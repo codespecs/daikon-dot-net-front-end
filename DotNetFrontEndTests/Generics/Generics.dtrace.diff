@@ -1,0 +1,7 @@
+Exception in thread "main" daikon.tools.DtraceDiff$DiffError: Mismatched variable declaration in program point Generics.GenericsTest.SwapIfGreater(T lhs, T rhs):::ENTER:
+  variable lhs at Generics.dtrace.goal:13986
+  variable lhs at daikon-output/Generics.dtrace:13840
+	at daikon.tools.DtraceDiff.ppt_var_decl_error(DtraceDiff.java:459)
+	at daikon.tools.DtraceDiff.dtraceDiff(DtraceDiff.java:294)
+	at daikon.tools.DtraceDiff.mainHelper(DtraceDiff.java:215)
+	at daikon.tools.DtraceDiff.main(DtraceDiff.java:49)

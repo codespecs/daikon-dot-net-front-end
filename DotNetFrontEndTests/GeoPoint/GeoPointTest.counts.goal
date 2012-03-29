@@ -1,0 +1,21 @@
+GeoPoint.Assert.assertNotNull(System.Object\_obj) ENTER/9: 14 EXIT8/15: 14
+GeoPoint.Assert.assertTrue(System.Boolean\_test) ENTER/6: 89 EXIT4/12: 89
+GeoPoint.GeoPoint..cctor() ENTER/3: 1 EXIT2/9: 1
+GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude) ENTER/9: 40 EXIT35/30: 40
+GeoPoint.GeoPoint.ToString() ENTER/18: 1 EXIT37/30: 1
+GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp) ENTER/30: 5 EXIT35/39: 5
+GeoPoint.GeoPoint.equals(System.Object\_o) ENTER/24: 20 EXIT10/33: 2 EXIT27/33: 18
+GeoPoint.GeoPoint.hashCode() ENTER/18: 3 EXIT11/27: 3
+GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp) ENTER/30: 9 EXIT57/39: 9
+GeoPoint.GeoPointTest..cctor() ENTER/3: 1 EXIT2/9: 1
+GeoPoint.GeoPointTest..ctor(System.String\_name) ENTER/9: 1 EXIT26/111: 1
+GeoPoint.GeoPointTest.Main(System.String[]\_args) ENTER/12: 1 EXIT53/18: 1
+GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol) ENTER/114: 10 EXIT10/120: 10
+GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test) ENTER/108: 13 EXIT4/114: 13
+GeoPoint.GeoPointTest.setUp() ENTER/99: 6 EXIT31/105: 6
+GeoPoint.GeoPointTest.testDistanceTo() ENTER/99: 1 EXIT38/105: 1
+GeoPoint.GeoPointTest.testEquals() ENTER/99: 1 EXIT31/105: 1
+GeoPoint.GeoPointTest.testEquals2() ENTER/99: 1 EXIT21/105: 1
+GeoPoint.GeoPointTest.testHashCode() ENTER/99: 1 EXIT15/105: 1
+GeoPoint.GeoPointTest.testHeadingTo() ENTER/99: 1 EXIT102/105: 1
+GeoPoint.GeoPointTest.testImmutability() ENTER/99: 1 EXIT71/105: 1

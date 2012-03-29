@@ -1,0 +1,7 @@
+Exception in thread "main" daikon.tools.DtraceDiff$DiffError: Mismatched program point:
+  ppt C..ctor(System.Int32 i):::ENTER at MultipleThreads.dtrace.goal:554
+  ppt C.run():::EXIT17 at daikon-output/MultipleThreads.dtrace:566
+	at daikon.tools.DtraceDiff.ppt_mismatch_error(DtraceDiff.java:430)
+	at daikon.tools.DtraceDiff.dtraceDiff(DtraceDiff.java:301)
+	at daikon.tools.DtraceDiff.mainHelper(DtraceDiff.java:215)
+	at daikon.tools.DtraceDiff.main(DtraceDiff.java:49)

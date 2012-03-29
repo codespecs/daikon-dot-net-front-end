@@ -1,0 +1,10 @@
+--- MultipleThreads.out.goal	2012-03-28 03:54:01.873421200 -0700
++++ MultipleThreads.out	2012-03-29 03:14:05.341557700 -0700
+@@ -40,6 +40,6 @@
+ Program Complete. Press enter to exit
+ Thread 18 says hi
+ Thread 18 says bye
++Program complete. Exiting DNFE.
+ Thread 19 says hi
+ Thread 19 says bye
+-Program complete. Exiting DNFE.
