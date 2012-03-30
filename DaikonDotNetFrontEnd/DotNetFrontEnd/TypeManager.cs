@@ -39,6 +39,7 @@ namespace DotNetFrontEnd
     public static readonly Type StringType = typeof(string);
     public static readonly Type TypeType = typeof(Type);
     public static readonly Type ULongType = typeof(ulong);
+    public static readonly Type HashSetType = typeof(HashSet<object>);
 
     //  Misc. int types, not needed by DeclarationPrinter
     private static readonly Type sByteType = typeof(sbyte);

@@ -399,9 +399,12 @@ namespace DotNetFrontEnd
         throw new ArgumentNullException("type");
       }
       // We don't want the internal fields of System objects
-      // Assumes that the Assembly of StringType is the System.* that we want to exclude
-      return this.BaseMemberAccessOptions & (TypeManager.StringType.Assembly != type.Assembly ?
-          this.BaseMemberAccessOptions : ~System.Reflection.BindingFlags.NonPublic);
+      // Assumes that the Assembly of StringType and the Assembly of HashSetType are the Assemblies
+      // that we want to exclude.
+      return this.BaseMemberAccessOptions & (
+             (TypeManager.StringType.Assembly.Equals(type.Assembly)
+           || TypeManager.HashSetType.Assembly.Equals(type.Assembly)) ?
+        ~System.Reflection.BindingFlags.NonPublic : this.BaseMemberAccessOptions);
     }
 
     /// <summary>
