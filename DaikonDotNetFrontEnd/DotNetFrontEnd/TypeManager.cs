@@ -9,11 +9,9 @@ namespace DotNetFrontEnd
   using System.Collections.Generic;
   using System.Linq;
   using System.Reflection;
+  using System.Text;
   using Microsoft.Cci;
   using Microsoft.Cci.MutableCodeModel;
-  using System.Runtime.CompilerServices;
-  using System.Text;
-  using System.Text.RegularExpressions;
 
   /// <summary>
   /// Keeps canoncial type references. Converts between CCIMetadata and .NET types.
@@ -46,6 +44,12 @@ namespace DotNetFrontEnd
     private static readonly Type uShortType = typeof(ushort);
     private static readonly Type uIntType = typeof(uint);
 
+    /// <summary>
+    ///  Name of the interface all sets must implement. Use is similar to a type store, but getting
+    ///  any specific set type wold require an element type.
+    /// </summary>
+    private static readonly string SetInterfaceName = "ISet";
+
     #endregion
 
     /// <summary>
@@ -73,16 +77,25 @@ namespace DotNetFrontEnd
 
     /// <summary>
     /// Map from a type to whether it is an FSharpList. Memoizes the lookup.
+    /// We use a bool-valued hashmap because there are essentially three states, IsLinkedList, 
+    /// NotLinkedList and Unknown. 
     /// </summary>
     private Dictionary<Type, bool> isFSharpListHashmap;
 
     /// <summary>    
     /// Map from types to whether or not they are linked-list implementors
     /// Memoizes the lookup
-    /// We use a bool-valued hashtable because there are essentially three states, IsLinkedList, 
+    /// We use a bool-valued hashmap because there are essentially three states, IsLinkedList, 
     /// NotLinkedList and Unknown. 
     /// </summary>
     private Dictionary<Type, bool> isLinkedListHashmap;
+
+    /// <summary>
+    /// Map from type to whether that type is a C# hashset.
+    /// Memoizes the lookup
+    /// We use a bool-valued hashmap because there are three states, true, false and unknown.
+    /// </summary>
+    private Dictionary<Type, bool> isSetHashmap;
 
     /// <summary>
     /// A map from assembly qualified names to the Type they describe
@@ -116,6 +129,7 @@ namespace DotNetFrontEnd
       this.isListHashmap = new Dictionary<Type, bool>();
       this.isFSharpListHashmap = new Dictionary<Type, bool>();
       this.isLinkedListHashmap = new Dictionary<Type, bool>();
+      this.isSetHashmap = new Dictionary<Type, bool>();
       this.nameTypeMap = new Dictionary<string, Type>();
       this.pureMethodKeys = new Dictionary<Type, ISet<int>>();
       this.pureMethods = new Dictionary<int, MethodInfo>();
@@ -163,6 +177,44 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
+    /// Defines a test to see if a type is an element of a given collection set (e.g. is the type
+    /// a list, is the type a set, etc.)
+    /// </summary>
+    /// <param name="type">Type to test</param>
+    /// <returns>Whether the type is an element of the set</returns>
+    private delegate bool IsElementTest(Type type);
+
+    /// <summary>
+    /// Perform memoized lookup to see if the given type is a element of the given collection set.
+    /// If the type isn't in the collection set already then perform the test and update the set.
+    /// </summary>
+    /// <param name="type">Type to test</param>
+    /// <param name="entries">Set to test against</param>
+    /// <param name="test">Test to perform if type is not in test</param>
+    /// <returns>Whether type is an element of the set, or if it passed the test</returns>
+    private bool IsElementOfCollectionType(Type type, Dictionary<Type, bool> entries,
+        IsElementTest test)
+    {
+      if (type == null)
+      {
+        throw new ArgumentNullException("type");
+      }
+
+      // Check in result table
+      bool lookupResult;
+      if (entries.TryGetValue(type, out lookupResult))
+      {
+        return lookupResult;
+      }
+
+      // If we haven't seen this type before, check each interface it implements
+      // Store result for memoization
+      bool testResult = test(type);
+      entries.Add(type, testResult);
+      return testResult;
+    }
+
+    /// <summary>
     /// Set the given identity assembly as the assembly to use when resolving types.
     /// </summary>
     /// <param name="identity">The identity to use during type resolution</param>
@@ -186,6 +238,23 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
+    /// Explicit test for wheter the given type is an F# list.
+    /// </summary>
+    /// <param name="type">Type to test</param>
+    /// <returns>True if the type is an F# list, false otherwise.</returns>
+    private bool IsFSharpListTest(Type type)
+    {
+      if (this.frontEndArgs.ElementInspectArraysOnly)
+      {
+        return type.IsArray;
+      }
+      else
+      {
+        return type.Namespace == "Microsoft.FSharp.Collections" && type.Name.StartsWith("FSharpList");
+      }
+    }
+
+    /// <summary>
     /// Check if the given type extends FSharpList, memoized
     /// </summary>
     /// <param name="type">The type to check</param>
@@ -193,33 +262,32 @@ namespace DotNetFrontEnd
     /// false</returns>
     public bool IsFSharpListImplementer(Type type)
     {
-      if (type == null)
-      {
-        throw new ArgumentNullException("type");
-      }
-      // Check in result table
-      bool result;
-      if (this.isFSharpListHashmap.TryGetValue(type, out result))
-      {
-        return result;
-      }
+      return IsElementOfCollectionType(type, this.isFSharpListHashmap, IsFSharpListTest);
+    }
 
+    /// <summary>
+    /// Explicity test whether type is a C# list.
+    /// </summary>
+    /// <param name="type">Type to check</param>
+    /// <returns>Whether type is a C# list</returns>
+    private bool IsListTest(Type type)
+    {      
       // If we haven't seen this type before, check each interface it implements
       // Store result for memoization
       if (this.frontEndArgs.ElementInspectArraysOnly)
       {
-        result = type.IsArray;
-        this.isFSharpListHashmap.Add(type, result);
-        return result;
+        return type.IsArray;
       }
       else
       {
-        if (type.Namespace == "Microsoft.FSharp.Collections" && type.Name.StartsWith("FSharpList"))
+        Type[] interfaces = type.GetInterfaces();
+        foreach (Type item in interfaces)
         {
-          this.isFSharpListHashmap.Add(type, true);
-          return true;
+          if (item == TypeManager.ListType)
+          {
+            return true;
+          }
         }
-        this.isFSharpListHashmap.Add(type, false);
         return false;
       }
     }
@@ -231,39 +299,7 @@ namespace DotNetFrontEnd
     /// <returns>True if the type implements System.Collections.List, otherwise false</returns>
     public bool IsListImplementer(Type type)
     {
-      if (type == null)
-      {
-        throw new ArgumentNullException("type");
-      }
-      // Check in result table
-      bool result;
-      if (this.isListHashmap.TryGetValue(type, out result))
-      {
-        return result;
-      }
-
-      // If we haven't seen this type before, check each interface it implements
-      // Store result for memoization
-      if (this.frontEndArgs.ElementInspectArraysOnly)
-      {
-        result = type.IsArray;
-        this.isListHashmap.Add(type, result);
-        return result;
-      }
-      else
-      {
-        Type[] interfaces = type.GetInterfaces();
-        foreach (Type item in interfaces)
-        {
-          if (item == TypeManager.ListType)
-          {
-            this.isListHashmap.Add(type, true);
-            return true;
-          }
-        }
-        this.isListHashmap.Add(type, false);
-        return false;
-      }
+      return IsElementOfCollectionType(type, this.isListHashmap, IsListTest);
     }
 
     /// <summary>
@@ -282,43 +318,69 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
+    /// Explicity tests whether the given type is a C# linked list.
+    /// </summary>
+    /// <param name="type">Type to test</param>
+    /// <returns>Whether type is a linked list.</returns>
+    private static bool IsLinkedListTest(Type type)
+    {
+      // Number of fields whose type matches the type being checked 
+      int numOwnType = 0;
+      FieldInfo[] fields = type.GetFields(System.Reflection.BindingFlags.Public
+                                            | System.Reflection.BindingFlags.NonPublic
+                                            | System.Reflection.BindingFlags.Instance);
+      foreach (FieldInfo field in fields)
+      {
+        if (field.FieldType == type)
+        {
+          numOwnType++;
+        }
+      }
+
+      // We have a linked list if there is exactly 1 field of the proper type.
+      return numOwnType == 1;
+    }
+
+    /// <summary>
     /// Returns whether the given type is a "linked-list" type: having 1 field of its own type.
     /// </summary>
     /// <param name="type">The type to check for linked-listness.</param>
     /// <returns>True if the type meets the linked-list qualification, otherwise false</returns>
     public bool IsLinkedListImplementer(Type type)
     {
-      if (type == null)
+      return IsElementOfCollectionType(type, this.isLinkedListHashmap, IsLinkedListTest);
+    }
+
+    /// <summary>
+    /// Explicityly tests whether type is a C# set.
+    /// </summary>
+    /// <param name="type">Type to test</param>
+    /// <returns>True if type is a C# test, false otherwise.</returns>
+    private bool IsSetTest(Type type)
+    {      
+      // If we haven't seen this type before, check each interface it implements
+      // Store result for memoization
+      if (this.frontEndArgs.ElementInspectArraysOnly)
       {
-        throw new ArgumentNullException("type");
-      }
-      // Check in result table
-      bool result;
-      if (this.isLinkedListHashmap.TryGetValue(type, out result))
-      {
-        return result;
+        return type.IsArray;
       }
       else
       {
-        // Number of fields whose type matches the type being checked 
-        int numOwnType = 0;
-        FieldInfo[] fields = type.GetFields(System.Reflection.BindingFlags.Public
-                                              | System.Reflection.BindingFlags.NonPublic
-                                              | System.Reflection.BindingFlags.Instance);
-        foreach (FieldInfo field in fields)
+        Type[] interfaces = type.GetInterfaces();
+        foreach (Type item in interfaces)
         {
-          if (field.FieldType == type)
+          if (item.Name.Contains(SetInterfaceName))
           {
-            numOwnType++;
+            return true;
           }
         }
-
-        // We have a linked list if there is exactly 1 field of the proper type.
-        bool success = numOwnType == 1;
-
-        this.isLinkedListHashmap.Add(type, success);
-        return success;
+        return false;
       }
+    }
+
+    public bool IsSetImplementer(Type type)
+    {
+      return IsElementOfCollectionType(type, this.isSetHashmap, IsSetTest);
     }
 
     /// <summary>
@@ -406,63 +468,63 @@ namespace DotNetFrontEnd
     /// <param name="deeplyInspectGenericParameters">Whether to investigate constraints on
     /// generic parmeters</param>
     /// <returns>A reflection type</returns>
-    public string ConvertCCITypeToAssemblyQualifiedName(ITypeReference type, 
+    public string ConvertCCITypeToAssemblyQualifiedName(ITypeReference type,
       bool deeplyInspectGenericParameters = true)
     {
       //try
       //{
-        string typeName = CheckSimpleCases(type);
-        if (typeName != null)
+      string typeName = CheckSimpleCases(type);
+      if (typeName != null)
+      {
+        return typeName;
+      }
+
+      // TODO(#16): In a future version it'd be nice to get some more
+      // information out of these
+      if (type is GenericTypeParameterReference || type is GenericMethodParameter
+       || type is GenericTypeParameter)
+      {
+        if (type is GenericMethodParameter && deeplyInspectGenericParameters)
         {
-          return typeName;
+          GenericMethodParameter gmp = (GenericMethodParameter)type;
+          return PrintListOfGenericParameterClassesAndInterfaces(gmp);
         }
+        return "System.Object";
+      }
 
-        // TODO(#16): In a future version it'd be nice to get some more
-        // information out of these
-        if (type is GenericTypeParameterReference || type is GenericMethodParameter
-         || type is GenericTypeParameter)
+
+      if (type is SpecializedNestedTypeReference)
+      {
+        type = ((SpecializedNestedTypeReference)type).UnspecializedVersion;
+      }
+
+      // Get the full name of the specified type
+      typeName = TypeHelper.GetTypeName(type,
+        NameFormattingOptions.UseReflectionStyleForNestedTypeNames);
+
+      typeName = UpdateTypeNameForNestedTypeDefinitions(type, typeName);
+
+      INamedTypeDefinition namedType = type as INamedTypeDefinition;
+      if (namedType != null && namedType.MangleName)
+      {
+        typeName = typeName + '`' + namedType.GenericParameterCount;
+      }
+      else if (type is GenericTypeInstanceReference)
+      {
+        var castedType = (GenericTypeInstanceReference)type;
+        typeName = TypeHelper.GetTypeName(castedType.GenericType,
+            NameFormattingOptions.UseReflectionStyleForNestedTypeNames) + '`' +
+            castedType.GenericArguments.Count;
+        if (deeplyInspectGenericParameters)
         {
-          if (type is GenericMethodParameter && deeplyInspectGenericParameters)
-          {
-            GenericMethodParameter gmp = (GenericMethodParameter)type;
-            return PrintListOfGenericParameterClassesAndInterfaces(gmp);
-          }
-          return "System.Object";
+          typeName = AddGenericTypeArguments(typeName, castedType);
         }
+        type = castedType.GenericType;
+      }
 
+      AssemblyIdentity identity = DetermineAssemblyIdentity(type);
 
-        if (type is SpecializedNestedTypeReference)
-        {
-          type = ((SpecializedNestedTypeReference)type).UnspecializedVersion;
-        }
-
-        // Get the full name of the specified type
-        typeName = TypeHelper.GetTypeName(type,
-          NameFormattingOptions.UseReflectionStyleForNestedTypeNames);
-
-        typeName = UpdateTypeNameForNestedTypeDefinitions(type, typeName);
-
-        INamedTypeDefinition namedType = type as INamedTypeDefinition;
-        if (namedType != null && namedType.MangleName)
-        {
-          typeName = typeName + '`' + namedType.GenericParameterCount;
-        }
-        else if (type is GenericTypeInstanceReference)
-        {
-          var castedType = (GenericTypeInstanceReference)type;
-          typeName = TypeHelper.GetTypeName(castedType.GenericType,
-              NameFormattingOptions.UseReflectionStyleForNestedTypeNames) + '`' +
-              castedType.GenericArguments.Count;
-          if (deeplyInspectGenericParameters)
-          {
-            typeName = AddGenericTypeArguments(typeName, castedType);
-          }
-          type = castedType.GenericType;
-        }
-
-        AssemblyIdentity identity = DetermineAssemblyIdentity(type);
-
-        return CompleteAssemblyQualifiedTypeNameProcessing(typeName, identity);
+      return CompleteAssemblyQualifiedTypeNameProcessing(typeName, identity);
       //}
       //catch (Exception ex)
       //{
