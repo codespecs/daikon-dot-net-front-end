@@ -533,6 +533,7 @@ namespace DotNetFrontEnd
       // building up the assembly qualified name and storing it in the IL.
       // type = obj != null ? typeManager.ConvertAssemblyQualifiedNameToType(
       //    obj.GetType().AssemblyQualifiedName) : type;
+
       if (depth > frontEndArgs.MaxNestingDepth ||
           !frontEndArgs.ShouldPrintVariable(name))
       {
@@ -652,7 +653,7 @@ namespace DotNetFrontEnd
         } // Close non-list inspection
       } // Close field inspection
     } // Close ReflectiveVisit()
-    
+
     /// <summary>
     /// Process the given variable of list type, making type class if necessary and visiting 
     /// the children elements.
@@ -842,7 +843,18 @@ namespace DotNetFrontEnd
         VisitListField(name, list, elementType, writer, depth, nonsensicalElements, elementField);
       }
 
-      // N.B.: No need to visit the static fields as a list, they will have the same value everywhere
+      // Static fields will have the same value for every element so just visit them once
+      foreach (FieldInfo elementField in
+          elementType.GetFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(elementType)))
+      {
+        string staticFieldName = elementType.Name + "." + elementField.Name;
+        if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
+        {
+          staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
+          ReflectiveVisit(staticFieldName, elementField.GetValue(null),
+                elementField.FieldType, writer, depth + 1);
+        }
+      }
 
       if (!elementType.IsSealed)
       {
@@ -893,7 +905,8 @@ namespace DotNetFrontEnd
     /// <param name="depth">The depth the fields will be printed at</param>
     /// <param name="nonsensicalElements">An array indicating corresponding locations in the list containing non-sensical elements</param>
     /// <param name="elementField">The field to be inspected</param>
-    private static void VisitListField(string name, IList list, Type elementType, TextWriter writer, int depth, bool[] nonsensicalElements, FieldInfo elementField)
+    private static void VisitListField(string name, IList list, Type elementType, TextWriter writer,
+        int depth, bool[] nonsensicalElements, FieldInfo elementField)
     {
       // If we have a non-null list then build an array comprising the calls on each 
       // element. The array must be object type so it can take any children.

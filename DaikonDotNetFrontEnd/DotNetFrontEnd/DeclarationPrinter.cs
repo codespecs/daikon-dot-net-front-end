@@ -2,10 +2,10 @@
 // It is called from ILRewriter.cs while the profiler is visiting the module.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace DotNetFrontEnd
@@ -461,12 +461,12 @@ namespace DotNetFrontEnd
           elementType.GetFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(
               elementType)))
       {
-        string staticFieldName = elementType + "." + field.Name;
+        string staticFieldName = elementType.Name + "." + field.Name;
         if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
         {
           this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
-          PrintList(staticFieldName, field.FieldType, name,
-              VariableKind.field, relativeName: field.Name,
+          // TODO(#44): Verify absence of VariableKind and enclosing-var
+          PrintVariable(staticFieldName, field.FieldType,
               nestingDepth: nestingDepth + 1);
         }
       }
