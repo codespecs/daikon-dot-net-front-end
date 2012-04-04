@@ -240,6 +240,10 @@ namespace DotNetFrontEnd
         PrintList(name + "." + arrayListField.Name + "[..]", type, name,
             VariableKind.array, nestingDepth: nestingDepth, parentName: parentName);
       }
+      else if (this.typeManager.IsSetImplementer(type))
+      {
+        DeclareVariableAsList(name, type, parentName, nestingDepth);
+      }
       else
       {
         foreach (FieldInfo field in

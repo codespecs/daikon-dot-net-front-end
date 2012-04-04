@@ -64,7 +64,7 @@ clean-all:
 	$(MAKE) nightly-tests__clean
 
 #default-projects__%: 
-default-projects__%: do-HelloWorld__% do-StackAr__% do-PolyCalc__% do-GeoPoint__% do-ExceptionTest__% do-MultipleThreads__% do-MultipleExits__% do-Generics__%
+default-projects__%: do-HelloWorld__% do-StackAr__% do-PolyCalc__% do-GeoPoint__% do-ExceptionTest__% do-MultipleThreads__% do-MultipleExits__% do-Generics__% do-AdvancedCollections__%
 	@
 
 # 'make do-SomeDiectory_target'

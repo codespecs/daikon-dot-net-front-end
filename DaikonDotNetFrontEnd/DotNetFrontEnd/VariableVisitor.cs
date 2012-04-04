@@ -574,6 +574,23 @@ namespace DotNetFrontEnd
 
           ProcessVariableAsList(name, result, result.GetType(), writer, depth);
         }
+        else if (typeManager.IsSetImplementer(type))
+        {
+          IEnumerable set = (IEnumerable)obj;
+          // A set can have only one generic argument -- the element type
+          Type setElementType = type.GetGenericArguments()[0];
+          // We don't statically know the element type or array length so create a temprorary list
+          // that can take objects of any type and have any length. Then create an array of the
+          // proper length and type and hand that off.
+          IList result = new ArrayList();
+          foreach (var item in set)
+          {
+            result.Add(item);
+          }
+          Array convertedList = Array.CreateInstance(setElementType, result.Count);
+          result.CopyTo(convertedList, 0);
+          ProcessVariableAsList(name, convertedList, convertedList.GetType(), writer, depth);
+        }
         else if (frontEndArgs.LinkedLists && typeManager.IsLinkedListImplementer(type))
         {
           FieldInfo linkedListField = TypeManager.FindLinkedListField(type);
@@ -666,7 +683,7 @@ namespace DotNetFrontEnd
     private static void ProcessVariableAsList(string name, object obj, Type type,
         TextWriter writer, int depth)
     {
-      // Print the type of the list.
+      // Call GetType() on the list if necessary.
       Type elementType = TypeManager.GetListElementType(type);
       if (!elementType.IsSealed)
       {
