@@ -261,9 +261,9 @@ namespace DotNetFrontEnd
           if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
           {
             this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
+            // TODO(#44): Verify absence of enclosing-var
             PrintVariable(staticFieldName, field.FieldType,
-               VariableKind.field, enclosingVar: name, relativeName: field.Name,
-               nestingDepth: nestingDepth + 1);
+               VariableKind.field, nestingDepth: nestingDepth + 1);
           }
         }
 
@@ -469,8 +469,8 @@ namespace DotNetFrontEnd
         if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
         {
           this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
-          // TODO(#44): Verify absence of VariableKind and enclosing-var
-          PrintVariable(staticFieldName, field.FieldType,
+          // TODO(#44): Verify absence of enclosing-var
+          PrintVariable(staticFieldName, field.FieldType, kind: VariableKind.field, 
               nestingDepth: nestingDepth + 1);
         }
       }
