@@ -21,6 +21,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
@@ -640,7 +641,7 @@ namespace DotNetFrontEnd
               {
                 staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
                 ReflectiveVisit(staticFieldName, GetFieldValue(obj, field, field.Name),
-                      field.FieldType, writer, depth + 1, fieldFlags);
+                      field.FieldType, writer, staticFieldName.Count(c => c == '.'), fieldFlags);
               }
             }
             catch (ArgumentException)
@@ -829,7 +830,8 @@ namespace DotNetFrontEnd
         if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
         {
           staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
-          ListReflectiveVisit(staticFieldName, null, elementField.FieldType, writer, depth + 1);
+          ListReflectiveVisit(staticFieldName, null, elementField.FieldType, writer, 
+              staticFieldName.Count(c => c == '.'));
         }
       }
 
@@ -869,7 +871,7 @@ namespace DotNetFrontEnd
         {
           staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
           ReflectiveVisit(staticFieldName, elementField.GetValue(null),
-                elementField.FieldType, writer, depth + 1);
+                elementField.FieldType, writer, staticFieldName.Count(c => c == '.'));
         }
       }
 

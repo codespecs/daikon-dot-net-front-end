@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -261,9 +262,8 @@ namespace DotNetFrontEnd
           if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
           {
             this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
-            // TODO(#44): Verify absence of enclosing-var
-            PrintVariable(staticFieldName, field.FieldType,
-               VariableKind.field, nestingDepth: nestingDepth + 1);
+            PrintVariable(staticFieldName, field.FieldType, 
+            nestingDepth: staticFieldName.Count(c => c == '.'));
           }
         }
 
@@ -469,9 +469,8 @@ namespace DotNetFrontEnd
         if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
         {
           this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
-          // TODO(#44): Verify absence of enclosing-var
-          PrintVariable(staticFieldName, field.FieldType, kind: VariableKind.field, 
-              nestingDepth: nestingDepth + 1);
+          PrintVariable(staticFieldName, field.FieldType, 
+              nestingDepth: staticFieldName.Count(c => c == '.'));
         }
       }
 
