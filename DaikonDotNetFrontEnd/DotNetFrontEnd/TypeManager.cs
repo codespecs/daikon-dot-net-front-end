@@ -54,7 +54,7 @@ namespace DotNetFrontEnd
 
     /// <summary>
     /// Don't print object definition program points or references to types whose name matches
-    /// this signature, they are system generated
+    /// this signature, they are system generated.
     /// </summary>
     public readonly static string RegexForTypesToIgnoreForProgramPoint = "<*>";
 
@@ -378,7 +378,12 @@ namespace DotNetFrontEnd
       }
     }
 
-    public bool IsSetImplementer(Type type)
+    /// <summary>
+    /// Memoized test whether type is in a C# Set.
+    /// </summary>
+    /// <param name="type">Type to test</param>
+    /// <returns>True if the type is a C# test, false otherwise</returns>
+    public bool IsSet(Type type)
     {
       return IsElementOfCollectionType(type, this.isSetHashmap, IsSetTest);
     }

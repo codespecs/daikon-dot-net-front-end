@@ -575,7 +575,7 @@ namespace DotNetFrontEnd
 
           ProcessVariableAsList(name, result, result.GetType(), writer, depth);
         }
-        else if (typeManager.IsSetImplementer(type))
+        else if (typeManager.IsSet(type))
         {
           IEnumerable set = (IEnumerable)obj;
           // A set can have only one generic argument -- the element type
