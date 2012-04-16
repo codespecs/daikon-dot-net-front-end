@@ -4,6 +4,7 @@ input-language C#.NET
 
 ppt HelloWorld..ctor():::ENTER
 ppt-type enter
+parent parent HelloWorld:::CLASS 1
 
 ppt HelloWorld..ctor():::EXIT2
 ppt-type subexit
@@ -69,6 +70,7 @@ parent parent HelloWorld:::OBJECT 1
 
 ppt HelloWorld.Main(System.String[]\_args):::ENTER
 ppt-type enter
+parent parent HelloWorld:::CLASS 1
   variable args
     var-kind variable
     dec-type java.lang.String[]
@@ -93,6 +95,7 @@ ppt-type enter
 
 ppt HelloWorld.Main(System.String[]\_args):::EXIT4
 ppt-type subexit
+parent parent HelloWorld:::CLASS 1
   variable args
     var-kind variable
     dec-type java.lang.String[]
@@ -129,6 +132,7 @@ ppt-type subexit
 
 ppt HelloWorld.Main(System.String[]\_args):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent HelloWorld:::CLASS 1
   variable args
     var-kind variable
     dec-type java.lang.String[]
@@ -163,8 +167,12 @@ ppt-type subexit
     flags synthetic classname
     comparability 22
 
+ppt HelloWorld:::CLASS
+ppt-type class
+
 ppt HelloWorld:::OBJECT
 ppt-type object
+parent parent HelloWorld:::CLASS 1
   variable this
     var-kind variable
     dec-type HelloWorld
@@ -183,7 +191,7 @@ HelloWorld.Main(System.String[]\_args):::ENTER
 this_invocation_nonce
 0
 args
-53046711
+38750844
 1
 args[..]
 []
@@ -196,7 +204,7 @@ HelloWorld.Main(System.String[]\_args):::EXIT4
 this_invocation_nonce
 0
 args
-53046711
+38750844
 1
 args[..]
 []

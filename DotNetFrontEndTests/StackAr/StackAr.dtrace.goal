@@ -4,6 +4,7 @@ input-language C#.NET
 
 ppt MyInteger..ctor():::ENTER
 ppt-type enter
+parent parent MyInteger:::CLASS 1
 
 ppt MyInteger..ctor():::EXIT6
 ppt-type subexit
@@ -67,6 +68,7 @@ parent parent MyInteger:::OBJECT 1
 
 ppt MyInteger..ctor(System.Int32\_x):::ENTER
 ppt-type enter
+parent parent MyInteger:::CLASS 1
   variable x
     var-kind variable
     dec-type int
@@ -951,8 +953,12 @@ parent parent MyInteger:::OBJECT 1
     comparability 22
     parent MyInteger:::OBJECT 1
 
+ppt MyInteger:::CLASS
+ppt-type class
+
 ppt MyInteger:::OBJECT
 ppt-type object
+parent parent MyInteger:::CLASS 1
   variable this
     var-kind variable
     dec-type MyInteger
@@ -968,6 +974,7 @@ ppt-type object
 
 ppt Overflow..ctor():::ENTER
 ppt-type enter
+parent parent Overflow:::CLASS 1
 
 ppt Overflow..ctor():::EXIT2
 ppt-type subexit
@@ -1075,8 +1082,12 @@ parent parent Overflow:::OBJECT 1
     comparability 22
     parent Overflow:::OBJECT 1
 
+ppt Overflow:::CLASS
+ppt-type class
+
 ppt Overflow:::OBJECT
 ppt-type object
+parent parent Overflow:::CLASS 1
   variable this
     var-kind variable
     dec-type Overflow
@@ -1112,9 +1123,51 @@ ppt-type object
 
 ppt Random..cctor():::ENTER
 ppt-type enter
+parent parent Random:::CLASS 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
 
 ppt Random..cctor():::EXIT12
 ppt-type subexit
+parent parent Random:::CLASS 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -1130,6 +1183,27 @@ ppt-type subexit
 
 ppt Random..cctor():::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Random:::CLASS 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -1145,10 +1219,51 @@ ppt-type subexit
 
 ppt Random..ctor():::ENTER
 ppt-type enter
+parent parent Random:::CLASS 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
 
 ppt Random..ctor():::EXIT12
 ppt-type subexit
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -1168,40 +1283,12 @@ parent parent Random:::OBJECT 1
     flags is_param
     comparability 22
     parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -1215,6 +1302,26 @@ parent parent Random:::OBJECT 1
 ppt Random..ctor():::EXIT_EX_Runtime
 ppt-type subexit
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -1234,40 +1341,12 @@ parent parent Random:::OBJECT 1
     flags is_param
     comparability 22
     parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -1280,6 +1359,27 @@ parent parent Random:::OBJECT 1
 
 ppt Random..ctor(System.Int32\_initialValue):::ENTER
 ppt-type enter
+parent parent Random:::CLASS 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable initialValue
     var-kind variable
     dec-type int
@@ -1290,6 +1390,26 @@ ppt-type enter
 ppt Random..ctor(System.Int32\_initialValue):::EXIT27
 ppt-type subexit
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -1315,40 +1435,12 @@ parent parent Random:::OBJECT 1
     flags is_param
     comparability 22
     parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -1362,6 +1454,26 @@ parent parent Random:::OBJECT 1
 ppt Random..ctor(System.Int32\_initialValue):::EXIT32
 ppt-type subexit
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -1387,40 +1499,12 @@ parent parent Random:::OBJECT 1
     flags is_param
     comparability 22
     parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -1434,6 +1518,26 @@ parent parent Random:::OBJECT 1
 ppt Random..ctor(System.Int32\_initialValue):::EXIT_EX_Runtime
 ppt-type subexit
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -1459,40 +1563,12 @@ parent parent Random:::OBJECT 1
     flags is_param
     comparability 22
     parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -1505,6 +1581,27 @@ parent parent Random:::OBJECT 1
 
 ppt Random.main(System.String[]\_args):::ENTER
 ppt-type enter
+parent parent Random:::CLASS 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable args
     var-kind variable
     dec-type java.lang.String[]
@@ -1529,6 +1626,27 @@ ppt-type enter
 
 ppt Random.main(System.String[]\_args):::EXIT21
 ppt-type subexit
+parent parent Random:::CLASS 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable args
     var-kind variable
     dec-type java.lang.String[]
@@ -1565,6 +1683,27 @@ ppt-type subexit
 
 ppt Random.main(System.String[]\_args):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Random:::CLASS 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable args
     var-kind variable
     dec-type java.lang.String[]
@@ -1601,6 +1740,27 @@ ppt-type subexit
 
 ppt Random.permute(System.Object[]\_a):::ENTER
 ppt-type enter
+parent parent Random:::CLASS 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type java.lang.Object[]
@@ -1632,6 +1792,27 @@ ppt-type enter
 
 ppt Random.permute(System.Object[]\_a):::EXIT26
 ppt-type subexit
+parent parent Random:::CLASS 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type java.lang.Object[]
@@ -1675,6 +1856,27 @@ ppt-type subexit
 
 ppt Random.permute(System.Object[]\_a):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Random:::CLASS 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type java.lang.Object[]
@@ -1719,18 +1921,31 @@ ppt-type subexit
 ppt Random.random0_1():::ENTER
 ppt-type enter
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable this
     var-kind variable
     dec-type Random
     rep-type hashcode
     flags is_param
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.GetType()
@@ -1739,27 +1954,6 @@ parent parent Random:::OBJECT 1
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -1773,6 +1967,26 @@ parent parent Random:::OBJECT 1
 ppt Random.random0_1():::EXIT10
 ppt-type subexit
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -1797,40 +2011,12 @@ parent parent Random:::OBJECT 1
     flags is_param
     comparability 22
     parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -1844,6 +2030,26 @@ parent parent Random:::OBJECT 1
 ppt Random.random0_1():::EXIT8
 ppt-type subexit
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -1868,40 +2074,12 @@ parent parent Random:::OBJECT 1
     flags is_param
     comparability 22
     parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -1915,6 +2093,26 @@ parent parent Random:::OBJECT 1
 ppt Random.random0_1():::EXIT_EX_Runtime
 ppt-type subexit
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -1939,40 +2137,12 @@ parent parent Random:::OBJECT 1
     flags is_param
     comparability 22
     parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -1986,18 +2156,31 @@ parent parent Random:::OBJECT 1
 ppt Random.randomInt():::ENTER
 ppt-type enter
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable this
     var-kind variable
     dec-type Random
     rep-type hashcode
     flags is_param
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.GetType()
@@ -2006,27 +2189,6 @@ parent parent Random:::OBJECT 1
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -2040,6 +2202,26 @@ parent parent Random:::OBJECT 1
 ppt Random.randomInt():::EXIT33
 ppt-type subexit
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -2064,40 +2246,12 @@ parent parent Random:::OBJECT 1
     flags is_param
     comparability 22
     parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -2111,6 +2265,26 @@ parent parent Random:::OBJECT 1
 ppt Random.randomInt():::EXIT35
 ppt-type subexit
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -2135,40 +2309,12 @@ parent parent Random:::OBJECT 1
     flags is_param
     comparability 22
     parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -2182,6 +2328,26 @@ parent parent Random:::OBJECT 1
 ppt Random.randomInt():::EXIT_EX_Runtime
 ppt-type subexit
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -2206,40 +2372,12 @@ parent parent Random:::OBJECT 1
     flags is_param
     comparability 22
     parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -2253,6 +2391,26 @@ parent parent Random:::OBJECT 1
 ppt Random.randomInt(System.Int32\_low,\_System.Int32\_high):::ENTER
 ppt-type enter
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable high
     var-kind variable
     dec-type int
@@ -2272,40 +2430,12 @@ parent parent Random:::OBJECT 1
     flags is_param
     comparability 22
     parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -2319,6 +2449,26 @@ parent parent Random:::OBJECT 1
 ppt Random.randomInt(System.Int32\_low,\_System.Int32\_high):::EXIT20
 ppt-type subexit
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -2355,40 +2505,12 @@ parent parent Random:::OBJECT 1
     flags is_param
     comparability 22
     parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -2402,6 +2524,26 @@ parent parent Random:::OBJECT 1
 ppt Random.randomInt(System.Int32\_low,\_System.Int32\_high):::EXIT22
 ppt-type subexit
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -2438,40 +2580,12 @@ parent parent Random:::OBJECT 1
     flags is_param
     comparability 22
     parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -2485,6 +2599,26 @@ parent parent Random:::OBJECT 1
 ppt Random.randomInt(System.Int32\_low,\_System.Int32\_high):::EXIT_EX_Runtime
 ppt-type subexit
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -2521,40 +2655,12 @@ parent parent Random:::OBJECT 1
     flags is_param
     comparability 22
     parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -2568,18 +2674,31 @@ parent parent Random:::OBJECT 1
 ppt Random.randomIntWRONG():::ENTER
 ppt-type enter
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable this
     var-kind variable
     dec-type Random
     rep-type hashcode
     flags is_param
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.GetType()
@@ -2588,27 +2707,6 @@ parent parent Random:::OBJECT 1
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -2622,6 +2720,26 @@ parent parent Random:::OBJECT 1
 ppt Random.randomIntWRONG():::EXIT13
 ppt-type subexit
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -2646,40 +2764,12 @@ parent parent Random:::OBJECT 1
     flags is_param
     comparability 22
     parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -2693,6 +2783,26 @@ parent parent Random:::OBJECT 1
 ppt Random.randomIntWRONG():::EXIT15
 ppt-type subexit
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -2717,40 +2827,12 @@ parent parent Random:::OBJECT 1
     flags is_param
     comparability 22
     parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -2764,6 +2846,26 @@ parent parent Random:::OBJECT 1
 ppt Random.randomIntWRONG():::EXIT_EX_Runtime
 ppt-type subexit
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -2788,40 +2890,12 @@ parent parent Random:::OBJECT 1
     flags is_param
     comparability 22
     parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -2835,6 +2909,26 @@ parent parent Random:::OBJECT 1
 ppt Random.randomLong(System.Int64\_low,\_System.Int64\_high):::ENTER
 ppt-type enter
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable high
     var-kind variable
     dec-type long
@@ -2854,40 +2948,12 @@ parent parent Random:::OBJECT 1
     flags is_param
     comparability 22
     parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -2901,6 +2967,26 @@ parent parent Random:::OBJECT 1
 ppt Random.randomLong(System.Int64\_low,\_System.Int64\_high):::EXIT38
 ppt-type subexit
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -2937,40 +3023,12 @@ parent parent Random:::OBJECT 1
     flags is_param
     comparability 22
     parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -2984,6 +3042,26 @@ parent parent Random:::OBJECT 1
 ppt Random.randomLong(System.Int64\_low,\_System.Int64\_high):::EXIT40
 ppt-type subexit
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -3020,40 +3098,12 @@ parent parent Random:::OBJECT 1
     flags is_param
     comparability 22
     parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -3067,6 +3117,26 @@ parent parent Random:::OBJECT 1
 ppt Random.randomLong(System.Int64\_low,\_System.Int64\_high):::EXIT_EX_Runtime
 ppt-type subexit
 parent parent Random:::OBJECT 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -3103,40 +3173,12 @@ parent parent Random:::OBJECT 1
     flags is_param
     comparability 22
     parent Random:::OBJECT 1
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Random:::OBJECT 1
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Random:::OBJECT 1
   variable this.state
@@ -3147,19 +3189,37 @@ parent parent Random:::OBJECT 1
     comparability 22
     parent Random:::OBJECT 1
 
+ppt Random:::CLASS
+ppt-type class
+
 ppt Random:::OBJECT
 ppt-type object
+parent parent Random:::CLASS 1
+  variable Random.A
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.M
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.Q
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Random.R
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable this
     var-kind variable
     dec-type Random
     rep-type hashcode
     flags is_param
-    comparability 22
-  variable this.A
-    var-kind field A
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
   variable this.GetType()
     var-kind function GetType()
@@ -3167,24 +3227,6 @@ ppt-type object
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-  variable this.M
-    var-kind field M
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-  variable this.Q
-    var-kind field Q
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-  variable this.R
-    var-kind field R
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
   variable this.state
     var-kind field state
@@ -3195,9 +3237,41 @@ ppt-type object
 
 ppt Sort..cctor():::ENTER
 ppt-type enter
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
 
 ppt Sort..cctor():::EXIT6
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -3213,6 +3287,22 @@ ppt-type subexit
 
 ppt Sort..cctor():::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -3228,10 +3318,41 @@ ppt-type subexit
 
 ppt Sort..ctor():::ENTER
 ppt-type enter
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
 
 ppt Sort..ctor():::EXIT2
 ppt-type subexit
 parent parent Sort:::OBJECT 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -3251,39 +3372,33 @@ parent parent Sort:::OBJECT 1
     flags is_param
     comparability 22
     parent Sort:::OBJECT 1
-  variable this.CUTOFF
-    var-kind field CUTOFF
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Sort:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent Sort:::OBJECT 1
-  variable this.NUM_ITEMS
-    var-kind field NUM_ITEMS
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Sort:::OBJECT 1
-  variable this.theSeed
-    var-kind field theSeed
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
     parent Sort:::OBJECT 1
 
 ppt Sort..ctor():::EXIT_EX_Runtime
 ppt-type subexit
 parent parent Sort:::OBJECT 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -3303,13 +3418,6 @@ parent parent Sort:::OBJECT 1
     flags is_param
     comparability 22
     parent Sort:::OBJECT 1
-  variable this.CUTOFF
-    var-kind field CUTOFF
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Sort:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
@@ -3318,23 +3426,25 @@ parent parent Sort:::OBJECT 1
     flags synthetic classname
     comparability 22
     parent Sort:::OBJECT 1
-  variable this.NUM_ITEMS
-    var-kind field NUM_ITEMS
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Sort:::OBJECT 1
-  variable this.theSeed
-    var-kind field theSeed
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent Sort:::OBJECT 1
 
 ppt Sort.checkSort(MyInteger[]\_a):::ENTER
 ppt-type enter
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type MyInteger[]
@@ -3358,6 +3468,22 @@ ppt-type enter
 
 ppt Sort.checkSort(MyInteger[]\_a):::EXIT34
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type MyInteger[]
@@ -3393,6 +3519,22 @@ ppt-type subexit
 
 ppt Sort.checkSort(MyInteger[]\_a):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type MyInteger[]
@@ -3428,6 +3570,22 @@ ppt-type subexit
 
 ppt Sort.heapsort(System.IComparable[]\_a):::ENTER
 ppt-type enter
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -3451,6 +3609,22 @@ ppt-type enter
 
 ppt Sort.heapsort(System.IComparable[]\_a):::EXIT56
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -3486,6 +3660,22 @@ ppt-type subexit
 
 ppt Sort.heapsort(System.IComparable[]\_a):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -3521,6 +3711,22 @@ ppt-type subexit
 
 ppt Sort.insertionSort(System.IComparable[]\_a):::ENTER
 ppt-type enter
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -3544,6 +3750,22 @@ ppt-type enter
 
 ppt Sort.insertionSort(System.IComparable[]\_a):::EXIT58
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -3579,6 +3801,22 @@ ppt-type subexit
 
 ppt Sort.insertionSort(System.IComparable[]\_a):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -3614,6 +3852,22 @@ ppt-type subexit
 
 ppt Sort.insertionSort(System.IComparable[]\_a,\_System.Int32\_left,\_System.Int32\_right):::ENTER
 ppt-type enter
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -3649,6 +3903,22 @@ ppt-type enter
 
 ppt Sort.insertionSort(System.IComparable[]\_a,\_System.Int32\_left,\_System.Int32\_right):::EXIT60
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -3696,6 +3966,22 @@ ppt-type subexit
 
 ppt Sort.insertionSort(System.IComparable[]\_a,\_System.Int32\_left,\_System.Int32\_right):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -3743,6 +4029,22 @@ ppt-type subexit
 
 ppt Sort.leftChild(System.Int32\_i):::ENTER
 ppt-type enter
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable i
     var-kind variable
     dec-type int
@@ -3752,6 +4054,22 @@ ppt-type enter
 
 ppt Sort.leftChild(System.Int32\_i):::EXIT7
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -3778,6 +4096,22 @@ ppt-type subexit
 
 ppt Sort.leftChild(System.Int32\_i):::EXIT9
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -3804,6 +4138,22 @@ ppt-type subexit
 
 ppt Sort.leftChild(System.Int32\_i):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -3830,6 +4180,22 @@ ppt-type subexit
 
 ppt Sort.main(System.String[]\_args):::ENTER
 ppt-type enter
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable args
     var-kind variable
     dec-type java.lang.String[]
@@ -3854,6 +4220,22 @@ ppt-type enter
 
 ppt Sort.main(System.String[]\_args):::EXIT110
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable args
     var-kind variable
     dec-type java.lang.String[]
@@ -3890,6 +4272,22 @@ ppt-type subexit
 
 ppt Sort.main(System.String[]\_args):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable args
     var-kind variable
     dec-type java.lang.String[]
@@ -3926,6 +4324,22 @@ ppt-type subexit
 
 ppt Sort.median3(System.IComparable[]\_a,\_System.Int32\_left,\_System.Int32\_right):::ENTER
 ppt-type enter
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -3961,6 +4375,22 @@ ppt-type enter
 
 ppt Sort.median3(System.IComparable[]\_a,\_System.Int32\_left,\_System.Int32\_right):::EXIT77
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -4013,6 +4443,22 @@ ppt-type subexit
 
 ppt Sort.median3(System.IComparable[]\_a,\_System.Int32\_left,\_System.Int32\_right):::EXIT79
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -4065,6 +4511,22 @@ ppt-type subexit
 
 ppt Sort.median3(System.IComparable[]\_a,\_System.Int32\_left,\_System.Int32\_right):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -4117,6 +4579,22 @@ ppt-type subexit
 
 ppt Sort.merge(System.IComparable[]\_a,\_System.IComparable[]\_tmpArray,\_System.Int32\_leftPos,\_System.Int32\_rightPos,\_System.Int32\_rightEnd):::ENTER
 ppt-type enter
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -4178,6 +4656,22 @@ ppt-type enter
 
 ppt Sort.merge(System.IComparable[]\_a,\_System.IComparable[]\_tmpArray,\_System.Int32\_leftPos,\_System.Int32\_rightPos,\_System.Int32\_rightEnd):::EXIT137
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -4251,6 +4745,22 @@ ppt-type subexit
 
 ppt Sort.merge(System.IComparable[]\_a,\_System.IComparable[]\_tmpArray,\_System.Int32\_leftPos,\_System.Int32\_rightPos,\_System.Int32\_rightEnd):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -4324,6 +4834,22 @@ ppt-type subexit
 
 ppt Sort.mergeSort(System.IComparable[]\_a):::ENTER
 ppt-type enter
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -4347,6 +4873,22 @@ ppt-type enter
 
 ppt Sort.mergeSort(System.IComparable[]\_a):::EXIT16
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -4382,6 +4924,22 @@ ppt-type subexit
 
 ppt Sort.mergeSort(System.IComparable[]\_a):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -4417,6 +4975,22 @@ ppt-type subexit
 
 ppt Sort.mergeSort(System.IComparable[]\_a,\_System.IComparable[]\_tmpArray,\_System.Int32\_left,\_System.Int32\_right):::ENTER
 ppt-type enter
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -4472,6 +5046,22 @@ ppt-type enter
 
 ppt Sort.mergeSort(System.IComparable[]\_a,\_System.IComparable[]\_tmpArray,\_System.Int32\_left,\_System.Int32\_right):::EXIT40
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -4539,6 +5129,22 @@ ppt-type subexit
 
 ppt Sort.mergeSort(System.IComparable[]\_a,\_System.IComparable[]\_tmpArray,\_System.Int32\_left,\_System.Int32\_right):::EXIT8
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -4606,6 +5212,22 @@ ppt-type subexit
 
 ppt Sort.mergeSort(System.IComparable[]\_a,\_System.IComparable[]\_tmpArray,\_System.Int32\_left,\_System.Int32\_right):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -4673,6 +5295,22 @@ ppt-type subexit
 
 ppt Sort.percDown(System.IComparable[]\_a,\_System.Int32\_i,\_System.Int32\_n):::ENTER
 ppt-type enter
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -4708,6 +5346,22 @@ ppt-type enter
 
 ppt Sort.percDown(System.IComparable[]\_a,\_System.Int32\_i,\_System.Int32\_n):::EXIT71
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -4755,6 +5409,22 @@ ppt-type subexit
 
 ppt Sort.percDown(System.IComparable[]\_a,\_System.Int32\_i,\_System.Int32\_n):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -4802,6 +5472,22 @@ ppt-type subexit
 
 ppt Sort.quickSelect(System.IComparable[]\_a,\_System.Int32\_k):::ENTER
 ppt-type enter
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -4831,6 +5517,22 @@ ppt-type enter
 
 ppt Sort.quickSelect(System.IComparable[]\_a,\_System.Int32\_k):::EXIT11
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -4872,6 +5574,22 @@ ppt-type subexit
 
 ppt Sort.quickSelect(System.IComparable[]\_a,\_System.Int32\_k):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -4913,6 +5631,22 @@ ppt-type subexit
 
 ppt Sort.quickSelect(System.IComparable[]\_a,\_System.Int32\_left,\_System.Int32\_right,\_System.Int32\_k):::ENTER
 ppt-type enter
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -4954,6 +5688,22 @@ ppt-type enter
 
 ppt Sort.quickSelect(System.IComparable[]\_a,\_System.Int32\_left,\_System.Int32\_right,\_System.Int32\_k):::EXIT117
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -5007,6 +5757,22 @@ ppt-type subexit
 
 ppt Sort.quickSelect(System.IComparable[]\_a,\_System.Int32\_left,\_System.Int32\_right,\_System.Int32\_k):::EXIT123
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -5060,6 +5826,22 @@ ppt-type subexit
 
 ppt Sort.quickSelect(System.IComparable[]\_a,\_System.Int32\_left,\_System.Int32\_right,\_System.Int32\_k):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -5113,6 +5895,22 @@ ppt-type subexit
 
 ppt Sort.quicksort(System.IComparable[]\_a):::ENTER
 ppt-type enter
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -5136,6 +5934,22 @@ ppt-type enter
 
 ppt Sort.quicksort(System.IComparable[]\_a):::EXIT10
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -5171,6 +5985,22 @@ ppt-type subexit
 
 ppt Sort.quicksort(System.IComparable[]\_a):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -5206,6 +6036,22 @@ ppt-type subexit
 
 ppt Sort.quicksort(System.IComparable[]\_a,\_System.Int32\_left,\_System.Int32\_right):::ENTER
 ppt-type enter
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -5241,6 +6087,22 @@ ppt-type enter
 
 ppt Sort.quicksort(System.IComparable[]\_a,\_System.Int32\_left,\_System.Int32\_right):::EXIT104
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -5288,6 +6150,22 @@ ppt-type subexit
 
 ppt Sort.quicksort(System.IComparable[]\_a,\_System.Int32\_left,\_System.Int32\_right):::EXIT98
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -5335,6 +6213,22 @@ ppt-type subexit
 
 ppt Sort.quicksort(System.IComparable[]\_a,\_System.Int32\_left,\_System.Int32\_right):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -5382,6 +6276,22 @@ ppt-type subexit
 
 ppt Sort.shellsort(System.IComparable[]\_a):::ENTER
 ppt-type enter
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -5405,6 +6315,22 @@ ppt-type enter
 
 ppt Sort.shellsort(System.IComparable[]\_a):::EXIT75
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -5440,6 +6366,22 @@ ppt-type subexit
 
 ppt Sort.shellsort(System.IComparable[]\_a):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type System.IComparable[]
@@ -5475,6 +6417,22 @@ ppt-type subexit
 
 ppt Sort.swapReferences(System.Object[]\_a,\_System.Int32\_index1,\_System.Int32\_index2):::ENTER
 ppt-type enter
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type java.lang.Object[]
@@ -5518,6 +6476,22 @@ ppt-type enter
 
 ppt Sort.swapReferences(System.Object[]\_a,\_System.Int32\_index1,\_System.Int32\_index2):::EXIT15
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type java.lang.Object[]
@@ -5573,6 +6547,22 @@ ppt-type subexit
 
 ppt Sort.swapReferences(System.Object[]\_a,\_System.Int32\_index1,\_System.Int32\_index2):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable a
     var-kind variable
     dec-type java.lang.Object[]
@@ -5626,19 +6616,32 @@ ppt-type subexit
     flags is_param
     comparability 22
 
+ppt Sort:::CLASS
+ppt-type class
+
 ppt Sort:::OBJECT
 ppt-type object
+parent parent Sort:::CLASS 1
+  variable Sort.CUTOFF
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.NUM_ITEMS
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable Sort.theSeed
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
   variable this
     var-kind variable
     dec-type Sort
     rep-type hashcode
     flags is_param
-    comparability 22
-  variable this.CUTOFF
-    var-kind field CUTOFF
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
   variable this.GetType()
     var-kind function GetType()
@@ -5647,21 +6650,10 @@ ppt-type object
     rep-type java.lang.String
     flags synthetic classname
     comparability 22
-  variable this.NUM_ITEMS
-    var-kind field NUM_ITEMS
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-  variable this.theSeed
-    var-kind field theSeed
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
 
 ppt StackAr..ctor(System.Int32\_capacity):::ENTER
 ppt-type enter
+parent parent StackAr:::CLASS 1
   variable capacity
     var-kind variable
     dec-type int
@@ -7697,8 +8689,12 @@ parent parent StackAr:::OBJECT 1
     comparability 22
     parent StackAr:::OBJECT 1
 
+ppt StackAr:::CLASS
+ppt-type class
+
 ppt StackAr:::OBJECT
 ppt-type object
+parent parent StackAr:::CLASS 1
   variable this
     var-kind variable
     dec-type StackAr
@@ -7742,9 +8738,83 @@ ppt-type object
 
 ppt StackArTester..cctor():::ENTER
 ppt-type enter
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
 
 ppt StackArTester..cctor():::EXIT6
 ppt-type subexit
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -7760,6 +8830,43 @@ ppt-type subexit
 
 ppt StackArTester..cctor():::EXIT_EX_Runtime
 ppt-type subexit
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -7775,10 +8882,83 @@ ppt-type subexit
 
 ppt StackArTester..ctor():::ENTER
 ppt-type enter
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
 
 ppt StackArTester..ctor():::EXIT2
 ppt-type subexit
 parent parent StackArTester:::OBJECT 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -7804,56 +8984,48 @@ parent parent StackArTester:::OBJECT 1
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent StackArTester:::OBJECT 1
-  variable this.rnd
-    var-kind field rnd
-    enclosing-var this
-    dec-type System.Random
-    rep-type hashcode
-    comparability 22
-    parent StackArTester:::OBJECT 1
-  variable this.rnd.GetType()
-    var-kind function GetType()
-    enclosing-var this.rnd
-    dec-type java.lang.Class
-    rep-type java.lang.String
-    flags synthetic classname
-    comparability 22
-    parent StackArTester:::OBJECT 1
-  variable this.s
-    var-kind field s
-    enclosing-var this
-    dec-type StackAr
-    rep-type hashcode
-    comparability 22
-    parent StackArTester:::OBJECT 1
-  variable this.s.theArray
-    var-kind field theArray
-    enclosing-var this.s
-    dec-type java.lang.Object[]
-    rep-type hashcode
-    comparability 22
-    parent StackArTester:::OBJECT 1
-  variable this.s.theArray[..]
-    var-kind array
-    enclosing-var this.s.theArray
-    array 1
-    dec-type java.lang.Object[]
-    rep-type hashcode[]
-    comparability 22
-    parent StackArTester:::OBJECT 1
-  variable this.s.topOfStack
-    var-kind field topOfStack
-    enclosing-var this.s
-    dec-type int
-    rep-type int
     comparability 22
     parent StackArTester:::OBJECT 1
 
 ppt StackArTester..ctor():::EXIT_EX_Runtime
 ppt-type subexit
 parent parent StackArTester:::OBJECT 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -7881,53 +9053,46 @@ parent parent StackArTester:::OBJECT 1
     flags synthetic classname
     comparability 22
     parent StackArTester:::OBJECT 1
-  variable this.rnd
-    var-kind field rnd
-    enclosing-var this
+
+ppt StackArTester.Main(System.String[]\_args):::ENTER
+ppt-type enter
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
     dec-type System.Random
     rep-type hashcode
     comparability 22
-    parent StackArTester:::OBJECT 1
-  variable this.rnd.GetType()
+  variable StackArTester.rnd.GetType()
     var-kind function GetType()
-    enclosing-var this.rnd
+    enclosing-var StackArTester.rnd
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
     comparability 22
-    parent StackArTester:::OBJECT 1
-  variable this.s
-    var-kind field s
-    enclosing-var this
+  variable StackArTester.s
+    var-kind variable
     dec-type StackAr
     rep-type hashcode
     comparability 22
-    parent StackArTester:::OBJECT 1
-  variable this.s.theArray
+  variable StackArTester.s.theArray
     var-kind field theArray
-    enclosing-var this.s
+    enclosing-var StackArTester.s
     dec-type java.lang.Object[]
     rep-type hashcode
     comparability 22
-    parent StackArTester:::OBJECT 1
-  variable this.s.theArray[..]
+  variable StackArTester.s.theArray[..]
     var-kind array
-    enclosing-var this.s.theArray
+    enclosing-var StackArTester.s.theArray
     array 1
     dec-type java.lang.Object[]
     rep-type hashcode[]
     comparability 22
-    parent StackArTester:::OBJECT 1
-  variable this.s.topOfStack
+  variable StackArTester.s.topOfStack
     var-kind field topOfStack
-    enclosing-var this.s
+    enclosing-var StackArTester.s
     dec-type int
     rep-type int
     comparability 22
-    parent StackArTester:::OBJECT 1
-
-ppt StackArTester.Main(System.String[]\_args):::ENTER
-ppt-type enter
   variable args
     var-kind variable
     dec-type java.lang.String[]
@@ -7952,6 +9117,43 @@ ppt-type enter
 
 ppt StackArTester.Main(System.String[]\_args):::EXIT4
 ppt-type subexit
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
   variable args
     var-kind variable
     dec-type java.lang.String[]
@@ -7988,6 +9190,43 @@ ppt-type subexit
 
 ppt StackArTester.Main(System.String[]\_args):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
   variable args
     var-kind variable
     dec-type java.lang.String[]
@@ -8024,6 +9263,43 @@ ppt-type subexit
 
 ppt StackArTester.doNew(System.Int32\_size):::ENTER
 ppt-type enter
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
   variable size
     var-kind variable
     dec-type int
@@ -8033,6 +9309,43 @@ ppt-type enter
 
 ppt StackArTester.doNew(System.Int32\_size):::EXIT11
 ppt-type subexit
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -8054,6 +9367,43 @@ ppt-type subexit
 
 ppt StackArTester.doNew(System.Int32\_size):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -8075,6 +9425,43 @@ ppt-type subexit
 
 ppt StackArTester.fill(System.Int32\_n):::ENTER
 ppt-type enter
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
   variable n
     var-kind variable
     dec-type int
@@ -8084,6 +9471,43 @@ ppt-type enter
 
 ppt StackArTester.fill(System.Int32\_n):::EXIT86
 ppt-type subexit
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -8105,6 +9529,43 @@ ppt-type subexit
 
 ppt StackArTester.fill(System.Int32\_n):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -8126,9 +9587,83 @@ ppt-type subexit
 
 ppt StackArTester.observe():::ENTER
 ppt-type enter
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
 
 ppt StackArTester.observe():::EXIT10
 ppt-type subexit
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -8144,6 +9679,43 @@ ppt-type subexit
 
 ppt StackArTester.observe():::EXIT_EX_Runtime
 ppt-type subexit
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -8159,9 +9731,83 @@ ppt-type subexit
 
 ppt StackArTester.push():::ENTER
 ppt-type enter
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
 
 ppt StackArTester.push():::EXIT23
 ppt-type subexit
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -8177,6 +9823,43 @@ ppt-type subexit
 
 ppt StackArTester.push():::EXIT_EX_Runtime
 ppt-type subexit
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -8192,9 +9875,83 @@ ppt-type subexit
 
 ppt StackArTester.topOrPop():::ENTER
 ppt-type enter
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
 
 ppt StackArTester.topOrPop():::EXIT33
 ppt-type subexit
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -8210,6 +9967,43 @@ ppt-type subexit
 
 ppt StackArTester.topOrPop():::EXIT_EX_Runtime
 ppt-type subexit
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
   variable exception
     var-kind return
     dec-type System.Exception
@@ -8223,8 +10017,48 @@ ppt-type subexit
     flags synthetic classname
     comparability 22
 
+ppt StackArTester:::CLASS
+ppt-type class
+
 ppt StackArTester:::OBJECT
 ppt-type object
+parent parent StackArTester:::CLASS 1
+  variable StackArTester.rnd
+    var-kind variable
+    dec-type System.Random
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.rnd.GetType()
+    var-kind function GetType()
+    enclosing-var StackArTester.rnd
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable StackArTester.s
+    var-kind variable
+    dec-type StackAr
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray
+    var-kind field theArray
+    enclosing-var StackArTester.s
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability 22
+  variable StackArTester.s.theArray[..]
+    var-kind array
+    enclosing-var StackArTester.s.theArray
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability 22
+  variable StackArTester.s.topOfStack
+    var-kind field topOfStack
+    enclosing-var StackArTester.s
+    dec-type int
+    rep-type int
+    comparability 22
   variable this
     var-kind variable
     dec-type StackArTester
@@ -8238,47 +10072,10 @@ ppt-type object
     rep-type java.lang.String
     flags synthetic classname
     comparability 22
-  variable this.rnd
-    var-kind field rnd
-    enclosing-var this
-    dec-type System.Random
-    rep-type hashcode
-    comparability 22
-  variable this.rnd.GetType()
-    var-kind function GetType()
-    enclosing-var this.rnd
-    dec-type java.lang.Class
-    rep-type java.lang.String
-    flags synthetic classname
-    comparability 22
-  variable this.s
-    var-kind field s
-    enclosing-var this
-    dec-type StackAr
-    rep-type hashcode
-    comparability 22
-  variable this.s.theArray
-    var-kind field theArray
-    enclosing-var this.s
-    dec-type java.lang.Object[]
-    rep-type hashcode
-    comparability 22
-  variable this.s.theArray[..]
-    var-kind array
-    enclosing-var this.s.theArray
-    array 1
-    dec-type java.lang.Object[]
-    rep-type hashcode[]
-    comparability 22
-  variable this.s.topOfStack
-    var-kind field topOfStack
-    enclosing-var this.s
-    dec-type int
-    rep-type int
-    comparability 22
 
 ppt Underflow..ctor():::ENTER
 ppt-type enter
+parent parent Underflow:::CLASS 1
 
 ppt Underflow..ctor():::EXIT2
 ppt-type subexit
@@ -8386,8 +10183,12 @@ parent parent Underflow:::OBJECT 1
     comparability 22
     parent Underflow:::OBJECT 1
 
+ppt Underflow:::CLASS
+ppt-type class
+
 ppt Underflow:::OBJECT
 ppt-type object
+parent parent Underflow:::CLASS 1
   variable this
     var-kind variable
     dec-type Underflow
@@ -8424,6 +10225,24 @@ ppt-type object
 StackArTester..cctor():::ENTER
 this_invocation_nonce
 0
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 
 StackAr..ctor(System.Int32\_capacity):::ENTER
 this_invocation_nonce
@@ -8445,10 +10264,10 @@ exception.GetType()
 nonsensical
 2
 this
-49313939
+36793414
 1
 this.theArray
-41172271
+62705275
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -8466,6 +10285,24 @@ this.topOfStack
 StackArTester..cctor():::EXIT6
 this_invocation_nonce
 0
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 exception
 nonsensical
 2
@@ -8476,8 +10313,26 @@ nonsensical
 StackArTester.Main(System.String[]\_args):::ENTER
 this_invocation_nonce
 2
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 args
-35006119
+27476571
 1
 args[..]
 []
@@ -8489,6 +10344,24 @@ args[..].ToString()
 StackArTester.fill(System.Int32\_n):::ENTER
 this_invocation_nonce
 3
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 n
 4
 1
@@ -8496,6 +10369,24 @@ n
 StackArTester.doNew(System.Int32\_size):::ENTER
 this_invocation_nonce
 4
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 size
 4
 1
@@ -8520,10 +10411,10 @@ exception.GetType()
 nonsensical
 2
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -8542,10 +10433,10 @@ StackAr.makeEmpty():::ENTER
 this_invocation_nonce
 6
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -8570,10 +10461,10 @@ exception.GetType()
 nonsensical
 2
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -8591,15 +10482,33 @@ this.topOfStack
 StackArTester.observe():::ENTER
 this_invocation_nonce
 7
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 
 StackAr.isFull():::ENTER
 this_invocation_nonce
 8
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -8627,10 +10536,10 @@ return
 false
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -8649,10 +10558,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 9
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -8680,10 +10589,10 @@ return
 true
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -8702,10 +10611,10 @@ StackAr.top():::ENTER
 this_invocation_nonce
 10
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -8724,10 +10633,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 11
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -8755,10 +10664,10 @@ return
 true
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -8789,10 +10698,10 @@ return.GetType()
 nonsensical
 2
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -8810,6 +10719,24 @@ this.topOfStack
 StackArTester.observe():::EXIT10
 this_invocation_nonce
 7
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 exception
 nonsensical
 2
@@ -8820,15 +10747,33 @@ nonsensical
 StackArTester.topOrPop():::ENTER
 this_invocation_nonce
 12
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 
 StackAr.isEmpty():::ENTER
 this_invocation_nonce
 13
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -8856,10 +10801,10 @@ return
 true
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -8878,10 +10823,10 @@ StackAr.topAndPop():::ENTER
 this_invocation_nonce
 14
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -8900,10 +10845,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 15
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -8931,10 +10876,10 @@ return
 true
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -8965,10 +10910,10 @@ return.GetType()
 nonsensical
 2
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -8986,15 +10931,33 @@ this.topOfStack
 StackArTester.observe():::ENTER
 this_invocation_nonce
 16
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 
 StackAr.isFull():::ENTER
 this_invocation_nonce
 17
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -9022,10 +10985,10 @@ return
 false
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -9044,10 +11007,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 18
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -9075,10 +11038,10 @@ return
 true
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -9097,10 +11060,10 @@ StackAr.top():::ENTER
 this_invocation_nonce
 19
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -9119,10 +11082,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 20
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -9150,10 +11113,10 @@ return
 true
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -9184,10 +11147,10 @@ return.GetType()
 nonsensical
 2
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -9205,6 +11168,24 @@ this.topOfStack
 StackArTester.observe():::EXIT10
 this_invocation_nonce
 16
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 exception
 nonsensical
 2
@@ -9215,6 +11196,24 @@ nonsensical
 StackArTester.topOrPop():::EXIT33
 this_invocation_nonce
 12
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 exception
 nonsensical
 2
@@ -9225,6 +11224,24 @@ nonsensical
 StackArTester.doNew(System.Int32\_size):::EXIT11
 this_invocation_nonce
 4
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 exception
 nonsensical
 2
@@ -9238,6 +11255,24 @@ size
 StackArTester.push():::ENTER
 this_invocation_nonce
 21
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 
 MyInteger..ctor(System.Int32\_x):::ENTER
 this_invocation_nonce
@@ -9256,7 +11291,7 @@ exception.GetType()
 nonsensical
 2
 this
-18093058
+31979016
 1
 this.value
 0
@@ -9269,10 +11304,10 @@ StackAr.push(System.Object\_x):::ENTER
 this_invocation_nonce
 23
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -9287,7 +11322,7 @@ this.topOfStack
 -1
 1
 x
-18093058
+31979016
 1
 x.GetType()
 "MyInteger"
@@ -9297,10 +11332,10 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 24
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -9328,10 +11363,10 @@ return
 false
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -9356,16 +11391,16 @@ exception.GetType()
 nonsensical
 2
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 null null null]
+[31979016 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -9374,7 +11409,7 @@ this.topOfStack
 0
 1
 x
-18093058
+31979016
 1
 x.GetType()
 "MyInteger"
@@ -9383,21 +11418,39 @@ x.GetType()
 StackArTester.observe():::ENTER
 this_invocation_nonce
 25
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 
 StackAr.isFull():::ENTER
 this_invocation_nonce
 26
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 null null null]
+[31979016 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -9419,16 +11472,16 @@ return
 false
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 null null null]
+[31979016 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -9441,16 +11494,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 27
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 null null null]
+[31979016 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -9472,16 +11525,16 @@ return
 false
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 null null null]
+[31979016 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -9494,16 +11547,16 @@ StackAr.top():::ENTER
 this_invocation_nonce
 28
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 null null null]
+[31979016 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -9516,16 +11569,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 29
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 null null null]
+[31979016 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -9547,16 +11600,16 @@ return
 false
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 null null null]
+[31979016 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -9575,22 +11628,22 @@ exception.GetType()
 nonsensical
 2
 return
-18093058
+31979016
 1
 return.GetType()
 "MyInteger"
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 null null null]
+[31979016 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -9602,6 +11655,24 @@ this.topOfStack
 StackArTester.observe():::EXIT10
 this_invocation_nonce
 25
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 exception
 nonsensical
 2
@@ -9612,6 +11683,24 @@ nonsensical
 StackArTester.push():::EXIT23
 this_invocation_nonce
 21
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 exception
 nonsensical
 2
@@ -9622,6 +11711,24 @@ nonsensical
 StackArTester.push():::ENTER
 this_invocation_nonce
 30
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 
 MyInteger..ctor(System.Int32\_x):::ENTER
 this_invocation_nonce
@@ -9640,7 +11747,7 @@ exception.GetType()
 nonsensical
 2
 this
-28619802
+19375690
 1
 this.value
 0
@@ -9653,16 +11760,16 @@ StackAr.push(System.Object\_x):::ENTER
 this_invocation_nonce
 32
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 null null null]
+[31979016 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -9671,7 +11778,7 @@ this.topOfStack
 0
 1
 x
-28619802
+19375690
 1
 x.GetType()
 "MyInteger"
@@ -9681,16 +11788,16 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 33
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 null null null]
+[31979016 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -9712,16 +11819,16 @@ return
 false
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 null null null]
+[31979016 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -9740,16 +11847,16 @@ exception.GetType()
 nonsensical
 2
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 null null]
+[31979016 19375690 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -9758,7 +11865,7 @@ this.topOfStack
 1
 1
 x
-28619802
+19375690
 1
 x.GetType()
 "MyInteger"
@@ -9767,21 +11874,39 @@ x.GetType()
 StackArTester.observe():::ENTER
 this_invocation_nonce
 34
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 
 StackAr.isFull():::ENTER
 this_invocation_nonce
 35
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 null null]
+[31979016 19375690 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -9803,16 +11928,16 @@ return
 false
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 null null]
+[31979016 19375690 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -9825,16 +11950,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 36
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 null null]
+[31979016 19375690 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -9856,16 +11981,16 @@ return
 false
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 null null]
+[31979016 19375690 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -9878,16 +12003,16 @@ StackAr.top():::ENTER
 this_invocation_nonce
 37
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 null null]
+[31979016 19375690 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -9900,16 +12025,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 38
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 null null]
+[31979016 19375690 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -9931,16 +12056,16 @@ return
 false
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 null null]
+[31979016 19375690 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -9959,22 +12084,22 @@ exception.GetType()
 nonsensical
 2
 return
-28619802
+19375690
 1
 return.GetType()
 "MyInteger"
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 null null]
+[31979016 19375690 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -9986,6 +12111,24 @@ this.topOfStack
 StackArTester.observe():::EXIT10
 this_invocation_nonce
 34
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 exception
 nonsensical
 2
@@ -9996,6 +12139,24 @@ nonsensical
 StackArTester.push():::EXIT23
 this_invocation_nonce
 30
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 exception
 nonsensical
 2
@@ -10006,21 +12167,39 @@ nonsensical
 StackArTester.push():::ENTER
 this_invocation_nonce
 39
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 
 StackAr.push(System.Object\_x):::ENTER
 this_invocation_nonce
 40
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 null null]
+[31979016 19375690 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -10029,7 +12208,7 @@ this.topOfStack
 1
 1
 x
-56251627
+40163483
 1
 x.GetType()
 "System.Object"
@@ -10039,16 +12218,16 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 41
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 null null]
+[31979016 19375690 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -10070,16 +12249,16 @@ return
 false
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 null null]
+[31979016 19375690 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -10098,16 +12277,16 @@ exception.GetType()
 nonsensical
 2
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 56251627 null]
+[31979016 19375690 40163483 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -10116,7 +12295,7 @@ this.topOfStack
 2
 1
 x
-56251627
+40163483
 1
 x.GetType()
 "System.Object"
@@ -10125,21 +12304,39 @@ x.GetType()
 StackArTester.observe():::ENTER
 this_invocation_nonce
 42
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 
 StackAr.isFull():::ENTER
 this_invocation_nonce
 43
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 56251627 null]
+[31979016 19375690 40163483 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -10161,16 +12358,16 @@ return
 false
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 56251627 null]
+[31979016 19375690 40163483 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -10183,16 +12380,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 44
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 56251627 null]
+[31979016 19375690 40163483 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -10214,16 +12411,16 @@ return
 false
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 56251627 null]
+[31979016 19375690 40163483 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -10236,16 +12433,16 @@ StackAr.top():::ENTER
 this_invocation_nonce
 45
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 56251627 null]
+[31979016 19375690 40163483 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -10258,16 +12455,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 46
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 56251627 null]
+[31979016 19375690 40163483 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -10289,16 +12486,16 @@ return
 false
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 56251627 null]
+[31979016 19375690 40163483 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -10317,22 +12514,22 @@ exception.GetType()
 nonsensical
 2
 return
-56251627
+40163483
 1
 return.GetType()
 "System.Object"
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 56251627 null]
+[31979016 19375690 40163483 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -10344,6 +12541,24 @@ this.topOfStack
 StackArTester.observe():::EXIT10
 this_invocation_nonce
 42
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 exception
 nonsensical
 2
@@ -10354,6 +12569,24 @@ nonsensical
 StackArTester.push():::EXIT23
 this_invocation_nonce
 39
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 exception
 nonsensical
 2
@@ -10364,6 +12597,24 @@ nonsensical
 StackArTester.push():::ENTER
 this_invocation_nonce
 47
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 
 MyInteger..ctor(System.Int32\_x):::ENTER
 this_invocation_nonce
@@ -10382,7 +12633,7 @@ exception.GetType()
 nonsensical
 2
 this
-36502600
+25927028
 1
 this.value
 0
@@ -10395,16 +12646,16 @@ StackAr.push(System.Object\_x):::ENTER
 this_invocation_nonce
 49
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 56251627 null]
+[31979016 19375690 40163483 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -10413,7 +12664,7 @@ this.topOfStack
 2
 1
 x
-36502600
+25927028
 1
 x.GetType()
 "MyInteger"
@@ -10423,16 +12674,16 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 50
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 56251627 null]
+[31979016 19375690 40163483 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -10454,16 +12705,16 @@ return
 false
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 56251627 null]
+[31979016 19375690 40163483 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -10482,16 +12733,16 @@ exception.GetType()
 nonsensical
 2
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 56251627 36502600]
+[31979016 19375690 40163483 25927028]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -10500,7 +12751,7 @@ this.topOfStack
 3
 1
 x
-36502600
+25927028
 1
 x.GetType()
 "MyInteger"
@@ -10509,21 +12760,39 @@ x.GetType()
 StackArTester.observe():::ENTER
 this_invocation_nonce
 51
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 
 StackAr.isFull():::ENTER
 this_invocation_nonce
 52
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 56251627 36502600]
+[31979016 19375690 40163483 25927028]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -10545,16 +12814,16 @@ return
 true
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 56251627 36502600]
+[31979016 19375690 40163483 25927028]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -10567,16 +12836,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 53
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 56251627 36502600]
+[31979016 19375690 40163483 25927028]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -10598,16 +12867,16 @@ return
 false
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 56251627 36502600]
+[31979016 19375690 40163483 25927028]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -10620,16 +12889,16 @@ StackAr.top():::ENTER
 this_invocation_nonce
 54
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 56251627 36502600]
+[31979016 19375690 40163483 25927028]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -10642,16 +12911,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 55
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 56251627 36502600]
+[31979016 19375690 40163483 25927028]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -10673,16 +12942,16 @@ return
 false
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 56251627 36502600]
+[31979016 19375690 40163483 25927028]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -10701,22 +12970,22 @@ exception.GetType()
 nonsensical
 2
 return
-36502600
+25927028
 1
 return.GetType()
 "MyInteger"
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 56251627 36502600]
+[31979016 19375690 40163483 25927028]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -10728,6 +12997,24 @@ this.topOfStack
 StackArTester.observe():::EXIT10
 this_invocation_nonce
 51
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 exception
 nonsensical
 2
@@ -10738,6 +13025,24 @@ nonsensical
 StackArTester.push():::EXIT23
 this_invocation_nonce
 47
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 exception
 nonsensical
 2
@@ -10749,16 +13054,16 @@ StackAr.makeEmpty():::ENTER
 this_invocation_nonce
 56
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[18093058 28619802 56251627 36502600]
+[31979016 19375690 40163483 25927028]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -10777,10 +13082,10 @@ exception.GetType()
 nonsensical
 2
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10799,10 +13104,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 57
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10830,10 +13135,10 @@ return
 true
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10852,10 +13157,10 @@ StackAr.makeEmpty():::ENTER
 this_invocation_nonce
 58
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10880,10 +13185,10 @@ exception.GetType()
 nonsensical
 2
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10901,15 +13206,33 @@ this.topOfStack
 StackArTester.observe():::ENTER
 this_invocation_nonce
 59
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 
 StackAr.isFull():::ENTER
 this_invocation_nonce
 60
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10937,10 +13260,10 @@ return
 false
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10959,10 +13282,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 61
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10990,10 +13313,10 @@ return
 true
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11012,10 +13335,10 @@ StackAr.top():::ENTER
 this_invocation_nonce
 62
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11034,10 +13357,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 63
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11065,10 +13388,10 @@ return
 true
 1
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11099,10 +13422,10 @@ return.GetType()
 nonsensical
 2
 this
-46619622
+45962549
 1
 this.theArray
-16923420
+11009764
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11120,6 +13443,24 @@ this.topOfStack
 StackArTester.observe():::EXIT10
 this_invocation_nonce
 59
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 exception
 nonsensical
 2
@@ -11130,6 +13471,24 @@ nonsensical
 StackArTester.doNew(System.Int32\_size):::ENTER
 this_invocation_nonce
 64
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 size
 4
 1
@@ -11154,10 +13513,10 @@ exception.GetType()
 nonsensical
 2
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11176,10 +13535,10 @@ StackAr.makeEmpty():::ENTER
 this_invocation_nonce
 66
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11204,10 +13563,10 @@ exception.GetType()
 nonsensical
 2
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11225,15 +13584,33 @@ this.topOfStack
 StackArTester.observe():::ENTER
 this_invocation_nonce
 67
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 
 StackAr.isFull():::ENTER
 this_invocation_nonce
 68
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11261,10 +13638,10 @@ return
 false
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11283,10 +13660,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 69
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11314,10 +13691,10 @@ return
 true
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11336,10 +13713,10 @@ StackAr.top():::ENTER
 this_invocation_nonce
 70
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11358,10 +13735,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 71
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11389,10 +13766,10 @@ return
 true
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11423,10 +13800,10 @@ return.GetType()
 nonsensical
 2
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11444,6 +13821,24 @@ this.topOfStack
 StackArTester.observe():::EXIT10
 this_invocation_nonce
 67
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 exception
 nonsensical
 2
@@ -11454,15 +13849,33 @@ nonsensical
 StackArTester.topOrPop():::ENTER
 this_invocation_nonce
 72
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 
 StackAr.isEmpty():::ENTER
 this_invocation_nonce
 73
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11490,10 +13903,10 @@ return
 true
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11512,10 +13925,10 @@ StackAr.topAndPop():::ENTER
 this_invocation_nonce
 74
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11534,10 +13947,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 75
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11565,10 +13978,10 @@ return
 true
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11599,10 +14012,10 @@ return.GetType()
 nonsensical
 2
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11620,15 +14033,33 @@ this.topOfStack
 StackArTester.observe():::ENTER
 this_invocation_nonce
 76
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 
 StackAr.isFull():::ENTER
 this_invocation_nonce
 77
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11656,10 +14087,10 @@ return
 false
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11678,10 +14109,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 78
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11709,10 +14140,10 @@ return
 true
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11731,10 +14162,10 @@ StackAr.top():::ENTER
 this_invocation_nonce
 79
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11753,10 +14184,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 80
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11784,10 +14215,10 @@ return
 true
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11818,10 +14249,10 @@ return.GetType()
 nonsensical
 2
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11839,6 +14270,24 @@ this.topOfStack
 StackArTester.observe():::EXIT10
 this_invocation_nonce
 76
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 exception
 nonsensical
 2
@@ -11849,6 +14298,24 @@ nonsensical
 StackArTester.topOrPop():::EXIT33
 this_invocation_nonce
 72
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 exception
 nonsensical
 2
@@ -11859,6 +14326,24 @@ nonsensical
 StackArTester.doNew(System.Int32\_size):::EXIT11
 this_invocation_nonce
 64
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 exception
 nonsensical
 2
@@ -11873,10 +14358,10 @@ StackAr.push(System.Object\_x):::ENTER
 this_invocation_nonce
 81
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11891,7 +14376,7 @@ this.topOfStack
 -1
 1
 x
-60087944
+32016662
 1
 x.GetType()
 "StackAr"
@@ -11901,10 +14386,10 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 82
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11932,10 +14417,10 @@ return
 false
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11960,16 +14445,16 @@ exception.GetType()
 nonsensical
 2
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 null null null]
+[32016662 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -11978,7 +14463,7 @@ this.topOfStack
 0
 1
 x
-60087944
+32016662
 1
 x.GetType()
 "StackAr"
@@ -11987,21 +14472,39 @@ x.GetType()
 StackArTester.observe():::ENTER
 this_invocation_nonce
 83
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 
 StackAr.isFull():::ENTER
 this_invocation_nonce
 84
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 null null null]
+[32016662 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -12023,16 +14526,16 @@ return
 false
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 null null null]
+[32016662 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -12045,16 +14548,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 85
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 null null null]
+[32016662 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -12076,16 +14579,16 @@ return
 false
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 null null null]
+[32016662 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -12098,16 +14601,16 @@ StackAr.top():::ENTER
 this_invocation_nonce
 86
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 null null null]
+[32016662 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -12120,16 +14623,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 87
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 null null null]
+[32016662 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -12151,16 +14654,16 @@ return
 false
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 null null null]
+[32016662 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -12179,22 +14682,22 @@ exception.GetType()
 nonsensical
 2
 return
-60087944
+32016662
 1
 return.GetType()
 "StackAr"
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 null null null]
+[32016662 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -12206,6 +14709,24 @@ this.topOfStack
 StackArTester.observe():::EXIT10
 this_invocation_nonce
 83
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 exception
 nonsensical
 2
@@ -12217,16 +14738,16 @@ StackAr.push(System.Object\_x):::ENTER
 this_invocation_nonce
 88
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 null null null]
+[32016662 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -12235,7 +14756,7 @@ this.topOfStack
 0
 1
 x
-60087944
+32016662
 1
 x.GetType()
 "StackAr"
@@ -12245,16 +14766,16 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 89
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 null null null]
+[32016662 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -12276,16 +14797,16 @@ return
 false
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 null null null]
+[32016662 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -12304,16 +14825,16 @@ exception.GetType()
 nonsensical
 2
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 60087944 null null]
+[32016662 32016662 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -12322,7 +14843,7 @@ this.topOfStack
 1
 1
 x
-60087944
+32016662
 1
 x.GetType()
 "StackAr"
@@ -12331,21 +14852,39 @@ x.GetType()
 StackArTester.observe():::ENTER
 this_invocation_nonce
 90
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 
 StackAr.isFull():::ENTER
 this_invocation_nonce
 91
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 60087944 null null]
+[32016662 32016662 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -12367,16 +14906,16 @@ return
 false
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 60087944 null null]
+[32016662 32016662 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -12389,16 +14928,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 92
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 60087944 null null]
+[32016662 32016662 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -12420,16 +14959,16 @@ return
 false
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 60087944 null null]
+[32016662 32016662 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -12442,16 +14981,16 @@ StackAr.top():::ENTER
 this_invocation_nonce
 93
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 60087944 null null]
+[32016662 32016662 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -12464,16 +15003,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 94
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 60087944 null null]
+[32016662 32016662 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -12495,16 +15034,16 @@ return
 false
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 60087944 null null]
+[32016662 32016662 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -12523,22 +15062,22 @@ exception.GetType()
 nonsensical
 2
 return
-60087944
+32016662
 1
 return.GetType()
 "StackAr"
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 60087944 null null]
+[32016662 32016662 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -12550,6 +15089,24 @@ this.topOfStack
 StackArTester.observe():::EXIT10
 this_invocation_nonce
 90
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 exception
 nonsensical
 2
@@ -12561,16 +15118,16 @@ StackAr.push(System.Object\_x):::ENTER
 this_invocation_nonce
 95
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 60087944 null null]
+[32016662 32016662 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -12579,7 +15136,7 @@ this.topOfStack
 1
 1
 x
-60087944
+32016662
 1
 x.GetType()
 "StackAr"
@@ -12589,16 +15146,16 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 96
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 60087944 null null]
+[32016662 32016662 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -12620,16 +15177,16 @@ return
 false
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 60087944 null null]
+[32016662 32016662 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -12648,16 +15205,16 @@ exception.GetType()
 nonsensical
 2
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 60087944 60087944 null]
+[32016662 32016662 32016662 null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" "StackAr" nonsensical]
@@ -12666,7 +15223,7 @@ this.topOfStack
 2
 1
 x
-60087944
+32016662
 1
 x.GetType()
 "StackAr"
@@ -12675,21 +15232,39 @@ x.GetType()
 StackArTester.observe():::ENTER
 this_invocation_nonce
 97
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 
 StackAr.isFull():::ENTER
 this_invocation_nonce
 98
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 60087944 60087944 null]
+[32016662 32016662 32016662 null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" "StackAr" nonsensical]
@@ -12711,16 +15286,16 @@ return
 false
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 60087944 60087944 null]
+[32016662 32016662 32016662 null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" "StackAr" nonsensical]
@@ -12733,16 +15308,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 99
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 60087944 60087944 null]
+[32016662 32016662 32016662 null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" "StackAr" nonsensical]
@@ -12764,16 +15339,16 @@ return
 false
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 60087944 60087944 null]
+[32016662 32016662 32016662 null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" "StackAr" nonsensical]
@@ -12786,16 +15361,16 @@ StackAr.top():::ENTER
 this_invocation_nonce
 100
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 60087944 60087944 null]
+[32016662 32016662 32016662 null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" "StackAr" nonsensical]
@@ -12808,16 +15383,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 101
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 60087944 60087944 null]
+[32016662 32016662 32016662 null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" "StackAr" nonsensical]
@@ -12839,16 +15414,16 @@ return
 false
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 60087944 60087944 null]
+[32016662 32016662 32016662 null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" "StackAr" nonsensical]
@@ -12867,22 +15442,22 @@ exception.GetType()
 nonsensical
 2
 return
-60087944
+32016662
 1
 return.GetType()
 "StackAr"
 1
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 60087944 60087944 null]
+[32016662 32016662 32016662 null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" "StackAr" nonsensical]
@@ -12894,6 +15469,24 @@ this.topOfStack
 StackArTester.observe():::EXIT10
 this_invocation_nonce
 97
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 exception
 nonsensical
 2
@@ -12905,16 +15498,16 @@ StackAr.makeEmpty():::ENTER
 this_invocation_nonce
 102
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[60087944 60087944 60087944 null]
+[32016662 32016662 32016662 null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" "StackAr" nonsensical]
@@ -12933,10 +15526,10 @@ exception.GetType()
 nonsensical
 2
 this
-60087944
+32016662
 1
 this.theArray
-3920590
+19714506
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -12954,6 +15547,24 @@ this.topOfStack
 StackArTester.fill(System.Int32\_n):::EXIT86
 this_invocation_nonce
 3
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 exception
 nonsensical
 2
@@ -12967,8 +15578,26 @@ n
 StackArTester.Main(System.String[]\_args):::EXIT4
 this_invocation_nonce
 2
+StackArTester.rnd
+null
+1
+StackArTester.rnd.GetType()
+nonsensical
+2
+StackArTester.s
+null
+1
+StackArTester.s.theArray
+nonsensical
+2
+StackArTester.s.theArray[..]
+nonsensical
+2
+StackArTester.s.topOfStack
+nonsensical
+2
 args
-35006119
+27476571
 1
 args[..]
 []

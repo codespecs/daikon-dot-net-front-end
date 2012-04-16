@@ -167,7 +167,21 @@ this.theArray[] contains only nulls and has only one value, of length 4
 this.topOfStack == -1
 this.theArray.GetType() == orig(this.theArray.GetType())
 ===========================================================================
+StackArTester..cctor():::ENTER
+StackArTester.rnd == null
+StackArTester.s == null
+===========================================================================
+StackArTester..cctor():::EXIT6
+===========================================================================
+StackArTester..cctor():::EXIT
+StackArTester.rnd == orig(StackArTester.rnd)
+StackArTester.s == orig(StackArTester.s)
+StackArTester.rnd == null
+StackArTester.s == null
+===========================================================================
 StackArTester.Main(System.String[] args):::ENTER
+StackArTester.rnd == null
+StackArTester.s == null
 args has only one value
 args[] == []
 args[].ToString() == []
@@ -175,20 +189,72 @@ args[].ToString() == []
 StackArTester.Main(System.String[] args):::EXIT4
 ===========================================================================
 StackArTester.Main(System.String[] args):::EXIT
+StackArTester.rnd == orig(StackArTester.rnd)
+StackArTester.s == orig(StackArTester.s)
 args[] == orig(args[])
+StackArTester.rnd == null
+StackArTester.s == null
 args[] == []
 args[].ToString() == []
 ===========================================================================
 StackArTester.doNew(System.Int32 size):::ENTER
+StackArTester.rnd == null
+StackArTester.s == null
 size == 4
 ===========================================================================
 StackArTester.doNew(System.Int32 size):::EXIT11
 ===========================================================================
 StackArTester.doNew(System.Int32 size):::EXIT
+StackArTester.rnd == orig(StackArTester.rnd)
+StackArTester.s == orig(StackArTester.s)
+StackArTester.rnd == null
+StackArTester.s == null
 ===========================================================================
 StackArTester.fill(System.Int32 n):::ENTER
+StackArTester.rnd == null
+StackArTester.s == null
 n == 4
 ===========================================================================
 StackArTester.fill(System.Int32 n):::EXIT86
 ===========================================================================
 StackArTester.fill(System.Int32 n):::EXIT
+StackArTester.rnd == orig(StackArTester.rnd)
+StackArTester.s == orig(StackArTester.s)
+StackArTester.rnd == null
+StackArTester.s == null
+===========================================================================
+StackArTester.observe():::ENTER
+StackArTester.rnd == null
+StackArTester.s == null
+===========================================================================
+StackArTester.observe():::EXIT10
+===========================================================================
+StackArTester.observe():::EXIT
+StackArTester.rnd == orig(StackArTester.rnd)
+StackArTester.s == orig(StackArTester.s)
+StackArTester.rnd == null
+StackArTester.s == null
+===========================================================================
+StackArTester.push():::ENTER
+StackArTester.rnd == null
+StackArTester.s == null
+===========================================================================
+StackArTester.push():::EXIT23
+===========================================================================
+StackArTester.push():::EXIT
+StackArTester.rnd == orig(StackArTester.rnd)
+StackArTester.s == orig(StackArTester.s)
+StackArTester.rnd == null
+StackArTester.s == null
+===========================================================================
+StackArTester.topOrPop():::ENTER
+StackArTester.rnd == null
+StackArTester.s == null
+===========================================================================
+StackArTester.topOrPop():::EXIT33
+===========================================================================
+StackArTester.topOrPop():::EXIT
+StackArTester.rnd == orig(StackArTester.rnd)
+StackArTester.s == orig(StackArTester.s)
+StackArTester.rnd == null
+StackArTester.s == null
