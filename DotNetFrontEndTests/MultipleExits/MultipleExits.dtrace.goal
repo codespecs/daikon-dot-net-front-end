@@ -4,6 +4,7 @@ input-language C#.NET
 
 ppt HelloWorld.HelloWorld..ctor():::ENTER
 ppt-type enter
+parent parent HelloWorld.HelloWorld:::CLASS 1
 
 ppt HelloWorld.HelloWorld..ctor():::EXIT2
 ppt-type subexit
@@ -69,6 +70,7 @@ parent parent HelloWorld.HelloWorld:::OBJECT 1
 
 ppt HelloWorld.HelloWorld.Main(System.String[]\_args):::ENTER
 ppt-type enter
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable args
     var-kind variable
     dec-type java.lang.String[]
@@ -93,6 +95,7 @@ ppt-type enter
 
 ppt HelloWorld.HelloWorld.Main(System.String[]\_args):::EXIT67
 ppt-type subexit
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable args
     var-kind variable
     dec-type java.lang.String[]
@@ -129,6 +132,7 @@ ppt-type subexit
 
 ppt HelloWorld.HelloWorld.Main(System.String[]\_args):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable args
     var-kind variable
     dec-type java.lang.String[]
@@ -165,6 +169,7 @@ ppt-type subexit
 
 ppt HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::ENTER
 ppt-type enter
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable a
     var-kind variable
     dec-type int
@@ -187,6 +192,7 @@ ppt-type enter
 
 ppt HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::EXIT25
 ppt-type subexit
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable a
     var-kind variable
     dec-type int
@@ -226,6 +232,7 @@ ppt-type subexit
 
 ppt HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::EXIT65
 ppt-type subexit
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable a
     var-kind variable
     dec-type int
@@ -265,6 +272,7 @@ ppt-type subexit
 
 ppt HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::EXIT67
 ppt-type subexit
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable a
     var-kind variable
     dec-type int
@@ -304,6 +312,7 @@ ppt-type subexit
 
 ppt HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable a
     var-kind variable
     dec-type int
@@ -343,6 +352,7 @@ ppt-type subexit
 
 ppt HelloWorld.HelloWorld.intFuncSimple(System.Boolean\_returnOne):::ENTER
 ppt-type enter
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable returnOne
     var-kind variable
     dec-type boolean
@@ -352,6 +362,7 @@ ppt-type enter
 
 ppt HelloWorld.HelloWorld.intFuncSimple(System.Boolean\_returnOne):::EXIT10
 ppt-type subexit
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -378,6 +389,7 @@ ppt-type subexit
 
 ppt HelloWorld.HelloWorld.intFuncSimple(System.Boolean\_returnOne):::EXIT13
 ppt-type subexit
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -404,6 +416,7 @@ ppt-type subexit
 
 ppt HelloWorld.HelloWorld.intFuncSimple(System.Boolean\_returnOne):::EXIT15
 ppt-type subexit
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -430,6 +443,7 @@ ppt-type subexit
 
 ppt HelloWorld.HelloWorld.intFuncSimple(System.Boolean\_returnOne):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -456,6 +470,7 @@ ppt-type subexit
 
 ppt HelloWorld.HelloWorld.multipleReturnsDelayed(System.Int32\_n):::ENTER
 ppt-type enter
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable n
     var-kind variable
     dec-type int
@@ -465,6 +480,7 @@ ppt-type enter
 
 ppt HelloWorld.HelloWorld.multipleReturnsDelayed(System.Int32\_n):::EXIT12
 ppt-type subexit
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -498,6 +514,7 @@ ppt-type subexit
 
 ppt HelloWorld.HelloWorld.multipleReturnsDelayed(System.Int32\_n):::EXIT24
 ppt-type subexit
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -531,6 +548,7 @@ ppt-type subexit
 
 ppt HelloWorld.HelloWorld.multipleReturnsDelayed(System.Int32\_n):::EXIT66
 ppt-type subexit
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -564,6 +582,7 @@ ppt-type subexit
 
 ppt HelloWorld.HelloWorld.multipleReturnsDelayed(System.Int32\_n):::EXIT68
 ppt-type subexit
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -597,6 +616,7 @@ ppt-type subexit
 
 ppt HelloWorld.HelloWorld.multipleReturnsDelayed(System.Int32\_n):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -630,6 +650,7 @@ ppt-type subexit
 
 ppt HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::ENTER
 ppt-type enter
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable a
     var-kind variable
     dec-type int
@@ -652,6 +673,7 @@ ppt-type enter
 
 ppt HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::EXIT23
 ppt-type subexit
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable a
     var-kind variable
     dec-type int
@@ -686,6 +708,7 @@ ppt-type subexit
 
 ppt HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::EXIT61
 ppt-type subexit
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable a
     var-kind variable
     dec-type int
@@ -720,6 +743,7 @@ ppt-type subexit
 
 ppt HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable a
     var-kind variable
     dec-type int
@@ -752,8 +776,12 @@ ppt-type subexit
     rep-type int[]
     comparability 22
 
+ppt HelloWorld.HelloWorld:::CLASS
+ppt-type class
+
 ppt HelloWorld.HelloWorld:::OBJECT
 ppt-type object
+parent parent HelloWorld.HelloWorld:::CLASS 1
   variable this
     var-kind variable
     dec-type HelloWorld.HelloWorld
@@ -772,7 +800,7 @@ HelloWorld.HelloWorld.Main(System.String[]\_args):::ENTER
 this_invocation_nonce
 0
 args
-61304253
+17042198
 1
 args[..]
 []
@@ -788,7 +816,7 @@ a
 1
 1
 vals
-14867369
+19162058
 1
 vals[..]
 [3]
@@ -810,7 +838,7 @@ return
 -3
 1
 vals
-14867369
+19162058
 1
 vals[..]
 [4]
@@ -823,7 +851,7 @@ a
 2
 1
 vals
-14867369
+19162058
 1
 vals[..]
 [4 4]
@@ -858,7 +886,7 @@ a
 1
 1
 vals
-66697461
+38240801
 1
 vals[..]
 [3]
@@ -877,7 +905,7 @@ exception.GetType()
 nonsensical
 2
 vals
-66697461
+38240801
 1
 vals[..]
 [4]
@@ -890,7 +918,7 @@ a
 2
 1
 vals
-66697461
+38240801
 1
 vals[..]
 [4 4]
@@ -1095,7 +1123,7 @@ HelloWorld.HelloWorld.Main(System.String[]\_args):::EXIT67
 this_invocation_nonce
 0
 args
-61304253
+17042198
 1
 args[..]
 []

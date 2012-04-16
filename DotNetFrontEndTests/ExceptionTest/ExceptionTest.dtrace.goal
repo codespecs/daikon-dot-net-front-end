@@ -4,6 +4,7 @@ input-language C#.NET
 
 ppt ExceptionTest.CubingClass..ctor(System.Int32\_val):::ENTER
 ppt-type enter
+parent parent ExceptionTest.CubingClass:::CLASS 1
   variable val
     var-kind variable
     dec-type int
@@ -409,8 +410,12 @@ parent parent ExceptionTest.CubingClass:::OBJECT 1
     comparability 22
     parent ExceptionTest.CubingClass:::OBJECT 1
 
+ppt ExceptionTest.CubingClass:::CLASS
+ppt-type class
+
 ppt ExceptionTest.CubingClass:::OBJECT
 ppt-type object
+parent parent ExceptionTest.CubingClass:::CLASS 1
   variable this
     var-kind variable
     dec-type ExceptionTest.CubingClass
@@ -433,6 +438,7 @@ ppt-type object
 
 ppt ExceptionTest.ExceptionTest..ctor():::ENTER
 ppt-type enter
+parent parent ExceptionTest.ExceptionTest:::CLASS 1
 
 ppt ExceptionTest.ExceptionTest..ctor():::EXIT2
 ppt-type subexit
@@ -498,6 +504,7 @@ parent parent ExceptionTest.ExceptionTest:::OBJECT 1
 
 ppt ExceptionTest.ExceptionTest.Main(System.String[]\_args):::ENTER
 ppt-type enter
+parent parent ExceptionTest.ExceptionTest:::CLASS 1
   variable args
     var-kind variable
     dec-type java.lang.String[]
@@ -522,6 +529,7 @@ ppt-type enter
 
 ppt ExceptionTest.ExceptionTest.Main(System.String[]\_args):::EXIT77
 ppt-type subexit
+parent parent ExceptionTest.ExceptionTest:::CLASS 1
   variable args
     var-kind variable
     dec-type java.lang.String[]
@@ -558,6 +566,7 @@ ppt-type subexit
 
 ppt ExceptionTest.ExceptionTest.Main(System.String[]\_args):::EXIT79
 ppt-type subexit
+parent parent ExceptionTest.ExceptionTest:::CLASS 1
   variable args
     var-kind variable
     dec-type java.lang.String[]
@@ -594,6 +603,7 @@ ppt-type subexit
 
 ppt ExceptionTest.ExceptionTest.Main(System.String[]\_args):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent ExceptionTest.ExceptionTest:::CLASS 1
   variable args
     var-kind variable
     dec-type java.lang.String[]
@@ -630,6 +640,7 @@ ppt-type subexit
 
 ppt ExceptionTest.ExceptionTest.Main(System.String[]\_args):::EXIT_EX_System.ArgumentException
 ppt-type subexit
+parent parent ExceptionTest.ExceptionTest:::CLASS 1
   variable args
     var-kind variable
     dec-type java.lang.String[]
@@ -666,6 +677,7 @@ ppt-type subexit
 
 ppt ExceptionTest.ExceptionTest.Square(System.Boolean\_square,\_System.Int32\_n):::ENTER
 ppt-type enter
+parent parent ExceptionTest.ExceptionTest:::CLASS 1
   variable n
     var-kind variable
     dec-type int
@@ -681,6 +693,7 @@ ppt-type enter
 
 ppt ExceptionTest.ExceptionTest.Square(System.Boolean\_square,\_System.Int32\_n):::EXIT13
 ppt-type subexit
+parent parent ExceptionTest.ExceptionTest:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -713,6 +726,7 @@ ppt-type subexit
 
 ppt ExceptionTest.ExceptionTest.Square(System.Boolean\_square,\_System.Int32\_n):::EXIT16
 ppt-type subexit
+parent parent ExceptionTest.ExceptionTest:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -745,6 +759,7 @@ ppt-type subexit
 
 ppt ExceptionTest.ExceptionTest.Square(System.Boolean\_square,\_System.Int32\_n):::EXIT22
 ppt-type subexit
+parent parent ExceptionTest.ExceptionTest:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -777,6 +792,7 @@ ppt-type subexit
 
 ppt ExceptionTest.ExceptionTest.Square(System.Boolean\_square,\_System.Int32\_n):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent ExceptionTest.ExceptionTest:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -807,8 +823,12 @@ ppt-type subexit
     flags is_param
     comparability 22
 
+ppt ExceptionTest.ExceptionTest:::CLASS
+ppt-type class
+
 ppt ExceptionTest.ExceptionTest:::OBJECT
 ppt-type object
+parent parent ExceptionTest.ExceptionTest:::CLASS 1
   variable this
     var-kind variable
     dec-type ExceptionTest.ExceptionTest
@@ -827,7 +847,7 @@ ExceptionTest.ExceptionTest.Main(System.String[]\_args):::ENTER
 this_invocation_nonce
 0
 args
-40519951
+62938818
 1
 args[..]
 []
@@ -882,7 +902,7 @@ exception.GetType()
 nonsensical
 2
 this
-29135240
+29578451
 1
 this.GetType()
 "ExceptionTest.CubingClass"
@@ -898,7 +918,7 @@ ExceptionTest.CubingClass.DoCube():::ENTER
 this_invocation_nonce
 3
 this
-29135240
+29578451
 1
 this.GetType()
 "ExceptionTest.CubingClass"
@@ -920,7 +940,7 @@ return
 125
 1
 this
-29135240
+29578451
 1
 this.GetType()
 "ExceptionTest.CubingClass"
@@ -933,7 +953,7 @@ ExceptionTest.ExceptionTest.Main(System.String[]\_args):::EXIT77
 this_invocation_nonce
 0
 args
-40519951
+62938818
 1
 args[..]
 []
