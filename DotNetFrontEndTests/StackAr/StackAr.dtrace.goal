@@ -10264,10 +10264,10 @@ exception.GetType()
 nonsensical
 2
 this
-36793414
+19714506
 1
 this.theArray
-62705275
+43212834
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10332,7 +10332,7 @@ StackArTester.s.topOfStack
 nonsensical
 2
 args
-27476571
+53371190
 1
 args[..]
 []
@@ -10411,10 +10411,10 @@ exception.GetType()
 nonsensical
 2
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10433,10 +10433,10 @@ StackAr.makeEmpty():::ENTER
 this_invocation_nonce
 6
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10461,10 +10461,10 @@ exception.GetType()
 nonsensical
 2
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10505,10 +10505,10 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 8
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10536,10 +10536,10 @@ return
 false
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10558,10 +10558,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 9
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10589,10 +10589,10 @@ return
 true
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10611,10 +10611,10 @@ StackAr.top():::ENTER
 this_invocation_nonce
 10
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10633,10 +10633,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 11
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10664,10 +10664,10 @@ return
 true
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10698,10 +10698,10 @@ return.GetType()
 nonsensical
 2
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10770,10 +10770,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 13
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10801,10 +10801,10 @@ return
 true
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10823,10 +10823,10 @@ StackAr.topAndPop():::ENTER
 this_invocation_nonce
 14
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10845,10 +10845,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 15
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10876,10 +10876,10 @@ return
 true
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10910,10 +10910,10 @@ return.GetType()
 nonsensical
 2
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10954,10 +10954,10 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 17
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10985,10 +10985,10 @@ return
 false
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11007,10 +11007,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 18
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11038,10 +11038,10 @@ return
 true
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11060,10 +11060,10 @@ StackAr.top():::ENTER
 this_invocation_nonce
 19
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11082,10 +11082,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 20
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11113,10 +11113,10 @@ return
 true
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11147,10 +11147,10 @@ return.GetType()
 nonsensical
 2
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11291,7 +11291,7 @@ exception.GetType()
 nonsensical
 2
 this
-31979016
+51565323
 1
 this.value
 0
@@ -11304,10 +11304,10 @@ StackAr.push(System.Object\_x):::ENTER
 this_invocation_nonce
 23
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11322,7 +11322,7 @@ this.topOfStack
 -1
 1
 x
-31979016
+51565323
 1
 x.GetType()
 "MyInteger"
@@ -11332,10 +11332,10 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 24
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11363,10 +11363,10 @@ return
 false
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11391,16 +11391,16 @@ exception.GetType()
 nonsensical
 2
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 null null null]
+[51565323 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11409,7 +11409,7 @@ this.topOfStack
 0
 1
 x
-31979016
+51565323
 1
 x.GetType()
 "MyInteger"
@@ -11441,16 +11441,16 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 26
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 null null null]
+[51565323 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11472,16 +11472,16 @@ return
 false
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 null null null]
+[51565323 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11494,16 +11494,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 27
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 null null null]
+[51565323 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11525,16 +11525,16 @@ return
 false
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 null null null]
+[51565323 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11547,16 +11547,16 @@ StackAr.top():::ENTER
 this_invocation_nonce
 28
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 null null null]
+[51565323 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11569,16 +11569,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 29
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 null null null]
+[51565323 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11600,16 +11600,16 @@ return
 false
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 null null null]
+[51565323 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11628,22 +11628,22 @@ exception.GetType()
 nonsensical
 2
 return
-31979016
+51565323
 1
 return.GetType()
 "MyInteger"
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 null null null]
+[51565323 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11747,7 +11747,7 @@ exception.GetType()
 nonsensical
 2
 this
-19375690
+61434729
 1
 this.value
 0
@@ -11760,16 +11760,16 @@ StackAr.push(System.Object\_x):::ENTER
 this_invocation_nonce
 32
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 null null null]
+[51565323 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11778,7 +11778,7 @@ this.topOfStack
 0
 1
 x
-19375690
+61434729
 1
 x.GetType()
 "MyInteger"
@@ -11788,16 +11788,16 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 33
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 null null null]
+[51565323 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11819,16 +11819,16 @@ return
 false
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 null null null]
+[51565323 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11847,16 +11847,16 @@ exception.GetType()
 nonsensical
 2
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 null null]
+[51565323 61434729 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -11865,7 +11865,7 @@ this.topOfStack
 1
 1
 x
-19375690
+61434729
 1
 x.GetType()
 "MyInteger"
@@ -11897,16 +11897,16 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 35
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 null null]
+[51565323 61434729 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -11928,16 +11928,16 @@ return
 false
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 null null]
+[51565323 61434729 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -11950,16 +11950,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 36
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 null null]
+[51565323 61434729 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -11981,16 +11981,16 @@ return
 false
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 null null]
+[51565323 61434729 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -12003,16 +12003,16 @@ StackAr.top():::ENTER
 this_invocation_nonce
 37
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 null null]
+[51565323 61434729 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -12025,16 +12025,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 38
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 null null]
+[51565323 61434729 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -12056,16 +12056,16 @@ return
 false
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 null null]
+[51565323 61434729 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -12084,22 +12084,22 @@ exception.GetType()
 nonsensical
 2
 return
-19375690
+61434729
 1
 return.GetType()
 "MyInteger"
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 null null]
+[51565323 61434729 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -12190,16 +12190,16 @@ StackAr.push(System.Object\_x):::ENTER
 this_invocation_nonce
 40
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 null null]
+[51565323 61434729 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -12208,7 +12208,7 @@ this.topOfStack
 1
 1
 x
-40163483
+16041657
 1
 x.GetType()
 "System.Object"
@@ -12218,16 +12218,16 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 41
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 null null]
+[51565323 61434729 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -12249,16 +12249,16 @@ return
 false
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 null null]
+[51565323 61434729 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -12277,16 +12277,16 @@ exception.GetType()
 nonsensical
 2
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 40163483 null]
+[51565323 61434729 16041657 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12295,7 +12295,7 @@ this.topOfStack
 2
 1
 x
-40163483
+16041657
 1
 x.GetType()
 "System.Object"
@@ -12327,16 +12327,16 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 43
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 40163483 null]
+[51565323 61434729 16041657 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12358,16 +12358,16 @@ return
 false
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 40163483 null]
+[51565323 61434729 16041657 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12380,16 +12380,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 44
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 40163483 null]
+[51565323 61434729 16041657 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12411,16 +12411,16 @@ return
 false
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 40163483 null]
+[51565323 61434729 16041657 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12433,16 +12433,16 @@ StackAr.top():::ENTER
 this_invocation_nonce
 45
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 40163483 null]
+[51565323 61434729 16041657 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12455,16 +12455,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 46
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 40163483 null]
+[51565323 61434729 16041657 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12486,16 +12486,16 @@ return
 false
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 40163483 null]
+[51565323 61434729 16041657 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12514,22 +12514,22 @@ exception.GetType()
 nonsensical
 2
 return
-40163483
+16041657
 1
 return.GetType()
 "System.Object"
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 40163483 null]
+[51565323 61434729 16041657 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12633,7 +12633,7 @@ exception.GetType()
 nonsensical
 2
 this
-25927028
+10157186
 1
 this.value
 0
@@ -12646,16 +12646,16 @@ StackAr.push(System.Object\_x):::ENTER
 this_invocation_nonce
 49
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 40163483 null]
+[51565323 61434729 16041657 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12664,7 +12664,7 @@ this.topOfStack
 2
 1
 x
-25927028
+10157186
 1
 x.GetType()
 "MyInteger"
@@ -12674,16 +12674,16 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 50
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 40163483 null]
+[51565323 61434729 16041657 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12705,16 +12705,16 @@ return
 false
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 40163483 null]
+[51565323 61434729 16041657 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12733,16 +12733,16 @@ exception.GetType()
 nonsensical
 2
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 40163483 25927028]
+[51565323 61434729 16041657 10157186]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -12751,7 +12751,7 @@ this.topOfStack
 3
 1
 x
-25927028
+10157186
 1
 x.GetType()
 "MyInteger"
@@ -12783,16 +12783,16 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 52
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 40163483 25927028]
+[51565323 61434729 16041657 10157186]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -12814,16 +12814,16 @@ return
 true
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 40163483 25927028]
+[51565323 61434729 16041657 10157186]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -12836,16 +12836,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 53
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 40163483 25927028]
+[51565323 61434729 16041657 10157186]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -12867,16 +12867,16 @@ return
 false
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 40163483 25927028]
+[51565323 61434729 16041657 10157186]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -12889,16 +12889,16 @@ StackAr.top():::ENTER
 this_invocation_nonce
 54
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 40163483 25927028]
+[51565323 61434729 16041657 10157186]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -12911,16 +12911,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 55
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 40163483 25927028]
+[51565323 61434729 16041657 10157186]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -12942,16 +12942,16 @@ return
 false
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 40163483 25927028]
+[51565323 61434729 16041657 10157186]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -12970,22 +12970,22 @@ exception.GetType()
 nonsensical
 2
 return
-25927028
+10157186
 1
 return.GetType()
 "MyInteger"
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 40163483 25927028]
+[51565323 61434729 16041657 10157186]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -13054,16 +13054,16 @@ StackAr.makeEmpty():::ENTER
 this_invocation_nonce
 56
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[31979016 19375690 40163483 25927028]
+[51565323 61434729 16041657 10157186]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -13082,10 +13082,10 @@ exception.GetType()
 nonsensical
 2
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13104,10 +13104,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 57
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13135,10 +13135,10 @@ return
 true
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13157,10 +13157,10 @@ StackAr.makeEmpty():::ENTER
 this_invocation_nonce
 58
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13185,10 +13185,10 @@ exception.GetType()
 nonsensical
 2
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13229,10 +13229,10 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 60
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13260,10 +13260,10 @@ return
 false
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13282,10 +13282,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 61
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13313,10 +13313,10 @@ return
 true
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13335,10 +13335,10 @@ StackAr.top():::ENTER
 this_invocation_nonce
 62
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13357,10 +13357,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 63
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13388,10 +13388,10 @@ return
 true
 1
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13422,10 +13422,10 @@ return.GetType()
 nonsensical
 2
 this
-45962549
+10578662
 1
 this.theArray
-11009764
+28099101
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13513,10 +13513,10 @@ exception.GetType()
 nonsensical
 2
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13535,10 +13535,10 @@ StackAr.makeEmpty():::ENTER
 this_invocation_nonce
 66
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13563,10 +13563,10 @@ exception.GetType()
 nonsensical
 2
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13607,10 +13607,10 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 68
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13638,10 +13638,10 @@ return
 false
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13660,10 +13660,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 69
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13691,10 +13691,10 @@ return
 true
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13713,10 +13713,10 @@ StackAr.top():::ENTER
 this_invocation_nonce
 70
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13735,10 +13735,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 71
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13766,10 +13766,10 @@ return
 true
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13800,10 +13800,10 @@ return.GetType()
 nonsensical
 2
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13872,10 +13872,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 73
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13903,10 +13903,10 @@ return
 true
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13925,10 +13925,10 @@ StackAr.topAndPop():::ENTER
 this_invocation_nonce
 74
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13947,10 +13947,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 75
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13978,10 +13978,10 @@ return
 true
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -14012,10 +14012,10 @@ return.GetType()
 nonsensical
 2
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -14056,10 +14056,10 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 77
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -14087,10 +14087,10 @@ return
 false
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -14109,10 +14109,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 78
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -14140,10 +14140,10 @@ return
 true
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -14162,10 +14162,10 @@ StackAr.top():::ENTER
 this_invocation_nonce
 79
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -14184,10 +14184,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 80
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -14215,10 +14215,10 @@ return
 true
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -14249,10 +14249,10 @@ return.GetType()
 nonsensical
 2
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -14358,10 +14358,10 @@ StackAr.push(System.Object\_x):::ENTER
 this_invocation_nonce
 81
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -14376,7 +14376,7 @@ this.topOfStack
 -1
 1
 x
-32016662
+24305815
 1
 x.GetType()
 "StackAr"
@@ -14386,10 +14386,10 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 82
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -14417,10 +14417,10 @@ return
 false
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -14445,16 +14445,16 @@ exception.GetType()
 nonsensical
 2
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 null null null]
+[24305815 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -14463,7 +14463,7 @@ this.topOfStack
 0
 1
 x
-32016662
+24305815
 1
 x.GetType()
 "StackAr"
@@ -14495,16 +14495,16 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 84
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 null null null]
+[24305815 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -14526,16 +14526,16 @@ return
 false
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 null null null]
+[24305815 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -14548,16 +14548,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 85
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 null null null]
+[24305815 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -14579,16 +14579,16 @@ return
 false
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 null null null]
+[24305815 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -14601,16 +14601,16 @@ StackAr.top():::ENTER
 this_invocation_nonce
 86
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 null null null]
+[24305815 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -14623,16 +14623,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 87
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 null null null]
+[24305815 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -14654,16 +14654,16 @@ return
 false
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 null null null]
+[24305815 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -14682,22 +14682,22 @@ exception.GetType()
 nonsensical
 2
 return
-32016662
+24305815
 1
 return.GetType()
 "StackAr"
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 null null null]
+[24305815 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -14738,16 +14738,16 @@ StackAr.push(System.Object\_x):::ENTER
 this_invocation_nonce
 88
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 null null null]
+[24305815 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -14756,7 +14756,7 @@ this.topOfStack
 0
 1
 x
-32016662
+24305815
 1
 x.GetType()
 "StackAr"
@@ -14766,16 +14766,16 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 89
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 null null null]
+[24305815 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -14797,16 +14797,16 @@ return
 false
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 null null null]
+[24305815 null null null]
 1
 this.theArray[..].GetType()
 ["StackAr" nonsensical nonsensical nonsensical]
@@ -14825,16 +14825,16 @@ exception.GetType()
 nonsensical
 2
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 32016662 null null]
+[24305815 24305815 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -14843,7 +14843,7 @@ this.topOfStack
 1
 1
 x
-32016662
+24305815
 1
 x.GetType()
 "StackAr"
@@ -14875,16 +14875,16 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 91
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 32016662 null null]
+[24305815 24305815 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -14906,16 +14906,16 @@ return
 false
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 32016662 null null]
+[24305815 24305815 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -14928,16 +14928,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 92
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 32016662 null null]
+[24305815 24305815 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -14959,16 +14959,16 @@ return
 false
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 32016662 null null]
+[24305815 24305815 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -14981,16 +14981,16 @@ StackAr.top():::ENTER
 this_invocation_nonce
 93
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 32016662 null null]
+[24305815 24305815 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -15003,16 +15003,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 94
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 32016662 null null]
+[24305815 24305815 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -15034,16 +15034,16 @@ return
 false
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 32016662 null null]
+[24305815 24305815 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -15062,22 +15062,22 @@ exception.GetType()
 nonsensical
 2
 return
-32016662
+24305815
 1
 return.GetType()
 "StackAr"
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 32016662 null null]
+[24305815 24305815 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -15118,16 +15118,16 @@ StackAr.push(System.Object\_x):::ENTER
 this_invocation_nonce
 95
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 32016662 null null]
+[24305815 24305815 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -15136,7 +15136,7 @@ this.topOfStack
 1
 1
 x
-32016662
+24305815
 1
 x.GetType()
 "StackAr"
@@ -15146,16 +15146,16 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 96
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 32016662 null null]
+[24305815 24305815 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -15177,16 +15177,16 @@ return
 false
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 32016662 null null]
+[24305815 24305815 null null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" nonsensical nonsensical]
@@ -15205,16 +15205,16 @@ exception.GetType()
 nonsensical
 2
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 32016662 32016662 null]
+[24305815 24305815 24305815 null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" "StackAr" nonsensical]
@@ -15223,7 +15223,7 @@ this.topOfStack
 2
 1
 x
-32016662
+24305815
 1
 x.GetType()
 "StackAr"
@@ -15255,16 +15255,16 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 98
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 32016662 32016662 null]
+[24305815 24305815 24305815 null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" "StackAr" nonsensical]
@@ -15286,16 +15286,16 @@ return
 false
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 32016662 32016662 null]
+[24305815 24305815 24305815 null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" "StackAr" nonsensical]
@@ -15308,16 +15308,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 99
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 32016662 32016662 null]
+[24305815 24305815 24305815 null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" "StackAr" nonsensical]
@@ -15339,16 +15339,16 @@ return
 false
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 32016662 32016662 null]
+[24305815 24305815 24305815 null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" "StackAr" nonsensical]
@@ -15361,16 +15361,16 @@ StackAr.top():::ENTER
 this_invocation_nonce
 100
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 32016662 32016662 null]
+[24305815 24305815 24305815 null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" "StackAr" nonsensical]
@@ -15383,16 +15383,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 101
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 32016662 32016662 null]
+[24305815 24305815 24305815 null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" "StackAr" nonsensical]
@@ -15414,16 +15414,16 @@ return
 false
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 32016662 32016662 null]
+[24305815 24305815 24305815 null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" "StackAr" nonsensical]
@@ -15442,22 +15442,22 @@ exception.GetType()
 nonsensical
 2
 return
-32016662
+24305815
 1
 return.GetType()
 "StackAr"
 1
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 32016662 32016662 null]
+[24305815 24305815 24305815 null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" "StackAr" nonsensical]
@@ -15498,16 +15498,16 @@ StackAr.makeEmpty():::ENTER
 this_invocation_nonce
 102
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[32016662 32016662 32016662 null]
+[24305815 24305815 24305815 null]
 1
 this.theArray[..].GetType()
 ["StackAr" "StackAr" "StackAr" nonsensical]
@@ -15526,10 +15526,10 @@ exception.GetType()
 nonsensical
 2
 this
-32016662
+24305815
 1
 this.theArray
-19714506
+17425743
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -15597,7 +15597,7 @@ StackArTester.s.topOfStack
 nonsensical
 2
 args
-27476571
+53371190
 1
 args[..]
 []
