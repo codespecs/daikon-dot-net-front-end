@@ -1477,7 +1477,11 @@ namespace DotNetFrontEnd
 
       generator.Emit(OperationCode.Ldloc, nonceVariableDictionary[methodBody.MethodDefinition]);
       this.EmitWriteInvocationNonceCall(generator);
-      
+
+      PrintParentNameDeclarationIfNecessary(transition, methodBody);
+
+      EmitParentClassFields(transition, methodBody, generator);
+
       // Sometimes we want to describe 'this', which is the 0th parameter. Don't describe this if 
       // the method is static, or the call is the entrance to a constructor. EmitParentObject
       // will check this.
@@ -1513,6 +1517,48 @@ namespace DotNetFrontEnd
       }
 
       return true;
+    }
+
+    /// <summary>
+    /// Print the declaration of the refernce to the parent program point for the given method, 
+    /// if necessary.
+    /// </summary>
+    /// <param name="transition">Transtition of the current program point</param>
+    /// <param name="methodBody">Method body of the current program point</param>
+    private void PrintParentNameDeclarationIfNecessary(MethodTransition transition, 
+        IMethodBody methodBody)
+    {
+      if (!this.printDeclarations)
+      {
+        return;
+      }
+      if (IsThisValid(transition, methodBody.MethodDefinition))
+      {
+        this.declPrinter.PrintParentName(methodBody.MethodDefinition.ContainingType, true);
+      }
+      else
+      {
+        this.declPrinter.PrintParentName(methodBody.MethodDefinition.ContainingType, false);
+      }
+    }
+
+    /// <summary>
+    /// Emit any static fields of the parent class.
+    /// </summary>
+    /// <param name="transition">Transition at the current program point</param>
+    /// <param name="methodBody">Method body for the program point</param>
+    /// <param name="generator">ILGenerator used to perform the emission</param>
+    private void EmitParentClassFields(MethodTransition transition, IMethodBody methodBody,
+        ILGenerator generator)
+    {
+      ITypeReference parentType = methodBody.MethodDefinition.ContainingType;
+      this.EmitStaticInstrumentationCall(generator, parentType);
+
+      if (this.printDeclarations)
+      {
+        this.declPrinter.PrintParentClassFields(
+            this.typeManager.ConvertCCITypeToAssemblyQualifiedName(parentType));
+      }
     }
 
     /// <summary>
@@ -1766,7 +1812,7 @@ namespace DotNetFrontEnd
       this.EmitInstrumentationCall(generator, parentType);
       if (this.printDeclarations)
       {
-        this.declPrinter.PrintParentObject(methodBody.MethodDefinition.ContainingType
+        this.declPrinter.PrintParentObjectFields(methodBody.MethodDefinition.ContainingType
             .ToString(), this.typeManager.ConvertCCITypeToAssemblyQualifiedName(parentType));
       }
     }
@@ -1933,6 +1979,26 @@ namespace DotNetFrontEnd
 
         generator.Emit(OperationCode.Box, param);
       }
+    }
+
+    /// <summary>
+    /// Emit the call to the instrumentation program, assuming name, then the param are loaded
+    /// onto the stack.
+    /// </summary>
+    /// <param name="generator">Generator to use for emission</param>
+    /// <param name="param">The Type of the param to visit</param>
+    /// Warning suppressed because variable containing method reference name is private, static, 
+    /// final and can be trusted.
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
+      "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
+    private void EmitStaticInstrumentationCall(ILGenerator generator, ITypeReference param)
+    {
+      generator.Emit(OperationCode.Ldstr,
+          this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param).ToString());
+      generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
+         this.host, this.cciReflectorType, CallingConvention.Default,
+         this.systemVoid, this.nameTable.GetNameFor(
+            VariableVisitor.StaticInstrumentationMethodName), 0, this.systemString));
     }
 
     /// <summary>
@@ -2144,6 +2210,8 @@ namespace DotNetFrontEnd
           if (!(regex.IsMatch(type.ToString())))
           {
             this.declPrinter.PrintObjectDefinition(typeName,
+                this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type));
+            this.declPrinter.PrintParentClassDefinition(typeName,
                 this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type));
           }
         }

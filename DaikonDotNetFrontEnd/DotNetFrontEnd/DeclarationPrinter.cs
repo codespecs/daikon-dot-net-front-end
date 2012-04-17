@@ -262,7 +262,7 @@ namespace DotNetFrontEnd
           if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
           {
             this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
-            PrintVariable(staticFieldName, field.FieldType, 
+            PrintVariable(staticFieldName, field.FieldType,
             nestingDepth: staticFieldName.Count(c => c == '.'));
           }
         }
@@ -284,7 +284,7 @@ namespace DotNetFrontEnd
         } // Close field foreach
       } // Close fields/elements foreach
     } // Close print-variable method
-    
+
     /// <summary>
     /// Wraps all the declaration necessary for a variable that is a list. Print the GetType()
     /// call if necessary then descrives the contents of the list.
@@ -469,7 +469,7 @@ namespace DotNetFrontEnd
         if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
         {
           this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
-          PrintVariable(staticFieldName, field.FieldType, 
+          PrintVariable(staticFieldName, field.FieldType,
               nestingDepth: staticFieldName.Count(c => c == '.'));
         }
       }
@@ -500,26 +500,62 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Print the parent of the current object: "this"
+    /// Print the declarations fpr the fields of the parent of the current object: "this".
     /// </summary>
     /// <param name="parentName">Name of the parent, as it would appear in the program point
     /// </param>
     /// <param name="parentObjectType">Assembly-qualified name of the type of the parent
     /// </param>
-    public void PrintParentObject(string parentName, string parentObjectType)
+    public void PrintParentObjectFields(string parentName, string parentObjectType)
     {
-     
-      // The 1 is hardcoded because there is only one object program point per type
       parentName = parentName + ":::OBJECT 1";
       // If we can't resolve the parent object type don't write anything
-      Type type = typeManager.ConvertAssemblyQualifiedNameToType(parentObjectType); 
+      Type type = typeManager.ConvertAssemblyQualifiedNameToType(parentObjectType);
       if (type != null)
       {
-        if (this.ShouldPrintParentPptIfNecessary(parentName))
-        {
-          this.WritePair("parent", "parent " + parentName);
-        }
         this.PrintVariable("this", type, flags: VariableFlags.is_param, parentName: parentName);
+      }
+      else
+      {
+        // TODO(#47): Error handling?
+      }
+    }
+
+    /// <summary>
+    /// Print the static fields of the parent of the current object.
+    /// </summary>
+    /// <param name="parentName">Name of the parent, as it would appear in the program point
+    /// </param>
+    /// <param name="parentObjectType">Assembly-qualified name of the type of the parent
+    /// </param>
+    public void PrintParentClassFields(string parentObjectType)
+    {
+      // TODO(#48): Parent type like we do for instance fields.
+      Type type = typeManager.ConvertAssemblyQualifiedNameToType(parentObjectType);
+      if (type == null)
+      {
+        throw new ArgumentException("Unable to resolve parent object type to a type.", 
+            "parentObjectType");
+      }
+      DeclareStaticFieldsForType(type);
+    }
+
+    /// <summary>
+    /// Print the declarations for all fields of the given type.
+    /// </summary>
+    /// <param name="type">Type to print declarations of the static fields of</param>
+    private void DeclareStaticFieldsForType(Type type)
+    {
+      foreach (FieldInfo field in
+        type.GetFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
+      {
+        string staticFieldName = type.Name + "." + field.Name;
+        if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
+        {
+          this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
+          PrintVariable(staticFieldName, field.FieldType,
+              nestingDepth: staticFieldName.Count(c => c == '.'));
+        }
       }
     }
 
@@ -603,8 +639,31 @@ namespace DotNetFrontEnd
         {
           this.WritePair("ppt", nameToPrint);
           this.WritePair("ppt-type", "object");
+          this.WritePair("parent", "parent " + nameToPrint.Replace(":::OBJECT", ":::CLASS 1"));
           PrintVariable("this", objectType, VariableKind.variable, VariableFlags.is_param);
         }
+      }
+    }
+
+    /// <summary>
+    /// Print declaration of the static fields of the given class.
+    /// </summary>
+    /// <param name="className">Name of the class whose static fields are being examined</param>
+    /// <param name="objectAssemblyQualifiedName">The assembly qualified name of the object whose 
+    /// static fields to print</param>
+    public void PrintParentClassDefinition(string className, string objectAssemblyQualifiedName)
+    {
+      Type objectType = typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
+      if (objectType != null)
+      {
+        this.WriteLine();
+        string nameToPrint = SanitizeProgramPointName(className + ":::CLASS");
+        if (frontEndArgs.ShouldPrintProgramPoint(nameToPrint))
+        {
+          this.WritePair("ppt", nameToPrint);
+          this.WritePair("ppt-type", "class");
+        }
+        DeclareStaticFieldsForType(objectType);
       }
     }
 
@@ -621,6 +680,29 @@ namespace DotNetFrontEnd
       }
       string result = programPointName.Replace("\\", "\\\\");
       return result.Replace(" ", "\\_");
+    }
+
+    /// <summary>
+    /// Print a reference to the parent program point of the given type, with a switch whether the 
+    /// program point is a class or an object.
+    /// </summary>
+    /// <param name="type">Type to print the parent reference to</param>
+    /// <param name="isObjectProgramPoint">True is the reference is to a parent object program point, 
+    /// false if the reference is to a parent class program point</param>
+    public void PrintParentName(Microsoft.Cci.ITypeReference type, bool isObjectProgramPoint)
+    {
+      string parentName = type.ToString();
+      if (this.ShouldPrintParentPptIfNecessary(parentName))
+      {
+        if (isObjectProgramPoint)
+        {
+          this.WritePair("parent", "parent " + parentName + ":::OBJECT 1");
+        }
+        else
+        {
+          this.WritePair("parent", "parent " + parentName + ":::CLASS 1");
+        }
+      }
     }
 
     #region Private Helper Methods

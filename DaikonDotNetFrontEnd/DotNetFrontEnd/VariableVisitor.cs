@@ -96,6 +96,12 @@ namespace DotNetFrontEnd
     public static readonly string InstrumentationMethodName = "VisitVariable";
 
     /// <summary>
+    /// The name of the static instrumentation method in VaraibleVisitor.cs. This is the method
+    /// which will be caleed when only the static fields of a variable should be visited.
+    /// </summary>
+    public static readonly string StaticInstrumentationMethodName = "PerformStaticInstrumentation";
+
+    /// <summary>
     /// The name of the special instrumentation method in VariableVisitor.cs that has parameter 
     /// order with the value of the variable before the name of the variable
     /// </summary>
@@ -263,6 +269,57 @@ namespace DotNetFrontEnd
     {
       // Make the traditional call, nothing special
       DoVisit(variable, name, typeName);
+    }
+
+    /// <summary>
+    /// Visit all the static variables of the given type.
+    /// </summary>
+    /// <param name="typeName">Assembly-qualified name of the type to visit.</param>
+    public static void PerformStaticInstrumentation(string typeName)
+    {
+      TextWriter writer = InitializeWriter();
+      try
+      {
+        Type type = typeManager.ConvertAssemblyQualifiedNameToType(typeName);
+        if (type == null)
+        {
+          throw new ArgumentException("VariableVistor received invalid type name for static" +
+            " instrumentation.", "typeName");
+        }
+
+        int depth = 0;
+        foreach (FieldInfo field in
+          type.GetFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
+        {
+          string staticFieldName = type.Name + "." + field.Name;
+          try
+          {
+            if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
+            {
+              staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
+              ReflectiveVisit(staticFieldName, field.GetValue(null),
+                    field.FieldType, writer, staticFieldName.Count(c => c == '.'));
+            }
+          }
+          catch (ArgumentException)
+          {
+            Console.Error.WriteLine(" Name: " + staticFieldName + " Type: " + type + " Field Name: "
+                + field.Name + " Field Type: " + field.FieldType);
+            // The field is declared in the decls so Daikon still needs a value, 
+            ReflectiveVisit(staticFieldName + "." + field.Name, null,
+                field.FieldType, writer, depth + 1, VariableModifiers.nonsensical);
+          }
+        }
+      }
+      catch (Exception ex)
+      {
+        throw new VariableVisitorException(ex);
+      }
+      finally
+      {
+        // Close the writer so it can be used elsewhere
+        writer.Close();
+      }
     }
 
     /// <summary>
@@ -830,7 +887,7 @@ namespace DotNetFrontEnd
         if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
         {
           staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
-          ListReflectiveVisit(staticFieldName, null, elementField.FieldType, writer, 
+          ListReflectiveVisit(staticFieldName, null, elementField.FieldType, writer,
               staticFieldName.Count(c => c == '.'));
         }
       }
