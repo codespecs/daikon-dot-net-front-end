@@ -658,7 +658,7 @@ namespace DotNetFrontEnd
           while (curr != null)
           {
             expandedList.Add(curr);
-            curr = GetFieldValue(obj, linkedListField, linkedListField.Name);
+            curr = GetFieldValue(curr, linkedListField, linkedListField.Name);
           }
           ListReflectiveVisit(name + "." + linkedListField.Name + "[..]", (IList)expandedList,
               type, writer, depth);
