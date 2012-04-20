@@ -168,20 +168,36 @@ this.topOfStack == -1
 this.theArray.GetType() == orig(this.theArray.GetType())
 ===========================================================================
 StackArTester..cctor():::ENTER
-StackArTester.rnd == null
-StackArTester.s == null
+StackArTester.rnd has only one value
+StackArTester.rnd.GetType() == System.Random.class
+StackArTester.s has only one value
+StackArTester.s.theArray has only one value
+StackArTester.s.theArray[] == []
+StackArTester.s.topOfStack == -1
 ===========================================================================
 StackArTester..cctor():::EXIT6
 ===========================================================================
 StackArTester..cctor():::EXIT
 StackArTester.rnd == orig(StackArTester.rnd)
 StackArTester.s == orig(StackArTester.s)
-StackArTester.rnd == null
-StackArTester.s == null
+StackArTester.s.theArray == orig(StackArTester.s.theArray)
+StackArTester.s.theArray[] == orig(StackArTester.s.theArray[])
+StackArTester.s.topOfStack == orig(StackArTester.s.topOfStack)
+StackArTester.rnd has only one value
+StackArTester.rnd.GetType() == System.Random.class
+StackArTester.s has only one value
+StackArTester.s.theArray has only one value
+StackArTester.s.theArray[] == []
+StackArTester.s.topOfStack == -1
+StackArTester.rnd.GetType() == orig(StackArTester.rnd.GetType())
 ===========================================================================
 StackArTester.Main(System.String[] args):::ENTER
-StackArTester.rnd == null
-StackArTester.s == null
+StackArTester.rnd has only one value
+StackArTester.rnd.GetType() == System.Random.class
+StackArTester.s has only one value
+StackArTester.s.theArray has only one value
+StackArTester.s.theArray[] == []
+StackArTester.s.topOfStack == -1
 args has only one value
 args[] == []
 args[].ToString() == []
@@ -191,15 +207,27 @@ StackArTester.Main(System.String[] args):::EXIT4
 StackArTester.Main(System.String[] args):::EXIT
 StackArTester.rnd == orig(StackArTester.rnd)
 StackArTester.s == orig(StackArTester.s)
+StackArTester.s.theArray == orig(StackArTester.s.theArray)
+StackArTester.s.theArray[] == orig(StackArTester.s.theArray[])
+StackArTester.s.topOfStack == orig(StackArTester.s.topOfStack)
 args[] == orig(args[])
-StackArTester.rnd == null
-StackArTester.s == null
+StackArTester.rnd has only one value
+StackArTester.rnd.GetType() == System.Random.class
+StackArTester.s has only one value
+StackArTester.s.theArray has only one value
+StackArTester.s.theArray[] == []
+StackArTester.s.topOfStack == -1
 args[] == []
 args[].ToString() == []
+StackArTester.rnd.GetType() == orig(StackArTester.rnd.GetType())
 ===========================================================================
 StackArTester.doNew(System.Int32 size):::ENTER
-StackArTester.rnd == null
-StackArTester.s == null
+StackArTester.rnd has only one value
+StackArTester.rnd.GetType() == System.Random.class
+StackArTester.s has only one value
+StackArTester.s.theArray has only one value
+StackArTester.s.theArray[] == []
+StackArTester.s.topOfStack == -1
 size == 4
 ===========================================================================
 StackArTester.doNew(System.Int32 size):::EXIT11
@@ -207,12 +235,24 @@ StackArTester.doNew(System.Int32 size):::EXIT11
 StackArTester.doNew(System.Int32 size):::EXIT
 StackArTester.rnd == orig(StackArTester.rnd)
 StackArTester.s == orig(StackArTester.s)
-StackArTester.rnd == null
-StackArTester.s == null
+StackArTester.s.theArray == orig(StackArTester.s.theArray)
+StackArTester.s.theArray[] == orig(StackArTester.s.theArray[])
+StackArTester.s.topOfStack == orig(StackArTester.s.topOfStack)
+StackArTester.rnd has only one value
+StackArTester.rnd.GetType() == System.Random.class
+StackArTester.s has only one value
+StackArTester.s.theArray has only one value
+StackArTester.s.theArray[] == []
+StackArTester.s.topOfStack == -1
+StackArTester.rnd.GetType() == orig(StackArTester.rnd.GetType())
 ===========================================================================
 StackArTester.fill(System.Int32 n):::ENTER
-StackArTester.rnd == null
-StackArTester.s == null
+StackArTester.rnd has only one value
+StackArTester.rnd.GetType() == System.Random.class
+StackArTester.s has only one value
+StackArTester.s.theArray has only one value
+StackArTester.s.theArray[] == []
+StackArTester.s.topOfStack == -1
 n == 4
 ===========================================================================
 StackArTester.fill(System.Int32 n):::EXIT86
@@ -220,41 +260,85 @@ StackArTester.fill(System.Int32 n):::EXIT86
 StackArTester.fill(System.Int32 n):::EXIT
 StackArTester.rnd == orig(StackArTester.rnd)
 StackArTester.s == orig(StackArTester.s)
-StackArTester.rnd == null
-StackArTester.s == null
+StackArTester.s.theArray == orig(StackArTester.s.theArray)
+StackArTester.s.theArray[] == orig(StackArTester.s.theArray[])
+StackArTester.s.topOfStack == orig(StackArTester.s.topOfStack)
+StackArTester.rnd has only one value
+StackArTester.rnd.GetType() == System.Random.class
+StackArTester.s has only one value
+StackArTester.s.theArray has only one value
+StackArTester.s.theArray[] == []
+StackArTester.s.topOfStack == -1
+StackArTester.rnd.GetType() == orig(StackArTester.rnd.GetType())
 ===========================================================================
 StackArTester.observe():::ENTER
-StackArTester.rnd == null
-StackArTester.s == null
+StackArTester.rnd has only one value
+StackArTester.rnd.GetType() == System.Random.class
+StackArTester.s has only one value
+StackArTester.s.theArray has only one value
+StackArTester.s.theArray[] == []
+StackArTester.s.topOfStack == -1
 ===========================================================================
 StackArTester.observe():::EXIT10
 ===========================================================================
 StackArTester.observe():::EXIT
 StackArTester.rnd == orig(StackArTester.rnd)
 StackArTester.s == orig(StackArTester.s)
-StackArTester.rnd == null
-StackArTester.s == null
+StackArTester.s.theArray == orig(StackArTester.s.theArray)
+StackArTester.s.theArray[] == orig(StackArTester.s.theArray[])
+StackArTester.s.topOfStack == orig(StackArTester.s.topOfStack)
+StackArTester.rnd has only one value
+StackArTester.rnd.GetType() == System.Random.class
+StackArTester.s has only one value
+StackArTester.s.theArray has only one value
+StackArTester.s.theArray[] == []
+StackArTester.s.topOfStack == -1
+StackArTester.rnd.GetType() == orig(StackArTester.rnd.GetType())
 ===========================================================================
 StackArTester.push():::ENTER
-StackArTester.rnd == null
-StackArTester.s == null
+StackArTester.rnd has only one value
+StackArTester.rnd.GetType() == System.Random.class
+StackArTester.s has only one value
+StackArTester.s.theArray has only one value
+StackArTester.s.theArray[] == []
+StackArTester.s.topOfStack == -1
 ===========================================================================
 StackArTester.push():::EXIT23
 ===========================================================================
 StackArTester.push():::EXIT
 StackArTester.rnd == orig(StackArTester.rnd)
 StackArTester.s == orig(StackArTester.s)
-StackArTester.rnd == null
-StackArTester.s == null
+StackArTester.s.theArray == orig(StackArTester.s.theArray)
+StackArTester.s.theArray[] == orig(StackArTester.s.theArray[])
+StackArTester.s.topOfStack == orig(StackArTester.s.topOfStack)
+StackArTester.rnd has only one value
+StackArTester.rnd.GetType() == System.Random.class
+StackArTester.s has only one value
+StackArTester.s.theArray has only one value
+StackArTester.s.theArray[] == []
+StackArTester.s.topOfStack == -1
+StackArTester.rnd.GetType() == orig(StackArTester.rnd.GetType())
 ===========================================================================
 StackArTester.topOrPop():::ENTER
-StackArTester.rnd == null
-StackArTester.s == null
+StackArTester.rnd has only one value
+StackArTester.rnd.GetType() == System.Random.class
+StackArTester.s has only one value
+StackArTester.s.theArray has only one value
+StackArTester.s.theArray[] == []
+StackArTester.s.topOfStack == -1
 ===========================================================================
 StackArTester.topOrPop():::EXIT33
 ===========================================================================
 StackArTester.topOrPop():::EXIT
 StackArTester.rnd == orig(StackArTester.rnd)
 StackArTester.s == orig(StackArTester.s)
-StackArTester.rnd == null
-StackArTester.s == null
+StackArTester.s.theArray == orig(StackArTester.s.theArray)
+StackArTester.s.theArray[] == orig(StackArTester.s.theArray[])
+StackArTester.s.topOfStack == orig(StackArTester.s.topOfStack)
+StackArTester.rnd has only one value
+StackArTester.rnd.GetType() == System.Random.class
+StackArTester.s has only one value
+StackArTester.s.theArray has only one value
+StackArTester.s.theArray[] == []
+StackArTester.s.topOfStack == -1
+StackArTester.rnd.GetType() == orig(StackArTester.rnd.GetType())
