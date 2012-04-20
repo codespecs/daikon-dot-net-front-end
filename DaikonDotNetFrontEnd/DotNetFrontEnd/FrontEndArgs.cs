@@ -76,7 +76,7 @@ namespace DotNetFrontEnd
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming",
       "CA1709:IdentifiersShouldBeCasedCorrectly")]
-    internal enum PossibleArgument
+    public enum PossibleArgument
     {
       // Comments indicate section argument is defined under in documentation
       // Program Point Options
@@ -612,7 +612,7 @@ namespace DotNetFrontEnd
     /// </summary>
     public bool LinkedLists
     {
-      get { return bool.Parse(this.programArguments[PossibleArgument.linked_lists]); }
+      get { return this.programArguments.ContainsKey(PossibleArgument.linked_lists); }
     }
 
     /// <summary>
