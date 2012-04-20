@@ -478,10 +478,18 @@ namespace DotNetFrontEnd
     {
       //try
       //{
-      string typeName = CheckSimpleCases(type);
-      if (typeName != null)
+      string simpleTypeName = CheckSimpleCases(type);
+      if (simpleTypeName != null)
       {
-        return typeName;
+        return simpleTypeName;
+      }
+
+      // If the type is a vector, then proceed on the element type, but rememeber that it was a 
+      // vector so the [] suffix can be added at the end.
+      bool isVectorTypeReference = type is VectorTypeReference;
+      if (isVectorTypeReference)
+      {
+        type = ((VectorTypeReference)type).ElementType;
       }
 
       // TODO(#16): In a future version it'd be nice to get some more
@@ -504,7 +512,7 @@ namespace DotNetFrontEnd
       }
 
       // Get the full name of the specified type
-      typeName = TypeHelper.GetTypeName(type,
+      string typeName = TypeHelper.GetTypeName(type,
         NameFormattingOptions.UseReflectionStyleForNestedTypeNames);
 
       typeName = UpdateTypeNameForNestedTypeDefinitions(type, typeName);
@@ -525,6 +533,11 @@ namespace DotNetFrontEnd
           typeName = AddGenericTypeArguments(typeName, castedType);
         }
         type = castedType.GenericType;
+      }
+
+      if (isVectorTypeReference)
+      {
+        typeName = typeName + "[]";
       }
 
       AssemblyIdentity identity = DetermineAssemblyIdentity(type);
