@@ -1,0 +1,91 @@
+===========================================================================
+PureMethods.A:::OBJECT
+this has only one value
+this.GetType() == PureMethods.A.class
+this.n == 6
+===========================================================================
+PureMethods.A..ctor(System.Int32):::ENTER
+n == 6
+===========================================================================
+PureMethods.A..ctor(System.Int32):::EXIT8
+===========================================================================
+PureMethods.A..ctor(System.Int32):::EXIT
+PureMethod3 == PureMethod4.n
+PureMethod3 == this.n
+PureMethod3 == orig(n)
+PureMethod1 == 0
+PureMethod2 has only one value
+PureMethod2.ToString() == "0"
+PureMethod3 == 6
+PureMethod4 has only one value
+PureMethod4.GetType() == PureMethods.A.class
+===========================================================================
+PureMethods.A.printN():::ENTER
+PureMethod3 == PureMethod4.n
+PureMethod3 == this.n
+PureMethod4 == this
+PureMethod1 == 0
+PureMethod2 has only one value
+PureMethod2.ToString() == "0"
+PureMethod3 == 6
+PureMethod4 has only one value
+PureMethod4.GetType() == PureMethods.A.class
+PureMethod4.GetType() == this.GetType()
+===========================================================================
+PureMethods.A.printN():::EXIT5
+===========================================================================
+PureMethods.A.printN():::EXIT
+PureMethod1 == orig(PureMethod1)
+PureMethod2 == orig(PureMethod2)
+PureMethod3 == PureMethod4.n
+PureMethod3 == this.n
+PureMethod3 == orig(PureMethod3)
+PureMethod3 == orig(PureMethod4.n)
+PureMethod3 == orig(this.n)
+PureMethod4 == orig(PureMethod4)
+PureMethod4 == orig(this)
+PureMethod1 == 0
+PureMethod2 has only one value
+PureMethod2.ToString() == "0"
+PureMethod3 == 6
+PureMethod4 has only one value
+PureMethod4.GetType() == PureMethods.A.class
+PureMethod2.ToString() == orig(PureMethod2.ToString())
+PureMethod4.GetType() == orig(PureMethod4.GetType())
+PureMethod4.GetType() == orig(this.GetType())
+===========================================================================
+PureMethods.PureMethods.Main(System.String[]):::ENTER
+StaticPureMethod1 == 0
+StaticPureMethod2 has only one value
+StaticPureMethod2.ToString() == "0"
+args has only one value
+args[] == []
+args[].ToString() == []
+===========================================================================
+PureMethods.PureMethods.Main(System.String[]):::EXIT9
+===========================================================================
+PureMethods.PureMethods.Main(System.String[]):::EXIT
+StaticPureMethod1 == orig(StaticPureMethod1)
+StaticPureMethod2 == orig(StaticPureMethod2)
+args[] == orig(args[])
+StaticPureMethod1 == 0
+StaticPureMethod2 has only one value
+StaticPureMethod2.ToString() == "0"
+args[] == []
+args[].ToString() == []
+StaticPureMethod2.ToString() == orig(StaticPureMethod2.ToString())
+===========================================================================
+PureMethods.PureMethods.PrintHelloWorld():::ENTER
+StaticPureMethod1 == 0
+StaticPureMethod2 has only one value
+StaticPureMethod2.ToString() == "0"
+===========================================================================
+PureMethods.PureMethods.PrintHelloWorld():::EXIT4
+===========================================================================
+PureMethods.PureMethods.PrintHelloWorld():::EXIT
+StaticPureMethod1 == orig(StaticPureMethod1)
+StaticPureMethod2 == orig(StaticPureMethod2)
+StaticPureMethod1 == 0
+StaticPureMethod2 has only one value
+StaticPureMethod2.ToString() == "0"
+StaticPureMethod2.ToString() == orig(StaticPureMethod2.ToString())
