@@ -1,0 +1,3 @@
+C..ctor(System.Int32\_i) ENTER/6: 20 EXIT8/21: 20
+C.run() ENTER/12: 20 EXIT17/18: 20
+M.Main(System.String[]\_args) ENTER/12: 1 EXIT37/18: 1

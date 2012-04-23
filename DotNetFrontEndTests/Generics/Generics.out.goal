@@ -1,0 +1,21 @@
+Argument processing complete
+Rewriting complete
+Loading complete. Starting program.
+9 8 7 6 5 4 3 2 1 0 
+Done
+ Name: this Type: Generics.BaseNodeMultiple`2[T,U] Field Name: t Field Type: T
+ Name: this Type: Generics.BaseNodeMultiple`2[T,U] Field Name: u Field Type: U
+ Name: this Type: Generics.BaseNodeMultiple`2[T,U] Field Name: t Field Type: T
+ Name: this Type: Generics.BaseNodeMultiple`2[T,U] Field Name: u Field Type: U
+ Name: this Type: Generics.BaseNodeMultiple`2[T,U] Field Name: t Field Type: T
+ Name: this Type: Generics.BaseNodeMultiple`2[T,U] Field Name: u Field Type: U
+ Name: this Type: Generics.BaseNodeMultiple`2[T,U] Field Name: t Field Type: T
+ Name: this Type: Generics.BaseNodeMultiple`2[T,U] Field Name: u Field Type: U
+Before Swap: 1 , 4
+After  Swap: 4 , 1
+Before Swap: 5 , 4
+After  Swap: 4 , 5
+0
+
+Smaller of 3 and -3 is -3
+Program complete. Exiting DNFE.
