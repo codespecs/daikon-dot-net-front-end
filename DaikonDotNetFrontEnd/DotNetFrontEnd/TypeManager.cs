@@ -98,6 +98,13 @@ namespace DotNetFrontEnd
     private Dictionary<Type, bool> isSetHashmap;
 
     /// <summary>
+    /// Map from type to whether that type is a F# hashset.
+    /// Memoizes the lookup
+    /// We use a bool-valued hashmap because there are three states, true, false and unknown.
+    /// </summary>
+    private Dictionary<Type, bool> isFSharpSetHashmap;
+
+    /// <summary>
     /// A map from assembly qualified names to the Type they describe
     /// Used to memoize type references (passed as names) from the IL rewriter
     /// </summary>
@@ -130,6 +137,7 @@ namespace DotNetFrontEnd
       this.isFSharpListHashmap = new Dictionary<Type, bool>();
       this.isLinkedListHashmap = new Dictionary<Type, bool>();
       this.isSetHashmap = new Dictionary<Type, bool>();
+      this.isFSharpSetHashmap = new Dictionary<Type, bool>();
       this.nameTypeMap = new Dictionary<string, Type>();
       this.pureMethodKeys = new Dictionary<Type, ISet<int>>();
       this.pureMethods = new Dictionary<int, MethodInfo>();
@@ -352,7 +360,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Explicityly tests whether type is a C# set.
+    /// Explicitly tests whether type is a C# set.
     /// </summary>
     /// <param name="type">Type to test</param>
     /// <returns>True if type is a C# test, false otherwise.</returns>
@@ -386,6 +394,34 @@ namespace DotNetFrontEnd
     public bool IsSet(Type type)
     {
       return IsElementOfCollectionType(type, this.isSetHashmap, IsSetTest);
+    }
+
+    /// <summary>
+    /// Explicitly tests whether type is a F# set.
+    /// </summary>
+    /// <param name="type">Type to test</param>
+    /// <returns>True if type is a F# test, false otherwise.</returns>
+    private bool IsFsharpSetTest(Type type)
+    {
+      if (this.frontEndArgs.ElementInspectArraysOnly)
+      {
+        return type.IsArray;
+      }
+      else
+      {
+        return type.Namespace == "Microsoft.FSharp.Collections" && 
+          type.Name.StartsWith("FSharpSet");
+      }
+    }
+
+    /// <summary>
+    /// Memoized test whether type is in an F# Set.
+    /// </summary>
+    /// <param name="type">Type to test</param>
+    /// <returns>True if the type is an F# test, false otherwise</returns>
+    public bool IsFSharpSet(Type type)
+    {
+      return IsElementOfCollectionType(type, this.isFSharpSetHashmap, IsFsharpSetTest);
     }
 
     /// <summary>

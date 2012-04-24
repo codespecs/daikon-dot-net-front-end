@@ -628,11 +628,15 @@ namespace DotNetFrontEnd
         }
         else if (typeManager.IsFSharpListImplementer(type))
         {
-          object[] result = TypeManager.ConvertFSharpListToCSharpArray(obj);
+          object[] result = null;
+          if (obj != null)
+          {
+            result = TypeManager.ConvertFSharpListToCSharpArray(obj);
+          }
 
           ProcessVariableAsList(name, result, result.GetType(), writer, depth);
         }
-        else if (typeManager.IsSet(type))
+        else if (typeManager.IsSet(type) || typeManager.IsFSharpSet(type))
         {
           IEnumerable set = (IEnumerable)obj;
           // A set can have only one generic argument -- the element type
@@ -641,9 +645,12 @@ namespace DotNetFrontEnd
           // that can take objects of any type and have any length. Then create an array of the
           // proper length and type and hand that off.
           IList result = new ArrayList();
-          foreach (var item in set)
+          if (set != null)
           {
-            result.Add(item);
+            foreach (var item in set)
+            {
+              result.Add(item);
+            }
           }
           Array convertedList = Array.CreateInstance(setElementType, result.Count);
           result.CopyTo(convertedList, 0);
