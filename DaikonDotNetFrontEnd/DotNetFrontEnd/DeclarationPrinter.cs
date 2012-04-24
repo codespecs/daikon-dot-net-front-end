@@ -243,7 +243,20 @@ namespace DotNetFrontEnd
       }
       else if (this.typeManager.IsSet(type))
       {
+        // It's not an array it's a set. Investigate element type.
+        // Will resolve with TODO(#52).
         DeclareVariableAsList(name, type, parentName, nestingDepth);
+      }
+      else if (this.typeManager.IsFSharpSet(type))
+      {
+        // We don't get information about generics, so all we know for sure is that the elements
+        // are objects.
+        // FSharpLists get converted into object[].
+        Type elementType = type.GetGenericArguments()[0];
+        // It's not an array it's a set. Investigate element type.
+        // Will resolve with TODO(#52).
+        DeclareVariableAsList(name, Array.CreateInstance(elementType, 0).GetType(), 
+            parentName, nestingDepth);
       }
       else
       {
