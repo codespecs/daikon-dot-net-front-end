@@ -97,6 +97,8 @@ namespace DotNetFrontEnd
       classname = synthetic << 1,
       to_string = classname << 1,
       is_param = to_string << 1,
+      no_dups = is_param << 1,
+      not_ordered = no_dups << 1
     }
 
     /// <summary>
@@ -138,6 +140,12 @@ namespace DotNetFrontEnd
       this.PrintPreliminaries();
     }
 
+    /// <summary>
+    /// Returns whether the parentType name should be printed. This won't be printed if it's empty
+    /// or matched a type to be ignored.
+    /// </summary>
+    /// <param name="parentTypeName">Parent name</param>
+    /// <returns>True if the name should be printed, false otherwise</returns>
     private bool ShouldPrintParentPptIfNecessary(String parentTypeName)
     {
       return !String.IsNullOrEmpty(parentTypeName) &&
@@ -245,7 +253,8 @@ namespace DotNetFrontEnd
       {
         // It's not an array it's a set. Investigate element type.
         // Will resolve with TODO(#52).
-        DeclareVariableAsList(name, type, parentName, nestingDepth);
+        DeclareVariableAsList(name, type, parentName, nestingDepth, 
+            VariableFlags.no_dups | VariableFlags.not_ordered);
       }
       else if (this.typeManager.IsFSharpSet(type))
       {
@@ -255,8 +264,8 @@ namespace DotNetFrontEnd
         Type elementType = type.GetGenericArguments()[0];
         // It's not an array it's a set. Investigate element type.
         // Will resolve with TODO(#52).
-        DeclareVariableAsList(name, Array.CreateInstance(elementType, 0).GetType(), 
-            parentName, nestingDepth);
+        DeclareVariableAsList(name, Array.CreateInstance(elementType, 0).GetType(),
+            parentName, nestingDepth, VariableFlags.no_dups | VariableFlags.not_ordered);
       }
       else
       {
@@ -303,10 +312,12 @@ namespace DotNetFrontEnd
     /// call if necessary then descrives the contents of the list.
     /// </summary>
     /// <param name="name">Name of the list variable</param>
-    /// <param name="type">Type of the list variable (Not element type)</param>
+    /// <param name="type">Type of the list variable (not element type)</param>
     /// <param name="parentName">Name of the parent</param>
     /// <param name="nestingDepth">Neesting depth for the list variable</param>
-    private void DeclareVariableAsList(string name, Type type, string parentName, int nestingDepth)
+    /// <param name="collectionFlags">Flags to describe the collection, e.g. no_dups, if any</param>
+    private void DeclareVariableAsList(string name, Type type, string parentName, int nestingDepth,
+        VariableFlags collectionFlags = VariableFlags.none)
     {
       Type elementType = TypeManager.GetListElementType(type);
       // Print the type of the list if it's not primitive
@@ -316,10 +327,9 @@ namespace DotNetFrontEnd
             VariableKind.function, VariableFlags.classname | VariableFlags.synthetic,
             enclosingVar: name, relativeName: GetTypeMethodCall,
             nestingDepth: nestingDepth + 1, parentName: parentName);
-
       }
       PrintList(name + "[..]", elementType, name, VariableKind.array,
-          nestingDepth: nestingDepth, parentName: parentName);
+          nestingDepth: nestingDepth, parentName: parentName, flags: collectionFlags);
     }
 
     /// <summary>
