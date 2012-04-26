@@ -46,9 +46,15 @@ namespace DotNetFrontEnd
 
     /// <summary>
     ///  Name of the interface all sets must implement. Use is similar to a type store, but getting
-    ///  any specific set type wold require an element type.
+    ///  any specific set type would require an element type.
     /// </summary>
     private static readonly string SetInterfaceName = "ISet";
+
+    /// <summary>
+    ///  Name of the interface all maps must implement. Use is similar to a type store, but getting
+    ///  any specific map type would require an element type.
+    /// </summary>
+    private static readonly string MapInterfaceName = "IDictionary";
 
     #endregion
 
@@ -97,6 +103,8 @@ namespace DotNetFrontEnd
     /// </summary>
     private Dictionary<Type, bool> isSetHashmap;
 
+    private Dictionary<Type, bool> isMapHashmap;
+
     /// <summary>
     /// Map from type to whether that type is a F# hashset.
     /// Memoizes the lookup
@@ -133,11 +141,14 @@ namespace DotNetFrontEnd
     public TypeManager(FrontEndArgs args)
     {
       this.frontEndArgs = args;
+
       this.isListHashmap = new Dictionary<Type, bool>();
       this.isFSharpListHashmap = new Dictionary<Type, bool>();
       this.isLinkedListHashmap = new Dictionary<Type, bool>();
       this.isSetHashmap = new Dictionary<Type, bool>();
       this.isFSharpSetHashmap = new Dictionary<Type, bool>();
+      this.isMapHashmap = new Dictionary<Type, bool>();
+
       this.nameTypeMap = new Dictionary<string, Type>();
       this.pureMethodKeys = new Dictionary<Type, ISet<int>>();
       this.pureMethods = new Dictionary<int, MethodInfo>();
@@ -279,25 +290,9 @@ namespace DotNetFrontEnd
     /// <param name="type">Type to check</param>
     /// <returns>Whether type is a C# list</returns>
     private bool IsListTest(Type type)
-    {      
-      // If we haven't seen this type before, check each interface it implements
-      // Store result for memoization
-      if (this.frontEndArgs.ElementInspectArraysOnly)
-      {
-        return type.IsArray;
-      }
-      else
-      {
-        Type[] interfaces = type.GetInterfaces();
-        foreach (Type item in interfaces)
-        {
-          if (item == TypeManager.ListType)
-          {
-            return true;
-          }
-        }
-        return false;
-      }
+    {
+      return SearchForMatchingInterface(type, 
+          interfaceToTest => interfaceToTest == TypeManager.ListType);
     }
 
     /// <summary>
@@ -365,9 +360,28 @@ namespace DotNetFrontEnd
     /// <param name="type">Type to test</param>
     /// <returns>True if type is a C# test, false otherwise.</returns>
     private bool IsSetTest(Type type)
-    {      
-      // If we haven't seen this type before, check each interface it implements
-      // Store result for memoization
+    {
+      return SearchForMatchingInterface(type, 
+          interfaceToTest => interfaceToTest.Name.Contains(SetInterfaceName));
+    }
+
+    /// <summary>
+    /// Delegate used to see if an interface statifies a condition
+    /// </summary>
+    /// <param name="interfaceToCheck">Interface to test</param>
+    /// <returns>True if the interface satisfies the condition, otherwise false</returns>
+    private delegate bool InterfaceMatchTest(Type interfaceToCheck);
+
+    /// <summary>
+    /// Search the interfaces of type looking for an interface satisfying matchTest
+    /// </summary>
+    /// <param name="type">Type whose interfaces to investigate</param>
+    /// <param name="matchTest">Test such that if any interfaces of type pass the test the return 
+    /// is true</param>
+    /// <returns>True if any of type's interfaces pass matchTest, otherwise false</returns>
+    private bool SearchForMatchingInterface(Type type, InterfaceMatchTest matchTest)
+    {
+      // If we are only element inspecting arrays return that result.
       if (this.frontEndArgs.ElementInspectArraysOnly)
       {
         return type.IsArray;
@@ -377,7 +391,7 @@ namespace DotNetFrontEnd
         Type[] interfaces = type.GetInterfaces();
         foreach (Type item in interfaces)
         {
-          if (item.Name.Contains(SetInterfaceName))
+          if (matchTest(item))
           {
             return true;
           }
@@ -401,7 +415,7 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="type">Type to test</param>
     /// <returns>True if type is a F# test, false otherwise.</returns>
-    private bool IsFsharpSetTest(Type type)
+    private bool IsFSharpSetTest(Type type)
     {
       if (this.frontEndArgs.ElementInspectArraysOnly)
       {
@@ -409,7 +423,7 @@ namespace DotNetFrontEnd
       }
       else
       {
-        return type.Namespace == "Microsoft.FSharp.Collections" && 
+        return type.Namespace == "Microsoft.FSharp.Collections" &&
           type.Name.StartsWith("FSharpSet");
       }
     }
@@ -421,7 +435,18 @@ namespace DotNetFrontEnd
     /// <returns>True if the type is an F# test, false otherwise</returns>
     public bool IsFSharpSet(Type type)
     {
-      return IsElementOfCollectionType(type, this.isFSharpSetHashmap, IsFsharpSetTest);
+      return IsElementOfCollectionType(type, this.isFSharpSetHashmap, IsFSharpSetTest);
+    }
+
+    public bool IsMap(Type type)
+    {
+      return IsElementOfCollectionType(type, this.isMapHashmap, IsMapTest);
+    }
+
+    private bool IsMapTest(Type type)
+    {
+      return SearchForMatchingInterface(type, interfaceToTest => 
+          interfaceToTest.Name.StartsWith(MapInterfaceName));
     }
 
     /// <summary>

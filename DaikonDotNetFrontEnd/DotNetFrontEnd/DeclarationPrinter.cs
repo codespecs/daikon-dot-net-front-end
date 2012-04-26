@@ -267,6 +267,10 @@ namespace DotNetFrontEnd
         DeclareVariableAsList(name, Array.CreateInstance(elementType, 0).GetType(),
             parentName, nestingDepth, VariableFlags.no_dups | VariableFlags.not_ordered);
       }
+      else if (this.typeManager.IsMap(type))
+      {
+        // TODO(#54): Implement
+      }
       else
       {
         foreach (FieldInfo field in
