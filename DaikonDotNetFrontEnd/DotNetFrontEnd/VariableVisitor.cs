@@ -305,7 +305,7 @@ namespace DotNetFrontEnd
           {
             Console.Error.WriteLine(" Name: " + staticFieldName + " Type: " + type + " Field Name: "
                 + field.Name + " Field Type: " + field.FieldType);
-            // The field is declared in the decls so Daikon still needs a value, 
+            // The field is declared in the decls so Daikon still needs a value. 
             ReflectiveVisit(staticFieldName + "." + field.Name, null,
                 field.FieldType, writer, depth + 1, VariableModifiers.nonsensical);
           }
