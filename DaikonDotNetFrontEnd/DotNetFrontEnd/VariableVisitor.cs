@@ -587,11 +587,6 @@ namespace DotNetFrontEnd
     private static void ReflectiveVisit(string name, object obj, Type type,
         TextWriter writer, int depth, VariableModifiers flags = VariableModifiers.none)
     {
-      // TODO(#35): Investigate if we can safely apply this -- would remove fragility around
-      // building up the assembly qualified name and storing it in the IL.
-      // type = obj != null ? typeManager.ConvertAssemblyQualifiedNameToType(
-      //    obj.GetType().AssemblyQualifiedName) : type;
-
       if (depth > frontEndArgs.MaxNestingDepth ||
           !frontEndArgs.ShouldPrintVariable(name))
       {
@@ -670,6 +665,11 @@ namespace DotNetFrontEnd
           ListReflectiveVisit(name + "." + linkedListField.Name + "[..]", (IList)expandedList,
               type, writer, depth);
         }
+        else if (typeManager.IsMap(type))
+        {
+          List<DictionaryEntry> entries = new List<DictionaryEntry>();
+          // TODO(#54) : Implement
+        }
         else
         {
           VariableModifiers fieldFlags = VariableModifiers.none;
@@ -690,7 +690,7 @@ namespace DotNetFrontEnd
             {
               Console.Error.WriteLine(" Name: " + name + " Type: " + type + " Field Name: "
                   + field.Name + " Field Type: " + field.FieldType);
-              // The field is declared in the decls so Daikon still needs a value, 
+              // The field is declared in the decls so Daikon still needs a value.
               ReflectiveVisit(name + "." + field.Name, null,
                   field.FieldType, writer, depth + 1, fieldFlags | VariableModifiers.nonsensical);
             }
