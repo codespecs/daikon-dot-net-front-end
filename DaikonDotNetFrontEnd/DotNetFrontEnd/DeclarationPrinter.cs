@@ -309,7 +309,7 @@ namespace DotNetFrontEnd
 
     /// <summary>
     /// Wraps all the declaration necessary for a variable that is a list. Print the GetType()
-    /// call if necessary then descrives the contents of the list.
+    /// call if necessary then describes the contents of the list.
     /// </summary>
     /// <param name="name">Name of the list variable</param>
     /// <param name="type">Type of the list variable (not element type)</param>
