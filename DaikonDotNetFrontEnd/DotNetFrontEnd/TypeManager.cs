@@ -226,8 +226,8 @@ namespace DotNetFrontEnd
         return lookupResult;
       }
 
-      // If we haven't seen this type before, check each interface it implements
-      // Store result for memoization
+      // If we haven't seen this type before, check each interface it implements.
+      // Store result for memoization.
       bool testResult = test(type);
       entries.Add(type, testResult);
       return testResult;

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Collections;
 
 namespace DotNetFrontEnd
 {
@@ -270,6 +271,8 @@ namespace DotNetFrontEnd
       else if (this.typeManager.IsMap(type))
       {
         // TODO(#54): Implement
+        DeclareVariableAsList(name, typeof(List<NonGenericTuple>), parentName, nestingDepth, 
+          VariableFlags.no_dups | VariableFlags.not_ordered);
       }
       else
       {

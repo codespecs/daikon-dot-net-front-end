@@ -667,8 +667,14 @@ namespace DotNetFrontEnd
         }
         else if (typeManager.IsMap(type))
         {
-          List<DictionaryEntry> entries = new List<DictionaryEntry>();
+          List<NonGenericTuple> entries = new List<NonGenericTuple>();
           // TODO(#54) : Implement
+          IDictionary dict = (IDictionary)obj;
+          foreach (DictionaryEntry entry in dict)
+          {
+            entries.Add(new NonGenericTuple(entry.Key, entry.Value));
+          }
+          ListReflectiveVisit(name + "[..]", entries, entries.GetType(), writer, depth);
         }
         else
         {
@@ -1139,5 +1145,16 @@ namespace DotNetFrontEnd
     }
 
     #endregion
+  }
+
+  public class NonGenericTuple
+  {
+    object key;
+    object value;
+    public NonGenericTuple(object key, object value)
+    {
+      this.key = key;
+      this.value = value;
+    }
   }
 }
