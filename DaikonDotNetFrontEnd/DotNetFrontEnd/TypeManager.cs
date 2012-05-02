@@ -497,12 +497,11 @@ namespace DotNetFrontEnd
       if (type is GenericTypeParameterReference || type is GenericMethodParameter
        || type is GenericTypeParameter)
       {
-        if (type is GenericMethodParameter && deeplyInspectGenericParameters)
+        if (deeplyInspectGenericParameters)
         {
-          GenericMethodParameter gmp = (GenericMethodParameter)type;
-          return PrintListOfGenericParameterClassesAndInterfaces(gmp);
+          return PrintListOfGenericParameterClassesAndInterfaces(type);
         }
-        return "System.Object";
+        // return "System.Object";
       }
 
 
@@ -562,7 +561,7 @@ namespace DotNetFrontEnd
     private string PrintListOfGenericParameterClassesAndInterfaces(ITypeReference type)
     {
       GenericParameter gtp = (GenericParameter)type;
-      if (gtp.Constraints != null && gtp.Constraints.Count > 0)
+      if (gtp != null && gtp.Constraints != null && gtp.Constraints.Count > 0)
       {
         // Stub implementation: Just return 1 of the constraints for now.
         // Don't deeply inspect generic types here or else we'll infinite loop.
