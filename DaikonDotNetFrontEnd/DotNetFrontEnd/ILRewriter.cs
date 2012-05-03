@@ -1701,7 +1701,7 @@ namespace DotNetFrontEnd
         IMethodDefinition methodDef)
     {
       return FormatMethodName(methodDef)
-                      + ":::" + transition.ToString().ToUpper(CultureInfo.InvariantCulture);
+          + ":::" + transition.ToString().ToUpper(CultureInfo.InvariantCulture);
     }
 
     /// <summary>
