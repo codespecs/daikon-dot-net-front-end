@@ -12,6 +12,7 @@ namespace DotNetFrontEnd
   using System.Text;
   using Microsoft.Cci;
   using Microsoft.Cci.MutableCodeModel;
+  using System.Text.RegularExpressions;
 
   /// <summary>
   /// Keeps canoncial type references. Converts between CCIMetadata and .NET types.
@@ -459,6 +460,11 @@ namespace DotNetFrontEnd
       }
       catch (Exception ex)
       {
+        if (assemblyQualifiedName.Contains("[["))
+        {
+          return ConvertAssemblyQualifiedNameToType(
+            Regex.Replace(assemblyQualifiedName, "\\[\\[[\\w\\W]*\\]\\]", ""));
+        }
         throw new Exception(String.Format("Unable to convert assembly qualified name {0} to a"
             + " Type.", assemblyQualifiedName), ex);
       }
