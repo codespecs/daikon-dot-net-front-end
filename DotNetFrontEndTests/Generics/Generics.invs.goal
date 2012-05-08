@@ -19,7 +19,7 @@ Generics.DelegateTestStack:::OBJECT
 this has only one value
 this.GetType() == Generics.DelegateTestStack`1[System.Double].class
 this.stackEvent._methodBase == null
-this.stackEvent._methodPtr == 93344248
+this.stackEvent._methodPtr == 41963976
 this.stackEvent._methodPtrAux == 0
 this.stackEvent._target has only one value
 ===========================================================================
@@ -32,7 +32,7 @@ Generics.DelegateTestStack.add_stackEvent(Generics.StackEventHandler<Generics.De
 this.stackEvent == null
 value has only one value
 value._methodBase == null
-value._methodPtr == 93344248
+value._methodPtr == 41963976
 value._methodPtrAux == 0
 value._target has only one value
 value._target.GetType() == Generics.DelegateTestClass.class
@@ -50,7 +50,7 @@ value._methodPtrAux == orig(value._methodPtrAux)
 value._target == orig(value._target)
 this.stackEvent has only one value
 value._methodBase == null
-value._methodPtr == 93344248
+value._methodPtr == 41963976
 value._methodPtrAux == 0
 value._target has only one value
 value._target.GetType() == Generics.DelegateTestClass.class
@@ -389,7 +389,6 @@ list2[] contains no nulls and has only one value, of length 3
 ===========================================================================
 Generics.GenericsTest.SwapIfGreater(T lhs, T rhs):::ENTER
 lhs has only one value
-lhs.GetType() == System.Int32.class
 rhs has only one value
 ===========================================================================
 Generics.GenericsTest.SwapIfGreater(T lhs, T rhs):::EXIT25
