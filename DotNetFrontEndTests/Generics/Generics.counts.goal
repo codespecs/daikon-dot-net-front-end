@@ -18,7 +18,7 @@ Generics.GenericsTest.DefaultTest() ENTER/3: 1 EXIT17/9: 1
 Generics.GenericsTest.DelegateTest() ENTER/3: 1 EXIT11/9: 1
 Generics.GenericsTest.Main() ENTER/3: 1 EXIT89/9: 1
 Generics.GenericsTest.OutTest() ENTER/3: 1 EXIT19/9: 1
-Generics.GenericsTest.PickSmaller(T\_a,\_T\_b,\_T\_smaller) ENTER/12: 1 EXIT23/18: 1
+Generics.GenericsTest.PickSmaller(T\_a,\_T\_b,\_T\_smaller) ENTER/21: 1 EXIT23/27: 1
 Generics.GenericsTest.Swap(System.Collections.Generic.List<T>\_list1,\_System.Collections.Generic.List<T>\_list2) ENTER/27: 1 EXIT18/33: 1
 Generics.GenericsTest.SwapIfGreater(T\_lhs,\_T\_rhs) ENTER/9: 1 EXIT25/15: 1
 Generics.GenericsTest.SwapTest() ENTER/3: 1 EXIT135/9: 1
