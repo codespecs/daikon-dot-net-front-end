@@ -94,6 +94,7 @@ namespace DotNetFrontEnd
       dtrace_append,
       enum_underlying_values,
       force_unix_newline,
+      friendly_dec_types,
       linked_lists,
       dont_catch_exceptions,
       output_location,
@@ -232,6 +233,8 @@ namespace DotNetFrontEnd
 
       // TODO(#41): Set to false before release.
       this.programArguments.Add(PossibleArgument.dont_catch_exceptions, true.ToString());
+
+      this.programArguments.Add(PossibleArgument.friendly_dec_types, "false");
     }
 
     /// <summary>
@@ -662,6 +665,16 @@ namespace DotNetFrontEnd
     {
       get;
       private set;
+    }
+
+    /// <summary>
+    /// Whether dec-types should be printed in the style they are typed in as.
+    /// If false we print assembly qualified names, e.g. Foo`1[System.Int]
+    /// If true we print Foo&lt;Int&gt; 
+    /// </summary>
+    public bool FriendlyDecTypes
+    {
+      get { return bool.Parse(this.programArguments[PossibleArgument.friendly_dec_types]); }
     }
 
     #endregion
