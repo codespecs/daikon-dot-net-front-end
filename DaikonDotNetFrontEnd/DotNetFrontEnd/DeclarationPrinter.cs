@@ -809,7 +809,7 @@ namespace DotNetFrontEnd
     /// <param name="type">The type whose daikon-compliant name to get</param>
     /// <returns>If the type is standard, the java name for that type, else just 
     /// the type name</returns>
-    private static string GetDecType(Type type)
+    private string GetDecType(Type type)
     {
       if (type.IsEquivalentTo(TypeManager.BooleanType))
       {
@@ -859,7 +859,17 @@ namespace DotNetFrontEnd
       }
       else
       {
-        return type.ToString();
+        string typeStr= type.ToString();
+        if (this.frontEndArgs.FriendlyDecTypes)
+        {
+          typeStr = Regex.Replace(typeStr, @"`\d", "");
+          typeStr = Regex.Replace(typeStr, @"\[", "<");
+          typeStr = Regex.Replace(typeStr, @"\]", ">");
+          // We messed up array specifications with our above replacements
+          typeStr = Regex.Replace(typeStr, "<>", "[]");
+          typeStr = Regex.Replace(typeStr, @"\+", @".");
+        }
+        return typeStr;
       }
     }
 

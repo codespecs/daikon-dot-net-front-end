@@ -234,7 +234,7 @@ namespace Generics
     /// <param name="a"></param>
     /// <param name="b"></param>
     /// <param name="smaller"></param>
-    private static void PickSmaller<T>(T a, T b, out T smaller) where T : System.IComparable<T>
+    private static void PickSmaller<T>(T a, T b, out T smaller) where T : struct, System.IComparable<T>
     {
       if (a.CompareTo(b) < 0)
       {
