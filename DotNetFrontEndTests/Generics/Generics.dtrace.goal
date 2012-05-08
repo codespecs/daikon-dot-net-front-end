@@ -4,6 +4,7 @@ input-language C#.NET
 
 ppt Generics.BaseNodeMultiple..ctor(T\_t,\_U\_u):::ENTER
 ppt-type enter
+parent parent Generics.BaseNodeMultiple:::CLASS 1
   variable t
     var-kind variable
     dec-type java.lang.Object
@@ -61,7 +62,7 @@ parent parent Generics.BaseNodeMultiple:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.BaseNodeMultiple`2[T,U]
+    dec-type Generics.BaseNodeMultiple<T,U>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -148,7 +149,7 @@ parent parent Generics.BaseNodeMultiple:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.BaseNodeMultiple`2[T,U]
+    dec-type Generics.BaseNodeMultiple<T,U>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -210,7 +211,7 @@ ppt-type enter
 parent parent Generics.BaseNodeMultiple:::OBJECT 1
   variable this
     var-kind variable
-    dec-type Generics.BaseNodeMultiple`2[T,U]
+    dec-type Generics.BaseNodeMultiple<T,U>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -271,7 +272,7 @@ parent parent Generics.BaseNodeMultiple:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.BaseNodeMultiple`2[T,U]
+    dec-type Generics.BaseNodeMultiple<T,U>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -332,7 +333,7 @@ parent parent Generics.BaseNodeMultiple:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.BaseNodeMultiple`2[T,U]
+    dec-type Generics.BaseNodeMultiple<T,U>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -376,11 +377,15 @@ parent parent Generics.BaseNodeMultiple:::OBJECT 1
     comparability 22
     parent Generics.BaseNodeMultiple:::OBJECT 1
 
+ppt Generics.BaseNodeMultiple:::CLASS
+ppt-type class
+
 ppt Generics.BaseNodeMultiple:::OBJECT
 ppt-type object
+parent parent Generics.BaseNodeMultiple:::CLASS 1
   variable this
     var-kind variable
-    dec-type Generics.BaseNodeMultiple`2[T,U]
+    dec-type Generics.BaseNodeMultiple<T,U>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -420,6 +425,7 @@ ppt-type object
 
 ppt Generics.DelegateTestClass..ctor():::ENTER
 ppt-type enter
+parent parent Generics.DelegateTestClass:::CLASS 1
 
 ppt Generics.DelegateTestClass..ctor():::EXIT2
 ppt-type subexit
@@ -488,7 +494,7 @@ ppt-type enter
 parent parent Generics.DelegateTestClass:::OBJECT 1
   variable args
     var-kind variable
-    dec-type Generics.DelegateTestStack`1+StackEventArgs[T]
+    dec-type Generics.DelegateTestStack.StackEventArgs<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -501,7 +507,7 @@ parent parent Generics.DelegateTestClass:::OBJECT 1
     comparability 22
   variable stack
     var-kind variable
-    dec-type Generics.DelegateTestStack`1[System.Object]
+    dec-type Generics.DelegateTestStack<System.Object>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -515,7 +521,7 @@ parent parent Generics.DelegateTestClass:::OBJECT 1
   variable stack.stackEvent
     var-kind field stackEvent
     enclosing-var stack
-    dec-type Generics.StackEventHandler`2[Generics.DelegateTestStack`1[System.Object],Generics.DelegateTestStack`1+StackEventArgs[System.Object]]
+    dec-type Generics.StackEventHandler<Generics.DelegateTestStack<System.Object>,Generics.DelegateTestStack.StackEventArgs<System.Object>>
     rep-type hashcode
     comparability 22
   variable stack.stackEvent._methodBase
@@ -563,7 +569,7 @@ ppt-type subexit
 parent parent Generics.DelegateTestClass:::OBJECT 1
   variable args
     var-kind variable
-    dec-type Generics.DelegateTestStack`1+StackEventArgs[T]
+    dec-type Generics.DelegateTestStack.StackEventArgs<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -588,7 +594,7 @@ parent parent Generics.DelegateTestClass:::OBJECT 1
     comparability 22
   variable stack
     var-kind variable
-    dec-type Generics.DelegateTestStack`1[System.Object]
+    dec-type Generics.DelegateTestStack<System.Object>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -602,7 +608,7 @@ parent parent Generics.DelegateTestClass:::OBJECT 1
   variable stack.stackEvent
     var-kind field stackEvent
     enclosing-var stack
-    dec-type Generics.StackEventHandler`2[Generics.DelegateTestStack`1[System.Object],Generics.DelegateTestStack`1+StackEventArgs[System.Object]]
+    dec-type Generics.StackEventHandler<Generics.DelegateTestStack<System.Object>,Generics.DelegateTestStack.StackEventArgs<System.Object>>
     rep-type hashcode
     comparability 22
   variable stack.stackEvent._methodBase
@@ -650,7 +656,7 @@ ppt-type subexit
 parent parent Generics.DelegateTestClass:::OBJECT 1
   variable args
     var-kind variable
-    dec-type Generics.DelegateTestStack`1+StackEventArgs[T]
+    dec-type Generics.DelegateTestStack.StackEventArgs<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -675,7 +681,7 @@ parent parent Generics.DelegateTestClass:::OBJECT 1
     comparability 22
   variable stack
     var-kind variable
-    dec-type Generics.DelegateTestStack`1[System.Object]
+    dec-type Generics.DelegateTestStack<System.Object>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -689,7 +695,7 @@ parent parent Generics.DelegateTestClass:::OBJECT 1
   variable stack.stackEvent
     var-kind field stackEvent
     enclosing-var stack
-    dec-type Generics.StackEventHandler`2[Generics.DelegateTestStack`1[System.Object],Generics.DelegateTestStack`1+StackEventArgs[System.Object]]
+    dec-type Generics.StackEventHandler<Generics.DelegateTestStack<System.Object>,Generics.DelegateTestStack.StackEventArgs<System.Object>>
     rep-type hashcode
     comparability 22
   variable stack.stackEvent._methodBase
@@ -732,8 +738,12 @@ parent parent Generics.DelegateTestClass:::OBJECT 1
     comparability 22
     parent Generics.DelegateTestClass:::OBJECT 1
 
+ppt Generics.DelegateTestClass:::CLASS
+ppt-type class
+
 ppt Generics.DelegateTestClass:::OBJECT
 ppt-type object
+parent parent Generics.DelegateTestClass:::CLASS 1
   variable this
     var-kind variable
     dec-type Generics.DelegateTestClass
@@ -750,6 +760,7 @@ ppt-type object
 
 ppt Generics.DelegateTestExampleClass..ctor():::ENTER
 ppt-type enter
+parent parent Generics.DelegateTestExampleClass:::CLASS 1
 
 ppt Generics.DelegateTestExampleClass..ctor():::EXIT2
 ppt-type subexit
@@ -992,8 +1003,12 @@ parent parent Generics.DelegateTestExampleClass:::OBJECT 1
     comparability 22
     parent Generics.DelegateTestExampleClass:::OBJECT 1
 
+ppt Generics.DelegateTestExampleClass:::CLASS
+ppt-type class
+
 ppt Generics.DelegateTestExampleClass:::OBJECT
 ppt-type object
+parent parent Generics.DelegateTestExampleClass:::CLASS 1
   variable this
     var-kind variable
     dec-type Generics.DelegateTestExampleClass
@@ -1010,6 +1025,7 @@ ppt-type object
 
 ppt Generics.DelegateTestStack..ctor():::ENTER
 ppt-type enter
+parent parent Generics.DelegateTestStack:::CLASS 1
 
 ppt Generics.DelegateTestStack..ctor():::EXIT2
 ppt-type subexit
@@ -1028,7 +1044,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.DelegateTestStack`1[T]
+    dec-type Generics.DelegateTestStack<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -1044,7 +1060,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent
     var-kind field stackEvent
     enclosing-var this
-    dec-type Generics.StackEventHandler`2[Generics.DelegateTestStack`1[T],Generics.DelegateTestStack`1+StackEventArgs[T]]
+    dec-type Generics.StackEventHandler<Generics.DelegateTestStack<T>,Generics.DelegateTestStack.StackEventArgs<T>>
     rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
@@ -1094,7 +1110,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.DelegateTestStack`1[T]
+    dec-type Generics.DelegateTestStack<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -1110,7 +1126,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent
     var-kind field stackEvent
     enclosing-var this
-    dec-type Generics.StackEventHandler`2[Generics.DelegateTestStack`1[T],Generics.DelegateTestStack`1+StackEventArgs[T]]
+    dec-type Generics.StackEventHandler<Generics.DelegateTestStack<T>,Generics.DelegateTestStack.StackEventArgs<T>>
     rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
@@ -1148,7 +1164,7 @@ ppt-type enter
 parent parent Generics.DelegateTestStack:::OBJECT 1
   variable a
     var-kind variable
-    dec-type Generics.DelegateTestStack`1+StackEventArgs[T]
+    dec-type Generics.DelegateTestStack.StackEventArgs<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -1161,7 +1177,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.DelegateTestStack`1[T]
+    dec-type Generics.DelegateTestStack<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -1177,7 +1193,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent
     var-kind field stackEvent
     enclosing-var this
-    dec-type Generics.StackEventHandler`2[Generics.DelegateTestStack`1[T],Generics.DelegateTestStack`1+StackEventArgs[T]]
+    dec-type Generics.StackEventHandler<Generics.DelegateTestStack<T>,Generics.DelegateTestStack.StackEventArgs<T>>
     rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
@@ -1215,7 +1231,7 @@ ppt-type subexit
 parent parent Generics.DelegateTestStack:::OBJECT 1
   variable a
     var-kind variable
-    dec-type Generics.DelegateTestStack`1+StackEventArgs[T]
+    dec-type Generics.DelegateTestStack.StackEventArgs<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -1240,7 +1256,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.DelegateTestStack`1[T]
+    dec-type Generics.DelegateTestStack<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -1256,7 +1272,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent
     var-kind field stackEvent
     enclosing-var this
-    dec-type Generics.StackEventHandler`2[Generics.DelegateTestStack`1[T],Generics.DelegateTestStack`1+StackEventArgs[T]]
+    dec-type Generics.StackEventHandler<Generics.DelegateTestStack<T>,Generics.DelegateTestStack.StackEventArgs<T>>
     rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
@@ -1294,7 +1310,7 @@ ppt-type subexit
 parent parent Generics.DelegateTestStack:::OBJECT 1
   variable a
     var-kind variable
-    dec-type Generics.DelegateTestStack`1+StackEventArgs[T]
+    dec-type Generics.DelegateTestStack.StackEventArgs<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -1319,7 +1335,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.DelegateTestStack`1[T]
+    dec-type Generics.DelegateTestStack<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -1335,7 +1351,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent
     var-kind field stackEvent
     enclosing-var this
-    dec-type Generics.StackEventHandler`2[Generics.DelegateTestStack`1[T],Generics.DelegateTestStack`1+StackEventArgs[T]]
+    dec-type Generics.StackEventHandler<Generics.DelegateTestStack<T>,Generics.DelegateTestStack.StackEventArgs<T>>
     rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
@@ -1370,6 +1386,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
 
 ppt Generics.DelegateTestStack.StackEventArgs..ctor():::ENTER
 ppt-type enter
+parent parent Generics.DelegateTestStack.StackEventArgs:::CLASS 1
 
 ppt Generics.DelegateTestStack.StackEventArgs..ctor():::EXIT2
 ppt-type subexit
@@ -1388,7 +1405,7 @@ parent parent Generics.DelegateTestStack.StackEventArgs:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.DelegateTestStack`1+StackEventArgs[T]
+    dec-type Generics.DelegateTestStack.StackEventArgs<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -1419,7 +1436,7 @@ parent parent Generics.DelegateTestStack.StackEventArgs:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.DelegateTestStack`1+StackEventArgs[T]
+    dec-type Generics.DelegateTestStack.StackEventArgs<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -1433,11 +1450,15 @@ parent parent Generics.DelegateTestStack.StackEventArgs:::OBJECT 1
     comparability 22
     parent Generics.DelegateTestStack.StackEventArgs:::OBJECT 1
 
+ppt Generics.DelegateTestStack.StackEventArgs:::CLASS
+ppt-type class
+
 ppt Generics.DelegateTestStack.StackEventArgs:::OBJECT
 ppt-type object
+parent parent Generics.DelegateTestStack.StackEventArgs:::CLASS 1
   variable this
     var-kind variable
-    dec-type Generics.DelegateTestStack`1+StackEventArgs[T]
+    dec-type Generics.DelegateTestStack.StackEventArgs<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -1454,7 +1475,7 @@ ppt-type enter
 parent parent Generics.DelegateTestStack:::OBJECT 1
   variable this
     var-kind variable
-    dec-type Generics.DelegateTestStack`1[T]
+    dec-type Generics.DelegateTestStack<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -1470,7 +1491,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent
     var-kind field stackEvent
     enclosing-var this
-    dec-type Generics.StackEventHandler`2[Generics.DelegateTestStack`1[T],Generics.DelegateTestStack`1+StackEventArgs[T]]
+    dec-type Generics.StackEventHandler<Generics.DelegateTestStack<T>,Generics.DelegateTestStack.StackEventArgs<T>>
     rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
@@ -1504,7 +1525,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     parent Generics.DelegateTestStack:::OBJECT 1
   variable value
     var-kind variable
-    dec-type Generics.StackEventHandler`2[Generics.DelegateTestStack`1[System.Object],Generics.DelegateTestStack`1+StackEventArgs[T]]
+    dec-type Generics.StackEventHandler<Generics.DelegateTestStack<System.Object>,Generics.DelegateTestStack.StackEventArgs<T>>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -1564,7 +1585,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.DelegateTestStack`1[T]
+    dec-type Generics.DelegateTestStack<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -1580,7 +1601,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent
     var-kind field stackEvent
     enclosing-var this
-    dec-type Generics.StackEventHandler`2[Generics.DelegateTestStack`1[T],Generics.DelegateTestStack`1+StackEventArgs[T]]
+    dec-type Generics.StackEventHandler<Generics.DelegateTestStack<T>,Generics.DelegateTestStack.StackEventArgs<T>>
     rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
@@ -1614,7 +1635,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     parent Generics.DelegateTestStack:::OBJECT 1
   variable value
     var-kind variable
-    dec-type Generics.StackEventHandler`2[Generics.DelegateTestStack`1[System.Object],Generics.DelegateTestStack`1+StackEventArgs[T]]
+    dec-type Generics.StackEventHandler<Generics.DelegateTestStack<System.Object>,Generics.DelegateTestStack.StackEventArgs<T>>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -1674,7 +1695,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.DelegateTestStack`1[T]
+    dec-type Generics.DelegateTestStack<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -1690,7 +1711,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent
     var-kind field stackEvent
     enclosing-var this
-    dec-type Generics.StackEventHandler`2[Generics.DelegateTestStack`1[T],Generics.DelegateTestStack`1+StackEventArgs[T]]
+    dec-type Generics.StackEventHandler<Generics.DelegateTestStack<T>,Generics.DelegateTestStack.StackEventArgs<T>>
     rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
@@ -1724,7 +1745,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     parent Generics.DelegateTestStack:::OBJECT 1
   variable value
     var-kind variable
-    dec-type Generics.StackEventHandler`2[Generics.DelegateTestStack`1[System.Object],Generics.DelegateTestStack`1+StackEventArgs[T]]
+    dec-type Generics.StackEventHandler<Generics.DelegateTestStack<System.Object>,Generics.DelegateTestStack.StackEventArgs<T>>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -1772,7 +1793,7 @@ ppt-type enter
 parent parent Generics.DelegateTestStack:::OBJECT 1
   variable this
     var-kind variable
-    dec-type Generics.DelegateTestStack`1[T]
+    dec-type Generics.DelegateTestStack<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -1788,7 +1809,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent
     var-kind field stackEvent
     enclosing-var this
-    dec-type Generics.StackEventHandler`2[Generics.DelegateTestStack`1[T],Generics.DelegateTestStack`1+StackEventArgs[T]]
+    dec-type Generics.StackEventHandler<Generics.DelegateTestStack<T>,Generics.DelegateTestStack.StackEventArgs<T>>
     rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
@@ -1822,7 +1843,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     parent Generics.DelegateTestStack:::OBJECT 1
   variable value
     var-kind variable
-    dec-type Generics.StackEventHandler`2[Generics.DelegateTestStack`1[System.Object],Generics.DelegateTestStack`1+StackEventArgs[T]]
+    dec-type Generics.StackEventHandler<Generics.DelegateTestStack<System.Object>,Generics.DelegateTestStack.StackEventArgs<T>>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -1882,7 +1903,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.DelegateTestStack`1[T]
+    dec-type Generics.DelegateTestStack<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -1898,7 +1919,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent
     var-kind field stackEvent
     enclosing-var this
-    dec-type Generics.StackEventHandler`2[Generics.DelegateTestStack`1[T],Generics.DelegateTestStack`1+StackEventArgs[T]]
+    dec-type Generics.StackEventHandler<Generics.DelegateTestStack<T>,Generics.DelegateTestStack.StackEventArgs<T>>
     rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
@@ -1932,7 +1953,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     parent Generics.DelegateTestStack:::OBJECT 1
   variable value
     var-kind variable
-    dec-type Generics.StackEventHandler`2[Generics.DelegateTestStack`1[System.Object],Generics.DelegateTestStack`1+StackEventArgs[T]]
+    dec-type Generics.StackEventHandler<Generics.DelegateTestStack<System.Object>,Generics.DelegateTestStack.StackEventArgs<T>>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -1992,7 +2013,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.DelegateTestStack`1[T]
+    dec-type Generics.DelegateTestStack<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -2008,7 +2029,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent
     var-kind field stackEvent
     enclosing-var this
-    dec-type Generics.StackEventHandler`2[Generics.DelegateTestStack`1[T],Generics.DelegateTestStack`1+StackEventArgs[T]]
+    dec-type Generics.StackEventHandler<Generics.DelegateTestStack<T>,Generics.DelegateTestStack.StackEventArgs<T>>
     rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
@@ -2042,7 +2063,7 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     parent Generics.DelegateTestStack:::OBJECT 1
   variable value
     var-kind variable
-    dec-type Generics.StackEventHandler`2[Generics.DelegateTestStack`1[System.Object],Generics.DelegateTestStack`1+StackEventArgs[T]]
+    dec-type Generics.StackEventHandler<Generics.DelegateTestStack<System.Object>,Generics.DelegateTestStack.StackEventArgs<T>>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -2085,11 +2106,15 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     flags synthetic classname
     comparability 22
 
+ppt Generics.DelegateTestStack:::CLASS
+ppt-type class
+
 ppt Generics.DelegateTestStack:::OBJECT
 ppt-type object
+parent parent Generics.DelegateTestStack:::CLASS 1
   variable this
     var-kind variable
-    dec-type Generics.DelegateTestStack`1[T]
+    dec-type Generics.DelegateTestStack<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -2103,7 +2128,7 @@ ppt-type object
   variable this.stackEvent
     var-kind field stackEvent
     enclosing-var this
-    dec-type Generics.StackEventHandler`2[Generics.DelegateTestStack`1[T],Generics.DelegateTestStack`1+StackEventArgs[T]]
+    dec-type Generics.StackEventHandler<Generics.DelegateTestStack<T>,Generics.DelegateTestStack.StackEventArgs<T>>
     rep-type hashcode
     comparability 22
   variable this.stackEvent._methodBase
@@ -2133,6 +2158,7 @@ ppt-type object
 
 ppt Generics.GenericList..ctor():::ENTER
 ppt-type enter
+parent parent Generics.GenericList:::CLASS 1
 
 ppt Generics.GenericList..ctor():::EXIT8
 ppt-type subexit
@@ -2151,7 +2177,7 @@ parent parent Generics.GenericList:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -2167,7 +2193,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head
     var-kind field head
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -2189,7 +2215,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head.next
     var-kind field next
     enclosing-var this.head
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -2211,7 +2237,7 @@ parent parent Generics.GenericList:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -2227,7 +2253,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head
     var-kind field head
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -2249,7 +2275,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head.next
     var-kind field next
     enclosing-var this.head
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -2258,7 +2284,7 @@ ppt Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 ppt-type enter
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+<GetEnumerator>d__0[T]
+    dec-type Generics.GenericList.<GetEnumerator>d__0<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -2284,7 +2310,7 @@ ppt-type enter
   variable this.<>4__this
     var-kind field <>4__this
     enclosing-var this
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     comparability 22
   variable this.<>4__this.GetType()
@@ -2297,13 +2323,13 @@ ppt-type enter
   variable this.<>4__this.head
     var-kind field head
     enclosing-var this.<>4__this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1
     var-kind field <current>5__1
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1.GetType()
@@ -2322,7 +2348,7 @@ ppt-type enter
   variable this.<current>5__1.next
     var-kind field next
     enclosing-var this.<current>5__1
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
@@ -2347,7 +2373,7 @@ ppt-type subexit
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+<GetEnumerator>d__0[T]
+    dec-type Generics.GenericList.<GetEnumerator>d__0<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -2373,7 +2399,7 @@ ppt-type subexit
   variable this.<>4__this
     var-kind field <>4__this
     enclosing-var this
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     comparability 22
   variable this.<>4__this.GetType()
@@ -2386,13 +2412,13 @@ ppt-type subexit
   variable this.<>4__this.head
     var-kind field head
     enclosing-var this.<>4__this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1
     var-kind field <current>5__1
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1.GetType()
@@ -2411,7 +2437,7 @@ ppt-type subexit
   variable this.<current>5__1.next
     var-kind field next
     enclosing-var this.<current>5__1
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
@@ -2436,7 +2462,7 @@ ppt-type subexit
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+<GetEnumerator>d__0[T]
+    dec-type Generics.GenericList.<GetEnumerator>d__0<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -2462,7 +2488,7 @@ ppt-type subexit
   variable this.<>4__this
     var-kind field <>4__this
     enclosing-var this
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     comparability 22
   variable this.<>4__this.GetType()
@@ -2475,13 +2501,13 @@ ppt-type subexit
   variable this.<>4__this.head
     var-kind field head
     enclosing-var this.<>4__this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1
     var-kind field <current>5__1
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1.GetType()
@@ -2500,7 +2526,7 @@ ppt-type subexit
   variable this.<current>5__1.next
     var-kind field next
     enclosing-var this.<current>5__1
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
@@ -2525,7 +2551,7 @@ ppt-type subexit
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+<GetEnumerator>d__0[T]
+    dec-type Generics.GenericList.<GetEnumerator>d__0<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -2551,7 +2577,7 @@ ppt-type subexit
   variable this.<>4__this
     var-kind field <>4__this
     enclosing-var this
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     comparability 22
   variable this.<>4__this.GetType()
@@ -2564,13 +2590,13 @@ ppt-type subexit
   variable this.<>4__this.head
     var-kind field head
     enclosing-var this.<>4__this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1
     var-kind field <current>5__1
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1.GetType()
@@ -2589,7 +2615,7 @@ ppt-type subexit
   variable this.<current>5__1.next
     var-kind field next
     enclosing-var this.<current>5__1
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
@@ -2614,7 +2640,7 @@ ppt-type subexit
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+<GetEnumerator>d__0[T]
+    dec-type Generics.GenericList.<GetEnumerator>d__0<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -2640,7 +2666,7 @@ ppt-type subexit
   variable this.<>4__this
     var-kind field <>4__this
     enclosing-var this
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     comparability 22
   variable this.<>4__this.GetType()
@@ -2653,13 +2679,13 @@ ppt-type subexit
   variable this.<>4__this.head
     var-kind field head
     enclosing-var this.<>4__this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1
     var-kind field <current>5__1
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1.GetType()
@@ -2678,7 +2704,7 @@ ppt-type subexit
   variable this.<current>5__1.next
     var-kind field next
     enclosing-var this.<current>5__1
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
@@ -2686,7 +2712,7 @@ ppt Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumera
 ppt-type enter
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+<GetEnumerator>d__0[T]
+    dec-type Generics.GenericList.<GetEnumerator>d__0<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -2712,7 +2738,7 @@ ppt-type enter
   variable this.<>4__this
     var-kind field <>4__this
     enclosing-var this
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     comparability 22
   variable this.<>4__this.GetType()
@@ -2725,13 +2751,13 @@ ppt-type enter
   variable this.<>4__this.head
     var-kind field head
     enclosing-var this.<>4__this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1
     var-kind field <current>5__1
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1.GetType()
@@ -2750,7 +2776,7 @@ ppt-type enter
   variable this.<current>5__1.next
     var-kind field next
     enclosing-var this.<current>5__1
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
@@ -2782,7 +2808,7 @@ ppt-type subexit
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+<GetEnumerator>d__0[T]
+    dec-type Generics.GenericList.<GetEnumerator>d__0<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -2808,7 +2834,7 @@ ppt-type subexit
   variable this.<>4__this
     var-kind field <>4__this
     enclosing-var this
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     comparability 22
   variable this.<>4__this.GetType()
@@ -2821,13 +2847,13 @@ ppt-type subexit
   variable this.<>4__this.head
     var-kind field head
     enclosing-var this.<>4__this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1
     var-kind field <current>5__1
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1.GetType()
@@ -2846,7 +2872,7 @@ ppt-type subexit
   variable this.<current>5__1.next
     var-kind field next
     enclosing-var this.<current>5__1
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
@@ -2878,7 +2904,7 @@ ppt-type subexit
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+<GetEnumerator>d__0[T]
+    dec-type Generics.GenericList.<GetEnumerator>d__0<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -2904,7 +2930,7 @@ ppt-type subexit
   variable this.<>4__this
     var-kind field <>4__this
     enclosing-var this
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     comparability 22
   variable this.<>4__this.GetType()
@@ -2917,13 +2943,13 @@ ppt-type subexit
   variable this.<>4__this.head
     var-kind field head
     enclosing-var this.<>4__this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1
     var-kind field <current>5__1
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1.GetType()
@@ -2942,7 +2968,7 @@ ppt-type subexit
   variable this.<current>5__1.next
     var-kind field next
     enclosing-var this.<current>5__1
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
@@ -2974,7 +3000,7 @@ ppt-type subexit
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+<GetEnumerator>d__0[T]
+    dec-type Generics.GenericList.<GetEnumerator>d__0<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -3000,7 +3026,7 @@ ppt-type subexit
   variable this.<>4__this
     var-kind field <>4__this
     enclosing-var this
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     comparability 22
   variable this.<>4__this.GetType()
@@ -3013,13 +3039,13 @@ ppt-type subexit
   variable this.<>4__this.head
     var-kind field head
     enclosing-var this.<>4__this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1
     var-kind field <current>5__1
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1.GetType()
@@ -3038,7 +3064,7 @@ ppt-type subexit
   variable this.<current>5__1.next
     var-kind field next
     enclosing-var this.<current>5__1
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
@@ -3046,7 +3072,7 @@ ppt Generics.GenericList.<GetEnumerator>d__0.System.Collections.IEnumerator.Rese
 ppt-type enter
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+<GetEnumerator>d__0[T]
+    dec-type Generics.GenericList.<GetEnumerator>d__0<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -3072,7 +3098,7 @@ ppt-type enter
   variable this.<>4__this
     var-kind field <>4__this
     enclosing-var this
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     comparability 22
   variable this.<>4__this.GetType()
@@ -3085,13 +3111,13 @@ ppt-type enter
   variable this.<>4__this.head
     var-kind field head
     enclosing-var this.<>4__this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1
     var-kind field <current>5__1
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1.GetType()
@@ -3110,7 +3136,7 @@ ppt-type enter
   variable this.<current>5__1.next
     var-kind field next
     enclosing-var this.<current>5__1
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
@@ -3130,7 +3156,7 @@ ppt-type subexit
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+<GetEnumerator>d__0[T]
+    dec-type Generics.GenericList.<GetEnumerator>d__0<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -3156,7 +3182,7 @@ ppt-type subexit
   variable this.<>4__this
     var-kind field <>4__this
     enclosing-var this
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     comparability 22
   variable this.<>4__this.GetType()
@@ -3169,13 +3195,13 @@ ppt-type subexit
   variable this.<>4__this.head
     var-kind field head
     enclosing-var this.<>4__this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1
     var-kind field <current>5__1
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1.GetType()
@@ -3194,7 +3220,7 @@ ppt-type subexit
   variable this.<current>5__1.next
     var-kind field next
     enclosing-var this.<current>5__1
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
@@ -3214,7 +3240,7 @@ ppt-type subexit
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+<GetEnumerator>d__0[T]
+    dec-type Generics.GenericList.<GetEnumerator>d__0<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -3240,7 +3266,7 @@ ppt-type subexit
   variable this.<>4__this
     var-kind field <>4__this
     enclosing-var this
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     comparability 22
   variable this.<>4__this.GetType()
@@ -3253,13 +3279,13 @@ ppt-type subexit
   variable this.<>4__this.head
     var-kind field head
     enclosing-var this.<>4__this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1
     var-kind field <current>5__1
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1.GetType()
@@ -3278,7 +3304,7 @@ ppt-type subexit
   variable this.<current>5__1.next
     var-kind field next
     enclosing-var this.<current>5__1
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
@@ -3298,7 +3324,7 @@ ppt-type subexit
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+<GetEnumerator>d__0[T]
+    dec-type Generics.GenericList.<GetEnumerator>d__0<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -3324,7 +3350,7 @@ ppt-type subexit
   variable this.<>4__this
     var-kind field <>4__this
     enclosing-var this
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     comparability 22
   variable this.<>4__this.GetType()
@@ -3337,13 +3363,13 @@ ppt-type subexit
   variable this.<>4__this.head
     var-kind field head
     enclosing-var this.<>4__this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1
     var-kind field <current>5__1
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1.GetType()
@@ -3362,7 +3388,7 @@ ppt-type subexit
   variable this.<current>5__1.next
     var-kind field next
     enclosing-var this.<current>5__1
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
@@ -3370,7 +3396,7 @@ ppt Generics.GenericList.<GetEnumerator>d__0.System.Collections.IEnumerator.get_
 ppt-type enter
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+<GetEnumerator>d__0[T]
+    dec-type Generics.GenericList.<GetEnumerator>d__0<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -3396,7 +3422,7 @@ ppt-type enter
   variable this.<>4__this
     var-kind field <>4__this
     enclosing-var this
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     comparability 22
   variable this.<>4__this.GetType()
@@ -3409,13 +3435,13 @@ ppt-type enter
   variable this.<>4__this.head
     var-kind field head
     enclosing-var this.<>4__this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1
     var-kind field <current>5__1
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1.GetType()
@@ -3434,7 +3460,7 @@ ppt-type enter
   variable this.<current>5__1.next
     var-kind field next
     enclosing-var this.<current>5__1
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
@@ -3466,7 +3492,7 @@ ppt-type subexit
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+<GetEnumerator>d__0[T]
+    dec-type Generics.GenericList.<GetEnumerator>d__0<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -3492,7 +3518,7 @@ ppt-type subexit
   variable this.<>4__this
     var-kind field <>4__this
     enclosing-var this
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     comparability 22
   variable this.<>4__this.GetType()
@@ -3505,13 +3531,13 @@ ppt-type subexit
   variable this.<>4__this.head
     var-kind field head
     enclosing-var this.<>4__this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1
     var-kind field <current>5__1
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1.GetType()
@@ -3530,7 +3556,7 @@ ppt-type subexit
   variable this.<current>5__1.next
     var-kind field next
     enclosing-var this.<current>5__1
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
@@ -3562,7 +3588,7 @@ ppt-type subexit
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+<GetEnumerator>d__0[T]
+    dec-type Generics.GenericList.<GetEnumerator>d__0<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -3588,7 +3614,7 @@ ppt-type subexit
   variable this.<>4__this
     var-kind field <>4__this
     enclosing-var this
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     comparability 22
   variable this.<>4__this.GetType()
@@ -3601,13 +3627,13 @@ ppt-type subexit
   variable this.<>4__this.head
     var-kind field head
     enclosing-var this.<>4__this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1
     var-kind field <current>5__1
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1.GetType()
@@ -3626,7 +3652,7 @@ ppt-type subexit
   variable this.<current>5__1.next
     var-kind field next
     enclosing-var this.<current>5__1
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
@@ -3658,7 +3684,7 @@ ppt-type subexit
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+<GetEnumerator>d__0[T]
+    dec-type Generics.GenericList.<GetEnumerator>d__0<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -3684,7 +3710,7 @@ ppt-type subexit
   variable this.<>4__this
     var-kind field <>4__this
     enclosing-var this
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     comparability 22
   variable this.<>4__this.GetType()
@@ -3697,13 +3723,13 @@ ppt-type subexit
   variable this.<>4__this.head
     var-kind field head
     enclosing-var this.<>4__this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1
     var-kind field <current>5__1
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1.GetType()
@@ -3722,7 +3748,7 @@ ppt-type subexit
   variable this.<current>5__1.next
     var-kind field next
     enclosing-var this.<current>5__1
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
@@ -3730,7 +3756,7 @@ ppt Generics.GenericList.<GetEnumerator>d__0.System.IDisposable.Dispose():::ENTE
 ppt-type enter
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+<GetEnumerator>d__0[T]
+    dec-type Generics.GenericList.<GetEnumerator>d__0<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -3756,7 +3782,7 @@ ppt-type enter
   variable this.<>4__this
     var-kind field <>4__this
     enclosing-var this
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     comparability 22
   variable this.<>4__this.GetType()
@@ -3769,13 +3795,13 @@ ppt-type enter
   variable this.<>4__this.head
     var-kind field head
     enclosing-var this.<>4__this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1
     var-kind field <current>5__1
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1.GetType()
@@ -3794,7 +3820,7 @@ ppt-type enter
   variable this.<current>5__1.next
     var-kind field next
     enclosing-var this.<current>5__1
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
@@ -3814,7 +3840,7 @@ ppt-type subexit
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+<GetEnumerator>d__0[T]
+    dec-type Generics.GenericList.<GetEnumerator>d__0<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -3840,7 +3866,7 @@ ppt-type subexit
   variable this.<>4__this
     var-kind field <>4__this
     enclosing-var this
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     comparability 22
   variable this.<>4__this.GetType()
@@ -3853,13 +3879,13 @@ ppt-type subexit
   variable this.<>4__this.head
     var-kind field head
     enclosing-var this.<>4__this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1
     var-kind field <current>5__1
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1.GetType()
@@ -3878,7 +3904,7 @@ ppt-type subexit
   variable this.<current>5__1.next
     var-kind field next
     enclosing-var this.<current>5__1
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
@@ -3898,7 +3924,7 @@ ppt-type subexit
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+<GetEnumerator>d__0[T]
+    dec-type Generics.GenericList.<GetEnumerator>d__0<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -3924,7 +3950,7 @@ ppt-type subexit
   variable this.<>4__this
     var-kind field <>4__this
     enclosing-var this
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     comparability 22
   variable this.<>4__this.GetType()
@@ -3937,13 +3963,13 @@ ppt-type subexit
   variable this.<>4__this.head
     var-kind field head
     enclosing-var this.<>4__this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1
     var-kind field <current>5__1
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.<current>5__1.GetType()
@@ -3962,7 +3988,7 @@ ppt-type subexit
   variable this.<current>5__1.next
     var-kind field next
     enclosing-var this.<current>5__1
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
@@ -3984,7 +4010,7 @@ parent parent Generics.GenericList:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -4000,7 +4026,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head
     var-kind field head
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -4022,7 +4048,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head.next
     var-kind field next
     enclosing-var this.head
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -4057,7 +4083,7 @@ parent parent Generics.GenericList:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -4073,7 +4099,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head
     var-kind field head
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -4095,7 +4121,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head.next
     var-kind field next
     enclosing-var this.head
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -4130,7 +4156,7 @@ parent parent Generics.GenericList:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -4146,7 +4172,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head
     var-kind field head
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -4168,7 +4194,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head.next
     var-kind field next
     enclosing-var this.head
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -4178,7 +4204,7 @@ ppt-type enter
 parent parent Generics.GenericList:::OBJECT 1
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -4194,7 +4220,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head
     var-kind field head
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -4216,7 +4242,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head.next
     var-kind field next
     enclosing-var this.head
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -4238,12 +4264,12 @@ parent parent Generics.GenericList:::OBJECT 1
     comparability 22
   variable return
     var-kind return
-    dec-type System.Collections.Generic.IEnumerator`1[System.Object]
+    dec-type System.Collections.Generic.IEnumerator<System.Object>
     rep-type hashcode
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -4259,7 +4285,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head
     var-kind field head
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -4281,7 +4307,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head.next
     var-kind field next
     enclosing-var this.head
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -4303,12 +4329,12 @@ parent parent Generics.GenericList:::OBJECT 1
     comparability 22
   variable return
     var-kind return
-    dec-type System.Collections.Generic.IEnumerator`1[System.Object]
+    dec-type System.Collections.Generic.IEnumerator<System.Object>
     rep-type hashcode
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -4324,7 +4350,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head
     var-kind field head
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -4346,7 +4372,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head.next
     var-kind field next
     enclosing-var this.head
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -4368,12 +4394,12 @@ parent parent Generics.GenericList:::OBJECT 1
     comparability 22
   variable return
     var-kind return
-    dec-type System.Collections.Generic.IEnumerator`1[System.Object]
+    dec-type System.Collections.Generic.IEnumerator<System.Object>
     rep-type hashcode
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -4389,7 +4415,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head
     var-kind field head
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -4411,7 +4437,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head.next
     var-kind field next
     enclosing-var this.head
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -4421,7 +4447,7 @@ ppt-type enter
 parent parent Generics.GenericList:::OBJECT 1
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -4437,7 +4463,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head
     var-kind field head
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -4459,7 +4485,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head.next
     var-kind field next
     enclosing-var this.head
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -4493,7 +4519,7 @@ parent parent Generics.GenericList:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -4509,7 +4535,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head
     var-kind field head
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -4531,7 +4557,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head.next
     var-kind field next
     enclosing-var this.head
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -4565,7 +4591,7 @@ parent parent Generics.GenericList:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -4581,7 +4607,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head
     var-kind field head
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -4603,7 +4629,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head.next
     var-kind field next
     enclosing-var this.head
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -4637,7 +4663,7 @@ parent parent Generics.GenericList:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -4653,7 +4679,7 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head
     var-kind field head
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
@@ -4675,13 +4701,14 @@ parent parent Generics.GenericList:::OBJECT 1
   variable this.head.next
     var-kind field next
     enclosing-var this.head
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList:::OBJECT 1
 
 ppt Generics.GenericList.Node..ctor(T\_t):::ENTER
 ppt-type enter
+parent parent Generics.GenericList.Node:::CLASS 1
   variable t
     var-kind variable
     dec-type java.lang.Object
@@ -4726,7 +4753,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -4757,7 +4784,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next
     var-kind field next
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -4779,7 +4806,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next.next
     var-kind field next
     enclosing-var this.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -4814,7 +4841,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -4845,7 +4872,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next
     var-kind field next
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -4867,7 +4894,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next.next
     var-kind field next
     enclosing-var this.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -4877,7 +4904,7 @@ ppt-type enter
 parent parent Generics.GenericList.Node:::OBJECT 1
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -4908,7 +4935,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next
     var-kind field next
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -4930,7 +4957,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next.next
     var-kind field next
     enclosing-var this.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -4964,7 +4991,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -4995,7 +5022,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next
     var-kind field next
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -5017,7 +5044,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next.next
     var-kind field next
     enclosing-var this.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -5051,7 +5078,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -5082,7 +5109,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next
     var-kind field next
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -5104,7 +5131,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next.next
     var-kind field next
     enclosing-var this.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -5138,7 +5165,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -5169,7 +5196,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next
     var-kind field next
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -5191,7 +5218,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next.next
     var-kind field next
     enclosing-var this.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -5201,7 +5228,7 @@ ppt-type enter
 parent parent Generics.GenericList.Node:::OBJECT 1
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -5232,7 +5259,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next
     var-kind field next
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -5254,7 +5281,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next.next
     var-kind field next
     enclosing-var this.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -5289,7 +5316,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -5320,7 +5347,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next
     var-kind field next
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -5342,7 +5369,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next.next
     var-kind field next
     enclosing-var this.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -5377,7 +5404,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -5408,7 +5435,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next
     var-kind field next
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -5430,7 +5457,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next.next
     var-kind field next
     enclosing-var this.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -5453,7 +5480,7 @@ ppt-type enter
 parent parent Generics.GenericList.Node:::OBJECT 1
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -5484,7 +5511,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next
     var-kind field next
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -5506,7 +5533,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next.next
     var-kind field next
     enclosing-var this.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -5528,7 +5555,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
     comparability 22
   variable return
     var-kind return
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable return.GetType()
@@ -5554,7 +5581,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable return.next
     var-kind field next
     enclosing-var return
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable return.next.GetType()
@@ -5573,12 +5600,12 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable return.next.next
     var-kind field next
     enclosing-var return.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -5609,7 +5636,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next
     var-kind field next
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -5631,7 +5658,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next.next
     var-kind field next
     enclosing-var this.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -5653,7 +5680,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
     comparability 22
   variable return
     var-kind return
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable return.GetType()
@@ -5679,7 +5706,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable return.next
     var-kind field next
     enclosing-var return
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable return.next.GetType()
@@ -5698,12 +5725,12 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable return.next.next
     var-kind field next
     enclosing-var return.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -5734,7 +5761,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next
     var-kind field next
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -5756,7 +5783,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next.next
     var-kind field next
     enclosing-var this.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -5778,7 +5805,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
     comparability 22
   variable return
     var-kind return
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable return.GetType()
@@ -5804,7 +5831,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable return.next
     var-kind field next
     enclosing-var return
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable return.next.GetType()
@@ -5823,12 +5850,12 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable return.next.next
     var-kind field next
     enclosing-var return.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -5859,7 +5886,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next
     var-kind field next
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -5881,7 +5908,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next.next
     var-kind field next
     enclosing-var this.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -5891,7 +5918,7 @@ ppt-type enter
 parent parent Generics.GenericList.Node:::OBJECT 1
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -5922,7 +5949,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next
     var-kind field next
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -5944,13 +5971,13 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next.next
     var-kind field next
     enclosing-var this.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
   variable value
     var-kind variable
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -5977,7 +6004,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable value.next
     var-kind field next
     enclosing-var value
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable value.next.GetType()
@@ -5996,7 +6023,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable value.next.next
     var-kind field next
     enclosing-var value.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
@@ -6017,7 +6044,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -6048,7 +6075,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next
     var-kind field next
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -6070,13 +6097,13 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next.next
     var-kind field next
     enclosing-var this.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
   variable value
     var-kind variable
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -6103,7 +6130,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable value.next
     var-kind field next
     enclosing-var value
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable value.next.GetType()
@@ -6122,7 +6149,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable value.next.next
     var-kind field next
     enclosing-var value.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
@@ -6143,7 +6170,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -6174,7 +6201,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next
     var-kind field next
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
@@ -6196,13 +6223,13 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable this.next.next
     var-kind field next
     enclosing-var this.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
     parent Generics.GenericList.Node:::OBJECT 1
   variable value
     var-kind variable
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -6229,7 +6256,7 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable value.next
     var-kind field next
     enclosing-var value
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable value.next.GetType()
@@ -6248,15 +6275,19 @@ parent parent Generics.GenericList.Node:::OBJECT 1
   variable value.next.next
     var-kind field next
     enclosing-var value.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
+ppt Generics.GenericList.Node:::CLASS
+ppt-type class
+
 ppt Generics.GenericList.Node:::OBJECT
 ppt-type object
+parent parent Generics.GenericList.Node:::CLASS 1
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -6283,7 +6314,7 @@ ppt-type object
   variable this.next
     var-kind field next
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.next.GetType()
@@ -6302,15 +6333,19 @@ ppt-type object
   variable this.next.next
     var-kind field next
     enclosing-var this.next
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
+ppt Generics.GenericList:::CLASS
+ppt-type class
+
 ppt Generics.GenericList:::OBJECT
 ppt-type object
+parent parent Generics.GenericList:::CLASS 1
   variable this
     var-kind variable
-    dec-type Generics.GenericList`1[T]
+    dec-type Generics.GenericList<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -6324,7 +6359,7 @@ ppt-type object
   variable this.head
     var-kind field head
     enclosing-var this
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
   variable this.head.GetType()
@@ -6343,12 +6378,13 @@ ppt-type object
   variable this.head.next
     var-kind field next
     enclosing-var this.head
-    dec-type Generics.GenericList`1+Node[T]
+    dec-type Generics.GenericList.Node<T>
     rep-type hashcode
     comparability 22
 
 ppt Generics.GenericsTest..ctor():::ENTER
 ppt-type enter
+parent parent Generics.GenericsTest:::CLASS 1
 
 ppt Generics.GenericsTest..ctor():::EXIT2
 ppt-type subexit
@@ -6414,9 +6450,10 @@ parent parent Generics.GenericsTest:::OBJECT 1
 
 ppt Generics.GenericsTest.AddToList1(System.Collections.Generic.List<System.Int32>\_intList1):::ENTER
 ppt-type enter
+parent parent Generics.GenericsTest:::CLASS 1
   variable intList1
     var-kind variable
-    dec-type System.Collections.Generic.List`1[System.Int32]
+    dec-type System.Collections.Generic.List<System.Int32>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -6430,6 +6467,7 @@ ppt-type enter
 
 ppt Generics.GenericsTest.AddToList1(System.Collections.Generic.List<System.Int32>\_intList1):::EXIT13
 ppt-type subexit
+parent parent Generics.GenericsTest:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -6444,7 +6482,7 @@ ppt-type subexit
     comparability 22
   variable intList1
     var-kind variable
-    dec-type System.Collections.Generic.List`1[System.Int32]
+    dec-type System.Collections.Generic.List<System.Int32>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -6458,6 +6496,7 @@ ppt-type subexit
 
 ppt Generics.GenericsTest.AddToList1(System.Collections.Generic.List<System.Int32>\_intList1):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Generics.GenericsTest:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -6472,7 +6511,7 @@ ppt-type subexit
     comparability 22
   variable intList1
     var-kind variable
-    dec-type System.Collections.Generic.List`1[System.Int32]
+    dec-type System.Collections.Generic.List<System.Int32>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -6486,9 +6525,11 @@ ppt-type subexit
 
 ppt Generics.GenericsTest.DefaultTest():::ENTER
 ppt-type enter
+parent parent Generics.GenericsTest:::CLASS 1
 
 ppt Generics.GenericsTest.DefaultTest():::EXIT17
 ppt-type subexit
+parent parent Generics.GenericsTest:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -6504,6 +6545,7 @@ ppt-type subexit
 
 ppt Generics.GenericsTest.DefaultTest():::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Generics.GenericsTest:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -6519,9 +6561,11 @@ ppt-type subexit
 
 ppt Generics.GenericsTest.DelegateTest():::ENTER
 ppt-type enter
+parent parent Generics.GenericsTest:::CLASS 1
 
 ppt Generics.GenericsTest.DelegateTest():::EXIT11
 ppt-type subexit
+parent parent Generics.GenericsTest:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -6537,6 +6581,7 @@ ppt-type subexit
 
 ppt Generics.GenericsTest.DelegateTest():::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Generics.GenericsTest:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -6552,9 +6597,11 @@ ppt-type subexit
 
 ppt Generics.GenericsTest.Main():::ENTER
 ppt-type enter
+parent parent Generics.GenericsTest:::CLASS 1
 
 ppt Generics.GenericsTest.Main():::EXIT89
 ppt-type subexit
+parent parent Generics.GenericsTest:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -6570,6 +6617,7 @@ ppt-type subexit
 
 ppt Generics.GenericsTest.Main():::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Generics.GenericsTest:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -6585,9 +6633,11 @@ ppt-type subexit
 
 ppt Generics.GenericsTest.OutTest():::ENTER
 ppt-type enter
+parent parent Generics.GenericsTest:::CLASS 1
 
 ppt Generics.GenericsTest.OutTest():::EXIT19
 ppt-type subexit
+parent parent Generics.GenericsTest:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -6603,6 +6653,7 @@ ppt-type subexit
 
 ppt Generics.GenericsTest.OutTest():::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Generics.GenericsTest:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -6618,6 +6669,7 @@ ppt-type subexit
 
 ppt Generics.GenericsTest.PickSmaller(T\_a,\_T\_b,\_T\_smaller):::ENTER
 ppt-type enter
+parent parent Generics.GenericsTest:::CLASS 1
   variable a
     var-kind variable
     dec-type System.ValueType
@@ -6660,6 +6712,7 @@ ppt-type enter
 
 ppt Generics.GenericsTest.PickSmaller(T\_a,\_T\_b,\_T\_smaller):::EXIT17
 ppt-type subexit
+parent parent Generics.GenericsTest:::CLASS 1
   variable a
     var-kind variable
     dec-type System.ValueType
@@ -6714,6 +6767,7 @@ ppt-type subexit
 
 ppt Generics.GenericsTest.PickSmaller(T\_a,\_T\_b,\_T\_smaller):::EXIT23
 ppt-type subexit
+parent parent Generics.GenericsTest:::CLASS 1
   variable a
     var-kind variable
     dec-type System.ValueType
@@ -6768,6 +6822,7 @@ ppt-type subexit
 
 ppt Generics.GenericsTest.PickSmaller(T\_a,\_T\_b,\_T\_smaller):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Generics.GenericsTest:::CLASS 1
   variable a
     var-kind variable
     dec-type System.ValueType
@@ -6822,9 +6877,10 @@ ppt-type subexit
 
 ppt Generics.GenericsTest.Swap(System.Collections.Generic.List<T>\_list1,\_System.Collections.Generic.List<T>\_list2):::ENTER
 ppt-type enter
+parent parent Generics.GenericsTest:::CLASS 1
   variable list1
     var-kind variable
-    dec-type System.Collections.Generic.List`1[System.Object]
+    dec-type System.Collections.Generic.List<System.Object>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -6852,7 +6908,7 @@ ppt-type enter
     comparability 22
   variable list2
     var-kind variable
-    dec-type System.Collections.Generic.List`1[System.Object]
+    dec-type System.Collections.Generic.List<System.Object>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -6881,6 +6937,7 @@ ppt-type enter
 
 ppt Generics.GenericsTest.Swap(System.Collections.Generic.List<T>\_list1,\_System.Collections.Generic.List<T>\_list2):::EXIT18
 ppt-type subexit
+parent parent Generics.GenericsTest:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -6895,7 +6952,7 @@ ppt-type subexit
     comparability 22
   variable list1
     var-kind variable
-    dec-type System.Collections.Generic.List`1[System.Object]
+    dec-type System.Collections.Generic.List<System.Object>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -6923,7 +6980,7 @@ ppt-type subexit
     comparability 22
   variable list2
     var-kind variable
-    dec-type System.Collections.Generic.List`1[System.Object]
+    dec-type System.Collections.Generic.List<System.Object>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -6952,6 +7009,7 @@ ppt-type subexit
 
 ppt Generics.GenericsTest.Swap(System.Collections.Generic.List<T>\_list1,\_System.Collections.Generic.List<T>\_list2):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Generics.GenericsTest:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -6966,7 +7024,7 @@ ppt-type subexit
     comparability 22
   variable list1
     var-kind variable
-    dec-type System.Collections.Generic.List`1[System.Object]
+    dec-type System.Collections.Generic.List<System.Object>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -6994,7 +7052,7 @@ ppt-type subexit
     comparability 22
   variable list2
     var-kind variable
-    dec-type System.Collections.Generic.List`1[System.Object]
+    dec-type System.Collections.Generic.List<System.Object>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -7023,21 +7081,23 @@ ppt-type subexit
 
 ppt Generics.GenericsTest.SwapIfGreater(T\_lhs,\_T\_rhs):::ENTER
 ppt-type enter
+parent parent Generics.GenericsTest:::CLASS 1
   variable lhs
     var-kind variable
-    dec-type System.IComparable`1[T]
+    dec-type System.IComparable<T>
     rep-type hashcode
     flags is_param
     comparability 22
   variable rhs
     var-kind variable
-    dec-type System.IComparable`1[T]
+    dec-type System.IComparable<T>
     rep-type hashcode
     flags is_param
     comparability 22
 
 ppt Generics.GenericsTest.SwapIfGreater(T\_lhs,\_T\_rhs):::EXIT12
 ppt-type subexit
+parent parent Generics.GenericsTest:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -7052,19 +7112,20 @@ ppt-type subexit
     comparability 22
   variable lhs
     var-kind variable
-    dec-type System.IComparable`1[T]
+    dec-type System.IComparable<T>
     rep-type hashcode
     flags is_param
     comparability 22
   variable rhs
     var-kind variable
-    dec-type System.IComparable`1[T]
+    dec-type System.IComparable<T>
     rep-type hashcode
     flags is_param
     comparability 22
 
 ppt Generics.GenericsTest.SwapIfGreater(T\_lhs,\_T\_rhs):::EXIT25
 ppt-type subexit
+parent parent Generics.GenericsTest:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -7079,19 +7140,20 @@ ppt-type subexit
     comparability 22
   variable lhs
     var-kind variable
-    dec-type System.IComparable`1[T]
+    dec-type System.IComparable<T>
     rep-type hashcode
     flags is_param
     comparability 22
   variable rhs
     var-kind variable
-    dec-type System.IComparable`1[T]
+    dec-type System.IComparable<T>
     rep-type hashcode
     flags is_param
     comparability 22
 
 ppt Generics.GenericsTest.SwapIfGreater(T\_lhs,\_T\_rhs):::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Generics.GenericsTest:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -7106,22 +7168,24 @@ ppt-type subexit
     comparability 22
   variable lhs
     var-kind variable
-    dec-type System.IComparable`1[T]
+    dec-type System.IComparable<T>
     rep-type hashcode
     flags is_param
     comparability 22
   variable rhs
     var-kind variable
-    dec-type System.IComparable`1[T]
+    dec-type System.IComparable<T>
     rep-type hashcode
     flags is_param
     comparability 22
 
 ppt Generics.GenericsTest.SwapTest():::ENTER
 ppt-type enter
+parent parent Generics.GenericsTest:::CLASS 1
 
 ppt Generics.GenericsTest.SwapTest():::EXIT135
 ppt-type subexit
+parent parent Generics.GenericsTest:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -7137,6 +7201,7 @@ ppt-type subexit
 
 ppt Generics.GenericsTest.SwapTest():::EXIT_EX_Runtime
 ppt-type subexit
+parent parent Generics.GenericsTest:::CLASS 1
   variable exception
     var-kind return
     dec-type System.Exception
@@ -7150,8 +7215,12 @@ ppt-type subexit
     flags synthetic classname
     comparability 22
 
+ppt Generics.GenericsTest:::CLASS
+ppt-type class
+
 ppt Generics.GenericsTest:::OBJECT
 ppt-type object
+parent parent Generics.GenericsTest:::CLASS 1
   variable this
     var-kind variable
     dec-type Generics.GenericsTest
@@ -7168,6 +7237,7 @@ ppt-type object
 
 ppt Generics.Node4..ctor(T\_t,\_System.Int32\_i):::ENTER
 ppt-type enter
+parent parent Generics.Node4:::CLASS 1
   variable i
     var-kind variable
     dec-type int
@@ -7224,7 +7294,7 @@ parent parent Generics.Node4:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.Node4`1[T]
+    dec-type Generics.Node4<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -7274,7 +7344,7 @@ parent parent Generics.Node4:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.Node4`1[T]
+    dec-type Generics.Node4<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -7288,11 +7358,15 @@ parent parent Generics.Node4:::OBJECT 1
     comparability 22
     parent Generics.Node4:::OBJECT 1
 
+ppt Generics.Node4:::CLASS
+ppt-type class
+
 ppt Generics.Node4:::OBJECT
 ppt-type object
+parent parent Generics.Node4:::CLASS 1
   variable this
     var-kind variable
-    dec-type Generics.Node4`1[T]
+    dec-type Generics.Node4<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -7306,6 +7380,7 @@ ppt-type object
 
 ppt Generics.Node5..ctor(T\_t,\_U\_u):::ENTER
 ppt-type enter
+parent parent Generics.Node5:::CLASS 1
   variable t
     var-kind variable
     dec-type java.lang.Object
@@ -7363,7 +7438,7 @@ parent parent Generics.Node5:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.Node5`2[T,U]
+    dec-type Generics.Node5<T,U>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -7420,7 +7495,7 @@ parent parent Generics.Node5:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.Node5`2[T,U]
+    dec-type Generics.Node5<T,U>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -7447,11 +7522,15 @@ parent parent Generics.Node5:::OBJECT 1
     flags synthetic classname
     comparability 22
 
+ppt Generics.Node5:::CLASS
+ppt-type class
+
 ppt Generics.Node5:::OBJECT
 ppt-type object
+parent parent Generics.Node5:::CLASS 1
   variable this
     var-kind variable
-    dec-type Generics.Node5`2[T,U]
+    dec-type Generics.Node5<T,U>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -7465,6 +7544,7 @@ ppt-type object
 
 ppt Generics.NodeItem..ctor():::ENTER
 ppt-type enter
+parent parent Generics.NodeItem:::CLASS 1
 
 ppt Generics.NodeItem..ctor():::EXIT2
 ppt-type subexit
@@ -7483,7 +7563,7 @@ parent parent Generics.NodeItem:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.NodeItem`1[T]
+    dec-type Generics.NodeItem<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -7514,7 +7594,7 @@ parent parent Generics.NodeItem:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.NodeItem`1[T]
+    dec-type Generics.NodeItem<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -7528,11 +7608,15 @@ parent parent Generics.NodeItem:::OBJECT 1
     comparability 22
     parent Generics.NodeItem:::OBJECT 1
 
+ppt Generics.NodeItem:::CLASS
+ppt-type class
+
 ppt Generics.NodeItem:::OBJECT
 ppt-type object
+parent parent Generics.NodeItem:::CLASS 1
   variable this
     var-kind variable
-    dec-type Generics.NodeItem`1[T]
+    dec-type Generics.NodeItem<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -7546,6 +7630,7 @@ ppt-type object
 
 ppt Generics.SpecialNodeItem..ctor():::ENTER
 ppt-type enter
+parent parent Generics.SpecialNodeItem:::CLASS 1
 
 ppt Generics.SpecialNodeItem..ctor():::EXIT2
 ppt-type subexit
@@ -7564,7 +7649,7 @@ parent parent Generics.SpecialNodeItem:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.SpecialNodeItem`1[T]
+    dec-type Generics.SpecialNodeItem<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -7595,7 +7680,7 @@ parent parent Generics.SpecialNodeItem:::OBJECT 1
     comparability 22
   variable this
     var-kind variable
-    dec-type Generics.SpecialNodeItem`1[T]
+    dec-type Generics.SpecialNodeItem<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -7608,12 +7693,16 @@ parent parent Generics.SpecialNodeItem:::OBJECT 1
     flags synthetic classname
     comparability 22
     parent Generics.SpecialNodeItem:::OBJECT 1
+
+ppt Generics.SpecialNodeItem:::CLASS
+ppt-type class
 
 ppt Generics.SpecialNodeItem:::OBJECT
 ppt-type object
+parent parent Generics.SpecialNodeItem:::CLASS 1
   variable this
     var-kind variable
-    dec-type Generics.SpecialNodeItem`1[T]
+    dec-type Generics.SpecialNodeItem<T>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -7625,11 +7714,15 @@ ppt-type object
     flags synthetic classname
     comparability 22
 
+ppt Generics.StackEventHandler:::CLASS
+ppt-type class
+
 ppt Generics.StackEventHandler:::OBJECT
 ppt-type object
+parent parent Generics.StackEventHandler:::CLASS 1
   variable this
     var-kind variable
-    dec-type Generics.StackEventHandler`2[T,U]
+    dec-type Generics.StackEventHandler<T,U>
     rep-type hashcode
     flags is_param
     comparability 22
@@ -7690,7 +7783,7 @@ exception.GetType()
 nonsensical
 2
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
@@ -7718,7 +7811,7 @@ t.GetType()
 "System.Int32"
 1
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
@@ -7762,7 +7855,7 @@ t.GetType()
 "System.Int32"
 1
 this
-45570991
+26965262
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -7790,7 +7883,7 @@ Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::ENTER
 this_invocation_nonce
 4
 this
-45570991
+26965262
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -7848,7 +7941,7 @@ exception.GetType()
 nonsensical
 2
 this
-45570991
+26965262
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -7912,13 +8005,13 @@ t.GetType()
 "System.Int32"
 1
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-45570991
+26965262
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -7940,13 +8033,13 @@ t.GetType()
 "System.Int32"
 1
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-45570991
+26965262
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -7984,7 +8077,7 @@ t.GetType()
 "System.Int32"
 1
 this
-7485743
+41360766
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8012,7 +8105,7 @@ Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::ENTER
 this_invocation_nonce
 7
 this
-7485743
+41360766
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8036,7 +8129,7 @@ this.next.next
 nonsensical
 2
 value
-45570991
+26965262
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8070,7 +8163,7 @@ exception.GetType()
 nonsensical
 2
 this
-7485743
+41360766
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8082,7 +8175,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-45570991
+26965262
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8094,7 +8187,7 @@ this.next.next
 null
 1
 value
-45570991
+26965262
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8134,13 +8227,13 @@ t.GetType()
 "System.Int32"
 1
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-7485743
+41360766
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8149,7 +8242,7 @@ this.head.data
 1
 1
 this.head.next
-45570991
+26965262
 1
 
 Generics.GenericList.AddHead(T\_t):::ENTER
@@ -8162,13 +8255,13 @@ t.GetType()
 "System.Int32"
 1
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-7485743
+41360766
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8177,7 +8270,7 @@ this.head.data
 1
 1
 this.head.next
-45570991
+26965262
 1
 
 Generics.GenericList.Node..ctor(T\_t):::ENTER
@@ -8206,7 +8299,7 @@ t.GetType()
 "System.Int32"
 1
 this
-262829
+36702580
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8234,7 +8327,7 @@ Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::ENTER
 this_invocation_nonce
 10
 this
-262829
+36702580
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8258,7 +8351,7 @@ this.next.next
 nonsensical
 2
 value
-7485743
+41360766
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8270,7 +8363,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-45570991
+26965262
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8292,7 +8385,7 @@ exception.GetType()
 nonsensical
 2
 this
-262829
+36702580
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8304,7 +8397,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-7485743
+41360766
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8313,10 +8406,10 @@ this.next.data
 1
 1
 this.next.next
-45570991
+26965262
 1
 value
-7485743
+41360766
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8328,7 +8421,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-45570991
+26965262
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8356,13 +8449,13 @@ t.GetType()
 "System.Int32"
 1
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-262829
+36702580
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8371,7 +8464,7 @@ this.head.data
 2
 1
 this.head.next
-7485743
+41360766
 1
 
 Generics.GenericList.AddHead(T\_t):::ENTER
@@ -8384,13 +8477,13 @@ t.GetType()
 "System.Int32"
 1
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-262829
+36702580
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8399,7 +8492,7 @@ this.head.data
 2
 1
 this.head.next
-7485743
+41360766
 1
 
 Generics.GenericList.Node..ctor(T\_t):::ENTER
@@ -8428,7 +8521,7 @@ t.GetType()
 "System.Int32"
 1
 this
-2365466
+61887768
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8456,7 +8549,7 @@ Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::ENTER
 this_invocation_nonce
 13
 this
-2365466
+61887768
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8480,7 +8573,7 @@ this.next.next
 nonsensical
 2
 value
-262829
+36702580
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8492,7 +8585,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-7485743
+41360766
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8501,7 +8594,7 @@ value.next.data
 1
 1
 value.next.next
-45570991
+26965262
 1
 
 Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::EXIT4
@@ -8514,7 +8607,7 @@ exception.GetType()
 nonsensical
 2
 this
-2365466
+61887768
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8526,7 +8619,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-262829
+36702580
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8535,10 +8628,10 @@ this.next.data
 2
 1
 this.next.next
-7485743
+41360766
 1
 value
-262829
+36702580
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8550,7 +8643,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-7485743
+41360766
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8559,7 +8652,7 @@ value.next.data
 1
 1
 value.next.next
-45570991
+26965262
 1
 
 Generics.GenericList.AddHead(T\_t):::EXIT12
@@ -8578,13 +8671,13 @@ t.GetType()
 "System.Int32"
 1
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-2365466
+61887768
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8593,7 +8686,7 @@ this.head.data
 3
 1
 this.head.next
-262829
+36702580
 1
 
 Generics.GenericList.AddHead(T\_t):::ENTER
@@ -8606,13 +8699,13 @@ t.GetType()
 "System.Int32"
 1
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-2365466
+61887768
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8621,7 +8714,7 @@ this.head.data
 3
 1
 this.head.next
-262829
+36702580
 1
 
 Generics.GenericList.Node..ctor(T\_t):::ENTER
@@ -8650,7 +8743,7 @@ t.GetType()
 "System.Int32"
 1
 this
-21289199
+20119003
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8678,7 +8771,7 @@ Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::ENTER
 this_invocation_nonce
 16
 this
-21289199
+20119003
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8702,7 +8795,7 @@ this.next.next
 nonsensical
 2
 value
-2365466
+61887768
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8714,7 +8807,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-262829
+36702580
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8723,7 +8816,7 @@ value.next.data
 2
 1
 value.next.next
-7485743
+41360766
 1
 
 Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::EXIT4
@@ -8736,7 +8829,7 @@ exception.GetType()
 nonsensical
 2
 this
-21289199
+20119003
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8748,7 +8841,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-2365466
+61887768
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8757,10 +8850,10 @@ this.next.data
 3
 1
 this.next.next
-262829
+36702580
 1
 value
-2365466
+61887768
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8772,7 +8865,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-262829
+36702580
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8781,7 +8874,7 @@ value.next.data
 2
 1
 value.next.next
-7485743
+41360766
 1
 
 Generics.GenericList.AddHead(T\_t):::EXIT12
@@ -8800,13 +8893,13 @@ t.GetType()
 "System.Int32"
 1
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-21289199
+20119003
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8815,7 +8908,7 @@ this.head.data
 4
 1
 this.head.next
-2365466
+61887768
 1
 
 Generics.GenericList.AddHead(T\_t):::ENTER
@@ -8828,13 +8921,13 @@ t.GetType()
 "System.Int32"
 1
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-21289199
+20119003
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8843,7 +8936,7 @@ this.head.data
 4
 1
 this.head.next
-2365466
+61887768
 1
 
 Generics.GenericList.Node..ctor(T\_t):::ENTER
@@ -8872,7 +8965,7 @@ t.GetType()
 "System.Int32"
 1
 this
-57385070
+46853302
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8900,7 +8993,7 @@ Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::ENTER
 this_invocation_nonce
 19
 this
-57385070
+46853302
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8924,7 +9017,7 @@ this.next.next
 nonsensical
 2
 value
-21289199
+20119003
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8936,7 +9029,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-2365466
+61887768
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8945,7 +9038,7 @@ value.next.data
 3
 1
 value.next.next
-262829
+36702580
 1
 
 Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::EXIT4
@@ -8958,7 +9051,7 @@ exception.GetType()
 nonsensical
 2
 this
-57385070
+46853302
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8970,7 +9063,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-21289199
+20119003
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8979,10 +9072,10 @@ this.next.data
 4
 1
 this.next.next
-2365466
+61887768
 1
 value
-21289199
+20119003
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8994,7 +9087,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-2365466
+61887768
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9003,7 +9096,7 @@ value.next.data
 3
 1
 value.next.next
-262829
+36702580
 1
 
 Generics.GenericList.AddHead(T\_t):::EXIT12
@@ -9022,13 +9115,13 @@ t.GetType()
 "System.Int32"
 1
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-57385070
+46853302
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9037,7 +9130,7 @@ this.head.data
 5
 1
 this.head.next
-21289199
+20119003
 1
 
 Generics.GenericList.AddHead(T\_t):::ENTER
@@ -9050,13 +9143,13 @@ t.GetType()
 "System.Int32"
 1
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-57385070
+46853302
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9065,7 +9158,7 @@ this.head.data
 5
 1
 this.head.next
-21289199
+20119003
 1
 
 Generics.GenericList.Node..ctor(T\_t):::ENTER
@@ -9094,7 +9187,7 @@ t.GetType()
 "System.Int32"
 1
 this
-46703582
+19026538
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9122,7 +9215,7 @@ Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::ENTER
 this_invocation_nonce
 22
 this
-46703582
+19026538
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9146,7 +9239,7 @@ this.next.next
 nonsensical
 2
 value
-57385070
+46853302
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9158,7 +9251,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-21289199
+20119003
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9167,7 +9260,7 @@ value.next.data
 4
 1
 value.next.next
-2365466
+61887768
 1
 
 Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::EXIT4
@@ -9180,7 +9273,7 @@ exception.GetType()
 nonsensical
 2
 this
-46703582
+19026538
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9192,7 +9285,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-57385070
+46853302
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9201,10 +9294,10 @@ this.next.data
 5
 1
 this.next.next
-21289199
+20119003
 1
 value
-57385070
+46853302
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9216,7 +9309,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-21289199
+20119003
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9225,7 +9318,7 @@ value.next.data
 4
 1
 value.next.next
-2365466
+61887768
 1
 
 Generics.GenericList.AddHead(T\_t):::EXIT12
@@ -9244,13 +9337,13 @@ t.GetType()
 "System.Int32"
 1
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-46703582
+19026538
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9259,7 +9352,7 @@ this.head.data
 6
 1
 this.head.next
-57385070
+46853302
 1
 
 Generics.GenericList.AddHead(T\_t):::ENTER
@@ -9272,13 +9365,13 @@ t.GetType()
 "System.Int32"
 1
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-46703582
+19026538
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9287,7 +9380,7 @@ this.head.data
 6
 1
 this.head.next
-57385070
+46853302
 1
 
 Generics.GenericList.Node..ctor(T\_t):::ENTER
@@ -9316,7 +9409,7 @@ t.GetType()
 "System.Int32"
 1
 this
-17679057
+37021121
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9344,7 +9437,7 @@ Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::ENTER
 this_invocation_nonce
 25
 this
-17679057
+37021121
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9368,7 +9461,7 @@ this.next.next
 nonsensical
 2
 value
-46703582
+19026538
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9380,7 +9473,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-57385070
+46853302
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9389,7 +9482,7 @@ value.next.data
 5
 1
 value.next.next
-21289199
+20119003
 1
 
 Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::EXIT4
@@ -9402,7 +9495,7 @@ exception.GetType()
 nonsensical
 2
 this
-17679057
+37021121
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9414,7 +9507,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-46703582
+19026538
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9423,10 +9516,10 @@ this.next.data
 6
 1
 this.next.next
-57385070
+46853302
 1
 value
-46703582
+19026538
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9438,7 +9531,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-57385070
+46853302
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9447,7 +9540,7 @@ value.next.data
 5
 1
 value.next.next
-21289199
+20119003
 1
 
 Generics.GenericList.AddHead(T\_t):::EXIT12
@@ -9466,13 +9559,13 @@ t.GetType()
 "System.Int32"
 1
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-17679057
+37021121
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9481,7 +9574,7 @@ this.head.data
 7
 1
 this.head.next
-46703582
+19026538
 1
 
 Generics.GenericList.AddHead(T\_t):::ENTER
@@ -9494,13 +9587,13 @@ t.GetType()
 "System.Int32"
 1
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-17679057
+37021121
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9509,7 +9602,7 @@ this.head.data
 7
 1
 this.head.next
-46703582
+19026538
 1
 
 Generics.GenericList.Node..ctor(T\_t):::ENTER
@@ -9538,7 +9631,7 @@ t.GetType()
 "System.Int32"
 1
 this
-24893793
+64754634
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9566,7 +9659,7 @@ Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::ENTER
 this_invocation_nonce
 28
 this
-24893793
+64754634
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9590,7 +9683,7 @@ this.next.next
 nonsensical
 2
 value
-17679057
+37021121
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9602,7 +9695,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-46703582
+19026538
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9611,7 +9704,7 @@ value.next.data
 6
 1
 value.next.next
-57385070
+46853302
 1
 
 Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::EXIT4
@@ -9624,7 +9717,7 @@ exception.GetType()
 nonsensical
 2
 this
-24893793
+64754634
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9636,7 +9729,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-17679057
+37021121
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9645,10 +9738,10 @@ this.next.data
 7
 1
 this.next.next
-46703582
+19026538
 1
 value
-17679057
+37021121
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9660,7 +9753,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-46703582
+19026538
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9669,7 +9762,7 @@ value.next.data
 6
 1
 value.next.next
-57385070
+46853302
 1
 
 Generics.GenericList.AddHead(T\_t):::EXIT12
@@ -9688,13 +9781,13 @@ t.GetType()
 "System.Int32"
 1
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-24893793
+64754634
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9703,7 +9796,7 @@ this.head.data
 8
 1
 this.head.next
-17679057
+37021121
 1
 
 Generics.GenericList.AddHead(T\_t):::ENTER
@@ -9716,13 +9809,13 @@ t.GetType()
 "System.Int32"
 1
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-24893793
+64754634
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9731,7 +9824,7 @@ this.head.data
 8
 1
 this.head.next
-17679057
+37021121
 1
 
 Generics.GenericList.Node..ctor(T\_t):::ENTER
@@ -9760,7 +9853,7 @@ t.GetType()
 "System.Int32"
 1
 this
-22717550
+45920800
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9788,7 +9881,7 @@ Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::ENTER
 this_invocation_nonce
 31
 this
-22717550
+45920800
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9812,7 +9905,7 @@ this.next.next
 nonsensical
 2
 value
-24893793
+64754634
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9824,7 +9917,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-17679057
+37021121
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9833,7 +9926,7 @@ value.next.data
 7
 1
 value.next.next
-46703582
+19026538
 1
 
 Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::EXIT4
@@ -9846,7 +9939,7 @@ exception.GetType()
 nonsensical
 2
 this
-22717550
+45920800
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9858,7 +9951,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-24893793
+64754634
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9867,10 +9960,10 @@ this.next.data
 8
 1
 this.next.next
-17679057
+37021121
 1
 value
-24893793
+64754634
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9882,7 +9975,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-17679057
+37021121
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9891,7 +9984,7 @@ value.next.data
 7
 1
 value.next.next
-46703582
+19026538
 1
 
 Generics.GenericList.AddHead(T\_t):::EXIT12
@@ -9910,13 +10003,13 @@ t.GetType()
 "System.Int32"
 1
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-22717550
+45920800
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9925,20 +10018,20 @@ this.head.data
 9
 1
 this.head.next
-24893793
+64754634
 1
 
 Generics.GenericList.GetEnumerator():::ENTER
 this_invocation_nonce
 32
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-22717550
+45920800
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9947,7 +10040,7 @@ this.head.data
 9
 1
 this.head.next
-24893793
+64754634
 1
 
 Generics.GenericList.GetEnumerator():::EXIT8
@@ -9960,16 +10053,16 @@ exception.GetType()
 nonsensical
 2
 return
-3131361
+10634019
 1
 this
-34889605
+25365761
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-22717550
+45920800
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9978,14 +10071,14 @@ this.head.data
 9
 1
 this.head.next
-24893793
+64754634
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 this_invocation_nonce
 34
 this
-3131361
+10634019
 1
 this.<>1__state
 0
@@ -9997,13 +10090,13 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
 null
@@ -10022,7 +10115,7 @@ Generics.GenericList.Node.Data.get():::ENTER
 this_invocation_nonce
 35
 this
-22717550
+45920800
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10034,7 +10127,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-24893793
+64754634
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10043,7 +10136,7 @@ this.next.data
 8
 1
 this.next.next
-17679057
+37021121
 1
 
 Generics.GenericList.Node.Data.get():::EXIT4
@@ -10062,7 +10155,7 @@ return.GetType()
 "System.Int32"
 1
 this
-22717550
+45920800
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10074,7 +10167,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-24893793
+64754634
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10083,7 +10176,7 @@ this.next.data
 8
 1
 this.next.next
-17679057
+37021121
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::EXIT30
@@ -10099,7 +10192,7 @@ return
 true
 1
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -10111,16 +10204,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-22717550
+45920800
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10129,14 +10222,14 @@ this.<current>5__1.data
 9
 1
 this.<current>5__1.next
-24893793
+64754634
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::ENTER
 this_invocation_nonce
 36
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -10148,16 +10241,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-22717550
+45920800
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10166,7 +10259,7 @@ this.<current>5__1.data
 9
 1
 this.<current>5__1.next
-24893793
+64754634
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::EXIT3
@@ -10185,7 +10278,7 @@ return.GetType()
 "System.Int32"
 1
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -10197,16 +10290,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-22717550
+45920800
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10215,14 +10308,14 @@ this.<current>5__1.data
 9
 1
 this.<current>5__1.next
-24893793
+64754634
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 this_invocation_nonce
 37
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -10234,16 +10327,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-22717550
+45920800
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10252,14 +10345,14 @@ this.<current>5__1.data
 9
 1
 this.<current>5__1.next
-24893793
+64754634
 1
 
 Generics.GenericList.Node.Next.get():::ENTER
 this_invocation_nonce
 38
 this
-22717550
+45920800
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10271,7 +10364,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-24893793
+64754634
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10280,7 +10373,7 @@ this.next.data
 8
 1
 this.next.next
-17679057
+37021121
 1
 
 Generics.GenericList.Node.Next.get():::EXIT4
@@ -10293,7 +10386,7 @@ exception.GetType()
 nonsensical
 2
 return
-24893793
+64754634
 1
 return.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10305,7 +10398,7 @@ return.data.GetType()
 "System.Int32"
 1
 return.next
-17679057
+37021121
 1
 return.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10314,10 +10407,10 @@ return.next.data
 7
 1
 return.next.next
-46703582
+19026538
 1
 this
-22717550
+45920800
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10329,7 +10422,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-24893793
+64754634
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10338,14 +10431,14 @@ this.next.data
 8
 1
 this.next.next
-17679057
+37021121
 1
 
 Generics.GenericList.Node.Data.get():::ENTER
 this_invocation_nonce
 39
 this
-24893793
+64754634
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10357,7 +10450,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-17679057
+37021121
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10366,7 +10459,7 @@ this.next.data
 7
 1
 this.next.next
-46703582
+19026538
 1
 
 Generics.GenericList.Node.Data.get():::EXIT4
@@ -10385,7 +10478,7 @@ return.GetType()
 "System.Int32"
 1
 this
-24893793
+64754634
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10397,7 +10490,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-17679057
+37021121
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10406,7 +10499,7 @@ this.next.data
 7
 1
 this.next.next
-46703582
+19026538
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::EXIT30
@@ -10422,7 +10515,7 @@ return
 true
 1
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -10434,16 +10527,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-24893793
+64754634
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10452,14 +10545,14 @@ this.<current>5__1.data
 8
 1
 this.<current>5__1.next
-17679057
+37021121
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::ENTER
 this_invocation_nonce
 40
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -10471,16 +10564,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-24893793
+64754634
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10489,7 +10582,7 @@ this.<current>5__1.data
 8
 1
 this.<current>5__1.next
-17679057
+37021121
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::EXIT3
@@ -10508,7 +10601,7 @@ return.GetType()
 "System.Int32"
 1
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -10520,16 +10613,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-24893793
+64754634
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10538,14 +10631,14 @@ this.<current>5__1.data
 8
 1
 this.<current>5__1.next
-17679057
+37021121
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 this_invocation_nonce
 41
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -10557,16 +10650,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-24893793
+64754634
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10575,14 +10668,14 @@ this.<current>5__1.data
 8
 1
 this.<current>5__1.next
-17679057
+37021121
 1
 
 Generics.GenericList.Node.Next.get():::ENTER
 this_invocation_nonce
 42
 this
-24893793
+64754634
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10594,7 +10687,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-17679057
+37021121
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10603,7 +10696,7 @@ this.next.data
 7
 1
 this.next.next
-46703582
+19026538
 1
 
 Generics.GenericList.Node.Next.get():::EXIT4
@@ -10616,7 +10709,7 @@ exception.GetType()
 nonsensical
 2
 return
-17679057
+37021121
 1
 return.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10628,7 +10721,7 @@ return.data.GetType()
 "System.Int32"
 1
 return.next
-46703582
+19026538
 1
 return.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10637,10 +10730,10 @@ return.next.data
 6
 1
 return.next.next
-57385070
+46853302
 1
 this
-24893793
+64754634
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10652,7 +10745,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-17679057
+37021121
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10661,14 +10754,14 @@ this.next.data
 7
 1
 this.next.next
-46703582
+19026538
 1
 
 Generics.GenericList.Node.Data.get():::ENTER
 this_invocation_nonce
 43
 this
-17679057
+37021121
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10680,7 +10773,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-46703582
+19026538
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10689,7 +10782,7 @@ this.next.data
 6
 1
 this.next.next
-57385070
+46853302
 1
 
 Generics.GenericList.Node.Data.get():::EXIT4
@@ -10708,7 +10801,7 @@ return.GetType()
 "System.Int32"
 1
 this
-17679057
+37021121
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10720,7 +10813,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-46703582
+19026538
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10729,7 +10822,7 @@ this.next.data
 6
 1
 this.next.next
-57385070
+46853302
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::EXIT30
@@ -10745,7 +10838,7 @@ return
 true
 1
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -10757,16 +10850,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-17679057
+37021121
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10775,14 +10868,14 @@ this.<current>5__1.data
 7
 1
 this.<current>5__1.next
-46703582
+19026538
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::ENTER
 this_invocation_nonce
 44
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -10794,16 +10887,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-17679057
+37021121
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10812,7 +10905,7 @@ this.<current>5__1.data
 7
 1
 this.<current>5__1.next
-46703582
+19026538
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::EXIT3
@@ -10831,7 +10924,7 @@ return.GetType()
 "System.Int32"
 1
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -10843,16 +10936,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-17679057
+37021121
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10861,14 +10954,14 @@ this.<current>5__1.data
 7
 1
 this.<current>5__1.next
-46703582
+19026538
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 this_invocation_nonce
 45
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -10880,16 +10973,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-17679057
+37021121
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10898,14 +10991,14 @@ this.<current>5__1.data
 7
 1
 this.<current>5__1.next
-46703582
+19026538
 1
 
 Generics.GenericList.Node.Next.get():::ENTER
 this_invocation_nonce
 46
 this
-17679057
+37021121
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10917,7 +11010,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-46703582
+19026538
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10926,7 +11019,7 @@ this.next.data
 6
 1
 this.next.next
-57385070
+46853302
 1
 
 Generics.GenericList.Node.Next.get():::EXIT4
@@ -10939,7 +11032,7 @@ exception.GetType()
 nonsensical
 2
 return
-46703582
+19026538
 1
 return.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10951,7 +11044,7 @@ return.data.GetType()
 "System.Int32"
 1
 return.next
-57385070
+46853302
 1
 return.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10960,10 +11053,10 @@ return.next.data
 5
 1
 return.next.next
-21289199
+20119003
 1
 this
-17679057
+37021121
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10975,7 +11068,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-46703582
+19026538
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10984,14 +11077,14 @@ this.next.data
 6
 1
 this.next.next
-57385070
+46853302
 1
 
 Generics.GenericList.Node.Data.get():::ENTER
 this_invocation_nonce
 47
 this
-46703582
+19026538
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11003,7 +11096,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-57385070
+46853302
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11012,7 +11105,7 @@ this.next.data
 5
 1
 this.next.next
-21289199
+20119003
 1
 
 Generics.GenericList.Node.Data.get():::EXIT4
@@ -11031,7 +11124,7 @@ return.GetType()
 "System.Int32"
 1
 this
-46703582
+19026538
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11043,7 +11136,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-57385070
+46853302
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11052,7 +11145,7 @@ this.next.data
 5
 1
 this.next.next
-21289199
+20119003
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::EXIT30
@@ -11068,7 +11161,7 @@ return
 true
 1
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -11080,16 +11173,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-46703582
+19026538
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11098,14 +11191,14 @@ this.<current>5__1.data
 6
 1
 this.<current>5__1.next
-57385070
+46853302
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::ENTER
 this_invocation_nonce
 48
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -11117,16 +11210,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-46703582
+19026538
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11135,7 +11228,7 @@ this.<current>5__1.data
 6
 1
 this.<current>5__1.next
-57385070
+46853302
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::EXIT3
@@ -11154,7 +11247,7 @@ return.GetType()
 "System.Int32"
 1
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -11166,16 +11259,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-46703582
+19026538
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11184,14 +11277,14 @@ this.<current>5__1.data
 6
 1
 this.<current>5__1.next
-57385070
+46853302
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 this_invocation_nonce
 49
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -11203,16 +11296,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-46703582
+19026538
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11221,14 +11314,14 @@ this.<current>5__1.data
 6
 1
 this.<current>5__1.next
-57385070
+46853302
 1
 
 Generics.GenericList.Node.Next.get():::ENTER
 this_invocation_nonce
 50
 this
-46703582
+19026538
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11240,7 +11333,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-57385070
+46853302
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11249,7 +11342,7 @@ this.next.data
 5
 1
 this.next.next
-21289199
+20119003
 1
 
 Generics.GenericList.Node.Next.get():::EXIT4
@@ -11262,7 +11355,7 @@ exception.GetType()
 nonsensical
 2
 return
-57385070
+46853302
 1
 return.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11274,7 +11367,7 @@ return.data.GetType()
 "System.Int32"
 1
 return.next
-21289199
+20119003
 1
 return.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11283,10 +11376,10 @@ return.next.data
 4
 1
 return.next.next
-2365466
+61887768
 1
 this
-46703582
+19026538
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11298,7 +11391,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-57385070
+46853302
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11307,14 +11400,14 @@ this.next.data
 5
 1
 this.next.next
-21289199
+20119003
 1
 
 Generics.GenericList.Node.Data.get():::ENTER
 this_invocation_nonce
 51
 this
-57385070
+46853302
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11326,7 +11419,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-21289199
+20119003
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11335,7 +11428,7 @@ this.next.data
 4
 1
 this.next.next
-2365466
+61887768
 1
 
 Generics.GenericList.Node.Data.get():::EXIT4
@@ -11354,7 +11447,7 @@ return.GetType()
 "System.Int32"
 1
 this
-57385070
+46853302
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11366,7 +11459,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-21289199
+20119003
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11375,7 +11468,7 @@ this.next.data
 4
 1
 this.next.next
-2365466
+61887768
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::EXIT30
@@ -11391,7 +11484,7 @@ return
 true
 1
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -11403,16 +11496,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-57385070
+46853302
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11421,14 +11514,14 @@ this.<current>5__1.data
 5
 1
 this.<current>5__1.next
-21289199
+20119003
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::ENTER
 this_invocation_nonce
 52
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -11440,16 +11533,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-57385070
+46853302
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11458,7 +11551,7 @@ this.<current>5__1.data
 5
 1
 this.<current>5__1.next
-21289199
+20119003
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::EXIT3
@@ -11477,7 +11570,7 @@ return.GetType()
 "System.Int32"
 1
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -11489,16 +11582,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-57385070
+46853302
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11507,14 +11600,14 @@ this.<current>5__1.data
 5
 1
 this.<current>5__1.next
-21289199
+20119003
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 this_invocation_nonce
 53
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -11526,16 +11619,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-57385070
+46853302
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11544,14 +11637,14 @@ this.<current>5__1.data
 5
 1
 this.<current>5__1.next
-21289199
+20119003
 1
 
 Generics.GenericList.Node.Next.get():::ENTER
 this_invocation_nonce
 54
 this
-57385070
+46853302
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11563,7 +11656,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-21289199
+20119003
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11572,7 +11665,7 @@ this.next.data
 4
 1
 this.next.next
-2365466
+61887768
 1
 
 Generics.GenericList.Node.Next.get():::EXIT4
@@ -11585,7 +11678,7 @@ exception.GetType()
 nonsensical
 2
 return
-21289199
+20119003
 1
 return.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11597,7 +11690,7 @@ return.data.GetType()
 "System.Int32"
 1
 return.next
-2365466
+61887768
 1
 return.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11606,10 +11699,10 @@ return.next.data
 3
 1
 return.next.next
-262829
+36702580
 1
 this
-57385070
+46853302
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11621,7 +11714,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-21289199
+20119003
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11630,14 +11723,14 @@ this.next.data
 4
 1
 this.next.next
-2365466
+61887768
 1
 
 Generics.GenericList.Node.Data.get():::ENTER
 this_invocation_nonce
 55
 this
-21289199
+20119003
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11649,7 +11742,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-2365466
+61887768
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11658,7 +11751,7 @@ this.next.data
 3
 1
 this.next.next
-262829
+36702580
 1
 
 Generics.GenericList.Node.Data.get():::EXIT4
@@ -11677,7 +11770,7 @@ return.GetType()
 "System.Int32"
 1
 this
-21289199
+20119003
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11689,7 +11782,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-2365466
+61887768
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11698,7 +11791,7 @@ this.next.data
 3
 1
 this.next.next
-262829
+36702580
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::EXIT30
@@ -11714,7 +11807,7 @@ return
 true
 1
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -11726,16 +11819,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-21289199
+20119003
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11744,14 +11837,14 @@ this.<current>5__1.data
 4
 1
 this.<current>5__1.next
-2365466
+61887768
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::ENTER
 this_invocation_nonce
 56
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -11763,16 +11856,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-21289199
+20119003
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11781,7 +11874,7 @@ this.<current>5__1.data
 4
 1
 this.<current>5__1.next
-2365466
+61887768
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::EXIT3
@@ -11800,7 +11893,7 @@ return.GetType()
 "System.Int32"
 1
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -11812,16 +11905,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-21289199
+20119003
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11830,14 +11923,14 @@ this.<current>5__1.data
 4
 1
 this.<current>5__1.next
-2365466
+61887768
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 this_invocation_nonce
 57
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -11849,16 +11942,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-21289199
+20119003
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11867,14 +11960,14 @@ this.<current>5__1.data
 4
 1
 this.<current>5__1.next
-2365466
+61887768
 1
 
 Generics.GenericList.Node.Next.get():::ENTER
 this_invocation_nonce
 58
 this
-21289199
+20119003
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11886,7 +11979,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-2365466
+61887768
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11895,7 +11988,7 @@ this.next.data
 3
 1
 this.next.next
-262829
+36702580
 1
 
 Generics.GenericList.Node.Next.get():::EXIT4
@@ -11908,7 +12001,7 @@ exception.GetType()
 nonsensical
 2
 return
-2365466
+61887768
 1
 return.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11920,7 +12013,7 @@ return.data.GetType()
 "System.Int32"
 1
 return.next
-262829
+36702580
 1
 return.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11929,10 +12022,10 @@ return.next.data
 2
 1
 return.next.next
-7485743
+41360766
 1
 this
-21289199
+20119003
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11944,7 +12037,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-2365466
+61887768
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11953,14 +12046,14 @@ this.next.data
 3
 1
 this.next.next
-262829
+36702580
 1
 
 Generics.GenericList.Node.Data.get():::ENTER
 this_invocation_nonce
 59
 this
-2365466
+61887768
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11972,7 +12065,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-262829
+36702580
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11981,7 +12074,7 @@ this.next.data
 2
 1
 this.next.next
-7485743
+41360766
 1
 
 Generics.GenericList.Node.Data.get():::EXIT4
@@ -12000,7 +12093,7 @@ return.GetType()
 "System.Int32"
 1
 this
-2365466
+61887768
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12012,7 +12105,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-262829
+36702580
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12021,7 +12114,7 @@ this.next.data
 2
 1
 this.next.next
-7485743
+41360766
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::EXIT30
@@ -12037,7 +12130,7 @@ return
 true
 1
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -12049,16 +12142,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-2365466
+61887768
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12067,14 +12160,14 @@ this.<current>5__1.data
 3
 1
 this.<current>5__1.next
-262829
+36702580
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::ENTER
 this_invocation_nonce
 60
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -12086,16 +12179,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-2365466
+61887768
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12104,7 +12197,7 @@ this.<current>5__1.data
 3
 1
 this.<current>5__1.next
-262829
+36702580
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::EXIT3
@@ -12123,7 +12216,7 @@ return.GetType()
 "System.Int32"
 1
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -12135,16 +12228,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-2365466
+61887768
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12153,14 +12246,14 @@ this.<current>5__1.data
 3
 1
 this.<current>5__1.next
-262829
+36702580
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 this_invocation_nonce
 61
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -12172,16 +12265,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-2365466
+61887768
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12190,14 +12283,14 @@ this.<current>5__1.data
 3
 1
 this.<current>5__1.next
-262829
+36702580
 1
 
 Generics.GenericList.Node.Next.get():::ENTER
 this_invocation_nonce
 62
 this
-2365466
+61887768
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12209,7 +12302,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-262829
+36702580
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12218,7 +12311,7 @@ this.next.data
 2
 1
 this.next.next
-7485743
+41360766
 1
 
 Generics.GenericList.Node.Next.get():::EXIT4
@@ -12231,7 +12324,7 @@ exception.GetType()
 nonsensical
 2
 return
-262829
+36702580
 1
 return.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12243,7 +12336,7 @@ return.data.GetType()
 "System.Int32"
 1
 return.next
-7485743
+41360766
 1
 return.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12252,10 +12345,10 @@ return.next.data
 1
 1
 return.next.next
-45570991
+26965262
 1
 this
-2365466
+61887768
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12267,7 +12360,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-262829
+36702580
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12276,14 +12369,14 @@ this.next.data
 2
 1
 this.next.next
-7485743
+41360766
 1
 
 Generics.GenericList.Node.Data.get():::ENTER
 this_invocation_nonce
 63
 this
-262829
+36702580
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12295,7 +12388,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-7485743
+41360766
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12304,7 +12397,7 @@ this.next.data
 1
 1
 this.next.next
-45570991
+26965262
 1
 
 Generics.GenericList.Node.Data.get():::EXIT4
@@ -12323,7 +12416,7 @@ return.GetType()
 "System.Int32"
 1
 this
-262829
+36702580
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12335,7 +12428,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-7485743
+41360766
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12344,7 +12437,7 @@ this.next.data
 1
 1
 this.next.next
-45570991
+26965262
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::EXIT30
@@ -12360,7 +12453,7 @@ return
 true
 1
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -12372,16 +12465,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-262829
+36702580
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12390,14 +12483,14 @@ this.<current>5__1.data
 2
 1
 this.<current>5__1.next
-7485743
+41360766
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::ENTER
 this_invocation_nonce
 64
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -12409,16 +12502,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-262829
+36702580
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12427,7 +12520,7 @@ this.<current>5__1.data
 2
 1
 this.<current>5__1.next
-7485743
+41360766
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::EXIT3
@@ -12446,7 +12539,7 @@ return.GetType()
 "System.Int32"
 1
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -12458,16 +12551,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-262829
+36702580
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12476,14 +12569,14 @@ this.<current>5__1.data
 2
 1
 this.<current>5__1.next
-7485743
+41360766
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 this_invocation_nonce
 65
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -12495,16 +12588,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-262829
+36702580
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12513,14 +12606,14 @@ this.<current>5__1.data
 2
 1
 this.<current>5__1.next
-7485743
+41360766
 1
 
 Generics.GenericList.Node.Next.get():::ENTER
 this_invocation_nonce
 66
 this
-262829
+36702580
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12532,7 +12625,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-7485743
+41360766
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12541,7 +12634,7 @@ this.next.data
 1
 1
 this.next.next
-45570991
+26965262
 1
 
 Generics.GenericList.Node.Next.get():::EXIT4
@@ -12554,7 +12647,7 @@ exception.GetType()
 nonsensical
 2
 return
-7485743
+41360766
 1
 return.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12566,7 +12659,7 @@ return.data.GetType()
 "System.Int32"
 1
 return.next
-45570991
+26965262
 1
 return.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12578,7 +12671,7 @@ return.next.next
 null
 1
 this
-262829
+36702580
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12590,7 +12683,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-7485743
+41360766
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12599,14 +12692,14 @@ this.next.data
 1
 1
 this.next.next
-45570991
+26965262
 1
 
 Generics.GenericList.Node.Data.get():::ENTER
 this_invocation_nonce
 67
 this
-7485743
+41360766
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12618,7 +12711,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-45570991
+26965262
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12646,7 +12739,7 @@ return.GetType()
 "System.Int32"
 1
 this
-7485743
+41360766
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12658,7 +12751,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-45570991
+26965262
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12683,7 +12776,7 @@ return
 true
 1
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -12695,16 +12788,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-7485743
+41360766
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12713,14 +12806,14 @@ this.<current>5__1.data
 1
 1
 this.<current>5__1.next
-45570991
+26965262
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::ENTER
 this_invocation_nonce
 68
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -12732,16 +12825,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-7485743
+41360766
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12750,7 +12843,7 @@ this.<current>5__1.data
 1
 1
 this.<current>5__1.next
-45570991
+26965262
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::EXIT3
@@ -12769,7 +12862,7 @@ return.GetType()
 "System.Int32"
 1
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -12781,16 +12874,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-7485743
+41360766
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12799,14 +12892,14 @@ this.<current>5__1.data
 1
 1
 this.<current>5__1.next
-45570991
+26965262
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 this_invocation_nonce
 69
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -12818,16 +12911,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-7485743
+41360766
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12836,14 +12929,14 @@ this.<current>5__1.data
 1
 1
 this.<current>5__1.next
-45570991
+26965262
 1
 
 Generics.GenericList.Node.Next.get():::ENTER
 this_invocation_nonce
 70
 this
-7485743
+41360766
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12855,7 +12948,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-45570991
+26965262
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12877,7 +12970,7 @@ exception.GetType()
 nonsensical
 2
 return
-45570991
+26965262
 1
 return.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12901,7 +12994,7 @@ return.next.next
 nonsensical
 2
 this
-7485743
+41360766
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12913,7 +13006,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-45570991
+26965262
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12929,7 +13022,7 @@ Generics.GenericList.Node.Data.get():::ENTER
 this_invocation_nonce
 71
 this
-45570991
+26965262
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12969,7 +13062,7 @@ return.GetType()
 "System.Int32"
 1
 this
-45570991
+26965262
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -13006,7 +13099,7 @@ return
 true
 1
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -13018,16 +13111,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-45570991
+26965262
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -13043,7 +13136,7 @@ Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<
 this_invocation_nonce
 72
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -13055,16 +13148,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-45570991
+26965262
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -13092,7 +13185,7 @@ return.GetType()
 "System.Int32"
 1
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -13104,16 +13197,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-45570991
+26965262
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -13129,7 +13222,7 @@ Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 this_invocation_nonce
 73
 this
-3131361
+10634019
 1
 this.<>1__state
 1
@@ -13141,16 +13234,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
-45570991
+26965262
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -13166,7 +13259,7 @@ Generics.GenericList.Node.Next.get():::ENTER
 this_invocation_nonce
 74
 this
-45570991
+26965262
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -13224,7 +13317,7 @@ return.next.next
 nonsensical
 2
 this
-45570991
+26965262
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -13261,7 +13354,7 @@ return
 false
 1
 this
-3131361
+10634019
 1
 this.<>1__state
 -1
@@ -13273,13 +13366,13 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
 null
@@ -13298,7 +13391,7 @@ Generics.GenericList.<GetEnumerator>d__0.System.IDisposable.Dispose():::ENTER
 this_invocation_nonce
 75
 this
-3131361
+10634019
 1
 this.<>1__state
 -1
@@ -13310,13 +13403,13 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
 null
@@ -13341,7 +13434,7 @@ exception.GetType()
 nonsensical
 2
 this
-3131361
+10634019
 1
 this.<>1__state
 -1
@@ -13353,13 +13446,13 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-34889605
+25365761
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-22717550
+45920800
 1
 this.<current>5__1
 null
@@ -13388,7 +13481,7 @@ exception.GetType()
 nonsensical
 2
 this
-28182251
+28597308
 1
 this.GetType()
 "Generics.GenericList`1[System.String]"
@@ -13420,7 +13513,7 @@ exception.GetType()
 nonsensical
 2
 this
-52313669
+56049180
 1
 this.GetType()
 "Generics.GenericList`1[Generics.DelegateTestExampleClass]"
@@ -13483,7 +13576,7 @@ t.GetType()
 "System.String"
 1
 this
-1060976
+34680572
 1
 this.GetType()
 "Generics.Node4`1[System.String]"
@@ -13526,7 +13619,7 @@ t.GetType()
 "System.String"
 1
 this
-1060976
+34680572
 1
 this.GetType()
 "Generics.Node4`1[System.String]"
@@ -13577,7 +13670,7 @@ t.GetType()
 "System.String"
 1
 this
-9548790
+43689693
 1
 this.GetType()
 "Generics.Node4`1[System.String]"
@@ -13620,7 +13713,7 @@ t.GetType()
 "System.String"
 1
 this
-9548790
+43689693
 1
 this.GetType()
 "Generics.Node4`1[System.String]"
@@ -13674,7 +13767,7 @@ t.GetType()
 "System.Int32"
 1
 this
-18830246
+57662920
 1
 this.GetType()
 "Generics.Node5`2[System.Int32,System.Int32]"
@@ -13714,7 +13807,7 @@ t.GetType()
 "System.Int32"
 1
 this
-18830246
+57662920
 1
 this.GetType()
 "Generics.Node5`2[System.Int32,System.Int32]"
@@ -13730,13 +13823,13 @@ Generics.Node5..ctor(T\_t,\_U\_u):::ENTER
 this_invocation_nonce
 84
 t
-9548790
+43689693
 1
 t.GetType()
 "Generics.Node4`1[System.String]"
 1
 u
-18830246
+57662920
 1
 u.GetType()
 "Generics.Node5`2[System.Int32,System.Int32]"
@@ -13746,13 +13839,13 @@ Generics.BaseNodeMultiple..ctor(T\_t,\_U\_u):::ENTER
 this_invocation_nonce
 85
 t
-9548790
+43689693
 1
 t.GetType()
 "Generics.Node4`1[System.String]"
 1
 u
-18830246
+57662920
 1
 u.GetType()
 "Generics.Node5`2[System.Int32,System.Int32]"
@@ -13768,13 +13861,13 @@ exception.GetType()
 nonsensical
 2
 t
-9548790
+43689693
 1
 t.GetType()
 "Generics.Node4`1[System.String]"
 1
 this
-35254491
+49204239
 1
 this.GetType()
 "Generics.Node5`2[Generics.Node4`1[System.String],Generics.Node5`2[System.Int32,System.Int32]]"
@@ -13792,7 +13885,7 @@ this.u.GetType()
 nonsensical
 2
 u
-18830246
+57662920
 1
 u.GetType()
 "Generics.Node5`2[System.Int32,System.Int32]"
@@ -13808,19 +13901,19 @@ exception.GetType()
 nonsensical
 2
 t
-9548790
+43689693
 1
 t.GetType()
 "Generics.Node4`1[System.String]"
 1
 this
-35254491
+49204239
 1
 this.GetType()
 "Generics.Node5`2[Generics.Node4`1[System.String],Generics.Node5`2[System.Int32,System.Int32]]"
 1
 u
-18830246
+57662920
 1
 u.GetType()
 "Generics.Node5`2[System.Int32,System.Int32]"
@@ -13840,7 +13933,7 @@ exception.GetType()
 nonsensical
 2
 this
-48854964
+40184969
 1
 this.GetType()
 "Generics.NodeItem`1[Generics.DelegateTestExampleClass]"
@@ -13854,7 +13947,7 @@ Generics.GenericsTest.Swap(System.Collections.Generic.List<T>\_list1,\_System.Co
 this_invocation_nonce
 88
 list1
-37041500
+26120409
 1
 list1.GetType()
 "System.Collections.Generic.List`1[System.Object]"
@@ -13866,7 +13959,7 @@ list1[..].GetType()
 ["System.Int32" "System.Int32" "System.Int32"]
 1
 list2
-64938051
+33757095
 1
 list2.GetType()
 "System.Collections.Generic.List`1[System.Object]"
@@ -13888,7 +13981,7 @@ exception.GetType()
 nonsensical
 2
 list1
-37041500
+26120409
 1
 list1.GetType()
 "System.Collections.Generic.List`1[System.Object]"
@@ -13900,7 +13993,7 @@ list1[..].GetType()
 ["System.Int32" "System.Int32" "System.Int32"]
 1
 list2
-64938051
+33757095
 1
 list2.GetType()
 "System.Collections.Generic.List`1[System.Object]"
@@ -13952,7 +14045,7 @@ Generics.GenericsTest.AddToList1(System.Collections.Generic.List<System.Int32>\_
 this_invocation_nonce
 90
 intList1
-47571555
+35378404
 1
 intList1[..]
 []
@@ -13968,7 +14061,7 @@ exception.GetType()
 nonsensical
 2
 intList1
-47571555
+35378404
 1
 intList1[..]
 [1 2 3]
@@ -13992,7 +14085,7 @@ exception.GetType()
 nonsensical
 2
 this
-25490811
+49970185
 1
 this.GetType()
 "Generics.DelegateTestStack`1[System.Double]"
@@ -14027,7 +14120,7 @@ exception.GetType()
 nonsensical
 2
 this
-28090709
+47078488
 1
 this.GetType()
 "Generics.DelegateTestClass"
@@ -14037,7 +14130,7 @@ Generics.DelegateTestStack.add_stackEvent(Generics.StackEventHandler<Generics.De
 this_invocation_nonce
 94
 this
-25490811
+49970185
 1
 this.GetType()
 "Generics.DelegateTestStack`1[System.Double]"
@@ -14058,7 +14151,7 @@ this.stackEvent._target
 nonsensical
 2
 value
-51489795
+21053208
 1
 value._methodBase
 null
@@ -14067,13 +14160,13 @@ value._methodBase.GetType()
 nonsensical
 2
 value._methodPtr
-94392824
+41963976
 1
 value._methodPtrAux
 0
 1
 value._target
-28090709
+47078488
 1
 value._target.GetType()
 "Generics.DelegateTestClass"
@@ -14089,28 +14182,28 @@ exception.GetType()
 nonsensical
 2
 this
-25490811
+49970185
 1
 this.GetType()
 "Generics.DelegateTestStack`1[System.Double]"
 1
 this.stackEvent
-51489795
+21053208
 1
 this.stackEvent._methodBase
 null
 1
 this.stackEvent._methodPtr
-94392824
+41963976
 1
 this.stackEvent._methodPtrAux
 0
 1
 this.stackEvent._target
-28090709
+47078488
 1
 value
-51489795
+21053208
 1
 value._methodBase
 null
@@ -14119,13 +14212,13 @@ value._methodBase.GetType()
 nonsensical
 2
 value._methodPtr
-94392824
+41963976
 1
 value._methodPtrAux
 0
 1
 value._target
-28090709
+47078488
 1
 value._target.GetType()
 "Generics.DelegateTestClass"
@@ -14159,7 +14252,7 @@ exception.GetType()
 nonsensical
 2
 this
-60754972
+55261147
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
@@ -14181,7 +14274,7 @@ Generics.GenericList.GetLast():::ENTER
 this_invocation_nonce
 97
 this
-60754972
+55261147
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
@@ -14215,7 +14308,7 @@ return.GetType()
 "System.Int32"
 1
 this
-60754972
+55261147
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
@@ -14247,7 +14340,7 @@ exception.GetType()
 nonsensical
 2
 this
-9923843
+27588283
 1
 this.GetType()
 "Generics.GenericList`1[System.String]"
@@ -14269,7 +14362,7 @@ Generics.GenericList.GetLast():::ENTER
 this_invocation_nonce
 99
 this
-9923843
+27588283
 1
 this.GetType()
 "Generics.GenericList`1[System.String]"
@@ -14303,7 +14396,7 @@ return.GetType()
 nonsensical
 2
 this
-9923843
+27588283
 1
 this.GetType()
 "Generics.GenericList`1[System.String]"
