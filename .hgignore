@@ -1,7 +1,3 @@
 syntax: glob
 */bin/*
 */obj/*
-*suo
-DaikonDotNetFrontEnd/HelloWorld/AdvancedCollections.cs
-HelloWorld.cs
-DaikonDotNetFrontEnd/MyTestProject/*
