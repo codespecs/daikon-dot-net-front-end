@@ -280,34 +280,37 @@ namespace DotNetFrontEnd
       TextWriter writer = InitializeWriter();
       try
       {
-        Type type = typeManager.ConvertAssemblyQualifiedNameToType(typeName);
-        if (type == null)
+        DNFETypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(typeName);
+        if (typeDecl == null)
         {
           throw new ArgumentException("VariableVistor received invalid type name for static" +
             " instrumentation.", "typeName");
         }
 
         int depth = 0;
-        foreach (FieldInfo field in
-          type.GetFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
+        foreach (Type type in typeDecl.GetAllTypes())
         {
-          string staticFieldName = type.Name + "." + field.Name;
-          try
+          foreach (FieldInfo field in
+           type.GetFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
           {
-            if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
+            string staticFieldName = type.Name + "." + field.Name;
+            try
             {
-              staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
-              ReflectiveVisit(staticFieldName, field.GetValue(null),
-                    field.FieldType, writer, staticFieldName.Count(c => c == '.'));
+              if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
+              {
+                staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
+                ReflectiveVisit(staticFieldName, field.GetValue(null),
+                      field.FieldType, writer, staticFieldName.Count(c => c == '.'));
+              }
             }
-          }
-          catch (ArgumentException)
-          {
-            Console.Error.WriteLine(" Name: " + staticFieldName + " Type: " + type + " Field Name: "
-                + field.Name + " Field Type: " + field.FieldType);
-            // The field is declared in the decls so Daikon still needs a value, 
-            ReflectiveVisit(staticFieldName + "." + field.Name, null,
-                field.FieldType, writer, depth + 1, VariableModifiers.nonsensical);
+            catch (ArgumentException)
+            {
+              Console.Error.WriteLine(" Name: " + staticFieldName + " Type: " + type + " Field Name: "
+                  + field.Name + " Field Type: " + field.FieldType);
+              // The field is declared in the decls so Daikon still needs a value, 
+              ReflectiveVisit(staticFieldName + "." + field.Name, null,
+                  field.FieldType, writer, depth + 1, VariableModifiers.nonsensical);
+            }
           }
         }
       }
@@ -472,26 +475,23 @@ namespace DotNetFrontEnd
       // Exceptions shouldn't be recursed any further down than the 
       // variable itself, because we only know that they are an exception.
       TextWriter writer = InitializeWriter();
-      Type type = typeManager.ConvertAssemblyQualifiedNameToType(typeName);
-      if (type == null)
-      {
-        try
-        {
-          writer.WriteLine(name);
-          writer.WriteLine("nonsensical");
-          writer.WriteLine(2);
-        }
-        finally
-        {
-          writer.Close();
-        }
-        return;
-      }
+      DNFETypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(typeName);
 
-      int depth = 0;
       try
       {
-        ReflectiveVisit(name, variable, type, writer, depth, flags);
+        foreach (Type type in typeDecl.GetAllTypes())
+        {
+          if (type == null)
+          {
+            writer.WriteLine(name);
+            writer.WriteLine("nonsensical");
+            writer.WriteLine(2);
+            return;
+          }
+
+          int depth = 0;
+          ReflectiveVisit(name, variable, type, writer, depth, flags);
+        }
       }
       //catch (Exception ex)
       //{
@@ -575,7 +575,7 @@ namespace DotNetFrontEnd
     #region Reflective Visitor and helper methods
 
     /// <summary>
-    /// Print the 3 line (name, value, mod bit) triple for the given variable and all it's 
+    /// Print the 3 line (name, value, mod bit) triple for the given variable and all its 
     /// children.
     /// </summary>
     /// <param name="name">Name of the variable to print</param>
@@ -754,7 +754,7 @@ namespace DotNetFrontEnd
       // null lists won't cast but we don't want to throw an exception for that
       if ((obj != null) && !(obj is IList))
       {
-        throw new NotSupportedException("Can't list reflective visit something that isn't a"
+        throw new NotSupportedException("Can'type list reflective visit something that isn'type a"
             + " list. This is a bug in the reflector implementation.");
       }
       else

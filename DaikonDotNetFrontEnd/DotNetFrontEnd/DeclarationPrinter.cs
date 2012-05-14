@@ -509,7 +509,7 @@ namespace DotNetFrontEnd
     {
       parentName = parentName + ":::OBJECT 1";
       // If we can't resolve the parent object type don't write anything
-      Type type = typeManager.ConvertAssemblyQualifiedNameToType(parentObjectType);
+      Type type = typeManager.ConvertAssemblyQualifiedNameToType(parentObjectType).GetSingleType();
       if (type != null)
       {
         this.PrintVariable("this", type, flags: VariableFlags.is_param, parentName: parentName);
@@ -530,10 +530,10 @@ namespace DotNetFrontEnd
     public void PrintParentClassFields(string parentObjectType)
     {
       // TODO(#48): Parent type like we do for instance fields.
-      Type type = typeManager.ConvertAssemblyQualifiedNameToType(parentObjectType);
+      Type type = typeManager.ConvertAssemblyQualifiedNameToType(parentObjectType).GetSingleType();
       if (type == null)
       {
-        throw new ArgumentException("Unable to resolve parent object type to a type.", 
+        throw new ArgumentException("Unable to resolve parent object type to a type.",
             "parentObjectType");
       }
       DeclareStaticFieldsForType(type);
@@ -590,10 +590,13 @@ namespace DotNetFrontEnd
     /// <param name="paramType">The assembly-qualified name of the program to print</param>
     public void PrintParameter(string name, string paramType)
     {
-      Type type = typeManager.ConvertAssemblyQualifiedNameToType(paramType);
-      if (type != null)
+      DNFETypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(paramType);
+      foreach (Type type in typeDecl.GetAllTypes())
       {
-        PrintVariable(name, type, flags: VariableFlags.is_param);
+        if (type != null)
+        {
+          PrintVariable(name, type, flags: VariableFlags.is_param);
+        }
       }
     }
 
@@ -614,10 +617,13 @@ namespace DotNetFrontEnd
     /// <param name="returnType">Assembly qualified name of the return type</param>
     public void PrintReturn(string name, string returnType)
     {
-      Type type = typeManager.ConvertAssemblyQualifiedNameToType(returnType);
-      if (type != null)
+      DNFETypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(returnType);
+      foreach (Type type in typeDecl.GetAllTypes())
       {
-        PrintVariable(name, type, kind: VariableKind.Return, nestingDepth: 0);
+        if (type != null)
+        {
+          PrintVariable(name, type, kind: VariableKind.Return, nestingDepth: 0);
+        }
       }
     }
 
@@ -629,17 +635,21 @@ namespace DotNetFrontEnd
     /// used to fetch the Type</param>
     public void PrintObjectDefinition(string objectName, string objectAssemblyQualifiedName)
     {
-      Type objectType = typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
-      if (objectType != null)
+      DNFETypeDeclaration objectTypeDecl = 
+          typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
+      foreach (Type objectType in objectTypeDecl.GetAllTypes())
       {
-        this.WriteLine();
-        string nameToPrint = SanitizeProgramPointName(objectName + ":::OBJECT");
-        if (frontEndArgs.ShouldPrintProgramPoint(nameToPrint))
+        if (objectType != null)
         {
-          this.WritePair("ppt", nameToPrint);
-          this.WritePair("ppt-type", "object");
-          this.WritePair("parent", "parent " + nameToPrint.Replace(":::OBJECT", ":::CLASS 1"));
-          PrintVariable("this", objectType, VariableKind.variable, VariableFlags.is_param);
+          this.WriteLine();
+          string nameToPrint = SanitizeProgramPointName(objectName + ":::OBJECT");
+          if (frontEndArgs.ShouldPrintProgramPoint(nameToPrint))
+          {
+            this.WritePair("ppt", nameToPrint);
+            this.WritePair("ppt-type", "object");
+            this.WritePair("parent", "parent " + nameToPrint.Replace(":::OBJECT", ":::CLASS 1"));
+            PrintVariable("this", objectType, VariableKind.variable, VariableFlags.is_param);
+          }
         }
       }
     }
@@ -652,8 +662,9 @@ namespace DotNetFrontEnd
     /// static fields to print</param>
     public void PrintParentClassDefinition(string className, string objectAssemblyQualifiedName)
     {
-      Type objectType = typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
-      if (objectType != null)
+      DNFETypeDeclaration objectTypeDecl =
+          typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
+      foreach (Type objectType in objectTypeDecl.GetAllTypes())
       {
         this.WriteLine();
         string nameToPrint = SanitizeProgramPointName(className + ":::CLASS");
@@ -828,7 +839,7 @@ namespace DotNetFrontEnd
       }
       else
       {
-        string typeStr= type.ToString();
+        string typeStr = type.ToString();
         if (this.frontEndArgs.FriendlyDecTypes)
         {
           typeStr = Regex.Replace(typeStr, @"`\d", "");
