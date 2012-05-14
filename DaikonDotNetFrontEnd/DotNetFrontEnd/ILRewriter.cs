@@ -694,8 +694,9 @@ namespace DotNetFrontEnd
             throw new NotSupportedException("How was this exception type reached?");
           }
           // Convert from CCI Type to String Type
+          // Exception name must be a single class
           Type t = this.typeManager.ConvertAssemblyQualifiedNameToType(
-              this.typeManager.ConvertCCITypeToAssemblyQualifiedName(exType));
+              this.typeManager.ConvertCCITypeToAssemblyQualifiedName(exType)).GetSingleType();
           if (t != null && !dict.ContainsKey(t))
           {
             dict.Add(t, exType);
@@ -2167,14 +2168,14 @@ namespace DotNetFrontEnd
       var assembly = module as IAssembly;
       if (assembly == null)
       {
-        throw new ILMutatorException("Couldn't modify assembly");
+        throw new ILMutatorException("Couldn'type modify assembly");
       }
       Assembly mutableAssembly = (Assembly)MetadataCopier.DeepCopy(host, assembly);
       this.assemblyIdentity = UnitHelper.GetAssemblyIdentity(mutableAssembly);
       this.typeManager.SetAssemblyIdentity(assemblyIdentity);
       if (!File.Exists(pathToVisitor))
       {
-        throw new FileNotFoundException("Reflector doesn't exist");
+        throw new FileNotFoundException("Reflector doesn'type exist");
       }
 
       IAssembly variableVisitorAssembly = this.host.LoadUnitFrom(pathToVisitor) as IAssembly;

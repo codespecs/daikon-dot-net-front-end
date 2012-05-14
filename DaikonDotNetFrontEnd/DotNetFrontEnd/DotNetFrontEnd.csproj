@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DeclarationPrinter.cs" />
+    <Compile Include="DNFETypeDeclaration.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="FrontEndArgs.cs" />
     <Compile Include="ILRewriter.cs" />
