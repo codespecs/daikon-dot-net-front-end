@@ -32,6 +32,11 @@ namespace DotNetFrontEnd
     /// </summary>
     private HashSet<string> staticFieldsForCurrentProgramPoint;
 
+    /// <summary>
+    /// Collection of variables declared for the current program point
+    /// </summary>
+    private HashSet<string> variablesForCurrentProgramPoint;
+
     #region Constants
 
     /// <summary>
@@ -134,6 +139,7 @@ namespace DotNetFrontEnd
       }
 
       this.staticFieldsForCurrentProgramPoint = new HashSet<string>();
+      this.variablesForCurrentProgramPoint = new HashSet<string>();
 
       this.PrintPreliminaries();
     }
@@ -184,6 +190,15 @@ namespace DotNetFrontEnd
           !this.frontEndArgs.ShouldPrintVariable(name))
       {
         return;
+      }
+
+      if (this.variablesForCurrentProgramPoint.Contains(name))
+      {
+        return;
+      }
+      else
+      {
+        this.variablesForCurrentProgramPoint.Add(name);
       }
 
       this.WritePair("variable", name, 1);
@@ -568,6 +583,7 @@ namespace DotNetFrontEnd
       this.WritePair("ppt", SanitizeProgramPointName(methodName));
       this.WritePair("ppt-type", "enter");
       this.staticFieldsForCurrentProgramPoint.Clear();
+      this.variablesForCurrentProgramPoint.Clear();
     }
 
     /// <summary>
@@ -580,6 +596,7 @@ namespace DotNetFrontEnd
       this.WritePair("ppt", SanitizeProgramPointName(methodName));
       this.WritePair("ppt-type", "subexit");
       this.staticFieldsForCurrentProgramPoint.Clear();
+      this.variablesForCurrentProgramPoint.Clear();
     }
 
     /// <summary>
@@ -639,6 +656,7 @@ namespace DotNetFrontEnd
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
       foreach (Type objectType in objectTypeDecl.GetAllTypes())
       {
+        this.variablesForCurrentProgramPoint.Clear();
         if (objectType != null)
         {
           this.WriteLine();
@@ -666,6 +684,7 @@ namespace DotNetFrontEnd
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
       foreach (Type objectType in objectTypeDecl.GetAllTypes())
       {
+        this.variablesForCurrentProgramPoint.Clear();
         this.WriteLine();
         string nameToPrint = SanitizeProgramPointName(className + ":::CLASS");
         if (frontEndArgs.ShouldPrintProgramPoint(nameToPrint))
