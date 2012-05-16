@@ -1,5 +1,4 @@
-﻿
-// TypeManager holds references to all .NET types we use and can convert
+﻿// TypeManager holds references to all .NET types we use and can convert
 // between CCIMetadata and .NET types.
 
 namespace DotNetFrontEnd
@@ -10,9 +9,9 @@ namespace DotNetFrontEnd
   using System.Linq;
   using System.Reflection;
   using System.Text;
+  using System.Text.RegularExpressions;
   using Microsoft.Cci;
   using Microsoft.Cci.MutableCodeModel;
-  using System.Text.RegularExpressions;
 
   /// <summary>
   /// Keeps canoncial type references. Converts between CCIMetadata and .NET types.
@@ -64,6 +63,12 @@ namespace DotNetFrontEnd
     /// this signature, they are system generated.
     /// </summary>
     public readonly static string RegexForTypesToIgnoreForProgramPoint = "<*>";
+
+    /// <summary>
+    /// When dec-type of a generic variable with multiple constraints is being printed, use this
+    /// to separate each class. Needs to not exist otherwise in an assembly-qualified name.
+    /// </summary>
+    private readonly static char DecTypeMultipleConstraintSeparator = '|';
 
     /// <summary>
     /// Front end args for the program this class is managing types for
@@ -174,7 +179,8 @@ namespace DotNetFrontEnd
           string typeName = methodDescriptions[0];
           string methodName = methodDescriptions[1];
 
-          Type type = ConvertAssemblyQualifiedNameToType(typeName);
+          // The user will declare a single type name
+          Type type = ConvertAssemblyQualifiedNameToType(typeName).GetSingleType();
           // Pure methods have no parameters
           MethodInfo method = type.GetMethod(methodName, new Type[] { });
           if (method == null)
@@ -459,15 +465,20 @@ namespace DotNetFrontEnd
     /// </returns>
     public Dictionary<int, MethodInfo> GetPureMethodsForType(String assemblyQualifiedName)
     {
-      Type type = this.ConvertAssemblyQualifiedNameToType(assemblyQualifiedName);
       Dictionary<int, MethodInfo> result = new Dictionary<int, MethodInfo>();
-      if (this.pureMethodKeys.ContainsKey(type))
+
+      DNFETypeDeclaration typeDecl = this.ConvertAssemblyQualifiedNameToType(assemblyQualifiedName);
+      foreach (Type type in typeDecl.GetAllTypes())
       {
-        foreach (int key in this.pureMethodKeys[type])
+        if (this.pureMethodKeys.ContainsKey(type))
         {
-          result.Add(key, pureMethods[key]);
+          foreach (int key in this.pureMethodKeys[type])
+          {
+            result.Add(key, pureMethods[key]);
+          }
         }
       }
+
       return result;
     }
 
@@ -483,11 +494,23 @@ namespace DotNetFrontEnd
     /// Warning supresesd because there is no way to avoid this call.
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability",
       "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadFrom")]
-    public Type ConvertAssemblyQualifiedNameToType(string assemblyQualifiedName)
+    public DNFETypeDeclaration ConvertAssemblyQualifiedNameToType(string assemblyQualifiedName)
     {
       // TODO(#17): Passing around an assembly qualified name here may not be best because it is
       // difficult to build and parse. Consider creating a custom object to manage type identity
       // and use that as a parameter instead.
+      if (Regex.IsMatch(assemblyQualifiedName, "{[\\w\\W]*}"))
+      {
+        var match = Regex.Match(assemblyQualifiedName, "{[\\w\\W]*}");
+        List<Type> types = new List<Type>();
+        foreach (var singleConstraint in match.Value.Split(DecTypeMultipleConstraintSeparator))
+        {
+          string updatedConstraint = singleConstraint.Replace("{", "").Replace("}", "");
+          types.Add(this.ConvertAssemblyQualifiedNameToType(match.Result(updatedConstraint))
+              .GetSingleType());
+        }
+        return new DNFETypeDeclaration(types);
+      }
 
       // Memoized; if we've seen this string before return the type from before.
       // Otherwise get the type and save the result.
@@ -512,15 +535,16 @@ namespace DotNetFrontEnd
                       false);
           if (result == null)
           {
-            Console.Error.WriteLine("Couldn't convert type with assembly qualified name: " +
+            Console.Error.WriteLine("Couldn'type convert type with assembly qualified name: " +
                 assemblyQualifiedName);
           }
           this.nameTypeMap.Add(assemblyQualifiedName, result);
         }
-        return result;
+        return new DNFETypeDeclaration(result);
       }
       catch (Exception ex)
       {
+        // Attempt to continue by stripping generic information
         if (assemblyQualifiedName.Contains("[["))
         {
           return ConvertAssemblyQualifiedNameToType(
@@ -623,20 +647,37 @@ namespace DotNetFrontEnd
     /// and visited.
     /// </summary>
     /// <param name="type">Generic parameter to inspect</param>
-    /// <returns>Array of form [a,b,...,x] containing comma separated assembly-qualified names
-    /// of the classes or interfaces constraining the generic parameter</returns>
+    /// <returns>If there is only one constraint then the name of the class of the constraint is
+    /// printed. Else a list of form {a,b,...,x} containing comma separated assembly-qualified names
+    /// of the classes or interfaces constraining the generic parameter is printed.</returns>
     private string PrintListOfGenericParameterClassesAndInterfaces(ITypeReference type)
     {
       GenericParameter gtp = (GenericParameter)type;
-      if (gtp != null && gtp.Constraints != null && gtp.Constraints.Count > 0)
+      if (gtp != null && gtp.Constraints != null)
       {
-        // Stub implementation: Just return 1 of the constraints for now.
-        // Don't deeply inspect generic types here or else we'll infinite loop.
-        return this.ConvertCCITypeToAssemblyQualifiedName(gtp.Constraints[0], false);
+        if (gtp.Constraints.Count > 1)
+        {
+          StringBuilder builder = new StringBuilder();
+          builder.Append("{");
+          foreach (ITypeReference constraint in gtp.Constraints)
+          {
+            builder.Append(this.ConvertCCITypeToAssemblyQualifiedName(constraint, false));
+            builder.Append(DecTypeMultipleConstraintSeparator);
+          }
+          // Remove the last comma
+          builder.Remove(builder.Length - 1, 1);
+          builder.Append("}");
+          return builder.ToString();
+        }
+        else
+        {
+          // Don't deeply inspect generic types here or else we'll infinite loop.
+          return this.ConvertCCITypeToAssemblyQualifiedName(gtp.Constraints[0], false);
+        }
       }
       else
       {
-        // Stub implementation
+        // Fall-back
         return "System.Object";
       }
     }
@@ -760,6 +801,7 @@ namespace DotNetFrontEnd
     {
       StringBuilder builder = new StringBuilder();
       builder.Append(typeName);
+
       builder.Append("[");
       foreach (var genericTypeArgument in castedType.GenericArguments)
       {
@@ -771,6 +813,7 @@ namespace DotNetFrontEnd
       // Remove the extraneous comma
       builder.Remove(builder.Length - 1, 1);
       builder.Append("]");
+
       return builder.ToString();
     }
 
@@ -814,7 +857,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Returns whether the method with the given name is non-regular, that is was added by the 
+    /// Returns whether the method with the given name is non-regular -- meaning it was added by the 
     /// compiler.
     /// </summary>
     /// <param name="type">The type the method comes from</param>
@@ -822,68 +865,80 @@ namespace DotNetFrontEnd
     /// <returns>True if the method wasn't written by the programer, false otherwise</returns>
     public bool IsMethodCompilerGenerated(IMethodDefinition methodDef)
     {
-      Type type = this.ConvertAssemblyQualifiedNameToType(
+      DNFETypeDeclaration typeDecl = this.ConvertAssemblyQualifiedNameToType(
         this.ConvertCCITypeToAssemblyQualifiedName(methodDef.ContainingType));
-      IEnumerable<IParameterDefinition> parameters = methodDef.Parameters;
-      string methodName = methodDef.Name.ToString();
-
-      if (type == null)
+      foreach (Type type in typeDecl.GetAllTypes())
       {
-        // TODO: Figure out better things to do here
-        // throw new ArgumentNullException("type");
-        return false;
-      }
-      // @ is not a valid character in a type name so it must be compiler generated
-      if (type.Name.Contains("@")) { return true; }
-      try
-      {
-        var cciTypes = parameters.ToArray();
-        Type[] reflectionTypes = new Type[cciTypes.Length];
-        int i = 0;
-        foreach (var currType in cciTypes) // (int i = 0; i < paramTypes.Length; i++)
-        {
-          // Get the param type
-          // Convert from CCI Type to .NET Type
-          reflectionTypes[i] = ConvertAssemblyQualifiedNameToType(
-              ConvertCCITypeToAssemblyQualifiedName(currType.Type));
-          if (reflectionTypes[i] == null)
-          {
-            // If anything can't be resolved we are hosed
-            reflectionTypes = null;
-            break;
-          }
-          i++;
-        }
+        IEnumerable<IParameterDefinition> parameters = methodDef.Parameters;
+        string methodName = methodDef.Name.ToString();
 
-        MethodInfo methodInfo;
-        if (reflectionTypes != null)
-        {
-          methodInfo = type.GetMethod(methodName, reflectionTypes);
-        }
-        else
-        {
-          methodInfo = type.GetMethod(methodName);
-        }
-        if (methodInfo == null)
+        if (type == null)
         {
           // TODO: Figure out better things to do here
-          //throw new Exception(
-          //  String.Format("Couldn't resolve method named {0} of type {1}", methodName, type.Name));
+          // throw new ArgumentNullException("type");
           return false;
         }
-        var customAttrs = methodInfo.GetCustomAttributes(true);
-        foreach (var attr in customAttrs)
+        // @ is not a valid character in a type name so it must be compiler generated
+        if (type.Name.Contains("@")) { return true; }
+        try
         {
-          if (attr.GetType() == typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute))
+          // Extract all the param types and try to resolve a method containing them
+          var paramTypes = parameters.ToArray();
+          Type[] reflectionTypes = new Type[paramTypes.Length];
+          int i = 0;
+          foreach (var currType in paramTypes) // (int i = 0; i < paramTypes.Length; i++)
           {
-            return true;
+            // Get the param type
+            // Convert from CCI Type to .NET Type
+            DNFETypeDeclaration paramTypeDecl = ConvertAssemblyQualifiedNameToType(
+                ConvertCCITypeToAssemblyQualifiedName(currType.Type));
+            if (paramTypeDecl.GetDeclartionType() != DNFETypeDeclaration.DeclarationType.SingleClass)
+            {
+              // There's no way to resolve the method type with multiple classes so we can 
+              // GetSingleType(), if there's any failure the only result is that a method that 
+              // possibly could be skipped won't be.
+              return false;
+            }
+            reflectionTypes[i] = paramTypeDecl.GetSingleType();
+            if (reflectionTypes[i] == null)
+            {
+              // If anything can't be resolved we are hosed
+              reflectionTypes = null;
+              break;
+            }
+            i++;
+          }
+
+          MethodInfo methodInfo;
+          if (reflectionTypes != null)
+          {
+            methodInfo = type.GetMethod(methodName, reflectionTypes);
+          }
+          else
+          {
+            methodInfo = type.GetMethod(methodName);
+          }
+          if (methodInfo == null)
+          {
+            // TODO: Figure out better things to do here
+            //throw new Exception(
+            //  String.Format("Couldn't resolve method named {0} of type {1}", methodName, type.Name));
+            return false;
+          }
+          var customAttrs = methodInfo.GetCustomAttributes(true);
+          foreach (var attr in customAttrs)
+          {
+            if (attr.GetType() == typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute))
+            {
+              return true;
+            }
           }
         }
-      }
-      catch (AmbiguousMatchException ex)
-      {
-        // TODO: Figure out better things to do here
-        Console.WriteLine(ex.Message);
+        catch (AmbiguousMatchException ex)
+        {
+          // TODO: Figure out better things to do here
+          Console.WriteLine(ex.Message);
+        }
       }
       return false;
     }
