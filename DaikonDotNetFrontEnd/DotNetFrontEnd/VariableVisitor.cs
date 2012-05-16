@@ -199,6 +199,11 @@ namespace DotNetFrontEnd
     /// </summary>
     private static HashSet<string> staticFieldsVisitedForCurrentProgramPoint = new HashSet<string>();
 
+    /// <summary>
+    /// Collection of varibles that have been visited during the current prorgram point
+    /// </summary>
+    private static HashSet<string> variablesVisitedForCurrentProgramPoint = new HashSet<string>();
+
     #endregion
 
     /// <summary>
@@ -399,6 +404,7 @@ namespace DotNetFrontEnd
     public static void WriteProgramPoint(string programPointName, string label)
     {
       staticFieldsVisitedForCurrentProgramPoint.Clear();
+      variablesVisitedForCurrentProgramPoint.Clear();
 
       if (frontEndArgs == null)
       {
@@ -591,6 +597,15 @@ namespace DotNetFrontEnd
       // building up the assembly qualified name and storing it in the IL.
       // type = obj != null ? typeManager.ConvertAssemblyQualifiedNameToType(
       //    obj.GetType().AssemblyQualifiedName) : type;
+
+      if (variablesVisitedForCurrentProgramPoint.Contains(name))
+      {
+        return;
+      }
+      else
+      {
+        variablesVisitedForCurrentProgramPoint.Add(name);
+      }
 
       if (depth > frontEndArgs.MaxNestingDepth ||
           !frontEndArgs.ShouldPrintVariable(name))

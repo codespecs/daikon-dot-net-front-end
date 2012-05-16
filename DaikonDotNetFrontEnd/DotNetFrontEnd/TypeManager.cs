@@ -594,25 +594,25 @@ namespace DotNetFrontEnd
       GenericParameter gtp = (GenericParameter)type;
       if (gtp != null && gtp.Constraints != null)
       {
-        //if (gtp.Constraints.Count > 1)
-        //{
-        //  StringBuilder builder = new StringBuilder();
-        //  builder.Append("{");
-        //  foreach (ITypeReference constraint in gtp.Constraints)
-        //  {
-        //    builder.Append(this.ConvertCCITypeToAssemblyQualifiedName(constraint, false));
-        //    builder.Append(DecTypeMultipleConstraintSeparator);
-        //  }
-        //  // Remove the last comma
-        //  builder.Remove(builder.Length - 1, 1);
-        //  builder.Append("}");
-        //  return builder.ToString();
-        //}
-        //else
-        //{
+        if (gtp.Constraints.Count > 1)
+        {
+          StringBuilder builder = new StringBuilder();
+          builder.Append("{");
+          foreach (ITypeReference constraint in gtp.Constraints)
+          {
+            builder.Append(this.ConvertCCITypeToAssemblyQualifiedName(constraint, false));
+            builder.Append(DecTypeMultipleConstraintSeparator);
+          }
+          // Remove the last comma
+          builder.Remove(builder.Length - 1, 1);
+          builder.Append("}");
+          return builder.ToString();
+        }
+        else
+        {
           // Don't deeply inspect generic types here or else we'll infinite loop.
           return this.ConvertCCITypeToAssemblyQualifiedName(gtp.Constraints[0], false);
-        //}
+        }
       }
       else
       {
