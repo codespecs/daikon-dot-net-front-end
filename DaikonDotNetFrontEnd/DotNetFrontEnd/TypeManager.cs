@@ -158,10 +158,7 @@ namespace DotNetFrontEnd
       this.nameTypeMap = new Dictionary<string, Type>();
       this.pureMethodKeys = new Dictionary<Type, ISet<int>>();
       this.pureMethods = new Dictionary<int, MethodInfo>();
-      if (this.frontEndArgs.PurityFile != null)
-      {
-        this.ProcessPurityMethods();
-      }
+      this.ProcessPurityMethods();
       this.globalPureMethodCount = 0;
     }
 
@@ -170,6 +167,7 @@ namespace DotNetFrontEnd
     /// </summary>
     private void ProcessPurityMethods()
     {
+      this.AddStandardPurityMethods();
       foreach (String str in this.frontEndArgs.PurityMethods)
       {
         if (str.StartsWith("//")) { continue; }
@@ -200,6 +198,15 @@ namespace DotNetFrontEnd
           throw new Exception("Malformed purity file -- line with contents: " + str);
         }
       }
+    }
+
+    /// <summary>
+    /// Add methods known to be pure to the list of purity methods
+    /// </summary>
+    private void AddStandardPurityMethods()
+    {
+      this.frontEndArgs.PurityMethods.Add("System.Collections.DictionaryEntry, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;get_Key");
+      this.frontEndArgs.PurityMethods.Add("System.Collections.DictionaryEntry, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;get_Value");
     }
 
     /// <summary>
@@ -499,6 +506,7 @@ namespace DotNetFrontEnd
       // TODO(#17): Passing around an assembly qualified name here may not be best because it is
       // difficult to build and parse. Consider creating a custom object to manage type identity
       // and use that as a parameter instead.
+
       if (Regex.IsMatch(assemblyQualifiedName, "{[\\w\\W]*}"))
       {
         var match = Regex.Match(assemblyQualifiedName, "{[\\w\\W]*}");
