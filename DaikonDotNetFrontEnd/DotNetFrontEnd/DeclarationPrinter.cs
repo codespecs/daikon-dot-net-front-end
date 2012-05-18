@@ -551,18 +551,24 @@ namespace DotNetFrontEnd
     /// </param>
     /// <param name="parentObjectType">Assembly-qualified name of the type of the parent
     /// </param>
-    public void PrintParentObjectFields(string parentName, string parentObjectType)
+    public void PrintParentObjectFields(string parentName, string assemblyQualifiedName)
     {
       parentName = parentName + ":::OBJECT 1";
-      // If we can't resolve the parent object type don't write anything
-      Type type = typeManager.ConvertAssemblyQualifiedNameToType(parentObjectType).GetSingleType();
-      if (type != null)
+
+      DNFETypeDeclaration typeDecl = 
+          this.typeManager.ConvertAssemblyQualifiedNameToType(assemblyQualifiedName);
+
+      foreach (Type type in typeDecl.GetAllTypes())
       {
-        this.PrintVariable("this", type, flags: VariableFlags.is_param, parentName: parentName);
-      }
-      else
-      {
-        // TODO(#47): Error handling?
+        // If we can't resolve the parent object type don't write anything
+        if (type != null)
+        {
+          this.PrintVariable("this", type, flags: VariableFlags.is_param, parentName: parentName);
+        }
+        else
+        {
+          // TODO(#47): Error handling?
+        }
       }
     }
 
@@ -576,13 +582,17 @@ namespace DotNetFrontEnd
     public void PrintParentClassFields(string parentObjectType)
     {
       // TODO(#48): Parent type like we do for instance fields.
-      Type type = typeManager.ConvertAssemblyQualifiedNameToType(parentObjectType).GetSingleType();
-      if (type == null)
+      DNFETypeDeclaration typeDecl =
+          typeManager.ConvertAssemblyQualifiedNameToType(parentObjectType);
+      foreach (Type type in typeDecl.GetAllTypes())
       {
-        throw new ArgumentException("Unable to resolve parent object type to a type.",
-            "parentObjectType");
+        if (type == null)
+        {
+          throw new ArgumentException("Unable to resolve parent object type to a type.",
+              "parentObjectType");
+        }
+        DeclareStaticFieldsForType(type);
       }
-      DeclareStaticFieldsForType(type);
     }
 
     /// <summary>
@@ -683,7 +693,7 @@ namespace DotNetFrontEnd
     /// used to fetch the Type</param>
     public void PrintObjectDefinition(string objectName, string objectAssemblyQualifiedName)
     {
-      DNFETypeDeclaration objectTypeDecl = 
+      DNFETypeDeclaration objectTypeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
       foreach (Type objectType in objectTypeDecl.GetAllTypes())
       {
