@@ -677,19 +677,19 @@ namespace DotNetFrontEnd
             expandedList.Add(curr);
             curr = GetFieldValue(curr, linkedListField, linkedListField.Name);
           }
-          ListReflectiveVisit(name + "." + linkedListField.Name + "[..]", (IList)expandedList,
-              type, writer, depth);
+          ProcessVariableAsList(name + "." + linkedListField.Name, expandedList,  type, writer, 
+              depth);
         }
         else if (typeManager.IsMap(type))
         {
-          List<NonGenericTuple> entries = new List<NonGenericTuple>();
+          List<DictionaryEntry> entries = new List<DictionaryEntry>();
           // TODO(#54) : Implement
           IDictionary dict = (IDictionary)obj;
           foreach (DictionaryEntry entry in dict)
           {
-            entries.Add(new NonGenericTuple(entry.Key, entry.Value));
+            entries.Add(entry);
           }
-          ListReflectiveVisit(name + "[..]", entries, entries.GetType(), writer, depth);
+          ProcessVariableAsList(name, entries, entries.GetType(), writer, depth);
         }
         else
         {
@@ -758,7 +758,7 @@ namespace DotNetFrontEnd
     } // Close ReflectiveVisit()
 
     /// <summary>
-    /// Process the given variable of list type, making type class if necessary and visiting 
+    /// Process the given variable of list type, calling GetType if necessary and visiting 
     /// the children elements.
     /// </summary>
     /// <param name="name">Name of the varible</param>
@@ -1160,16 +1160,5 @@ namespace DotNetFrontEnd
     }
 
     #endregion
-  }
-
-  public class NonGenericTuple
-  {
-    object key;
-    object value;
-    public NonGenericTuple(object key, object value)
-    {
-      this.key = key;
-      this.value = value;
-    }
   }
 }

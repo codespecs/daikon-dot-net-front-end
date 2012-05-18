@@ -1573,7 +1573,7 @@ namespace DotNetFrontEnd
     private void ProcessPureMethodCalls(MethodTransition transition, IMethodBody methodBody,
         ILGenerator generator)
     {
-      if (this.reflectionArgs.PurityFile == null)
+      if (this.reflectionArgs.PurityMethods.Count == 0)
       {
         return;
       }

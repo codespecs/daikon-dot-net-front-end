@@ -286,7 +286,7 @@ namespace DotNetFrontEnd
       else if (this.typeManager.IsMap(type))
       {
         // TODO(#54): Implement
-        DeclareVariableAsList(name, typeof(List<NonGenericTuple>), parentName, nestingDepth, 
+        DeclareVariableAsList(name, typeof(List<DictionaryEntry>), parentName, nestingDepth, 
           VariableFlags.no_dups | VariableFlags.not_ordered);
       }
       else
