@@ -312,7 +312,7 @@ namespace DotNetFrontEnd
             {
               Console.Error.WriteLine(" Name: " + staticFieldName + " Type: " + type + " Field Name: "
                   + field.Name + " Field Type: " + field.FieldType);
-              // The field is declared in the decls so Daikon still needs a value, 
+            // The field is declared in the decls so Daikon still needs a value. 
               ReflectiveVisit(staticFieldName + "." + field.Name, null,
                   field.FieldType, writer, depth + 1, VariableModifiers.nonsensical);
             }
@@ -593,11 +593,6 @@ namespace DotNetFrontEnd
     private static void ReflectiveVisit(string name, object obj, Type type,
         TextWriter writer, int depth, VariableModifiers flags = VariableModifiers.none)
     {
-      // TODO(#35): Investigate if we can safely apply this -- would remove fragility around
-      // building up the assembly qualified name and storing it in the IL.
-      // type = obj != null ? typeManager.ConvertAssemblyQualifiedNameToType(
-      //    obj.GetType().AssemblyQualifiedName) : type;
-
       if (variablesVisitedForCurrentProgramPoint.Contains(name))
       {
         return;
@@ -643,11 +638,15 @@ namespace DotNetFrontEnd
         }
         else if (typeManager.IsFSharpListImplementer(type))
         {
-          object[] result = TypeManager.ConvertFSharpListToCSharpArray(obj);
+          object[] result = null;
+          if (obj != null)
+          {
+            result = TypeManager.ConvertFSharpListToCSharpArray(obj);
+          }
 
           ProcessVariableAsList(name, result, result.GetType(), writer, depth);
         }
-        else if (typeManager.IsSet(type))
+        else if (typeManager.IsSet(type) || typeManager.IsFSharpSet(type))
         {
           IEnumerable set = (IEnumerable)obj;
           // A set can have only one generic argument -- the element type
@@ -656,9 +655,12 @@ namespace DotNetFrontEnd
           // that can take objects of any type and have any length. Then create an array of the
           // proper length and type and hand that off.
           IList result = new ArrayList();
-          foreach (var item in set)
+          if (set != null)
           {
-            result.Add(item);
+            foreach (var item in set)
+            {
+              result.Add(item);
+            }
           }
           Array convertedList = Array.CreateInstance(setElementType, result.Count);
           result.CopyTo(convertedList, 0);
@@ -677,6 +679,17 @@ namespace DotNetFrontEnd
           }
           ListReflectiveVisit(name + "." + linkedListField.Name + "[..]", (IList)expandedList,
               type, writer, depth);
+        }
+        else if (typeManager.IsMap(type))
+        {
+          List<NonGenericTuple> entries = new List<NonGenericTuple>();
+          // TODO(#54) : Implement
+          IDictionary dict = (IDictionary)obj;
+          foreach (DictionaryEntry entry in dict)
+          {
+            entries.Add(new NonGenericTuple(entry.Key, entry.Value));
+          }
+          ListReflectiveVisit(name + "[..]", entries, entries.GetType(), writer, depth);
         }
         else
         {
@@ -698,7 +711,7 @@ namespace DotNetFrontEnd
             {
               Console.Error.WriteLine(" Name: " + name + " Type: " + type + " Field Name: "
                   + field.Name + " Field Type: " + field.FieldType);
-              // The field is declared in the decls so Daikon still needs a value. 
+              // The field is declared in the decls so Daikon still needs a value.
               ReflectiveVisit(name + "." + field.Name, null,
                   field.FieldType, writer, depth + 1, fieldFlags | VariableModifiers.nonsensical);
             }
@@ -1147,5 +1160,16 @@ namespace DotNetFrontEnd
     }
 
     #endregion
+  }
+
+  public class NonGenericTuple
+  {
+    object key;
+    object value;
+    public NonGenericTuple(object key, object value)
+    {
+      this.key = key;
+      this.value = value;
+    }
   }
 }
