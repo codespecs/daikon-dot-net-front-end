@@ -47,45 +47,45 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\FSharp\2.0\Runtime\v4.0\FSharp.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Cci.ILGenerator, Version=2.0.8.17659, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Cci.ILGenerator, Version=1.0.7.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DotNetFrontEndLauncher\CCI_DLLs\Microsoft.Cci.ILGenerator.dll</HintPath>
+      <HintPath>CCI_DLLs\Microsoft.Cci.ILGenerator.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Cci.MetadataHelper, Version=2.0.8.17659, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Cci.MetadataHelper, Version=1.0.7.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DotNetFrontEndLauncher\CCI_DLLs\Microsoft.Cci.MetadataHelper.dll</HintPath>
+      <HintPath>CCI_DLLs\Microsoft.Cci.MetadataHelper.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Cci.MetadataModel, Version=2.0.8.17659, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Cci.MetadataModel, Version=1.0.7.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DotNetFrontEndLauncher\CCI_DLLs\Microsoft.Cci.MetadataModel.dll</HintPath>
+      <HintPath>CCI_DLLs\Microsoft.Cci.MetadataModel.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Cci.MutableMetadataModel, Version=2.0.8.17659, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Cci.MutableMetadataModel, Version=1.0.7.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DotNetFrontEndLauncher\CCI_DLLs\Microsoft.Cci.MutableMetadataModel.dll</HintPath>
+      <HintPath>CCI_DLLs\Microsoft.Cci.MutableMetadataModel.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Cci.PdbReader, Version=2.0.8.17659, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Cci.PdbReader, Version=1.0.7.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DotNetFrontEndLauncher\CCI_DLLs\Microsoft.Cci.PdbReader.dll</HintPath>
+      <HintPath>CCI_DLLs\Microsoft.Cci.PdbReader.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Cci.PdbWriter, Version=2.0.8.17659, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Cci.PdbWriter, Version=1.0.7.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DotNetFrontEndLauncher\CCI_DLLs\Microsoft.Cci.PdbWriter.dll</HintPath>
+      <HintPath>CCI_DLLs\Microsoft.Cci.PdbWriter.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Cci.PeReader, Version=2.0.8.17659, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Cci.PeReader, Version=1.0.7.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DotNetFrontEndLauncher\CCI_DLLs\Microsoft.Cci.PeReader.dll</HintPath>
+      <HintPath>CCI_DLLs\Microsoft.Cci.PeReader.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Cci.PeWriter, Version=2.0.8.17659, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Cci.PeWriter, Version=1.0.7.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DotNetFrontEndLauncher\CCI_DLLs\Microsoft.Cci.PeWriter.dll</HintPath>
+      <HintPath>CCI_DLLs\Microsoft.Cci.PeWriter.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Cci.SourceModel, Version=2.0.8.17659, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Cci.SourceModel, Version=1.0.7.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DotNetFrontEndLauncher\CCI_DLLs\Microsoft.Cci.SourceModel.dll</HintPath>
+      <HintPath>CCI_DLLs\Microsoft.Cci.SourceModel.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Contracts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DotNetFrontEndLauncher\CCI_DLLs\Microsoft.Contracts.dll</HintPath>
+      <HintPath>CCI_DLLs\Microsoft.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -105,6 +105,7 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="CCI_DLLs\Microsoft.Cci.ILGenerator.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
