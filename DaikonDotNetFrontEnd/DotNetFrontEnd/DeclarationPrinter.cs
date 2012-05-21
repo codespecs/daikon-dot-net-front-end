@@ -893,14 +893,16 @@ namespace DotNetFrontEnd
       {
         return DaikonBoolName;
       }
-      else if (Type.GetType("System.Double") == type || Type.GetType("System.Single") == type)
+      else if (TypeManager.DoubleType == type || TypeManager.FloatType == type 
+            || TypeManager.DecimalType == type)
       {
         return "double";
       }
-      else if (type.IsValueType)
+      else if (type.IsValueType && (type == TypeManager.IntType 
+            || type == TypeManager.ByteType || type == TypeManager.CharType 
+            || type == TypeManager.LongType || type == TypeManager.ShortType
+            || type == TypeManager.ULongType || TypeManager.IsNonstandardIntType(type)))
       {
-        // Only remaining rep-type is an int.
-        // There are a lot of type that could be ints, so this acts as a catch-all.
         return DaikonIntName;
       }
       else
