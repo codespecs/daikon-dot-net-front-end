@@ -307,7 +307,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Mutuate the method body by adding the instrumentation calls
+    /// Mutuate the method body by adding the instrumentation calls.
     /// </summary>
     /// <param name="methodBody">The original methodBody</param>
     /// <returns>methodBody with instrumentation calls added</returns>
@@ -436,11 +436,6 @@ namespace DotNetFrontEnd
           RecordExceptionHandlerOffsets(immutableMethodBody);
 
       List<ITypeReference> exceptions = DetermineAndSortExceptions(operations);
-      // TODO(#9): Determine why this code was commented out
-      //if (this.printDeclarations)
-      //{
-      //    DeclareExceptions(methodBody, methodDef, exceptions);
-      //}
 
       // If the method is non-void, return in debug builds will contain a store before a jump to 
       // the return point. Figure out what the store will be to detect these returns later.
