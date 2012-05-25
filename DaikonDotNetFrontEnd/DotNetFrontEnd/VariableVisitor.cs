@@ -295,26 +295,29 @@ namespace DotNetFrontEnd
         int depth = 0;
         foreach (Type type in typeDecl.GetAllTypes())
         {
-          foreach (FieldInfo field in
+          foreach (FieldInfo staticField in
            type.GetFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
           {
-            string staticFieldName = type.Name + "." + field.Name;
-            try
+            if (!typeManager.ShouldIgnoreField(type, staticField.Name))
             {
-              if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
+              string staticFieldName = type.Name + "." + staticField.Name;
+              try
               {
-                staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
-                ReflectiveVisit(staticFieldName, field.GetValue(null),
-                      field.FieldType, writer, staticFieldName.Count(c => c == '.'));
+                if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
+                {
+                  staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
+                  ReflectiveVisit(staticFieldName, staticField.GetValue(null),
+                        staticField.FieldType, writer, staticFieldName.Count(c => c == '.'));
+                }
               }
-            }
-            catch (ArgumentException)
-            {
-              Console.Error.WriteLine(" Name: " + staticFieldName + " Type: " + type + " Field Name: "
-                  + field.Name + " Field Type: " + field.FieldType);
-            // The field is declared in the decls so Daikon still needs a value. 
-              ReflectiveVisit(staticFieldName + "." + field.Name, null,
-                  field.FieldType, writer, depth + 1, VariableModifiers.nonsensical);
+              catch (ArgumentException)
+              {
+                Console.Error.WriteLine(" Name: " + staticFieldName + " Type: " + type + " Field Name: "
+                    + staticField.Name + " Field Type: " + staticField.FieldType);
+                // The field is declared in the decls so Daikon still needs a value, 
+                ReflectiveVisit(staticFieldName + "." + staticField.Name, null,
+                    staticField.FieldType, writer, depth + 1, VariableModifiers.nonsensical);
+              }
             }
           }
         }
@@ -630,31 +633,33 @@ namespace DotNetFrontEnd
       }
 
       // Print the varible's children.
-      if (type.IsClass && !simplePrint)
+      if (simplePrint)
       {
-        if (typeManager.IsListImplementer(type))
-        {
-          ProcessVariableAsList(name, obj, type, writer, depth);
-        }
-        else if (typeManager.IsFSharpListImplementer(type))
-        {
+        return;
+      }
+      if (typeManager.IsListImplementer(type))
+      {
+        ProcessVariableAsList(name, obj, type, writer, depth);
+      }
+      else if (typeManager.IsFSharpListImplementer(type))
+      {
           object[] result = null;
           if (obj != null)
           {
             result = TypeManager.ConvertFSharpListToCSharpArray(obj);
           }
 
-          ProcessVariableAsList(name, result, result.GetType(), writer, depth);
-        }
+        ProcessVariableAsList(name, result, result.GetType(), writer, depth);
+      }
         else if (typeManager.IsSet(type) || typeManager.IsFSharpSet(type))
-        {
-          IEnumerable set = (IEnumerable)obj;
-          // A set can have only one generic argument -- the element type
-          Type setElementType = type.GetGenericArguments()[0];
-          // We don't statically know the element type or array length so create a temprorary list
-          // that can take objects of any type and have any length. Then create an array of the
-          // proper length and type and hand that off.
-          IList result = new ArrayList();
+      {
+        IEnumerable set = (IEnumerable)obj;
+        // A set can have only one generic argument -- the element type
+        Type setElementType = type.GetGenericArguments()[0];
+        // We don't statically know the element type or array length so create a temprorary list
+        // that can take objects of any type and have any length. Then create an array of the
+        // proper length and type and hand that off.
+        IList result = new ArrayList();
           if (set != null)
           {
             foreach (var item in set)
@@ -662,21 +667,21 @@ namespace DotNetFrontEnd
               result.Add(item);
             }
           }
-          Array convertedList = Array.CreateInstance(setElementType, result.Count);
-          result.CopyTo(convertedList, 0);
-          ProcessVariableAsList(name, convertedList, convertedList.GetType(), writer, depth);
-        }
-        else if (frontEndArgs.LinkedLists && typeManager.IsLinkedListImplementer(type))
+        Array convertedList = Array.CreateInstance(setElementType, result.Count);
+        result.CopyTo(convertedList, 0);
+        ProcessVariableAsList(name, convertedList, convertedList.GetType(), writer, depth);
+      }
+      else if (frontEndArgs.LinkedLists && typeManager.IsLinkedListImplementer(type))
+      {
+        FieldInfo linkedListField = TypeManager.FindLinkedListField(type);
+        // Synthetic list of the sequence of linked list values
+        IList<object> expandedList = new List<object>();
+        Object curr = obj;
+        while (curr != null)
         {
-          FieldInfo linkedListField = TypeManager.FindLinkedListField(type);
-          // Synthetic list of the sequence of linked list values
-          IList<object> expandedList = new List<object>();
-          Object curr = obj;
-          while (curr != null)
-          {
-            expandedList.Add(curr);
-            curr = GetFieldValue(curr, linkedListField, linkedListField.Name);
-          }
+          expandedList.Add(curr);
+          curr = GetFieldValue(curr, linkedListField, linkedListField.Name);
+        }
           ProcessVariableAsList(name + "." + linkedListField.Name, expandedList,  type, writer, 
               depth);
         }
@@ -690,71 +695,76 @@ namespace DotNetFrontEnd
             entries.Add(entry);
           }
           ProcessVariableAsList(name, entries, entries.GetType(), writer, depth);
-        }
-        else
+      }
+      else
+      {
+        VariableModifiers fieldFlags = VariableModifiers.none;
+        if (obj == null)
         {
-          VariableModifiers fieldFlags = VariableModifiers.none;
-          if (obj == null)
-          {
-            fieldFlags |= VariableModifiers.nonsensical;
-          }
+          fieldFlags |= VariableModifiers.nonsensical;
+        }
 
-          foreach (FieldInfo field in
-              type.GetFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(type)))
+        foreach (FieldInfo field in
+            type.GetFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(type)))
+        {
+          try
           {
-            try
+            if (!typeManager.ShouldIgnoreField(type, field.Name))
             {
               ReflectiveVisit(name + "." + field.Name, GetFieldValue(obj, field, field.Name),
                   field.FieldType, writer, depth + 1, fieldFlags);
             }
-            catch (ArgumentException)
-            {
-              Console.Error.WriteLine(" Name: " + name + " Type: " + type + " Field Name: "
-                  + field.Name + " Field Type: " + field.FieldType);
-              // The field is declared in the decls so Daikon still needs a value.
-              ReflectiveVisit(name + "." + field.Name, null,
-                  field.FieldType, writer, depth + 1, fieldFlags | VariableModifiers.nonsensical);
-            }
           }
-          foreach (FieldInfo field in
-              type.GetFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
+          catch (ArgumentException)
+          {
+            Console.Error.WriteLine(" Name: " + name + " Type: " + type + " Field Name: "
+                + field.Name + " Field Type: " + field.FieldType);
+              // The field is declared in the decls so Daikon still needs a value. 
+            ReflectiveVisit(name + "." + field.Name, null,
+                field.FieldType, writer, depth + 1, fieldFlags | VariableModifiers.nonsensical);
+          }
+        }
+        foreach (FieldInfo staticField in
+            type.GetFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
+        {
+          if (!typeManager.ShouldIgnoreField(type, staticField.Name))
           {
             try
             {
-              string staticFieldName = type.Name + "." + field.Name;
+              string staticFieldName = type.Name + "." + staticField.Name;
               if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
               {
                 staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
-                ReflectiveVisit(staticFieldName, GetFieldValue(obj, field, field.Name),
-                      field.FieldType, writer, staticFieldName.Count(c => c == '.'), fieldFlags);
+                ReflectiveVisit(staticFieldName, GetFieldValue(obj, staticField, staticField.Name),
+                      staticField.FieldType, writer, staticFieldName.Count(c => c == '.'), fieldFlags);
               }
             }
             catch (ArgumentException)
             {
               Console.Error.WriteLine(" Name: " + name + " Type: " + type + " Field Name: "
-                  + field.Name + " Field Type: " + field.FieldType);
+                  + staticField.Name + " Field Type: " + staticField.FieldType);
               // The field is declared in the decls so Daikon still needs a value, 
-              ReflectiveVisit(name + "." + field.Name, null,
-                  field.FieldType, writer, depth + 1, fieldFlags | VariableModifiers.nonsensical);
+              ReflectiveVisit(name + "." + staticField.Name, null,
+                  staticField.FieldType, writer, depth + 1, fieldFlags | VariableModifiers.nonsensical);
             }
           }
+        }
 
-          if (!type.IsSealed)
-          {
-            object xType = (obj == null ? null : obj.GetType());
-            ReflectiveVisit(name + '.' + DeclarationPrinter.GetTypeMethodCall, xType,
-                TypeManager.TypeType, writer, depth + 1,
-                (obj == null ? VariableModifiers.nonsensical : VariableModifiers.none) | VariableModifiers.classname);
-          }
-          if (type == TypeManager.StringType)
-          {
-            object xString = (obj == null ? null : obj.ToString());
-            ReflectiveVisit(name + '.' + DeclarationPrinter.ToStringMethodCall, xString,
-                TypeManager.StringType, writer, depth + 1,
-                fieldFlags | VariableModifiers.to_string);
-          } // Close StringType if
-        } // Close non-list inspection
-      } // Close field inspection
+        if (!type.IsSealed)
+        {
+          object xType = (obj == null ? null : obj.GetType());
+          ReflectiveVisit(name + '.' + DeclarationPrinter.GetTypeMethodCall, xType,
+              TypeManager.TypeType, writer, depth + 1,
+              (obj == null ? VariableModifiers.nonsensical : VariableModifiers.none) | VariableModifiers.classname);
+        }
+        if (type == TypeManager.StringType)
+        {
+          object xString = (obj == null ? null : obj.ToString());
+          ReflectiveVisit(name + '.' + DeclarationPrinter.ToStringMethodCall, xString,
+              TypeManager.StringType, writer, depth + 1,
+              fieldFlags | VariableModifiers.to_string);
+        } // Close StringType if
+      } // Close non-list inspection
     } // Close ReflectiveVisit()
 
     /// <summary>
@@ -944,19 +954,25 @@ namespace DotNetFrontEnd
       foreach (FieldInfo elementField in
           elementType.GetFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(elementType)))
       {
-        VisitListField(name, list, elementType, writer, depth, nonsensicalElements, elementField);
+        if (!typeManager.ShouldIgnoreField(elementType, elementField.Name))
+        {
+          VisitListField(name, list, elementType, writer, depth, nonsensicalElements, elementField);
+        }
       }
 
       // Static fields will have the same value for every element so just visit them once
       foreach (FieldInfo elementField in
           elementType.GetFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(elementType)))
       {
-        string staticFieldName = elementType.Name + "." + elementField.Name;
-        if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
+        if (!typeManager.ShouldIgnoreField(elementType, elementField.Name))
         {
-          staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
-          ReflectiveVisit(staticFieldName, elementField.GetValue(null),
-                elementField.FieldType, writer, staticFieldName.Count(c => c == '.'));
+          string staticFieldName = elementType.Name + "." + elementField.Name;
+          if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
+          {
+            staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
+            ReflectiveVisit(staticFieldName, elementField.GetValue(null),
+                  elementField.FieldType, writer, staticFieldName.Count(c => c == '.'));
+          }
         }
       }
 
@@ -1086,18 +1102,17 @@ namespace DotNetFrontEnd
         {
           return ((int)(char)x).ToString(CultureInfo.InvariantCulture);
         }
-        else
+        else if (TypeManager.IsAnyNumericType(type))
         {
           return x.ToString();
         }
       }
-      else
-      {
-        SetOutputSuppression(true);
-        string hashcode = x.GetHashCode().ToString(CultureInfo.InvariantCulture);
-        SetOutputSuppression(false);
-        return hashcode;
-      }
+
+      // Type is either an object or a user-defined struct, print out its hashcode.
+      SetOutputSuppression(true);
+      string hashcode = x.GetHashCode().ToString(CultureInfo.InvariantCulture);
+      SetOutputSuppression(false);
+      return hashcode;
     }
 
     /// <summary>
@@ -1131,7 +1146,7 @@ namespace DotNetFrontEnd
 
         if (field == null)
         {
-          throw new ArgumentException("No such field was found.", "fieldName");
+          throw new ArgumentException("No such staticField was found.", "fieldName");
         }
 
         return field.GetValue(obj);
