@@ -182,7 +182,7 @@ namespace DotNetFrontEnd
       if ((kind == VariableKind.field || kind == VariableKind.array) &&
         enclosingVar.Length == 0)
       {
-        throw new ArgumentException("Enclosing var requried for field and array and none"
+        throw new ArgumentException("Enclosing var requried for staticField and array and none"
             + " was present for varible named: " + name + " of kind: " + kind);
       }
 
@@ -264,20 +264,26 @@ namespace DotNetFrontEnd
         foreach (FieldInfo field in
             type.GetFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(type)))
         {
-          PrintVariable(name + "." + field.Name, field.FieldType,
-              VariableKind.field, enclosingVar: name, relativeName: field.Name,
-              nestingDepth: nestingDepth + 1, parentName: parentName);
+          if (!this.typeManager.ShouldIgnoreField(type, field.Name))
+          {
+            PrintVariable(name + "." + field.Name, field.FieldType,
+                VariableKind.field, enclosingVar: name, relativeName: field.Name,
+                nestingDepth: nestingDepth + 1, parentName: parentName);
+          }
         }
 
-        foreach (FieldInfo field in
+        foreach (FieldInfo staticField in
             type.GetFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
         {
-          string staticFieldName = type.Name + "." + field.Name;
-          if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
+          if (!this.typeManager.ShouldIgnoreField(type, staticField.Name))
           {
-            this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
-            PrintVariable(staticFieldName, field.FieldType,
-            nestingDepth: staticFieldName.Count(c => c == '.'));
+            string staticFieldName = type.Name + "." + staticField.Name;
+            if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
+            {
+              this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
+              PrintVariable(staticFieldName, staticField.FieldType,
+                  nestingDepth: staticFieldName.Count(c => c == '.'));
+            }
           }
         }
 
@@ -295,9 +301,9 @@ namespace DotNetFrontEnd
               VariableFlags.synthetic,
               enclosingVar: name, relativeName: ToStringMethodCall,
               nestingDepth: nestingDepth + 1, parentName: parentName);
-        } // Close field foreach
-      } // Close fields/elements foreach
-    } // Close print-variable method
+        }
+      }
+    }
 
     /// <summary>
     /// Wraps all the declaration necessary for a variable that is a list. Print the GetType()
@@ -470,20 +476,26 @@ namespace DotNetFrontEnd
       foreach (FieldInfo field in
           elementType.GetFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(elementType)))
       {
-        PrintList(name + "." + field.Name, field.FieldType, name,
-            VariableKind.field, relativeName: field.Name,
-            nestingDepth: nestingDepth + 1, parentName: parentName);
+        if (!this.typeManager.ShouldIgnoreField(elementType, field.Name))
+        {
+          PrintList(name + "." + field.Name, field.FieldType, name,
+              VariableKind.field, relativeName: field.Name,
+              nestingDepth: nestingDepth + 1, parentName: parentName);
+        }
       }
-      foreach (FieldInfo field in
+      foreach (FieldInfo staticField in
           elementType.GetFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(
               elementType)))
       {
-        string staticFieldName = elementType.Name + "." + field.Name;
-        if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
+        if (!this.typeManager.ShouldIgnoreField(elementType, staticField.Name))
         {
-          this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
-          PrintVariable(staticFieldName, field.FieldType,
-              nestingDepth: staticFieldName.Count(c => c == '.'));
+          string staticFieldName = elementType.Name + "." + staticField.Name;
+          if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
+          {
+            this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
+            PrintVariable(staticFieldName, staticField.FieldType,
+                nestingDepth: staticFieldName.Count(c => c == '.'));
+          }
         }
       }
 
@@ -523,7 +535,7 @@ namespace DotNetFrontEnd
     {
       parentName = parentName + ":::OBJECT 1";
 
-      DNFETypeDeclaration typeDecl = 
+      DNFETypeDeclaration typeDecl =
           this.typeManager.ConvertAssemblyQualifiedNameToType(assemblyQualifiedName);
 
       foreach (Type type in typeDecl.GetAllTypes())
@@ -569,15 +581,18 @@ namespace DotNetFrontEnd
     /// <param name="type">Type to print declarations of the static fields of</param>
     private void DeclareStaticFieldsForType(Type type)
     {
-      foreach (FieldInfo field in
+      foreach (FieldInfo staticField in
         type.GetFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
       {
-        string staticFieldName = type.Name + "." + field.Name;
-        if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
+        if (!this.typeManager.ShouldIgnoreField(type, staticField.Name))
         {
-          this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
-          PrintVariable(staticFieldName, field.FieldType,
-              nestingDepth: staticFieldName.Count(c => c == '.'));
+          string staticFieldName = type.Name + "." + staticField.Name;
+          if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
+          {
+            this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
+            PrintVariable(staticFieldName, staticField.FieldType,
+                nestingDepth: staticFieldName.Count(c => c == '.'));
+          }
         }
       }
     }
@@ -892,13 +907,13 @@ namespace DotNetFrontEnd
       {
         return DaikonBoolName;
       }
-      else if (TypeManager.DoubleType == type || TypeManager.FloatType == type 
+      else if (TypeManager.DoubleType == type || TypeManager.FloatType == type
             || TypeManager.DecimalType == type)
       {
         return "double";
       }
-      else if (type.IsValueType && (type == TypeManager.IntType 
-            || type == TypeManager.ByteType || type == TypeManager.CharType 
+      else if (type.IsValueType && (type == TypeManager.IntType
+            || type == TypeManager.ByteType || type == TypeManager.CharType
             || type == TypeManager.LongType || type == TypeManager.ShortType
             || type == TypeManager.ULongType || TypeManager.IsNonstandardIntType(type)))
       {
