@@ -233,8 +233,7 @@ namespace DotNetFrontEnd
 
       // If the variable is an object, then look at its fields or elements.
       // Don't look at the fields if the variable is a ToString or Classname call.
-      if (!(type.IsClass && !flags.HasFlag(VariableFlags.to_string) && !flags.HasFlag
-          (VariableFlags.classname)))
+      if (flags.HasFlag(VariableFlags.to_string) || flags.HasFlag(VariableFlags.classname))
       {
         return;
       }

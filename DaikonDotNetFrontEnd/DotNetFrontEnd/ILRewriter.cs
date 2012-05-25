@@ -1804,7 +1804,10 @@ namespace DotNetFrontEnd
       generator.Emit(OperationCode.Ldarg_0);
 
       var parentType = methodBody.MethodDefinition.ContainingType;
-
+      if (parentType.IsValueType)
+      {
+        generator.Emit(OperationCode.Ldobj, parentType);
+      }
       this.EmitInstrumentationCall(generator, parentType);
       if (this.printDeclarations)
       {
@@ -1967,12 +1970,6 @@ namespace DotNetFrontEnd
           || param is GenericTypeParameter || param is GenericTypeParameterReference
           || param is GenericMethodParameter || param is GenericMethodParameterReference)
       {
-        // This is a user-defined struct, load it onto the stack before boxing
-        if (param.IsValueType && param is ITypeDefinition)
-        {
-          generator.Emit(OperationCode.Ldobj, param);
-        }
-
         generator.Emit(OperationCode.Box, param);
       }
     }
