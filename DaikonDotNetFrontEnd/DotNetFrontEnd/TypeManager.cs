@@ -7,6 +7,7 @@ namespace DotNetFrontEnd
   using System.Collections;
   using System.Collections.Generic;
   using System.Linq;
+  using System.Numerics;
   using System.Reflection;
   using System.Text;
   using System.Text.RegularExpressions;
@@ -23,6 +24,7 @@ namespace DotNetFrontEnd
 
     // Type stores used by ReflectionArgs and DeclarationPrinter
     // Keep these alphabatized.
+    public static readonly Type BigIntegerType = typeof(BigInteger);
     public static readonly Type BooleanType = typeof(bool);
     public static readonly Type ByteType = typeof(byte);
     public static readonly Type CharType = typeof(char);
@@ -322,6 +324,17 @@ namespace DotNetFrontEnd
           type == TypeManager.sByteType ||
           type == TypeManager.uShortType ||
           type == TypeManager.uIntType;
+    }
+
+    public static bool IsAnyNumericType(Type type)
+    {
+      return type.IsValueType && (type == TypeManager.ByteType || type == TypeManager.CharType
+        || type == TypeManager.DecimalType || type == TypeManager.DoubleType
+        || type == TypeManager.FloatType || type == TypeManager.IntType
+        || type == TypeManager.LongType || type == TypeManager.sByteType
+        || type == TypeManager.ShortType || type == TypeManager.uIntType
+        || type == TypeManager.ULongType || type == TypeManager.uShortType
+        || type == TypeManager.BigIntegerType);
     }
 
     /// <summary>

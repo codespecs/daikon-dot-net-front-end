@@ -635,113 +635,114 @@ namespace DotNetFrontEnd
       }
 
       // Print the varible's children.
-      if (type.IsClass && !simplePrint)
+      if (simplePrint)
       {
-        if (typeManager.IsListImplementer(type))
-        {
-          ProcessVariableAsList(name, obj, type, writer, depth);
-        }
-        else if (typeManager.IsFSharpListImplementer(type))
-        {
-          object[] result = TypeManager.ConvertFSharpListToCSharpArray(obj);
+        return;
+      }
+      if (typeManager.IsListImplementer(type))
+      {
+        ProcessVariableAsList(name, obj, type, writer, depth);
+      }
+      else if (typeManager.IsFSharpListImplementer(type))
+      {
+        object[] result = TypeManager.ConvertFSharpListToCSharpArray(obj);
 
-          ProcessVariableAsList(name, result, result.GetType(), writer, depth);
-        }
-        else if (typeManager.IsSet(type))
+        ProcessVariableAsList(name, result, result.GetType(), writer, depth);
+      }
+      else if (typeManager.IsSet(type))
+      {
+        IEnumerable set = (IEnumerable)obj;
+        // A set can have only one generic argument -- the element type
+        Type setElementType = type.GetGenericArguments()[0];
+        // We don't statically know the element type or array length so create a temprorary list
+        // that can take objects of any type and have any length. Then create an array of the
+        // proper length and type and hand that off.
+        IList result = new ArrayList();
+        foreach (var item in set)
         {
-          IEnumerable set = (IEnumerable)obj;
-          // A set can have only one generic argument -- the element type
-          Type setElementType = type.GetGenericArguments()[0];
-          // We don't statically know the element type or array length so create a temprorary list
-          // that can take objects of any type and have any length. Then create an array of the
-          // proper length and type and hand that off.
-          IList result = new ArrayList();
-          foreach (var item in set)
-          {
-            result.Add(item);
-          }
-          Array convertedList = Array.CreateInstance(setElementType, result.Count);
-          result.CopyTo(convertedList, 0);
-          ProcessVariableAsList(name, convertedList, convertedList.GetType(), writer, depth);
+          result.Add(item);
         }
-        else if (frontEndArgs.LinkedLists && typeManager.IsLinkedListImplementer(type))
+        Array convertedList = Array.CreateInstance(setElementType, result.Count);
+        result.CopyTo(convertedList, 0);
+        ProcessVariableAsList(name, convertedList, convertedList.GetType(), writer, depth);
+      }
+      else if (frontEndArgs.LinkedLists && typeManager.IsLinkedListImplementer(type))
+      {
+        FieldInfo linkedListField = TypeManager.FindLinkedListField(type);
+        // Synthetic list of the sequence of linked list values
+        IList<object> expandedList = new List<object>();
+        Object curr = obj;
+        while (curr != null)
         {
-          FieldInfo linkedListField = TypeManager.FindLinkedListField(type);
-          // Synthetic list of the sequence of linked list values
-          IList<object> expandedList = new List<object>();
-          Object curr = obj;
-          while (curr != null)
-          {
-            expandedList.Add(curr);
-            curr = GetFieldValue(curr, linkedListField, linkedListField.Name);
-          }
-          ListReflectiveVisit(name + "." + linkedListField.Name + "[..]", (IList)expandedList,
-              type, writer, depth);
+          expandedList.Add(curr);
+          curr = GetFieldValue(curr, linkedListField, linkedListField.Name);
         }
-        else
+        ListReflectiveVisit(name + "." + linkedListField.Name + "[..]", (IList)expandedList,
+            type, writer, depth);
+      }
+      else
+      {
+        VariableModifiers fieldFlags = VariableModifiers.none;
+        if (obj == null)
         {
-          VariableModifiers fieldFlags = VariableModifiers.none;
-          if (obj == null)
-          {
-            fieldFlags |= VariableModifiers.nonsensical;
-          }
+          fieldFlags |= VariableModifiers.nonsensical;
+        }
 
-          foreach (FieldInfo field in
-              type.GetFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(type)))
+        foreach (FieldInfo field in
+            type.GetFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(type)))
+        {
+          try
           {
-            try
+            ReflectiveVisit(name + "." + field.Name, GetFieldValue(obj, field, field.Name),
+                field.FieldType, writer, depth + 1, fieldFlags);
+          }
+          catch (ArgumentException)
+          {
+            Console.Error.WriteLine(" Name: " + name + " Type: " + type + " Field Name: "
+                + field.Name + " Field Type: " + field.FieldType);
+            // The field is declared in the decls so Daikon still needs a value. 
+            ReflectiveVisit(name + "." + field.Name, null,
+                field.FieldType, writer, depth + 1, fieldFlags | VariableModifiers.nonsensical);
+          }
+        }
+        foreach (FieldInfo field in
+            type.GetFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
+        {
+          try
+          {
+            string staticFieldName = type.Name + "." + field.Name;
+            if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
             {
-              ReflectiveVisit(name + "." + field.Name, GetFieldValue(obj, field, field.Name),
-                  field.FieldType, writer, depth + 1, fieldFlags);
-            }
-            catch (ArgumentException)
-            {
-              Console.Error.WriteLine(" Name: " + name + " Type: " + type + " Field Name: "
-                  + field.Name + " Field Type: " + field.FieldType);
-              // The field is declared in the decls so Daikon still needs a value. 
-              ReflectiveVisit(name + "." + field.Name, null,
-                  field.FieldType, writer, depth + 1, fieldFlags | VariableModifiers.nonsensical);
+              staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
+              ReflectiveVisit(staticFieldName, GetFieldValue(obj, field, field.Name),
+                    field.FieldType, writer, staticFieldName.Count(c => c == '.'), fieldFlags);
             }
           }
-          foreach (FieldInfo field in
-              type.GetFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
+          catch (ArgumentException)
           {
-            try
-            {
-              string staticFieldName = type.Name + "." + field.Name;
-              if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
-              {
-                staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
-                ReflectiveVisit(staticFieldName, GetFieldValue(obj, field, field.Name),
-                      field.FieldType, writer, staticFieldName.Count(c => c == '.'), fieldFlags);
-              }
-            }
-            catch (ArgumentException)
-            {
-              Console.Error.WriteLine(" Name: " + name + " Type: " + type + " Field Name: "
-                  + field.Name + " Field Type: " + field.FieldType);
-              // The field is declared in the decls so Daikon still needs a value, 
-              ReflectiveVisit(name + "." + field.Name, null,
-                  field.FieldType, writer, depth + 1, fieldFlags | VariableModifiers.nonsensical);
-            }
+            Console.Error.WriteLine(" Name: " + name + " Type: " + type + " Field Name: "
+                + field.Name + " Field Type: " + field.FieldType);
+            // The field is declared in the decls so Daikon still needs a value, 
+            ReflectiveVisit(name + "." + field.Name, null,
+                field.FieldType, writer, depth + 1, fieldFlags | VariableModifiers.nonsensical);
           }
+        }
 
-          if (!type.IsSealed)
-          {
-            object xType = (obj == null ? null : obj.GetType());
-            ReflectiveVisit(name + '.' + DeclarationPrinter.GetTypeMethodCall, xType,
-                TypeManager.TypeType, writer, depth + 1,
-                (obj == null ? VariableModifiers.nonsensical : VariableModifiers.none) | VariableModifiers.classname);
-          }
-          if (type == TypeManager.StringType)
-          {
-            object xString = (obj == null ? null : obj.ToString());
-            ReflectiveVisit(name + '.' + DeclarationPrinter.ToStringMethodCall, xString,
-                TypeManager.StringType, writer, depth + 1,
-                fieldFlags | VariableModifiers.to_string);
-          } // Close StringType if
-        } // Close non-list inspection
-      } // Close field inspection
+        if (!type.IsSealed)
+        {
+          object xType = (obj == null ? null : obj.GetType());
+          ReflectiveVisit(name + '.' + DeclarationPrinter.GetTypeMethodCall, xType,
+              TypeManager.TypeType, writer, depth + 1,
+              (obj == null ? VariableModifiers.nonsensical : VariableModifiers.none) | VariableModifiers.classname);
+        }
+        if (type == TypeManager.StringType)
+        {
+          object xString = (obj == null ? null : obj.ToString());
+          ReflectiveVisit(name + '.' + DeclarationPrinter.ToStringMethodCall, xString,
+              TypeManager.StringType, writer, depth + 1,
+              fieldFlags | VariableModifiers.to_string);
+        } // Close StringType if
+      } // Close non-list inspection
     } // Close ReflectiveVisit()
 
     /// <summary>
@@ -1073,18 +1074,17 @@ namespace DotNetFrontEnd
         {
           return ((int)(char)x).ToString(CultureInfo.InvariantCulture);
         }
-        else
+        else if (TypeManager.IsAnyNumericType(type))
         {
           return x.ToString();
         }
       }
-      else
-      {
-        SetOutputSuppression(true);
-        string hashcode = x.GetHashCode().ToString(CultureInfo.InvariantCulture);
-        SetOutputSuppression(false);
-        return hashcode;
-      }
+
+      // Type is either an object or a user-defined struct, print out its hashcode.
+      SetOutputSuppression(true);
+      string hashcode = x.GetHashCode().ToString(CultureInfo.InvariantCulture);
+      SetOutputSuppression(false);
+      return hashcode;
     }
 
     /// <summary>
