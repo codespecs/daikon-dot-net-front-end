@@ -534,13 +534,13 @@ parent parent Generics.DelegateTestClass:::OBJECT 1
     var-kind field _methodPtr
     enclosing-var stack.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
   variable stack.stackEvent._methodPtrAux
     var-kind field _methodPtrAux
     enclosing-var stack.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
   variable stack.stackEvent._target
     var-kind field _target
@@ -621,13 +621,13 @@ parent parent Generics.DelegateTestClass:::OBJECT 1
     var-kind field _methodPtr
     enclosing-var stack.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
   variable stack.stackEvent._methodPtrAux
     var-kind field _methodPtrAux
     enclosing-var stack.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
   variable stack.stackEvent._target
     var-kind field _target
@@ -708,13 +708,13 @@ parent parent Generics.DelegateTestClass:::OBJECT 1
     var-kind field _methodPtr
     enclosing-var stack.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
   variable stack.stackEvent._methodPtrAux
     var-kind field _methodPtrAux
     enclosing-var stack.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
   variable stack.stackEvent._target
     var-kind field _target
@@ -1075,14 +1075,14 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     var-kind field _methodPtr
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent._methodPtrAux
     var-kind field _methodPtrAux
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent._target
@@ -1141,14 +1141,14 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     var-kind field _methodPtr
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent._methodPtrAux
     var-kind field _methodPtrAux
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent._target
@@ -1208,14 +1208,14 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     var-kind field _methodPtr
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent._methodPtrAux
     var-kind field _methodPtrAux
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent._target
@@ -1287,14 +1287,14 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     var-kind field _methodPtr
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent._methodPtrAux
     var-kind field _methodPtrAux
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent._target
@@ -1366,14 +1366,14 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     var-kind field _methodPtr
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent._methodPtrAux
     var-kind field _methodPtrAux
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent._target
@@ -1506,14 +1506,14 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     var-kind field _methodPtr
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent._methodPtrAux
     var-kind field _methodPtrAux
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent._target
@@ -1546,13 +1546,13 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     var-kind field _methodPtr
     enclosing-var value
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
   variable value._methodPtrAux
     var-kind field _methodPtrAux
     enclosing-var value
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
   variable value._target
     var-kind field _target
@@ -1616,14 +1616,14 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     var-kind field _methodPtr
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent._methodPtrAux
     var-kind field _methodPtrAux
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent._target
@@ -1656,13 +1656,13 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     var-kind field _methodPtr
     enclosing-var value
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
   variable value._methodPtrAux
     var-kind field _methodPtrAux
     enclosing-var value
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
   variable value._target
     var-kind field _target
@@ -1726,14 +1726,14 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     var-kind field _methodPtr
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent._methodPtrAux
     var-kind field _methodPtrAux
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent._target
@@ -1766,13 +1766,13 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     var-kind field _methodPtr
     enclosing-var value
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
   variable value._methodPtrAux
     var-kind field _methodPtrAux
     enclosing-var value
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
   variable value._target
     var-kind field _target
@@ -1824,14 +1824,14 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     var-kind field _methodPtr
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent._methodPtrAux
     var-kind field _methodPtrAux
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent._target
@@ -1864,13 +1864,13 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     var-kind field _methodPtr
     enclosing-var value
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
   variable value._methodPtrAux
     var-kind field _methodPtrAux
     enclosing-var value
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
   variable value._target
     var-kind field _target
@@ -1934,14 +1934,14 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     var-kind field _methodPtr
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent._methodPtrAux
     var-kind field _methodPtrAux
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent._target
@@ -1974,13 +1974,13 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     var-kind field _methodPtr
     enclosing-var value
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
   variable value._methodPtrAux
     var-kind field _methodPtrAux
     enclosing-var value
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
   variable value._target
     var-kind field _target
@@ -2044,14 +2044,14 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     var-kind field _methodPtr
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent._methodPtrAux
     var-kind field _methodPtrAux
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
     parent Generics.DelegateTestStack:::OBJECT 1
   variable this.stackEvent._target
@@ -2084,13 +2084,13 @@ parent parent Generics.DelegateTestStack:::OBJECT 1
     var-kind field _methodPtr
     enclosing-var value
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
   variable value._methodPtrAux
     var-kind field _methodPtrAux
     enclosing-var value
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
   variable value._target
     var-kind field _target
@@ -2141,13 +2141,13 @@ parent parent Generics.DelegateTestStack:::CLASS 1
     var-kind field _methodPtr
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
   variable this.stackEvent._methodPtrAux
     var-kind field _methodPtrAux
     enclosing-var this.stackEvent
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
   variable this.stackEvent._target
     var-kind field _target
@@ -4267,6 +4267,13 @@ parent parent Generics.GenericList:::OBJECT 1
     dec-type System.Collections.Generic.IEnumerator<System.Object>
     rep-type hashcode
     comparability 22
+  variable return.GetType()
+    var-kind function GetType()
+    enclosing-var return
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
   variable this
     var-kind variable
     dec-type Generics.GenericList<T>
@@ -4332,6 +4339,13 @@ parent parent Generics.GenericList:::OBJECT 1
     dec-type System.Collections.Generic.IEnumerator<System.Object>
     rep-type hashcode
     comparability 22
+  variable return.GetType()
+    var-kind function GetType()
+    enclosing-var return
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
   variable this
     var-kind variable
     dec-type Generics.GenericList<T>
@@ -4396,6 +4410,13 @@ parent parent Generics.GenericList:::OBJECT 1
     var-kind return
     dec-type System.Collections.Generic.IEnumerator<System.Object>
     rep-type hashcode
+    comparability 22
+  variable return.GetType()
+    var-kind function GetType()
+    enclosing-var return
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
     comparability 22
   variable this
     var-kind variable
@@ -7088,11 +7109,25 @@ parent parent Generics.GenericsTest:::CLASS 1
     rep-type hashcode
     flags is_param
     comparability 22
+  variable lhs.GetType()
+    var-kind function GetType()
+    enclosing-var lhs
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
   variable rhs
     var-kind variable
     dec-type System.IComparable<T>
     rep-type hashcode
     flags is_param
+    comparability 22
+  variable rhs.GetType()
+    var-kind function GetType()
+    enclosing-var rhs
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
     comparability 22
 
 ppt Generics.GenericsTest.SwapIfGreater(T\_lhs,\_T\_rhs):::EXIT12
@@ -7116,11 +7151,25 @@ parent parent Generics.GenericsTest:::CLASS 1
     rep-type hashcode
     flags is_param
     comparability 22
+  variable lhs.GetType()
+    var-kind function GetType()
+    enclosing-var lhs
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
   variable rhs
     var-kind variable
     dec-type System.IComparable<T>
     rep-type hashcode
     flags is_param
+    comparability 22
+  variable rhs.GetType()
+    var-kind function GetType()
+    enclosing-var rhs
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
     comparability 22
 
 ppt Generics.GenericsTest.SwapIfGreater(T\_lhs,\_T\_rhs):::EXIT25
@@ -7144,11 +7193,25 @@ parent parent Generics.GenericsTest:::CLASS 1
     rep-type hashcode
     flags is_param
     comparability 22
+  variable lhs.GetType()
+    var-kind function GetType()
+    enclosing-var lhs
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
   variable rhs
     var-kind variable
     dec-type System.IComparable<T>
     rep-type hashcode
     flags is_param
+    comparability 22
+  variable rhs.GetType()
+    var-kind function GetType()
+    enclosing-var rhs
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
     comparability 22
 
 ppt Generics.GenericsTest.SwapIfGreater(T\_lhs,\_T\_rhs):::EXIT_EX_Runtime
@@ -7172,11 +7235,25 @@ parent parent Generics.GenericsTest:::CLASS 1
     rep-type hashcode
     flags is_param
     comparability 22
+  variable lhs.GetType()
+    var-kind function GetType()
+    enclosing-var lhs
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
   variable rhs
     var-kind variable
     dec-type System.IComparable<T>
     rep-type hashcode
     flags is_param
+    comparability 22
+  variable rhs.GetType()
+    var-kind function GetType()
+    enclosing-var rhs
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
     comparability 22
 
 ppt Generics.GenericsTest.SwapTest():::ENTER
@@ -7743,13 +7820,13 @@ parent parent Generics.StackEventHandler:::CLASS 1
     var-kind field _methodPtr
     enclosing-var this
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
   variable this._methodPtrAux
     var-kind field _methodPtrAux
     enclosing-var this
     dec-type System.IntPtr
-    rep-type int
+    rep-type hashcode
     comparability 22
   variable this._target
     var-kind field _target
@@ -7783,7 +7860,7 @@ exception.GetType()
 nonsensical
 2
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
@@ -7811,7 +7888,7 @@ t.GetType()
 "System.Int32"
 1
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
@@ -7855,7 +7932,7 @@ t.GetType()
 "System.Int32"
 1
 this
-26965262
+23069209
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -7883,7 +7960,7 @@ Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::ENTER
 this_invocation_nonce
 4
 this
-26965262
+23069209
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -7941,7 +8018,7 @@ exception.GetType()
 nonsensical
 2
 this
-26965262
+23069209
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8005,13 +8082,13 @@ t.GetType()
 "System.Int32"
 1
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-26965262
+23069209
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8033,13 +8110,13 @@ t.GetType()
 "System.Int32"
 1
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-26965262
+23069209
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8077,7 +8154,7 @@ t.GetType()
 "System.Int32"
 1
 this
-41360766
+6296289
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8105,7 +8182,7 @@ Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::ENTER
 this_invocation_nonce
 7
 this
-41360766
+6296289
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8129,7 +8206,7 @@ this.next.next
 nonsensical
 2
 value
-26965262
+23069209
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8163,7 +8240,7 @@ exception.GetType()
 nonsensical
 2
 this
-41360766
+6296289
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8175,7 +8252,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-26965262
+23069209
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8187,7 +8264,7 @@ this.next.next
 null
 1
 value
-26965262
+23069209
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8227,13 +8304,13 @@ t.GetType()
 "System.Int32"
 1
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-41360766
+6296289
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8242,7 +8319,7 @@ this.head.data
 1
 1
 this.head.next
-26965262
+23069209
 1
 
 Generics.GenericList.AddHead(T\_t):::ENTER
@@ -8255,13 +8332,13 @@ t.GetType()
 "System.Int32"
 1
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-41360766
+6296289
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8270,7 +8347,7 @@ this.head.data
 1
 1
 this.head.next
-26965262
+23069209
 1
 
 Generics.GenericList.Node..ctor(T\_t):::ENTER
@@ -8299,7 +8376,7 @@ t.GetType()
 "System.Int32"
 1
 this
-36702580
+56666602
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8327,7 +8404,7 @@ Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::ENTER
 this_invocation_nonce
 10
 this
-36702580
+56666602
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8351,7 +8428,7 @@ this.next.next
 nonsensical
 2
 value
-41360766
+6296289
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8363,7 +8440,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-26965262
+23069209
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8385,7 +8462,7 @@ exception.GetType()
 nonsensical
 2
 this
-36702580
+56666602
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8397,7 +8474,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-41360766
+6296289
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8406,10 +8483,10 @@ this.next.data
 1
 1
 this.next.next
-26965262
+23069209
 1
 value
-41360766
+6296289
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8421,7 +8498,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-26965262
+23069209
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8449,13 +8526,13 @@ t.GetType()
 "System.Int32"
 1
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-36702580
+56666602
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8464,7 +8541,7 @@ this.head.data
 2
 1
 this.head.next
-41360766
+6296289
 1
 
 Generics.GenericList.AddHead(T\_t):::ENTER
@@ -8477,13 +8554,13 @@ t.GetType()
 "System.Int32"
 1
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-36702580
+56666602
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8492,7 +8569,7 @@ this.head.data
 2
 1
 this.head.next
-41360766
+6296289
 1
 
 Generics.GenericList.Node..ctor(T\_t):::ENTER
@@ -8521,7 +8598,7 @@ t.GetType()
 "System.Int32"
 1
 this
-61887768
+40237373
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8549,7 +8626,7 @@ Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::ENTER
 this_invocation_nonce
 13
 this
-61887768
+40237373
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8573,7 +8650,7 @@ this.next.next
 nonsensical
 2
 value
-36702580
+56666602
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8585,7 +8662,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-41360766
+6296289
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8594,7 +8671,7 @@ value.next.data
 1
 1
 value.next.next
-26965262
+23069209
 1
 
 Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::EXIT4
@@ -8607,7 +8684,7 @@ exception.GetType()
 nonsensical
 2
 this
-61887768
+40237373
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8619,7 +8696,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-36702580
+56666602
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8628,10 +8705,10 @@ this.next.data
 2
 1
 this.next.next
-41360766
+6296289
 1
 value
-36702580
+56666602
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8643,7 +8720,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-41360766
+6296289
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8652,7 +8729,7 @@ value.next.data
 1
 1
 value.next.next
-26965262
+23069209
 1
 
 Generics.GenericList.AddHead(T\_t):::EXIT12
@@ -8671,13 +8748,13 @@ t.GetType()
 "System.Int32"
 1
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-61887768
+40237373
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8686,7 +8763,7 @@ this.head.data
 3
 1
 this.head.next
-36702580
+56666602
 1
 
 Generics.GenericList.AddHead(T\_t):::ENTER
@@ -8699,13 +8776,13 @@ t.GetType()
 "System.Int32"
 1
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-61887768
+40237373
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8714,7 +8791,7 @@ this.head.data
 3
 1
 this.head.next
-36702580
+56666602
 1
 
 Generics.GenericList.Node..ctor(T\_t):::ENTER
@@ -8743,7 +8820,7 @@ t.GetType()
 "System.Int32"
 1
 this
-20119003
+26592044
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8771,7 +8848,7 @@ Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::ENTER
 this_invocation_nonce
 16
 this
-20119003
+26592044
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8795,7 +8872,7 @@ this.next.next
 nonsensical
 2
 value
-61887768
+40237373
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8807,7 +8884,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-36702580
+56666602
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8816,7 +8893,7 @@ value.next.data
 2
 1
 value.next.next
-41360766
+6296289
 1
 
 Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::EXIT4
@@ -8829,7 +8906,7 @@ exception.GetType()
 nonsensical
 2
 this
-20119003
+26592044
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8841,7 +8918,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-61887768
+40237373
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8850,10 +8927,10 @@ this.next.data
 3
 1
 this.next.next
-36702580
+56666602
 1
 value
-61887768
+40237373
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8865,7 +8942,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-36702580
+56666602
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8874,7 +8951,7 @@ value.next.data
 2
 1
 value.next.next
-41360766
+6296289
 1
 
 Generics.GenericList.AddHead(T\_t):::EXIT12
@@ -8893,13 +8970,13 @@ t.GetType()
 "System.Int32"
 1
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-20119003
+26592044
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8908,7 +8985,7 @@ this.head.data
 4
 1
 this.head.next
-61887768
+40237373
 1
 
 Generics.GenericList.AddHead(T\_t):::ENTER
@@ -8921,13 +8998,13 @@ t.GetType()
 "System.Int32"
 1
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-20119003
+26592044
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8936,7 +9013,7 @@ this.head.data
 4
 1
 this.head.next
-61887768
+40237373
 1
 
 Generics.GenericList.Node..ctor(T\_t):::ENTER
@@ -8965,7 +9042,7 @@ t.GetType()
 "System.Int32"
 1
 this
-46853302
+38001806
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -8993,7 +9070,7 @@ Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::ENTER
 this_invocation_nonce
 19
 this
-46853302
+38001806
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9017,7 +9094,7 @@ this.next.next
 nonsensical
 2
 value
-20119003
+26592044
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9029,7 +9106,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-61887768
+40237373
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9038,7 +9115,7 @@ value.next.data
 3
 1
 value.next.next
-36702580
+56666602
 1
 
 Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::EXIT4
@@ -9051,7 +9128,7 @@ exception.GetType()
 nonsensical
 2
 this
-46853302
+38001806
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9063,7 +9140,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-20119003
+26592044
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9072,10 +9149,10 @@ this.next.data
 4
 1
 this.next.next
-61887768
+40237373
 1
 value
-20119003
+26592044
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9087,7 +9164,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-61887768
+40237373
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9096,7 +9173,7 @@ value.next.data
 3
 1
 value.next.next
-36702580
+56666602
 1
 
 Generics.GenericList.AddHead(T\_t):::EXIT12
@@ -9115,13 +9192,13 @@ t.GetType()
 "System.Int32"
 1
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-46853302
+38001806
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9130,7 +9207,7 @@ this.head.data
 5
 1
 this.head.next
-20119003
+26592044
 1
 
 Generics.GenericList.AddHead(T\_t):::ENTER
@@ -9143,13 +9220,13 @@ t.GetType()
 "System.Int32"
 1
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-46853302
+38001806
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9158,7 +9235,7 @@ this.head.data
 5
 1
 this.head.next
-20119003
+26592044
 1
 
 Generics.GenericList.Node..ctor(T\_t):::ENTER
@@ -9187,7 +9264,7 @@ t.GetType()
 "System.Int32"
 1
 this
-19026538
+6471942
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9215,7 +9292,7 @@ Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::ENTER
 this_invocation_nonce
 22
 this
-19026538
+6471942
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9239,7 +9316,7 @@ this.next.next
 nonsensical
 2
 value
-46853302
+38001806
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9251,7 +9328,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-20119003
+26592044
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9260,7 +9337,7 @@ value.next.data
 4
 1
 value.next.next
-61887768
+40237373
 1
 
 Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::EXIT4
@@ -9273,7 +9350,7 @@ exception.GetType()
 nonsensical
 2
 this
-19026538
+6471942
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9285,7 +9362,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-46853302
+38001806
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9294,10 +9371,10 @@ this.next.data
 5
 1
 this.next.next
-20119003
+26592044
 1
 value
-46853302
+38001806
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9309,7 +9386,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-20119003
+26592044
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9318,7 +9395,7 @@ value.next.data
 4
 1
 value.next.next
-61887768
+40237373
 1
 
 Generics.GenericList.AddHead(T\_t):::EXIT12
@@ -9337,13 +9414,13 @@ t.GetType()
 "System.Int32"
 1
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-19026538
+6471942
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9352,7 +9429,7 @@ this.head.data
 6
 1
 this.head.next
-46853302
+38001806
 1
 
 Generics.GenericList.AddHead(T\_t):::ENTER
@@ -9365,13 +9442,13 @@ t.GetType()
 "System.Int32"
 1
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-19026538
+6471942
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9380,7 +9457,7 @@ this.head.data
 6
 1
 this.head.next
-46853302
+38001806
 1
 
 Generics.GenericList.Node..ctor(T\_t):::ENTER
@@ -9409,7 +9486,7 @@ t.GetType()
 "System.Int32"
 1
 this
-37021121
+58247484
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9437,7 +9514,7 @@ Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::ENTER
 this_invocation_nonce
 25
 this
-37021121
+58247484
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9461,7 +9538,7 @@ this.next.next
 nonsensical
 2
 value
-19026538
+6471942
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9473,7 +9550,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-46853302
+38001806
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9482,7 +9559,7 @@ value.next.data
 5
 1
 value.next.next
-20119003
+26592044
 1
 
 Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::EXIT4
@@ -9495,7 +9572,7 @@ exception.GetType()
 nonsensical
 2
 this
-37021121
+58247484
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9507,7 +9584,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-19026538
+6471942
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9516,10 +9593,10 @@ this.next.data
 6
 1
 this.next.next
-46853302
+38001806
 1
 value
-19026538
+6471942
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9531,7 +9608,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-46853302
+38001806
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9540,7 +9617,7 @@ value.next.data
 5
 1
 value.next.next
-20119003
+26592044
 1
 
 Generics.GenericList.AddHead(T\_t):::EXIT12
@@ -9559,13 +9636,13 @@ t.GetType()
 "System.Int32"
 1
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-37021121
+58247484
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9574,7 +9651,7 @@ this.head.data
 7
 1
 this.head.next
-19026538
+6471942
 1
 
 Generics.GenericList.AddHead(T\_t):::ENTER
@@ -9587,13 +9664,13 @@ t.GetType()
 "System.Int32"
 1
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-37021121
+58247484
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9602,7 +9679,7 @@ this.head.data
 7
 1
 this.head.next
-19026538
+6471942
 1
 
 Generics.GenericList.Node..ctor(T\_t):::ENTER
@@ -9631,7 +9708,7 @@ t.GetType()
 "System.Int32"
 1
 this
-64754634
+54465313
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9659,7 +9736,7 @@ Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::ENTER
 this_invocation_nonce
 28
 this
-64754634
+54465313
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9683,7 +9760,7 @@ this.next.next
 nonsensical
 2
 value
-37021121
+58247484
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9695,7 +9772,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-19026538
+6471942
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9704,7 +9781,7 @@ value.next.data
 6
 1
 value.next.next
-46853302
+38001806
 1
 
 Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::EXIT4
@@ -9717,7 +9794,7 @@ exception.GetType()
 nonsensical
 2
 this
-64754634
+54465313
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9729,7 +9806,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-37021121
+58247484
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9738,10 +9815,10 @@ this.next.data
 7
 1
 this.next.next
-19026538
+6471942
 1
 value
-37021121
+58247484
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9753,7 +9830,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-19026538
+6471942
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9762,7 +9839,7 @@ value.next.data
 6
 1
 value.next.next
-46853302
+38001806
 1
 
 Generics.GenericList.AddHead(T\_t):::EXIT12
@@ -9781,13 +9858,13 @@ t.GetType()
 "System.Int32"
 1
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-64754634
+54465313
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9796,7 +9873,7 @@ this.head.data
 8
 1
 this.head.next
-37021121
+58247484
 1
 
 Generics.GenericList.AddHead(T\_t):::ENTER
@@ -9809,13 +9886,13 @@ t.GetType()
 "System.Int32"
 1
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-64754634
+54465313
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9824,7 +9901,7 @@ this.head.data
 8
 1
 this.head.next
-37021121
+58247484
 1
 
 Generics.GenericList.Node..ctor(T\_t):::ENTER
@@ -9853,7 +9930,7 @@ t.GetType()
 "System.Int32"
 1
 this
-45920800
+20425774
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9881,7 +9958,7 @@ Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::ENTER
 this_invocation_nonce
 31
 this
-45920800
+20425774
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9905,7 +9982,7 @@ this.next.next
 nonsensical
 2
 value
-64754634
+54465313
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9917,7 +9994,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-37021121
+58247484
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9926,7 +10003,7 @@ value.next.data
 7
 1
 value.next.next
-19026538
+6471942
 1
 
 Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value):::EXIT4
@@ -9939,7 +10016,7 @@ exception.GetType()
 nonsensical
 2
 this
-45920800
+20425774
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9951,7 +10028,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-64754634
+54465313
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9960,10 +10037,10 @@ this.next.data
 8
 1
 this.next.next
-37021121
+58247484
 1
 value
-64754634
+54465313
 1
 value.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9975,7 +10052,7 @@ value.data.GetType()
 "System.Int32"
 1
 value.next
-37021121
+58247484
 1
 value.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -9984,7 +10061,7 @@ value.next.data
 7
 1
 value.next.next
-19026538
+6471942
 1
 
 Generics.GenericList.AddHead(T\_t):::EXIT12
@@ -10003,13 +10080,13 @@ t.GetType()
 "System.Int32"
 1
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-45920800
+20425774
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10018,20 +10095,20 @@ this.head.data
 9
 1
 this.head.next
-64754634
+54465313
 1
 
 Generics.GenericList.GetEnumerator():::ENTER
 this_invocation_nonce
 32
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-45920800
+20425774
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10040,7 +10117,7 @@ this.head.data
 9
 1
 this.head.next
-64754634
+54465313
 1
 
 Generics.GenericList.GetEnumerator():::EXIT8
@@ -10053,16 +10130,19 @@ exception.GetType()
 nonsensical
 2
 return
-10634019
+49614245
+1
+return.GetType()
+"Generics.GenericList`1+<GetEnumerator>d__0[System.Int32]"
 1
 this
-25365761
+62215569
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.head
-45920800
+20425774
 1
 this.head.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10071,14 +10151,14 @@ this.head.data
 9
 1
 this.head.next
-64754634
+54465313
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 this_invocation_nonce
 34
 this
-10634019
+49614245
 1
 this.<>1__state
 0
@@ -10090,13 +10170,13 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
 null
@@ -10115,7 +10195,7 @@ Generics.GenericList.Node.Data.get():::ENTER
 this_invocation_nonce
 35
 this
-45920800
+20425774
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10127,7 +10207,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-64754634
+54465313
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10136,7 +10216,7 @@ this.next.data
 8
 1
 this.next.next
-37021121
+58247484
 1
 
 Generics.GenericList.Node.Data.get():::EXIT4
@@ -10155,7 +10235,7 @@ return.GetType()
 "System.Int32"
 1
 this
-45920800
+20425774
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10167,7 +10247,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-64754634
+54465313
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10176,7 +10256,7 @@ this.next.data
 8
 1
 this.next.next
-37021121
+58247484
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::EXIT30
@@ -10192,7 +10272,7 @@ return
 true
 1
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -10204,16 +10284,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-45920800
+20425774
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10222,14 +10302,14 @@ this.<current>5__1.data
 9
 1
 this.<current>5__1.next
-64754634
+54465313
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::ENTER
 this_invocation_nonce
 36
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -10241,16 +10321,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-45920800
+20425774
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10259,7 +10339,7 @@ this.<current>5__1.data
 9
 1
 this.<current>5__1.next
-64754634
+54465313
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::EXIT3
@@ -10278,7 +10358,7 @@ return.GetType()
 "System.Int32"
 1
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -10290,16 +10370,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-45920800
+20425774
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10308,14 +10388,14 @@ this.<current>5__1.data
 9
 1
 this.<current>5__1.next
-64754634
+54465313
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 this_invocation_nonce
 37
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -10327,16 +10407,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-45920800
+20425774
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10345,14 +10425,14 @@ this.<current>5__1.data
 9
 1
 this.<current>5__1.next
-64754634
+54465313
 1
 
 Generics.GenericList.Node.Next.get():::ENTER
 this_invocation_nonce
 38
 this
-45920800
+20425774
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10364,7 +10444,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-64754634
+54465313
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10373,7 +10453,7 @@ this.next.data
 8
 1
 this.next.next
-37021121
+58247484
 1
 
 Generics.GenericList.Node.Next.get():::EXIT4
@@ -10386,7 +10466,7 @@ exception.GetType()
 nonsensical
 2
 return
-64754634
+54465313
 1
 return.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10398,7 +10478,7 @@ return.data.GetType()
 "System.Int32"
 1
 return.next
-37021121
+58247484
 1
 return.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10407,10 +10487,10 @@ return.next.data
 7
 1
 return.next.next
-19026538
+6471942
 1
 this
-45920800
+20425774
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10422,7 +10502,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-64754634
+54465313
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10431,14 +10511,14 @@ this.next.data
 8
 1
 this.next.next
-37021121
+58247484
 1
 
 Generics.GenericList.Node.Data.get():::ENTER
 this_invocation_nonce
 39
 this
-64754634
+54465313
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10450,7 +10530,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-37021121
+58247484
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10459,7 +10539,7 @@ this.next.data
 7
 1
 this.next.next
-19026538
+6471942
 1
 
 Generics.GenericList.Node.Data.get():::EXIT4
@@ -10478,7 +10558,7 @@ return.GetType()
 "System.Int32"
 1
 this
-64754634
+54465313
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10490,7 +10570,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-37021121
+58247484
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10499,7 +10579,7 @@ this.next.data
 7
 1
 this.next.next
-19026538
+6471942
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::EXIT30
@@ -10515,7 +10595,7 @@ return
 true
 1
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -10527,16 +10607,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-64754634
+54465313
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10545,14 +10625,14 @@ this.<current>5__1.data
 8
 1
 this.<current>5__1.next
-37021121
+58247484
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::ENTER
 this_invocation_nonce
 40
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -10564,16 +10644,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-64754634
+54465313
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10582,7 +10662,7 @@ this.<current>5__1.data
 8
 1
 this.<current>5__1.next
-37021121
+58247484
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::EXIT3
@@ -10601,7 +10681,7 @@ return.GetType()
 "System.Int32"
 1
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -10613,16 +10693,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-64754634
+54465313
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10631,14 +10711,14 @@ this.<current>5__1.data
 8
 1
 this.<current>5__1.next
-37021121
+58247484
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 this_invocation_nonce
 41
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -10650,16 +10730,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-64754634
+54465313
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10668,14 +10748,14 @@ this.<current>5__1.data
 8
 1
 this.<current>5__1.next
-37021121
+58247484
 1
 
 Generics.GenericList.Node.Next.get():::ENTER
 this_invocation_nonce
 42
 this
-64754634
+54465313
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10687,7 +10767,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-37021121
+58247484
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10696,7 +10776,7 @@ this.next.data
 7
 1
 this.next.next
-19026538
+6471942
 1
 
 Generics.GenericList.Node.Next.get():::EXIT4
@@ -10709,7 +10789,7 @@ exception.GetType()
 nonsensical
 2
 return
-37021121
+58247484
 1
 return.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10721,7 +10801,7 @@ return.data.GetType()
 "System.Int32"
 1
 return.next
-19026538
+6471942
 1
 return.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10730,10 +10810,10 @@ return.next.data
 6
 1
 return.next.next
-46853302
+38001806
 1
 this
-64754634
+54465313
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10745,7 +10825,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-37021121
+58247484
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10754,14 +10834,14 @@ this.next.data
 7
 1
 this.next.next
-19026538
+6471942
 1
 
 Generics.GenericList.Node.Data.get():::ENTER
 this_invocation_nonce
 43
 this
-37021121
+58247484
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10773,7 +10853,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-19026538
+6471942
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10782,7 +10862,7 @@ this.next.data
 6
 1
 this.next.next
-46853302
+38001806
 1
 
 Generics.GenericList.Node.Data.get():::EXIT4
@@ -10801,7 +10881,7 @@ return.GetType()
 "System.Int32"
 1
 this
-37021121
+58247484
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10813,7 +10893,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-19026538
+6471942
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10822,7 +10902,7 @@ this.next.data
 6
 1
 this.next.next
-46853302
+38001806
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::EXIT30
@@ -10838,7 +10918,7 @@ return
 true
 1
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -10850,16 +10930,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-37021121
+58247484
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10868,14 +10948,14 @@ this.<current>5__1.data
 7
 1
 this.<current>5__1.next
-19026538
+6471942
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::ENTER
 this_invocation_nonce
 44
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -10887,16 +10967,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-37021121
+58247484
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10905,7 +10985,7 @@ this.<current>5__1.data
 7
 1
 this.<current>5__1.next
-19026538
+6471942
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::EXIT3
@@ -10924,7 +11004,7 @@ return.GetType()
 "System.Int32"
 1
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -10936,16 +11016,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-37021121
+58247484
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10954,14 +11034,14 @@ this.<current>5__1.data
 7
 1
 this.<current>5__1.next
-19026538
+6471942
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 this_invocation_nonce
 45
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -10973,16 +11053,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-37021121
+58247484
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -10991,14 +11071,14 @@ this.<current>5__1.data
 7
 1
 this.<current>5__1.next
-19026538
+6471942
 1
 
 Generics.GenericList.Node.Next.get():::ENTER
 this_invocation_nonce
 46
 this
-37021121
+58247484
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11010,7 +11090,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-19026538
+6471942
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11019,7 +11099,7 @@ this.next.data
 6
 1
 this.next.next
-46853302
+38001806
 1
 
 Generics.GenericList.Node.Next.get():::EXIT4
@@ -11032,7 +11112,7 @@ exception.GetType()
 nonsensical
 2
 return
-19026538
+6471942
 1
 return.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11044,7 +11124,7 @@ return.data.GetType()
 "System.Int32"
 1
 return.next
-46853302
+38001806
 1
 return.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11053,10 +11133,10 @@ return.next.data
 5
 1
 return.next.next
-20119003
+26592044
 1
 this
-37021121
+58247484
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11068,7 +11148,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-19026538
+6471942
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11077,14 +11157,14 @@ this.next.data
 6
 1
 this.next.next
-46853302
+38001806
 1
 
 Generics.GenericList.Node.Data.get():::ENTER
 this_invocation_nonce
 47
 this
-19026538
+6471942
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11096,7 +11176,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-46853302
+38001806
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11105,7 +11185,7 @@ this.next.data
 5
 1
 this.next.next
-20119003
+26592044
 1
 
 Generics.GenericList.Node.Data.get():::EXIT4
@@ -11124,7 +11204,7 @@ return.GetType()
 "System.Int32"
 1
 this
-19026538
+6471942
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11136,7 +11216,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-46853302
+38001806
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11145,7 +11225,7 @@ this.next.data
 5
 1
 this.next.next
-20119003
+26592044
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::EXIT30
@@ -11161,7 +11241,7 @@ return
 true
 1
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -11173,16 +11253,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-19026538
+6471942
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11191,14 +11271,14 @@ this.<current>5__1.data
 6
 1
 this.<current>5__1.next
-46853302
+38001806
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::ENTER
 this_invocation_nonce
 48
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -11210,16 +11290,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-19026538
+6471942
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11228,7 +11308,7 @@ this.<current>5__1.data
 6
 1
 this.<current>5__1.next
-46853302
+38001806
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::EXIT3
@@ -11247,7 +11327,7 @@ return.GetType()
 "System.Int32"
 1
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -11259,16 +11339,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-19026538
+6471942
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11277,14 +11357,14 @@ this.<current>5__1.data
 6
 1
 this.<current>5__1.next
-46853302
+38001806
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 this_invocation_nonce
 49
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -11296,16 +11376,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-19026538
+6471942
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11314,14 +11394,14 @@ this.<current>5__1.data
 6
 1
 this.<current>5__1.next
-46853302
+38001806
 1
 
 Generics.GenericList.Node.Next.get():::ENTER
 this_invocation_nonce
 50
 this
-19026538
+6471942
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11333,7 +11413,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-46853302
+38001806
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11342,7 +11422,7 @@ this.next.data
 5
 1
 this.next.next
-20119003
+26592044
 1
 
 Generics.GenericList.Node.Next.get():::EXIT4
@@ -11355,7 +11435,7 @@ exception.GetType()
 nonsensical
 2
 return
-46853302
+38001806
 1
 return.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11367,7 +11447,7 @@ return.data.GetType()
 "System.Int32"
 1
 return.next
-20119003
+26592044
 1
 return.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11376,10 +11456,10 @@ return.next.data
 4
 1
 return.next.next
-61887768
+40237373
 1
 this
-19026538
+6471942
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11391,7 +11471,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-46853302
+38001806
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11400,14 +11480,14 @@ this.next.data
 5
 1
 this.next.next
-20119003
+26592044
 1
 
 Generics.GenericList.Node.Data.get():::ENTER
 this_invocation_nonce
 51
 this
-46853302
+38001806
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11419,7 +11499,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-20119003
+26592044
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11428,7 +11508,7 @@ this.next.data
 4
 1
 this.next.next
-61887768
+40237373
 1
 
 Generics.GenericList.Node.Data.get():::EXIT4
@@ -11447,7 +11527,7 @@ return.GetType()
 "System.Int32"
 1
 this
-46853302
+38001806
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11459,7 +11539,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-20119003
+26592044
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11468,7 +11548,7 @@ this.next.data
 4
 1
 this.next.next
-61887768
+40237373
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::EXIT30
@@ -11484,7 +11564,7 @@ return
 true
 1
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -11496,16 +11576,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-46853302
+38001806
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11514,14 +11594,14 @@ this.<current>5__1.data
 5
 1
 this.<current>5__1.next
-20119003
+26592044
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::ENTER
 this_invocation_nonce
 52
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -11533,16 +11613,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-46853302
+38001806
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11551,7 +11631,7 @@ this.<current>5__1.data
 5
 1
 this.<current>5__1.next
-20119003
+26592044
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::EXIT3
@@ -11570,7 +11650,7 @@ return.GetType()
 "System.Int32"
 1
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -11582,16 +11662,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-46853302
+38001806
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11600,14 +11680,14 @@ this.<current>5__1.data
 5
 1
 this.<current>5__1.next
-20119003
+26592044
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 this_invocation_nonce
 53
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -11619,16 +11699,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-46853302
+38001806
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11637,14 +11717,14 @@ this.<current>5__1.data
 5
 1
 this.<current>5__1.next
-20119003
+26592044
 1
 
 Generics.GenericList.Node.Next.get():::ENTER
 this_invocation_nonce
 54
 this
-46853302
+38001806
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11656,7 +11736,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-20119003
+26592044
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11665,7 +11745,7 @@ this.next.data
 4
 1
 this.next.next
-61887768
+40237373
 1
 
 Generics.GenericList.Node.Next.get():::EXIT4
@@ -11678,7 +11758,7 @@ exception.GetType()
 nonsensical
 2
 return
-20119003
+26592044
 1
 return.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11690,7 +11770,7 @@ return.data.GetType()
 "System.Int32"
 1
 return.next
-61887768
+40237373
 1
 return.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11699,10 +11779,10 @@ return.next.data
 3
 1
 return.next.next
-36702580
+56666602
 1
 this
-46853302
+38001806
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11714,7 +11794,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-20119003
+26592044
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11723,14 +11803,14 @@ this.next.data
 4
 1
 this.next.next
-61887768
+40237373
 1
 
 Generics.GenericList.Node.Data.get():::ENTER
 this_invocation_nonce
 55
 this
-20119003
+26592044
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11742,7 +11822,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-61887768
+40237373
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11751,7 +11831,7 @@ this.next.data
 3
 1
 this.next.next
-36702580
+56666602
 1
 
 Generics.GenericList.Node.Data.get():::EXIT4
@@ -11770,7 +11850,7 @@ return.GetType()
 "System.Int32"
 1
 this
-20119003
+26592044
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11782,7 +11862,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-61887768
+40237373
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11791,7 +11871,7 @@ this.next.data
 3
 1
 this.next.next
-36702580
+56666602
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::EXIT30
@@ -11807,7 +11887,7 @@ return
 true
 1
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -11819,16 +11899,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-20119003
+26592044
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11837,14 +11917,14 @@ this.<current>5__1.data
 4
 1
 this.<current>5__1.next
-61887768
+40237373
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::ENTER
 this_invocation_nonce
 56
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -11856,16 +11936,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-20119003
+26592044
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11874,7 +11954,7 @@ this.<current>5__1.data
 4
 1
 this.<current>5__1.next
-61887768
+40237373
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::EXIT3
@@ -11893,7 +11973,7 @@ return.GetType()
 "System.Int32"
 1
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -11905,16 +11985,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-20119003
+26592044
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11923,14 +12003,14 @@ this.<current>5__1.data
 4
 1
 this.<current>5__1.next
-61887768
+40237373
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 this_invocation_nonce
 57
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -11942,16 +12022,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-20119003
+26592044
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11960,14 +12040,14 @@ this.<current>5__1.data
 4
 1
 this.<current>5__1.next
-61887768
+40237373
 1
 
 Generics.GenericList.Node.Next.get():::ENTER
 this_invocation_nonce
 58
 this
-20119003
+26592044
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11979,7 +12059,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-61887768
+40237373
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -11988,7 +12068,7 @@ this.next.data
 3
 1
 this.next.next
-36702580
+56666602
 1
 
 Generics.GenericList.Node.Next.get():::EXIT4
@@ -12001,7 +12081,7 @@ exception.GetType()
 nonsensical
 2
 return
-61887768
+40237373
 1
 return.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12013,7 +12093,7 @@ return.data.GetType()
 "System.Int32"
 1
 return.next
-36702580
+56666602
 1
 return.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12022,10 +12102,10 @@ return.next.data
 2
 1
 return.next.next
-41360766
+6296289
 1
 this
-20119003
+26592044
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12037,7 +12117,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-61887768
+40237373
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12046,14 +12126,14 @@ this.next.data
 3
 1
 this.next.next
-36702580
+56666602
 1
 
 Generics.GenericList.Node.Data.get():::ENTER
 this_invocation_nonce
 59
 this
-61887768
+40237373
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12065,7 +12145,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-36702580
+56666602
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12074,7 +12154,7 @@ this.next.data
 2
 1
 this.next.next
-41360766
+6296289
 1
 
 Generics.GenericList.Node.Data.get():::EXIT4
@@ -12093,7 +12173,7 @@ return.GetType()
 "System.Int32"
 1
 this
-61887768
+40237373
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12105,7 +12185,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-36702580
+56666602
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12114,7 +12194,7 @@ this.next.data
 2
 1
 this.next.next
-41360766
+6296289
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::EXIT30
@@ -12130,7 +12210,7 @@ return
 true
 1
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -12142,16 +12222,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-61887768
+40237373
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12160,14 +12240,14 @@ this.<current>5__1.data
 3
 1
 this.<current>5__1.next
-36702580
+56666602
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::ENTER
 this_invocation_nonce
 60
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -12179,16 +12259,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-61887768
+40237373
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12197,7 +12277,7 @@ this.<current>5__1.data
 3
 1
 this.<current>5__1.next
-36702580
+56666602
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::EXIT3
@@ -12216,7 +12296,7 @@ return.GetType()
 "System.Int32"
 1
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -12228,16 +12308,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-61887768
+40237373
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12246,14 +12326,14 @@ this.<current>5__1.data
 3
 1
 this.<current>5__1.next
-36702580
+56666602
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 this_invocation_nonce
 61
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -12265,16 +12345,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-61887768
+40237373
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12283,14 +12363,14 @@ this.<current>5__1.data
 3
 1
 this.<current>5__1.next
-36702580
+56666602
 1
 
 Generics.GenericList.Node.Next.get():::ENTER
 this_invocation_nonce
 62
 this
-61887768
+40237373
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12302,7 +12382,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-36702580
+56666602
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12311,7 +12391,7 @@ this.next.data
 2
 1
 this.next.next
-41360766
+6296289
 1
 
 Generics.GenericList.Node.Next.get():::EXIT4
@@ -12324,7 +12404,7 @@ exception.GetType()
 nonsensical
 2
 return
-36702580
+56666602
 1
 return.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12336,7 +12416,7 @@ return.data.GetType()
 "System.Int32"
 1
 return.next
-41360766
+6296289
 1
 return.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12345,10 +12425,10 @@ return.next.data
 1
 1
 return.next.next
-26965262
+23069209
 1
 this
-61887768
+40237373
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12360,7 +12440,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-36702580
+56666602
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12369,14 +12449,14 @@ this.next.data
 2
 1
 this.next.next
-41360766
+6296289
 1
 
 Generics.GenericList.Node.Data.get():::ENTER
 this_invocation_nonce
 63
 this
-36702580
+56666602
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12388,7 +12468,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-41360766
+6296289
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12397,7 +12477,7 @@ this.next.data
 1
 1
 this.next.next
-26965262
+23069209
 1
 
 Generics.GenericList.Node.Data.get():::EXIT4
@@ -12416,7 +12496,7 @@ return.GetType()
 "System.Int32"
 1
 this
-36702580
+56666602
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12428,7 +12508,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-41360766
+6296289
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12437,7 +12517,7 @@ this.next.data
 1
 1
 this.next.next
-26965262
+23069209
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::EXIT30
@@ -12453,7 +12533,7 @@ return
 true
 1
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -12465,16 +12545,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-36702580
+56666602
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12483,14 +12563,14 @@ this.<current>5__1.data
 2
 1
 this.<current>5__1.next
-41360766
+6296289
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::ENTER
 this_invocation_nonce
 64
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -12502,16 +12582,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-36702580
+56666602
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12520,7 +12600,7 @@ this.<current>5__1.data
 2
 1
 this.<current>5__1.next
-41360766
+6296289
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::EXIT3
@@ -12539,7 +12619,7 @@ return.GetType()
 "System.Int32"
 1
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -12551,16 +12631,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-36702580
+56666602
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12569,14 +12649,14 @@ this.<current>5__1.data
 2
 1
 this.<current>5__1.next
-41360766
+6296289
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 this_invocation_nonce
 65
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -12588,16 +12668,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-36702580
+56666602
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12606,14 +12686,14 @@ this.<current>5__1.data
 2
 1
 this.<current>5__1.next
-41360766
+6296289
 1
 
 Generics.GenericList.Node.Next.get():::ENTER
 this_invocation_nonce
 66
 this
-36702580
+56666602
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12625,7 +12705,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-41360766
+6296289
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12634,7 +12714,7 @@ this.next.data
 1
 1
 this.next.next
-26965262
+23069209
 1
 
 Generics.GenericList.Node.Next.get():::EXIT4
@@ -12647,7 +12727,7 @@ exception.GetType()
 nonsensical
 2
 return
-41360766
+6296289
 1
 return.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12659,7 +12739,7 @@ return.data.GetType()
 "System.Int32"
 1
 return.next
-26965262
+23069209
 1
 return.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12671,7 +12751,7 @@ return.next.next
 null
 1
 this
-36702580
+56666602
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12683,7 +12763,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-41360766
+6296289
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12692,14 +12772,14 @@ this.next.data
 1
 1
 this.next.next
-26965262
+23069209
 1
 
 Generics.GenericList.Node.Data.get():::ENTER
 this_invocation_nonce
 67
 this
-41360766
+6296289
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12711,7 +12791,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-26965262
+23069209
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12739,7 +12819,7 @@ return.GetType()
 "System.Int32"
 1
 this
-41360766
+6296289
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12751,7 +12831,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-26965262
+23069209
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12776,7 +12856,7 @@ return
 true
 1
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -12788,16 +12868,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-41360766
+6296289
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12806,14 +12886,14 @@ this.<current>5__1.data
 1
 1
 this.<current>5__1.next
-26965262
+23069209
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::ENTER
 this_invocation_nonce
 68
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -12825,16 +12905,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-41360766
+6296289
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12843,7 +12923,7 @@ this.<current>5__1.data
 1
 1
 this.<current>5__1.next
-26965262
+23069209
 1
 
 Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current():::EXIT3
@@ -12862,7 +12942,7 @@ return.GetType()
 "System.Int32"
 1
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -12874,16 +12954,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-41360766
+6296289
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12892,14 +12972,14 @@ this.<current>5__1.data
 1
 1
 this.<current>5__1.next
-26965262
+23069209
 1
 
 Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 this_invocation_nonce
 69
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -12911,16 +12991,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-41360766
+6296289
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12929,14 +13009,14 @@ this.<current>5__1.data
 1
 1
 this.<current>5__1.next
-26965262
+23069209
 1
 
 Generics.GenericList.Node.Next.get():::ENTER
 this_invocation_nonce
 70
 this
-41360766
+6296289
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12948,7 +13028,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-26965262
+23069209
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12970,7 +13050,7 @@ exception.GetType()
 nonsensical
 2
 return
-26965262
+23069209
 1
 return.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -12994,7 +13074,7 @@ return.next.next
 nonsensical
 2
 this
-41360766
+6296289
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -13006,7 +13086,7 @@ this.data.GetType()
 "System.Int32"
 1
 this.next
-26965262
+23069209
 1
 this.next.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -13022,7 +13102,7 @@ Generics.GenericList.Node.Data.get():::ENTER
 this_invocation_nonce
 71
 this
-26965262
+23069209
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -13062,7 +13142,7 @@ return.GetType()
 "System.Int32"
 1
 this
-26965262
+23069209
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -13099,7 +13179,7 @@ return
 true
 1
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -13111,16 +13191,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-26965262
+23069209
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -13136,7 +13216,7 @@ Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<
 this_invocation_nonce
 72
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -13148,16 +13228,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-26965262
+23069209
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -13185,7 +13265,7 @@ return.GetType()
 "System.Int32"
 1
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -13197,16 +13277,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-26965262
+23069209
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -13222,7 +13302,7 @@ Generics.GenericList.<GetEnumerator>d__0.MoveNext():::ENTER
 this_invocation_nonce
 73
 this
-10634019
+49614245
 1
 this.<>1__state
 1
@@ -13234,16 +13314,16 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
-26965262
+23069209
 1
 this.<current>5__1.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -13259,7 +13339,7 @@ Generics.GenericList.Node.Next.get():::ENTER
 this_invocation_nonce
 74
 this
-26965262
+23069209
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -13317,7 +13397,7 @@ return.next.next
 nonsensical
 2
 this
-26965262
+23069209
 1
 this.GetType()
 "Generics.GenericList`1+Node[System.Int32]"
@@ -13354,7 +13434,7 @@ return
 false
 1
 this
-10634019
+49614245
 1
 this.<>1__state
 -1
@@ -13366,13 +13446,13 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
 null
@@ -13391,7 +13471,7 @@ Generics.GenericList.<GetEnumerator>d__0.System.IDisposable.Dispose():::ENTER
 this_invocation_nonce
 75
 this
-10634019
+49614245
 1
 this.<>1__state
 -1
@@ -13403,13 +13483,13 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
 null
@@ -13434,7 +13514,7 @@ exception.GetType()
 nonsensical
 2
 this
-10634019
+49614245
 1
 this.<>1__state
 -1
@@ -13446,13 +13526,13 @@ this.<>2__current.GetType()
 "System.Int32"
 1
 this.<>4__this
-25365761
+62215569
 1
 this.<>4__this.GetType()
 "Generics.GenericList`1[System.Int32]"
 1
 this.<>4__this.head
-45920800
+20425774
 1
 this.<current>5__1
 null
@@ -13481,7 +13561,7 @@ exception.GetType()
 nonsensical
 2
 this
-28597308
+43875021
 1
 this.GetType()
 "Generics.GenericList`1[System.String]"
@@ -13513,7 +13593,7 @@ exception.GetType()
 nonsensical
 2
 this
-56049180
+59330872
 1
 this.GetType()
 "Generics.GenericList`1[Generics.DelegateTestExampleClass]"
@@ -13576,7 +13656,7 @@ t.GetType()
 "System.String"
 1
 this
-34680572
+64215808
 1
 this.GetType()
 "Generics.Node4`1[System.String]"
@@ -13619,7 +13699,7 @@ t.GetType()
 "System.String"
 1
 this
-34680572
+64215808
 1
 this.GetType()
 "Generics.Node4`1[System.String]"
@@ -13670,7 +13750,7 @@ t.GetType()
 "System.String"
 1
 this
-43689693
+41071365
 1
 this.GetType()
 "Generics.Node4`1[System.String]"
@@ -13713,7 +13793,7 @@ t.GetType()
 "System.String"
 1
 this
-43689693
+41071365
 1
 this.GetType()
 "Generics.Node4`1[System.String]"
@@ -13767,7 +13847,7 @@ t.GetType()
 "System.Int32"
 1
 this
-57662920
+34097968
 1
 this.GetType()
 "Generics.Node5`2[System.Int32,System.Int32]"
@@ -13807,7 +13887,7 @@ t.GetType()
 "System.Int32"
 1
 this
-57662920
+34097968
 1
 this.GetType()
 "Generics.Node5`2[System.Int32,System.Int32]"
@@ -13823,13 +13903,13 @@ Generics.Node5..ctor(T\_t,\_U\_u):::ENTER
 this_invocation_nonce
 84
 t
-43689693
+41071365
 1
 t.GetType()
 "Generics.Node4`1[System.String]"
 1
 u
-57662920
+34097968
 1
 u.GetType()
 "Generics.Node5`2[System.Int32,System.Int32]"
@@ -13839,13 +13919,13 @@ Generics.BaseNodeMultiple..ctor(T\_t,\_U\_u):::ENTER
 this_invocation_nonce
 85
 t
-43689693
+41071365
 1
 t.GetType()
 "Generics.Node4`1[System.String]"
 1
 u
-57662920
+34097968
 1
 u.GetType()
 "Generics.Node5`2[System.Int32,System.Int32]"
@@ -13861,13 +13941,13 @@ exception.GetType()
 nonsensical
 2
 t
-43689693
+41071365
 1
 t.GetType()
 "Generics.Node4`1[System.String]"
 1
 this
-49204239
+38446258
 1
 this.GetType()
 "Generics.Node5`2[Generics.Node4`1[System.String],Generics.Node5`2[System.Int32,System.Int32]]"
@@ -13885,7 +13965,7 @@ this.u.GetType()
 nonsensical
 2
 u
-57662920
+34097968
 1
 u.GetType()
 "Generics.Node5`2[System.Int32,System.Int32]"
@@ -13901,19 +13981,19 @@ exception.GetType()
 nonsensical
 2
 t
-43689693
+41071365
 1
 t.GetType()
 "Generics.Node4`1[System.String]"
 1
 this
-49204239
+38446258
 1
 this.GetType()
 "Generics.Node5`2[Generics.Node4`1[System.String],Generics.Node5`2[System.Int32,System.Int32]]"
 1
 u
-57662920
+34097968
 1
 u.GetType()
 "Generics.Node5`2[System.Int32,System.Int32]"
@@ -13933,7 +14013,7 @@ exception.GetType()
 nonsensical
 2
 this
-40184969
+10472004
 1
 this.GetType()
 "Generics.NodeItem`1[Generics.DelegateTestExampleClass]"
@@ -13947,7 +14027,7 @@ Generics.GenericsTest.Swap(System.Collections.Generic.List<T>\_list1,\_System.Co
 this_invocation_nonce
 88
 list1
-26120409
+27139175
 1
 list1.GetType()
 "System.Collections.Generic.List`1[System.Object]"
@@ -13959,7 +14039,7 @@ list1[..].GetType()
 ["System.Int32" "System.Int32" "System.Int32"]
 1
 list2
-33757095
+42925989
 1
 list2.GetType()
 "System.Collections.Generic.List`1[System.Object]"
@@ -13981,7 +14061,7 @@ exception.GetType()
 nonsensical
 2
 list1
-26120409
+27139175
 1
 list1.GetType()
 "System.Collections.Generic.List`1[System.Object]"
@@ -13993,7 +14073,7 @@ list1[..].GetType()
 ["System.Int32" "System.Int32" "System.Int32"]
 1
 list2
-33757095
+42925989
 1
 list2.GetType()
 "System.Collections.Generic.List`1[System.Object]"
@@ -14011,8 +14091,14 @@ this_invocation_nonce
 lhs
 5
 1
+lhs.GetType()
+"System.Int32"
+1
 rhs
 4
+1
+rhs.GetType()
+"System.Int32"
 1
 
 Generics.GenericsTest.SwapIfGreater(T\_lhs,\_T\_rhs):::EXIT25
@@ -14027,8 +14113,14 @@ nonsensical
 lhs
 4
 1
+lhs.GetType()
+"System.Int32"
+1
 rhs
 5
+1
+rhs.GetType()
+"System.Int32"
 1
 
 Generics.GenericsTest.SwapTest():::EXIT135
@@ -14045,7 +14137,7 @@ Generics.GenericsTest.AddToList1(System.Collections.Generic.List<System.Int32>\_
 this_invocation_nonce
 90
 intList1
-35378404
+50789581
 1
 intList1[..]
 []
@@ -14061,7 +14153,7 @@ exception.GetType()
 nonsensical
 2
 intList1
-35378404
+50789581
 1
 intList1[..]
 [1 2 3]
@@ -14085,7 +14177,7 @@ exception.GetType()
 nonsensical
 2
 this
-49970185
+54453050
 1
 this.GetType()
 "Generics.DelegateTestStack`1[System.Double]"
@@ -14120,7 +14212,7 @@ exception.GetType()
 nonsensical
 2
 this
-47078488
+20315403
 1
 this.GetType()
 "Generics.DelegateTestClass"
@@ -14130,7 +14222,7 @@ Generics.DelegateTestStack.add_stackEvent(Generics.StackEventHandler<Generics.De
 this_invocation_nonce
 94
 this
-49970185
+54453050
 1
 this.GetType()
 "Generics.DelegateTestStack`1[System.Double]"
@@ -14151,7 +14243,7 @@ this.stackEvent._target
 nonsensical
 2
 value
-21053208
+48620907
 1
 value._methodBase
 null
@@ -14160,13 +14252,13 @@ value._methodBase.GetType()
 nonsensical
 2
 value._methodPtr
-41963976
+42032456
 1
 value._methodPtrAux
 0
 1
 value._target
-47078488
+20315403
 1
 value._target.GetType()
 "Generics.DelegateTestClass"
@@ -14182,28 +14274,28 @@ exception.GetType()
 nonsensical
 2
 this
-49970185
+54453050
 1
 this.GetType()
 "Generics.DelegateTestStack`1[System.Double]"
 1
 this.stackEvent
-21053208
+48620907
 1
 this.stackEvent._methodBase
 null
 1
 this.stackEvent._methodPtr
-41963976
+42032456
 1
 this.stackEvent._methodPtrAux
 0
 1
 this.stackEvent._target
-47078488
+20315403
 1
 value
-21053208
+48620907
 1
 value._methodBase
 null
@@ -14212,13 +14304,13 @@ value._methodBase.GetType()
 nonsensical
 2
 value._methodPtr
-41963976
+42032456
 1
 value._methodPtrAux
 0
 1
 value._target
-47078488
+20315403
 1
 value._target.GetType()
 "Generics.DelegateTestClass"
@@ -14252,7 +14344,7 @@ exception.GetType()
 nonsensical
 2
 this
-55261147
+34934986
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
@@ -14274,7 +14366,7 @@ Generics.GenericList.GetLast():::ENTER
 this_invocation_nonce
 97
 this
-55261147
+34934986
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
@@ -14308,7 +14400,7 @@ return.GetType()
 "System.Int32"
 1
 this
-55261147
+34934986
 1
 this.GetType()
 "Generics.GenericList`1[System.Int32]"
@@ -14340,7 +14432,7 @@ exception.GetType()
 nonsensical
 2
 this
-27588283
+45979426
 1
 this.GetType()
 "Generics.GenericList`1[System.String]"
@@ -14362,7 +14454,7 @@ Generics.GenericList.GetLast():::ENTER
 this_invocation_nonce
 99
 this
-27588283
+45979426
 1
 this.GetType()
 "Generics.GenericList`1[System.String]"
@@ -14396,7 +14488,7 @@ return.GetType()
 nonsensical
 2
 this
-27588283
+45979426
 1
 this.GetType()
 "Generics.GenericList`1[System.String]"

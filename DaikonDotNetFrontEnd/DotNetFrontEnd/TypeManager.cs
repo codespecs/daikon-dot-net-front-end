@@ -122,6 +122,12 @@ namespace DotNetFrontEnd
     private Dictionary<int, MethodInfo> pureMethods;
 
     /// <summary>
+    /// A collection of values to ignore, where each value is of the form 
+    /// "AssemblyQualifiedTypeName;ValueName"
+    /// </summary>
+    private ISet<string> ignoredValues;
+
+    /// <summary>
     /// Used when adding methods to ensure that keys are unique
     /// </summary>
     private int globalPureMethodCount;
@@ -141,11 +147,33 @@ namespace DotNetFrontEnd
       this.nameTypeMap = new Dictionary<string, Type>();
       this.pureMethodKeys = new Dictionary<Type, ISet<int>>();
       this.pureMethods = new Dictionary<int, MethodInfo>();
+      this.ignoredValues = new HashSet<string>();
+      this.PopulateIgnoredValues();
       if (this.frontEndArgs.PurityFile != null)
       {
         this.ProcessPurityMethods();
       }
       this.globalPureMethodCount = 0;
+    }
+
+    /// <summary>
+    /// Add some default ignored values, especially those for system types.
+    /// </summary>
+    private void PopulateIgnoredValues()
+    {
+      // TODO(#57): Should be not .NET 4.0 specific
+      this.ignoredValues.Add("System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Empty");
+      this.ignoredValues.Add("System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;MaxValue");
+      this.ignoredValues.Add("System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;MinValue");
+      this.ignoredValues.Add("System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;FalseString");
+      this.ignoredValues.Add("System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;TrueString");
+      this.ignoredValues.Add("System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;MinValue");
+      this.ignoredValues.Add("System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;MaxValue");
+      this.ignoredValues.Add("System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Epsilon");
+      this.ignoredValues.Add("System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;NaN");
+      this.ignoredValues.Add("System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;NegativeInfinity");
+      this.ignoredValues.Add("System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;PositiveInfinity");
+      this.ignoredValues.Add("System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Zero");
     }
 
     /// <summary>
@@ -326,6 +354,23 @@ namespace DotNetFrontEnd
           type == TypeManager.uIntType;
     }
 
+    /// <summary>
+    /// Returns whether the given field should be ignored.
+    /// </summary>
+    /// <param name="type">Parent type of the field to test</param>
+    /// <param name="fieldName">Name of the field to test</param>
+    /// <returns>True if the field should be ignored, false otherwise</returns>
+    public bool ShouldIgnoreField(Type type, string fieldName)
+    {
+      // TODO(#58): Should be able to switch this test off with a command line arg.
+      return this.ignoredValues.Contains(type.AssemblyQualifiedName + ";" + fieldName);
+    }
+
+    /// <summary>
+    /// Returns whether the given type is any of the numeric types, e.g. int, float, BigInteger.
+    /// </summary>
+    /// <param name="type">Type to test</param>
+    /// <returns>True if the type is numerio, false otherwise</returns>
     public static bool IsAnyNumericType(Type type)
     {
       return type.IsValueType && (type == TypeManager.ByteType || type == TypeManager.CharType
@@ -368,6 +413,9 @@ namespace DotNetFrontEnd
     /// <returns>True if the type meets the linked-list qualification, otherwise false</returns>
     public bool IsLinkedListImplementer(Type type)
     {
+      // The implementation appears to the test as a linked list.
+      if (TypeManager.IsAnyNumericType(type)) { return false; }
+
       return IsElementOfCollectionType(type, this.isLinkedListHashmap, IsLinkedListTest);
     }
 
@@ -794,7 +842,7 @@ namespace DotNetFrontEnd
           return field;
         }
       }
-      throw new ArgumentException("Type has no field of its own type -- it's not a linked list.",
+      throw new ArgumentException("Type has no staticField of its own type -- it's not a linked list.",
           "type");
     }
 
