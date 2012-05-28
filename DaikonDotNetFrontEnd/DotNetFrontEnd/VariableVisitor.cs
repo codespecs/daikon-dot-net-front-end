@@ -458,12 +458,9 @@ namespace DotNetFrontEnd
         if (extractedType != null)
         {
           method = extractedType.GetMethod(method.Name);
-          //  return method.Invoke(
-          //     Convert.ChangeType(obj, obj.GetType()), null);
         }
       }
-      return method.Invoke(
-          obj, null);
+      return method.Invoke(obj, null);
     }
 
     #endregion
@@ -860,33 +857,35 @@ namespace DotNetFrontEnd
         writer.WriteLine(SafeModifiedBit);
       }
 
-      if (elementType.IsClass && !simplePrint)
+      if (simplePrint)
       {
-        if (typeManager.IsListImplementer(elementType))
-        {
-          // Daikon can't handle nested arrays. Just skip silently.
-          return;
-        }
-        else if (typeManager.IsFSharpListImplementer(elementType))
-        {
-          // Daikon can't handle nested lists. Skip silently.
-          return;
-        }
+        return;
+      }
 
-        // If the list was null then we can't visit the children, just print nonsensical for them.
-        if (list == null)
+      if (typeManager.IsListImplementer(elementType))
+      {
+        // Daikon can't handle nested arrays. Just skip silently.
+        return;
+      }
+      else if (typeManager.IsFSharpListImplementer(elementType))
+      {
+        // Daikon can't handle nested lists. Skip silently.
+        return;
+      }
+
+      // If the list was null then we can't visit the children, just print nonsensical for them.
+      if (list == null)
+      {
+        VisitNullListChildren(name, elementType, writer, depth);
+      }
+      else
+      {
+        if (nonsensicalElements == null)
         {
-          VisitNullListChildren(name, elementType, writer, depth);
+          nonsensicalElements = new bool[list.Count];
         }
-        else
-        {
-          if (nonsensicalElements == null)
-          {
-            nonsensicalElements = new bool[list.Count];
-          }
-          VisitListChildren(name, list, elementType, writer, depth, nonsensicalElements);
-        } // Close non-null branch
-      } // Close non-child visit check
+        VisitListChildren(name, list, elementType, writer, depth, nonsensicalElements);
+      } // Close non-null branch
     } // Close ListReflectiveVisit()
 
     /// <summary>
@@ -937,7 +936,7 @@ namespace DotNetFrontEnd
     /// <param name="depth">Current nesting depth</param>
     private static void VisitListChildren(string name, IList list, Type elementType,
         TextWriter writer, int depth, bool[] nonsensicalElements)
-    {
+    {      
       foreach (FieldInfo elementField in
           elementType.GetFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(elementType)))
       {
@@ -1010,7 +1009,8 @@ namespace DotNetFrontEnd
     /// <param name="elementType">The type of the element of the list</param>
     /// <param name="writer">The writer used to print the visitation results</param>
     /// <param name="depth">The depth the fields will be printed at</param>
-    /// <param name="nonsensicalElements">An array indicating corresponding locations in the list containing non-sensical elements</param>
+    /// <param name="nonsensicalElements">An array indicating corresponding 
+    /// locations in the list containing non-sensical elements</param>
     /// <param name="elementField">The field to be inspected</param>
     private static void VisitListField(string name, IList list, Type elementType, TextWriter writer,
         int depth, bool[] nonsensicalElements, FieldInfo elementField)
@@ -1118,26 +1118,24 @@ namespace DotNetFrontEnd
         return null;
       }
 
-      try
-      {
-        // First attempt to load the value directly using the FieldInfo object.
-        return field.GetValue(obj);
-      }
-      catch
-      {
-        // If that fails re-extract the FieldInfo object ant try again.
-        field = obj.GetType().GetField(fieldName, BindingFlags.Public |
-                                                            BindingFlags.NonPublic |
-                                                            BindingFlags.Static |
-                                                            BindingFlags.Instance);
+      FieldInfo runtimeField;
+      Type currentType = obj.GetType();
 
-        if (field == null)
-        {
-          throw new ArgumentException("No such staticField was found.", "fieldName");
-        }
+      do
+      {
+        runtimeField = currentType.GetField(fieldName, 
+            BindingFlags.Public | BindingFlags.NonPublic 
+          | BindingFlags.Static | BindingFlags.Instance);
+        currentType = obj.GetType().BaseType;
+      } while (runtimeField == null && currentType != null);
 
-        return field.GetValue(obj);
+
+      if (runtimeField == null)
+      {
+        throw new ArgumentException("Field " + fieldName + " not found in type or supertypes");
       }
+
+      return runtimeField.GetValue(obj);
     }
 
     /// <summary>
