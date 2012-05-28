@@ -424,7 +424,10 @@ namespace DotNetFrontEnd
     public bool IsLinkedListImplementer(Type type)
     {
       // The implementation appears to the test as a linked list.
-      if (TypeManager.IsAnyNumericType(type)) { return false; }
+      if (type.AssemblyQualifiedName != null && type.AssemblyQualifiedName.Contains("System")) 
+      { 
+        return false; 
+      }
 
       return IsElementOfCollectionType(type, this.isLinkedListHashmap, IsLinkedListTest);
     }
@@ -538,15 +541,30 @@ namespace DotNetFrontEnd
       DNFETypeDeclaration typeDecl = this.ConvertAssemblyQualifiedNameToType(assemblyQualifiedName);
       foreach (Type type in typeDecl.GetAllTypes())
       {
-        if (this.pureMethodKeys.ContainsKey(type))
+        foreach (var x in GetPureMethodsForType(type))
         {
-          foreach (int key in this.pureMethodKeys[type])
-          {
-            result.Add(key, pureMethods[key]);
-          }
+          result.Add(x.Key, x.Value);
         }
       }
-
+      return result;
+    }
+    
+    /// <summary>
+    /// Get a list of the pure methods that should be called for the given type.
+    /// </summary>
+    /// <param name="type">Type to get the pure methods for</param>
+    /// <returns>Map from key to method object of all the pure methods for the given type
+    /// </returns>
+    public Dictionary<int, MethodInfo> GetPureMethodsForType(Type type)
+    {
+      Dictionary<int, MethodInfo> result = new Dictionary<int, MethodInfo>();
+      if (this.pureMethodKeys.ContainsKey(type))
+      {
+        foreach (int key in this.pureMethodKeys[type])
+        {
+          result.Add(key, pureMethods[key]);
+        }
+      }
       return result;
     }
 
