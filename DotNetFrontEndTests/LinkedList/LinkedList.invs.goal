@@ -10,8 +10,6 @@ LinkedLists.LinkedLists.Main(System.String[] args):::EXIT
 args[] == orig(args[])
 args[] == []
 args[].ToString() == []
-exception._innerException[] == []
-exception._innerException[].GetType() == []
 ===========================================================================
 LinkedLists.LinkedLists.printLast(LinkedLists.Node n):::ENTER
 n has only one value
@@ -23,8 +21,6 @@ n in n.next[]
 LinkedLists.LinkedLists.printLast(LinkedLists.Node n):::EXIT19
 ===========================================================================
 LinkedLists.LinkedLists.printLast(LinkedLists.Node n):::EXIT
-exception._innerException[] == []
-exception._innerException[].GetType() == []
 return in orig(n.next[].val)
 ===========================================================================
 LinkedLists.Node:::OBJECT
@@ -38,7 +34,5 @@ LinkedLists.Node..ctor(System.Int32 n):::ENTER
 LinkedLists.Node..ctor(System.Int32 n):::EXIT8
 ===========================================================================
 LinkedLists.Node..ctor(System.Int32 n):::EXIT
-exception._innerException[] == []
-exception._innerException[].GetType() == []
 orig(n) in this.next[].val
 this.next[].val elements == orig(n)
