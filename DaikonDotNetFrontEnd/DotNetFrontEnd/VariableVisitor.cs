@@ -904,15 +904,18 @@ namespace DotNetFrontEnd
         ListReflectiveVisit(name + "." + elementField.Name, null,
             elementField.FieldType, writer, depth + 1);
       }
-      foreach (FieldInfo elementField in
+      foreach (FieldInfo staticElementField in
           elementType.GetFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(elementType)))
       {
-        string staticFieldName = elementType.Name + "." + elementField.Name;
-        if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
+        if (!typeManager.ShouldIgnoreField(elementType, staticElementField.Name))
         {
-          staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
-          ListReflectiveVisit(staticFieldName, null, elementField.FieldType, writer,
-              staticFieldName.Count(c => c == '.'));
+          string staticFieldName = elementType.Name + "." + staticElementField.Name;
+          if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
+          {
+            staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
+            ListReflectiveVisit(staticFieldName, null, staticElementField.FieldType, writer,
+                staticFieldName.Count(c => c == '.'));
+          }
         }
       }
 
