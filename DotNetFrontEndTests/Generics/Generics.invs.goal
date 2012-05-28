@@ -6,6 +6,10 @@ Generics.BaseNodeMultiple..ctor(T t, U u):::ENTER
 Generics.BaseNodeMultiple..ctor(T t, U u):::EXIT11
 ===========================================================================
 Generics.BaseNodeMultiple..ctor(T t, U u):::EXIT
+this.t == orig(t)
+this.u == orig(u)
+this.t.GetType() == orig(t.GetType())
+this.u.GetType() == orig(u.GetType())
 ===========================================================================
 Generics.DelegateTestClass:::OBJECT
 this has only one value
