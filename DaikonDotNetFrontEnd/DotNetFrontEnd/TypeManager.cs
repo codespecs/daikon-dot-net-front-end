@@ -48,9 +48,15 @@ namespace DotNetFrontEnd
 
     /// <summary>
     ///  Name of the interface all sets must implement. Use is similar to a type store, but getting
-    ///  any specific set type wold require an element type.
+    ///  any specific set type would require an element type.
     /// </summary>
     private static readonly string SetInterfaceName = "ISet";
+
+    /// <summary>
+    ///  Name of the interface all maps must implement. Use is similar to a type store, but getting
+    ///  any specific map type would require an element type.
+    /// </summary>
+    private static readonly string MapInterfaceName = "IDictionary";
 
     #endregion
 
@@ -105,6 +111,15 @@ namespace DotNetFrontEnd
     /// </summary>
     private Dictionary<Type, bool> isSetHashmap;
 
+    private Dictionary<Type, bool> isMapHashmap;
+
+    /// <summary>
+    /// Map from type to whether that type is a F# hashset.
+    /// Memoizes the lookup
+    /// We use a bool-valued hashmap because there are three states, true, false and unknown.
+    /// </summary>
+    private Dictionary<Type, bool> isFSharpSetHashmap;
+
     /// <summary>
     /// A map from assembly qualified names to the Type they describe
     /// Used to memoize type references (passed as names) from the IL rewriter
@@ -140,19 +155,20 @@ namespace DotNetFrontEnd
     public TypeManager(FrontEndArgs args)
     {
       this.frontEndArgs = args;
+
       this.isListHashmap = new Dictionary<Type, bool>();
       this.isFSharpListHashmap = new Dictionary<Type, bool>();
       this.isLinkedListHashmap = new Dictionary<Type, bool>();
       this.isSetHashmap = new Dictionary<Type, bool>();
+      this.isFSharpSetHashmap = new Dictionary<Type, bool>();
+      this.isMapHashmap = new Dictionary<Type, bool>();
+
       this.nameTypeMap = new Dictionary<string, Type>();
       this.pureMethodKeys = new Dictionary<Type, ISet<int>>();
       this.pureMethods = new Dictionary<int, MethodInfo>();
       this.ignoredValues = new HashSet<string>();
       this.PopulateIgnoredValues();
-      if (this.frontEndArgs.PurityFile != null)
-      {
-        this.ProcessPurityMethods();
-      }
+      this.ProcessPurityMethods();
       this.globalPureMethodCount = 0;
     }
 
@@ -181,6 +197,7 @@ namespace DotNetFrontEnd
     /// </summary>
     private void ProcessPurityMethods()
     {
+      this.AddStandardPurityMethods();
       foreach (String str in this.frontEndArgs.PurityMethods)
       {
         if (str.StartsWith("//")) { continue; }
@@ -214,6 +231,15 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
+    /// Add methods known to be pure to the list of purity methods
+    /// </summary>
+    private void AddStandardPurityMethods()
+    {
+      this.frontEndArgs.PurityMethods.Add("System.Collections.DictionaryEntry, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;get_Key");
+      this.frontEndArgs.PurityMethods.Add("System.Collections.DictionaryEntry, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;get_Value");
+    }
+
+    /// <summary>
     /// Defines a test to see if a type is an element of a given collection set (e.g. is the type
     /// a list, is the type a set, etc.)
     /// </summary>
@@ -244,8 +270,8 @@ namespace DotNetFrontEnd
         return lookupResult;
       }
 
-      // If we haven't seen this type before, check each interface it implements
-      // Store result for memoization
+      // If we haven't seen this type before, check each interface it implements.
+      // Store result for memoization.
       bool testResult = test(type);
       entries.Add(type, testResult);
       return testResult;
@@ -309,24 +335,8 @@ namespace DotNetFrontEnd
     /// <returns>Whether type is a C# list</returns>
     private bool IsListTest(Type type)
     {
-      // If we haven't seen this type before, check each interface it implements
-      // Store result for memoization
-      if (this.frontEndArgs.ElementInspectArraysOnly)
-      {
-        return type.IsArray;
-      }
-      else
-      {
-        Type[] interfaces = type.GetInterfaces();
-        foreach (Type item in interfaces)
-        {
-          if (item == TypeManager.ListType)
-          {
-            return true;
-          }
-        }
-        return false;
-      }
+      return SearchForMatchingInterface(type, 
+          interfaceToTest => interfaceToTest == TypeManager.ListType);
     }
 
     /// <summary>
@@ -423,14 +433,33 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Explicityly tests whether type is a C# set.
+    /// Explicitly tests whether type is a C# set.
     /// </summary>
     /// <param name="type">Type to test</param>
     /// <returns>True if type is a C# test, false otherwise.</returns>
     private bool IsSetTest(Type type)
     {
-      // If we haven't seen this type before, check each interface it implements
-      // Store result for memoization
+      return SearchForMatchingInterface(type, 
+          interfaceToTest => interfaceToTest.Name.Contains(SetInterfaceName));
+    }
+
+    /// <summary>
+    /// Delegate used to see if an interface statifies a condition
+    /// </summary>
+    /// <param name="interfaceToCheck">Interface to test</param>
+    /// <returns>True if the interface satisfies the condition, otherwise false</returns>
+    private delegate bool InterfaceMatchTest(Type interfaceToCheck);
+
+    /// <summary>
+    /// Search the interfaces of type looking for an interface satisfying matchTest
+    /// </summary>
+    /// <param name="type">Type whose interfaces to investigate</param>
+    /// <param name="matchTest">Test such that if any interfaces of type pass the test the return 
+    /// is true</param>
+    /// <returns>True if any of type's interfaces pass matchTest, otherwise false</returns>
+    private bool SearchForMatchingInterface(Type type, InterfaceMatchTest matchTest)
+    {
+      // If we are only element inspecting arrays return that result.
       if (this.frontEndArgs.ElementInspectArraysOnly)
       {
         return type.IsArray;
@@ -440,7 +469,7 @@ namespace DotNetFrontEnd
         Type[] interfaces = type.GetInterfaces();
         foreach (Type item in interfaces)
         {
-          if (item.Name.Contains(SetInterfaceName))
+          if (matchTest(item))
           {
             return true;
           }
@@ -457,6 +486,45 @@ namespace DotNetFrontEnd
     public bool IsSet(Type type)
     {
       return IsElementOfCollectionType(type, this.isSetHashmap, IsSetTest);
+    }
+
+    /// <summary>
+    /// Explicitly tests whether type is a F# set.
+    /// </summary>
+    /// <param name="type">Type to test</param>
+    /// <returns>True if type is a F# test, false otherwise.</returns>
+    private bool IsFSharpSetTest(Type type)
+    {
+      if (this.frontEndArgs.ElementInspectArraysOnly)
+      {
+        return type.IsArray;
+      }
+      else
+      {
+        return type.Namespace == "Microsoft.FSharp.Collections" &&
+          type.Name.StartsWith("FSharpSet");
+      }
+    }
+
+    /// <summary>
+    /// Memoized test whether type is in an F# Set.
+    /// </summary>
+    /// <param name="type">Type to test</param>
+    /// <returns>True if the type is an F# test, false otherwise</returns>
+    public bool IsFSharpSet(Type type)
+    {
+      return IsElementOfCollectionType(type, this.isFSharpSetHashmap, IsFSharpSetTest);
+    }
+
+    public bool IsMap(Type type)
+    {
+      return IsElementOfCollectionType(type, this.isMapHashmap, IsMapTest);
+    }
+
+    private bool IsMapTest(Type type)
+    {
+      return SearchForMatchingInterface(type, interfaceToTest => 
+          interfaceToTest.Name.StartsWith(MapInterfaceName));
     }
 
     /// <summary>
@@ -517,6 +585,7 @@ namespace DotNetFrontEnd
       // TODO(#17): Passing around an assembly qualified name here may not be best because it is
       // difficult to build and parse. Consider creating a custom object to manage type identity
       // and use that as a parameter instead.
+
       if (Regex.IsMatch(assemblyQualifiedName, "{[\\w\\W]*}"))
       {
         var match = Regex.Match(assemblyQualifiedName, "{[\\w\\W]*}");
