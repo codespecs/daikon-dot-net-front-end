@@ -32,19 +32,15 @@ Commercial build processes can become very complex over time. As a result, it ma
 Modifying the contents of the disk to instrument the program, e.g., creating a patched version of the executable, is similarly undesirable. The creation or replacement of binary files opens the door for versioning issues such as accidentally running an instrumented binary with incorrect options.
 
 \section{Tool Architecture}
-The front end has two major components: a profiler that inserts instrumentation calls into procedures and instrumentation code (a run-time system) that traverses data structures and outputs information in the Daikon format.
+The front end has two major components: an IL rewriter that inserts instrumentation calls into procedures and instrumentation code (a run-time system) that traverses data structures and outputs information in the Daikon format.
 
 \subsection{Profiler}
-The profiler, written in C\#, utilizes the CCIMetadata IL Rewriting library. The CCIMetadata library provides an API for reading and writing MSIL at a higher level than raw assembly code. The Profiler component of the application was adapted from a CCIMetadata example program that printed the name of local variables. The profiler loads a .NET Module in memory, walks over the IL and inserts instrumentation calls at interesting points. While it is inserting instrumentation calls the Profiler also write the declaration section of a Daikon datatrace file. When finished the profiler returns a memory stream which the front-end loads and executes.
+The profiler, written in C\#, utilizes the CCIMetadata IL Rewriting library. The CCIMetadata library provides an API for reading and writing MSIL at a higher level than raw bytecode. The profiler component of the application, named ILRewriter, was adapted from a CCIMetadata example program that printed the name of local variables. The profiler loads a .NET Module in memory, walks over the IL and inserts instrumentation calls at the entrance and exits of methods. While it is inserting instrumentation calls the ILRewriter also makes calls to the DeclarationPrinter class which writes the declaration portion of the datatrace file. When finished, the profiler returns a memory stream which the front-end loads and executes.
 
 \subsection{Instrumentation Code}
-The instrumentation code, written in C\#, (or another .NET language) and compiled to MSIL, uses reflection to log variable information. The instrumentation code traverses data structures and enumerates variables that implement the IList interface. For each instrumented variable its fields are instrumented.
+The instrumentation code, written in C\#, (or another .NET language) and compiled to MSIL, uses reflection to log variable information. The code, written in the VariableVisitor class, is called with the name of the variable, value of the variable, and the assembly-qualified name of the declaring class. The value of the variable itself is printed, along with any static or instance fields of that variable, which are visited reflectively based on the declared type of the variable. The instrumentation code traverses data structures and enumerates variables that implement the IList, ISet, or Dictionary interfaces. 
 
-For performance reasons, it may be necessary to hard code certain
-pieces of information (e.g., the list of fields) because reflection
-may be prohibitively slow.
-
-\subsection{Use case Illustrated}
+\subsection{Use case illustrated}
 The following figure shows the steps executed during a run of the front-end. The names in parenthesis indicate the class represented by the block.
 
 \includegraphics[scale=.7]{SequenceDiagram.jpg}
@@ -78,6 +74,8 @@ The remainder of the quarter was spend implementing the profiler and visitor, an
 
 \subsection{4/2011 - 6/2011}
 During this quarter reflective visiting and array-style visiting of IEnumerable types were implemented. Most command-line arguments available to Chicory were documented. A test suite was added, modeled off the Kavasir (C++) front-end test suite. Chicory test sources were transliterated from Java to C\# and ran through the front-end. Output invariants were compared to the invariants produced by Chicory, and bugs in the front-end were fixed to rectify the differences. Exception handling was also added, a feature new to Daikon front-ends.
+
+\subsection{4/2012 - 6/2012}
 
 \subsection{Introductory Milestones - From the 10/2010 - 12/2010 section}
 

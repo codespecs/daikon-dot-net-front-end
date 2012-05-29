@@ -6,7 +6,7 @@
 	</head>
 	<body>
 		<!-- Introduction -->
-		<h3 class="section">7.8 C# Front-End DNFE</h3>
+		<h3 class="section">C# Front-End DNFE</h3>
 		<p>The C# front end for Daikon, code-named DNFE, creates datatrace (.dtrace)
 		 files by examining C# programs, modifying them in-memory, and running them.
 		</p>
@@ -24,19 +24,19 @@
 		<p class="noindent">then instead you would run
 		</p>
 		<pre class="example">
-			DNFE.exe MyProgram.exe arg1 arg2 arg3
+			DotNetProfilerCustomLauncher.exe MyProgram.exe arg1 arg2 arg3
 		</pre>
 		<p class="noindent">This runs your program and creates MyProgram.dtrace 
 		 in a sub-directory daikon-output/ from the current directory
 		</p>
-		<p>That's all there is to it! DNFE instruments class files
-		 when the CLR is loaded, you do not need to perform separate instrumentation
+		<p>That's all there is to it! DNFE instruments your program's IL
+		 when the CLR is loaded, so you do not need to perform separate instrumentation
 		 and recompilation steps.
 		</p>
 		<hr/>
 		
 		<!-- Options Intro -->
-		<h4 class="subsection">7.8.1 DNFE Options</h4>
+		<h4 class="subsection">DNFE Options</h4>
 		<p>The section lists the optional command-line arguments to DNFE, which appear 
 		 before the path of the program to be executed.
 		</p>
@@ -52,7 +52,7 @@
 		<hr/>
 		
 		<!-- Program point options -->		
-		<h5 class="subsection">7.8.1.1 Program points in DNFE output</h5>
+		<h5 class="subsection">Program points in DNFE output</h5>
 		<a name="Program-points-in-DNFE-output"></a>
 		<p>This section lists options that affect which program points appear
 		 in DNFE Output.
@@ -102,7 +102,7 @@
 		</dl>
 		<hr/>
 		<!-- Variable options -->		
-		<h5 class="subsection">7.8.1.2 Variables in DNFE output</h5>
+		<h5 class="subsection">Variables in DNFE output</h5>
 		<a name="Variables-in-DNFE-output"></a>
 		<p>This section lists options that affect which variables appear
 		 in DNFE Output
@@ -183,7 +183,7 @@
 				
 		<hr/>				
 		<!-- Misc. options -->		
-		<h5 class="subsection">7.8.1.3 DNFE miscellaneous options</h5>
+		<h5 class="subsection">DNFE miscellaneous options</h5>
 		<a name="DNFE-miscellaneous-options"></a>
 		
 		<p>This section lists all other DNFE options - that is, all options
