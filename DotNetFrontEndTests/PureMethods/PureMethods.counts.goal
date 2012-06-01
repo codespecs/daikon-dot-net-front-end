@@ -1,0 +1,4 @@
+PureMethods.A..ctor(System.Int32) ENTER/6: 1 EXIT8/42: 1
+PureMethods.A.printN() ENTER/33: 1 EXIT5/39: 1
+PureMethods.PureMethods.Main(System.String[]) ENTER/21: 1 EXIT9/27: 1
+PureMethods.PureMethods.PrintHelloWorld() ENTER/12: 1 EXIT4/18: 1
