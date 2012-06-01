@@ -1137,14 +1137,20 @@ namespace DotNetFrontEnd
       FieldInfo runtimeField;
       Type currentType = obj.GetType();
 
+      // Ensure we are at the declared type, and not possibly a subtype
+      while ((currentType.Name != null) && (currentType.Name != field.DeclaringType.Name))
+      {
+        currentType = currentType.BaseType;
+      }
+
+      // Climb the supertypes as necessary to get the desired field
       do
       {
         runtimeField = currentType.GetField(fieldName, 
             BindingFlags.Public | BindingFlags.NonPublic 
           | BindingFlags.Static | BindingFlags.Instance);
-        currentType = obj.GetType().BaseType;
+        currentType = currentType.BaseType;
       } while (runtimeField == null && currentType != null);
-
 
       if (runtimeField == null)
       {
