@@ -318,7 +318,9 @@ namespace DotNetFrontEnd
         throw new ArgumentNullException("methodBody");
       }
       // If the method is compiler generated don't insert instrumentation code.
-      if (typeManager.IsMethodCompilerGenerated(methodBody.MethodDefinition))
+      if (typeManager.IsMethodCompilerGenerated(methodBody.MethodDefinition) ||
+        typeManager.GetPureMethodsForType(methodBody.MethodDefinition.ContainingType).Any(
+        meth => meth.Value.Name.ToString() == methodBody.MethodDefinition.Name.ToString()))
       {
         return base.Rewrite(methodBody);
       }
@@ -1485,8 +1487,6 @@ namespace DotNetFrontEnd
 
       EmitParameters(methodBody, generator);
 
-      ProcessPureMethodCalls(transition, methodBody, generator);
-
       // If we are at a method exit we may need to print the declaration 
       // for the method's return value
       if (transition == MethodTransition.EXIT && this.printDeclarations)
@@ -1555,49 +1555,6 @@ namespace DotNetFrontEnd
         this.declPrinter.PrintParentClassFields(
             this.typeManager.ConvertCCITypeToAssemblyQualifiedName(parentType));
       }
-    }
-
-    /// <summary>
-    /// Insert the IL to make, and the declarations for, pure method calls, if necessary
-    /// </summary>
-    /// <param name="transition">Exit/entrance description of the program point where the calls 
-    /// would be made</param>
-    /// <param name="methodBody">Method body description of the program point where the calls 
-    /// would be made</param>
-    /// <param name="generator">IL writer to use to insert the calls</param>
-    private void ProcessPureMethodCalls(MethodTransition transition, IMethodBody methodBody,
-        ILGenerator generator)
-    {
-      if (this.reflectionArgs.PurityFile == null)
-      {
-        return;
-      }
-
-      AcquireWriterLock(generator);
-
-      string containingTypeName =
-          this.typeManager.ConvertCCITypeToAssemblyQualifiedName(
-                  methodBody.MethodDefinition.ContainingType);
-      var pureMethodsForType = typeManager.GetPureMethodsForType(containingTypeName);
-      bool isThisValid = IsThisValid(transition, methodBody.MethodDefinition);
-      // Never call pure instance methods when entering a construtor as the this won't be 
-      // created, so the results will be non-sensical. Also don't insert a call to this 
-      // method into itself, or else we would recurse infinitely.
-      if ((isThisValid || methodBody.MethodDefinition.IsStatic) &&
-          !(pureMethodsForType.Any(
-              meth => meth.Value.Name == methodBody.MethodDefinition.Name.ToString())))
-      {
-        foreach (var method in pureMethodsForType)
-        {
-          if (this.printDeclarations)
-          {
-            this.declPrinter.PrintPureMethod(method.Value.Name, method.Value.ReturnType);
-          }
-          InsertPureMethodCallAndInstrumentation(method, generator, transition, isThisValid);
-        }
-      }
-
-      ReleaseWriterLock(generator);
     }
 
     /// <summary>

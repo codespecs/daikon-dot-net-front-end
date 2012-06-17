@@ -466,11 +466,12 @@ namespace DotNetFrontEnd
     /// methods for</param>
     /// <returns>Map from key to method object of all the pure methods for the given type
     /// </returns>
-    public Dictionary<int, MethodInfo> GetPureMethodsForType(String assemblyQualifiedName)
+    public Dictionary<int, MethodInfo> GetPureMethodsForType(ITypeReference cciType)
     {
       Dictionary<int, MethodInfo> result = new Dictionary<int, MethodInfo>();
 
-      DNFETypeDeclaration typeDecl = this.ConvertAssemblyQualifiedNameToType(assemblyQualifiedName);
+      DNFETypeDeclaration typeDecl = this.ConvertAssemblyQualifiedNameToType(
+          this.ConvertCCITypeToAssemblyQualifiedName(cciType));
       foreach (Type type in typeDecl.GetAllTypes())
       {
         foreach (var x in GetPureMethodsForType(type))

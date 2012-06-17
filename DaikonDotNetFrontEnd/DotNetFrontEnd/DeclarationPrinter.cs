@@ -302,6 +302,13 @@ namespace DotNetFrontEnd
               enclosingVar: name, relativeName: ToStringMethodCall,
               nestingDepth: nestingDepth + 1, parentName: parentName);
         }
+
+        foreach (var pureMethod in typeManager.GetPureMethodsForType(type))
+        {
+          DeclareVariable(name + "." + pureMethod.Value.Name, pureMethod.Value.ReturnType,
+            // TODO(#61): Fill out the var-kind and any other necessary fields
+            nestingDepth: nestingDepth + 1);
+        }
       }
     }
 
@@ -512,6 +519,13 @@ namespace DotNetFrontEnd
             VariableKind.function, VariableFlags.to_string |
             VariableFlags.synthetic,
             relativeName: ToStringMethodCall,
+            nestingDepth: nestingDepth + 1, parentName: parentName);
+      }
+
+      foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType))
+      {
+        PrintList(name + "." + pureMethod.Value.Name, pureMethod.Value.ReturnType, name,
+            // TODO(#61): Fill out the flags
             nestingDepth: nestingDepth + 1, parentName: parentName);
       }
     }
