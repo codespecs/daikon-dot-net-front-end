@@ -567,11 +567,6 @@ namespace DotNetFrontEnd
     private static void ReflectiveVisit(string name, object obj, Type type,
         TextWriter writer, int depth, VariableModifiers flags = VariableModifiers.none)
     {
-      // TODO(#35): Investigate if we can safely apply this -- would remove fragility around
-      // building up the assembly qualified name and storing it in the IL.
-      // type = obj != null ? typeManager.ConvertAssemblyQualifiedNameToType(
-      //    obj.GetType().AssemblyQualifiedName) : type;
-
       if (variablesVisitedForCurrentProgramPoint.Contains(name))
       {
         return;
@@ -619,11 +614,15 @@ namespace DotNetFrontEnd
       }
       else if (typeManager.IsFSharpListImplementer(type))
       {
-        object[] result = TypeManager.ConvertFSharpListToCSharpArray(obj);
+          object[] result = null;
+          if (obj != null)
+          {
+            result = TypeManager.ConvertFSharpListToCSharpArray(obj);
+          }
 
         ProcessVariableAsList(name, result, result.GetType(), writer, depth);
       }
-      else if (typeManager.IsSet(type))
+        else if (typeManager.IsSet(type) || typeManager.IsFSharpSet(type))
       {
         IEnumerable set = (IEnumerable)obj;
         // A set can have only one generic argument -- the element type
@@ -632,10 +631,13 @@ namespace DotNetFrontEnd
         // that can take objects of any type and have any length. Then create an array of the
         // proper length and type and hand that off.
         IList result = new ArrayList();
-        foreach (var item in set)
-        {
-          result.Add(item);
-        }
+          if (set != null)
+          {
+            foreach (var item in set)
+            {
+              result.Add(item);
+            }
+          }
         Array convertedList = Array.CreateInstance(setElementType, result.Count);
         result.CopyTo(convertedList, 0);
         ProcessVariableAsList(name, convertedList, convertedList.GetType(), writer, depth);
@@ -651,8 +653,19 @@ namespace DotNetFrontEnd
           expandedList.Add(curr);
           curr = GetFieldValue(curr, linkedListField, linkedListField.Name);
         }
-        ListReflectiveVisit(name + "." + linkedListField.Name + "[..]", (IList)expandedList,
-            type, writer, depth);
+          ProcessVariableAsList(name + "." + linkedListField.Name, expandedList,  type, writer, 
+              depth);
+        }
+        else if (typeManager.IsMap(type))
+        {
+          List<DictionaryEntry> entries = new List<DictionaryEntry>();
+          // TODO(#54) : Implement
+          IDictionary dict = (IDictionary)obj;
+          foreach (DictionaryEntry entry in dict)
+          {
+            entries.Add(entry);
+          }
+          ProcessVariableAsList(name, entries, entries.GetType(), writer, depth);
       }
       else
       {
@@ -677,7 +690,7 @@ namespace DotNetFrontEnd
           {
             Console.Error.WriteLine(" Name: " + name + " Type: " + type + " Field Name: "
                 + field.Name + " Field Type: " + field.FieldType);
-            // The field is declared in the decls so Daikon still needs a value. 
+              // The field is declared in the decls so Daikon still needs a value. 
             ReflectiveVisit(name + "." + field.Name, null,
                 field.FieldType, writer, depth + 1, fieldFlags | VariableModifiers.nonsensical);
           }
@@ -736,7 +749,7 @@ namespace DotNetFrontEnd
     } // Close ReflectiveVisit()
 
     /// <summary>
-    /// Process the given variable of list type, making type class if necessary and visiting 
+    /// Process the given variable of list type, calling GetType if necessary and visiting 
     /// the children elements.
     /// </summary>
     /// <param name="name">Name of the varible</param>

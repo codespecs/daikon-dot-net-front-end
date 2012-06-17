@@ -203,6 +203,7 @@ namespace DotNetFrontEnd
             DatatraceOutputFolder + assemblyName + DatatraceExtension);
       }
 
+      this.PurityMethods = new List<string>();
       if (IsArgumentSpecified(PossibleArgument.purity_file))
       {
         this.LoadPurityFile();
@@ -315,13 +316,12 @@ namespace DotNetFrontEnd
     /// </summary>
     private void LoadPurityFile()
     {
-      PurityMethods = new List<string>();
       StreamReader f = File.OpenText(this.PurityFile);
       try
       {
         while (!f.EndOfStream)
         {
-          PurityMethods.Add(f.ReadLine());
+          this.PurityMethods.Add(f.ReadLine());
         }
       }
       finally
