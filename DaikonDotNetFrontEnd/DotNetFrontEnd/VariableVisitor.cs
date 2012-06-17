@@ -127,12 +127,7 @@ namespace DotNetFrontEnd
     /// Name of the method to print the invocation nonce
     /// </summary>
     public static readonly string WriteInvocationNonceMethodName = "WriteInvocationNonce";
-
-    /// <summary>
-    /// The name of the method that executes the method call it's given
-    /// </summary>
-    public static readonly string ExecutePureMethodCallMethodName = "ExecutePureMethodCall";
-
+    
     /// <summary>
     /// Name of the method to suppress any output
     /// </summary>
@@ -442,27 +437,6 @@ namespace DotNetFrontEnd
       writer.Close();
     }
 
-    /// <summary>
-    /// Execute the given pure method call on the given object
-    /// </summary>
-    /// <param name="obj">Object to execute the pure method call on</param>
-    /// <param name="methodKey">Key for the method to lookup to execute</param>
-    /// <returns>The result of the exeuction</returns>
-    public static object ExecutePureMethodCall(object obj, int methodKey)
-    {
-      // Pure methods have no parameters
-      MethodInfo method = typeManager.GetPureMethodValue(methodKey);
-      if (obj != null)
-      {
-        Type extractedType = obj.GetType();
-        if (extractedType != null)
-        {
-          method = extractedType.GetMethod(method.Name);
-        }
-      }
-      return method.Invoke(obj, null);
-    }
-
     #endregion
 
     /// <summary>
@@ -761,6 +735,16 @@ namespace DotNetFrontEnd
               TypeManager.StringType, writer, depth + 1,
               fieldFlags | VariableModifiers.to_string);
         } // Close StringType if
+
+        if (!shouldSuppressOutput)
+        {
+          foreach (var item in typeManager.GetPureMethodsForType(type))
+          {
+            ReflectiveVisit(name + '.' + item.Value.Name, 
+                GetMethodValue(obj, item.Value, item.Value.Name), item.Value.ReturnType, writer,
+                    depth + 1); 
+          }
+        }
       } // Close non-list inspection
     } // Close ReflectiveVisit()
 
@@ -1129,6 +1113,7 @@ namespace DotNetFrontEnd
     /// <exception cref="ArgumentException">If the field is not found in the object</exception>
     private static object GetFieldValue(object obj, FieldInfo field, string fieldName)
     {
+      // TODO(#60): Duplicative with GetVariableValue code
       if (obj == null)
       {
         return null;
@@ -1158,6 +1143,42 @@ namespace DotNetFrontEnd
       }
 
       return runtimeField.GetValue(obj);
+    }
+
+    private static object GetMethodValue(object obj, MethodInfo field, string methodName)
+    {
+      if (obj == null)
+      {
+        return null;
+      }
+
+      MethodInfo runtimeMethod;
+      Type currentType = obj.GetType();
+
+      // Ensure we are at the declared type, and not possibly a subtype
+      while ((currentType.Name != null) && (currentType.Name != field.DeclaringType.Name))
+      {
+        currentType = currentType.BaseType;
+      }
+
+      // Climb the supertypes as necessary to get the desired field
+      do
+      {
+        runtimeMethod = currentType.GetMethod(methodName,
+            BindingFlags.Public | BindingFlags.NonPublic
+          | BindingFlags.Static | BindingFlags.Instance);
+        currentType = currentType.BaseType;
+      } while (runtimeMethod == null && currentType != null);
+
+      if (runtimeMethod == null)
+      {
+        throw new ArgumentException("Method " + methodName + " not found in type or supertypes");
+      }
+
+      SetOutputSuppression(true);
+      var val = runtimeMethod.Invoke(obj, null);
+      SetOutputSuppression(false);
+      return val;
     }
 
     /// <summary>

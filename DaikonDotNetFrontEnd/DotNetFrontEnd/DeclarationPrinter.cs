@@ -172,7 +172,7 @@ namespace DotNetFrontEnd
     /// (how to get to it) </param>
     /// <param name="nestingDepth">The nesting depth of the current variable. If not given 
     /// assumed to be the root value of 0.</param>
-    private void PrintVariable(string name, Type type,
+    private void DeclareVariable(string name, Type type,
         VariableKind kind = VariableKind.variable, VariableFlags flags = VariableFlags.none,
         string enclosingVar = "", string relativeName = "", string parentName = "",
         int nestingDepth = 0)
@@ -295,7 +295,7 @@ namespace DotNetFrontEnd
         {
           if (!this.typeManager.ShouldIgnoreField(type, field.Name))
           {
-            PrintVariable(name + "." + field.Name, field.FieldType,
+            DeclareVariable(name + "." + field.Name, field.FieldType,
                 VariableKind.field, enclosingVar: name, relativeName: field.Name,
                 nestingDepth: nestingDepth + 1, parentName: parentName);
           }
@@ -310,7 +310,7 @@ namespace DotNetFrontEnd
             if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
             {
               this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
-              PrintVariable(staticFieldName, staticField.FieldType,
+              DeclareVariable(staticFieldName, staticField.FieldType,
                   nestingDepth: staticFieldName.Count(c => c == '.'));
             }
           }
@@ -318,18 +318,25 @@ namespace DotNetFrontEnd
 
         if (!type.IsSealed)
         {
-          PrintVariable(name + "." + GetTypeMethodCall, TypeManager.TypeType,
+          DeclareVariable(name + "." + GetTypeMethodCall, TypeManager.TypeType,
               VariableKind.function, VariableFlags.classname |
               VariableFlags.synthetic, enclosingVar: name, relativeName: GetTypeMethodCall,
               nestingDepth: nestingDepth + 1, parentName: parentName);
         }
         if (type == TypeManager.StringType)
         {
-          PrintVariable(name + "." + ToStringMethodCall, TypeManager.StringType,
+          DeclareVariable(name + "." + ToStringMethodCall, TypeManager.StringType,
               VariableKind.function, VariableFlags.to_string |
               VariableFlags.synthetic,
               enclosingVar: name, relativeName: ToStringMethodCall,
               nestingDepth: nestingDepth + 1, parentName: parentName);
+        }
+
+        foreach (var pureMethod in typeManager.GetPureMethodsForType(type))
+        {
+          DeclareVariable(name + "." + pureMethod.Value.Name, pureMethod.Value.ReturnType,
+            // TODO(#61): Fill out the var-kind and any other necessary fields
+            nestingDepth: nestingDepth + 1);
         }
       }
     }
@@ -350,7 +357,7 @@ namespace DotNetFrontEnd
       // Print the type of the list if it's not primitive
       if (!elementType.IsSealed)
       {
-        PrintVariable(name + "." + GetTypeMethodCall, TypeManager.TypeType,
+        DeclareVariable(name + "." + GetTypeMethodCall, TypeManager.TypeType,
             VariableKind.function, VariableFlags.classname | VariableFlags.synthetic,
             enclosingVar: name, relativeName: GetTypeMethodCall,
             nestingDepth: nestingDepth + 1, parentName: parentName);
@@ -524,7 +531,7 @@ namespace DotNetFrontEnd
           if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
           {
             this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
-            PrintVariable(staticFieldName, staticField.FieldType,
+            DeclareVariable(staticFieldName, staticField.FieldType,
                 nestingDepth: staticFieldName.Count(c => c == '.'));
           }
         }
@@ -543,6 +550,13 @@ namespace DotNetFrontEnd
             VariableKind.function, VariableFlags.to_string |
             VariableFlags.synthetic,
             relativeName: ToStringMethodCall,
+            nestingDepth: nestingDepth + 1, parentName: parentName);
+      }
+
+      foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType))
+      {
+        PrintList(name + "." + pureMethod.Value.Name, pureMethod.Value.ReturnType, name,
+            // TODO(#61): Fill out the flags
             nestingDepth: nestingDepth + 1, parentName: parentName);
       }
     }
@@ -574,7 +588,7 @@ namespace DotNetFrontEnd
         // If we can't resolve the parent object type don't write anything
         if (type != null)
         {
-          this.PrintVariable("this", type, flags: VariableFlags.is_param, parentName: parentName);
+          this.DeclareVariable("this", type, flags: VariableFlags.is_param, parentName: parentName);
         }
         else
         {
@@ -621,7 +635,7 @@ namespace DotNetFrontEnd
           if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
           {
             this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
-            PrintVariable(staticFieldName, staticField.FieldType,
+            DeclareVariable(staticFieldName, staticField.FieldType,
                 nestingDepth: staticFieldName.Count(c => c == '.'));
           }
         }
@@ -667,19 +681,9 @@ namespace DotNetFrontEnd
       {
         if (type != null)
         {
-          PrintVariable(name, type, flags: VariableFlags.is_param);
+          DeclareVariable(name, type, flags: VariableFlags.is_param);
         }
       }
-    }
-
-    /// <summary>
-    /// Print a declaration for the result of a pure method call
-    /// </summary>
-    /// <param name="name">Name of the pure method</param>
-    /// <param name="methodReturnType">Type the pure method returns</param>
-    public void PrintPureMethod(string name, Type methodReturnType)
-    {
-      PrintVariable(name, methodReturnType, VariableKind.function, relativeName: name);
     }
 
     /// <summary>
@@ -694,7 +698,7 @@ namespace DotNetFrontEnd
       {
         if (type != null)
         {
-          PrintVariable(name, type, kind: VariableKind.Return, nestingDepth: 0);
+          DeclareVariable(name, type, kind: VariableKind.Return, nestingDepth: 0);
         }
       }
     }
@@ -721,7 +725,7 @@ namespace DotNetFrontEnd
             this.WritePair("ppt", nameToPrint);
             this.WritePair("ppt-type", "object");
             this.WritePair("parent", "parent " + nameToPrint.Replace(":::OBJECT", ":::CLASS 1"));
-            PrintVariable("this", objectType, VariableKind.variable, VariableFlags.is_param);
+            this.DeclareVariable("this", objectType, VariableKind.variable, VariableFlags.is_param);
           }
         }
       }

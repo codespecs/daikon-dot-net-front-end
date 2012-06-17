@@ -318,7 +318,9 @@ namespace DotNetFrontEnd
         throw new ArgumentNullException("methodBody");
       }
       // If the method is compiler generated don't insert instrumentation code.
-      if (typeManager.IsMethodCompilerGenerated(methodBody.MethodDefinition))
+      if (typeManager.IsMethodCompilerGenerated(methodBody.MethodDefinition) ||
+        typeManager.GetPureMethodsForType(methodBody.MethodDefinition.ContainingType).Any(
+        meth => meth.Value.Name.ToString() == methodBody.MethodDefinition.Name.ToString()))
       {
         return base.Rewrite(methodBody);
       }
@@ -1485,8 +1487,6 @@ namespace DotNetFrontEnd
 
       EmitParameters(methodBody, generator);
 
-      ProcessPureMethodCalls(transition, methodBody, generator);
-
       // If we are at a method exit we may need to print the declaration 
       // for the method's return value
       if (transition == MethodTransition.EXIT && this.printDeclarations)
@@ -1555,49 +1555,6 @@ namespace DotNetFrontEnd
         this.declPrinter.PrintParentClassFields(
             this.typeManager.ConvertCCITypeToAssemblyQualifiedName(parentType));
       }
-    }
-
-    /// <summary>
-    /// Insert the IL to make, and the declarations for, pure method calls, if necessary
-    /// </summary>
-    /// <param name="transition">Exit/entrance description of the program point where the calls 
-    /// would be made</param>
-    /// <param name="methodBody">Method body description of the program point where the calls 
-    /// would be made</param>
-    /// <param name="generator">IL writer to use to insert the calls</param>
-    private void ProcessPureMethodCalls(MethodTransition transition, IMethodBody methodBody,
-        ILGenerator generator)
-    {
-      if (this.reflectionArgs.PurityMethods.Count == 0)
-      {
-        return;
-      }
-
-      AcquireWriterLock(generator);
-
-      string containingTypeName =
-          this.typeManager.ConvertCCITypeToAssemblyQualifiedName(
-                  methodBody.MethodDefinition.ContainingType);
-      var pureMethodsForType = typeManager.GetPureMethodsForType(containingTypeName);
-      bool isThisValid = IsThisValid(transition, methodBody.MethodDefinition);
-      // Never call pure instance methods when entering a construtor as the this won't be 
-      // created, so the results will be non-sensical. Also don't insert a call to this 
-      // method into itself, or else we would recurse infinitely.
-      if ((isThisValid || methodBody.MethodDefinition.IsStatic) &&
-          !(pureMethodsForType.Any(
-              meth => meth.Value.Name == methodBody.MethodDefinition.Name.ToString())))
-      {
-        foreach (var method in pureMethodsForType)
-        {
-          if (this.printDeclarations)
-          {
-            this.declPrinter.PrintPureMethod(method.Value.Name, method.Value.ReturnType);
-          }
-          InsertPureMethodCallAndInstrumentation(method, generator, transition, isThisValid);
-        }
-      }
-
-      ReleaseWriterLock(generator);
     }
 
     /// <summary>
@@ -1828,53 +1785,7 @@ namespace DotNetFrontEnd
       return !(methodDefiniton.IsStatic ||
                (transition == MethodTransition.ENTER && methodDefiniton.IsConstructor));
     }
-
-    /// <summary>
-    /// Add the IL to make the call for the given pure method and print its result
-    /// </summary>
-    /// <param name="method">The key/value pair describing the pure method</param>    
-    /// <param name="generator">IL Generator to use to insert the instrumentation</param>
-    /// <param name="transition">Transition describing whether we are entering or exiting the method
-    /// </param>
-    /// Variable containing method name reference is private, static, final and can be trusted.
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
-      "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void InsertPureMethodCallAndInstrumentation(
-        KeyValuePair<int, System.Reflection.MethodInfo> method, ILGenerator generator,
-        MethodTransition transition, bool isThisValid)
-    {
-      generator.Emit(OperationCode.Ldstr, method.Value.Name);
-
-      // Load "this" or null if we are at a staic method or entering a constructor
-      if (!isThisValid)
-      {
-        generator.Emit(OperationCode.Ldnull);
-      }
-      else
-      {
-        generator.Emit(OperationCode.Ldarg_0);
-        // generator.Emit(OperationCode.Box, cciType);
-      }
-
-      generator.Emit(OperationCode.Ldc_I4, method.Key);
-
-      // Suppress output so the entrance / exit of pure methods don't interfere with this program 
-      // point
-      this.InsertShouldSuppressOutputCall(true, generator);
-
-      // Insert the call to load the value
-      generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
-          this.host, this.cciReflectorType, CallingConvention.Default,
-          this.systemObject, this.nameTable.GetNameFor(
-              VariableVisitor.ExecutePureMethodCallMethodName), 0,
-              this.systemObject, this.host.PlatformType.SystemInt32));
-
-      // Unsuppress so we can print the actual value
-      this.InsertShouldSuppressOutputCall(false, generator);
-
-      this.EmitInstrumentationCall(generator, method.Value.ReturnType.AssemblyQualifiedName);
-    }
-
+    
     /// <summary>
     /// Print the declaration for fact that we are entering or exiting the method
     /// </summary>
