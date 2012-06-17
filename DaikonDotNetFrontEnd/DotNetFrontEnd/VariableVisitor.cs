@@ -127,7 +127,7 @@ namespace DotNetFrontEnd
     /// Name of the method to print the invocation nonce
     /// </summary>
     public static readonly string WriteInvocationNonceMethodName = "WriteInvocationNonce";
-    
+
     /// <summary>
     /// Name of the method to suppress any output
     /// </summary>
@@ -531,7 +531,7 @@ namespace DotNetFrontEnd
       {
         // First load the front end args.
         stream = new FileStream(System.Reflection.Assembly.GetExecutingAssembly().Location +
-              SavedArgsExtension,
+            SavedArgsExtension,
             FileMode.Open,
             FileAccess.Read,
             FileShare.Read);
@@ -540,7 +540,7 @@ namespace DotNetFrontEnd
 
         // Now load the type manager.
         stream = new FileStream(System.Reflection.Assembly.GetExecutingAssembly().Location +
-              SavedTypeManagerExtension,
+            SavedTypeManagerExtension,
             FileMode.Open,
             FileAccess.Read,
             FileShare.Read);
@@ -614,15 +614,15 @@ namespace DotNetFrontEnd
       }
       else if (typeManager.IsFSharpListImplementer(type))
       {
-          object[] result = null;
-          if (obj != null)
-          {
-            result = TypeManager.ConvertFSharpListToCSharpArray(obj);
-          }
+        object[] result = null;
+        if (obj != null)
+        {
+          result = TypeManager.ConvertFSharpListToCSharpArray(obj);
+        }
 
         ProcessVariableAsList(name, result, result.GetType(), writer, depth);
       }
-        else if (typeManager.IsSet(type) || typeManager.IsFSharpSet(type))
+      else if (typeManager.IsSet(type) || typeManager.IsFSharpSet(type))
       {
         IEnumerable set = (IEnumerable)obj;
         // A set can have only one generic argument -- the element type
@@ -631,13 +631,13 @@ namespace DotNetFrontEnd
         // that can take objects of any type and have any length. Then create an array of the
         // proper length and type and hand that off.
         IList result = new ArrayList();
-          if (set != null)
+        if (set != null)
+        {
+          foreach (var item in set)
           {
-            foreach (var item in set)
-            {
-              result.Add(item);
-            }
+            result.Add(item);
           }
+        }
         Array convertedList = Array.CreateInstance(setElementType, result.Count);
         result.CopyTo(convertedList, 0);
         ProcessVariableAsList(name, convertedList, convertedList.GetType(), writer, depth);
@@ -653,19 +653,19 @@ namespace DotNetFrontEnd
           expandedList.Add(curr);
           curr = GetFieldValue(curr, linkedListField, linkedListField.Name);
         }
-          ProcessVariableAsList(name + "." + linkedListField.Name, expandedList,  type, writer, 
-              depth);
-        }
-        else if (typeManager.IsMap(type))
+        ProcessVariableAsList(name + "." + linkedListField.Name, expandedList, type, writer,
+            depth);
+      }
+      else if (typeManager.IsDictionary(type))
+      {
+        List<DictionaryEntry> entries = new List<DictionaryEntry>();
+        // TODO(#54) : Implement
+        IDictionary dict = (IDictionary)obj;
+        foreach (DictionaryEntry entry in dict)
         {
-          List<DictionaryEntry> entries = new List<DictionaryEntry>();
-          // TODO(#54) : Implement
-          IDictionary dict = (IDictionary)obj;
-          foreach (DictionaryEntry entry in dict)
-          {
-            entries.Add(entry);
-          }
-          ProcessVariableAsList(name, entries, entries.GetType(), writer, depth);
+          entries.Add(entry);
+        }
+        ProcessVariableAsList(name, entries, entries.GetType(), writer, depth);
       }
       else
       {
@@ -690,11 +690,12 @@ namespace DotNetFrontEnd
           {
             Console.Error.WriteLine(" Name: " + name + " Type: " + type + " Field Name: "
                 + field.Name + " Field Type: " + field.FieldType);
-              // The field is declared in the decls so Daikon still needs a value. 
+            // The field is declared in the decls so Daikon still needs a value. 
             ReflectiveVisit(name + "." + field.Name, null,
                 field.FieldType, writer, depth + 1, fieldFlags | VariableModifiers.nonsensical);
           }
         }
+
         foreach (FieldInfo staticField in
             type.GetFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
         {
@@ -728,21 +729,22 @@ namespace DotNetFrontEnd
               TypeManager.TypeType, writer, depth + 1,
               (obj == null ? VariableModifiers.nonsensical : VariableModifiers.none) | VariableModifiers.classname);
         }
+
         if (type == TypeManager.StringType)
         {
           object xString = (obj == null ? null : obj.ToString());
           ReflectiveVisit(name + '.' + DeclarationPrinter.ToStringMethodCall, xString,
               TypeManager.StringType, writer, depth + 1,
               fieldFlags | VariableModifiers.to_string);
-        } // Close StringType if
+        }
 
         if (!shouldSuppressOutput)
         {
           foreach (var item in typeManager.GetPureMethodsForType(type))
           {
-            ReflectiveVisit(name + '.' + item.Value.Name, 
+            ReflectiveVisit(name + '.' + item.Value.Name,
                 GetMethodValue(obj, item.Value, item.Value.Name), item.Value.ReturnType, writer,
-                    depth + 1); 
+                    depth + 1);
           }
         }
       } // Close non-list inspection
@@ -895,11 +897,11 @@ namespace DotNetFrontEnd
     private static void VisitNullListChildren(string name, Type elementType,
         TextWriter writer, int depth)
     {
-      foreach (FieldInfo elementField in
+      foreach (FieldInfo staticElementField in
           elementType.GetFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(elementType)))
       {
-        ListReflectiveVisit(name + "." + elementField.Name, null,
-            elementField.FieldType, writer, depth + 1);
+        ListReflectiveVisit(name + "." + staticElementField.Name, null,
+            staticElementField.FieldType, writer, depth + 1);
       }
       foreach (FieldInfo staticElementField in
           elementType.GetFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(elementType)))
@@ -936,7 +938,7 @@ namespace DotNetFrontEnd
     /// <param name="depth">Current nesting depth</param>
     private static void VisitListChildren(string name, IList list, Type elementType,
         TextWriter writer, int depth, bool[] nonsensicalElements)
-    {      
+    {
       foreach (FieldInfo elementField in
           elementType.GetFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(elementType)))
       {
@@ -998,6 +1000,24 @@ namespace DotNetFrontEnd
         }
         ListReflectiveVisit(name + "." + DeclarationPrinter.ToStringMethodCall, stringArray,
             TypeManager.StringType, writer, depth + 1, VariableModifiers.to_string);
+      }
+
+      foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType))
+      {
+        object[] pureMethodResults = new object[list.Count];
+        for (int i = 0; i < list.Count; i++)
+        {
+          if (list[i] == null)
+          {
+            pureMethodResults[i] = null;
+          }
+          else
+          {
+            pureMethodResults[i] = GetMethodValue(list[i], pureMethod.Value, pureMethod.Value.Name);
+          }
+        }
+        ListReflectiveVisit(name + "." + pureMethod.Value.Name, pureMethodResults,
+          pureMethod.Value.ReturnType, writer, depth + 1);
       }
     }
 
@@ -1131,8 +1151,8 @@ namespace DotNetFrontEnd
       // Climb the supertypes as necessary to get the desired field
       do
       {
-        runtimeField = currentType.GetField(fieldName, 
-            BindingFlags.Public | BindingFlags.NonPublic 
+        runtimeField = currentType.GetField(fieldName,
+            BindingFlags.Public | BindingFlags.NonPublic
           | BindingFlags.Static | BindingFlags.Instance);
         currentType = currentType.BaseType;
       } while (runtimeField == null && currentType != null);

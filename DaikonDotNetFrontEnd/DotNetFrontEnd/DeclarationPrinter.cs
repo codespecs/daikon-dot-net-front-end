@@ -2,13 +2,13 @@
 // It is called from ILRewriter.cs while the profiler is visiting the module.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Collections;
 
 namespace DotNetFrontEnd
 {
@@ -249,7 +249,27 @@ namespace DotNetFrontEnd
 
       if (this.typeManager.IsListImplementer(type))
       {
-        DeclareVariableAsList(name, type, parentName, nestingDepth);
+        // It's not an array it's a set. Investigate element type.
+        // Will resolve with TODO(#52).
+        DeclareVariableAsList(name, type, parentName, nestingDepth,
+            VariableFlags.no_dups | VariableFlags.not_ordered);
+      }
+      else if (this.typeManager.IsFSharpSet(type))
+      {
+        // We don't get information about generics, so all we know for sure is that the elements
+        // are objects.
+        // FSharpLists get converted into object[].
+        Type elementType = type.GetGenericArguments()[0];
+        // It's not an array it's a set. Investigate element type.
+        // Will resolve with TODO(#52).
+        DeclareVariableAsList(name, Array.CreateInstance(elementType, 0).GetType(),
+            parentName, nestingDepth, VariableFlags.no_dups | VariableFlags.not_ordered);
+      }
+      else if (this.typeManager.IsDictionary(type))
+      {
+        // TODO(#54): Implement
+        DeclareVariableAsList(name, typeof(List<DictionaryEntry>), parentName, nestingDepth,
+          VariableFlags.no_dups | VariableFlags.not_ordered);
       }
       else if (this.typeManager.IsFSharpListImplementer(type))
       {
@@ -268,7 +288,7 @@ namespace DotNetFrontEnd
       {
         // It's not an array it's a set. Investigate element type.
         // Will resolve with TODO(#52).
-        DeclareVariableAsList(name, type, parentName, nestingDepth, 
+        DeclareVariableAsList(name, type, parentName, nestingDepth,
             VariableFlags.no_dups | VariableFlags.not_ordered);
       }
       else if (this.typeManager.IsFSharpSet(type))
@@ -282,10 +302,10 @@ namespace DotNetFrontEnd
         DeclareVariableAsList(name, Array.CreateInstance(elementType, 0).GetType(),
             parentName, nestingDepth, VariableFlags.no_dups | VariableFlags.not_ordered);
       }
-      else if (this.typeManager.IsMap(type))
+      else if (this.typeManager.IsDictionary(type))
       {
         // TODO(#54): Implement
-        DeclareVariableAsList(name, typeof(List<DictionaryEntry>), parentName, nestingDepth, 
+        DeclareVariableAsList(name, typeof(List<DictionaryEntry>), parentName, nestingDepth,
           VariableFlags.no_dups | VariableFlags.not_ordered);
       }
       else
@@ -348,7 +368,7 @@ namespace DotNetFrontEnd
     /// <param name="name">Name of the list variable</param>
     /// <param name="type">Type of the list variable (not element type)</param>
     /// <param name="parentName">Name of the parent</param>
-    /// <param name="nestingDepth">Neesting depth for the list variable</param>
+    /// <param name="nestingDepth">Nesting depth for the list variable</param>
     /// <param name="collectionFlags">Flags to describe the collection, e.g. no_dups, if any</param>
     private void DeclareVariableAsList(string name, Type type, string parentName, int nestingDepth,
         VariableFlags collectionFlags = VariableFlags.none)
@@ -495,7 +515,7 @@ namespace DotNetFrontEnd
       }
 
       // Print the fields for each element -- unless it's not a class or the list is synthetic
-      if (!(elementType.IsClass && !flags.HasFlag(VariableFlags.synthetic)))
+      if (flags.HasFlag(VariableFlags.synthetic))
       {
         return;
       }
@@ -521,6 +541,7 @@ namespace DotNetFrontEnd
               nestingDepth: nestingDepth + 1, parentName: parentName);
         }
       }
+
       foreach (FieldInfo staticField in
           elementType.GetFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(
               elementType)))

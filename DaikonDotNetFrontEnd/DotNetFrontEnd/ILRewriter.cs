@@ -338,7 +338,8 @@ namespace DotNetFrontEnd
     private IMethodBody ProcessOperations(IMethodBody immutableMethodBody)
     {
       // Alias operations and the count for convenience
-      List<IOperation> operations = ((immutableMethodBody.Operations == null) ? new List<IOperation>()
+      List<IOperation> operations = ((immutableMethodBody.Operations == null) 
+        ? new List<IOperation>()
         : new List<IOperation>(immutableMethodBody.Operations));
       int opCount = operations.Count;
       // Add a return instruction at the end if one doesn't exist
@@ -1058,7 +1059,6 @@ namespace DotNetFrontEnd
 
     /// <summary>
     /// Add the instrumentation calls for the return statement of the method
-    /// TODO(#13): Tidy up signature
     /// </summary>
     /// 
     /// <param name="op">The actual return operation</param>
