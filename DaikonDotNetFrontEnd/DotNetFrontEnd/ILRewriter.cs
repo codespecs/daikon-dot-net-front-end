@@ -1785,53 +1785,7 @@ namespace DotNetFrontEnd
       return !(methodDefiniton.IsStatic ||
                (transition == MethodTransition.ENTER && methodDefiniton.IsConstructor));
     }
-
-    /// <summary>
-    /// Add the IL to make the call for the given pure method and print its result
-    /// </summary>
-    /// <param name="method">The key/value pair describing the pure method</param>    
-    /// <param name="generator">IL Generator to use to insert the instrumentation</param>
-    /// <param name="transition">Transition describing whether we are entering or exiting the method
-    /// </param>
-    /// Variable containing method name reference is private, static, final and can be trusted.
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
-      "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void InsertPureMethodCallAndInstrumentation(
-        KeyValuePair<int, System.Reflection.MethodInfo> method, ILGenerator generator,
-        MethodTransition transition, bool isThisValid)
-    {
-      generator.Emit(OperationCode.Ldstr, method.Value.Name);
-
-      // Load "this" or null if we are at a staic method or entering a constructor
-      if (!isThisValid)
-      {
-        generator.Emit(OperationCode.Ldnull);
-      }
-      else
-      {
-        generator.Emit(OperationCode.Ldarg_0);
-        // generator.Emit(OperationCode.Box, cciType);
-      }
-
-      generator.Emit(OperationCode.Ldc_I4, method.Key);
-
-      // Suppress output so the entrance / exit of pure methods don't interfere with this program 
-      // point
-      this.InsertShouldSuppressOutputCall(true, generator);
-
-      // Insert the call to load the value
-      generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
-          this.host, this.cciReflectorType, CallingConvention.Default,
-          this.systemObject, this.nameTable.GetNameFor(
-              VariableVisitor.ExecutePureMethodCallMethodName), 0,
-              this.systemObject, this.host.PlatformType.SystemInt32));
-
-      // Unsuppress so we can print the actual value
-      this.InsertShouldSuppressOutputCall(false, generator);
-
-      this.EmitInstrumentationCall(generator, method.Value.ReturnType.AssemblyQualifiedName);
-    }
-
+    
     /// <summary>
     /// Print the declaration for fact that we are entering or exiting the method
     /// </summary>
