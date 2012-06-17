@@ -1,19 +1,19 @@
 ﻿// TypeManager holds references to all .NET types we use and can convert
 // between CCIMetadata and .NET types.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
+using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
+using Microsoft.Cci;
+using Microsoft.Cci.MutableCodeModel;
+
 namespace DotNetFrontEnd
 {
-  using System;
-  using System.Collections;
-  using System.Collections.Generic;
-  using System.Linq;
-  using System.Numerics;
-  using System.Reflection;
-  using System.Text;
-  using System.Text.RegularExpressions;
-  using Microsoft.Cci;
-  using Microsoft.Cci.MutableCodeModel;
-
   /// <summary>
   /// Keeps canoncial type references. Converts between CCIMetadata and .NET types.
   /// </summary>
@@ -56,7 +56,7 @@ namespace DotNetFrontEnd
     ///  Name of the interface all maps must implement. Use is similar to a type store, but getting
     ///  any specific map type would require an element type.
     /// </summary>
-    private static readonly string MapInterfaceName = "IDictionary";
+    private static readonly string DictionaryInterfaceName = "IDictionary";
 
     #endregion
 
@@ -111,7 +111,12 @@ namespace DotNetFrontEnd
     /// </summary>
     private Dictionary<Type, bool> isSetHashmap;
 
-    private Dictionary<Type, bool> isMapHashmap;
+    /// <summary>
+    /// Map from type to whether that type is a C# Dictionary.
+    /// Memoizes the lookup
+    /// We use a bool-valued hashmap because there are three states, true, false and unknown.
+    /// </summary>
+    private Dictionary<Type, bool> isDictionaryHashMap;
 
     /// <summary>
     /// Map from type to whether that type is a F# hashset.
@@ -161,7 +166,7 @@ namespace DotNetFrontEnd
       this.isLinkedListHashmap = new Dictionary<Type, bool>();
       this.isSetHashmap = new Dictionary<Type, bool>();
       this.isFSharpSetHashmap = new Dictionary<Type, bool>();
-      this.isMapHashmap = new Dictionary<Type, bool>();
+      this.isDictionaryHashMap = new Dictionary<Type, bool>();
 
       this.nameTypeMap = new Dictionary<string, Type>();
       this.pureMethodKeys = new Dictionary<Type, ISet<int>>();
@@ -335,7 +340,7 @@ namespace DotNetFrontEnd
     /// <returns>Whether type is a C# list</returns>
     private bool IsListTest(Type type)
     {
-      return SearchForMatchingInterface(type, 
+      return SearchForMatchingInterface(type,
           interfaceToTest => interfaceToTest == TypeManager.ListType);
     }
 
@@ -424,9 +429,9 @@ namespace DotNetFrontEnd
     public bool IsLinkedListImplementer(Type type)
     {
       // The implementation appears to the test as a linked list.
-      if (type.AssemblyQualifiedName != null && type.AssemblyQualifiedName.Contains("System")) 
-      { 
-        return false; 
+      if (type.AssemblyQualifiedName != null && type.AssemblyQualifiedName.Contains("System"))
+      {
+        return false;
       }
 
       return IsElementOfCollectionType(type, this.isLinkedListHashmap, IsLinkedListTest);
@@ -439,7 +444,7 @@ namespace DotNetFrontEnd
     /// <returns>True if type is a C# test, false otherwise.</returns>
     private bool IsSetTest(Type type)
     {
-      return SearchForMatchingInterface(type, 
+      return SearchForMatchingInterface(type,
           interfaceToTest => interfaceToTest.Name.Contains(SetInterfaceName));
     }
 
@@ -516,22 +521,31 @@ namespace DotNetFrontEnd
       return IsElementOfCollectionType(type, this.isFSharpSetHashmap, IsFSharpSetTest);
     }
 
-    public bool IsMap(Type type)
+    /// <summary>
+    /// Memoized test whether the given type is a C# Dictionary.
+    /// </summary>
+    /// <param name="type">Type to test</param>
+    /// <returns>True if the given type is a dictionary, otherwise false</returns>
+    public bool IsDictionary(Type type)
     {
-      return IsElementOfCollectionType(type, this.isMapHashmap, IsMapTest);
+      return IsElementOfCollectionType(type, this.isDictionaryHashMap, IsDictionaryTest);
     }
 
-    private bool IsMapTest(Type type)
+    /// <summary>
+    /// Explicitly tests whether type is a C# Dictionary.
+    /// </summary>
+    /// <param name="type">Type to test</param>
+    /// <returns>True if type is a C# Dictionary, false otherwise.</returns>
+    private bool IsDictionaryTest(Type type)
     {
-      return SearchForMatchingInterface(type, interfaceToTest => 
-          interfaceToTest.Name.StartsWith(MapInterfaceName));
+      return SearchForMatchingInterface(type, interfaceToTest =>
+          interfaceToTest.Name.StartsWith(DictionaryInterfaceName));
     }
 
     /// <summary>
     /// Get a list of the pure methods that should be called for the given type.
     /// </summary>
-    /// <param name="assemblyQualifiedName">Assembly qualified name of the type to get the pure 
-    /// methods for</param>
+    /// <param name="cciType">CCI Type Reference to the type to get pure methods for</param>
     /// <returns>Map from key to method object of all the pure methods for the given type
     /// </returns>
     public Dictionary<int, MethodInfo> GetPureMethodsForType(ITypeReference cciType)
@@ -549,7 +563,7 @@ namespace DotNetFrontEnd
       }
       return result;
     }
-    
+
     /// <summary>
     /// Get a list of the pure methods that should be called for the given type.
     /// </summary>
