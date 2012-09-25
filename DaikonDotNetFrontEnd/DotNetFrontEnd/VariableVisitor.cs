@@ -633,7 +633,7 @@ namespace DotNetFrontEnd
         IList result = new ArrayList();
         if (set != null)
         {
-          foreach (var item in set)
+          foreach (object item in set)
           {
             result.Add(item);
           }
@@ -715,7 +715,7 @@ namespace DotNetFrontEnd
             {
               Console.Error.WriteLine(" Name: " + name + " Type: " + type + " Field Name: "
                   + staticField.Name + " Field Type: " + staticField.FieldType);
-              // The field is declared in the decls so Daikon still needs a value, 
+              // The field is declared in the decls so Daikon still needs a value. 
               ReflectiveVisit(name + "." + staticField.Name, null,
                   staticField.FieldType, writer, depth + 1, fieldFlags | VariableModifiers.nonsensical);
             }
@@ -884,8 +884,8 @@ namespace DotNetFrontEnd
           nonsensicalElements = new bool[list.Count];
         }
         VisitListChildren(name, list, elementType, writer, depth, nonsensicalElements);
-      } // Close non-null branch
-    } // Close ListReflectiveVisit()
+      }
+    }
 
     /// <summary>
     /// Visit all children of a null list -- printing nonsensical at each step.
@@ -929,7 +929,6 @@ namespace DotNetFrontEnd
     /// Visit the children of a non-null array, printing the value of each element's children.
     /// </summary>
     /// <param name="list">The list whose children to visit</param>
-    /// 
     /// <param name="nonsensicalElements">Indicator of which elements in the list are 
     /// nonsensical</param>
     /// <param name="name">name of the null array</param>
@@ -959,7 +958,7 @@ namespace DotNetFrontEnd
           {
             staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
             ReflectiveVisit(staticFieldName, elementField.GetValue(null),
-                  elementField.FieldType, writer, staticFieldName.Count(c => c == '.'));
+                elementField.FieldType, writer, staticFieldName.Count(c => c == '.'));
           }
         }
       }
@@ -1123,7 +1122,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Reflectively get the value in fieldName from obj, null if obj is null
+    /// Reflectively get the value in fieldName from obj, null if obj is null.
     /// </summary>
     /// <param name="obj">Object to inspect</param>
     /// <param name="field">Field to get the value of</param>
@@ -1142,13 +1141,13 @@ namespace DotNetFrontEnd
       FieldInfo runtimeField;
       Type currentType = obj.GetType();
 
-      // Ensure we are at the declared type, and not possibly a subtype
+      // Ensure we are at the declared type, and not possibly a subtype.
       while ((currentType.Name != null) && (currentType.Name != field.DeclaringType.Name))
       {
         currentType = currentType.BaseType;
       }
 
-      // Climb the supertypes as necessary to get the desired field
+      // Climb the supertypes as necessary to get the desired field.
       do
       {
         runtimeField = currentType.GetField(fieldName,
@@ -1208,13 +1207,13 @@ namespace DotNetFrontEnd
     /// <returns>String that can be output to a daikon datatrace file</returns>
     private static string PrepareString(String str)
     {
-      // Escape internal quotes, backslashes, newlines, and carriage returns
+      // Escape internal quotes, backslashes, newlines, and carriage returns.
       str = str.Replace("\\", "\\\\");
       str = str.Replace("\"", "\\\"");
       str = str.Replace("\n", "\\n");
       str = str.Replace("\r", "\\r");
 
-      // Add quotes before and after string contents
+      // Add quotes before and after string contents.
       StringBuilder builder = new StringBuilder();
       builder.Append("\"");
       builder.Append(str);
