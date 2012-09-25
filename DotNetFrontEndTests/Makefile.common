@@ -1,7 +1,7 @@
 # This is a -*- makefile -*-
 
-COMPILER := /cygdrive/c/Windows/Microsoft.NET/Framework/v4.0.30319/csc.exe /debug
 CS_EXT = cs
+FS_EXT = fs
 DNFE_EXE = $(DAIKONDIR)/scripts/DotNetFrontEndLauncher.exe
 DNFE_OPTIONS := $(DNFE_OPTIONS) --force-unix-newline --omit_var=Empty
 CLEAN_OUTPUT := ../clean-output.pl
@@ -10,6 +10,7 @@ DTRACE_COUNT ?= $(DAIKONDIR)/scripts/dtrace-count.pl
 DTRACE_DIFF ?= java daikon.tools.DtraceDiff
 SORT_DTRACE_INPLACE := perl -Si sort-dtrace.pl
 INCLUDES ?=
+LANG ?= CSharp
 LIBS ?=
 LIBFLAGS ?=
 DIFF_NAME ?= $(shell basename `pwd`)
@@ -20,6 +21,11 @@ inv ?= ..
 DAIKON := java -Xmx960m -XX:MaxPermSize=960M daikon.Daikon --no_text_output --config_option daikon.derive.Derivation.disable_derived_variables=true --config $(inv)/config.txt --config_option daikon.DynamicConstants.OneOf_only=true
 # -Xmx960m -XX:MaxPermSize=960M -cp ${DAIKONDIR}/daikon.jar
 PRINT_INV := java -Xmx960m -XX:MaxPermSize=960M daikon.PrintInvariants
+ifeq ($(LANG), CSharp)
+COMPILER := /cygdrive/c/Windows/Microsoft.NET/Framework/v4.0.30319/csc.exe /debug
+else
+COMPILER := /cygdrive/c/program_files/fsc.exe
+endif
 
 default: summary
 
@@ -34,7 +40,11 @@ DTRACE_EXT := .dtrace.gz
 ZCAT := zcat
 endif
 
+ifeq ($(LANG), CSharp)
 SOURCES ?= *.$(CS_EXT)
+else
+SOURCES ?= *.$(FS_EXT)
+endif
 
 $(NAME): $(SOURCES) $(LIBS)
 	$(COMPILER) $(DEFINES) $(SOURCES) $(INCLUDES)
