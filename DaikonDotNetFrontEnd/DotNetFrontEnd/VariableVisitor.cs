@@ -717,7 +717,8 @@ namespace DotNetFrontEnd
                   + staticField.Name + " Field Type: " + staticField.FieldType);
               // The field is declared in the decls so Daikon still needs a value. 
               ReflectiveVisit(name + "." + staticField.Name, null,
-                  staticField.FieldType, writer, depth + 1, fieldFlags | VariableModifiers.nonsensical);
+                  staticField.FieldType, writer, depth + 1, fieldFlags 
+                  | VariableModifiers.nonsensical);
             }
           }
         }
@@ -727,7 +728,8 @@ namespace DotNetFrontEnd
           object xType = (obj == null ? null : obj.GetType());
           ReflectiveVisit(name + '.' + DeclarationPrinter.GetTypeMethodCall, xType,
               TypeManager.TypeType, writer, depth + 1,
-              (obj == null ? VariableModifiers.nonsensical : VariableModifiers.none) | VariableModifiers.classname);
+              (obj == null ? VariableModifiers.nonsensical : VariableModifiers.none) 
+              | VariableModifiers.classname);
         }
 
         if (type == TypeManager.StringType)

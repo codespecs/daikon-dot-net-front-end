@@ -342,40 +342,14 @@ namespace DotNetFrontEnd
         ? new List<IOperation>()
         : new List<IOperation>(immutableMethodBody.Operations));
       int opCount = operations.Count;
-      // Add a return instruction at the end if one doesn't exist
-      if (!(operations[opCount - 1].OperationCode == OperationCode.Ret))
-      {
-        Operation op = new Operation();
-        op.OperationCode = OperationCode.Ret;
-        // Add padding for the previous instructions
-        op.Offset = operations[opCount - 1].Offset + 4;
-        operations.Add(op);
-        // Update the opCount with the added operationd
-        opCount++;
-      }
 
-      // Save the last return instruction
-      IOperation lastReturnOperation = operations[opCount - 1];
+      IOperation lastReturnOperation = GetLastReturnInstruction(operations, ref opCount);
 
       // There may be many nops before the ret instruction, we want to catch anything
       // branching into the last return, so we need to catch anything branching into these
       // nops.
-      int operationIndexForLastReturnJumpTarget;
-      if (opCount > 1)
-      {
-        operationIndexForLastReturnJumpTarget = opCount - 2;
-        while (operationIndexForLastReturnJumpTarget > 0 &&
-               operations[operationIndexForLastReturnJumpTarget].OperationCode == OperationCode.Nop)
-        {
-          operationIndexForLastReturnJumpTarget--;
-        }
-        // We went one too far, so increment again by 1
-        operationIndexForLastReturnJumpTarget++;
-      }
-      else
-      {
-        operationIndexForLastReturnJumpTarget = 0;
-      }
+      int operationIndexForLastReturnJumpTarget = 
+        GetOpeartionIndexForLastReturnJumpTarget(operations, opCount);
 
       ILGenerator generator = new ILGenerator(this.host, immutableMethodBody.MethodDefinition);
       if (this.pdbReader != null)
@@ -391,10 +365,7 @@ namespace DotNetFrontEnd
       this.scopeEnumerator = this.pdbReader == null ?
           null : this.pdbReader.GetLocalScopes(immutableMethodBody).GetEnumerator();
       this.scopeEnumeratorIsValid = this.scopeEnumerator != null && this.scopeEnumerator.MoveNext();
-
-      string methodName = MemberHelper.GetMemberSignature(immutableMethodBody.MethodDefinition,
-          NameFormattingOptions.SmartTypeName);
-
+      
       // Need the method body to be mutable to add the nonce variable
       MethodBody mutableMethodBody = (MethodBody)immutableMethodBody;
 
@@ -442,21 +413,8 @@ namespace DotNetFrontEnd
 
       // If the method is non-void, return in debug builds will contain a store before a jump to 
       // the return point. Figure out what the store will be to detect these returns later.
-      ISet<IOperation> synthesizedReturns = null;
-      if (immutableMethodBody.MethodDefinition.Type.TypeCode != PrimitiveTypeCode.Void)
-      {
-        OperationCode lastStoreOperation = GetLastStoreOperation(immutableMethodBody);
-        if (lastStoreOperation == 0)
-        {
-          // If there is no last store then there are no synthesized returns.
-          synthesizedReturns = new HashSet<IOperation>();
-        }
-        else
-        {
-          synthesizedReturns = FindAndAdjustSynthesizedReturns(operations, lastStoreOperation,
-              commonExit);
-        }
-      }
+      ISet<IOperation> synthesizedReturns = DetermineSynthesizedReturns(
+        immutableMethodBody, operations, commonExit);
 
       // We may need to mutate the method body during rewriting, so obtain a mutable version.
       mutableMethodBody = (MethodBody)immutableMethodBody;
@@ -479,12 +437,80 @@ namespace DotNetFrontEnd
 
       // Retrieve the operations (and the exception information) from the generator
       generator.AdjustBranchSizesToBestFit();
-      mutableMethodBody.OperationExceptionInformation = new
-          List<IOperationExceptionInformation>(
-              generator.GetOperationExceptionInformation());
+      mutableMethodBody.OperationExceptionInformation = new List<IOperationExceptionInformation>(
+          generator.GetOperationExceptionInformation());
       mutableMethodBody.Operations = new List<IOperation>(generator.GetOperations());
 
       return mutableMethodBody;
+    }
+
+    private ISet<IOperation> DetermineSynthesizedReturns(IMethodBody immutableMethodBody, 
+      List<IOperation> operations, ILGeneratorLabel commonExit)
+    {
+
+      ISet<IOperation> synthesizedReturns = null;
+      if (immutableMethodBody.MethodDefinition.Type.TypeCode != PrimitiveTypeCode.Void)
+      {
+        OperationCode lastStoreOperation = GetLastStoreOperation(immutableMethodBody);
+        if (lastStoreOperation == 0)
+        {
+          // If there is no last store then there are no synthesized returns.
+          synthesizedReturns = new HashSet<IOperation>();
+        }
+        else
+        {
+          synthesizedReturns = FindAndAdjustSynthesizedReturns(operations, lastStoreOperation,
+              commonExit);
+        }
+      }
+      return synthesizedReturns;
+    }
+
+    private static int GetOpeartionIndexForLastReturnJumpTarget(List<IOperation> operations, 
+      int opCount)
+    {
+      int operationIndexForLastReturnJumpTarget;
+      if (opCount > 1)
+      {
+        operationIndexForLastReturnJumpTarget = opCount - 2;
+        while (operationIndexForLastReturnJumpTarget > 0 &&
+               operations[operationIndexForLastReturnJumpTarget].OperationCode == OperationCode.Nop)
+        {
+          operationIndexForLastReturnJumpTarget--;
+        }
+        // We went one too far, so increment again by 1
+        operationIndexForLastReturnJumpTarget++;
+      }
+      else
+      {
+        operationIndexForLastReturnJumpTarget = 0;
+      }
+      return operationIndexForLastReturnJumpTarget;
+    }
+
+    /// <summary>
+    /// Create if necessary and return the last return instruction for the method
+    /// </summary>
+    /// <param name="operations">List of operations for the method</param>
+    /// <param name="opCount">Number iof operations in the method</param>
+    /// <returns>The last return instruction</returns>
+    private static IOperation GetLastReturnInstruction(List<IOperation> operations, ref int opCount)
+    {
+      // Add a return instruction at the end if one doesn't exist
+      if (!(operations[opCount - 1].OperationCode == OperationCode.Ret))
+      {
+        Operation op = new Operation();
+        op.OperationCode = OperationCode.Ret;
+        // Add padding for the previous instructions
+        op.Offset = operations[opCount - 1].Offset + 4;
+        operations.Add(op);
+        // Update the opCount with the added operationd
+        opCount++;
+      }
+
+      // Save the last return instruction
+      IOperation lastReturnOperation = operations[opCount - 1];
+      return lastReturnOperation;
     }
 
     /// <summary>

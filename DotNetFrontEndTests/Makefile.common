@@ -21,10 +21,10 @@ inv ?= ..
 DAIKON := java -Xmx960m -XX:MaxPermSize=960M daikon.Daikon --no_text_output --config_option daikon.derive.Derivation.disable_derived_variables=true --config $(inv)/config.txt --config_option daikon.DynamicConstants.OneOf_only=true
 # -Xmx960m -XX:MaxPermSize=960M -cp ${DAIKONDIR}/daikon.jar
 PRINT_INV := java -Xmx960m -XX:MaxPermSize=960M daikon.PrintInvariants
-ifeq ($(LANG), CSharp)
-COMPILER := /cygdrive/c/Windows/Microsoft.NET/Framework/v4.0.30319/csc.exe /debug
-else
+ifeq ($(LANG), FSharp)
 COMPILER := /cygdrive/c/program_files/fsc.exe
+else
+COMPILER := /cygdrive/c/Windows/Microsoft.NET/Framework/v4.0.30319/csc.exe /debug
 endif
 
 default: summary
@@ -40,10 +40,10 @@ DTRACE_EXT := .dtrace.gz
 ZCAT := zcat
 endif
 
-ifeq ($(LANG), CSharp)
-SOURCES ?= *.$(CS_EXT)
-else
+ifeq ($(LANG), FSharp)
 SOURCES ?= *.$(FS_EXT)
+else
+SOURCES ?= *.$(CS_EXT)
 endif
 
 $(NAME): $(SOURCES) $(LIBS)
