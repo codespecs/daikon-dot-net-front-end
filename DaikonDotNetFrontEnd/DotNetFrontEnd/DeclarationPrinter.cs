@@ -254,35 +254,12 @@ namespace DotNetFrontEnd
         DeclareVariableAsList(name, type, parentName, nestingDepth,
             VariableFlags.no_dups | VariableFlags.not_ordered);
       }
-      else if (this.typeManager.IsFSharpSet(type))
-      {
-        // We don't get information about generics, so all we know for sure is that the elements
-        // are objects.
-        // FSharpLists get converted into object[].
-        Type elementType = type.GetGenericArguments()[0];
-        // It's not an array it's a set. Investigate element type.
-        // Will resolve with TODO(#52).
-        DeclareVariableAsList(name, Array.CreateInstance(elementType, 0).GetType(),
-            parentName, nestingDepth, VariableFlags.no_dups | VariableFlags.not_ordered);
-      }
-      else if (this.typeManager.IsDictionary(type))
-      {
-        // TODO(#54): Implement
-        DeclareVariableAsList(name, typeof(List<DictionaryEntry>), parentName, nestingDepth,
-          VariableFlags.no_dups | VariableFlags.not_ordered);
-      }
       else if (this.typeManager.IsFSharpListImplementer(type))
       {
         // We don't get information about generics, so all we know for sure is that the elements
         // are objects.
         // FSharpLists get converted into object[].
         DeclareVariableAsList(name, typeof(object[]), parentName, nestingDepth);
-      }
-      else if (frontEndArgs.LinkedLists && this.typeManager.IsLinkedListImplementer(type))
-      {
-        FieldInfo arrayListField = TypeManager.FindLinkedListField(type);
-        PrintList(name + "." + arrayListField.Name + "[..]", type, name,
-            VariableKind.array, nestingDepth: nestingDepth, parentName: parentName);
       }
       else if (this.typeManager.IsSet(type))
       {
@@ -307,6 +284,12 @@ namespace DotNetFrontEnd
         // TODO(#54): Implement
         DeclareVariableAsList(name, typeof(List<DictionaryEntry>), parentName, nestingDepth,
           VariableFlags.no_dups | VariableFlags.not_ordered);
+      }
+      else if (frontEndArgs.LinkedLists && this.typeManager.IsLinkedListImplementer(type))
+      {
+        FieldInfo arrayListField = TypeManager.FindLinkedListField(type);
+        DeclareVariableAsList(name, typeof(LinkedList<>), parentName, nestingDepth, 
+          flags | VariableFlags.synthetic);
       }
       else
       {
