@@ -554,6 +554,26 @@ namespace DotNetFrontEnd
 
     #region Reflective Visitor and helper methods
 
+    private static bool PerformEarlyExitChecks(string name, int depth)
+    {
+      if (variablesVisitedForCurrentProgramPoint.Contains(name))
+      {
+        return true;
+      }
+      else
+      {
+        variablesVisitedForCurrentProgramPoint.Add(name);
+      }
+
+      if (depth > frontEndArgs.MaxNestingDepth ||
+          !frontEndArgs.ShouldPrintVariable(name))
+      {
+        return true;
+      }
+
+      return false;
+    }
+
     /// <summary>
     /// Print the 3 line (name, value, mod bit) triple for the given variable and all its 
     /// children.
@@ -567,17 +587,7 @@ namespace DotNetFrontEnd
     private static void ReflectiveVisit(string name, object obj, Type type,
         TextWriter writer, int depth, VariableModifiers flags = VariableModifiers.none)
     {
-      if (variablesVisitedForCurrentProgramPoint.Contains(name))
-      {
-        return;
-      }
-      else
-      {
-        variablesVisitedForCurrentProgramPoint.Add(name);
-      }
-
-      if (depth > frontEndArgs.MaxNestingDepth ||
-          !frontEndArgs.ShouldPrintVariable(name))
+      if (PerformEarlyExitChecks(name, depth))
       {
         return;
       }
@@ -642,20 +652,6 @@ namespace DotNetFrontEnd
         result.CopyTo(convertedList, 0);
         ProcessVariableAsList(name, convertedList, convertedList.GetType(), writer, depth);
       }
-      else if (frontEndArgs.LinkedLists && typeManager.IsLinkedListImplementer(type))
-      {
-        FieldInfo linkedListField = TypeManager.FindLinkedListField(type);
-        // Synthetic list of the sequence of linked list values
-        IList<object> expandedList = new List<object>();
-        Object curr = obj;
-        while (curr != null)
-        {
-          expandedList.Add(curr);
-          curr = GetFieldValue(curr, linkedListField, linkedListField.Name);
-        }
-        ProcessVariableAsList(name + "." + linkedListField.Name, expandedList, type, writer,
-            depth);
-      }
       else if (typeManager.IsDictionary(type))
       {
         List<DictionaryEntry> entries = new List<DictionaryEntry>();
@@ -669,6 +665,20 @@ namespace DotNetFrontEnd
       }
       else
       {
+        if (frontEndArgs.LinkedLists && typeManager.IsLinkedListImplementer(type))
+        {
+          FieldInfo linkedListField = TypeManager.FindLinkedListField(type);
+          // Synthetic list of the sequence of linked list values
+          IList<object> expandedList = new List<object>();
+          Object curr = obj;
+          while (curr != null)
+          {
+            expandedList.Add(curr);
+            curr = GetFieldValue(curr, linkedListField, linkedListField.Name);
+          }
+          ProcessVariableAsList(name + "." + linkedListField.Name, expandedList, 
+              typeof(LinkedList<>), writer, depth);
+        }
         VariableModifiers fieldFlags = VariableModifiers.none;
         if (obj == null)
         {
@@ -717,7 +727,7 @@ namespace DotNetFrontEnd
                   + staticField.Name + " Field Type: " + staticField.FieldType);
               // The field is declared in the decls so Daikon still needs a value. 
               ReflectiveVisit(name + "." + staticField.Name, null,
-                  staticField.FieldType, writer, depth + 1, fieldFlags 
+                  staticField.FieldType, writer, depth + 1, fieldFlags
                   | VariableModifiers.nonsensical);
             }
           }
@@ -728,7 +738,7 @@ namespace DotNetFrontEnd
           object xType = (obj == null ? null : obj.GetType());
           ReflectiveVisit(name + '.' + DeclarationPrinter.GetTypeMethodCall, xType,
               TypeManager.TypeType, writer, depth + 1,
-              (obj == null ? VariableModifiers.nonsensical : VariableModifiers.none) 
+              (obj == null ? VariableModifiers.nonsensical : VariableModifiers.none)
               | VariableModifiers.classname);
         }
 
