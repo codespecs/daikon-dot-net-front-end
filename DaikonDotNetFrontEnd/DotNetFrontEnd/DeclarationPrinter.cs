@@ -177,37 +177,9 @@ namespace DotNetFrontEnd
         string enclosingVar = "", string relativeName = "", string parentName = "",
         int nestingDepth = 0)
     {
-      if (name.Length == 0)
-      {
-        throw new NotSupportedException("An error occurred in the instrumentation process"
-            + " and a varible was encountered with no name.");
-      }
-      if (type == null)
-      {
-        throw new NotSupportedException("An error occurred in the instrumentation process"
-            + " and type was null for varible named: " + name);
-      }
-
-      if ((kind == VariableKind.field || kind == VariableKind.array) &&
-        enclosingVar.Length == 0)
-      {
-        throw new ArgumentException("Enclosing var requried for staticField and array and none"
-            + " was present for varible named: " + name + " of kind: " + kind);
-      }
-
-      if (nestingDepth > this.frontEndArgs.MaxNestingDepth ||
-          !this.frontEndArgs.ShouldPrintVariable(name))
+      if (PerformEarlyExitChecks(name, type, kind, enclosingVar, nestingDepth))
       {
         return;
-      }
-
-      if (this.variablesForCurrentProgramPoint.Contains(name))
-      {
-        return;
-      }
-      else
-      {
-        this.variablesForCurrentProgramPoint.Add(name);
       }
 
       this.WritePair("variable", name, 1);
@@ -285,14 +257,15 @@ namespace DotNetFrontEnd
         DeclareVariableAsList(name, typeof(List<DictionaryEntry>), parentName, nestingDepth,
           VariableFlags.no_dups | VariableFlags.not_ordered);
       }
-      else if (frontEndArgs.LinkedLists && this.typeManager.IsLinkedListImplementer(type))
-      {
-        FieldInfo arrayListField = TypeManager.FindLinkedListField(type);
-        DeclareVariableAsList(name, typeof(LinkedList<>), parentName, nestingDepth, 
-          flags | VariableFlags.synthetic);
-      }
       else
       {
+        if (frontEndArgs.LinkedLists && this.typeManager.IsLinkedListImplementer(type))
+        {
+          FieldInfo arrayListField = TypeManager.FindLinkedListField(type);
+          DeclareVariableAsList(name, typeof(LinkedList<>), parentName, nestingDepth,
+            flags | VariableFlags.synthetic);
+        }
+
         foreach (FieldInfo field in
             type.GetFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(type)))
         {
@@ -326,6 +299,7 @@ namespace DotNetFrontEnd
               VariableFlags.synthetic, enclosingVar: name, relativeName: GetTypeMethodCall,
               nestingDepth: nestingDepth + 1, parentName: parentName);
         }
+
         if (type == TypeManager.StringType)
         {
           DeclareVariable(name + "." + ToStringMethodCall, TypeManager.StringType,
@@ -342,6 +316,45 @@ namespace DotNetFrontEnd
             nestingDepth: nestingDepth + 1);
         }
       }
+    }
+
+    private bool PerformEarlyExitChecks(string name, Type type, VariableKind kind, 
+      string enclosingVar, int nestingDepth)
+    {
+      if (name.Length == 0)
+      {
+        throw new NotSupportedException("An error occurred in the instrumentation process"
+            + " and a varible was encountered with no name.");
+      }
+      if (type == null)
+      {
+        throw new NotSupportedException("An error occurred in the instrumentation process"
+            + " and type was null for varible named: " + name);
+      }
+
+      if ((kind == VariableKind.field || kind == VariableKind.array) &&
+        enclosingVar.Length == 0)
+      {
+        throw new ArgumentException("Enclosing var requried for staticField and array and none"
+            + " was present for varible named: " + name + " of kind: " + kind);
+      }
+
+      if (nestingDepth > this.frontEndArgs.MaxNestingDepth ||
+          !this.frontEndArgs.ShouldPrintVariable(name))
+      {
+        return true;
+      }
+
+      if (this.variablesForCurrentProgramPoint.Contains(name))
+      {
+        return true;
+      }
+      else
+      {
+        this.variablesForCurrentProgramPoint.Add(name);
+      }
+
+      return false;
     }
 
     /// <summary>
@@ -560,7 +573,7 @@ namespace DotNetFrontEnd
       foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType))
       {
         PrintList(name + "." + pureMethod.Value.Name, pureMethod.Value.ReturnType, name,
-            // TODO(#61): Fill out the flags
+          // TODO(#61): Fill out the flags
             nestingDepth: nestingDepth + 1, parentName: parentName);
       }
     }
