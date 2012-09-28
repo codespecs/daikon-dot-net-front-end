@@ -49,6 +49,7 @@ namespace DotNetFrontEnd
     to_string = none << 1,
     classname = to_string << 1,
     nonsensical = classname << 1,
+    ignore_linked_list = nonsensical << 1,
   }
 
   /// <summary>
@@ -583,9 +584,9 @@ namespace DotNetFrontEnd
     /// <param name="type">The declared type of the variable</param>
     /// <param name="writer">The writer to use to print</param>
     /// <param name="depth">The current call depth</param>
-    /// <param name="flags">Flags indicating special printing</param>
+    /// <param name="fieldFlags">Flags indicating special printing</param>
     private static void ReflectiveVisit(string name, object obj, Type type,
-        TextWriter writer, int depth, VariableModifiers flags = VariableModifiers.none)
+        TextWriter writer, int depth, VariableModifiers fieldFlags = VariableModifiers.none)
     {
       if (PerformEarlyExitChecks(name, depth))
       {
@@ -593,18 +594,18 @@ namespace DotNetFrontEnd
       }
 
       // Don't visit the fields of variables with certain flags.
-      bool simplePrint = flags.HasFlag(VariableModifiers.to_string) ||
-          flags.HasFlag(VariableModifiers.classname);
+      bool simplePrint = fieldFlags.HasFlag(VariableModifiers.to_string) ||
+          fieldFlags.HasFlag(VariableModifiers.classname);
 
       // Print variable's name.
       writer.WriteLine(name);
 
       // Print variable's value.
-      writer.WriteLine(GetVariableValue(obj, type, flags));
+      writer.WriteLine(GetVariableValue(obj, type, fieldFlags));
 
       // Print variable's modified bit.
       // Stub implementation, always print safe value.
-      if (flags.HasFlag(VariableModifiers.nonsensical))
+      if (fieldFlags.HasFlag(VariableModifiers.nonsensical))
       {
         writer.WriteLine(NonsensicalModifiedBit);
       }
@@ -665,21 +666,7 @@ namespace DotNetFrontEnd
       }
       else
       {
-        if (frontEndArgs.LinkedLists && typeManager.IsLinkedListImplementer(type))
-        {
-          FieldInfo linkedListField = TypeManager.FindLinkedListField(type);
-          // Synthetic list of the sequence of linked list values
-          IList<object> expandedList = new List<object>();
-          Object curr = obj;
-          while (curr != null)
-          {
-            expandedList.Add(curr);
-            curr = GetFieldValue(curr, linkedListField, linkedListField.Name);
-          }
-          ProcessVariableAsList(name + "." + linkedListField.Name, expandedList, 
-              typeof(LinkedList<>), writer, depth);
-        }
-        VariableModifiers fieldFlags = VariableModifiers.none;
+
         if (obj == null)
         {
           fieldFlags |= VariableModifiers.nonsensical;
@@ -693,7 +680,8 @@ namespace DotNetFrontEnd
             if (!typeManager.ShouldIgnoreField(type, field.Name))
             {
               ReflectiveVisit(name + "." + field.Name, GetFieldValue(obj, field, field.Name),
-                  field.FieldType, writer, depth + 1, fieldFlags);
+                  field.FieldType, writer, depth + 1, 
+                  fieldFlags | VariableModifiers.ignore_linked_list);
             }
           }
           catch (ArgumentException)
@@ -718,7 +706,8 @@ namespace DotNetFrontEnd
               {
                 staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
                 ReflectiveVisit(staticFieldName, GetFieldValue(obj, staticField, staticField.Name),
-                      staticField.FieldType, writer, staticFieldName.Count(c => c == '.'), fieldFlags);
+                      staticField.FieldType, writer, staticFieldName.Count(c => c == '.'), 
+                      fieldFlags | VariableModifiers.ignore_linked_list);
               }
             }
             catch (ArgumentException)
@@ -759,6 +748,23 @@ namespace DotNetFrontEnd
                     depth + 1);
           }
         }
+
+        // Don't look at linked-lists of synthetic variables to prevent children from also printing
+        // linked-lists, when they are really just deeper levels of the current linked list.
+        if ((fieldFlags & VariableModifiers.ignore_linked_list) == 0 && 
+            frontEndArgs.LinkedLists && typeManager.IsLinkedListImplementer(type))
+        {
+          FieldInfo linkedListField = TypeManager.FindLinkedListField(type);
+          // Synthetic list of the sequence of linked list values
+          IList<object> expandedList = new List<object>();
+          Object curr = obj;
+          while (curr != null)
+          {
+            expandedList.Add(curr);
+            curr = GetFieldValue(curr, linkedListField, linkedListField.Name);
+          }
+          ListReflectiveVisit(name + "[..]", (IList)expandedList, type, writer, depth, fieldFlags);
+        }
       } // Close non-list inspection
     } // Close ReflectiveVisit()
 
@@ -771,8 +777,9 @@ namespace DotNetFrontEnd
     /// <param name="type">Type of the list</param>
     /// <param name="writer">Writer to output to</param>
     /// <param name="depth">Depth of the list variable</param>
+    /// <param name="flags">Field flags for the list variable</param>
     private static void ProcessVariableAsList(string name, object obj, Type type,
-        TextWriter writer, int depth)
+        TextWriter writer, int depth,  VariableModifiers flags = VariableModifiers.none)
     {
       // Call GetType() on the list if necessary.
       Type elementType = TypeManager.GetListElementType(type);
@@ -792,7 +799,7 @@ namespace DotNetFrontEnd
       }
       else
       {
-        ListReflectiveVisit(name + "[..]", (IList)obj, elementType, writer, depth);
+        ListReflectiveVisit(name + "[..]", (IList)obj, elementType, writer, depth, flags);
       }
     }
 

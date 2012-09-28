@@ -13,26 +13,40 @@ args[].ToString() == []
 ===========================================================================
 LinkedLists.LinkedLists.printLast(LinkedLists.Node n):::ENTER
 n has only one value
-n.next[].GetType() elements == LinkedLists.Node.class
-n.next[].val elements >= 0
-n.next[i].val == i
-n in n.next[]
+n.GetType() == LinkedLists.Node.class
+n.next.GetType() == LinkedLists.Node.class
+n.next.val == 1
+n.val == 0
+n[].GetType() elements == LinkedLists.Node.class
+n[].val elements >= 0
+n[i].val == i
+n in n[]
+n.GetType() == n.next.GetType()
+n.GetType() in n[].GetType()
+n.next in n[].next
+n.next.GetType() in n[].GetType()
+n.next.next in n[].next
+n.next.val in n[].val
+n.val in n[].val
 ===========================================================================
 LinkedLists.LinkedLists.printLast(LinkedLists.Node n):::EXIT19
 ===========================================================================
 LinkedLists.LinkedLists.printLast(LinkedLists.Node n):::EXIT
-return in orig(n.next[].val)
+return in orig(n[].val)
 ===========================================================================
 LinkedLists.Node:::OBJECT
-this.next[].GetType() == [LinkedLists.Node]
-this.next[].next == [null]
-this in this.next[]
-this.next[] elements == this
+this.GetType() == LinkedLists.Node.class
+this.next == null
+this[].GetType() == [LinkedLists.Node]
+this[].next == [null]
+this in this[]
+this[] elements == this
+this.val in this[].val
+this[].val elements == this.val
 ===========================================================================
 LinkedLists.Node..ctor(System.Int32 n):::ENTER
 ===========================================================================
 LinkedLists.Node..ctor(System.Int32 n):::EXIT8
 ===========================================================================
 LinkedLists.Node..ctor(System.Int32 n):::EXIT
-orig(n) in this.next[].val
-this.next[].val elements == orig(n)
+this.val == orig(n)
