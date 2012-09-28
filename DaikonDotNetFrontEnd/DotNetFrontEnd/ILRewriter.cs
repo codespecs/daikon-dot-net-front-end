@@ -962,6 +962,10 @@ namespace DotNetFrontEnd
             generator.Emit(OperationCode.Leave, commonExit);
           }
           break;
+        case OperationCode.Tail_:
+          // The Tail(call) instruction can't be called in a try/catch block. Since we wrap
+          // the entire method in a try/catch block, we thus can't use it at all.
+          break;
         default:
           if (op.Value == null)
           {
