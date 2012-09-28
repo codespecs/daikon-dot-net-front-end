@@ -176,53 +176,92 @@ parent parent LinkedLists.LinkedLists:::CLASS 1
     rep-type hashcode
     flags is_param
     comparability 22
-  variable n.next[..]
+  variable n.GetType()
+    var-kind function GetType()
+    enclosing-var n
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable n.next
+    var-kind field next
+    enclosing-var n
+    dec-type LinkedLists.Node
+    rep-type hashcode
+    comparability 22
+  variable n.next.GetType()
+    var-kind function GetType()
+    enclosing-var n.next
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable n.next.next
+    var-kind field next
+    enclosing-var n.next
+    dec-type LinkedLists.Node
+    rep-type hashcode
+    comparability 22
+  variable n.next.val
+    var-kind field val
+    enclosing-var n.next
+    dec-type int
+    rep-type int
+    comparability 22
+  variable n.val
+    var-kind field val
+    enclosing-var n
+    dec-type int
+    rep-type int
+    comparability 22
+  variable n[..]
     var-kind array
     enclosing-var n
     array 1
     dec-type LinkedLists.Node[]
     rep-type hashcode[]
+    flags is_param
     comparability 22
-  variable n.next[..].GetType()
+  variable n[..].GetType()
     var-kind function GetType()
-    enclosing-var n.next[..]
+    enclosing-var n[..]
     array 1
     dec-type java.lang.Class[]
     rep-type java.lang.String[]
     flags synthetic classname
     comparability 22
-  variable n.next[..].next
+  variable n[..].next
     var-kind field next
-    enclosing-var n.next[..]
+    enclosing-var n[..]
     array 1
     dec-type LinkedLists.Node[]
     rep-type hashcode[]
     comparability 22
-  variable n.next[..].next.GetType()
+  variable n[..].next.GetType()
     var-kind function GetType()
-    enclosing-var n.next[..].next
+    enclosing-var n[..].next
     array 1
     dec-type java.lang.Class[]
     rep-type java.lang.String[]
     flags synthetic classname
     comparability 22
-  variable n.next[..].next.next
+  variable n[..].next.next
     var-kind field next
-    enclosing-var n.next[..].next
+    enclosing-var n[..].next
     array 1
     dec-type LinkedLists.Node[]
     rep-type hashcode[]
     comparability 22
-  variable n.next[..].next.val
+  variable n[..].next.val
     var-kind field val
-    enclosing-var n.next[..].next
+    enclosing-var n[..].next
     array 1
     dec-type int[]
     rep-type int[]
     comparability 22
-  variable n.next[..].val
+  variable n[..].val
     var-kind field val
-    enclosing-var n.next[..]
+    enclosing-var n[..]
     array 1
     dec-type int[]
     rep-type int[]
@@ -249,53 +288,92 @@ parent parent LinkedLists.LinkedLists:::CLASS 1
     rep-type hashcode
     flags is_param
     comparability 22
-  variable n.next[..]
+  variable n.GetType()
+    var-kind function GetType()
+    enclosing-var n
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable n.next
+    var-kind field next
+    enclosing-var n
+    dec-type LinkedLists.Node
+    rep-type hashcode
+    comparability 22
+  variable n.next.GetType()
+    var-kind function GetType()
+    enclosing-var n.next
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable n.next.next
+    var-kind field next
+    enclosing-var n.next
+    dec-type LinkedLists.Node
+    rep-type hashcode
+    comparability 22
+  variable n.next.val
+    var-kind field val
+    enclosing-var n.next
+    dec-type int
+    rep-type int
+    comparability 22
+  variable n.val
+    var-kind field val
+    enclosing-var n
+    dec-type int
+    rep-type int
+    comparability 22
+  variable n[..]
     var-kind array
     enclosing-var n
     array 1
     dec-type LinkedLists.Node[]
     rep-type hashcode[]
+    flags is_param
     comparability 22
-  variable n.next[..].GetType()
+  variable n[..].GetType()
     var-kind function GetType()
-    enclosing-var n.next[..]
+    enclosing-var n[..]
     array 1
     dec-type java.lang.Class[]
     rep-type java.lang.String[]
     flags synthetic classname
     comparability 22
-  variable n.next[..].next
+  variable n[..].next
     var-kind field next
-    enclosing-var n.next[..]
+    enclosing-var n[..]
     array 1
     dec-type LinkedLists.Node[]
     rep-type hashcode[]
     comparability 22
-  variable n.next[..].next.GetType()
+  variable n[..].next.GetType()
     var-kind function GetType()
-    enclosing-var n.next[..].next
+    enclosing-var n[..].next
     array 1
     dec-type java.lang.Class[]
     rep-type java.lang.String[]
     flags synthetic classname
     comparability 22
-  variable n.next[..].next.next
+  variable n[..].next.next
     var-kind field next
-    enclosing-var n.next[..].next
+    enclosing-var n[..].next
     array 1
     dec-type LinkedLists.Node[]
     rep-type hashcode[]
     comparability 22
-  variable n.next[..].next.val
+  variable n[..].next.val
     var-kind field val
-    enclosing-var n.next[..].next
+    enclosing-var n[..].next
     array 1
     dec-type int[]
     rep-type int[]
     comparability 22
-  variable n.next[..].val
+  variable n[..].val
     var-kind field val
-    enclosing-var n.next[..]
+    enclosing-var n[..]
     array 1
     dec-type int[]
     rep-type int[]
@@ -327,53 +405,92 @@ parent parent LinkedLists.LinkedLists:::CLASS 1
     rep-type hashcode
     flags is_param
     comparability 22
-  variable n.next[..]
+  variable n.GetType()
+    var-kind function GetType()
+    enclosing-var n
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable n.next
+    var-kind field next
+    enclosing-var n
+    dec-type LinkedLists.Node
+    rep-type hashcode
+    comparability 22
+  variable n.next.GetType()
+    var-kind function GetType()
+    enclosing-var n.next
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable n.next.next
+    var-kind field next
+    enclosing-var n.next
+    dec-type LinkedLists.Node
+    rep-type hashcode
+    comparability 22
+  variable n.next.val
+    var-kind field val
+    enclosing-var n.next
+    dec-type int
+    rep-type int
+    comparability 22
+  variable n.val
+    var-kind field val
+    enclosing-var n
+    dec-type int
+    rep-type int
+    comparability 22
+  variable n[..]
     var-kind array
     enclosing-var n
     array 1
     dec-type LinkedLists.Node[]
     rep-type hashcode[]
+    flags is_param
     comparability 22
-  variable n.next[..].GetType()
+  variable n[..].GetType()
     var-kind function GetType()
-    enclosing-var n.next[..]
+    enclosing-var n[..]
     array 1
     dec-type java.lang.Class[]
     rep-type java.lang.String[]
     flags synthetic classname
     comparability 22
-  variable n.next[..].next
+  variable n[..].next
     var-kind field next
-    enclosing-var n.next[..]
+    enclosing-var n[..]
     array 1
     dec-type LinkedLists.Node[]
     rep-type hashcode[]
     comparability 22
-  variable n.next[..].next.GetType()
+  variable n[..].next.GetType()
     var-kind function GetType()
-    enclosing-var n.next[..].next
+    enclosing-var n[..].next
     array 1
     dec-type java.lang.Class[]
     rep-type java.lang.String[]
     flags synthetic classname
     comparability 22
-  variable n.next[..].next.next
+  variable n[..].next.next
     var-kind field next
-    enclosing-var n.next[..].next
+    enclosing-var n[..].next
     array 1
     dec-type LinkedLists.Node[]
     rep-type hashcode[]
     comparability 22
-  variable n.next[..].next.val
+  variable n[..].next.val
     var-kind field val
-    enclosing-var n.next[..].next
+    enclosing-var n[..].next
     array 1
     dec-type int[]
     rep-type int[]
     comparability 22
-  variable n.next[..].val
+  variable n[..].val
     var-kind field val
-    enclosing-var n.next[..]
+    enclosing-var n[..]
     array 1
     dec-type int[]
     rep-type int[]
@@ -405,53 +522,92 @@ parent parent LinkedLists.LinkedLists:::CLASS 1
     rep-type hashcode
     flags is_param
     comparability 22
-  variable n.next[..]
+  variable n.GetType()
+    var-kind function GetType()
+    enclosing-var n
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable n.next
+    var-kind field next
+    enclosing-var n
+    dec-type LinkedLists.Node
+    rep-type hashcode
+    comparability 22
+  variable n.next.GetType()
+    var-kind function GetType()
+    enclosing-var n.next
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable n.next.next
+    var-kind field next
+    enclosing-var n.next
+    dec-type LinkedLists.Node
+    rep-type hashcode
+    comparability 22
+  variable n.next.val
+    var-kind field val
+    enclosing-var n.next
+    dec-type int
+    rep-type int
+    comparability 22
+  variable n.val
+    var-kind field val
+    enclosing-var n
+    dec-type int
+    rep-type int
+    comparability 22
+  variable n[..]
     var-kind array
     enclosing-var n
     array 1
     dec-type LinkedLists.Node[]
     rep-type hashcode[]
+    flags is_param
     comparability 22
-  variable n.next[..].GetType()
+  variable n[..].GetType()
     var-kind function GetType()
-    enclosing-var n.next[..]
+    enclosing-var n[..]
     array 1
     dec-type java.lang.Class[]
     rep-type java.lang.String[]
     flags synthetic classname
     comparability 22
-  variable n.next[..].next
+  variable n[..].next
     var-kind field next
-    enclosing-var n.next[..]
+    enclosing-var n[..]
     array 1
     dec-type LinkedLists.Node[]
     rep-type hashcode[]
     comparability 22
-  variable n.next[..].next.GetType()
+  variable n[..].next.GetType()
     var-kind function GetType()
-    enclosing-var n.next[..].next
+    enclosing-var n[..].next
     array 1
     dec-type java.lang.Class[]
     rep-type java.lang.String[]
     flags synthetic classname
     comparability 22
-  variable n.next[..].next.next
+  variable n[..].next.next
     var-kind field next
-    enclosing-var n.next[..].next
+    enclosing-var n[..].next
     array 1
     dec-type LinkedLists.Node[]
     rep-type hashcode[]
     comparability 22
-  variable n.next[..].next.val
+  variable n[..].next.val
     var-kind field val
-    enclosing-var n.next[..].next
+    enclosing-var n[..].next
     array 1
     dec-type int[]
     rep-type int[]
     comparability 22
-  variable n.next[..].val
+  variable n[..].val
     var-kind field val
-    enclosing-var n.next[..]
+    enclosing-var n[..]
     array 1
     dec-type int[]
     rep-type int[]
@@ -520,59 +676,104 @@ parent parent LinkedLists.Node:::OBJECT 1
     flags is_param
     comparability 22
     parent LinkedLists.Node:::OBJECT 1
-  variable this.next[..]
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent LinkedLists.Node:::OBJECT 1
+  variable this.next
+    var-kind field next
+    enclosing-var this
+    dec-type LinkedLists.Node
+    rep-type hashcode
+    comparability 22
+    parent LinkedLists.Node:::OBJECT 1
+  variable this.next.GetType()
+    var-kind function GetType()
+    enclosing-var this.next
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent LinkedLists.Node:::OBJECT 1
+  variable this.next.next
+    var-kind field next
+    enclosing-var this.next
+    dec-type LinkedLists.Node
+    rep-type hashcode
+    comparability 22
+    parent LinkedLists.Node:::OBJECT 1
+  variable this.next.val
+    var-kind field val
+    enclosing-var this.next
+    dec-type int
+    rep-type int
+    comparability 22
+    parent LinkedLists.Node:::OBJECT 1
+  variable this.val
+    var-kind field val
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+    parent LinkedLists.Node:::OBJECT 1
+  variable this[..]
     var-kind array
     enclosing-var this
     array 1
     dec-type LinkedLists.Node[]
     rep-type hashcode[]
+    flags is_param
     comparability 22
     parent LinkedLists.Node:::OBJECT 1
-  variable this.next[..].GetType()
+  variable this[..].GetType()
     var-kind function GetType()
-    enclosing-var this.next[..]
+    enclosing-var this[..]
     array 1
     dec-type java.lang.Class[]
     rep-type java.lang.String[]
     flags synthetic classname
     comparability 22
     parent LinkedLists.Node:::OBJECT 1
-  variable this.next[..].next
+  variable this[..].next
     var-kind field next
-    enclosing-var this.next[..]
+    enclosing-var this[..]
     array 1
     dec-type LinkedLists.Node[]
     rep-type hashcode[]
     comparability 22
     parent LinkedLists.Node:::OBJECT 1
-  variable this.next[..].next.GetType()
+  variable this[..].next.GetType()
     var-kind function GetType()
-    enclosing-var this.next[..].next
+    enclosing-var this[..].next
     array 1
     dec-type java.lang.Class[]
     rep-type java.lang.String[]
     flags synthetic classname
     comparability 22
     parent LinkedLists.Node:::OBJECT 1
-  variable this.next[..].next.next
+  variable this[..].next.next
     var-kind field next
-    enclosing-var this.next[..].next
+    enclosing-var this[..].next
     array 1
     dec-type LinkedLists.Node[]
     rep-type hashcode[]
     comparability 22
     parent LinkedLists.Node:::OBJECT 1
-  variable this.next[..].next.val
+  variable this[..].next.val
     var-kind field val
-    enclosing-var this.next[..].next
+    enclosing-var this[..].next
     array 1
     dec-type int[]
     rep-type int[]
     comparability 22
     parent LinkedLists.Node:::OBJECT 1
-  variable this.next[..].val
+  variable this[..].val
     var-kind field val
-    enclosing-var this.next[..]
+    enclosing-var this[..]
     array 1
     dec-type int[]
     rep-type int[]
@@ -607,59 +808,104 @@ parent parent LinkedLists.Node:::OBJECT 1
     flags is_param
     comparability 22
     parent LinkedLists.Node:::OBJECT 1
-  variable this.next[..]
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent LinkedLists.Node:::OBJECT 1
+  variable this.next
+    var-kind field next
+    enclosing-var this
+    dec-type LinkedLists.Node
+    rep-type hashcode
+    comparability 22
+    parent LinkedLists.Node:::OBJECT 1
+  variable this.next.GetType()
+    var-kind function GetType()
+    enclosing-var this.next
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent LinkedLists.Node:::OBJECT 1
+  variable this.next.next
+    var-kind field next
+    enclosing-var this.next
+    dec-type LinkedLists.Node
+    rep-type hashcode
+    comparability 22
+    parent LinkedLists.Node:::OBJECT 1
+  variable this.next.val
+    var-kind field val
+    enclosing-var this.next
+    dec-type int
+    rep-type int
+    comparability 22
+    parent LinkedLists.Node:::OBJECT 1
+  variable this.val
+    var-kind field val
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+    parent LinkedLists.Node:::OBJECT 1
+  variable this[..]
     var-kind array
     enclosing-var this
     array 1
     dec-type LinkedLists.Node[]
     rep-type hashcode[]
+    flags is_param
     comparability 22
     parent LinkedLists.Node:::OBJECT 1
-  variable this.next[..].GetType()
+  variable this[..].GetType()
     var-kind function GetType()
-    enclosing-var this.next[..]
+    enclosing-var this[..]
     array 1
     dec-type java.lang.Class[]
     rep-type java.lang.String[]
     flags synthetic classname
     comparability 22
     parent LinkedLists.Node:::OBJECT 1
-  variable this.next[..].next
+  variable this[..].next
     var-kind field next
-    enclosing-var this.next[..]
+    enclosing-var this[..]
     array 1
     dec-type LinkedLists.Node[]
     rep-type hashcode[]
     comparability 22
     parent LinkedLists.Node:::OBJECT 1
-  variable this.next[..].next.GetType()
+  variable this[..].next.GetType()
     var-kind function GetType()
-    enclosing-var this.next[..].next
+    enclosing-var this[..].next
     array 1
     dec-type java.lang.Class[]
     rep-type java.lang.String[]
     flags synthetic classname
     comparability 22
     parent LinkedLists.Node:::OBJECT 1
-  variable this.next[..].next.next
+  variable this[..].next.next
     var-kind field next
-    enclosing-var this.next[..].next
+    enclosing-var this[..].next
     array 1
     dec-type LinkedLists.Node[]
     rep-type hashcode[]
     comparability 22
     parent LinkedLists.Node:::OBJECT 1
-  variable this.next[..].next.val
+  variable this[..].next.val
     var-kind field val
-    enclosing-var this.next[..].next
+    enclosing-var this[..].next
     array 1
     dec-type int[]
     rep-type int[]
     comparability 22
     parent LinkedLists.Node:::OBJECT 1
-  variable this.next[..].val
+  variable this[..].val
     var-kind field val
-    enclosing-var this.next[..]
+    enclosing-var this[..]
     array 1
     dec-type int[]
     rep-type int[]
@@ -678,53 +924,92 @@ parent parent LinkedLists.Node:::CLASS 1
     rep-type hashcode
     flags is_param
     comparability 22
-  variable this.next[..]
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable this.next
+    var-kind field next
+    enclosing-var this
+    dec-type LinkedLists.Node
+    rep-type hashcode
+    comparability 22
+  variable this.next.GetType()
+    var-kind function GetType()
+    enclosing-var this.next
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable this.next.next
+    var-kind field next
+    enclosing-var this.next
+    dec-type LinkedLists.Node
+    rep-type hashcode
+    comparability 22
+  variable this.next.val
+    var-kind field val
+    enclosing-var this.next
+    dec-type int
+    rep-type int
+    comparability 22
+  variable this.val
+    var-kind field val
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+  variable this[..]
     var-kind array
     enclosing-var this
     array 1
     dec-type LinkedLists.Node[]
     rep-type hashcode[]
+    flags is_param
     comparability 22
-  variable this.next[..].GetType()
+  variable this[..].GetType()
     var-kind function GetType()
-    enclosing-var this.next[..]
+    enclosing-var this[..]
     array 1
     dec-type java.lang.Class[]
     rep-type java.lang.String[]
     flags synthetic classname
     comparability 22
-  variable this.next[..].next
+  variable this[..].next
     var-kind field next
-    enclosing-var this.next[..]
+    enclosing-var this[..]
     array 1
     dec-type LinkedLists.Node[]
     rep-type hashcode[]
     comparability 22
-  variable this.next[..].next.GetType()
+  variable this[..].next.GetType()
     var-kind function GetType()
-    enclosing-var this.next[..].next
+    enclosing-var this[..].next
     array 1
     dec-type java.lang.Class[]
     rep-type java.lang.String[]
     flags synthetic classname
     comparability 22
-  variable this.next[..].next.next
+  variable this[..].next.next
     var-kind field next
-    enclosing-var this.next[..].next
+    enclosing-var this[..].next
     array 1
     dec-type LinkedLists.Node[]
     rep-type hashcode[]
     comparability 22
-  variable this.next[..].next.val
+  variable this[..].next.val
     var-kind field val
-    enclosing-var this.next[..].next
+    enclosing-var this[..].next
     array 1
     dec-type int[]
     rep-type int[]
     comparability 22
-  variable this.next[..].val
+  variable this[..].val
     var-kind field val
-    enclosing-var this.next[..]
+    enclosing-var this[..]
     array 1
     dec-type int[]
     rep-type int[]
@@ -734,7 +1019,7 @@ LinkedLists.LinkedLists.Main(System.String[]\_args):::ENTER
 this_invocation_nonce
 0
 args
-16947234
+6503226
 1
 args[..]
 []
@@ -763,27 +1048,45 @@ n
 0
 1
 this
-18307385
+58529038
 1
-this.next[..]
-[18307385]
+this.GetType()
+"LinkedLists.Node"
 1
-this.next[..].GetType()
+this.next
+null
+1
+this.next.GetType()
+nonsensical
+2
+this.next.next
+nonsensical
+2
+this.next.val
+nonsensical
+2
+this.val
+0
+1
+this[..]
+[58529038]
+1
+this[..].GetType()
 ["LinkedLists.Node"]
 1
-this.next[..].next
+this[..].next
 [null]
 1
-this.next[..].next.GetType()
+this[..].next.GetType()
 [nonsensical]
 1
-this.next[..].next.next
+this[..].next.next
 [nonsensical]
 1
-this.next[..].next.val
+this[..].next.val
 [nonsensical]
 1
-this.next[..].val
+this[..].val
 [0]
 1
 
@@ -791,27 +1094,45 @@ LinkedLists.LinkedLists.printLast(LinkedLists.Node\_n):::ENTER
 this_invocation_nonce
 2
 n
-18307385
+58529038
 1
-n.next[..]
-[18307385]
+n.GetType()
+"LinkedLists.Node"
 1
-n.next[..].GetType()
+n.next
+null
+1
+n.next.GetType()
+nonsensical
+2
+n.next.next
+nonsensical
+2
+n.next.val
+nonsensical
+2
+n.val
+0
+1
+n[..]
+[58529038]
+1
+n[..].GetType()
 ["LinkedLists.Node"]
 1
-n.next[..].next
+n[..].next
 [null]
 1
-n.next[..].next.GetType()
+n[..].next.GetType()
 [nonsensical]
 1
-n.next[..].next.next
+n[..].next.next
 [nonsensical]
 1
-n.next[..].next.val
+n[..].next.val
 [nonsensical]
 1
-n.next[..].val
+n[..].val
 [0]
 1
 
@@ -825,27 +1146,45 @@ exception.GetType()
 nonsensical
 2
 n
-18307385
+58529038
 1
-n.next[..]
-[18307385]
+n.GetType()
+"LinkedLists.Node"
 1
-n.next[..].GetType()
+n.next
+null
+1
+n.next.GetType()
+nonsensical
+2
+n.next.next
+nonsensical
+2
+n.next.val
+nonsensical
+2
+n.val
+0
+1
+n[..]
+[58529038]
+1
+n[..].GetType()
 ["LinkedLists.Node"]
 1
-n.next[..].next
+n[..].next
 [null]
 1
-n.next[..].next.GetType()
+n[..].next.GetType()
 [nonsensical]
 1
-n.next[..].next.next
+n[..].next.next
 [nonsensical]
 1
-n.next[..].next.val
+n[..].next.val
 [nonsensical]
 1
-n.next[..].val
+n[..].val
 [0]
 1
 return
@@ -872,27 +1211,45 @@ n
 1
 1
 this
-30548742
+56999299
 1
-this.next[..]
-[30548742]
+this.GetType()
+"LinkedLists.Node"
 1
-this.next[..].GetType()
+this.next
+null
+1
+this.next.GetType()
+nonsensical
+2
+this.next.next
+nonsensical
+2
+this.next.val
+nonsensical
+2
+this.val
+1
+1
+this[..]
+[56999299]
+1
+this[..].GetType()
 ["LinkedLists.Node"]
 1
-this.next[..].next
+this[..].next
 [null]
 1
-this.next[..].next.GetType()
+this[..].next.GetType()
 [nonsensical]
 1
-this.next[..].next.next
+this[..].next.next
 [nonsensical]
 1
-this.next[..].next.val
+this[..].next.val
 [nonsensical]
 1
-this.next[..].val
+this[..].val
 [1]
 1
 
@@ -900,27 +1257,45 @@ LinkedLists.LinkedLists.printLast(LinkedLists.Node\_n):::ENTER
 this_invocation_nonce
 4
 n
-18307385
+58529038
 1
-n.next[..]
-[18307385 30548742]
+n.GetType()
+"LinkedLists.Node"
 1
-n.next[..].GetType()
+n.next
+56999299
+1
+n.next.GetType()
+"LinkedLists.Node"
+1
+n.next.next
+null
+1
+n.next.val
+1
+1
+n.val
+0
+1
+n[..]
+[58529038 56999299]
+1
+n[..].GetType()
 ["LinkedLists.Node" "LinkedLists.Node"]
 1
-n.next[..].next
-[30548742 null]
+n[..].next
+[56999299 null]
 1
-n.next[..].next.GetType()
+n[..].next.GetType()
 ["LinkedLists.Node" nonsensical]
 1
-n.next[..].next.next
+n[..].next.next
 [null nonsensical]
 1
-n.next[..].next.val
+n[..].next.val
 [1 nonsensical]
 1
-n.next[..].val
+n[..].val
 [0 1]
 1
 
@@ -934,27 +1309,45 @@ exception.GetType()
 nonsensical
 2
 n
-30548742
+56999299
 1
-n.next[..]
-[30548742]
+n.GetType()
+"LinkedLists.Node"
 1
-n.next[..].GetType()
+n.next
+null
+1
+n.next.GetType()
+nonsensical
+2
+n.next.next
+nonsensical
+2
+n.next.val
+nonsensical
+2
+n.val
+1
+1
+n[..]
+[56999299]
+1
+n[..].GetType()
 ["LinkedLists.Node"]
 1
-n.next[..].next
+n[..].next
 [null]
 1
-n.next[..].next.GetType()
+n[..].next.GetType()
 [nonsensical]
 1
-n.next[..].next.next
+n[..].next.next
 [nonsensical]
 1
-n.next[..].next.val
+n[..].next.val
 [nonsensical]
 1
-n.next[..].val
+n[..].val
 [1]
 1
 return
@@ -981,27 +1374,45 @@ n
 2
 1
 this
-6503226
+43231651
 1
-this.next[..]
-[6503226]
+this.GetType()
+"LinkedLists.Node"
 1
-this.next[..].GetType()
+this.next
+null
+1
+this.next.GetType()
+nonsensical
+2
+this.next.next
+nonsensical
+2
+this.next.val
+nonsensical
+2
+this.val
+2
+1
+this[..]
+[43231651]
+1
+this[..].GetType()
 ["LinkedLists.Node"]
 1
-this.next[..].next
+this[..].next
 [null]
 1
-this.next[..].next.GetType()
+this[..].next.GetType()
 [nonsensical]
 1
-this.next[..].next.next
+this[..].next.next
 [nonsensical]
 1
-this.next[..].next.val
+this[..].next.val
 [nonsensical]
 1
-this.next[..].val
+this[..].val
 [2]
 1
 
@@ -1009,27 +1420,45 @@ LinkedLists.LinkedLists.printLast(LinkedLists.Node\_n):::ENTER
 this_invocation_nonce
 6
 n
-18307385
+58529038
 1
-n.next[..]
-[18307385 30548742 6503226]
+n.GetType()
+"LinkedLists.Node"
 1
-n.next[..].GetType()
+n.next
+56999299
+1
+n.next.GetType()
+"LinkedLists.Node"
+1
+n.next.next
+43231651
+1
+n.next.val
+1
+1
+n.val
+0
+1
+n[..]
+[58529038 56999299 43231651]
+1
+n[..].GetType()
 ["LinkedLists.Node" "LinkedLists.Node" "LinkedLists.Node"]
 1
-n.next[..].next
-[30548742 6503226 null]
+n[..].next
+[56999299 43231651 null]
 1
-n.next[..].next.GetType()
+n[..].next.GetType()
 ["LinkedLists.Node" "LinkedLists.Node" nonsensical]
 1
-n.next[..].next.next
-[6503226 null nonsensical]
+n[..].next.next
+[43231651 null nonsensical]
 1
-n.next[..].next.val
+n[..].next.val
 [1 2 nonsensical]
 1
-n.next[..].val
+n[..].val
 [0 1 2]
 1
 
@@ -1043,27 +1472,45 @@ exception.GetType()
 nonsensical
 2
 n
-6503226
+43231651
 1
-n.next[..]
-[6503226]
+n.GetType()
+"LinkedLists.Node"
 1
-n.next[..].GetType()
+n.next
+null
+1
+n.next.GetType()
+nonsensical
+2
+n.next.next
+nonsensical
+2
+n.next.val
+nonsensical
+2
+n.val
+2
+1
+n[..]
+[43231651]
+1
+n[..].GetType()
 ["LinkedLists.Node"]
 1
-n.next[..].next
+n[..].next
 [null]
 1
-n.next[..].next.GetType()
+n[..].next.GetType()
 [nonsensical]
 1
-n.next[..].next.next
+n[..].next.next
 [nonsensical]
 1
-n.next[..].next.val
+n[..].next.val
 [nonsensical]
 1
-n.next[..].val
+n[..].val
 [2]
 1
 return
@@ -1090,27 +1537,45 @@ n
 3
 1
 this
-58529038
+53540541
 1
-this.next[..]
-[58529038]
+this.GetType()
+"LinkedLists.Node"
 1
-this.next[..].GetType()
+this.next
+null
+1
+this.next.GetType()
+nonsensical
+2
+this.next.next
+nonsensical
+2
+this.next.val
+nonsensical
+2
+this.val
+3
+1
+this[..]
+[53540541]
+1
+this[..].GetType()
 ["LinkedLists.Node"]
 1
-this.next[..].next
+this[..].next
 [null]
 1
-this.next[..].next.GetType()
+this[..].next.GetType()
 [nonsensical]
 1
-this.next[..].next.next
+this[..].next.next
 [nonsensical]
 1
-this.next[..].next.val
+this[..].next.val
 [nonsensical]
 1
-this.next[..].val
+this[..].val
 [3]
 1
 
@@ -1118,27 +1583,45 @@ LinkedLists.LinkedLists.printLast(LinkedLists.Node\_n):::ENTER
 this_invocation_nonce
 8
 n
-18307385
+58529038
 1
-n.next[..]
-[18307385 30548742 6503226 58529038]
+n.GetType()
+"LinkedLists.Node"
 1
-n.next[..].GetType()
+n.next
+56999299
+1
+n.next.GetType()
+"LinkedLists.Node"
+1
+n.next.next
+43231651
+1
+n.next.val
+1
+1
+n.val
+0
+1
+n[..]
+[58529038 56999299 43231651 53540541]
+1
+n[..].GetType()
 ["LinkedLists.Node" "LinkedLists.Node" "LinkedLists.Node" "LinkedLists.Node"]
 1
-n.next[..].next
-[30548742 6503226 58529038 null]
+n[..].next
+[56999299 43231651 53540541 null]
 1
-n.next[..].next.GetType()
+n[..].next.GetType()
 ["LinkedLists.Node" "LinkedLists.Node" "LinkedLists.Node" nonsensical]
 1
-n.next[..].next.next
-[6503226 58529038 null nonsensical]
+n[..].next.next
+[43231651 53540541 null nonsensical]
 1
-n.next[..].next.val
+n[..].next.val
 [1 2 3 nonsensical]
 1
-n.next[..].val
+n[..].val
 [0 1 2 3]
 1
 
@@ -1152,27 +1635,45 @@ exception.GetType()
 nonsensical
 2
 n
-58529038
+53540541
 1
-n.next[..]
-[58529038]
+n.GetType()
+"LinkedLists.Node"
 1
-n.next[..].GetType()
+n.next
+null
+1
+n.next.GetType()
+nonsensical
+2
+n.next.next
+nonsensical
+2
+n.next.val
+nonsensical
+2
+n.val
+3
+1
+n[..]
+[53540541]
+1
+n[..].GetType()
 ["LinkedLists.Node"]
 1
-n.next[..].next
+n[..].next
 [null]
 1
-n.next[..].next.GetType()
+n[..].next.GetType()
 [nonsensical]
 1
-n.next[..].next.next
+n[..].next.next
 [nonsensical]
 1
-n.next[..].next.val
+n[..].next.val
 [nonsensical]
 1
-n.next[..].val
+n[..].val
 [3]
 1
 return
@@ -1183,7 +1684,7 @@ LinkedLists.LinkedLists.Main(System.String[]\_args):::EXIT37
 this_invocation_nonce
 0
 args
-16947234
+6503226
 1
 args[..]
 []

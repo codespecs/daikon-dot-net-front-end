@@ -148,18 +148,6 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Returns whether the parentType name should be printed. This won't be printed if it's empty
-    /// or matched a type to be ignored.
-    /// </summary>
-    /// <param name="parentTypeName">Parent name</param>
-    /// <returns>True if the name should be printed, false otherwise</returns>
-    private bool ShouldPrintParentPptIfNecessary(String parentTypeName)
-    {
-      return !String.IsNullOrEmpty(parentTypeName) &&
-          !Regex.IsMatch(parentTypeName, TypeManager.RegexForTypesToIgnoreForProgramPoint);
-    }
-
-    /// <summary>
     /// Print the declaration for the given variable, and all its children
     /// </summary>
     /// <param name="name">The name of the variable</param>
@@ -223,8 +211,7 @@ namespace DotNetFrontEnd
       {
         // It's not an array it's a set. Investigate element type.
         // Will resolve with TODO(#52).
-        DeclareVariableAsList(name, type, parentName, nestingDepth,
-            VariableFlags.no_dups | VariableFlags.not_ordered);
+        DeclareVariableAsList(name, type, parentName, nestingDepth);
       }
       else if (this.typeManager.IsFSharpListImplementer(type))
       {
@@ -259,13 +246,6 @@ namespace DotNetFrontEnd
       }
       else
       {
-        if (frontEndArgs.LinkedLists && this.typeManager.IsLinkedListImplementer(type))
-        {
-          FieldInfo arrayListField = TypeManager.FindLinkedListField(type);
-          DeclareVariableAsList(name, typeof(LinkedList<>), parentName, nestingDepth,
-            flags | VariableFlags.synthetic);
-        }
-
         foreach (FieldInfo field in
             type.GetFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(type)))
         {
@@ -315,127 +295,22 @@ namespace DotNetFrontEnd
             // TODO(#61): Fill out the var-kind and any other necessary fields
             nestingDepth: nestingDepth + 1);
         }
-      }
-    }
 
-    private bool PerformEarlyExitChecks(string name, Type type, VariableKind kind, 
-      string enclosingVar, int nestingDepth)
-    {
-      if (name.Length == 0)
-      {
-        throw new NotSupportedException("An error occurred in the instrumentation process"
-            + " and a varible was encountered with no name.");
-      }
-      if (type == null)
-      {
-        throw new NotSupportedException("An error occurred in the instrumentation process"
-            + " and type was null for varible named: " + name);
-      }
-
-      if ((kind == VariableKind.field || kind == VariableKind.array) &&
-        enclosingVar.Length == 0)
-      {
-        throw new ArgumentException("Enclosing var requried for staticField and array and none"
-            + " was present for varible named: " + name + " of kind: " + kind);
-      }
-
-      if (nestingDepth > this.frontEndArgs.MaxNestingDepth ||
-          !this.frontEndArgs.ShouldPrintVariable(name))
-      {
-        return true;
-      }
-
-      if (this.variablesForCurrentProgramPoint.Contains(name))
-      {
-        return true;
-      }
-      else
-      {
-        this.variablesForCurrentProgramPoint.Add(name);
-      }
-
-      return false;
-    }
-
-    /// <summary>
-    /// Wraps all the declaration necessary for a variable that is a list. Print the GetType()
-    /// call if necessary then describes the contents of the list.
-    /// </summary>
-    /// <param name="name">Name of the list variable</param>
-    /// <param name="type">Type of the list variable (not element type)</param>
-    /// <param name="parentName">Name of the parent</param>
-    /// <param name="nestingDepth">Nesting depth for the list variable</param>
-    /// <param name="collectionFlags">Flags to describe the collection, e.g. no_dups, if any</param>
-    private void DeclareVariableAsList(string name, Type type, string parentName, int nestingDepth,
-        VariableFlags collectionFlags = VariableFlags.none)
-    {
-      Type elementType = TypeManager.GetListElementType(type);
-      // Print the type of the list if it's not primitive
-      if (!elementType.IsSealed)
-      {
-        DeclareVariable(name + "." + GetTypeMethodCall, TypeManager.TypeType,
-            VariableKind.function, VariableFlags.classname | VariableFlags.synthetic,
-            enclosingVar: name, relativeName: GetTypeMethodCall,
-            nestingDepth: nestingDepth + 1, parentName: parentName);
-      }
-      PrintList(name + "[..]", elementType, name, VariableKind.array,
-          nestingDepth: nestingDepth, parentName: parentName, flags: collectionFlags);
-    }
-
-    /// <summary>
-    /// Print the daikon rep-type for a variable of a given type
-    /// </summary>
-    /// <param name="type">Type of the variable</param>
-    /// <param name="flags">Flags may modify the type of the varible. i.e. in a ToString() 
-    /// call</param>
-    private void PrintRepType(Type type, VariableFlags flags)
-    {
-      string repType;
-      if (type.IsEnum)
-      {
-        if (this.frontEndArgs.EnumUnderlyingValues)
+        // Don't look at linked-lists of synthetic variables or fields to prevent children 
+        // also printing linked-lists, when they are really just deeper levels of the current 
+        // linked list.
+        if (((flags & VariableFlags.synthetic) == 0) && kind != VariableKind.field
+            && frontEndArgs.LinkedLists 
+            && this.typeManager.IsLinkedListImplementer(type))
         {
-          repType = DaikonIntName;
+          FieldInfo linkedListField = TypeManager.FindLinkedListField(type);
+          PrintList(name + "[..]", linkedListField.FieldType, name, VariableKind.array,
+              nestingDepth: nestingDepth, parentName: parentName, flags: flags);
         }
-        else
-        {
-          repType = DaikonStringName;
-        }
-      }
-      else if (flags.HasFlag(VariableFlags.to_string)
-          || flags.HasFlag(VariableFlags.classname))
-      {
-        repType = DaikonStringName;
-      }
-      else
-      {
-        repType = GetRepType(type);
-      }
-      this.WritePair("rep-type", repType, 2);
-    }
 
-    /// <summary>
-    /// Print the daikon var-kind
-    /// </summary>
-    /// <param name="kind"></param>
-    /// <param name="relativeName">Daikon-name for the path to this variable </param>
-    private void PrintVarKind(VariableKind kind, string relativeName)
-    {
-      if (kind == VariableKind.function || kind == VariableKind.field)
-      {
-        this.WritePair("var-kind", kind.ToString() + " " + relativeName, 2);
-      }
-      else if (kind == VariableKind.Return)
-      {
-        // Decapitalize the R in return.
-        this.WritePair("var-kind", "return", 2);
-      }
-      else
-      {
-        this.WritePair("var-kind", kind.ToString(), 2);
       }
     }
-
+        
     /// <summary>
     /// Print the declaration for the given list, and all its children
     /// </summary>
@@ -811,6 +686,7 @@ namespace DotNetFrontEnd
     }
 
     #region Private Helper Methods
+
     /// <summary>
     /// Print a space separated pair of values, followed by a new line to the class writer.
     /// </summary>
@@ -975,6 +851,136 @@ namespace DotNetFrontEnd
       {
         return "hashcode";
       }
+    }
+
+    /// <summary>
+    /// Print the daikon rep-type for a variable of a given type
+    /// </summary>
+    /// <param name="type">Type of the variable</param>
+    /// <param name="flags">Flags may modify the type of the varible. i.e. in a ToString() 
+    /// call</param>
+    private void PrintRepType(Type type, VariableFlags flags)
+    {
+      string repType;
+      if (type.IsEnum)
+      {
+        if (this.frontEndArgs.EnumUnderlyingValues)
+        {
+          repType = DaikonIntName;
+        }
+        else
+        {
+          repType = DaikonStringName;
+        }
+      }
+      else if (flags.HasFlag(VariableFlags.to_string)
+          || flags.HasFlag(VariableFlags.classname))
+      {
+        repType = DaikonStringName;
+      }
+      else
+      {
+        repType = GetRepType(type);
+      }
+      this.WritePair("rep-type", repType, 2);
+    }
+
+    /// <summary>
+    /// Print the daikon var-kind
+    /// </summary>
+    /// <param name="kind"></param>
+    /// <param name="relativeName">Daikon-name for the path to this variable </param>
+    private void PrintVarKind(VariableKind kind, string relativeName)
+    {
+      if (kind == VariableKind.function || kind == VariableKind.field)
+      {
+        this.WritePair("var-kind", kind.ToString() + " " + relativeName, 2);
+      }
+      else if (kind == VariableKind.Return)
+      {
+        // Decapitalize the R in return.
+        this.WritePair("var-kind", "return", 2);
+      }
+      else
+      {
+        this.WritePair("var-kind", kind.ToString(), 2);
+      }
+    }
+
+    /// <summary>
+    /// Returns whether the parentType name should be printed. This won't be printed if it's empty
+    /// or matched a type to be ignored.
+    /// </summary>
+    /// <param name="parentTypeName">Parent name</param>
+    /// <returns>True if the name should be printed, false otherwise</returns>
+    private bool ShouldPrintParentPptIfNecessary(String parentTypeName)
+    {
+      return !String.IsNullOrEmpty(parentTypeName) &&
+          !Regex.IsMatch(parentTypeName, TypeManager.RegexForTypesToIgnoreForProgramPoint);
+    }
+
+    private bool PerformEarlyExitChecks(string name, Type type, VariableKind kind,
+      string enclosingVar, int nestingDepth)
+    {
+      if (name.Length == 0)
+      {
+        throw new NotSupportedException("An error occurred in the instrumentation process"
+            + " and a varible was encountered with no name.");
+      }
+      if (type == null)
+      {
+        throw new NotSupportedException("An error occurred in the instrumentation process"
+            + " and type was null for varible named: " + name);
+      }
+
+      if ((kind == VariableKind.field || kind == VariableKind.array) &&
+        enclosingVar.Length == 0)
+      {
+        throw new ArgumentException("Enclosing var requried for staticField and array and none"
+            + " was present for varible named: " + name + " of kind: " + kind);
+      }
+
+      if (nestingDepth > this.frontEndArgs.MaxNestingDepth ||
+          !this.frontEndArgs.ShouldPrintVariable(name))
+      {
+        return true;
+      }
+
+      if (this.variablesForCurrentProgramPoint.Contains(name))
+      {
+        return true;
+      }
+      else
+      {
+        this.variablesForCurrentProgramPoint.Add(name);
+      }
+
+      return false;
+    }
+
+    /// <summary>
+    /// Wraps all the declaration necessary for a variable that is a list. Print the GetType()
+    /// call if necessary then describes the contents of the list.
+    /// </summary>
+    /// <param name="name">Name of the list variable</param>
+    /// <param name="type">Type of the list variable (not element type)</param>
+    /// <param name="parentName">Name of the parent</param>
+    /// <param name="nestingDepth">Nesting depth for the list variable</param>
+    /// <param name="collectionFlags">Flags to describe the collection, e.g. no_dups, if any</param>
+    private void DeclareVariableAsList(string name, Type type, string parentName, int nestingDepth,
+        VariableFlags collectionFlags = VariableFlags.none)
+    {
+      Type elementType = TypeManager.GetListElementType(type);
+      // Print the type of the list if it's not primitive
+      if (!elementType.IsSealed)
+      {
+        DeclareVariable(name + "." + GetTypeMethodCall, TypeManager.TypeType,
+            VariableKind.function, VariableFlags.classname | VariableFlags.synthetic,
+            enclosingVar: name, relativeName: GetTypeMethodCall,
+            nestingDepth: nestingDepth + 1, parentName: parentName);
+      }
+      PrintList(name + "[..]", elementType, name, VariableKind.array,
+          nestingDepth: nestingDepth, parentName: parentName, flags: collectionFlags);
     }
 
     #endregion
