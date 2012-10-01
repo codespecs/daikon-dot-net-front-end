@@ -36,6 +36,11 @@ namespace PureMethods
       Console.WriteLine(this.n);
     }
 
+    public int NPlusOne
+    {
+        get { return this.n+1; }
+    }
+
     public int PureMethod1() { return 0; }
     public string PureMethod2() { return "0"; }
     public int PureMethod3() { return this.n; }
