@@ -40,12 +40,12 @@ namespace DotNetFrontEnd
     #region Constants
 
     /// <summary>
-    /// The environment variable defining where daikon output will go
+    /// The environment variable defining where front-end output will go
     /// </summary>
     private static readonly string DaikonEnvVar = "DNFE_OUT";
 
     /// <summary>
-    /// The name of the DLL containing reflector visitor to insert calls to
+    /// The name of the DLL containing the visitor to insert calls to
     /// </summary>
     public static readonly string VisitorDll = "DotNetFrontEnd.dll";
 
@@ -2101,14 +2101,14 @@ namespace DotNetFrontEnd
       var assembly = module as IAssembly;
       if (assembly == null)
       {
-        throw new ILMutatorException("Couldn'type modify assembly");
+        throw new ILMutatorException("Couldn't modify assembly");
       }
       Assembly mutableAssembly = (Assembly)MetadataCopier.DeepCopy(host, assembly);
       this.assemblyIdentity = UnitHelper.GetAssemblyIdentity(mutableAssembly);
       this.typeManager.SetAssemblyIdentity(assemblyIdentity);
       if (!File.Exists(pathToVisitor))
       {
-        throw new FileNotFoundException("Reflector doesn'type exist");
+        throw new FileNotFoundException("DLL for Reflector doesn't exist");
       }
 
       IAssembly variableVisitorAssembly = this.host.LoadUnitFrom(pathToVisitor) as IAssembly;

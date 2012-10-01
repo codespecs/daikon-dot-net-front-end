@@ -88,7 +88,56 @@
 				 class) with regular expression ‘bar$’, or you could match
 				 the program point name with ‘C\.bar\(’.
 				</p>
-			</dd>			
+			</dd>
+      
+      <dt><samp><span class="option">--purity-file=<var>pure-methods-file</var></span></samp></dt>
+      <dd>
+        <p>
+          File <var>pure-methods-file</var> lists the pure methods (sometimes called observer 
+          methods) in a C# program. Pure methods have no externally side effects, such as setting 
+          variables or producing output. For example, most implementations of the 
+          <code>hashCode()</code>, 
+          <code>toString()</code>, and <code>equals()</code> methods are pure. 
+        </p><p>
+          For each variable, DNFE adds to the trace 
+          new “fields” that represent invoking each pure method on the variable. 
+          (Currently, DNFE does so only for pure methods that take no parameters, and obviously 
+          this mechanism is only useful for methods that return a value: a pure method that 
+          returns no value does nothing!)
+        </p>
+          Here is an example:
+        <pre>
+           class Point {
+             private int x, y;
+              public int radiusSquared() {
+                return x*x + y*y;
+              }
+            }
+        </pre>
+        <p>
+        If <code>radiusSquared()</code> has been specified as pure, then for each point <var>p</var>, 
+        DNFE will output 
+        the variables <var>p</var>.<code>x</code>, <var>p</var>.<code>y</code>, and 
+        <var>p</var><code>.radiusSquared()</code>. Use of pure methods can improve the Daikon 
+        output, since they represent information that the programmer considered important but that 
+        is not necessarily stored in a variable.
+        </p><p>
+        Invoking a pure method at any time in an application should not change the application's 
+        behavior. If a non-pure method is listed in a purity file, then application behavior can change. 
+        DNFE does not verify the purity of methods listed in the purity file.
+        </p><p>
+        The purity file lists a set of methods, one per line. The format of each method is given as follows:        
+        <pre>
+        [AssemblyQualifiedName];[MethodName]
+        </pre>        
+        For example:
+        <pre>        
+          PureMethods.A, PureMethods, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;PureMethod1
+        </pre>
+        </p><p>
+        By convention, pure-methods-file has the suffix .pure.
+        </p>
+      </dd>
 			
 			<dt><samp><span class="option">--sample-start=<var>sample-cnt</var></span></samp></dt>
 			<dd>
