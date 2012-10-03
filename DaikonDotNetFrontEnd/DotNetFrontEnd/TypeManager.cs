@@ -126,6 +126,13 @@ namespace DotNetFrontEnd
     private Dictionary<Type, bool> isFSharpSetHashmap;
 
     /// <summary>
+    /// Map from type to whether that type is a F# map.
+    /// Memoizes the lookup
+    /// We use a bool-valued hashmap because there are three states, true, false and unknown.
+    /// </summary>
+    private Dictionary<Type, bool> isFSharpMapHashmap;
+
+    /// <summary>
     /// A map from assembly qualified names to the Type they describe
     /// Used to memoize type references (passed as names) from the IL rewriter
     /// </summary>
@@ -167,6 +174,7 @@ namespace DotNetFrontEnd
       this.isSetHashmap = new Dictionary<Type, bool>();
       this.isFSharpSetHashmap = new Dictionary<Type, bool>();
       this.isDictionaryHashMap = new Dictionary<Type, bool>();
+      this.isFSharpMapHashmap = new Dictionary<Type, bool>();
 
       this.nameTypeMap = new Dictionary<string, Type>();
       this.pureMethodKeys = new Dictionary<Type, ISet<int>>();
@@ -497,7 +505,7 @@ namespace DotNetFrontEnd
     /// Explicitly tests whether type is a F# set.
     /// </summary>
     /// <param name="type">Type to test</param>
-    /// <returns>True if type is a F# test, false otherwise.</returns>
+    /// <returns>True if type is a F# set, false otherwise.</returns>
     private bool IsFSharpSetTest(Type type)
     {
       if (this.frontEndArgs.ElementInspectArraysOnly)
@@ -515,10 +523,38 @@ namespace DotNetFrontEnd
     /// Memoized test whether type is in an F# Set.
     /// </summary>
     /// <param name="type">Type to test</param>
-    /// <returns>True if the type is an F# test, false otherwise</returns>
+    /// <returns>True if the type is an F# set, false otherwise</returns>
     public bool IsFSharpSet(Type type)
     {
       return IsElementOfCollectionType(type, this.isFSharpSetHashmap, IsFSharpSetTest);
+    }
+
+    /// <summary>
+    /// Explicitly tests whether type is a F# map.
+    /// </summary>
+    /// <param name="type">Type to test</param>
+    /// <returns>True if type is a F# map, false otherwise.</returns>
+    private bool IsFSharpMapTest(Type type)
+    {
+        if (this.frontEndArgs.ElementInspectArraysOnly)
+        {
+            return type.IsArray;
+        }
+        else
+        {
+            return type.Namespace == "Microsoft.FSharp.Collections" &&
+              type.Name.StartsWith("FSharpMap");
+        }
+    }
+
+    /// <summary>
+    /// Memoized test whether type is in an F# Map.
+    /// </summary>
+    /// <param name="type">Type to test</param>
+    /// <returns>True if the type is an F# map, false otherwise</returns>
+    public bool IsFSharpMap(Type type)
+    {
+        return IsElementOfCollectionType(type, this.isFSharpMapHashmap, IsFSharpMapTest);
     }
 
     /// <summary>
