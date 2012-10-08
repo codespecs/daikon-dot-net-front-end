@@ -318,10 +318,10 @@ namespace DotNetFrontEnd
           }
         }
       }
-      catch (Exception ex)
-      {
-        throw new VariableVisitorException(ex);
-      }
+      //catch (Exception ex)
+      //{
+      //  throw new VariableVisitorException(ex);
+      //}
       finally
       {
         // Close the writer so it can be used elsewhere
@@ -656,17 +656,31 @@ namespace DotNetFrontEnd
       else if (typeManager.IsDictionary(type))
       {
         List<DictionaryEntry> entries = new List<DictionaryEntry>();
-        // TODO(#54) : Implement
-        IDictionary dict = (IDictionary)obj;
-        foreach (DictionaryEntry entry in dict)
+        if (obj != null)
         {
-          entries.Add(entry);
+          IDictionary dict = (IDictionary)obj;
+          foreach (DictionaryEntry entry in dict)
+          {
+            entries.Add(entry);
+          }
+        }
+
+        ProcessVariableAsList(name, entries, entries.GetType(), writer, depth);
+      }
+      else if (typeManager.IsFSharpMap(type))
+      {
+        ArrayList entries = new ArrayList();
+        if (obj != null)
+        {
+          foreach (var item in (IEnumerable)obj)
+          {
+            entries.Add(item);
+          }
         }
         ProcessVariableAsList(name, entries, entries.GetType(), writer, depth);
       }
       else
       {
-
         if (obj == null)
         {
           fieldFlags |= VariableModifiers.nonsensical;
@@ -680,7 +694,7 @@ namespace DotNetFrontEnd
             if (!typeManager.ShouldIgnoreField(type, field.Name))
             {
               ReflectiveVisit(name + "." + field.Name, GetFieldValue(obj, field, field.Name),
-                  field.FieldType, writer, depth + 1, 
+                  field.FieldType, writer, depth + 1,
                   fieldFlags | VariableModifiers.ignore_linked_list);
             }
           }
@@ -706,7 +720,7 @@ namespace DotNetFrontEnd
               {
                 staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
                 ReflectiveVisit(staticFieldName, GetFieldValue(obj, staticField, staticField.Name),
-                      staticField.FieldType, writer, staticFieldName.Count(c => c == '.'), 
+                      staticField.FieldType, writer, staticFieldName.Count(c => c == '.'),
                       fieldFlags | VariableModifiers.ignore_linked_list);
               }
             }
@@ -751,7 +765,7 @@ namespace DotNetFrontEnd
 
         // Don't look at linked-lists of synthetic variables to prevent children from also printing
         // linked-lists, when they are really just deeper levels of the current linked list.
-        if ((fieldFlags & VariableModifiers.ignore_linked_list) == 0 && 
+        if ((fieldFlags & VariableModifiers.ignore_linked_list) == 0 &&
             frontEndArgs.LinkedLists && typeManager.IsLinkedListImplementer(type))
         {
           FieldInfo linkedListField = TypeManager.FindLinkedListField(type);
@@ -779,7 +793,7 @@ namespace DotNetFrontEnd
     /// <param name="depth">Depth of the list variable</param>
     /// <param name="flags">Field flags for the list variable</param>
     private static void ProcessVariableAsList(string name, object obj, Type type,
-        TextWriter writer, int depth,  VariableModifiers flags = VariableModifiers.none)
+        TextWriter writer, int depth, VariableModifiers flags = VariableModifiers.none)
     {
       // Call GetType() on the list if necessary.
       Type elementType = TypeManager.GetListElementType(type);

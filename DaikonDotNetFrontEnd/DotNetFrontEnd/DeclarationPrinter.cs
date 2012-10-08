@@ -244,6 +244,11 @@ namespace DotNetFrontEnd
         DeclareVariableAsList(name, typeof(List<DictionaryEntry>), parentName, nestingDepth,
           VariableFlags.no_dups | VariableFlags.not_ordered);
       }
+      else if (this.typeManager.IsFSharpMap(type))
+      {
+        DeclareVariableAsList(name, typeof(List<DictionaryEntry>), parentName, nestingDepth,
+            VariableFlags.no_dups | VariableFlags.not_ordered);
+      }
       else
       {
         foreach (FieldInfo field in
@@ -300,7 +305,7 @@ namespace DotNetFrontEnd
         // also printing linked-lists, when they are really just deeper levels of the current 
         // linked list.
         if (((flags & VariableFlags.synthetic) == 0) && kind != VariableKind.field
-            && frontEndArgs.LinkedLists 
+            && frontEndArgs.LinkedLists
             && this.typeManager.IsLinkedListImplementer(type))
         {
           FieldInfo linkedListField = TypeManager.FindLinkedListField(type);
@@ -310,7 +315,7 @@ namespace DotNetFrontEnd
 
       }
     }
-        
+
     /// <summary>
     /// Print the declaration for the given list, and all its children
     /// </summary>
