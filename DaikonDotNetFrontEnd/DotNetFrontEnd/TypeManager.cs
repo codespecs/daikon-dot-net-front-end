@@ -536,15 +536,15 @@ namespace DotNetFrontEnd
     /// <returns>True if type is a F# map, false otherwise.</returns>
     private bool IsFSharpMapTest(Type type)
     {
-        if (this.frontEndArgs.ElementInspectArraysOnly)
-        {
-            return type.IsArray;
-        }
-        else
-        {
-            return type.Namespace == "Microsoft.FSharp.Collections" &&
-              type.Name.StartsWith("FSharpMap");
-        }
+      if (this.frontEndArgs.ElementInspectArraysOnly)
+      {
+        return type.IsArray;
+      }
+      else
+      {
+        return type.Namespace == "Microsoft.FSharp.Collections" &&
+          type.Name.StartsWith("FSharpMap");
+      }
     }
 
     /// <summary>
@@ -554,7 +554,7 @@ namespace DotNetFrontEnd
     /// <returns>True if the type is an F# map, false otherwise</returns>
     public bool IsFSharpMap(Type type)
     {
-        return IsElementOfCollectionType(type, this.isFSharpMapHashmap, IsFSharpMapTest);
+      return IsElementOfCollectionType(type, this.isFSharpMapHashmap, IsFSharpMapTest);
     }
 
     /// <summary>
@@ -575,7 +575,7 @@ namespace DotNetFrontEnd
     private bool IsDictionaryTest(Type type)
     {
       return SearchForMatchingInterface(type, interfaceToTest =>
-          interfaceToTest.Name.StartsWith(DictionaryInterfaceName));
+          interfaceToTest.Name.EndsWith(DictionaryInterfaceName));
     }
 
     /// <summary>
