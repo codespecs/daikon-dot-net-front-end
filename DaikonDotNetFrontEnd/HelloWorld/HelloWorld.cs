@@ -8,14 +8,22 @@
 
   public class HelloWorld
   {
-    public static void Main(String[] args)
+    string greeting = "Hello World";
+
+    public HelloWorld()
     {
-      PrintHello("world");
+      this.greeting = "Hello World";
     }
 
-    public static void PrintHello(string name)
+    public static void Main(String[] args)
     {
-      Console.WriteLine("Hello " + name);
+      HelloWorld hw = new HelloWorld();
+      Console.WriteLine(hw.Greeting);
+    }
+
+    public string Greeting
+    {
+      get { return this.greeting; }
     }
   }
 }

@@ -170,35 +170,7 @@ namespace DotNetFrontEnd
         return;
       }
 
-      this.WritePair("variable", name, 1);
-
-      PrintVarKind(kind, relativeName);
-
-      if (enclosingVar.Length > 0)
-      {
-        this.WritePair("enclosing-var", enclosingVar, 2);
-      }
-
-      if (!type.IsArray)
-      {
-        this.WritePair("dec-type", GetDecType(type), 2);
-      }
-      else
-      {
-        this.WritePair("dec-type", GetDecType(type.GetElementType()) + "[]", 2);
-      }
-
-      PrintRepType(type, flags);
-
-      this.PrintFlags(flags);
-
-      // TODO(#4): Implement real comparability.
-      this.WritePair("comparability", 22, 2);
-
-      if (this.ShouldPrintParentPptIfNecessary(parentName))
-      {
-        this.WritePair("parent", parentName, 2);
-      }
+      PrintSimpleDescriptors(name, type, kind, flags, enclosingVar, relativeName, parentName);
 
       // If the variable is an object, then look at its fields or elements.
       // Don't look at the fields if the variable is a ToString or Classname call.
@@ -296,7 +268,8 @@ namespace DotNetFrontEnd
 
         foreach (var pureMethod in typeManager.GetPureMethodsForType(type))
         {
-          DeclareVariable(name + "." + pureMethod.Value.Name, pureMethod.Value.ReturnType,
+          DeclareVariable(name + "." + DeclarationPrinter.SanitizePropertyName(pureMethod.Value.Name),
+            pureMethod.Value.ReturnType,
             // TODO(#61): Fill out the var-kind and any other necessary fields
             nestingDepth: nestingDepth + 1);
         }
@@ -313,6 +286,51 @@ namespace DotNetFrontEnd
               nestingDepth: nestingDepth, parentName: parentName, flags: flags);
         }
 
+      }
+    }
+
+    /// <summary>
+    /// Print all the simple descriptors for this variable (name, flags, etc). Specifically excludes
+    /// any list expansion, children elements, pure method calls etc.
+    /// </summary>
+    /// <param name="name">Name of the variable to be declared</param>
+    /// <param name="type">(.NET) Type of the variable to be declared</param>
+    /// <param name="kind">Daikon-kind of the variable to be declared</param>
+    /// <param name="flags">Daikong-flags describing the variable</param>
+    /// <param name="enclosingVar">Variable enclosing the one to be declared</param>
+    /// <param name="relativeName">Relative name of the variable to be decalred</param>
+    /// <param name="parentName">Parent name of the variable to be declared</param>
+    private void PrintSimpleDescriptors(string name, Type type, VariableKind kind, 
+      VariableFlags flags, string enclosingVar, string relativeName, string parentName)
+    {
+      this.WritePair("variable", name, 1);
+
+      PrintVarKind(kind, relativeName);
+
+      if (enclosingVar.Length > 0)
+      {
+        this.WritePair("enclosing-var", enclosingVar, 2);
+      }
+
+      if (!type.IsArray)
+      {
+        this.WritePair("dec-type", GetDecType(type), 2);
+      }
+      else
+      {
+        this.WritePair("dec-type", GetDecType(type.GetElementType()) + "[]", 2);
+      }
+
+      PrintRepType(type, flags);
+
+      this.PrintFlags(flags);
+
+      // TODO(#4): Implement real comparability.
+      this.WritePair("comparability", 22, 2);
+
+      if (this.ShouldPrintParentPptIfNecessary(parentName))
+      {
+        this.WritePair("parent", parentName, 2);
       }
     }
 
@@ -452,9 +470,10 @@ namespace DotNetFrontEnd
 
       foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType))
       {
-        PrintList(name + "." + pureMethod.Value.Name, pureMethod.Value.ReturnType, name,
+        PrintList(name + "." + DeclarationPrinter.SanitizePropertyName(pureMethod.Value.Name), 
+          pureMethod.Value.ReturnType, name,
           // TODO(#61): Fill out the flags
-            nestingDepth: nestingDepth + 1, parentName: parentName);
+          nestingDepth: nestingDepth + 1, parentName: parentName);
       }
     }
 
@@ -665,6 +684,22 @@ namespace DotNetFrontEnd
       }
       string result = programPointName.Replace("\\", "\\\\");
       return result.Replace(" ", "\\_");
+    }
+
+    /// <summary>
+    /// In the IL property names have "get_" inserted in front of the property name. Including this
+    /// prefix in the output is confusing to the user, who doesn't expect it. This method removes
+    /// the prefix if necessary.
+    /// </summary>
+    /// <param name="propertyNameInIL">Name of the property as stored in IL</param>
+    /// <returns>Property name as the developer would recognize it</returns>
+    public static string SanitizePropertyName(string propertyNameInIL)
+    {
+      if (propertyNameInIL.StartsWith("get_"))
+      {
+        propertyNameInIL = propertyNameInIL.Replace("get_", "");
+      }
+      return propertyNameInIL;
     }
 
     /// <summary>

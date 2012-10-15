@@ -757,7 +757,7 @@ namespace DotNetFrontEnd
         {
           foreach (var item in typeManager.GetPureMethodsForType(type))
           {
-            ReflectiveVisit(name + '.' + item.Value.Name,
+            ReflectiveVisit(name + '.' + DeclarationPrinter.SanitizePropertyName(item.Value.Name),
                 GetMethodValue(obj, item.Value, item.Value.Name), item.Value.ReturnType, writer,
                     depth + 1);
           }
@@ -1036,6 +1036,7 @@ namespace DotNetFrontEnd
 
       foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType))
       {
+        string pureMethodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Value.Name);
         object[] pureMethodResults = new object[list.Count];
         for (int i = 0; i < list.Count; i++)
         {
@@ -1048,7 +1049,7 @@ namespace DotNetFrontEnd
             pureMethodResults[i] = GetMethodValue(list[i], pureMethod.Value, pureMethod.Value.Name);
           }
         }
-        ListReflectiveVisit(name + "." + pureMethod.Value.Name, pureMethodResults,
+        ListReflectiveVisit(name + "." + pureMethodName, pureMethodResults,
           pureMethod.Value.ReturnType, writer, depth + 1);
       }
     }

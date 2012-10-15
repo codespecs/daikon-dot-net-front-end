@@ -10,6 +10,7 @@ n == 6
 PureMethods.A..ctor(System.Int32 n):::EXIT8
 ===========================================================================
 PureMethods.A..ctor(System.Int32 n):::EXIT
+this.NPlusOne == this.PureMethod4.NPlusOne
 this.PureMethod1 == this.PureMethod4.PureMethod1
 this.PureMethod2 == this.PureMethod4.PureMethod2
 this.PureMethod3 == this.PureMethod4.PureMethod3
@@ -17,35 +18,37 @@ this.PureMethod3 == this.PureMethod4.n
 this.PureMethod3 == this.n
 this.PureMethod3 == orig(n)
 this.PureMethod4 == this.PureMethod4.PureMethod4
-this.PureMethod4.get_NPlusOne == this.get_NPlusOne
+this.NPlusOne == 7
 this.PureMethod1 == 0
 this.PureMethod2 has only one value
 this.PureMethod2.ToString() == "0"
 this.PureMethod3 == 6
 this.PureMethod4 has only one value
 this.PureMethod4.GetType() == PureMethods.A.class
-this.PureMethod4.get_NPlusOne == 7
 ===========================================================================
 PureMethods.A.printN():::ENTER
 this == this.PureMethod4
+this.NPlusOne == this.PureMethod4.NPlusOne
 this.PureMethod1 == this.PureMethod4.PureMethod1
 this.PureMethod2 == this.PureMethod4.PureMethod2
 this.PureMethod3 == this.PureMethod4.PureMethod3
 this.PureMethod3 == this.PureMethod4.n
 this.PureMethod3 == this.n
 this.PureMethod4 == this.PureMethod4.PureMethod4
-this.PureMethod4.get_NPlusOne == this.get_NPlusOne
+this.NPlusOne == 7
 this.PureMethod1 == 0
 this.PureMethod2 has only one value
 this.PureMethod2.ToString() == "0"
 this.PureMethod3 == 6
 this.PureMethod4 has only one value
 this.PureMethod4.GetType() == PureMethods.A.class
-this.PureMethod4.get_NPlusOne == 7
 ===========================================================================
 PureMethods.A.printN():::EXIT5
 ===========================================================================
 PureMethods.A.printN():::EXIT
+this.NPlusOne == this.PureMethod4.NPlusOne
+this.NPlusOne == orig(this.NPlusOne)
+this.NPlusOne == orig(this.PureMethod4.NPlusOne)
 this.PureMethod1 == this.PureMethod4.PureMethod1
 this.PureMethod1 == orig(this.PureMethod1)
 this.PureMethod1 == orig(this.PureMethod4.PureMethod1)
@@ -63,16 +66,13 @@ this.PureMethod4 == this.PureMethod4.PureMethod4
 this.PureMethod4 == orig(this)
 this.PureMethod4 == orig(this.PureMethod4)
 this.PureMethod4 == orig(this.PureMethod4.PureMethod4)
-this.PureMethod4.get_NPlusOne == this.get_NPlusOne
-this.PureMethod4.get_NPlusOne == orig(this.PureMethod4.get_NPlusOne)
-this.PureMethod4.get_NPlusOne == orig(this.get_NPlusOne)
+this.NPlusOne == 7
 this.PureMethod1 == 0
 this.PureMethod2 has only one value
 this.PureMethod2.ToString() == "0"
 this.PureMethod3 == 6
 this.PureMethod4 has only one value
 this.PureMethod4.GetType() == PureMethods.A.class
-this.PureMethod4.get_NPlusOne == 7
 this.PureMethod2.ToString() == orig(this.PureMethod2.ToString())
 ===========================================================================
 PureMethods.PureMethods.Main(System.String[] args):::ENTER
