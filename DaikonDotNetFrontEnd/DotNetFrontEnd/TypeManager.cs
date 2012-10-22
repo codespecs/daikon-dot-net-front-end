@@ -223,7 +223,12 @@ namespace DotNetFrontEnd
           // The user will declare a single type name
           Type type = ConvertAssemblyQualifiedNameToType(typeName).GetSingleType();
           // Pure methods have no parameters
-          MethodInfo method = type.GetMethod(methodName, new Type[] { });
+          MethodInfo method = type.GetMethod(methodName, 
+            BindingFlags.Public | 
+            BindingFlags.NonPublic | 
+            BindingFlags.Static | 
+            BindingFlags.Instance
+          );
           if (method == null)
           {
             throw new ArgumentException("No method of name: " + methodName + " on type:" + typeName
