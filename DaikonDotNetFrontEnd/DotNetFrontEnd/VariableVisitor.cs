@@ -555,26 +555,6 @@ namespace DotNetFrontEnd
 
     #region Reflective Visitor and helper methods
 
-    private static bool PerformEarlyExitChecks(string name, int depth)
-    {
-      if (variablesVisitedForCurrentProgramPoint.Contains(name))
-      {
-        return true;
-      }
-      else
-      {
-        variablesVisitedForCurrentProgramPoint.Add(name);
-      }
-
-      if (depth > frontEndArgs.MaxNestingDepth ||
-          !frontEndArgs.ShouldPrintVariable(name))
-      {
-        return true;
-      }
-
-      return false;
-    }
-
     /// <summary>
     /// Print the 3 line (name, value, mod bit) triple for the given variable and all its 
     /// children.
@@ -781,6 +761,34 @@ namespace DotNetFrontEnd
         }
       } // Close non-list inspection
     } // Close ReflectiveVisit()
+
+    /// <summary>
+    /// Checks whether the front end should exit early due to already visiting the variable,
+    /// for exceeding depth, or for user-supressed variables. Updates the list of variables
+    /// visited for this program point to include this one.
+    /// </summary>
+    /// <param name="name">Name of the variable to be potentailly instrumented</param>
+    /// <param name="depth">Nesting depth of the variable</param>
+    /// <returns>True if the variable should be skipped, otherwise false</returns>
+    private static bool PerformEarlyExitChecks(string name, int depth)
+    {
+      if (variablesVisitedForCurrentProgramPoint.Contains(name))
+      {
+        return true;
+      }
+      else
+      {
+        variablesVisitedForCurrentProgramPoint.Add(name);
+      }
+
+      if (depth > frontEndArgs.MaxNestingDepth ||
+          !frontEndArgs.ShouldPrintVariable(name))
+      {
+        return true;
+      }
+
+      return false;
+    }
 
     /// <summary>
     /// Process the given variable of list type, calling GetType if necessary and visiting 
@@ -1117,7 +1125,11 @@ namespace DotNetFrontEnd
         }
         else
         {
-          return x.ToString();
+          StringBuilder builder = new StringBuilder();
+          builder.Append("\"");
+          builder.Append(x.ToString());
+          builder.Append("\"");
+          return builder.ToString();
         }
       }
       else if (flags.HasFlag(VariableModifiers.classname) ||

@@ -1,0 +1,4 @@
+Enums.Enums.Main() ENTER/3: 1 EXIT27/9: 1
+Enums.Enums.PrintColors(Enums.Enums.Colors\_myColors) ENTER/33: 1 EXIT6/39: 1
+Enums.Enums.PrintEnumType(System.Type\_weekdays) ENTER/33: 2 EXIT35/39: 2
+Enums.Enums.formatEnum(System.String\_s,\_System.Type\_enumType) ENTER/39: 9 EXIT8/51: 9
