@@ -2,6 +2,7 @@
 
 CS_EXT = cs
 FS_EXT = fs
+VB_EXT = vb
 DNFE_EXE = $(DAIKONDIR)/scripts/DotNetFrontEndLauncher.exe
 DNFE_OPTIONS := $(DNFE_OPTIONS) --force-unix-newline --omit_var=Empty
 CLEAN_OUTPUT := ../clean-output.pl
@@ -23,6 +24,8 @@ DAIKON := java -Xmx960m -XX:MaxPermSize=960M daikon.Daikon --no_text_output --co
 PRINT_INV := java -Xmx960m -XX:MaxPermSize=960M daikon.PrintInvariants
 ifeq ($(LANG), FSharp)
 COMPILER := /cygdrive/c/program_files/fsc.exe
+else ifeq ($(LANG), VB)
+COMPILER := /cygdrive/c/Windows/Microsoft.NET/Framework/v4.0.30319/vbc.exe /debug
 else
 COMPILER := /cygdrive/c/Windows/Microsoft.NET/Framework/v4.0.30319/csc.exe /debug
 endif
@@ -42,6 +45,8 @@ endif
 
 ifeq ($(LANG), FSharp)
 SOURCES ?= *.$(FS_EXT)
+else ifeq ($(LANG), VB)
+SOURCES ?= *.$(VB_EXT)
 else
 SOURCES ?= *.$(CS_EXT)
 endif
