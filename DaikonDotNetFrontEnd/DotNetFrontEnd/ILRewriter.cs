@@ -178,7 +178,10 @@ namespace DotNetFrontEnd
         throw new ArgumentNullException("methodBody");
       }
       // If the method is compiler generated don't insert instrumentation code.
-      if (typeManager.IsMethodCompilerGenerated(methodBody.MethodDefinition) ||
+      if (
+        methodBody.MethodDefinition.Name.ToString() == "TestMethod" ||
+        
+        typeManager.IsMethodCompilerGenerated(methodBody.MethodDefinition) ||
         typeManager.GetPureMethodsForType(methodBody.MethodDefinition.ContainingType).Any(
         meth => meth.Value.Name.ToString() == methodBody.MethodDefinition.Name.ToString()))
       {
@@ -1992,6 +1995,50 @@ namespace DotNetFrontEnd
           break;
         }
       }
+
+      var testAssembly= new Assembly()
+      {
+        Name = nameTable.GetNameFor("hello"),
+        Kind = ModuleKind.DynamicallyLinkedLibrary,
+        PlatformType = host.PlatformType,
+        RequiresStartupStub = true,
+      };
+      mutableAssembly.AssemblyReferences.Add(testAssembly);
+
+      var rootUnitNamespace = new RootUnitNamespace();
+      testAssembly.UnitNamespaceRoot = rootUnitNamespace;
+      rootUnitNamespace.Unit = testAssembly;
+      var testClass = new NamespaceTypeDefinition()
+      {
+        ContainingUnitNamespace = rootUnitNamespace,
+        InternFactory = host.InternFactory,
+        IsClass = true,
+        IsPublic = true,
+        Methods = new List<IMethodDefinition>(1),
+        Name = nameTable.GetNameFor("Test"),
+      };
+      rootUnitNamespace.Members.Add(testClass);
+      testAssembly.AllTypes.Add(testClass);
+      testClass.BaseClasses = new List<ITypeReference>() { host.PlatformType.SystemObject };
+
+      var mainMethod = new MethodDefinition()
+      {
+        ContainingTypeDefinition = testClass,
+        InternFactory = host.InternFactory,
+        IsCil = true,
+        IsStatic = true,
+        Name = nameTable.GetNameFor("TestMethod"),
+        Type = host.PlatformType.SystemString,
+        Visibility = TypeMemberVisibility.Public,
+      };
+      testClass.Methods.Add(mainMethod);
+
+      var ilGenerator = new ILGenerator(host, mainMethod);
+      var body = new ILGeneratorMethodBody(ilGenerator, true, 1, mainMethod, Enumerable<ILocalDefinition>.Empty, Enumerable<ITypeDefinition>.Empty);
+      mainMethod.Body = body;
+
+      ilGenerator.Emit(OperationCode.Ldstr, "hello");
+      ilGenerator.Emit(OperationCode.Ret);
 
       // We need to be able to reference to variable visitor assembly to add calls to it.
       mutableAssembly.AssemblyReferences.Add(variableVisitorAssembly);
