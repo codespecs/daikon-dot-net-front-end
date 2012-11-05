@@ -7,172 +7,32 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-// This file defines a profiler that inserts instrumentation calls 
-// at the beginning and end of every function and returns the modified program
-// as a MemoryStream.
-//
 //-----------------------------------------------------------------------------
-
-// This file originally came from the CCIMetadata (http://ccimetadata.codeplex.com/) 
-// sample programs. Specifically, it was Samples/ILMutator/ILMutator.cs. The original code inserted
-// a System.WriteLine call for each store to a local variable defined by the programmer. It has been
-// modified to insert the call to the instrumentation function at the beginning and exit of every 
-// method. This is mostly done in the ProcessOperations() method, with many support methods added.
 
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization; // needed for defining exception .ctors
+using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using Microsoft.Cci;
 using Microsoft.Cci.MutableCodeModel;
 
+// This file and ProgramRewriter.cs originally came from the CCIMetadata (http://ccimetadata.codeplex.com/) 
+// sample programs. Specifically, it was Samples/ILMutator/ILMutator.cs. The original code inserted
+// a System.WriteLine call for each store to a local variable defined by the programmer. It has been
+// modified to insert the call to the instrumentation function at the beginning and exit of every 
+// method. This is mostly done in the ProcessOperations() method, with many support methods added.
+
 namespace DotNetFrontEnd
 {
-  /// <summary>
-  /// Performs insertion of instrumentation calls at entrance and exit of every function in a
-  /// executable. Never instantiated, only the rewrite_il() method is used.
-  /// </summary>
-  public class ILRewriter
-  {
-    #region Constants
-
-    /// <summary>
-    /// The environment variable defining where front-end output will go
-    /// </summary>
-    private static readonly string DaikonEnvVar = "DNFE_OUT";
-
-    /// <summary>
-    /// The name of the DLL containing the visitor to insert calls to
-    /// </summary>
-    public static readonly string VisitorDll = "DotNetFrontEnd.dll";
-
-    #endregion
-
-    // Don't instantiate
-    private ILRewriter() { }
-
-    /// <summary>
-    /// Rewrite program IL with instrumentation calls, returning a MemoryStream, or null if the
-    /// program was saved to a file.
-    /// Caller must be sure to dispose returned MemoryStream.
-    /// </summary>
-    /// <param name="frontEndArgs">The args to use in profiling the program</param>
-    /// <returns>MemoryStream containing the program to be profiled, with the instrumentation
-    /// code added, or null if the saveProgram argument is active.</returns>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage",
-       "CA2202:Do not dispose objects multiple times"),
-     System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability",
-       "CA2000:Dispose objects before losing scope")]
-    public static MemoryStream rewrite_il(FrontEndArgs frontEndArgs,
-        TypeManager typeManager)
-    {
-      Stream resultStream;
-      if (frontEndArgs.AssemblyPath == null || frontEndArgs.AssemblyPath.Length < 1)
-      {
-        throw new FileNotFoundException("No program found at the specified path.");
-      }
-
-      if (frontEndArgs.SaveProgram != null)
-      {
-        resultStream = new FileStream(frontEndArgs.SaveProgram, FileMode.Create);
-      }
-      else
-      {
-        resultStream = new MemoryStream();
-      }
-
-      using (var host = new PeReader.DefaultHost())
-      {
-        IModule/*?*/ module = host.LoadUnitFrom(frontEndArgs.AssemblyPath) as IModule;
-        if (module == null || module == Dummy.Module || module == Dummy.Assembly)
-        {
-          throw new ArgumentException("Given path is not a PE file containing a CLR"
-            + " assembly, or an error occurred when loading it.", "reflectorArgs.AssemblyPath");
-        }
-
-        PdbReader/*?*/ pdbReader = null;
-        string pdbFile = Path.ChangeExtension(module.Location, "pdb");
-        if (File.Exists(pdbFile))
-        {
-          using (var pdbStream = File.OpenRead(pdbFile))
-          {
-            pdbReader = new PdbReader(pdbStream, host);
-          }
-        }
-        else
-        {
-          // TODO(#25): Figure out how what happens if we can't load the PDB file.
-          // It seems to be non-fatal, so print the error and continue.
-          Console.Error.WriteLine("Could not load the PDB file for '" + module.Name.Value +
-              "' . Proceeding anyway.");
-        }
-        using (pdbReader)
-        {
-          ILMutator mutator = new ILMutator(host, pdbReader, frontEndArgs, typeManager);
-
-          // Look for the path to the reflector, it's an environment variable, check the user space 
-          // first.
-          string daikonDir = Environment.GetEnvironmentVariable(DaikonEnvVar,
-              EnvironmentVariableTarget.User);
-          if (daikonDir == null)
-          {
-            // If that didn't work check the machine space
-            daikonDir = Environment.GetEnvironmentVariable(DaikonEnvVar,
-                EnvironmentVariableTarget.Machine);
-          }
-
-          if (daikonDir == null)
-          {
-            // We can't proceed without this
-            Console.WriteLine("Must define" + DaikonEnvVar + " environment variable");
-            Environment.Exit(1);
-          }
-          module = mutator.Visit(module, Path.Combine(daikonDir, VisitorDll));
-
-          // Remove the old PDB file
-          try
-          {
-            File.Delete(pdbFile);
-          }
-          catch (UnauthorizedAccessException)
-          {
-            // If they are running the debugger we might not be able to delete the file
-            // Save the pdb elsewhere in this case.
-            pdbFile = module.Location + ".pdb";
-          }
-
-          // Need to not pass in a local scope provider until such time as we have one 
-          // that will use the mutator to remap things (like the type of a scope 
-          // constant) from the original assembly to the mutated one.
-          using (var pdbWriter = new PdbWriter(pdbFile, pdbReader))
-          {
-            PeWriter.WritePeToStream(module, host, resultStream, pdbReader, null,
-                pdbWriter);
-          }
-        }
-      }
-
-      if (frontEndArgs.SaveProgram != null)
-      {
-        // We aren't going to run the program, so no need to return anything
-        return null;
-      }
-      else
-      {
-        return (MemoryStream)resultStream; // success
-      }
-    }
-  }
-
   /// <summary>
   /// A mutator that modifies method bodies at the IL level.
   /// It injects a call to a visitor function for each function argument and class field and the
   /// beginning and end of every method.
   /// </summary>
-  public class ILMutator : MetadataRewriter, IDisposable
+  public class ILRewriter : MetadataRewriter, IDisposable
   {
     #region Constants
 
@@ -257,7 +117,7 @@ namespace DotNetFrontEnd
 
     #region CCI Code
 
-    public ILMutator(IMetadataHost host, PdbReader pdbReader, DotNetFrontEnd.FrontEndArgs refArgs,
+    public ILRewriter(IMetadataHost host, PdbReader pdbReader, DotNetFrontEnd.FrontEndArgs refArgs,
         DotNetFrontEnd.TypeManager typeManager)
       : base(host)
     {
@@ -338,7 +198,7 @@ namespace DotNetFrontEnd
     private IMethodBody ProcessOperations(IMethodBody immutableMethodBody)
     {
       // Alias operations and the count for convenience
-      List<IOperation> operations = ((immutableMethodBody.Operations == null) 
+      List<IOperation> operations = ((immutableMethodBody.Operations == null)
         ? new List<IOperation>()
         : new List<IOperation>(immutableMethodBody.Operations));
       int opCount = operations.Count;
@@ -348,8 +208,8 @@ namespace DotNetFrontEnd
       // There may be many nops before the ret instruction, we want to catch anything
       // branching into the last return, so we need to catch anything branching into these
       // nops.
-      int operationIndexForLastReturnJumpTarget = 
-        GetOpeartionIndexForLastReturnJumpTarget(operations, opCount);
+      int operationIndexForLastReturnJumpTarget =
+        GetIndexOfLastReturnJumpTarget(operations, opCount);
 
       ILGenerator generator = new ILGenerator(this.host, immutableMethodBody.MethodDefinition);
       if (this.pdbReader != null)
@@ -365,7 +225,7 @@ namespace DotNetFrontEnd
       this.scopeEnumerator = this.pdbReader == null ?
           null : this.pdbReader.GetLocalScopes(immutableMethodBody).GetEnumerator();
       this.scopeEnumeratorIsValid = this.scopeEnumerator != null && this.scopeEnumerator.MoveNext();
-      
+
       // Need the method body to be mutable to add the nonce variable
       MethodBody mutableMethodBody = (MethodBody)immutableMethodBody;
 
@@ -444,10 +304,9 @@ namespace DotNetFrontEnd
       return mutableMethodBody;
     }
 
-    private ISet<IOperation> DetermineSynthesizedReturns(IMethodBody immutableMethodBody, 
+    private ISet<IOperation> DetermineSynthesizedReturns(IMethodBody immutableMethodBody,
       List<IOperation> operations, ILGeneratorLabel commonExit)
     {
-
       ISet<IOperation> synthesizedReturns = null;
       if (immutableMethodBody.MethodDefinition.Type.TypeCode != PrimitiveTypeCode.Void)
       {
@@ -466,7 +325,15 @@ namespace DotNetFrontEnd
       return synthesizedReturns;
     }
 
-    private static int GetOpeartionIndexForLastReturnJumpTarget(List<IOperation> operations, 
+    /// <summary>
+    /// The compiler translate multiple return statements to a jump to the some
+    /// number of noops inserted before the final return instruction. This method
+    /// gets the index of the last return jump target in the given list of operations.
+    /// </summary>
+    /// <param name="operations">Operations to inspect</param>
+    /// <param name="opCount">The number of operations in the list</param>
+    /// <returns>The index of the last return jump target.</returns>
+    private static int GetIndexOfLastReturnJumpTarget(List<IOperation> operations,
       int opCount)
     {
       int operationIndexForLastReturnJumpTarget;
@@ -509,8 +376,7 @@ namespace DotNetFrontEnd
       }
 
       // Save the last return instruction
-      IOperation lastReturnOperation = operations[opCount - 1];
-      return lastReturnOperation;
+      return operations[opCount - 1];
     }
 
     /// <summary>
@@ -1551,7 +1417,7 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="transition">Transtition of the current program point</param>
     /// <param name="methodBody">Method body of the current program point</param>
-    private void PrintParentNameDeclarationIfNecessary(MethodTransition transition, 
+    private void PrintParentNameDeclarationIfNecessary(MethodTransition transition,
         IMethodBody methodBody)
     {
       if (!this.printDeclarations)
@@ -1815,7 +1681,7 @@ namespace DotNetFrontEnd
       return !(methodDefiniton.IsStatic ||
                (transition == MethodTransition.ENTER && methodDefiniton.IsConstructor));
     }
-    
+
     /// <summary>
     /// Print the declaration for fact that we are entering or exiting the method
     /// </summary>
