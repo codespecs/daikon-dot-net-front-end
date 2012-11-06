@@ -678,7 +678,7 @@ namespace DotNetFrontEnd
                       false);
           if (result == null)
           {
-            Console.Error.WriteLine("Couldn'type convert type with assembly qualified name: " +
+            Console.Error.WriteLine("Couldn't convert type with assembly qualified name: " +
                 assemblyQualifiedName);
           }
           this.nameTypeMap.Add(assemblyQualifiedName, result);

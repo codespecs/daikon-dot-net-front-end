@@ -180,7 +180,7 @@ namespace DotNetFrontEnd
       // If the method is compiler generated don't insert instrumentation code.
       if (
         methodBody.MethodDefinition.Name.ToString() == "TestMethod" ||
-        
+
         typeManager.IsMethodCompilerGenerated(methodBody.MethodDefinition) ||
         typeManager.GetPureMethodsForType(methodBody.MethodDefinition.ContainingType).Any(
         meth => meth.Value.Name.ToString() == methodBody.MethodDefinition.Name.ToString()))
@@ -1995,50 +1995,7 @@ namespace DotNetFrontEnd
           break;
         }
       }
-
-      var testAssembly= new Assembly()
-      {
-        Name = nameTable.GetNameFor("hello"),
-        Kind = ModuleKind.DynamicallyLinkedLibrary,
-        PlatformType = host.PlatformType,
-        RequiresStartupStub = true,
-      };
-      mutableAssembly.AssemblyReferences.Add(testAssembly);
-
-      var rootUnitNamespace = new RootUnitNamespace();
-      testAssembly.UnitNamespaceRoot = rootUnitNamespace;
-      rootUnitNamespace.Unit = testAssembly;
-      var testClass = new NamespaceTypeDefinition()
-      {
-        ContainingUnitNamespace = rootUnitNamespace,
-        InternFactory = host.InternFactory,
-        IsClass = true,
-        IsPublic = true,
-        Methods = new List<IMethodDefinition>(1),
-        Name = nameTable.GetNameFor("Test"),
-      };
-      rootUnitNamespace.Members.Add(testClass);
-      testAssembly.AllTypes.Add(testClass);
-      testClass.BaseClasses = new List<ITypeReference>() { host.PlatformType.SystemObject };
-
-      var mainMethod = new MethodDefinition()
-      {
-        ContainingTypeDefinition = testClass,
-        InternFactory = host.InternFactory,
-        IsCil = true,
-        IsStatic = true,
-        Name = nameTable.GetNameFor("TestMethod"),
-        Type = host.PlatformType.SystemString,
-        Visibility = TypeMemberVisibility.Public,
-      };
-      testClass.Methods.Add(mainMethod);
-
-      var ilGenerator = new ILGenerator(host, mainMethod);
-      var body = new ILGeneratorMethodBody(ilGenerator, true, 1, mainMethod, Enumerable<ILocalDefinition>.Empty, Enumerable<ITypeDefinition>.Empty);
-      mainMethod.Body = body;
-
-      ilGenerator.Emit(OperationCode.Ldstr, "hello");
-      ilGenerator.Emit(OperationCode.Ret);
+      WriteTestAssembly(mutableAssembly, host);
 
       // We need to be able to reference to variable visitor assembly to add calls to it.
       mutableAssembly.AssemblyReferences.Add(variableVisitorAssembly);
@@ -2054,7 +2011,7 @@ namespace DotNetFrontEnd
           // CCI components come up named <*>, and we want to exclude them.
           Regex regex = new Regex(TypeManager.RegexForTypesToIgnoreForProgramPoint);
           string typeName = ((ITypeDefinition)type).ToString();
-          if (!(regex.IsMatch(type.ToString())))
+          if (!(regex.IsMatch(type.ToString()) || type.ToString() == "Test"))
           {
             this.declPrinter.PrintObjectDefinition(typeName,
                 this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type));
@@ -2069,6 +2026,51 @@ namespace DotNetFrontEnd
         this.declPrinter.CloseWriter();
       }
       return result;
+    }
+
+    private void WriteTestAssembly(Assembly mutableAssembly, IMetadataHost host)
+    {
+        var coreAssembly = host.LoadAssembly(host.CoreAssemblySymbolicIdentity);
+
+        var rootUnitNamespace = new RootUnitNamespace();
+        rootUnitNamespace.Unit = mutableAssembly;
+
+        var testClass = new NamespaceTypeDefinition()
+        {
+          ContainingUnitNamespace = rootUnitNamespace,
+          InternFactory = host.InternFactory,
+          IsClass = true,
+          IsPublic = true,
+          Methods = new List<IMethodDefinition>(1),
+          Name = nameTable.GetNameFor("Test"),
+        };
+        rootUnitNamespace.Members.Add(testClass);
+        mutableAssembly.AllTypes.Add(testClass);
+        testClass.BaseClasses = new List<ITypeReference>() { host.PlatformType.SystemObject };
+
+        var mainMethod = new MethodDefinition()
+        {
+          ContainingTypeDefinition = testClass,
+          InternFactory = host.InternFactory,
+          IsCil = true,
+          IsStatic = true,
+          Name = nameTable.GetNameFor("Main"),
+          Type = host.PlatformType.SystemVoid,
+          Visibility = TypeMemberVisibility.Public,
+        };
+        testClass.Methods.Add(mainMethod);
+
+        var ilGenerator = new ILGenerator(host, mainMethod);
+
+        var systemConsole = UnitHelper.FindType(nameTable, coreAssembly, "System.Console");
+        var writeLine = TypeHelper.GetMethod(systemConsole, nameTable.GetNameFor("WriteLine"), host.PlatformType.SystemString);
+
+        ilGenerator.Emit(OperationCode.Ldstr, "hello");
+        ilGenerator.Emit(OperationCode.Call, writeLine);
+        ilGenerator.Emit(OperationCode.Ret);
+
+        var body = new ILGeneratorMethodBody(ilGenerator, true, 1, mainMethod, Enumerable<ILocalDefinition>.Empty, Enumerable<ITypeDefinition>.Empty);
+        mainMethod.Body = body;
     }
 
     public void Dispose()
