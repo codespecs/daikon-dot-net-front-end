@@ -80,6 +80,8 @@ namespace DotNetFrontEnd
     [NonSerialized]
     private AssemblyIdentity assemblyIdentity;
 
+    #region Collection / Pure Method Memoization Caches
+
     /// <summary>
     /// Map from types to whether or not they are list implementors
     /// Memoizes the lookup
@@ -147,6 +149,8 @@ namespace DotNetFrontEnd
     /// Map from key to method info for pure methods
     /// </summary>
     private Dictionary<int, MethodInfo> pureMethods;
+
+    #endregion
 
     /// <summary>
     /// A collection of values to ignore, where each value is of the form 
@@ -1021,7 +1025,7 @@ namespace DotNetFrontEnd
           // throw new ArgumentNullException("type");
           return false;
         }
-        // @ is not a valid character in a type name so it must be compiler generated
+        // @ is not a valid character in a type name, so any type that contains it must be compiler generated
         if (type.Name.Contains("@")) { return true; }
         try
         {
@@ -1029,7 +1033,7 @@ namespace DotNetFrontEnd
           var paramTypes = parameters.ToArray();
           Type[] reflectionTypes = new Type[paramTypes.Length];
           int i = 0;
-          foreach (var currType in paramTypes) // (int i = 0; i < paramTypes.Length; i++)
+          foreach (var currType in paramTypes)
           {
             // Get the param type
             // Convert from CCI Type to .NET Type
