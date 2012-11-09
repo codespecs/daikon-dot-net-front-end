@@ -2048,29 +2048,25 @@ namespace DotNetFrontEnd
         mutableAssembly.AllTypes.Add(testClass);
         testClass.BaseClasses = new List<ITypeReference>() { host.PlatformType.SystemObject };
 
-        var mainMethod = new MethodDefinition()
+        var myMethod = new MethodDefinition()
         {
           ContainingTypeDefinition = testClass,
           InternFactory = host.InternFactory,
           IsCil = true,
           IsStatic = true,
-          Name = nameTable.GetNameFor("Main"),
-          Type = host.PlatformType.SystemVoid,
+          Name = nameTable.GetNameFor("MyMethod"),
+          Type = host.PlatformType.SystemString,
           Visibility = TypeMemberVisibility.Public,
         };
-        testClass.Methods.Add(mainMethod);
+        testClass.Methods.Add(myMethod);
 
-        var ilGenerator = new ILGenerator(host, mainMethod);
-
-        var systemConsole = UnitHelper.FindType(nameTable, coreAssembly, "System.Console");
-        var writeLine = TypeHelper.GetMethod(systemConsole, nameTable.GetNameFor("WriteLine"), host.PlatformType.SystemString);
+        var ilGenerator = new ILGenerator(host, myMethod);
 
         ilGenerator.Emit(OperationCode.Ldstr, "hello");
-        ilGenerator.Emit(OperationCode.Call, writeLine);
         ilGenerator.Emit(OperationCode.Ret);
 
-        var body = new ILGeneratorMethodBody(ilGenerator, true, 1, mainMethod, Enumerable<ILocalDefinition>.Empty, Enumerable<ITypeDefinition>.Empty);
-        mainMethod.Body = body;
+        var body = new ILGeneratorMethodBody(ilGenerator, true, 1, myMethod, Enumerable<ILocalDefinition>.Empty, Enumerable<ITypeDefinition>.Empty);
+        myMethod.Body = body;
     }
 
     public void Dispose()
