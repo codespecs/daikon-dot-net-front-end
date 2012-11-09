@@ -411,6 +411,8 @@ namespace DotNetFrontEnd
         // been saved to disk, so load them now.
         LoadFrontEndArgsAndTypeManagerFromDisk();
       }
+
+      LoadStoredType();
       if (frontEndArgs.SampleStart != FrontEndArgs.NoSampleStart)
       {
         int oldOccurrences;
@@ -551,6 +553,15 @@ namespace DotNetFrontEnd
       {
         if (stream != null) { stream.Dispose(); }
       }
+    }
+
+    /// <summary>
+    /// Experimental method to load data from a type stored in the assembly
+    /// </summary>
+    private static void LoadStoredType()
+    {
+      Type t = Type.GetType("Test");
+      Console.WriteLine(t.GetMethods()[0]);
     }
 
     #region Reflective Visitor and helper methods
@@ -1210,8 +1221,16 @@ namespace DotNetFrontEnd
       return runtimeField.GetValue(obj);
     }
 
-    private static object GetMethodValue(object obj, MethodInfo field, string methodName)
+    /// <summary>
+    /// Get the result resturned by invoking the given method on the given object.
+    /// </summary>
+    /// <param name="obj">Object to invoke the method on</param>
+    /// <param name="method">Method to invoke</param>
+    /// <param name="methodName">Name of the method to invoke</param>
+    /// <returns>Result returned by the invoked function</returns>
+    private static object GetMethodValue(object obj, MethodInfo method, string methodName)
     {
+      // TODO(#60): Duplicative with GetVariableValue?
       if (obj == null)
       {
         return null;
@@ -1221,7 +1240,7 @@ namespace DotNetFrontEnd
       Type currentType = obj.GetType();
 
       // Ensure we are at the declared type, and not possibly a subtype
-      while ((currentType.Name != null) && (currentType.Name != field.DeclaringType.Name))
+      while ((currentType.Name != null) && (currentType.Name != method.DeclaringType.Name))
       {
         currentType = currentType.BaseType;
       }
