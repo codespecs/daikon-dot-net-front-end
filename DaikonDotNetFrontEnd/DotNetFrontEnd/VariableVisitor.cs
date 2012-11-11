@@ -560,8 +560,19 @@ namespace DotNetFrontEnd
     /// </summary>
     private static void LoadStoredType()
     {
-      Type t = Type.GetType("Test");
-      Console.WriteLine(t.GetMethods()[0]);
+      Type t = typeManager.ConvertAssemblyQualifiedNameToType(
+        "Test, Bank, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/*,
+        frontEndArgs.AssemblyName, frontEndArgs.AssemblyPath*/).GetSingleType();
+
+      if (t == null)
+      {
+        throw new Exception("type resolution failed");
+      }
+      var method = t.GetMethod("MyMethod");
+      if ((string)method.Invoke(null, null) != "hello")
+      {
+        throw new Exception("Didn't get expected result");
+      }
     }
 
     #region Reflective Visitor and helper methods
