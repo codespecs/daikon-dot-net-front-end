@@ -98,6 +98,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="FrontEndArgs.cs" />
     <Compile Include="ILRewriter.cs" />
+    <Compile Include="ProgramRewriter.cs" />
     <Compile Include="VariableVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VariableVisitorException.cs" />
