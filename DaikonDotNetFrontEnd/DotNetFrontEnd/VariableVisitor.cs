@@ -560,9 +560,9 @@ namespace DotNetFrontEnd
     /// </summary>
     private static void LoadStoredType()
     {
+      /*
       Type t = typeManager.ConvertAssemblyQualifiedNameToType(
-        "Test, Bank, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/*,
-        frontEndArgs.AssemblyName, frontEndArgs.AssemblyPath*/).GetSingleType();
+        "Test, Bank, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null").GetSingleType();
 
       if (t == null)
       {
@@ -573,6 +573,7 @@ namespace DotNetFrontEnd
       {
         throw new Exception("Didn't get expected result");
       }
+       */
     }
 
     #region Reflective Visitor and helper methods
