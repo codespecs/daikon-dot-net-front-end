@@ -4,6 +4,7 @@ CS_EXT = cs
 FS_EXT = fs
 VB_EXT = vb
 DNFE_EXE = $(DAIKONDIR)/scripts/DotNetFrontEndLauncher.exe
+SIKULI_PATH = '/cygdrive/c/Program Files (x86)/Sikuli X/Sikuli-IDE-w.bat'
 DNFE_OPTIONS := $(DNFE_OPTIONS) --force-unix-newline --omit_var=Empty
 CLEAN_OUTPUT := ../clean-output.pl
 RUN_MANY := ../run-many.pl
@@ -77,6 +78,15 @@ invs-large: $(NAME)
 	$(AFTER_RUN)
 	$(PRINT_INV) daikon-output/$(NAME).inv.gz daikon-output/$(NAME).inv.txt
 
+ifeq ($(SIKULI_RUN),1)
+ran-dnfe: $(NAME) $(DNFE_EXE) $(CLEAN_OUTPUT)
+	$(BEFORE_RUN)
+	$(SIKULI_PATH) -r $(NAME).skl >$(NAME).out 2>&1
+	sleep 8
+	cat /dev/null $(EXTRA_OUTPUTS) >>$(NAME).out
+	perl -i $(CLEAN_OUTPUT) $(NAME).out
+	touch $@
+else
 ifdef TESTS_SCRIPT
 ran-dnfe: $(NAME).exe $(DNFE_EXE) $(TESTS_SCRIPT) $(CLEAN_OUTPUT)
 	rm -f daikon-output/$(NAME)$(DTRACE_EXT)
@@ -117,6 +127,7 @@ ran-dnfe: $(NAME) $(DNFE_EXE) $(CLEAN_OUTPUT)
 	cat /dev/null $(EXTRA_OUTPUTS) >>$(NAME).out
 	perl -i $(CLEAN_OUTPUT) $(NAME).out
 	touch $@
+endif
 endif
 endif
 endif
