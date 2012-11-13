@@ -70,10 +70,10 @@
 <h2>SikuliCode.sikuli\SikuliCode.sikuli</h2> <a href="SikuliCode.sikuli\SikuliCode.zip">(Download this script)</a>
 </div>
 <pre class="sikuli-code">
-dir = <span class="str">r'C:\Users\Kellen\Documents\daikon-dot-net-front-end\DaikonDotNetFrontEnd\DotNetFrontEndLauncher\bin\Debug'</span>
-dnfe = dir + <span class="str">r'\DotNetFrontEndLauncher.exe'</span>
-app = <span class="str">r'C:\Users\Kellen\Documents\daikon-dot-net-front-end\DotNetFrontEndTests\SikuliExample\SikuliExample.exe'</span>
-<span class="kw">print</span> <span class="str">'hello'</span>
+<span class="kw">import</span> os
+
+dnfe = os.environ[<span class="str">'DNFE_OUT'</span>] + <span class="str">r'\DotNetFrontEndLauncher.exe'</span>
+app = <span class="str">'SikuliExample.exe'</span>
 openApp(dnfe + <span class="str">' '</span> + app)
 <span class="skw">wait</span>(<img src="iuwmanylicks.png" />)
 <span class="skw">click</span>(<img src="iuwmanylicks.png" />)
