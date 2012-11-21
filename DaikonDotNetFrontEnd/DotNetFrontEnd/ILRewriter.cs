@@ -2034,7 +2034,6 @@ namespace DotNetFrontEnd
 
         var rootUnitNamespace = new RootUnitNamespace();
         rootUnitNamespace.Unit = mutableAssembly;
-
         var testClass = new NamespaceTypeDefinition()
         {
           ContainingUnitNamespace = rootUnitNamespace,
@@ -2043,6 +2042,7 @@ namespace DotNetFrontEnd
           IsPublic = true,
           Methods = new List<IMethodDefinition>(1),
           Name = nameTable.GetNameFor("Test"),
+          MangleName = false,
         };
         rootUnitNamespace.Members.Add(testClass);
         mutableAssembly.AllTypes.Add(testClass);
@@ -2062,7 +2062,7 @@ namespace DotNetFrontEnd
 
         var ilGenerator = new ILGenerator(host, myMethod);
 
-        ilGenerator.Emit(OperationCode.Ldstr, "hello");
+        ilGenerator.Emit(OperationCode.Ldstr, this.reflectionArgs.GetArgsToWrite());
         ilGenerator.Emit(OperationCode.Ret);
 
         var body = new ILGeneratorMethodBody(ilGenerator, true, 1, myMethod, Enumerable<ILocalDefinition>.Empty, Enumerable<ITypeDefinition>.Empty);

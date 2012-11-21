@@ -118,6 +118,8 @@ namespace DotNetFrontEnd
     /// </summary>
     private Dictionary<PossibleArgument, string> programArguments;
 
+    private string argsToWrite;
+
     /// <summary>
     /// The index in the given argument list of the first non-front end argument (the name of the 
     /// program to be profiled and its arguments)
@@ -135,6 +137,7 @@ namespace DotNetFrontEnd
       {
         throw new ArgumentNullException("args");
       }
+      this.argsToWrite = String.Join(" ", args);
       this.programArguments = new Dictionary<PossibleArgument, string>();
       this.ProgramArgIndex = 0;
       this.PptAlwaysExclude = new Regex("<>");
@@ -701,6 +704,11 @@ namespace DotNetFrontEnd
         this.AddArgument(PossibleArgument.output_location, Path.ChangeExtension(this.OutputLocation,
             DatatraceExtension));
       }
+    }
+
+    public string GetArgsToWrite()
+    {
+      return this.argsToWrite;
     }
   }
 }
