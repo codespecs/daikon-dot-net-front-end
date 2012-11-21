@@ -409,10 +409,12 @@ namespace DotNetFrontEnd
       {
         // Front end args are null because the program was saved and then loaded. The args have
         // been saved to disk, so load them now.
+        //Console.WriteLine(programPointName);
+        //Console.WriteLine(label);
+        //LoadStoredType();
         LoadFrontEndArgsAndTypeManagerFromDisk();
       }
 
-      LoadStoredType();
       if (frontEndArgs.SampleStart != FrontEndArgs.NoSampleStart)
       {
         int oldOccurrences;
@@ -560,20 +562,34 @@ namespace DotNetFrontEnd
     /// </summary>
     private static void LoadStoredType()
     {
-      /*
-      Type t = typeManager.ConvertAssemblyQualifiedNameToType(
-        "Test, Bank, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null").GetSingleType();
-
+      string feaAN = "HelloWorld";
+      string assemblyQualifiedName = 
+        "Test, " + feaAN + ", Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+      Type t = Type.GetType(
+                     assemblyQualifiedName,
+        // Assembly resolver -- load from self if necessary.
+                     (aName) => aName.Name == feaAN ?
+                         System.Reflection.Assembly.LoadFrom("InstrumentedProgram.exe") :
+                         System.Reflection.Assembly.Load(aName),
+        // Type resolver -- load the type from the assembly if we have one
+        // Otherwise let .NET resolve it
+                     (assem, name, ignore) => assem == null ?
+                         Type.GetType(name, false, ignore) :
+                             assem.GetType(name, false, ignore),
+                     false);
       if (t == null)
       {
         throw new Exception("type resolution failed");
       }
       var method = t.GetMethod("MyMethod");
-      if ((string)method.Invoke(null, null) != "hello")
+      if ((string)method.Invoke(null, null) == null)
       {
         throw new Exception("Didn't get expected result");
       }
-       */
+      frontEndArgs = new FrontEndArgs(((string)method.Invoke(null, null)).Split());
+      typeManager = new TypeManager(frontEndArgs);
+
+      //*/
     }
 
     #region Reflective Visitor and helper methods
