@@ -64,9 +64,9 @@ namespace DotNetFrontEnd
         TypeManager typeManager)
     {
       Stream resultStream;
-      if (frontEndArgs.AssemblyPath == null || frontEndArgs.AssemblyPath.Length < 1)
+      if (String.IsNullOrWhiteSpace(frontEndArgs.AssemblyPath))
       {
-        throw new FileNotFoundException("No program found at the specified path.");
+        throw new FileNotFoundException("Path to program to be profiled not provided");
       }
 
       if (frontEndArgs.SaveProgram != null)

@@ -741,8 +741,7 @@ namespace DotNetFrontEnd
         }
         // return "System.Object";
       }
-
-
+      
       if (type is SpecializedNestedTypeReference)
       {
         type = ((SpecializedNestedTypeReference)type).UnspecializedVersion;

@@ -72,7 +72,7 @@ namespace DotNetFrontEnd
     // DNFE-specific variables
     private ITypeDefinition cciReflectorType;
     private DotNetFrontEnd.DeclarationPrinter declPrinter;
-    private DotNetFrontEnd.FrontEndArgs reflectionArgs;
+    private DotNetFrontEnd.FrontEndArgs frontEndArgs;
     private DotNetFrontEnd.TypeManager typeManager;
 
     // Variables used during rewriting
@@ -117,7 +117,7 @@ namespace DotNetFrontEnd
 
     #region CCI Code
 
-    public ILRewriter(IMetadataHost host, PdbReader pdbReader, DotNetFrontEnd.FrontEndArgs refArgs,
+    public ILRewriter(IMetadataHost host, PdbReader pdbReader, DotNetFrontEnd.FrontEndArgs frontEndArgs,
         DotNetFrontEnd.TypeManager typeManager)
       : base(host)
     {
@@ -126,7 +126,7 @@ namespace DotNetFrontEnd
       {
         throw new ArgumentNullException("host");
       }
-      this.reflectionArgs = refArgs;
+      this.frontEndArgs = frontEndArgs;
       this.typeManager = typeManager;
       this.nameTable = this.host.NameTable;
 
@@ -937,7 +937,7 @@ namespace DotNetFrontEnd
     private bool DeclareReturnProgramPoint(IMethodBody methodBody, ILGenerator generator, int i)
     {
       // If we don't want to instrument returns then don't do anything special here
-      bool instrumentReturns = reflectionArgs.ShouldPrintProgramPoint(FormatMethodName(
+      bool instrumentReturns = frontEndArgs.ShouldPrintProgramPoint(FormatMethodName(
           MethodTransition.EXIT, methodBody.MethodDefinition),
           i.ToString(CultureInfo.InvariantCulture));
       if (!instrumentReturns)
@@ -1042,7 +1042,7 @@ namespace DotNetFrontEnd
         ILGenerator generator, ITypeReference ex, string label)
     {
       // If we don't want to instrument returns don't do anything special here
-      bool instrumentReturns = reflectionArgs.ShouldPrintProgramPoint(FormatMethodName(
+      bool instrumentReturns = frontEndArgs.ShouldPrintProgramPoint(FormatMethodName(
           MethodTransition.EXIT, methodBody.MethodDefinition), label);
       if (instrumentReturns)
       {
@@ -1141,7 +1141,7 @@ namespace DotNetFrontEnd
         // Pop the comparison, jump to next conditional if no match
         generator.Emit(ILGenerator.LongVersionOf(OperationCode.Brtrue_S), jumpPoint);
         // Otherwise make the instrumentation call
-        if (this.reflectionArgs.ShouldPrintProgramPoint(
+        if (this.frontEndArgs.ShouldPrintProgramPoint(
             FormatMethodName(
                 MethodTransition.EXIT, methodBody.MethodDefinition),
                 FormatExceptionProgramPoint(ex)))
@@ -1158,7 +1158,7 @@ namespace DotNetFrontEnd
       }
 
       // Now that expected exception has been caught, instrument the catch-all exception handler.
-      if (this.reflectionArgs.ShouldPrintProgramPoint(
+      if (this.frontEndArgs.ShouldPrintProgramPoint(
               FormatMethodName(
                   MethodTransition.EXIT, methodBody.MethodDefinition),
                   FormatExceptionProgramPoint(host.PlatformType.SystemObject)))
@@ -1356,7 +1356,7 @@ namespace DotNetFrontEnd
     {
       string methodName = FormatMethodName(transition, methodBody.MethodDefinition);
 
-      if (!reflectionArgs.ShouldPrintProgramPoint(methodName, label))
+      if (!frontEndArgs.ShouldPrintProgramPoint(methodName, label))
       {
         return false;
       }
@@ -2001,10 +2001,10 @@ namespace DotNetFrontEnd
       mutableAssembly.AssemblyReferences.Add(variableVisitorAssembly);
 
       // If appending onto an existing dtrace then don't reprint the declarations.
-      this.printDeclarations = !this.reflectionArgs.DtraceAppend;
+      this.printDeclarations = !this.frontEndArgs.DtraceAppend;
       if (this.printDeclarations)
       {
-        this.declPrinter = new DotNetFrontEnd.DeclarationPrinter(this.reflectionArgs,
+        this.declPrinter = new DotNetFrontEnd.DeclarationPrinter(this.frontEndArgs,
                                                                     this.typeManager);
         foreach (INamedTypeDefinition type in mutableAssembly.AllTypes)
         {
@@ -2062,7 +2062,7 @@ namespace DotNetFrontEnd
 
         var ilGenerator = new ILGenerator(host, myMethod);
 
-        ilGenerator.Emit(OperationCode.Ldstr, this.reflectionArgs.GetArgsToWrite());
+        ilGenerator.Emit(OperationCode.Ldstr, this.frontEndArgs.GetArgsToWrite());
         ilGenerator.Emit(OperationCode.Ret);
 
         var body = new ILGeneratorMethodBody(ilGenerator, true, 1, myMethod, Enumerable<ILocalDefinition>.Empty, Enumerable<ITypeDefinition>.Empty);
