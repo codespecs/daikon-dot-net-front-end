@@ -67,19 +67,7 @@ namespace DotNetFrontEnd
     /// which Type to use for the instrumentation calls.
     /// </summary>
     public static readonly string VariableVisitorClassName = "VariableVisitor";
-
-    /// <summary>
-    /// If we are saving the instrumented program then we need to save the args supplied to the 
-    /// DotNetFrontEnd, this extension will be added onto the end of the saved program path.
-    /// </summary>
-    public static readonly string SavedArgsExtension = ".args";
-
-    /// <summary>
-    /// When we save the program we need to save the type manager used for it, this extension will 
-    /// be added onto the end of the saved program path.
-    /// </summary>
-    public static readonly string SavedTypeManagerExtension = ".tm";
-
+    
     /// <summary>
     /// Name of the function to be inserted into the IL to acquire a lock on the writer.
     /// </summary>
@@ -118,6 +106,11 @@ namespace DotNetFrontEnd
     /// The name of the method to print the a program point
     /// </summary>
     public static readonly string WriteProgramPointMethodName = "WriteProgramPoint";
+
+    /// <summary>
+    /// Name of the method to call to save assembly name and path
+    /// </summary>
+    public static readonly string LoadAssemblyPathAndNameMethodName = "LoadAssemblyPathAndName";
 
     /// <summary>
     /// The name of the method to set an invocation nonce
@@ -161,7 +154,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// The args for the reflective visitor. Used statically by decl printer and reflector.
     /// </summary>
-    private static FrontEndArgs frontEndArgs;
+    private static FrontEndArgs frontEndArgs = null;
 
     /// <summary>
     /// TypeManager used to convert between assembly qualified and .NET types and during reflection
@@ -171,7 +164,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Map from program point name to number of times that program point has occurred.
     /// </summary>
-    private static Dictionary<String, int> occurenceCounts;
+    private static Dictionary<String, int> occurenceCounts = null;
 
     /// <summary>
     /// Whether output for the program point currently being visited should be suppressed. Used in 
@@ -199,6 +192,16 @@ namespace DotNetFrontEnd
     /// Collection of varibles that have been visited during the current prorgram point
     /// </summary>
     private static HashSet<string> variablesVisitedForCurrentProgramPoint = new HashSet<string>();
+
+    /// <summary>
+    /// The path to the assembly being instrumented. Necessary when DNFE is run in offline-mode
+    /// </summary>
+    private static string offlineAssemblyPath = null;
+
+    /// <summary>
+    /// The name of the assembly being instrumented. Necessary when DNFE is run in offline-mode
+    /// </summary>
+    private static string offlineAssemblyName = null;
 
     #endregion
 
@@ -408,11 +411,8 @@ namespace DotNetFrontEnd
       if (frontEndArgs == null)
       {
         // Front end args are null because the program was saved and then loaded. The args have
-        // been saved to disk, so load them now.
-        //Console.WriteLine(programPointName);
-        //Console.WriteLine(label);
-        //LoadStoredType();
-        LoadFrontEndArgsAndTypeManagerFromDisk();
+        // been saved inside the rewritten assembly, so load them now.
+        LoadStoredArgs();
       }
 
       if (frontEndArgs.SampleStart != FrontEndArgs.NoSampleStart)
@@ -440,6 +440,24 @@ namespace DotNetFrontEnd
           (String.IsNullOrEmpty(label) ? String.Empty : label);
       writer.WriteLine(programPointName);
       writer.Close();
+    }
+
+    /// <summary>
+    /// When the program is run in offline mode, that is with a saved binary, the first time
+    /// the variable visitor is entered we need to determine the name and path of the assembly
+    /// being profiled. This is necessary so the .NET type resolve can locate and load the types in 
+    /// the assembly being profiled.
+    /// </summary>
+    /// <param name="assemblyName">Name of the assembly being profiled.</param>
+    /// <param name="assemblyPath">Relative path to the rewritten assembly.</param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+    public static void LoadAssemblyPathAndName(string assemblyName, string assemblyPath)
+    {
+      if (frontEndArgs == null)
+      {
+        offlineAssemblyName = assemblyName;
+        offlineAssemblyPath = assemblyPath;
+      }
     }
 
     #endregion
@@ -510,6 +528,11 @@ namespace DotNetFrontEnd
       }
       else
       {
+        string dirName = Path.GetDirectoryName(frontEndArgs.OutputLocation);
+        if (Directory.Exists(dirName))
+        {
+          Directory.CreateDirectory(dirName);
+        }
         writer = new StreamWriter(frontEndArgs.OutputLocation, true);
       }
 
@@ -521,55 +544,23 @@ namespace DotNetFrontEnd
 
       return writer;
     }
-
-    /// <summary>
-    /// If the instrumented program was started from disk then we need to populate the type manager
-    /// and front end args objects with their stored values.
-    /// </summary>
-    /// We do dispose it.
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability",
-        "CA2000:Dispose objects before losing scope")]
-    private static void LoadFrontEndArgsAndTypeManagerFromDisk()
-    {
-      Stream stream = null;
-      try
-      {
-        // First load the front end args.
-        stream = new FileStream(System.Reflection.Assembly.GetExecutingAssembly().Location +
-            SavedArgsExtension,
-            FileMode.Open,
-            FileAccess.Read,
-            FileShare.Read);
-        IFormatter formatter = new BinaryFormatter();
-        frontEndArgs = (FrontEndArgs)formatter.Deserialize(stream);
-
-        // Now load the type manager.
-        stream = new FileStream(System.Reflection.Assembly.GetExecutingAssembly().Location +
-            SavedTypeManagerExtension,
-            FileMode.Open,
-            FileAccess.Read,
-            FileShare.Read);
-        typeManager = (TypeManager)formatter.Deserialize(stream);
-      }
-      finally
-      {
-        if (stream != null) { stream.Dispose(); }
-      }
-    }
-
+    
     /// <summary>
     /// Experimental method to load data from a type stored in the assembly
     /// </summary>
-    private static void LoadStoredType()
+    private static void LoadStoredArgs()
     {
-      string feaAN = "HelloWorld";
-      string assemblyQualifiedName = 
-        "Test, " + feaAN + ", Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+      string assemblyQualifiedName =
+        String.Join(", ", new string[] {
+          ILRewriter.ArgumentStoringClassName,
+          offlineAssemblyName,
+          "Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+        });
       Type t = Type.GetType(
                      assemblyQualifiedName,
         // Assembly resolver -- load from self if necessary.
-                     (aName) => aName.Name == feaAN ?
-                         System.Reflection.Assembly.LoadFrom("InstrumentedProgram.exe") :
+                     (aName) => aName.Name == offlineAssemblyName ?
+                         System.Reflection.Assembly.LoadFrom(offlineAssemblyPath) :
                          System.Reflection.Assembly.Load(aName),
         // Type resolver -- load the type from the assembly if we have one
         // Otherwise let .NET resolve it
@@ -579,17 +570,16 @@ namespace DotNetFrontEnd
                      false);
       if (t == null)
       {
-        throw new Exception("type resolution failed");
+        throw new Exception("Type resolution of the class storing the arguments failed.");
       }
-      var method = t.GetMethod("MyMethod");
-      if ((string)method.Invoke(null, null) == null)
+
+      var method = t.GetMethod(ILRewriter.ArgumentStoringMethodName);
+      if (method == null)
       {
-        throw new Exception("Didn't get expected result");
+        throw new Exception("Method resolution of the method storing the arguments failed.");
       }
       frontEndArgs = new FrontEndArgs(((string)method.Invoke(null, null)).Split());
       typeManager = new TypeManager(frontEndArgs);
-
-      //*/
     }
 
     #region Reflective Visitor and helper methods

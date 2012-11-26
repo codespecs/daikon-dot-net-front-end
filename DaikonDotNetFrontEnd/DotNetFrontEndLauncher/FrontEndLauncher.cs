@@ -41,20 +41,6 @@ namespace DotNetFrontEndLauncher
         // Print the decls in one file
         frontEndArgs.SetDeclExtension();
         ProgramRewriter.RewriteProgramIL(frontEndArgs, typeManager);
-        // Normally, the args are handed to the visitor statically. However since the program 
-        // is being run separately we have to serialize the args.
-        IFormatter formatter = new BinaryFormatter();
-        Stream stream = new FileStream(ProgramRewriter.VisitorDll + VariableVisitor.SavedArgsExtension,
-            FileMode.Create, FileAccess.Write, FileShare.None);
-
-        // When the program actually runs print the dtrace in another
-        frontEndArgs.SetDtraceExtension();
-        formatter.Serialize(stream, frontEndArgs);
-        stream.Close();
-        stream = new FileStream(ProgramRewriter.VisitorDll + VariableVisitor.SavedTypeManagerExtension,
-            FileMode.Create, FileAccess.Write, FileShare.None);
-        formatter.Serialize(stream, typeManager);
-        stream.Close();
         return;
       }
 

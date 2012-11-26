@@ -34,6 +34,20 @@ namespace DotNetFrontEnd
   /// </summary>
   public class ILRewriter : MetadataRewriter, IDisposable
   {
+    #region Public Constants
+
+    /// <summary>
+    /// The name of the class stroing the DNFE arguments when the program is run in offline mode.
+    /// </summary>
+    public static readonly string ArgumentStoringClassName = "DNFE_ArgumentStoringClass";
+
+    /// <summary>
+    /// The name of the method stroing the DNFE arguments when the program is run in offline mode.
+    /// </summary>
+    public static readonly string ArgumentStoringMethodName = "DNFE_ArgumentStroingMethod";
+
+    #endregion
+
     #region Constants
 
     /// <summary>
@@ -81,6 +95,11 @@ namespace DotNetFrontEnd
     IEnumerator<ILocalScope>/*?*/ scopeEnumerator;
     bool scopeEnumeratorIsValid;
     Stack<ILocalScope> scopeStack = new Stack<ILocalScope>();
+
+    /// <summary>
+    /// Reference to the VariableVisitor method that loads assembly name and path
+    /// </summary>
+    private Microsoft.Cci.MethodReference initializeVariableVisitorMethodReference;
 
     /// <summary>
     /// Reference to the VariableVisitor method that will write the program point name
@@ -178,12 +197,9 @@ namespace DotNetFrontEnd
         throw new ArgumentNullException("methodBody");
       }
       // If the method is compiler generated don't insert instrumentation code.
-      if (
-        methodBody.MethodDefinition.Name.ToString() == "TestMethod" ||
-
-        typeManager.IsMethodCompilerGenerated(methodBody.MethodDefinition) ||
-        typeManager.GetPureMethodsForType(methodBody.MethodDefinition.ContainingType).Any(
-        meth => meth.Value.Name.ToString() == methodBody.MethodDefinition.Name.ToString()))
+      if (typeManager.IsMethodCompilerGenerated(methodBody.MethodDefinition) ||
+          typeManager.GetPureMethodsForType(methodBody.MethodDefinition.ContainingType).Any(
+            meth => meth.Value.Name.ToString() == methodBody.MethodDefinition.Name.ToString()))
       {
         return base.Rewrite(methodBody);
       }
@@ -1367,9 +1383,19 @@ namespace DotNetFrontEnd
         this.DeclareMethodTransition(transition, methodName, label);
       }
 
+      // If the program is being run offline, we need to save the assembly name and path
+      // so they can be loaded by the variable visitor before it beings instrumentation.
+      // Could be necessary anytime we enter a method because some programs, e.g. libraries
+      // have no entry point.
+      if (this.frontEndArgs.SaveProgram != null && transition == MethodTransition.ENTER)
+      {
+        this.EmitVariableVisitorInitialization(generator);
+      }
+
       // Print the method name
       generator.Emit(OperationCode.Ldstr, methodName);
       generator.Emit(OperationCode.Ldstr, label);
+
       this.EmitProgramPoint(generator);
 
       generator.Emit(OperationCode.Ldloc, nonceVariableDictionary[methodBody.MethodDefinition]);
@@ -1920,7 +1946,32 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Add the call to write the invocation nonce
+    /// Write the name and output path of the assembly to be instrumented and a method call to
+    /// initialize the variable visitor with these.
+    /// </summary>
+    /// <param name="generator">The generator to print the instructions with</param>
+    /// Variable containing method reference name is private, static, final and can be trusted.
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
+      "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
+    private void EmitVariableVisitorInitialization(ILGenerator generator)
+    {
+      generator.Emit(OperationCode.Ldstr, this.frontEndArgs.AssemblyName);
+      System.Diagnostics.Debug.Assert(this.frontEndArgs.SaveProgram != null);
+      generator.Emit(OperationCode.Ldstr, this.frontEndArgs.SaveProgram);
+      if (initializeVariableVisitorMethodReference == null)
+      {
+        initializeVariableVisitorMethodReference = new Microsoft.Cci.MethodReference(
+         this.host, this.cciReflectorType, CallingConvention.Default,
+         this.systemVoid, this.nameTable.GetNameFor(
+            VariableVisitor.LoadAssemblyPathAndNameMethodName), 
+         /* genericParameterCount */ 0,
+         this.systemString, this.systemString);
+      }
+      generator.Emit(OperationCode.Call, initializeVariableVisitorMethodReference);
+    }
+
+    /// <summary>
+    /// Emit the call to write the invocation nonce
     /// </summary>
     /// <param name="generator">Generator to use to emit the call</param>
     /// Suppression is ok because we only lookup methods whose names we control
@@ -1995,7 +2046,7 @@ namespace DotNetFrontEnd
           break;
         }
       }
-      WriteTestAssembly(mutableAssembly, host);
+      WriteClassStoringArguments(mutableAssembly, host);
 
       // We need to be able to reference to variable visitor assembly to add calls to it.
       mutableAssembly.AssemblyReferences.Add(variableVisitorAssembly);
@@ -2009,9 +2060,10 @@ namespace DotNetFrontEnd
         foreach (INamedTypeDefinition type in mutableAssembly.AllTypes)
         {
           // CCI components come up named <*>, and we want to exclude them.
+          // Also exclude the name of the class storing arguments (for offline programs)
           Regex regex = new Regex(TypeManager.RegexForTypesToIgnoreForProgramPoint);
           string typeName = ((ITypeDefinition)type).ToString();
-          if (!(regex.IsMatch(type.ToString()) || type.ToString() == "Test"))
+          if (!(regex.IsMatch(type.ToString()) || type.ToString() == ArgumentStoringClassName))
           {
             this.declPrinter.PrintObjectDefinition(typeName,
                 this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type));
@@ -2028,45 +2080,60 @@ namespace DotNetFrontEnd
       return result;
     }
 
-    private void WriteTestAssembly(Assembly mutableAssembly, IMetadataHost host)
+    /// <summary>
+    /// Creates and emites a new class, which contains a single method returning the front end
+    /// arguments used during instrumentation. Necessary for running the front-end in offline
+    /// mode since these would otherwise not be available.
+    /// </summary>
+    /// <param name="mutableAssembly">Assembly to emit the class into</param>
+    /// <param name="host">Metadatahost to use during rewriting</param>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
+        "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
+    private void WriteClassStoringArguments(Assembly mutableAssembly, IMetadataHost host)
     {
-        var coreAssembly = host.LoadAssembly(host.CoreAssemblySymbolicIdentity);
+        var rootUnitNamespace = new RootUnitNamespace()
+        {
+          Unit = mutableAssembly
+        };
 
-        var rootUnitNamespace = new RootUnitNamespace();
-        rootUnitNamespace.Unit = mutableAssembly;
-        var testClass = new NamespaceTypeDefinition()
+        var argumentStoringClass = new NamespaceTypeDefinition()
         {
           ContainingUnitNamespace = rootUnitNamespace,
           InternFactory = host.InternFactory,
           IsClass = true,
           IsPublic = true,
           Methods = new List<IMethodDefinition>(1),
-          Name = nameTable.GetNameFor("Test"),
+          Name = nameTable.GetNameFor(ArgumentStoringClassName),
           MangleName = false,
         };
-        rootUnitNamespace.Members.Add(testClass);
-        mutableAssembly.AllTypes.Add(testClass);
-        testClass.BaseClasses = new List<ITypeReference>() { host.PlatformType.SystemObject };
+        rootUnitNamespace.Members.Add(argumentStoringClass);
+        mutableAssembly.AllTypes.Add(argumentStoringClass);
+        argumentStoringClass.BaseClasses = new List<ITypeReference>() { host.PlatformType.SystemObject };
 
-        var myMethod = new MethodDefinition()
+        var getArgumentsMethod = new MethodDefinition()
         {
-          ContainingTypeDefinition = testClass,
+          ContainingTypeDefinition = argumentStoringClass,
           InternFactory = host.InternFactory,
           IsCil = true,
           IsStatic = true,
-          Name = nameTable.GetNameFor("MyMethod"),
+          Name = nameTable.GetNameFor(ArgumentStoringMethodName),
           Type = host.PlatformType.SystemString,
           Visibility = TypeMemberVisibility.Public,
         };
-        testClass.Methods.Add(myMethod);
+        argumentStoringClass.Methods.Add(getArgumentsMethod);
 
-        var ilGenerator = new ILGenerator(host, myMethod);
+        var ilGenerator = new ILGenerator(host, getArgumentsMethod);
 
         ilGenerator.Emit(OperationCode.Ldstr, this.frontEndArgs.GetArgsToWrite());
         ilGenerator.Emit(OperationCode.Ret);
 
-        var body = new ILGeneratorMethodBody(ilGenerator, true, 1, myMethod, Enumerable<ILocalDefinition>.Empty, Enumerable<ITypeDefinition>.Empty);
-        myMethod.Body = body;
+        var body = new ILGeneratorMethodBody(ilGenerator, 
+          /* localsAreZeroed */ true, 
+          /* maxStack */ 1, 
+          getArgumentsMethod, 
+          Enumerable<ILocalDefinition>.Empty, 
+          Enumerable<ITypeDefinition>.Empty);
+        getArgumentsMethod.Body = body;
     }
 
     public void Dispose()

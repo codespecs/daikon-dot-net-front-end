@@ -25,6 +25,7 @@ PRINT_INV := java -Xmx960m -XX:MaxPermSize=960M daikon.PrintInvariants
 # Customize these 
 UNIT_TESTING_FRAMEWORK ?= 'C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\ReferenceAssemblies\v4.0\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll'
 UNIT_TEST_DRIVER ?= '/cygdrive/c/Program Files (x86)/Microsoft Visual Studio 10.0/Common7/IDE/MSTest'
+DNFE_PATH = 'C:\daikon\scripts'
 DNFE_EXE = $(DAIKONDIR)/scripts/DotNetFrontEndLauncher.exe
 SIKULI_PATH = '/cygdrive/c/Program Files (x86)/Sikuli X/Sikuli-IDE-w.bat'
 ifeq ($(LANG), FSharp)
@@ -88,9 +89,8 @@ ifeq ($(UNIT_TEST),1)
 ran-dnfe: $(DNFE_EXE) $(CLEAN_OUTPUT)
 	mkdir daikon-output
 	$(COMPILER) /target:library $(NAME).cs
-	$(DNFE_EXE) --save-program $(DNFE_OPTIONS) $(PROGRAM_ARGS) $(NAME).dll
-	mv InstrumentedProgram.exe BankAccount.dll
-	$(COMPILER) /target:library /reference:$(UNIT_TESTING_FRAMEWORK),BankAccount.dll,/cygdrive/c/daikon/scripts/DotNetFrontEnd.dll $(NAME)Test.cs
+	$(DNFE_EXE) --save-program --output-location=results.dtrace $(DNFE_OPTIONS) $(PROGRAM_ARGS) $(NAME).dll
+	$(COMPILER) /target:library /reference:$(UNIT_TESTING_FRAMEWORK),InstrumentedProgram.exe $(NAME)Test.cs
 	$(UNIT_TEST_DRIVER) /testcontainer:$(NAME)Test.dll
 	cat /dev/null $(EXTRA_OUTPUTS) >>$(NAME).out
 	perl -i $(CLEAN_OUTPUT) $(NAME).out
