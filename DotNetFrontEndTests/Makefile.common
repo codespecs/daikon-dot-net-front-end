@@ -91,7 +91,7 @@ ran-dnfe: $(DNFE_EXE) $(CLEAN_OUTPUT)
 	$(COMPILER) /target:library $(NAME).cs
 	$(DNFE_EXE) --save-program --output-location=results.dtrace $(DNFE_OPTIONS) $(PROGRAM_ARGS) $(NAME).dll
 	$(COMPILER) /target:library /reference:$(UNIT_TESTING_FRAMEWORK),InstrumentedProgram.exe $(NAME)Test.cs
-	$(UNIT_TEST_DRIVER) /testcontainer:$(NAME)Test.dll
+	$(UNIT_TEST_DRIVER) /testcontainer:$(NAME)Test.dll /testsettings:Local.testsettings
 	cat /dev/null $(EXTRA_OUTPUTS) >>$(NAME).out
 	perl -i $(CLEAN_OUTPUT) $(NAME).out
 	touch $@
