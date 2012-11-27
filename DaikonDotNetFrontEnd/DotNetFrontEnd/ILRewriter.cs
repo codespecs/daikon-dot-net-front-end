@@ -208,6 +208,7 @@ namespace DotNetFrontEnd
         return ProcessOperations(methodBody);
       }
     }
+
     #endregion
 
     /// <summary>
@@ -216,19 +217,17 @@ namespace DotNetFrontEnd
     /// <param name="immutableMethodBody">Describes the method to instrument</param>
     private IMethodBody ProcessOperations(IMethodBody immutableMethodBody)
     {
-      // Alias operations and the count for convenience
+      // Alias operations for convenience
       List<IOperation> operations = ((immutableMethodBody.Operations == null)
         ? new List<IOperation>()
         : new List<IOperation>(immutableMethodBody.Operations));
-      int opCount = operations.Count;
 
-      IOperation lastReturnOperation = GetLastReturnInstruction(operations, ref opCount);
+      IOperation lastReturnOperation = GetLastReturnInstruction(operations);
 
       // There may be many nops before the ret instruction, we want to catch anything
       // branching into the last return, so we need to catch anything branching into these
       // nops.
-      int operationIndexForLastReturnJumpTarget =
-        GetIndexOfLastReturnJumpTarget(operations, opCount);
+      int operationIndexForLastReturnJumpTarget = GetIndexOfLastReturnJumpTarget(operations);
 
       ILGenerator generator = new ILGenerator(this.host, immutableMethodBody.MethodDefinition);
       if (this.pdbReader != null)
@@ -279,7 +278,7 @@ namespace DotNetFrontEnd
 
       // Constructors need to initialize the object before the try body starts.
       if (!immutableMethodBody.MethodDefinition.IsConstructor &&
-          !ConstructorWithNoObjectConstructorCall(immutableMethodBody))
+          !IsConstructorWithNoObjectConstructorCall(immutableMethodBody))
       {
         generator.BeginTryBody();
         tryBodyStarted = true;
@@ -299,7 +298,7 @@ namespace DotNetFrontEnd
       mutableMethodBody = (MethodBody)immutableMethodBody;
 
       // Emit each operation, along with labels
-      for (int i = 0; i < opCount; i++)
+      for (int i = 0; i < operations.Count; i++)
       {
         IOperation op = operations[i];
         MarkLabels(immutableMethodBody, generator, offsetsUsedInExceptionInformation,
@@ -323,39 +322,43 @@ namespace DotNetFrontEnd
       return mutableMethodBody;
     }
 
+    #region Processing method exits
+
+    /// <summary>
+    /// Determine which of the operations in the given operations list are synthesized
+    /// returns. These are returns in the C#, but are implemented in the CIL as jumps
+    /// to the given commonExit point.
+    /// </summary>
+    /// <param name="immutableMethodBody">Method body under consideration</param>
+    /// <param name="operations">List of operations in which to look for the synthesized
+    /// returns</param>
+    /// <param name="commonExit">Common exit the synsethized returns will jump to</param>
+    /// <returns>The list of operations if any, otherwise null</returns>
     private ISet<IOperation> DetermineSynthesizedReturns(IMethodBody immutableMethodBody,
       List<IOperation> operations, ILGeneratorLabel commonExit)
     {
-      ISet<IOperation> synthesizedReturns = null;
       if (immutableMethodBody.MethodDefinition.Type.TypeCode != PrimitiveTypeCode.Void)
       {
         OperationCode lastStoreOperation = GetLastStoreOperation(immutableMethodBody);
-        if (lastStoreOperation == 0)
-        {
-          // If there is no last store then there are no synthesized returns.
-          synthesizedReturns = new HashSet<IOperation>();
-        }
-        else
-        {
-          synthesizedReturns = FindAndAdjustSynthesizedReturns(operations, lastStoreOperation,
+        if (lastStoreOperation != 0) {
+          return FindAndAdjustSynthesizedReturns(operations, lastStoreOperation,
               commonExit);
         }
       }
-      return synthesizedReturns;
+      return null;
     }
 
     /// <summary>
-    /// The compiler translate multiple return statements to a jump to the some
+    /// The compiler translates multiple return statements to a jump to the some
     /// number of noops inserted before the final return instruction. This method
     /// gets the index of the last return jump target in the given list of operations.
     /// </summary>
     /// <param name="operations">Operations to inspect</param>
-    /// <param name="opCount">The number of operations in the list</param>
-    /// <returns>The index of the last return jump target.</returns>
-    private static int GetIndexOfLastReturnJumpTarget(List<IOperation> operations,
-      int opCount)
+    /// <returns>The index of the last return jump target</returns>
+    private static int GetIndexOfLastReturnJumpTarget(List<IOperation> operations)
     {
-      int operationIndexForLastReturnJumpTarget;
+      int opCount = operations.Count - 1;
+      int operationIndexForLastReturnJumpTarget = 0;
       if (opCount > 1)
       {
         operationIndexForLastReturnJumpTarget = opCount - 2;
@@ -367,10 +370,6 @@ namespace DotNetFrontEnd
         // We went one too far, so increment again by 1
         operationIndexForLastReturnJumpTarget++;
       }
-      else
-      {
-        operationIndexForLastReturnJumpTarget = 0;
-      }
       return operationIndexForLastReturnJumpTarget;
     }
 
@@ -378,10 +377,10 @@ namespace DotNetFrontEnd
     /// Create if necessary and return the last return instruction for the method
     /// </summary>
     /// <param name="operations">List of operations for the method</param>
-    /// <param name="opCount">Number iof operations in the method</param>
     /// <returns>The last return instruction</returns>
-    private static IOperation GetLastReturnInstruction(List<IOperation> operations, ref int opCount)
+    private static IOperation GetLastReturnInstruction(List<IOperation> operations)
     {
+      int opCount = operations.Count;
       // Add a return instruction at the end if one doesn't exist
       if (!(operations[opCount - 1].OperationCode == OperationCode.Ret))
       {
@@ -397,6 +396,90 @@ namespace DotNetFrontEnd
       // Save the last return instruction
       return operations[opCount - 1];
     }
+
+    /// <summary>
+    /// Find the returns that have been synthesized (in a debug build) to a store then a jump, 
+    /// and adjust the jump operation to target commonExit.
+    /// </summary>
+    /// <param name="operations">Operations to the the synthesized returns in</param>
+    /// <param name="lastStoreOperation">The store operation that will preceed a jump</param>
+    /// <param name="commonExit">The exit point that all syntehsized returns should jump to
+    /// after instrumentation is complete</param>
+    /// <returns>The set of store commands comprising part of the synthesized return</returns>
+    private static ISet<IOperation> FindAndAdjustSynthesizedReturns(List<IOperation> operations,
+        OperationCode lastStoreOperation, ILGeneratorLabel commonExit)
+    {
+      HashSet<IOperation> synthesizedReturns = new HashSet<IOperation>();
+      // Need a pair of instructions for the synthesized return, so stop looking 1 before you 
+      // hit the end of the operations.
+      for (int i = 0; i < operations.Count - 1; i++)
+      {
+        // Look for cases where the current instruction is a store...
+        if (operations[i].OperationCode == lastStoreOperation &&
+          // ... and the next instruction is a branch.
+          (operations[i + 1].OperationCode == OperationCode.Br
+          || operations[i + 1].OperationCode == OperationCode.Leave
+          || operations[i + 1].OperationCode == OperationCode.Brtrue
+          || operations[i + 1].OperationCode == OperationCode.Brfalse
+          || operations[i + 1].OperationCode == OperationCode.Br_S
+          || operations[i + 1].OperationCode == OperationCode.Leave_S
+          || operations[i + 1].OperationCode == OperationCode.Brtrue_S
+          || operations[i + 1].OperationCode == OperationCode.Brfalse_S))
+        {
+          synthesizedReturns.Add(operations[i]);
+          ((Operation)operations[i + 1]).Value = commonExit;
+        }
+      }
+      return synthesizedReturns;
+    }
+
+    /// <summary>
+    /// Get the store instruction that will precede any pseudo-return 
+    /// (store then a branch) found in a debug build.
+    /// </summary>
+    /// <param name="methodBody">Method for which to get the last store</param>
+    /// <returns>The instruction called during the store, 0 for void methods</returns>
+    private OperationCode GetLastStoreOperation(IMethodBody methodBody)
+    {
+      if (methodBody.MethodDefinition.Type.TypeCode == PrimitiveTypeCode.Void)
+      {
+        return 0;
+      }
+
+      List<IOperation> operations = methodBody.Operations.ToList();
+      if (operations.Count < 1)
+      {
+        return 0;
+      }
+
+      // Start at the end of the method, back track until we get to a load
+      int opIndex = operations.Count - 1;
+      IOperation op = operations[opIndex];
+      while (op.OperationCode == OperationCode.Ret || op.OperationCode == OperationCode.Nop)
+      {
+        opIndex--;
+        op = operations[opIndex];
+      }
+      switch (op.OperationCode)
+      {
+        case OperationCode.Ldloc:
+          return OperationCode.Stloc;
+        case OperationCode.Ldloc_0:
+          return OperationCode.Stloc_0;
+        case OperationCode.Ldloc_1:
+          return OperationCode.Stloc_1;
+        case OperationCode.Ldloc_2:
+          return OperationCode.Stloc_2;
+        case OperationCode.Ldloc_3:
+          return OperationCode.Stloc_3;
+        case OperationCode.Ldloc_S:
+          return OperationCode.Stloc_S;
+        default:
+          return 0;
+      }
+    }
+
+    #endregion
 
     /// <summary>
     /// CCI-Implemented method to emit debug information for an operation.
@@ -437,42 +520,6 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Find the returns that have been synthesized (in a debug build) to a store then a jump, 
-    /// and adjust the jump operation to target commonExit.
-    /// </summary>
-    /// <param name="operations">Operations to the the synthesized returns in</param>
-    /// <param name="lastStoreOperation">The store operation that will preceed a jump</param>
-    /// <param name="commonExit">The exit point that all syntehsized returns should jump to
-    /// after instrumentation is complete</param>
-    /// <returns>The set of store commands comprising part of the synthesized return</returns>
-    private static ISet<IOperation> FindAndAdjustSynthesizedReturns(List<IOperation> operations,
-        OperationCode lastStoreOperation, ILGeneratorLabel commonExit)
-    {
-      HashSet<IOperation> synthesizedReturns = new HashSet<IOperation>();
-      // Need a pair of instructions for the synthesized return, so stop looking 1 before you 
-      // hit the end of the operations.
-      for (int i = 0; i < operations.Count - 1; i++)
-      {
-        // Look for cases where the current instruction is a store...
-        if (operations[i].OperationCode == lastStoreOperation &&
-          // ... and the next instruction is a branch.
-          (operations[i + 1].OperationCode == OperationCode.Br
-          || operations[i + 1].OperationCode == OperationCode.Leave
-          || operations[i + 1].OperationCode == OperationCode.Brtrue
-          || operations[i + 1].OperationCode == OperationCode.Brfalse
-          || operations[i + 1].OperationCode == OperationCode.Br_S
-          || operations[i + 1].OperationCode == OperationCode.Leave_S
-          || operations[i + 1].OperationCode == OperationCode.Brtrue_S
-          || operations[i + 1].OperationCode == OperationCode.Brfalse_S))
-        {
-          synthesizedReturns.Add(operations[i]);
-          ((Operation)operations[i + 1]).Value = commonExit;
-        }
-      }
-      return synthesizedReturns;
-    }
-
-    /// <summary>
     /// Emit the code to store the nonce as a local variable
     /// </summary>
     /// <param name="methodDefinition">Method to store the nonce for</param>
@@ -487,57 +534,12 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Get the store that will precede any pseudo-return (store then a branch in) found in a debug 
-    /// build.
-    /// </summary>
-    /// <param name="methodBody">Method for which to get the last store</param>
-    /// <returns>The instruction called furing the store, 0 for void methods</returns>
-    private OperationCode GetLastStoreOperation(IMethodBody methodBody)
-    {
-      List<IOperation> operations = methodBody.Operations.ToList();
-      if (methodBody.MethodDefinition.Type.TypeCode == PrimitiveTypeCode.Void)
-      {
-        return 0;
-      }
-      if (operations.Count < 1)
-      {
-        return 0;
-      }
-
-      // Start at the end of the method, back track until we get to a load
-      int opIndex = operations.Count - 1;
-      IOperation op = operations[opIndex];
-      while (op.OperationCode == OperationCode.Ret || op.OperationCode == OperationCode.Nop)
-      {
-        opIndex--;
-        op = operations[opIndex];
-      }
-      switch (op.OperationCode)
-      {
-        case OperationCode.Ldloc:
-          return OperationCode.Stloc;
-        case OperationCode.Ldloc_0:
-          return OperationCode.Stloc_0;
-        case OperationCode.Ldloc_1:
-          return OperationCode.Stloc_1;
-        case OperationCode.Ldloc_2:
-          return OperationCode.Stloc_2;
-        case OperationCode.Ldloc_3:
-          return OperationCode.Stloc_3;
-        case OperationCode.Ldloc_S:
-          return OperationCode.Stloc_S;
-        default:
-          return 0;
-      }
-    }
-
-    /// <summary>
     /// Returns whether the given method body has a constructor and that constructor doesn't call
     /// the object constructor
     /// </summary>
     /// <param name="methodBody">Method body to test</param>
     /// <returns>True if not a constructor or not object constructor call, false otherwise</returns>
-    private bool ConstructorWithNoObjectConstructorCall(IMethodBody methodBody)
+    private bool IsConstructorWithNoObjectConstructorCall(IMethodBody methodBody)
     {
       return methodBody.MethodDefinition.IsConstructor
         && !(methodBody.Operations.ToList()[0].OperationCode == OperationCode.Ldarg_0
@@ -1392,12 +1394,12 @@ namespace DotNetFrontEnd
         this.EmitVariableVisitorInitialization(generator);
       }
 
-      // Print the method name
+      // Emit the method name as a program point
       generator.Emit(OperationCode.Ldstr, methodName);
       generator.Emit(OperationCode.Ldstr, label);
-
       this.EmitProgramPoint(generator);
 
+      // Emit the nonce
       generator.Emit(OperationCode.Ldloc, nonceVariableDictionary[methodBody.MethodDefinition]);
       this.EmitWriteInvocationNonceCall(generator);
 
@@ -1464,7 +1466,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Emit any static fields of the parent class.
+    /// Emit the instrumentation and print the declaration for any static fields of the parent class.
     /// </summary>
     /// <param name="transition">Transition at the current program point</param>
     /// <param name="methodBody">Method body for the program point</param>
@@ -1608,8 +1610,8 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Insert the instrumetnation calls, and possibly the definitions for the actual method
-    /// parameters
+    /// Insert the instrumentation calls, and possibly the definitions for the actual method
+    /// parameters.
     /// </summary>
     /// <param name="methodBody">Method body being instrumented</param>
     /// <param name="generator">Generator used to write the instrumentation calls</param>
