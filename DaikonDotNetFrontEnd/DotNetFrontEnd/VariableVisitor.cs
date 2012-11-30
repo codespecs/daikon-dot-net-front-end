@@ -110,7 +110,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Name of the method to call to save assembly name and path
     /// </summary>
-    public static readonly string LoadAssemblyPathAndNameMethodName = "LoadAssemblyPathAndName";
+    public static readonly string InitializeFrontEndArgumentsMethodName = "InitializeFrontEndArgs";
 
     /// <summary>
     /// The name of the method to set an invocation nonce
@@ -407,14 +407,7 @@ namespace DotNetFrontEnd
     {
       staticFieldsVisitedForCurrentProgramPoint.Clear();
       variablesVisitedForCurrentProgramPoint.Clear();
-
-      if (frontEndArgs == null)
-      {
-        // Front end args are null because the program was saved and then loaded. The args have
-        // been saved inside the rewritten assembly, so load them now.
-        LoadStoredArgs();
-      }
-
+      
       if (frontEndArgs.SampleStart != FrontEndArgs.NoSampleStart)
       {
         int oldOccurrences;
@@ -451,12 +444,13 @@ namespace DotNetFrontEnd
     /// <param name="assemblyName">Name of the assembly being profiled.</param>
     /// <param name="assemblyPath">Relative path to the rewritten assembly.</param>
     [MethodImpl(MethodImplOptions.Synchronized)]
-    public static void LoadAssemblyPathAndName(string assemblyName, string assemblyPath)
+    public static void InitializeFrontEndArgs(string assemblyName, string assemblyPath, string arguments)
     {
       if (frontEndArgs == null)
       {
         offlineAssemblyName = assemblyName;
         offlineAssemblyPath = assemblyPath;
+        LoadStoredArgs(arguments);        
       }
     }
 
@@ -548,37 +542,9 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Experimental method to load data from a type stored in the assembly
     /// </summary>
-    private static void LoadStoredArgs()
+    private static void LoadStoredArgs(string args)
     {
-      string assemblyQualifiedName =
-        String.Join(", ", new string[] {
-          ILRewriter.ArgumentStoringClassName,
-          offlineAssemblyName,
-          "Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
-        });
-      Type t = Type.GetType(
-                     assemblyQualifiedName,
-        // Assembly resolver -- load from self if necessary.
-                     (aName) => aName.Name == offlineAssemblyName ?
-                         System.Reflection.Assembly.LoadFrom(offlineAssemblyPath) :
-                         System.Reflection.Assembly.Load(aName),
-        // Type resolver -- load the type from the assembly if we have one
-        // Otherwise let .NET resolve it
-                     (assem, name, ignore) => assem == null ?
-                         Type.GetType(name, false, ignore) :
-                             assem.GetType(name, false, ignore),
-                     false);
-      if (t == null)
-      {
-        throw new Exception("Type resolution of the class storing the arguments failed.");
-      }
-
-      var method = t.GetMethod(ILRewriter.ArgumentStoringMethodName);
-      if (method == null)
-      {
-        throw new Exception("Method resolution of the method storing the arguments failed.");
-      }
-      frontEndArgs = new FrontEndArgs(((string)method.Invoke(null, null)).Split());
+      frontEndArgs = new FrontEndArgs(args.Split());
       typeManager = new TypeManager(frontEndArgs);
     }
 

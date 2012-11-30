@@ -84,7 +84,7 @@ namespace DotNetFrontEnd
     private INamespaceTypeReference systemObject;
 
     // DNFE-specific variables
-    private ITypeDefinition cciReflectorType;
+    private ITypeDefinition variableVisitorType;
     private DotNetFrontEnd.DeclarationPrinter declPrinter;
     private DotNetFrontEnd.FrontEndArgs frontEndArgs;
     private DotNetFrontEnd.TypeManager typeManager;
@@ -99,7 +99,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Reference to the VariableVisitor method that loads assembly name and path
     /// </summary>
-    private Microsoft.Cci.MethodReference initializeVariableVisitorMethodReference;
+    private Microsoft.Cci.MethodReference argumentStoringMethodReference;
 
     /// <summary>
     /// Reference to the VariableVisitor method that will write the program point name
@@ -1391,7 +1391,7 @@ namespace DotNetFrontEnd
       // have no entry point.
       if (this.frontEndArgs.SaveProgram != null && transition == MethodTransition.ENTER)
       {
-        this.EmitVariableVisitorInitialization(generator);
+        this.EmitFrontEndArgInitializationCall(generator);
       }
 
       // Emit the method name as a program point
@@ -1494,7 +1494,7 @@ namespace DotNetFrontEnd
     private void ReleaseWriterLock(ILGenerator generator)
     {
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
-          this.host, this.cciReflectorType, CallingConvention.Default,
+          this.host, this.variableVisitorType, CallingConvention.Default,
           this.systemVoid, this.nameTable.GetNameFor(
               VariableVisitor.ReleaseWriterLockFunctionName), 0));
     }
@@ -1509,7 +1509,7 @@ namespace DotNetFrontEnd
     private void AcquireWriterLock(ILGenerator generator)
     {
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
-          this.host, this.cciReflectorType, CallingConvention.Default,
+          this.host, this.variableVisitorType, CallingConvention.Default,
           this.systemVoid, this.nameTable.GetNameFor(
               VariableVisitor.AcquireWriterLockFunctionName), 0));
     }
@@ -1525,16 +1525,9 @@ namespace DotNetFrontEnd
     private void InsertShouldSuppressOutputCall(bool shouldSuppress, ILGenerator generator)
     {
       // .NET opcode semantics for boolean values are: 0 => false, other => true
-      if (shouldSuppress)
-      {
-        generator.Emit(OperationCode.Ldc_I4, 1);
-      }
-      else
-      {
-        generator.Emit(OperationCode.Ldc_I4, 0);
-      }
+      generator.Emit(OperationCode.Ldc_I4, shouldSuppress ? 1 : 0);
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
-          this.host, this.cciReflectorType, CallingConvention.Default,
+          this.host, this.variableVisitorType, CallingConvention.Default,
           this.systemVoid, this.nameTable.GetNameFor(
               VariableVisitor.ShouldSuppressOutputMethodName), 0, host.PlatformType.SystemBoolean));
     }
@@ -1761,7 +1754,7 @@ namespace DotNetFrontEnd
       // "exception", or Type, since we are limited about the type info
       // and it's always downcast to System.Object
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
-         this.host, this.cciReflectorType, CallingConvention.Default,
+         this.host, this.variableVisitorType, CallingConvention.Default,
          this.systemVoid, this.nameTable.GetNameFor(
             VariableVisitor.ExceptionInstrumentationMethodName),
          0, this.systemObject));
@@ -1791,7 +1784,7 @@ namespace DotNetFrontEnd
           this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param).ToString());
       // Make special instrumentation call instead of regular, with parameters reordered
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
-         this.host, this.cciReflectorType, CallingConvention.Default,
+         this.host, this.variableVisitorType, CallingConvention.Default,
          this.systemVoid, this.nameTable.GetNameFor(
           VariableVisitor.ValueFirstInstrumentationMethodName), 0,
          this.systemObject, this.systemString, this.systemString));
@@ -1827,7 +1820,7 @@ namespace DotNetFrontEnd
       generator.Emit(OperationCode.Ldstr,
           this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param).ToString());
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
-         this.host, this.cciReflectorType, CallingConvention.Default,
+         this.host, this.variableVisitorType, CallingConvention.Default,
          this.systemVoid, this.nameTable.GetNameFor(
             VariableVisitor.StaticInstrumentationMethodName), 0, this.systemString));
     }
@@ -1859,7 +1852,7 @@ namespace DotNetFrontEnd
     {
       generator.Emit(OperationCode.Ldstr, paramTypeName);
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
-         this.host, this.cciReflectorType, CallingConvention.Default,
+         this.host, this.variableVisitorType, CallingConvention.Default,
          this.systemVoid, this.nameTable.GetNameFor(
             VariableVisitor.InstrumentationMethodName), 0,
          this.systemString, this.systemObject, this.systemString));
@@ -1939,7 +1932,7 @@ namespace DotNetFrontEnd
       if (programPointWriterMethod == null)
       {
         programPointWriterMethod = new Microsoft.Cci.MethodReference(
-         this.host, this.cciReflectorType, CallingConvention.Default,
+         this.host, this.variableVisitorType, CallingConvention.Default,
          this.systemVoid, this.nameTable.GetNameFor(
             VariableVisitor.WriteProgramPointMethodName), 0,
          this.systemString, this.systemString);
@@ -1955,21 +1948,17 @@ namespace DotNetFrontEnd
     /// Variable containing method reference name is private, static, final and can be trusted.
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
       "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void EmitVariableVisitorInitialization(ILGenerator generator)
+    private void EmitFrontEndArgInitializationCall(ILGenerator generator)
     {
-      generator.Emit(OperationCode.Ldstr, this.frontEndArgs.AssemblyName);
-      System.Diagnostics.Debug.Assert(this.frontEndArgs.SaveProgram != null);
-      generator.Emit(OperationCode.Ldstr, this.frontEndArgs.SaveProgram);
-      if (initializeVariableVisitorMethodReference == null)
+      if (argumentStoringMethodReference == null)
       {
-        initializeVariableVisitorMethodReference = new Microsoft.Cci.MethodReference(
-         this.host, this.cciReflectorType, CallingConvention.Default,
-         this.systemVoid, this.nameTable.GetNameFor(
-            VariableVisitor.LoadAssemblyPathAndNameMethodName), 
-         /* genericParameterCount */ 0,
-         this.systemString, this.systemString);
+        argumentStoringMethodReference = new Microsoft.Cci.MethodReference(
+         this.host, this.argumentStoringType, CallingConvention.Default,
+         this.systemVoid, this.nameTable.GetNameFor(ArgumentStoringMethodName), 
+         /* genericParameterCount */ 0
+         /* no param types */);
       }
-      generator.Emit(OperationCode.Call, initializeVariableVisitorMethodReference);
+      generator.Emit(OperationCode.Call, argumentStoringMethodReference);
     }
 
     /// <summary>
@@ -1984,7 +1973,7 @@ namespace DotNetFrontEnd
       if (invocationNonceWriterMethod == null)
       {
         invocationNonceWriterMethod = new Microsoft.Cci.MethodReference(
-         this.host, this.cciReflectorType, CallingConvention.Default,
+         this.host, this.variableVisitorType, CallingConvention.Default,
          this.systemVoid, this.nameTable.GetNameFor(
             VariableVisitor.WriteInvocationNonceMethodName), 0,
          host.PlatformType.SystemInt32);
@@ -2005,7 +1994,7 @@ namespace DotNetFrontEnd
       if (invocationNonceSetterMethod == null)
       {
         invocationNonceSetterMethod = new Microsoft.Cci.MethodReference(
-         this.host, this.cciReflectorType, CallingConvention.Default,
+         this.host, this.variableVisitorType, CallingConvention.Default,
          this.host.PlatformType.SystemInt32, this.nameTable.GetNameFor(
             VariableVisitor.InvocationNonceSetterMethodName), 0, systemString);
       }
@@ -2044,7 +2033,7 @@ namespace DotNetFrontEnd
         // Get the VariableVisitor Type, mostly filtering out the system assemblies.
         if (type.Name.ToString() == DotNetFrontEnd.VariableVisitor.VariableVisitorClassName)
         {
-          this.cciReflectorType = type;
+          this.variableVisitorType = type;
           break;
         }
       }
@@ -2083,6 +2072,12 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
+    /// TODO(kellend): Move
+    /// The type holding the arguments needed when assembly is run in offline mode
+    /// </summary>
+    private ITypeDefinition argumentStoringType;
+
+    /// <summary>
     /// Creates and emites a new class, which contains a single method returning the front end
     /// arguments used during instrumentation. Necessary for running the front-end in offline
     /// mode since these would otherwise not be available.
@@ -2093,12 +2088,12 @@ namespace DotNetFrontEnd
         "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
     private void WriteClassStoringArguments(Assembly mutableAssembly, IMetadataHost host)
     {
-        var rootUnitNamespace = new RootUnitNamespace()
+        RootUnitNamespace rootUnitNamespace = new RootUnitNamespace()
         {
           Unit = mutableAssembly
         };
 
-        var argumentStoringClass = new NamespaceTypeDefinition()
+        NamespaceTypeDefinition argumentStoringClass = new NamespaceTypeDefinition()
         {
           ContainingUnitNamespace = rootUnitNamespace,
           InternFactory = host.InternFactory,
@@ -2111,30 +2106,45 @@ namespace DotNetFrontEnd
         rootUnitNamespace.Members.Add(argumentStoringClass);
         mutableAssembly.AllTypes.Add(argumentStoringClass);
         argumentStoringClass.BaseClasses = new List<ITypeReference>() { host.PlatformType.SystemObject };
+        this.argumentStoringType = argumentStoringClass;
 
-        var getArgumentsMethod = new MethodDefinition()
+        MethodDefinition getArgumentsMethod = new MethodDefinition()
         {
           ContainingTypeDefinition = argumentStoringClass,
           InternFactory = host.InternFactory,
           IsCil = true,
           IsStatic = true,
           Name = nameTable.GetNameFor(ArgumentStoringMethodName),
-          Type = host.PlatformType.SystemString,
+          Type = host.PlatformType.SystemVoid,
           Visibility = TypeMemberVisibility.Public,
         };
         argumentStoringClass.Methods.Add(getArgumentsMethod);
 
-        var ilGenerator = new ILGenerator(host, getArgumentsMethod);
+        ILGenerator ilGenerator = new ILGenerator(host, getArgumentsMethod);
 
+
+        ilGenerator.Emit(OperationCode.Ldstr, this.frontEndArgs.AssemblyName);
+        System.Diagnostics.Debug.Assert(this.frontEndArgs.SaveProgram != null);
+        ilGenerator.Emit(OperationCode.Ldstr, this.frontEndArgs.SaveProgram);
         ilGenerator.Emit(OperationCode.Ldstr, this.frontEndArgs.GetArgsToWrite());
-        ilGenerator.Emit(OperationCode.Ret);
 
-        var body = new ILGeneratorMethodBody(ilGenerator, 
+        var variableVisitorMethodReference = new Microsoft.Cci.MethodReference(
+         this.host, this.variableVisitorType, CallingConvention.Default,
+         this.systemVoid, this.nameTable.GetNameFor(VariableVisitor.InitializeFrontEndArgumentsMethodName),
+          /* genericParameterCount */ 0,
+          /* param types */ systemString, systemString, systemString);
+
+        ilGenerator.Emit(OperationCode.Call, variableVisitorMethodReference);
+
+        ilGenerator.Emit(OperationCode.Ret);
+                  
+        ILGeneratorMethodBody body = new ILGeneratorMethodBody(ilGenerator, 
           /* localsAreZeroed */ true, 
           /* maxStack */ 1, 
           getArgumentsMethod, 
           Enumerable<ILocalDefinition>.Empty, 
-          Enumerable<ITypeDefinition>.Empty);
+          Enumerable<ITypeDefinition>.Empty
+        );
         getArgumentsMethod.Body = body;
     }
 
