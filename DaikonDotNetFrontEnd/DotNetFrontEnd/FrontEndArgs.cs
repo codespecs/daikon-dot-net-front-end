@@ -118,6 +118,9 @@ namespace DotNetFrontEnd
     /// </summary>
     private Dictionary<PossibleArgument, string> programArguments;
 
+    /// <summary>
+    /// String holding the arguments that created the instance
+    /// </summary>
     private string argsToWrite;
 
     /// <summary>
@@ -706,6 +709,10 @@ namespace DotNetFrontEnd
       }
     }
 
+    /// <summary>
+    /// Get the original arguments that were used to construct the instance
+    /// </summary>
+    /// <returns>Space separated string of the original arguments</returns>
     public string GetArgsToWrite()
     {
       return this.argsToWrite;
