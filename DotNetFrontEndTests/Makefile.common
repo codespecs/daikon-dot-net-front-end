@@ -87,14 +87,20 @@ invs-large: $(NAME)
   
 ifeq ($(UNIT_TEST),1)
 ran-dnfe: $(DNFE_EXE) $(CLEAN_OUTPUT)
+	# TODO(#66): Shouldn't need to create this
 	mkdir daikon-output
 	$(COMPILER) /target:library $(NAME).cs
 	$(DNFE_EXE) --save-program --output-location=results.dtrace $(DNFE_OPTIONS) $(PROGRAM_ARGS) $(NAME).dll
-	$(COMPILER) /target:library /reference:$(UNIT_TESTING_FRAMEWORK),InstrumentedProgram.exe $(NAME)Test.cs
+	# TODO(#67): Shouldn't be able to save and overwrite
+	mv InstrumentedProgram.exe $(NAME).dll
+	$(COMPILER) /target:library /reference:$(UNIT_TESTING_FRAMEWORK),$(NAME).dll $(NAME)Test.cs
 	$(UNIT_TEST_DRIVER) /testcontainer:$(NAME)Test.dll /testsettings:Local.testsettings
 	cat /dev/null $(EXTRA_OUTPUTS) >>$(NAME).out
 	perl -i $(CLEAN_OUTPUT) $(NAME).out
 	touch $@
+	cp results.decls daikon-output/$(NAME).dtrace
+	cat TestResults/Results/Out/results.dtrace >> daikon-output/$(NAME).dtrace
+	rm -r TestResults/Results*
 else ifeq ($(SIKULI_RUN),1)
 ran-dnfe: $(NAME) $(DNFE_EXE) $(CLEAN_OUTPUT)
 	$(BEFORE_RUN)
