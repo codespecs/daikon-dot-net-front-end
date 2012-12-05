@@ -1,0 +1,324 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>DNFE Documentation</title>
+	</head>
+	<body>
+		<!-- Introduction -->
+		<h3 class="section">C# Front-End DNFE</h3>
+		<p>The C# front end for Daikon, code-named DNFE, creates datatrace (.dtrace)
+		 files by examining C# programs, modifying them in-memory, and running them.
+		</p>
+		<p> Before DNFE can be run you must first set the path to the reflective 
+		 visitor as an environmental variable, DNFE_OUT. DNFE expects the reflector
+		 to be saved to DNFE_OUT/Reflector.dll
+		</p>
+		<p>To use DNFE, call the launcher, FrontEndLauncher.exe then any DNFE-arguments, 
+		then the path to your  program, followed by any argument for your program. 
+		If you would normally run
+		</p>
+		<pre class="example">
+			MyProgram.exe arg1 arg2 arg3
+		</pre>
+		<p class="noindent">then instead you would run
+		</p>
+		<pre class="example">
+			DotNetProfilerCustomLauncher.exe MyProgram.exe arg1 arg2 arg3
+		</pre>
+		<p class="noindent">This runs your program and creates MyProgram.dtrace 
+		 in a sub-directory daikon-output/ from the current directory
+		</p>
+		<p>That's all there is to it! DNFE instruments your program's IL
+		 when the CLR is loaded, so you do not need to perform separate instrumentation
+		 and recompilation steps.
+		</p>
+		<hr/>
+		
+		<!-- Options Intro -->
+		<h4 class="subsection">DNFE Options</h4>
+		<p>The section lists the optional command-line arguments to DNFE, which appear 
+		 before the path of the program to be executed.
+		</p>
+		<ul class="menu">
+			<li><a href="#Program-points-in-DNFE-output">Program points in 
+			 DNFE output</a></li>
+			<li><a href="#Variables-in-DNFE-output">Variables in DNFE output
+			</a></li>
+			<li><a href="#DNFE-miscellaneous-options">DNFE miscellaneous
+			 options</a></li>
+		</ul>
+
+		<hr/>
+		
+		<!-- Program point options -->		
+		<h5 class="subsection">Program points in DNFE output</h5>
+		<a name="Program-points-in-DNFE-output"></a>
+		<p>This section lists options that affect which program points appear
+		 in DNFE Output.
+		</p>
+		<dl>		
+			<dt><samp><span class="option">--ppt-omit-pattern=<var>regexp</var></span></samp></dt>
+			<dd>
+				<p>Do not produce data trace output for 
+				 classes/procedures/program points whose names match the given
+				 regular expression. This reduces the size of the data trace
+				 file and also may make the instrumented program run faster,
+				 since it need not output those variables.</p>
+				<p>This option works just like --ppt-select-pattern does, 
+				 except that matching program points are excluded, not 
+				 included.</p>
+				 <p>Omit takes precedence over select.</p>
+			</dd>		
+			
+			<dt><samp><span class="option">--ppt-select-pattern=<var>regexp</var></span></samp></dt>
+			<dd>
+				<p>Only produce trace output for classes/procedures/program points
+				whose names match the given regular expression. This option may be
+				supplied multiple times, and may be used in conjunction with
+				<samp><span class="option">--ppt-omit-pattern</span></samp></p>
+				<p>When this switch is supplied, filtering occurs in the following
+				 way: for each program point, DNFE checks the fully qualified 
+				 class name, the method name, and the program point name
+				 against each <var>regexp</var> that was supplied. If any of these match,
+				 then the program point is included in the instrumentation.
+				</p>
+				<p>Suppose that method bar is defined only in class C. Then to 
+				 trace only bar, you could match the method name (in any 
+				 class) with regular expression ‘bar$’, or you could match
+				 the program point name with ‘C\.bar\(’.
+				</p>
+			</dd>
+      
+      <dt><samp><span class="option">--purity-file=<var>pure-methods-file</var></span></samp></dt>
+      <dd>
+        <p>
+          File <var>pure-methods-file</var> lists the pure methods (sometimes called observer 
+          methods) in a C# program. Pure methods have no externally side effects, such as setting 
+          variables or producing output. For example, most implementations of the 
+          <code>hashCode()</code>, 
+          <code>toString()</code>, and <code>equals()</code> methods are pure. 
+        </p><p>
+          For each variable, DNFE adds to the trace 
+          new “fields” that represent invoking each pure method on the variable. 
+          (Currently, DNFE does so only for pure methods that take no parameters, and obviously 
+          this mechanism is only useful for methods that return a value: a pure method that 
+          returns no value does nothing!)
+        </p>
+          Here is an example:
+        <pre>
+           class Point {
+             private int x, y;
+              public int radiusSquared() {
+                return x*x + y*y;
+              }
+            }
+        </pre>
+        <p>
+        If <code>radiusSquared()</code> has been specified as pure, then for each point <var>p</var>, 
+        DNFE will output 
+        the variables <var>p</var>.<code>x</code>, <var>p</var>.<code>y</code>, and 
+        <var>p</var><code>.radiusSquared()</code>. Use of pure methods can improve the Daikon 
+        output, since they represent information that the programmer considered important but that 
+        is not necessarily stored in a variable.
+        </p><p>
+        Invoking a pure method at any time in an application should not change the application's 
+        behavior. If a non-pure method is listed in a purity file, then application behavior can change. 
+        DNFE does not verify the purity of methods listed in the purity file.
+        </p><p>
+        The purity file lists a set of methods, one per line. The format of each method is given as follows:        
+        <pre>
+        [AssemblyQualifiedName];[MethodName]
+        </pre>        
+        For example:
+        <pre>        
+          PureMethods.A, PureMethods, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;PureMethod1
+        </pre>
+        </p><p>
+        By convention, pure-methods-file has the suffix .pure.
+        </p>
+      </dd>
+			
+			<dt><samp><span class="option">--sample-start=<var>sample-cnt</var></span></samp></dt>
+			<dd>
+				<p>When this option is chosen, DNFE will record each program point until
+				that program point has been executed <var>sample-cnt</var> times.  DNFE will
+				then begin sampling.  Sampling starts at 10% and decreases by a factor
+				of 10 each time another <var>sample-cnt</var> samples have been recorded.  If
+				<var>sample-cnt</var> is 0, then all calls will be recorded.</p>
+			</dd>		
+			
+		</dl>
+		<hr/>
+		<!-- Variable options -->		
+		<h5 class="subsection">Variables in DNFE output</h5>
+		<a name="Variables-in-DNFE-output"></a>
+		<p>This section lists options that affect which variables appear
+		 in DNFE Output
+		</p>
+		<dl>
+			<dt><samp><span class="option">--arrays-only=<var>true|false</var></span></samp></dt>
+			<dd>
+				<p>Determines whether variables that implement IList should be treated as arrays
+				for purposes of instrumentaion. This will affect whether the variable's elements are
+				inspected, e.g. a[0], ..., a[n]. False by default.
+				</p>
+			</dd>
+			<dt><samp><span class="option">--nesting-depth=<var>n</var></span></samp></dt>
+			<dd>				
+				<p>Depth to which to examine structure components (default 2).
+				 This parameter determines which variables the front end causes 
+				 to be output at runtime. For instance, suppose that a program 
+				 contained the following data structures and variables:
+				 </p>
+				 <pre class="example">
+          class A {
+            int x;
+            B b;
+          }
+          class B {
+            int y;
+            int z;
+          }
+          A myA;
+          
+          class Link {
+            int val;
+            Link next;
+          }
+          Link myList;
+				</pre>
+				
+				<ul>
+					<li>If depth=0, only the identities (hashcodes) of <code>myA</code> and
+					<code>myList</code> would be examined; those variables could be determined to
+					be equal or not equal to other variables. 
+					</li><li>If depth=1, then also <code>MyA.b</code>, <code>myList.next</code>, and the integers
+					<code>myA.x</code> and <code>myList.val</code> would be examined. 
+					</li><li>If depth=2, then also <code>MyA.b.y</code>, <code>MyA.b.y</code>,
+					<code>myList.next.next</code>, and <code>myList.next.val</code> would be examined. 
+					</li>
+				</ul>
+				
+				<p>Values whose value is undefined are not examined.  For instance, if <code>myA</code>
+						is <code>null</code> on a particular execution of a program point, then
+						<code>myA.b</code> is not accessed on that execution regardless of the depth
+						parameter.  That variable appears in the <samp><span class="file">.dtrace</span></samp> file, but its
+						value is marked as nonsensical.<br/>
+				</p>
+			</dd>
+			<dt><samp><span class="option">--omit-var=<var>regex</var></span></samp></dt>
+			<dd>
+				<p>
+				Do not include variables whose name matches the regular 
+				 expression. Variables will be omitted from each program 
+				 point in which they appear. 
+				</p>
+			</dd>
+			<dt><samp><span class="option">--std-visibility</span></samp></dt>
+			<dd>
+				<p>When this switch is on, DNFE will traverse exactly 
+				 those fields that are visible from a given program point. 
+				 For instance, only the public fields of class pack1.B will 
+				 be included at a program point for class pack2.A whether 
+				 or not pack1.B is instrumented. By default, DNFE outputs 
+				 all fields in instrumented classes (even those that would 
+				 not be accessible in Java code at the given program point) 
+				 and outputs no fields from uninstrumented classes (even 
+				 those that are accessible).
+				</p>
+			</dd>
+		</dl>
+				
+		<hr/>				
+		<!-- Misc. options -->		
+		<h5 class="subsection">DNFE miscellaneous options</h5>
+		<a name="DNFE-miscellaneous-options"></a>
+		
+		<p>This section lists all other DNFE options - that is, all options
+		that do not control which program points and variables appear in DNFE's
+		output.
+		</p>
+		<dl>
+			<dt><samp><span class="option">--assembly-name=<var>assembly</var></span></samp></dt>
+			<dd>				
+				<p>Specify the name of the assembly to be profiled. If not specified, the assembly
+				name will be inferred as the name of the executeable.
+				</p>
+			</dd>
+			
+			<dt><samp><span class="option">--output-location=<var>filename</var></span></samp></dt>
+			<dd>				
+				<p>Specifies the for the trace output (.dtrace)
+				 file. If this is not specified, then the default value of
+				 daikon-output/PROGRAMNAME.dtrace is used
+				</p>
+			</dd>
+			
+			<dt><samp><span class="option">--save-program=<var>filename</var></span></samp></dt>
+			<dd>
+				<p>Instead of executing the program, save it as 
+				 <var>filename</var>, or InstrumentedProgram.exe if filename
+				 is no supplied. This new program can then be executed, and will
+				 write its output as normal. This is useful for debugging purposes, 
+				 to examine the program with all instrumentation calls inserted, or 
+				 to verify the bytecode.
+				</p>
+			</dd>
+			
+			<dt><samp><span class="option">--force-unix-newline</span></samp></dt>
+			<dd>
+				<p>Always use the UNIX newline character. If not specified the
+				 OS default newline character will be used. This is necessary 
+				 for passing the unit tests.
+				</p>
+			</dd>
+			
+			<dt><samp><span class="option">--dtrace-append</span></samp></dt>
+			<dd>
+				<p>Instead of deleting the existing dtrace file, append the
+				 results of this run to the end of the existing file, if any.
+				</p>
+			</dd>
+			
+			<dt><samp><span class="option">--enum-underlying-values</span></samp></dt>
+			<dd>
+				<p>Instead of printing the string representation of an Enum's 
+				 value, print the underlying integral-type value.
+				</p>
+			</dd>
+			
+			<dt><samp><span class="option">--linked-lists</span></samp></dt>
+			<dd><p>This boolean option (default: true) causes user-defined linked lists to
+				be output as sequences, much like Java ‘<samp><span class="samp">List</span></samp>’s and arrays are. 
+				A user-defined data structure is considered to be a linked list if it
+				has one instance field that is of its own type.
+				</p>
+			</dd>	
+
+			<dt><samp><span class="option">--verbose=<var>true|false</var></span></samp></dt>
+			<dd>
+				<p>
+				Whether to include debugging and progress information in the STDOUT output, false 
+				by default.
+				</p>
+			</dd>
+			
+			<dt><samp><span class="option">--friendly-dec-types=<var>true|false</var></span></samp></dt>
+			<dd>
+				<p>
+				Whether dec-types should be printed in the style of the programming language.
+				If false dec-types are printed as assembly qualified names, e.g. Foo`1[System.Int]
+				If true they are printed in the style of Foo&lt;Int&gt;
+				</p>
+			</dd>
+		</dl>
+		
+		<!-- Validation Badge -->	
+		<p>
+			<a href="http://validator.w3.org/check?uri=referer"><img
+			src="http://www.w3.org/Icons/valid-xhtml10" 
+			alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a>
+		</p>
+	</body>
+</html>

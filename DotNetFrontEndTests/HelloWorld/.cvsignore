@@ -1,0 +1,7 @@
+DataStr.exe
+*.diff
+*.counts
+*.out
+*.comp
+ran-kvasir
+daikon-output

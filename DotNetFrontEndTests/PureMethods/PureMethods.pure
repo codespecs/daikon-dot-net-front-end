@@ -1,0 +1,7 @@
+PureMethods.PureMethods, PureMethods, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;StaticPureMethod1
+PureMethods.PureMethods, PureMethods, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;StaticPureMethod2
+PureMethods.A, PureMethods, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;PureMethod1
+PureMethods.A, PureMethods, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;PureMethod2
+PureMethods.A, PureMethods, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;PureMethod3
+PureMethods.A, PureMethods, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;PureMethod4
+PureMethods.A, PureMethods, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;get_NPlusOne
