@@ -1,0 +1,10 @@
+click("MainwindcwOT.png")
+click("MainwindcwOT.png")
+click("MainwindcwOT.png")
+click("MainwindcwOT.png")
+click("MainwindcwOT.png")
+click("1354705142793.png")
+
+click("MainwindcwOT.png")
+click("MainwindcwOT.png")
+click("MainwindcwOT.png")
