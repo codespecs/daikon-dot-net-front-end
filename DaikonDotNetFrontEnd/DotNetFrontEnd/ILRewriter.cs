@@ -2037,7 +2037,11 @@ namespace DotNetFrontEnd
           break;
         }
       }
-      WriteClassStoringArguments(mutableAssembly, host);
+
+      if (this.frontEndArgs.SaveProgram != null)
+      {
+        WriteClassStoringArguments(mutableAssembly, host);
+      }
 
       // We need to be able to reference to variable visitor assembly to add calls to it.
       mutableAssembly.AssemblyReferences.Add(variableVisitorAssembly);
@@ -2121,7 +2125,6 @@ namespace DotNetFrontEnd
         argumentStoringClass.Methods.Add(getArgumentsMethod);
 
         ILGenerator ilGenerator = new ILGenerator(host, getArgumentsMethod);
-
 
         ilGenerator.Emit(OperationCode.Ldstr, this.frontEndArgs.AssemblyName);
         System.Diagnostics.Debug.Assert(this.frontEndArgs.SaveProgram != null);
