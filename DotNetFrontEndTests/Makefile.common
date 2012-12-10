@@ -28,6 +28,7 @@ UNIT_TEST_DRIVER ?= '/cygdrive/c/Program Files (x86)/Microsoft Visual Studio 10.
 DNFE_PATH = 'C:\daikon\scripts'
 DNFE_EXE = $(DAIKONDIR)/scripts/DotNetFrontEndLauncher.exe
 SIKULI_PATH = '/cygdrive/c/Program Files (x86)/Sikuli X/Sikuli-IDE-w.bat'
+MSBUILD = 'C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe'
 ifeq ($(LANG), FSharp)
 COMPILER := /cygdrive/c/program_files/fsc.exe
 else ifeq ($(LANG), VB)
@@ -58,9 +59,13 @@ else
 SOURCES ?= *.$(CS_EXT)
 endif
 
+ifeq ($(WPF_TEST),1)
+$(NAME): $(SOURCES) $(LIBS)
+	$(MSBUILD) /property:OutDir=. $(NAME).sln
+else
 $(NAME): $(SOURCES) $(LIBS)
 	$(COMPILER) $(DEFINES) $(SOURCES) $(INCLUDES)
-
+endif
 .PRECIOUS: %$(DTRACE_EXT) %.out %$(DTRACE_EXT).diff %.out.diff
 
 daikon-output/$(NAME)$(DTRACE_EXT): ran-dnfe
@@ -84,7 +89,7 @@ invs-large: $(NAME)
 	$(DNFE_EXE) $(DNFE_OPTIONS) --output-location=- ./$(NAME).exe $(PROGRAM_ARGS)  | $(DAIKON) - -o daikon-output/$(NAME).inv.gz
 	$(AFTER_RUN)
 	$(PRINT_INV) daikon-output/$(NAME).inv.gz daikon-output/$(NAME).inv.txt
-  
+
 ifeq ($(UNIT_TEST),1)
 ran-dnfe: $(DNFE_EXE) $(CLEAN_OUTPUT)
 	# TODO(#66): Shouldn't need to create this
