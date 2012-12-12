@@ -63,21 +63,12 @@ namespace DotNetFrontEnd
     public static MemoryStream RewriteProgramIL(FrontEndArgs frontEndArgs,
         TypeManager typeManager)
     {
-      Stream resultStream;
       if (String.IsNullOrWhiteSpace(frontEndArgs.AssemblyPath))
       {
         throw new FileNotFoundException("Path to program to be profiled not provided");
       }
 
-      if (frontEndArgs.SaveProgram != null)
-      {
-        resultStream = new FileStream(frontEndArgs.SaveProgram, FileMode.Create);
-      }
-      else
-      {
-        resultStream = new MemoryStream();
-      }
-
+      Stream resultStream;
       using (var host = new PeReader.DefaultHost())
       {
         IModule/*?*/ module = host.LoadUnitFrom(frontEndArgs.AssemblyPath) as IModule;
@@ -89,14 +80,14 @@ namespace DotNetFrontEnd
 
         PdbReader/*?*/ pdbReader = null;
         string pdbFile = Path.ChangeExtension(module.Location, "pdb");
-        if (File.Exists(pdbFile))
+        try
         {
           using (var pdbStream = File.OpenRead(pdbFile))
           {
             pdbReader = new PdbReader(pdbStream, host);
           }
         }
-        else
+        catch
         {
           // TODO(#25): Figure out how what happens if we can't load the PDB file.
           // It seems to be non-fatal, so print the error and continue.
@@ -138,6 +129,16 @@ namespace DotNetFrontEnd
             pdbFile = module.Location + ".pdb";
           }
 
+          host.Dispose();
+          if (frontEndArgs.SaveProgram != null)
+          {
+            resultStream = new FileStream(frontEndArgs.SaveProgram, FileMode.Create);
+          }
+          else
+          {
+            resultStream = new MemoryStream();
+          }
+
           // Need to not pass in a local scope provider until such time as we have one 
           // that will use the mutator to remap things (like the type of a scope 
           // constant) from the original assembly to the mutated one.
@@ -145,11 +146,16 @@ namespace DotNetFrontEnd
           {
             PeWriter.WritePeToStream(module, host, resultStream, pdbReader, null,
                 pdbWriter);
+            if (frontEndArgs.SaveAndRun)
+            {
+              resultStream = new MemoryStream();
+              PeWriter.WritePeToStream(module, host, resultStream);
+            }
           }
         }
       }
 
-      if (frontEndArgs.SaveProgram != null)
+      if (frontEndArgs.SaveProgram != null && !frontEndArgs.SaveAndRun)
       {
         // We aren't going to run the program, so no need to return anything
         return null;

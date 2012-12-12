@@ -8,6 +8,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
+using System.Diagnostics;
 
 namespace DotNetFrontEndLauncher
 {
@@ -19,14 +20,58 @@ namespace DotNetFrontEndLauncher
   {
     static void Main(string[] args)
     {
+      var arguments = ProcessArguments(args);
+      FrontEndArgs frontEndArgs = arguments.Item1;
+      TypeManager typeManager = arguments.Item2;
+
+      // Hold the IL for the program to be profiled in memory if we are running the modified 
+      // program directly.
+      MemoryStream resultStream = null;
+      //try
+      //{
+      resultStream = ProgramRewriter.RewriteProgramIL(frontEndArgs, typeManager);
+      if (frontEndArgs.VerboseMode)
+      {
+        Console.WriteLine("Rewriting complete");
+      }
+      //}
+      //catch (Exception ex)
+      //{
+      //  if (frontEndArgs.DontCatchExceptions)
+      //  {
+      //    throw;
+      //  }
+      //  Console.Error.WriteLine("Exception occurred during IL Rewriting.");
+      //  if (frontEndArgs.VerboseMode)
+      //  {
+      //    Console.Error.WriteLine(ex.Message);
+      //    Console.Error.WriteLine(ex.StackTrace);
+      //  }
+      //  //  Can't proceed any further, so exit here.
+      //  return;
+      //}
+
+      if (frontEndArgs.SaveProgram != null && !frontEndArgs.SaveAndRun)
+      {
+        return;
+      }
+      ExecuteProgram(args, frontEndArgs, resultStream);
+    }
+
+    /// <summary>
+    /// Process the provided front-end arguments, creating FrontEndArgs and TypeManager objects
+    /// </summary>
+    /// <param name="args">Arguments provided to the front end, including program arguments</param>
+    /// <returns>FrontEndArgs and TypeManager obejcts to use during visiting</returns>
+    private static Tuple<FrontEndArgs, TypeManager> ProcessArguments(string[] args)
+    {
       if (args == null || args.Length < 1)
       {
         Console.WriteLine("FrontEndLauncher.exe [arguments] ProgramToBeProfiled");
-        return;
+        Environment.Exit(1);// return;
       }
 
       FrontEndArgs frontEndArgs = new FrontEndArgs(args);
-
       TypeManager typeManager = new TypeManager(frontEndArgs);
 
       if (!File.Exists(frontEndArgs.AssemblyPath))
@@ -38,10 +83,9 @@ namespace DotNetFrontEndLauncher
       // The user may just want to get the profiled program, not have it run.
       if (frontEndArgs.SaveProgram != null)
       {
-        // Print the decls in one file
+        // Print all the decls in one file
         frontEndArgs.SetDeclExtension();
-        ProgramRewriter.RewriteProgramIL(frontEndArgs, typeManager);
-        return;
+        return new Tuple<FrontEndArgs, TypeManager>(frontEndArgs, typeManager);
       }
 
       // Whether to print datatrace file to stdout
@@ -68,41 +112,8 @@ namespace DotNetFrontEndLauncher
       {
         Console.WriteLine("Argument processing complete");
       }
-
-      // Hold the IL for the program to be profiled in memory if we are running the modified 
-      // program directly.
-      MemoryStream resultStream = null;
-      //try
-      //{
-        resultStream = ProgramRewriter.RewriteProgramIL(frontEndArgs, typeManager);
-        if (resultStream == null)
-        {
-          throw new ArgumentException("resultStream", "Invalid result stream produced.");
-        }
-        if (frontEndArgs.VerboseMode)
-        {
-          Console.WriteLine("Rewriting complete");
-        }
-      //}
-      //catch (Exception ex)
-      //{
-      //  if (frontEndArgs.DontCatchExceptions)
-      //  {
-      //    throw;
-      //  }
-      //  Console.Error.WriteLine("Exception occurred during IL Rewriting.");
-      //  if (frontEndArgs.VerboseMode)
-      //  {
-      //    Console.Error.WriteLine(ex.Message);
-      //    Console.Error.WriteLine(ex.StackTrace);
-      //  }
-      //  //  Can't proceed any further, so exit here.
-      //  return;
-      //}
-
-        ExecuteProgram(args, frontEndArgs, resultStream);
+      return new Tuple<FrontEndArgs, TypeManager>(frontEndArgs, typeManager);
     }
-
 
     /// <summary>
     /// Load and execute the rewritten program.
@@ -113,6 +124,10 @@ namespace DotNetFrontEndLauncher
     private static void ExecuteProgram(string[] args, FrontEndArgs frontEndArgs,
       MemoryStream resultStream)
     {
+      if (resultStream == null)
+      {
+        throw new ArgumentException("resultStream", "Invalid result stream produced.");
+      }
       try
       {
         Assembly rewrittenAssembly = Assembly.Load(resultStream.ToArray());
@@ -132,23 +147,24 @@ namespace DotNetFrontEndLauncher
         // First argument relevant to the program to be profiled
         int indexOfFirstArg = frontEndArgs.ProgramArgIndex + 1;
 
+        object[] programArguments = null;
+
         // Assume the single parameter is an array of strings -- the arguments
         if (rewrittenAssembly.EntryPoint.GetParameters().Length == 1 &&
             rewrittenAssembly.EntryPoint.GetParameters()[0].ParameterType.Equals(typeof(string[])))
         {
           // Pass on arguments to the program, all but the program name
-          string[] programArgs = new string[args.Length - indexOfFirstArg];
-          Array.Copy(args, indexOfFirstArg, programArgs, 0, args.Length - indexOfFirstArg);
-          rewrittenAssembly.EntryPoint.Invoke(null, new object[] { programArgs });
+          programArguments = new object[] { new string[args.Length - indexOfFirstArg] };
+          Array.Copy(args, indexOfFirstArg, (string[])programArguments[0], 0, args.Length - indexOfFirstArg);
         }
-        else if (rewrittenAssembly.EntryPoint.GetParameters().Length == 0)
+        else if (rewrittenAssembly.EntryPoint.GetParameters().Length != 0)
         {
-          // Otherwise assume there are no arguments
-          rewrittenAssembly.EntryPoint.Invoke(null, null);
+          Console.Error.WriteLine("Unable to execute the program with the given type of arguments.");
         }
+
         else
         {
-          Console.Error.WriteLine("Unable to execute the program with the given type of arguments");
+          rewrittenAssembly.EntryPoint.Invoke(null, programArguments);
         }
 
         if (frontEndArgs.VerboseMode)
