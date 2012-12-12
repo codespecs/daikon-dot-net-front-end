@@ -91,13 +91,14 @@ namespace DotNetFrontEnd
       std_visibility,
       // Misc. options
       assembly_name,
+      dont_catch_exceptions,
       dtrace_append,
       enum_underlying_values,
       force_unix_newline,
       friendly_dec_types,
       linked_lists,
-      dont_catch_exceptions,
       output_location,
+      save_and_run,
       save_program,
       verbose,
       // Not an option -- the location of the program to be profiled
@@ -681,6 +682,14 @@ namespace DotNetFrontEnd
     public bool FriendlyDecTypes
     {
       get { return bool.Parse(this.programArguments[PossibleArgument.friendly_dec_types]); }
+    }
+
+    /// <summary>
+    /// Whether the program should be saved to disk and immediately executed
+    /// </summary>
+    public bool SaveAndRun
+    {
+      get { return this.programArguments.ContainsKey(PossibleArgument.save_and_run); }
     }
 
     #endregion

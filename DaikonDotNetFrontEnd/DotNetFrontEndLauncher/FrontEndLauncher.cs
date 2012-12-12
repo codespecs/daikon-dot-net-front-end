@@ -100,7 +100,19 @@ namespace DotNetFrontEndLauncher
       //  return;
       //}
 
-      // Load and execute the rewritten program.
+        ExecuteProgram(args, frontEndArgs, resultStream);
+    }
+
+
+    /// <summary>
+    /// Load and execute the rewritten program.
+    /// </summary>
+    /// <param name="args">Arguments for the program</param>
+    /// <param name="frontEndArgs">Arguments for the front end</param>
+    /// <param name="resultStream">Memory stream of the program to be executed</param>
+    private static void ExecuteProgram(string[] args, FrontEndArgs frontEndArgs,
+      MemoryStream resultStream)
+    {
       try
       {
         Assembly rewrittenAssembly = Assembly.Load(resultStream.ToArray());
@@ -112,7 +124,7 @@ namespace DotNetFrontEndLauncher
 
         if (rewrittenAssembly.EntryPoint == null)
         {
-          Console.Error.WriteLine("Rewritten assembly has no entry point, so cannot be started." 
+          Console.Error.WriteLine("Rewritten assembly has no entry point, so cannot be started."
             + " Exiting now.");
           return;
         }
