@@ -96,7 +96,7 @@ ran-dnfe: $(DNFE_EXE) $(CLEAN_OUTPUT)
 	mkdir daikon-output
 	$(COMPILER) /target:library $(NAME).cs
 	$(DNFE_EXE) --save-program --output-location=results.dtrace $(DNFE_OPTIONS) $(PROGRAM_ARGS) $(NAME).dll
-	# TODO(#67): Shouldn't be able to save and overwrite
+	# TODO(#67): Should be able to save and overwrite
 	mv InstrumentedProgram.exe $(NAME).dll
 	$(COMPILER) /target:library /reference:$(UNIT_TESTING_FRAMEWORK),$(NAME).dll $(NAME)Test.cs
 	$(UNIT_TEST_DRIVER) /testcontainer:$(NAME)Test.dll /testsettings:Local.testsettings
@@ -109,8 +109,11 @@ ran-dnfe: $(DNFE_EXE) $(CLEAN_OUTPUT)
 else ifeq ($(SIKULI_RUN),1)
 ran-dnfe: $(NAME) $(DNFE_EXE) $(CLEAN_OUTPUT)
 	$(BEFORE_RUN)
-	$(SIKULI_PATH) -r $(NAME).skl
+	mkdir daikon-output
 	$(DNFE_EXE) $(DNFE_OPTIONS) ./$(NAME).exe $(PROGRAM_ARGS)
+	mv InstrumentedProgram.exe $(NAME).exe
+	$(SIKULI_PATH) -r $(NAME).skl
+	./$(NAME).exe
 	cat /dev/null $(EXTRA_OUTPUTS) >>$(NAME).out
 	perl -i $(CLEAN_OUTPUT) $(NAME).out
 	touch $@
