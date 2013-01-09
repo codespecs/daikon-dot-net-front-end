@@ -162,10 +162,7 @@ namespace DotNetFrontEndLauncher
           Console.Error.WriteLine("Unable to execute the program with the given type of arguments.");
         }
 
-        else
-        {
-          rewrittenAssembly.EntryPoint.Invoke(null, programArguments);
-        }
+        rewrittenAssembly.EntryPoint.Invoke(null, programArguments);
 
         if (frontEndArgs.VerboseMode)
         {
