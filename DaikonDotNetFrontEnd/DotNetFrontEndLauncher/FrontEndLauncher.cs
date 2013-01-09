@@ -51,13 +51,23 @@ namespace DotNetFrontEndLauncher
       //  return;
       //}
 
-      if (frontEndArgs.SaveProgram != null && !frontEndArgs.SaveAndRun)
+      if (resultStream == null)
       {
-        return;
+        throw new ArgumentException("resultStream", "Invalid result stream produced.");
       }
-      ExecuteProgram(args, frontEndArgs, resultStream);
-    }
+      Assembly rewrittenAssembly = Assembly.Load(resultStream.ToArray());
+      resultStream.Dispose();
 
+      if (frontEndArgs.SaveAndRun)
+      {
+        ExecuteProgramFromDisk(args, frontEndArgs, rewrittenAssembly.EntryPoint);
+      }
+      else if (String.IsNullOrEmpty(frontEndArgs.SaveProgram))
+      {
+        ExecuteProgramFromMemory(args, frontEndArgs, rewrittenAssembly);
+      }
+    }
+    
     /// <summary>
     /// Process the provided front-end arguments, creating FrontEndArgs and TypeManager objects
     /// </summary>
@@ -121,17 +131,11 @@ namespace DotNetFrontEndLauncher
     /// <param name="args">Arguments for the program</param>
     /// <param name="frontEndArgs">Arguments for the front end</param>
     /// <param name="resultStream">Memory stream of the program to be executed</param>
-    private static void ExecuteProgram(string[] args, FrontEndArgs frontEndArgs,
-      MemoryStream resultStream)
+    private static void ExecuteProgramFromMemory(string[] args, FrontEndArgs frontEndArgs,
+      Assembly rewrittenAssembly)
     {
-      if (resultStream == null)
-      {
-        throw new ArgumentException("resultStream", "Invalid result stream produced.");
-      }
       try
       {
-        Assembly rewrittenAssembly = Assembly.Load(resultStream.ToArray());
-        resultStream.Dispose();
         if (frontEndArgs.VerboseMode)
         {
           Console.WriteLine("Loading complete. Starting program.");
@@ -143,26 +147,9 @@ namespace DotNetFrontEndLauncher
             + " Exiting now.");
           return;
         }
-
-        // First argument relevant to the program to be profiled
-        int indexOfFirstArg = frontEndArgs.ProgramArgIndex + 1;
-
-        object[] programArguments = null;
-
-        // Assume the single parameter is an array of strings -- the arguments
-        if (rewrittenAssembly.EntryPoint.GetParameters().Length == 1 &&
-            rewrittenAssembly.EntryPoint.GetParameters()[0].ParameterType.Equals(typeof(string[])))
-        {
-          // Pass on arguments to the program, all but the program name
-          programArguments = new object[] { new string[args.Length - indexOfFirstArg] };
-          Array.Copy(args, indexOfFirstArg, (string[])programArguments[0], 0, args.Length - indexOfFirstArg);
-        }
-        else if (rewrittenAssembly.EntryPoint.GetParameters().Length != 0)
-        {
-          Console.Error.WriteLine("Unable to execute the program with the given type of arguments.");
-        }
-
-        rewrittenAssembly.EntryPoint.Invoke(null, programArguments);
+        
+        rewrittenAssembly.EntryPoint.Invoke(null,  
+          ExtractProgramArguments(args, frontEndArgs, rewrittenAssembly.EntryPoint));
 
         if (frontEndArgs.VerboseMode)
         {
@@ -203,6 +190,58 @@ namespace DotNetFrontEndLauncher
           Console.Error.WriteLine(ex.InnerException.StackTrace);
         }
       }
+    }
+
+    private static void ExecuteProgramFromDisk(string[] args, FrontEndArgs frontEndArgs,
+      MethodInfo entryPointInfo)
+    {
+      /*
+      ProcessStartInfo psi = new ProcessStartInfo();
+      psi.FileName = frontEndArgs.SaveProgram;
+      object[] programArguments = ExtractProgramArguments(args, frontEndArgs, entryPointInfo);
+      if (programArguments != null)
+      {
+        psi.Arguments = String.Join(" ", programArguments[0]);
+      }
+      Process p = Process.Start(psi);
+      p.WaitForExit();
+      */
+    }
+
+    /// <summary>
+    /// Create an array of arguments to be used by the rewritten assembly, given the arguments
+    /// passed to the FrontEndLauncher. Checks that the number of arguments given is a match
+    /// to the types expected by the written assembly. Returns null if no parameters are necessary.
+    /// </summary>
+    /// <param name="args">The arguments given to the front-end launcher</param>
+    /// <param name="frontEndArgs">Args object used to rewrite assembly</param>
+    /// <param name="entryPointInfo">Method info for the entry point of the assembly</param>
+    /// <returns>Array containing a string[] of arguments to be used by the rewritten program
+    /// </returns>
+    /// <exception cref="Exception">If the arguments after extraction don't match the ones
+    /// expected by the entry point of the assembly</exception>
+    private static object[] ExtractProgramArguments(string[] args, FrontEndArgs frontEndArgs, 
+      MethodInfo entryPointInfo)
+    {
+      // First argument relevant to the program to be profiled
+      int indexOfFirstArg = frontEndArgs.ProgramArgIndex + 1;
+
+      object[] programArguments = null;
+
+      // Assume the single parameter is an array of strings -- the arguments
+      if (entryPointInfo.GetParameters().Length == 1 &&
+          entryPointInfo.GetParameters()[0].ParameterType.Equals(typeof(string[])))
+      {
+        // Pass on arguments to the program, all but the program name
+        programArguments = new object[] { new string[args.Length - indexOfFirstArg] };
+        Array.Copy(args, indexOfFirstArg, (string[])programArguments[0], 0, args.Length - 
+          indexOfFirstArg);
+      }
+      else if (entryPointInfo.GetParameters().Length != 0)
+      {
+        throw new Exception("Unable to execute the program with the given type of arguments.");        
+      }
+      return programArguments;
     }
   }
 }
