@@ -30,7 +30,7 @@ DNFE_EXE = $(DAIKONDIR)/scripts/DotNetFrontEndLauncher.exe
 SIKULI_PATH = '/cygdrive/c/Program Files (x86)/Sikuli X/Sikuli-IDE-w.bat'
 MSBUILD = 'C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe'
 ifeq ($(LANG), FSharp)
-COMPILER := /cygdrive/c/program_files/fsc.exe
+COMPILER := /cygdrive/c/program_files/fsc.exe /debug
 else ifeq ($(LANG), VB)
 COMPILER := /cygdrive/c/Windows/Microsoft.NET/Framework/v4.0.30319/vbc.exe /debug
 else
