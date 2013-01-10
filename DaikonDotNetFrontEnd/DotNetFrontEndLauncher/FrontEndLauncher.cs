@@ -50,20 +50,16 @@ namespace DotNetFrontEndLauncher
       //  //  Can't proceed any further, so exit here.
       //  return;
       //}
-
-      if (resultStream == null)
-      {
-        throw new ArgumentException("resultStream", "Invalid result stream produced.");
-      }
-      Assembly rewrittenAssembly = Assembly.Load(resultStream.ToArray());
-      resultStream.Dispose();
-
+      
       if (frontEndArgs.SaveAndRun)
       {
-        ExecuteProgramFromDisk(args, frontEndArgs, rewrittenAssembly.EntryPoint);
+        ExecuteProgramFromDisk(args, frontEndArgs);
       }
+      // Don't execute the program if it should just be saved to disk
       else if (String.IsNullOrEmpty(frontEndArgs.SaveProgram))
       {
+        Assembly rewrittenAssembly = Assembly.Load(resultStream.ToArray());
+        resultStream.Close();
         ExecuteProgramFromMemory(args, frontEndArgs, rewrittenAssembly);
       }
     }
@@ -192,36 +188,42 @@ namespace DotNetFrontEndLauncher
       }
     }
 
-    private static void ExecuteProgramFromDisk(string[] args, FrontEndArgs frontEndArgs,
-      MethodInfo entryPointInfo)
-    {
-      /*
+    /// <summary>
+    /// Execute the program that has been saved to disk.
+    /// </summary>
+    /// <param name="args">Args DNFELauncher was called with, the arguments for the program will 
+    /// be extracted from here</param>
+    /// <param name="frontEndArgs">FrontEndArgs object used during instrumentation, the
+    /// name of the program to execute will be extracted from here</param>
+    private static void ExecuteProgramFromDisk(string[] args, FrontEndArgs frontEndArgs)
+    {      
       ProcessStartInfo psi = new ProcessStartInfo();
       psi.FileName = frontEndArgs.SaveProgram;
-      object[] programArguments = ExtractProgramArguments(args, frontEndArgs, entryPointInfo);
+      object[] programArguments = ExtractProgramArguments(args, frontEndArgs);
       if (programArguments != null)
       {
         psi.Arguments = String.Join(" ", programArguments[0]);
       }
       Process p = Process.Start(psi);
-      p.WaitForExit();
-      */
+      p.WaitForExit();      
     }
 
     /// <summary>
     /// Create an array of arguments to be used by the rewritten assembly, given the arguments
     /// passed to the FrontEndLauncher. Checks that the number of arguments given is a match
-    /// to the types expected by the written assembly. Returns null if no parameters are necessary.
+    /// to the types expected by the written assembly. Returns null if no parameters are necessary
+    /// for the entry assembly, e.g. if it is a library.
     /// </summary>
     /// <param name="args">The arguments given to the front-end launcher</param>
     /// <param name="frontEndArgs">Args object used to rewrite assembly</param>
-    /// <param name="entryPointInfo">Method info for the entry point of the assembly</param>
+    /// <param name="entryPointInfo">Optional method info for the entry point of the assembly,
+    /// if null verification of entry point is skipped and arguments are always copied.</param>
     /// <returns>Array containing a string[] of arguments to be used by the rewritten program
     /// </returns>
     /// <exception cref="Exception">If the arguments after extraction don't match the ones
     /// expected by the entry point of the assembly</exception>
     private static object[] ExtractProgramArguments(string[] args, FrontEndArgs frontEndArgs, 
-      MethodInfo entryPointInfo)
+      MethodInfo entryPointInfo = null)
     {
       // First argument relevant to the program to be profiled
       int indexOfFirstArg = frontEndArgs.ProgramArgIndex + 1;
@@ -229,8 +231,9 @@ namespace DotNetFrontEndLauncher
       object[] programArguments = null;
 
       // Assume the single parameter is an array of strings -- the arguments
-      if (entryPointInfo.GetParameters().Length == 1 &&
-          entryPointInfo.GetParameters()[0].ParameterType.Equals(typeof(string[])))
+      if (entryPointInfo == null || 
+          (entryPointInfo.GetParameters().Length == 1 &&
+           entryPointInfo.GetParameters()[0].ParameterType.Equals(typeof(string[]))))
       {
         // Pass on arguments to the program, all but the program name
         programArguments = new object[] { new string[args.Length - indexOfFirstArg] };

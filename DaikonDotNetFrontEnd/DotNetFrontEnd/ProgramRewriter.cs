@@ -27,7 +27,7 @@ namespace DotNetFrontEnd
 {
   /// <summary>
   /// Performs insertion of instrumentation calls at entrance and exit of every function in a
-  /// executable. Never instantiated, only the rewrite_il() method is used.
+  /// executable. Never instantiated, only the RewriteProgramIL() method is used.
   /// </summary>
   public class ProgramRewriter
   {
@@ -146,18 +146,15 @@ namespace DotNetFrontEnd
           {
             PeWriter.WritePeToStream(module, host, resultStream, pdbReader, null,
                 pdbWriter);
-            if (frontEndArgs.SaveAndRun)
-            {
-              resultStream = new MemoryStream();
-              PeWriter.WritePeToStream(module, host, resultStream);
-            }
           }
         }
       }
 
-      if (frontEndArgs.SaveProgram != null && !frontEndArgs.SaveAndRun)
+      if (frontEndArgs.SaveProgram != null)
       {
-        // We aren't going to run the program, so no need to return anything
+        // We aren't going to run the program, so no need to return anything,
+        // but close the file stream.
+        resultStream.Close();
         return null;
       }
       else
