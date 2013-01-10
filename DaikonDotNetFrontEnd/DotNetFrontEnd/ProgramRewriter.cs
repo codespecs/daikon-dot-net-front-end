@@ -129,7 +129,6 @@ namespace DotNetFrontEnd
             pdbFile = module.Location + ".pdb";
           }
 
-          host.Dispose();
           if (frontEndArgs.SaveProgram != null)
           {
             resultStream = new FileStream(frontEndArgs.SaveProgram, FileMode.Create);
