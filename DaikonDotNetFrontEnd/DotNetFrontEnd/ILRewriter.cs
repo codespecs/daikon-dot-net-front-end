@@ -126,6 +126,11 @@ namespace DotNetFrontEnd
     /// </summary>
     private Dictionary<IMethodDefinition, LocalDefinition> nonceVariableDictionary;
 
+    /// <summary>
+    /// The type holding the arguments needed when assembly is run in offline mode
+    /// </summary>
+    private ITypeDefinition argumentStoringType;
+
     #endregion
 
     private enum MethodTransition
@@ -2052,13 +2057,15 @@ namespace DotNetFrontEnd
       {
         this.declPrinter = new DotNetFrontEnd.DeclarationPrinter(this.frontEndArgs,
                                                                     this.typeManager);
+
+
+        Regex ignoreRegex = new Regex(TypeManager.RegexForTypesToIgnoreForProgramPoint);
         foreach (INamedTypeDefinition type in mutableAssembly.AllTypes)
         {
           // CCI components come up named <*>, and we want to exclude them.
           // Also exclude the name of the class storing arguments (for offline programs)
-          Regex regex = new Regex(TypeManager.RegexForTypesToIgnoreForProgramPoint);
           string typeName = ((ITypeDefinition)type).ToString();
-          if (!(regex.IsMatch(type.ToString()) || type.ToString() == ArgumentStoringClassName))
+          if (!(ignoreRegex.IsMatch(type.ToString()) || type.ToString() == ArgumentStoringClassName))
           {
             this.declPrinter.PrintObjectDefinition(typeName,
                 this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type));
@@ -2074,13 +2081,7 @@ namespace DotNetFrontEnd
       }
       return result;
     }
-
-    /// <summary>
-    /// TODO(kellend): Move
-    /// The type holding the arguments needed when assembly is run in offline mode
-    /// </summary>
-    private ITypeDefinition argumentStoringType;
-
+    
     /// <summary>
     /// Creates and emites a new class, which contains a single method returning the front end
     /// arguments used during instrumentation. Necessary for running the front-end in offline
