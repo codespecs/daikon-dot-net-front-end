@@ -8,6 +8,11 @@
 // "In Project Suppression File".
 // You do not need to add suppressions to this file manually.
 
-// This isn't important to the project
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", 
+// This isn't important to the project.
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design",
   "CA1014:MarkAssembliesWithClsCompliant")]
+
+// This isn't worth the effort.
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", 
+  "CA1303:Do not pass literals as localized parameters",
+  MessageId = "System.Console.WriteLine(System.String)")]

@@ -242,7 +242,8 @@ namespace DotNetFrontEndLauncher
       }
       else if (entryPointInfo.GetParameters().Length != 0)
       {
-        throw new Exception("Unable to execute the program with the given type of arguments.");        
+        throw new InvalidOperationException("Unable to execute the program with the given type"
+          + " of arguments.");        
       }
       return programArguments;
     }
