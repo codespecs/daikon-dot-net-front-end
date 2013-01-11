@@ -9,6 +9,7 @@ namespace DotNetFrontEnd
   using System.Collections.Generic;
   using System.Linq;
   using System.Text;
+  using System.Collections.ObjectModel;
 
   public class DNFETypeDeclaration
   {
@@ -58,9 +59,12 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <returns>The declaration type enum value corresponding to the type of declaration this
     /// declaration type was created with.</returns>
-    public DeclarationType GetDeclartionType()
+    public DeclarationType GetDeclartionType
     {
-      return this.declarationType;
+      get
+      {
+        return this.declarationType;
+      }
     }
     
     /// <summary>
@@ -69,14 +73,17 @@ namespace DotNetFrontEnd
     /// <returns>The single type this declaration describes</returns>
     /// <exception cref="InvalidOperationException">When this declaration was not created
     /// with a single class.</exception>
-    public Type GetSingleType()
+    public Type GetSingleType
     {
-      if (this.declarationType != DeclarationType.SingleClass)
+      get
       {
-        throw new InvalidOperationException("Can'type get a single type on a declaration object" +
-            " that isn't a single class.");
+        if (this.declarationType != DeclarationType.SingleClass)
+        {
+          throw new InvalidOperationException("Can'type get a single type on a declaration object" +
+              " that isn't a single class.");
+        }
+        return this.type;
       }
-      return this.type;
     }
 
     /// <summary>
@@ -85,16 +92,19 @@ namespace DotNetFrontEnd
     /// <returns>The list of types this delcaration describes</returns>
     /// <exception cref="InvalidOperationException">Occurs when this declaration
     /// was not created with a list of classes.</exception>
-    public List<Type> GetListOfTypes()
+    public Collection<Type> GetListOfTypes
     {
-      if (this.declarationType != DeclarationType.ListOfClasses)
+      get
       {
-        throw new InvalidOperationException("Can'type get a list of types on a declaration object" +
-            " that isn't a list of types.");
+        if (this.declarationType != DeclarationType.ListOfClasses)
+        {
+          throw new InvalidOperationException("Can'type get a list of types on a declaration object" +
+              " that isn't a list of types.");
+        }
+        List<Type> resultList = new List<Type>(this.list.Count);
+        list.ForEach(x => resultList.Add(x));
+        return new Collection<Type>(resultList);
       }
-      List<Type> resultList = new List<Type>(this.list.Count);
-      list.ForEach(x => resultList.Add(x));
-      return resultList;
     }
 
     /// <summary>
@@ -104,26 +114,29 @@ namespace DotNetFrontEnd
     /// type, or else the list of types if this declaration was created with such a list.</returns>
     /// <exception cref="InvalidOperationException">Occurs when the declaration was created
     /// with a method other than single type or list.</exception>
-    public List<Type> GetAllTypes()
+    public Collection<Type> GetAllTypes
     {
-      // With the current two types this will always be true but won't be if new declaration types
-      // are added.
-      if ((this.declarationType != DeclarationType.ListOfClasses) 
-        && (this.declarationType != DeclarationType.SingleClass))
+      get
       {
-        throw new InvalidOperationException("Can'type get a list of types on a declaration object" +
-            " that isn't a list of types or a single type.");
+        // With the current two types this will always be true but won't be if new declaration types
+        // are added.
+        if ((this.declarationType != DeclarationType.ListOfClasses)
+          && (this.declarationType != DeclarationType.SingleClass))
+        {
+          throw new InvalidOperationException("Can'type get a list of types on a declaration object" +
+              " that isn't a list of types or a single type.");
+        }
+        List<Type> resultList = new List<Type>();
+        if (this.declarationType == DeclarationType.ListOfClasses)
+        {
+          this.list.ForEach(x => resultList.Add(x));
+        }
+        else
+        {
+          resultList.Add(this.type);
+        }
+        return new Collection<Type>(resultList);
       }
-      List<Type> resultList = new List<Type>();
-      if (this.declarationType == DeclarationType.ListOfClasses)
-      {
-        this.list.ForEach(x => resultList.Add(x));
-      }
-      else
-      {
-        resultList.Add(this.type);
-      }
-      return resultList;
     }
   }
 }

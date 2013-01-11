@@ -328,7 +328,7 @@ namespace DotNetFrontEnd
       // TODO(#4): Implement real comparability.
       this.WritePair("comparability", 22, 2);
 
-      if (this.ShouldPrintParentPptIfNecessary(parentName))
+      if (ShouldPrintParentPptIfNecessary(parentName))
       {
         this.WritePair("parent", parentName, 2);
       }
@@ -403,7 +403,7 @@ namespace DotNetFrontEnd
       // TODO(#4): Implement real comparability
       this.WritePair("comparability", ComparabilityConstant, IndentsForEntry);
 
-      if (this.ShouldPrintParentPptIfNecessary(parentName))
+      if (ShouldPrintParentPptIfNecessary(parentName))
       {
         this.WritePair("parent", parentName, IndentsForEntry);
       }
@@ -499,7 +499,7 @@ namespace DotNetFrontEnd
       DNFETypeDeclaration typeDecl =
           this.typeManager.ConvertAssemblyQualifiedNameToType(assemblyQualifiedName);
 
-      foreach (Type type in typeDecl.GetAllTypes())
+      foreach (Type type in typeDecl.GetAllTypes)
       {
         // If we can't resolve the parent object type don't write anything
         if (type != null)
@@ -525,7 +525,7 @@ namespace DotNetFrontEnd
       // TODO(#48): Parent type like we do for instance fields.
       DNFETypeDeclaration typeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(parentObjectType);
-      foreach (Type type in typeDecl.GetAllTypes())
+      foreach (Type type in typeDecl.GetAllTypes)
       {
         if (type == null)
         {
@@ -593,7 +593,7 @@ namespace DotNetFrontEnd
     public void PrintParameter(string name, string paramType)
     {
       DNFETypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(paramType);
-      foreach (Type type in typeDecl.GetAllTypes())
+      foreach (Type type in typeDecl.GetAllTypes)
       {
         if (type != null)
         {
@@ -610,7 +610,7 @@ namespace DotNetFrontEnd
     public void PrintReturn(string name, string returnType)
     {
       DNFETypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(returnType);
-      foreach (Type type in typeDecl.GetAllTypes())
+      foreach (Type type in typeDecl.GetAllTypes)
       {
         if (type != null)
         {
@@ -629,7 +629,7 @@ namespace DotNetFrontEnd
     {
       DNFETypeDeclaration objectTypeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
-      foreach (Type objectType in objectTypeDecl.GetAllTypes())
+      foreach (Type objectType in objectTypeDecl.GetAllTypes)
       {
         this.variablesForCurrentProgramPoint.Clear();
         if (objectType != null)
@@ -657,7 +657,7 @@ namespace DotNetFrontEnd
     {
       DNFETypeDeclaration objectTypeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
-      foreach (Type objectType in objectTypeDecl.GetAllTypes())
+      foreach (Type objectType in objectTypeDecl.GetAllTypes)
       {
         this.variablesForCurrentProgramPoint.Clear();
         this.WriteLine();
@@ -712,7 +712,7 @@ namespace DotNetFrontEnd
     public void PrintParentName(Microsoft.Cci.ITypeReference type, bool isObjectProgramPoint)
     {
       string parentName = type.ToString();
-      if (this.ShouldPrintParentPptIfNecessary(parentName))
+      if (ShouldPrintParentPptIfNecessary(parentName))
       {
         if (isObjectProgramPoint)
         {
@@ -953,7 +953,7 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="parentTypeName">Parent name</param>
     /// <returns>True if the name should be printed, false otherwise</returns>
-    private bool ShouldPrintParentPptIfNecessary(String parentTypeName)
+    private static bool ShouldPrintParentPptIfNecessary(String parentTypeName)
     {
       return !String.IsNullOrEmpty(parentTypeName) &&
           !Regex.IsMatch(parentTypeName, TypeManager.RegexForTypesToIgnoreForProgramPoint);

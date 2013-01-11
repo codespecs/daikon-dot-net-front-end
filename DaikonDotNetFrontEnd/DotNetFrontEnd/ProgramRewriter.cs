@@ -29,7 +29,7 @@ namespace DotNetFrontEnd
   /// Performs insertion of instrumentation calls at entrance and exit of every function in a
   /// executable. Never instantiated, only the RewriteProgramIL() method is used.
   /// </summary>
-  public class ProgramRewriter
+  public static class ProgramRewriter
   {
     #region Constants
 
@@ -44,10 +44,7 @@ namespace DotNetFrontEnd
     public static readonly string VisitorDll = "DotNetFrontEnd.dll";
 
     #endregion
-
-    // Don't instantiate
-    private ProgramRewriter() { }
-
+    
     /// <summary>
     /// Rewrite program IL with instrumentation calls, returning a MemoryStream, or null if the
     /// program was saved to a file.

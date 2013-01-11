@@ -225,7 +225,7 @@ namespace DotNetFrontEnd
           string methodName = methodDescriptions[1];
 
           // The user will declare a single type name
-          Type type = ConvertAssemblyQualifiedNameToType(typeName).GetSingleType();
+          Type type = ConvertAssemblyQualifiedNameToType(typeName).GetSingleType;
           // Pure methods have no parameters
           MethodInfo method = type.GetMethod(methodName, 
             BindingFlags.Public | 
@@ -277,7 +277,7 @@ namespace DotNetFrontEnd
     /// <param name="entries">Set to test against</param>
     /// <param name="test">Test to perform if type is not in test</param>
     /// <returns>Whether type is an element of the set, or if it passed the test</returns>
-    private bool IsElementOfCollectionType(Type type, Dictionary<Type, bool> entries,
+    private static bool IsElementOfCollectionType(Type type, Dictionary<Type, bool> entries,
         IsElementTest test)
     {
       if (type == null)
@@ -599,7 +599,7 @@ namespace DotNetFrontEnd
 
       DNFETypeDeclaration typeDecl = this.ConvertAssemblyQualifiedNameToType(
           this.ConvertCCITypeToAssemblyQualifiedName(cciType));
-      foreach (Type type in typeDecl.GetAllTypes())
+      foreach (Type type in typeDecl.GetAllTypes)
       {
         foreach (var x in GetPureMethodsForType(type))
         {
@@ -654,7 +654,7 @@ namespace DotNetFrontEnd
         {
           string updatedConstraint = singleConstraint.Replace("{", "").Replace("}", "");
           types.Add(this.ConvertAssemblyQualifiedNameToType(match.Result(updatedConstraint))
-              .GetSingleType());
+              .GetSingleType);
         }
         return new DNFETypeDeclaration(types);
       }
@@ -929,7 +929,7 @@ namespace DotNetFrontEnd
       {
         if (this.assemblyIdentity == null)
         {
-          throw new ArgumentNullException("Assembly identity must be set");
+          throw new ArgumentException("Assembly identity must be set");
         }
         identity = this.assemblyIdentity;
       }
@@ -1013,7 +1013,7 @@ namespace DotNetFrontEnd
     {
       DNFETypeDeclaration typeDecl = this.ConvertAssemblyQualifiedNameToType(
         this.ConvertCCITypeToAssemblyQualifiedName(methodDef.ContainingType));
-      foreach (Type type in typeDecl.GetAllTypes())
+      foreach (Type type in typeDecl.GetAllTypes)
       {
         IEnumerable<IParameterDefinition> parameters = methodDef.Parameters;
         string methodName = methodDef.Name.ToString();
@@ -1038,14 +1038,14 @@ namespace DotNetFrontEnd
             // Convert from CCI Type to .NET Type
             DNFETypeDeclaration paramTypeDecl = ConvertAssemblyQualifiedNameToType(
                 ConvertCCITypeToAssemblyQualifiedName(currType.Type));
-            if (paramTypeDecl.GetDeclartionType() != DNFETypeDeclaration.DeclarationType.SingleClass)
+            if (paramTypeDecl.GetDeclartionType != DNFETypeDeclaration.DeclarationType.SingleClass)
             {
               // There's no way to resolve the method type with multiple classes so we can 
               // GetSingleType(), if there's any failure the only result is that a method that 
               // possibly could be skipped won't be.
               return false;
             }
-            reflectionTypes[i] = paramTypeDecl.GetSingleType();
+            reflectionTypes[i] = paramTypeDecl.GetSingleType;
             if (reflectionTypes[i] == null)
             {
               // If anything can't be resolved we are hosed
