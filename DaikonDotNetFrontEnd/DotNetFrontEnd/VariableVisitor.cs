@@ -292,7 +292,7 @@ namespace DotNetFrontEnd
         }
 
         int depth = 0;
-        foreach (Type type in typeDecl.GetAllTypes())
+        foreach (Type type in typeDecl.GetAllTypes)
         {
           foreach (FieldInfo staticField in
            type.GetFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
@@ -450,7 +450,8 @@ namespace DotNetFrontEnd
       {
         offlineAssemblyName = assemblyName;
         offlineAssemblyPath = assemblyPath;
-        LoadStoredArgs(arguments);        
+        frontEndArgs = new FrontEndArgs(arguments.Split());
+        typeManager = new TypeManager(frontEndArgs);
       }
     }
 
@@ -476,7 +477,7 @@ namespace DotNetFrontEnd
 
       try
       {
-        foreach (Type type in typeDecl.GetAllTypes())
+        foreach (Type type in typeDecl.GetAllTypes)
         {
           if (type == null)
           {
@@ -539,15 +540,6 @@ namespace DotNetFrontEnd
       return writer;
     }
     
-    /// <summary>
-    /// Experimental method to load data from a type stored in the assembly
-    /// </summary>
-    private static void LoadStoredArgs(string args)
-    {
-      frontEndArgs = new FrontEndArgs(args.Split());
-      typeManager = new TypeManager(frontEndArgs);
-    }
-
     #region Reflective Visitor and helper methods
 
     /// <summary>

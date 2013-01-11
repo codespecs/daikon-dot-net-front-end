@@ -339,13 +339,14 @@ namespace DotNetFrontEnd
     /// returns</param>
     /// <param name="commonExit">Common exit the synsethized returns will jump to</param>
     /// <returns>The list of operations if any, otherwise null</returns>
-    private ISet<IOperation> DetermineSynthesizedReturns(IMethodBody immutableMethodBody,
+    private static ISet<IOperation> DetermineSynthesizedReturns(IMethodBody immutableMethodBody,
       List<IOperation> operations, ILGeneratorLabel commonExit)
     {
       if (immutableMethodBody.MethodDefinition.Type.TypeCode != PrimitiveTypeCode.Void)
       {
         OperationCode lastStoreOperation = GetLastStoreOperation(immutableMethodBody);
-        if (lastStoreOperation != 0) {
+        if (lastStoreOperation != 0)
+        {
           return FindAndAdjustSynthesizedReturns(operations, lastStoreOperation,
               commonExit);
         }
@@ -444,7 +445,7 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="methodBody">Method for which to get the last store</param>
     /// <returns>The instruction called during the store, 0 for void methods</returns>
-    private OperationCode GetLastStoreOperation(IMethodBody methodBody)
+    private static OperationCode GetLastStoreOperation(IMethodBody methodBody)
     {
       if (methodBody.MethodDefinition.Type.TypeCode == PrimitiveTypeCode.Void)
       {
@@ -544,7 +545,7 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="methodBody">Method body to test</param>
     /// <returns>True if not a constructor or not object constructor call, false otherwise</returns>
-    private bool IsConstructorWithNoObjectConstructorCall(IMethodBody methodBody)
+    private static bool IsConstructorWithNoObjectConstructorCall(IMethodBody methodBody)
     {
       return methodBody.MethodDefinition.IsConstructor
         && !(methodBody.Operations.ToList()[0].OperationCode == OperationCode.Ldarg_0
@@ -612,7 +613,7 @@ namespace DotNetFrontEnd
           // Convert from CCI Type to String Type
           // Exception name must be a single class
           Type t = this.typeManager.ConvertAssemblyQualifiedNameToType(
-              this.typeManager.ConvertCCITypeToAssemblyQualifiedName(exType)).GetSingleType();
+              this.typeManager.ConvertCCITypeToAssemblyQualifiedName(exType)).GetSingleType;
           if (t != null && !dict.ContainsKey(t))
           {
             dict.Add(t, exType);
@@ -819,7 +820,7 @@ namespace DotNetFrontEnd
           // block, add handlers for all exceptions, and mark the common exit point.
           if (op == lastReturnInstruction)
           {
-            methodBody = EndExceptionHandling(methodBody, generator, op, exceptions);
+            methodBody = EndExceptionHandling(methodBody, generator, exceptions);
 
             bool shouldInstrumentReturn = DeclareReturnProgramPoint(methodBody,
                 generator, i);
@@ -1008,14 +1009,13 @@ namespace DotNetFrontEnd
 
     /// <summary>
     /// Ends the try block associated with the method and adds the handler.
-    /// <param name="op">The return operation from the method being ended</param>
+    /// 
     /// <param name="methodBody">Reference to a mutable method body, will modify it for exception
     /// handling, including adding a local stash var if necessary </param>
     /// <param name="generator">IL emitter to use</param>
     /// <param name="exceptions">Sorted list of exceptions to instrument</param>
     /// </summary>
-    private MethodBody EndExceptionHandling(IMethodBody methodBody, ILGenerator generator,
-        IOperation op, List<ITypeReference> exceptions)
+    private MethodBody EndExceptionHandling(IMethodBody methodBody, ILGenerator generator, List<ITypeReference> exceptions)
     {
       MethodBody mutableMethodBody = (MethodBody)methodBody;
       // We will need to store the return value (at the top of the stack)
@@ -1410,7 +1410,7 @@ namespace DotNetFrontEnd
 
       PrintParentNameDeclarationIfNecessary(transition, methodBody);
 
-      EmitParentClassFields(transition, methodBody, generator);
+      EmitParentClassFields(methodBody, generator);
 
       // Sometimes we want to describe 'this', which is the 0th parameter. Don't describe this if 
       // the method is static, or the call is the entrance to a constructor. EmitParentObject
@@ -1473,11 +1473,10 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Emit the instrumentation and print the declaration for any static fields of the parent class.
     /// </summary>
-    /// <param name="transition">Transition at the current program point</param>
+    /// 
     /// <param name="methodBody">Method body for the program point</param>
     /// <param name="generator">ILGenerator used to perform the emission</param>
-    private void EmitParentClassFields(MethodTransition transition, IMethodBody methodBody,
-        ILGenerator generator)
+    private void EmitParentClassFields(IMethodBody methodBody, ILGenerator generator)
     {
       ITypeReference parentType = methodBody.MethodDefinition.ContainingType;
       this.EmitStaticInstrumentationCall(generator, parentType);
@@ -1959,9 +1958,9 @@ namespace DotNetFrontEnd
       {
         argumentStoringMethodReference = new Microsoft.Cci.MethodReference(
          this.host, this.argumentStoringType, CallingConvention.Default,
-         this.systemVoid, this.nameTable.GetNameFor(ArgumentStoringMethodName), 
-         /* genericParameterCount */ 0
-         /* no param types */);
+         this.systemVoid, this.nameTable.GetNameFor(ArgumentStoringMethodName),
+          /* genericParameterCount */ 0
+          /* no param types */);
       }
       generator.Emit(OperationCode.Call, argumentStoringMethodReference);
     }
@@ -2058,7 +2057,6 @@ namespace DotNetFrontEnd
         this.declPrinter = new DotNetFrontEnd.DeclarationPrinter(this.frontEndArgs,
                                                                     this.typeManager);
 
-
         Regex ignoreRegex = new Regex(TypeManager.RegexForTypesToIgnoreForProgramPoint);
         foreach (INamedTypeDefinition type in mutableAssembly.AllTypes)
         {
@@ -2081,7 +2079,7 @@ namespace DotNetFrontEnd
       }
       return result;
     }
-    
+
     /// <summary>
     /// Creates and emites a new class, which contains a single method returning the front end
     /// arguments used during instrumentation. Necessary for running the front-end in offline
@@ -2093,63 +2091,63 @@ namespace DotNetFrontEnd
         "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
     private void WriteClassStoringArguments(Assembly mutableAssembly, IMetadataHost host)
     {
-        RootUnitNamespace rootUnitNamespace = new RootUnitNamespace()
-        {
-          Unit = mutableAssembly
-        };
+      RootUnitNamespace rootUnitNamespace = new RootUnitNamespace()
+      {
+        Unit = mutableAssembly
+      };
 
-        NamespaceTypeDefinition argumentStoringClass = new NamespaceTypeDefinition()
-        {
-          ContainingUnitNamespace = rootUnitNamespace,
-          InternFactory = host.InternFactory,
-          IsClass = true,
-          IsPublic = true,
-          Methods = new List<IMethodDefinition>(1),
-          Name = nameTable.GetNameFor(ArgumentStoringClassName),
-          MangleName = false,
-        };
-        rootUnitNamespace.Members.Add(argumentStoringClass);
-        mutableAssembly.AllTypes.Add(argumentStoringClass);
-        argumentStoringClass.BaseClasses = new List<ITypeReference>() { host.PlatformType.SystemObject };
-        this.argumentStoringType = argumentStoringClass;
+      NamespaceTypeDefinition argumentStoringClass = new NamespaceTypeDefinition()
+      {
+        ContainingUnitNamespace = rootUnitNamespace,
+        InternFactory = host.InternFactory,
+        IsClass = true,
+        IsPublic = true,
+        Methods = new List<IMethodDefinition>(1),
+        Name = nameTable.GetNameFor(ArgumentStoringClassName),
+        MangleName = false,
+      };
+      rootUnitNamespace.Members.Add(argumentStoringClass);
+      mutableAssembly.AllTypes.Add(argumentStoringClass);
+      argumentStoringClass.BaseClasses = new List<ITypeReference>() { host.PlatformType.SystemObject };
+      this.argumentStoringType = argumentStoringClass;
 
-        MethodDefinition getArgumentsMethod = new MethodDefinition()
-        {
-          ContainingTypeDefinition = argumentStoringClass,
-          InternFactory = host.InternFactory,
-          IsCil = true,
-          IsStatic = true,
-          Name = nameTable.GetNameFor(ArgumentStoringMethodName),
-          Type = host.PlatformType.SystemVoid,
-          Visibility = TypeMemberVisibility.Public,
-        };
-        argumentStoringClass.Methods.Add(getArgumentsMethod);
+      MethodDefinition getArgumentsMethod = new MethodDefinition()
+      {
+        ContainingTypeDefinition = argumentStoringClass,
+        InternFactory = host.InternFactory,
+        IsCil = true,
+        IsStatic = true,
+        Name = nameTable.GetNameFor(ArgumentStoringMethodName),
+        Type = host.PlatformType.SystemVoid,
+        Visibility = TypeMemberVisibility.Public,
+      };
+      argumentStoringClass.Methods.Add(getArgumentsMethod);
 
-        ILGenerator ilGenerator = new ILGenerator(host, getArgumentsMethod);
+      ILGenerator ilGenerator = new ILGenerator(host, getArgumentsMethod);
 
-        ilGenerator.Emit(OperationCode.Ldstr, this.frontEndArgs.AssemblyName);
-        System.Diagnostics.Debug.Assert(this.frontEndArgs.SaveProgram != null);
-        ilGenerator.Emit(OperationCode.Ldstr, this.frontEndArgs.SaveProgram);
-        ilGenerator.Emit(OperationCode.Ldstr, this.frontEndArgs.GetArgsToWrite());
+      ilGenerator.Emit(OperationCode.Ldstr, this.frontEndArgs.AssemblyName);
+      System.Diagnostics.Debug.Assert(this.frontEndArgs.SaveProgram != null);
+      ilGenerator.Emit(OperationCode.Ldstr, this.frontEndArgs.SaveProgram);
+      ilGenerator.Emit(OperationCode.Ldstr, this.frontEndArgs.GetArgsToWrite);
 
-        var variableVisitorMethodReference = new Microsoft.Cci.MethodReference(
-         this.host, this.variableVisitorType, CallingConvention.Default,
-         this.systemVoid, this.nameTable.GetNameFor(VariableVisitor.InitializeFrontEndArgumentsMethodName),
-          /* genericParameterCount */ 0,
-          /* param types */ systemString, systemString, systemString);
+      var variableVisitorMethodReference = new Microsoft.Cci.MethodReference(
+       this.host, this.variableVisitorType, CallingConvention.Default,
+       this.systemVoid, this.nameTable.GetNameFor(VariableVisitor.InitializeFrontEndArgumentsMethodName),
+        /* genericParameterCount */ 0,
+        /* param types */ systemString, systemString, systemString);
 
-        ilGenerator.Emit(OperationCode.Call, variableVisitorMethodReference);
+      ilGenerator.Emit(OperationCode.Call, variableVisitorMethodReference);
 
-        ilGenerator.Emit(OperationCode.Ret);
-                  
-        ILGeneratorMethodBody body = new ILGeneratorMethodBody(ilGenerator, 
-          /* localsAreZeroed */ true, 
-          /* maxStack */ 1, 
-          getArgumentsMethod, 
-          Enumerable<ILocalDefinition>.Empty, 
-          Enumerable<ITypeDefinition>.Empty
-        );
-        getArgumentsMethod.Body = body;
+      ilGenerator.Emit(OperationCode.Ret);
+
+      ILGeneratorMethodBody body = new ILGeneratorMethodBody(ilGenerator,
+        /* localsAreZeroed */ true,
+        /* maxStack */ 1,
+        getArgumentsMethod,
+        Enumerable<ILocalDefinition>.Empty,
+        Enumerable<ITypeDefinition>.Empty
+      );
+      getArgumentsMethod.Body = body;
     }
 
     public void Dispose()
