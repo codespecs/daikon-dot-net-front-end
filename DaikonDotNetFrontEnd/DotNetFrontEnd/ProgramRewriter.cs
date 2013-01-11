@@ -71,8 +71,8 @@ namespace DotNetFrontEnd
         IModule/*?*/ module = host.LoadUnitFrom(frontEndArgs.AssemblyPath) as IModule;
         if (module == null || module == Dummy.Module || module == Dummy.Assembly)
         {
-          throw new ArgumentException("Given path is not a PE file containing a CLR"
-            + " assembly, or an error occurred when loading it.", "reflectorArgs.AssemblyPath");
+          throw new FileNotFoundException("Given path is not a PE file containing a CLR"
+            + " assembly, or an error occurred when loading it.", frontEndArgs.AssemblyPath);
         }
 
         PdbReader/*?*/ pdbReader = null;

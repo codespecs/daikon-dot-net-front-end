@@ -247,7 +247,7 @@ namespace DotNetFrontEnd
         }
         catch (IndexOutOfRangeException)
         {
-          throw new Exception("Malformed purity file -- line with contents: " + str);
+          throw new InvalidOperationException("Malformed purity file -- line with contents: " + str);
         }
       }
     }
@@ -697,7 +697,7 @@ namespace DotNetFrontEnd
           return ConvertAssemblyQualifiedNameToType(
             Regex.Replace(assemblyQualifiedName, "\\[\\[[\\w\\W]*\\]\\]", ""));
         }
-        throw new Exception(String.Format("Unable to convert assembly qualified name {0} to a"
+        throw new InvalidOperationException(String.Format("Unable to convert assembly qualified name {0} to a"
             + " Type.", assemblyQualifiedName), ex);
       }
     }
