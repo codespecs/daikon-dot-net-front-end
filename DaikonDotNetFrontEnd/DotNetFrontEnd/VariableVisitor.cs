@@ -378,7 +378,7 @@ namespace DotNetFrontEnd
     /// Set the invocation nonce for this method by storing it in an appropriate local var
     /// </summary>
     /// <returns>The invocation nonce for the method</returns>
-    [MethodImpl(MethodImplOptions.Synchronized)]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "programPointName"), MethodImpl(MethodImplOptions.Synchronized)]
     public static int SetInvocationNonce(string programPointName)
     {
       return globalNonce++;
