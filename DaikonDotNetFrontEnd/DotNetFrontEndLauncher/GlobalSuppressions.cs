@@ -16,3 +16,7 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", 
   "CA1303:Do not pass literals as localized parameters",
   MessageId = "System.Console.WriteLine(System.String)")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Console.WriteLine(System.String)")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Console.WriteLine(System.String)", Scope = "member", Target = "DotNetFrontEndLauncher.FrontEndLauncher.#ProcessArguments(System.String[])")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Console.WriteLine(System.String)", Scope = "member", Target = "DotNetFrontEndLauncher.FrontEndLauncher.#Main(System.String[])")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Console.WriteLine(System.String)", Scope = "member", Target = "DotNetFrontEndLauncher.FrontEndLauncher.#ExecuteProgramFromMemory(System.String[],DotNetFrontEnd.FrontEndArgs,System.Reflection.Assembly)")]

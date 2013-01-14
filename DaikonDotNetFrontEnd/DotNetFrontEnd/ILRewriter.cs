@@ -1524,7 +1524,10 @@ namespace DotNetFrontEnd
     /// <param name="shouldSuppress">The desired state of output suppression</param>
     /// <param name="generator">Generator to insert call with</param>
     /// Suppresion safe because we control the string in the GetNameFor call
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
+    /// Performance warning suppressed becuase the calls to this method are inserted in the 
+    /// source programs
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode"), 
+     System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
          "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
     private void InsertShouldSuppressOutputCall(bool shouldSuppress, ILGenerator generator)
     {
