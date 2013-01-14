@@ -873,7 +873,7 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="type">The .NET type whose daikon rep-type name to get</param>
     /// <returns>A rep-type for the given type, from the list of valid rep-types</returns>
-    private static string GetRepType(Type type)
+    private string GetRepType(Type type)
     {
       if (type.IsEquivalentTo(TypeManager.BooleanType))
       {
@@ -890,6 +890,10 @@ namespace DotNetFrontEnd
             || type == TypeManager.ULongType || TypeManager.IsNonstandardIntType(type)))
       {
         return DaikonIntName;
+      }
+      else if (type.IsEnum && !frontEndArgs.EnumUnderlyingValues)
+      {
+        return "string";
       }
       else
       {
