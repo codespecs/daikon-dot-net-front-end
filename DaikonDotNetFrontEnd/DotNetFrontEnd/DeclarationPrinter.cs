@@ -133,6 +133,10 @@ namespace DotNetFrontEnd
       }
       else
       {
+        if (!Directory.Exists(frontEndArgs.OutputLocation))
+        {
+          Directory.CreateDirectory(Path.GetDirectoryName(frontEndArgs.OutputLocation));
+        }
         this.fileWriter = new StreamWriter(this.frontEndArgs.OutputLocation);
       }
 
