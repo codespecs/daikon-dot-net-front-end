@@ -79,7 +79,7 @@ namespace DotNetFrontEnd
       {
         if (this.declarationType != DeclarationType.SingleClass)
         {
-          throw new InvalidOperationException("Can'type get a single type on a declaration object" +
+          throw new InvalidOperationException("Can't get a single type on a declaration object" +
               " that isn't a single class.");
         }
         return this.type;
@@ -98,7 +98,7 @@ namespace DotNetFrontEnd
       {
         if (this.declarationType != DeclarationType.ListOfClasses)
         {
-          throw new InvalidOperationException("Can'type get a list of types on a declaration object" +
+          throw new InvalidOperationException("Can't get a list of types on a declaration object" +
               " that isn't a list of types.");
         }
         List<Type> resultList = new List<Type>(this.list.Count);
@@ -123,7 +123,7 @@ namespace DotNetFrontEnd
         if ((this.declarationType != DeclarationType.ListOfClasses)
           && (this.declarationType != DeclarationType.SingleClass))
         {
-          throw new InvalidOperationException("Can'type get a list of types on a declaration object" +
+          throw new InvalidOperationException("Can't get a list of types on a declaration object" +
               " that isn't a list of types or a single type.");
         }
         List<Type> resultList = new List<Type>();
