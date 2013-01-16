@@ -803,7 +803,7 @@ namespace DotNetFrontEnd
       // null lists won't cast but we don't want to throw an exception for that
       if ((obj != null) && !(obj is IList))
       {
-        throw new NotSupportedException("Can'type list reflective visit something that isn'type a"
+        throw new NotSupportedException("Can't list reflective visit something that isn't a"
             + " list. This is a bug in the reflector implementation.");
       }
       else
