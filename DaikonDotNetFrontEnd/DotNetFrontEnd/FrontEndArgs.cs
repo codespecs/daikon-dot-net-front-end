@@ -8,8 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Collections.ObjectModel;
 
 namespace DotNetFrontEnd
 {
@@ -101,6 +103,7 @@ namespace DotNetFrontEnd
       save_and_run,
       save_program,
       verbose,
+      wpf,
       // Not an option -- the location of the program to be profiled
       assembly_location,
     }
@@ -216,6 +219,15 @@ namespace DotNetFrontEnd
         this.LoadPurityFile();
       }
 
+      // This needs to occur after assembly path has been set.
+      if (args.Contains("--wpf"))
+      {
+        File.Copy(this.AssemblyPath, this.AssemblyPath + ".tmp", true);
+        this.AddArgument(PossibleArgument.save_program, this.AssemblyPath);
+        this.AddArgument(PossibleArgument.assembly_location, this.AssemblyPath + ".tmp");
+        this.AddArgument(PossibleArgument.save_and_run, true.ToString());
+      }
+
       this.PrintOutput = (this.OutputLocation == PrintOutputFileLocation);
     }
 
@@ -235,7 +247,7 @@ namespace DotNetFrontEnd
 
       // TODO(#30): This is true for chicory, so should be true for us as well.
       // this.programArguments.Add(PossibleArgument.linked_lists, false.ToString());
-      
+
       // TODO(#43): Change this back to true.
       this.programArguments.Add(PossibleArgument.arrays_only, false.ToString());
 
@@ -424,7 +436,7 @@ namespace DotNetFrontEnd
     /// <returns>Binding flag specfying visibility of fields to inspect</returns>
     public BindingFlags GetInstanceAccessOptionsForFieldInspection(Type type)
     {
-        return BindingFlags.Instance | this.GetAccessOptionsForFieldInspection(type); 
+      return BindingFlags.Instance | this.GetAccessOptionsForFieldInspection(type);
     }
 
     /// <summary>
@@ -434,7 +446,7 @@ namespace DotNetFrontEnd
     /// <returns>Binding flag specfying visibility of fields to inspect</returns>
     public BindingFlags GetStaticAccessOptionsForFieldInspection(Type type)
     {
-        return BindingFlags.Static | this.GetAccessOptionsForFieldInspection(type); 
+      return BindingFlags.Static | this.GetAccessOptionsForFieldInspection(type);
     }
 
     #endregion
@@ -555,12 +567,12 @@ namespace DotNetFrontEnd
 
     public BindingFlags InstanceMemberAccessOptions
     {
-        get { return BaseMemberAccessOptions | BindingFlags.Instance; }
+      get { return BaseMemberAccessOptions | BindingFlags.Instance; }
     }
 
     public BindingFlags StaticMemberAccessOptions
     {
-        get { return BaseMemberAccessOptions | BindingFlags.Static; }
+      get { return BaseMemberAccessOptions | BindingFlags.Static; }
     }
 
     /// <summary>
@@ -661,7 +673,7 @@ namespace DotNetFrontEnd
       get
       {
         return (this.programArguments.ContainsKey(PossibleArgument.dont_catch_exceptions) ?
-        bool.Parse(this.programArguments[PossibleArgument.dont_catch_exceptions]) : false);
+           bool.Parse(this.programArguments[PossibleArgument.dont_catch_exceptions]) : false);
       }
     }
 
@@ -690,6 +702,11 @@ namespace DotNetFrontEnd
     public bool SaveAndRun
     {
       get { return this.programArguments.ContainsKey(PossibleArgument.save_and_run); }
+    }
+
+    public bool WPF
+    {
+      get { return this.programArguments.ContainsKey(PossibleArgument.wpf); }
     }
 
     #endregion
@@ -722,9 +739,12 @@ namespace DotNetFrontEnd
     /// Get the original arguments that were used to construct the instance
     /// </summary>
     /// <returns>Space separated string of the original arguments</returns>
-    public string GetArgsToWrite()
+    public string GetArgsToWrite
     {
-      return this.argsToWrite;
+      get
+      {
+        return this.argsToWrite;
+      }
     }
   }
 }
