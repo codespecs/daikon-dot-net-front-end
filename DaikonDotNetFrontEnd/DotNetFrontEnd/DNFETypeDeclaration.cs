@@ -26,7 +26,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// The possible formats this declaration type could take on.
     /// </summary>
-    public enum DeclarationType { SingleClass, ListOfClasses }
+    internal enum DeclarationType { SingleClass, ListOfClasses }
 
     /// <summary>
     /// Internal record for what type of declaration this is
@@ -47,10 +47,10 @@ namespace DotNetFrontEnd
     /// Create a new type declaration for a given list of types
     /// </summary>
     /// <param name="list">The list of types for the type declaration</param>
-    public DNFETypeDeclaration(List<Type> list)
+    public DNFETypeDeclaration(Collection<Type> list)
     {
       this.list = new List<Type>(list.Count);
-      list.ForEach(x => this.list.Add(x));
+      this.list.AddRange(list);// list.ForEach(x => this.list.Add(x));
       this.declarationType = DeclarationType.ListOfClasses;
     }
 
@@ -59,7 +59,7 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <returns>The declaration type enum value corresponding to the type of declaration this
     /// declaration type was created with.</returns>
-    public DeclarationType GetDeclartionType
+    internal DeclarationType GetDeclartionType
     {
       get
       {

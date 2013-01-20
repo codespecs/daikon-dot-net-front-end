@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.Cci;
 using Microsoft.Cci.MutableCodeModel;
+using System.Collections.ObjectModel;
 
 namespace DotNetFrontEnd
 {
@@ -649,7 +650,7 @@ namespace DotNetFrontEnd
       if (Regex.IsMatch(assemblyQualifiedName, "{[\\w\\W]*}"))
       {
         var match = Regex.Match(assemblyQualifiedName, "{[\\w\\W]*}");
-        List<Type> types = new List<Type>();
+        Collection<Type> types = new Collection<Type>();
         foreach (var singleConstraint in match.Value.Split(DecTypeMultipleConstraintSeparator))
         {
           string updatedConstraint = singleConstraint.Replace("{", "").Replace("}", "");
@@ -708,11 +709,21 @@ namespace DotNetFrontEnd
     /// Get a Reflection Type from a CCI Type
     /// </summary>
     /// <param name="type">A reference to a CCI Type defined in the program to be profiled</param>
+    /// <returns>A reflection type</returns>
+    public string ConvertCCITypeToAssemblyQualifiedName(ITypeReference type)
+    {
+      return ConvertCCITypeToAssemblyQualifiedName(type, true);
+    }
+
+    /// <summary>
+    /// Get a Reflection Type from a CCI Type
+    /// </summary>
+    /// <param name="type">A reference to a CCI Type defined in the program to be profiled</param>
     /// <param name="deeplyInspectGenericParameters">Whether to investigate constraints on
     /// generic parmeters</param>
     /// <returns>A reflection type</returns>
     public string ConvertCCITypeToAssemblyQualifiedName(ITypeReference type,
-      bool deeplyInspectGenericParameters = true)
+      bool deeplyInspectGenericParameters)
     {
       //try
       //{

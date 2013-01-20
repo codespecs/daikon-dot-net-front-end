@@ -559,33 +559,16 @@ namespace DotNetFrontEnd
       {
         return;
       }
+      
+      PrintSimpleVisitFields(name, obj, type, writer, fieldFlags);
 
       // Don't visit the fields of variables with certain flags.
-      bool simplePrint = fieldFlags.HasFlag(VariableModifiers.to_string) ||
-          fieldFlags.HasFlag(VariableModifiers.classname);
-
-      // Print variable's name.
-      writer.WriteLine(name);
-
-      // Print variable's value.
-      writer.WriteLine(GetVariableValue(obj, type, fieldFlags));
-
-      // Print variable's modified bit.
-      // Stub implementation, always print safe value.
-      if (fieldFlags.HasFlag(VariableModifiers.nonsensical))
-      {
-        writer.WriteLine(NonsensicalModifiedBit);
-      }
-      else
-      {
-        writer.WriteLine(SafeModifiedBit);
-      }
-
-      // Print the varible's children.
-      if (simplePrint)
+      if (fieldFlags.HasFlag(VariableModifiers.to_string) ||
+          fieldFlags.HasFlag(VariableModifiers.classname))
       {
         return;
       }
+
       if (typeManager.IsListImplementer(type))
       {
         ProcessVariableAsList(name, obj, type, writer, depth);
@@ -648,106 +631,162 @@ namespace DotNetFrontEnd
       }
       else
       {
-        if (obj == null)
-        {
-          fieldFlags |= VariableModifiers.nonsensical;
-        }
+        PerformNonListInspection(name, obj, type, writer, depth, fieldFlags);
+      }
+    }
 
-        foreach (FieldInfo field in
-            type.GetFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(type)))
+    /// <summary>
+    /// Perform full inspection for non list variables, printing necessary
+    /// values to the given writer. Includes children if any, and toString
+    /// or hasCode calls.
+    /// </summary>
+    private static void PerformNonListInspection(string name, object obj, 
+      Type type, TextWriter writer, int depth, VariableModifiers fieldFlags)
+    {
+      if (obj == null)
+      {
+        fieldFlags |= VariableModifiers.nonsensical;
+      }
+
+      PrintFieldValues(name, obj, type, writer, depth, fieldFlags);
+
+      if (!type.IsSealed)
+      {
+        object xType = (obj == null ? null : obj.GetType());
+        ReflectiveVisit(name + '.' + DeclarationPrinter.GetTypeMethodCall, xType,
+            TypeManager.TypeType, writer, depth + 1,
+            (obj == null ? VariableModifiers.nonsensical : VariableModifiers.none)
+            | VariableModifiers.classname);
+      }
+
+      if (type == TypeManager.StringType)
+      {
+        object xString = (obj == null ? null : obj.ToString());
+        ReflectiveVisit(name + '.' + DeclarationPrinter.ToStringMethodCall, xString,
+            TypeManager.StringType, writer, depth + 1,
+            fieldFlags | VariableModifiers.to_string);
+      }
+
+      if (!shouldSuppressOutput)
+      {
+        foreach (var item in typeManager.GetPureMethodsForType(type))
+        {
+          ReflectiveVisit(name + '.' + DeclarationPrinter.SanitizePropertyName(item.Value.Name),
+              GetMethodValue(obj, item.Value, item.Value.Name), item.Value.ReturnType, writer,
+                  depth + 1);
+        }
+      }
+
+      // Don't look at linked-lists of synthetic variables to prevent children from also printing
+      // linked-lists, when they are really just deeper levels of the current linked list.
+      if ((fieldFlags & VariableModifiers.ignore_linked_list) == 0 &&
+          frontEndArgs.LinkedLists && typeManager.IsLinkedListImplementer(type))
+      {
+        FieldInfo linkedListField = TypeManager.FindLinkedListField(type);
+        // Synthetic list of the sequence of linked list values
+        IList<object> expandedList = new List<object>();
+        Object curr = obj;
+        while (curr != null)
+        {
+          expandedList.Add(curr);
+          curr = GetFieldValue(curr, linkedListField, linkedListField.Name);
+        }
+        ListReflectiveVisit(name + "[..]", (IList)expandedList, type, writer, depth, fieldFlags);
+      }
+    }
+
+    /// <summary>
+    /// Print the values of the variable's instance and static fields.
+    /// </summary>
+    /// <param name="name">Name of the variable</param>
+    /// <param name="obj">Value of the variable</param>
+    /// <param name="type">Type of the variable</param>
+    /// <param name="writer">Writer to use when printing</param>
+    /// <param name="depth">Depth of the variable</param>
+    /// <param name="fieldFlags">Flags describing the current variable</param>
+    private static void PrintFieldValues(string name, object obj, Type type, 
+      TextWriter writer, int depth, VariableModifiers fieldFlags)
+    {
+      foreach (FieldInfo field in
+          type.GetFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(type)))
+      {
+        try
+        {
+          if (!typeManager.ShouldIgnoreField(type, field.Name))
+          {
+            ReflectiveVisit(name + "." + field.Name, GetFieldValue(obj, field, field.Name),
+                field.FieldType, writer, depth + 1,
+                fieldFlags | VariableModifiers.ignore_linked_list);
+          }
+        }
+        catch (ArgumentException)
+        {
+          Console.Error.WriteLine(" Name: " + name + " Type: " + type + " Field Name: "
+              + field.Name + " Field Type: " + field.FieldType);
+          // The field is declared in the decls so Daikon still needs a value. 
+          ReflectiveVisit(name + "." + field.Name, null,
+              field.FieldType, writer, depth + 1, fieldFlags | VariableModifiers.nonsensical);
+        }
+      }
+
+      foreach (FieldInfo staticField in
+          type.GetFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
+      {
+        if (!typeManager.ShouldIgnoreField(type, staticField.Name))
         {
           try
           {
-            if (!typeManager.ShouldIgnoreField(type, field.Name))
+            string staticFieldName = type.Name + "." + staticField.Name;
+            if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
             {
-              ReflectiveVisit(name + "." + field.Name, GetFieldValue(obj, field, field.Name),
-                  field.FieldType, writer, depth + 1,
-                  fieldFlags | VariableModifiers.ignore_linked_list);
+              staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
+              ReflectiveVisit(staticFieldName, GetFieldValue(obj, staticField, staticField.Name),
+                    staticField.FieldType, writer, staticFieldName.Count(c => c == '.'),
+                    fieldFlags | VariableModifiers.ignore_linked_list);
             }
           }
           catch (ArgumentException)
           {
             Console.Error.WriteLine(" Name: " + name + " Type: " + type + " Field Name: "
-                + field.Name + " Field Type: " + field.FieldType);
+                + staticField.Name + " Field Type: " + staticField.FieldType);
             // The field is declared in the decls so Daikon still needs a value. 
-            ReflectiveVisit(name + "." + field.Name, null,
-                field.FieldType, writer, depth + 1, fieldFlags | VariableModifiers.nonsensical);
+            ReflectiveVisit(name + "." + staticField.Name, null,
+                staticField.FieldType, writer, depth + 1, fieldFlags
+                | VariableModifiers.nonsensical);
           }
         }
+      }
+    }
 
-        foreach (FieldInfo staticField in
-            type.GetFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
-        {
-          if (!typeManager.ShouldIgnoreField(type, staticField.Name))
-          {
-            try
-            {
-              string staticFieldName = type.Name + "." + staticField.Name;
-              if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
-              {
-                staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
-                ReflectiveVisit(staticFieldName, GetFieldValue(obj, staticField, staticField.Name),
-                      staticField.FieldType, writer, staticFieldName.Count(c => c == '.'),
-                      fieldFlags | VariableModifiers.ignore_linked_list);
-              }
-            }
-            catch (ArgumentException)
-            {
-              Console.Error.WriteLine(" Name: " + name + " Type: " + type + " Field Name: "
-                  + staticField.Name + " Field Type: " + staticField.FieldType);
-              // The field is declared in the decls so Daikon still needs a value. 
-              ReflectiveVisit(name + "." + staticField.Name, null,
-                  staticField.FieldType, writer, depth + 1, fieldFlags
-                  | VariableModifiers.nonsensical);
-            }
-          }
-        }
+    /// <summary>
+    /// Print simple fields of the object (e.g. name, type, etc.). Specifically excludes
+    /// printing of the object's fields.
+    /// </summary>
+    /// <param name="name">Name of the varibles</param>
+    /// <param name="obj">Variable's value</param>
+    /// <param name="type">Type of the variable</param>
+    /// <param name="writer">Writer used to print the variable</param>
+    /// <param name="fieldFlags">Flags for the field, if any</param>
+    private static void PrintSimpleVisitFields(string name, object obj, Type type, 
+      TextWriter writer, VariableModifiers fieldFlags)
+    {
+      // Print variable's name.
+      writer.WriteLine(name);
 
-        if (!type.IsSealed)
-        {
-          object xType = (obj == null ? null : obj.GetType());
-          ReflectiveVisit(name + '.' + DeclarationPrinter.GetTypeMethodCall, xType,
-              TypeManager.TypeType, writer, depth + 1,
-              (obj == null ? VariableModifiers.nonsensical : VariableModifiers.none)
-              | VariableModifiers.classname);
-        }
+      // Print variable's value.
+      writer.WriteLine(GetVariableValue(obj, type, fieldFlags));
 
-        if (type == TypeManager.StringType)
-        {
-          object xString = (obj == null ? null : obj.ToString());
-          ReflectiveVisit(name + '.' + DeclarationPrinter.ToStringMethodCall, xString,
-              TypeManager.StringType, writer, depth + 1,
-              fieldFlags | VariableModifiers.to_string);
-        }
-
-        if (!shouldSuppressOutput)
-        {
-          foreach (var item in typeManager.GetPureMethodsForType(type))
-          {
-            ReflectiveVisit(name + '.' + DeclarationPrinter.SanitizePropertyName(item.Value.Name),
-                GetMethodValue(obj, item.Value, item.Value.Name), item.Value.ReturnType, writer,
-                    depth + 1);
-          }
-        }
-
-        // Don't look at linked-lists of synthetic variables to prevent children from also printing
-        // linked-lists, when they are really just deeper levels of the current linked list.
-        if ((fieldFlags & VariableModifiers.ignore_linked_list) == 0 &&
-            frontEndArgs.LinkedLists && typeManager.IsLinkedListImplementer(type))
-        {
-          FieldInfo linkedListField = TypeManager.FindLinkedListField(type);
-          // Synthetic list of the sequence of linked list values
-          IList<object> expandedList = new List<object>();
-          Object curr = obj;
-          while (curr != null)
-          {
-            expandedList.Add(curr);
-            curr = GetFieldValue(curr, linkedListField, linkedListField.Name);
-          }
-          ListReflectiveVisit(name + "[..]", (IList)expandedList, type, writer, depth, fieldFlags);
-        }
-      } // Close non-list inspection
-    } // Close ReflectiveVisit()
+      // Print variable's modified bit.
+      // Stub implementation, always print safe value.
+      if (fieldFlags.HasFlag(VariableModifiers.nonsensical))
+      {
+        writer.WriteLine(NonsensicalModifiedBit);
+      }
+      else
+      {
+        writer.WriteLine(SafeModifiedBit);
+      }
+    }
 
     /// <summary>
     /// Checks whether the front end should exit early due to already visiting the variable,
