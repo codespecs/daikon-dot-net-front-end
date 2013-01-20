@@ -78,7 +78,7 @@ namespace DotNetFrontEnd
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming",
       "CA1709:IdentifiersShouldBeCasedCorrectly")]
-    public enum PossibleArgument
+    internal enum PossibleArgument
     {
       // Comments indicate section argument is defined under in documentation
       // Program Point Options
@@ -680,7 +680,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// List of which methods should be considered Pure and called at program points
     /// </summary>
-    public List<string> PurityMethods
+    internal List<string> PurityMethods
     {
       get;
       private set;

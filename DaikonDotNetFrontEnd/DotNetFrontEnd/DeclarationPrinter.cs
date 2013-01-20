@@ -96,7 +96,7 @@ namespace DotNetFrontEnd
     /// Flags is acceptable for use in VariableFlags because flags is a daikon term.
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms",
       MessageId = "Flags"), Flags]
-    public enum VariableFlags
+    internal enum VariableFlags
     {
       none = 1,
       synthetic = none << 1,
