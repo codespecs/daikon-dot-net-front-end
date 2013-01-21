@@ -272,9 +272,12 @@ namespace DotNetFrontEnd
 
         foreach (var pureMethod in typeManager.GetPureMethodsForType(type))
         {
-          DeclareVariable(name + "." + DeclarationPrinter.SanitizePropertyName(pureMethod.Value.Name),
+          string methodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Value.Name);
+          DeclareVariable(name + "." + methodName,
             pureMethod.Value.ReturnType,
-            // TODO(#61): Fill out the var-kind and any other necessary fields
+            enclosingVar: name,
+            relativeName: methodName,
+            kind: VariableKind.function,
             nestingDepth: nestingDepth + 1);
         }
 
@@ -289,7 +292,6 @@ namespace DotNetFrontEnd
           PrintList(name + "[..]", linkedListField.FieldType, name, VariableKind.array,
               nestingDepth: nestingDepth, parentName: parentName, flags: flags);
         }
-
       }
     }
 
@@ -474,9 +476,11 @@ namespace DotNetFrontEnd
 
       foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType))
       {
-        PrintList(name + "." + DeclarationPrinter.SanitizePropertyName(pureMethod.Value.Name), 
+        string methodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Value.Name);
+        PrintList(name + "." + methodName, 
           pureMethod.Value.ReturnType, name,
-          // TODO(#61): Fill out the flags
+          relativeName: methodName,
+          kind: VariableKind.function,
           nestingDepth: nestingDepth + 1, parentName: parentName);
       }
     }
