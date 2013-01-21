@@ -5,3 +5,4 @@ PureMethods.A, PureMethods, Version=1.0.0.0, Culture=neutral, PublicKeyToken=nul
 PureMethods.A, PureMethods, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;PureMethod3
 PureMethods.A, PureMethods, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;PureMethod4
 PureMethods.A, PureMethods, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;get_NPlusOne
+PureMethods.A, PureMethods, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;get_This

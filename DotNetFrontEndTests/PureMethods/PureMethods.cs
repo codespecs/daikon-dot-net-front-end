@@ -14,7 +14,7 @@ namespace PureMethods
     {
       PrintHelloWorld();
       A a = new A(6);
-      a.printN();
+      a.This.printN();
     }
 
     public static void PrintHelloWorld()
@@ -39,6 +39,11 @@ namespace PureMethods
     public int NPlusOne
     {
         get { return this.n+1; }
+    }
+
+    public A This
+    {
+      get { return this; }
     }
 
     public int PureMethod1() { return 0; }
