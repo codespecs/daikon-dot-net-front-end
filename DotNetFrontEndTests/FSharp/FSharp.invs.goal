@@ -1,0 +1,49 @@
+===========================================================================
+<StartupCode$FSharp>.$FSharp.main@():::ENTER
+$FSharp.init@ == 0
+$FSharp.set@4 == null
+$FSharp.set@4.contents@[] == []
+===========================================================================
+<StartupCode$FSharp>.$FSharp.main@():::EXIT39
+===========================================================================
+<StartupCode$FSharp>.$FSharp.main@():::EXIT
+$FSharp.init@ == orig($FSharp.init@)
+$FSharp.set@4 == orig($FSharp.set@4)
+$FSharp.set@4.contents@[] == orig($FSharp.set@4.contents@[])
+$FSharp.init@ == 0
+$FSharp.set@4 == null
+$FSharp.set@4.contents@[] == []
+===========================================================================
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32> set):::ENTER
+set[] elements >= 0
+set[i] == i
+===========================================================================
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32> set):::EXIT60
+===========================================================================
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32> set):::EXIT
+set[] == orig(set[])
+return[] elements >= 0
+return[i] == i
+set[] elements >= 0
+set[i] == i
+set[] is a subsequence of return[]
+===========================================================================
+FSharp.printCollection(System.String msg, System.Collections.Generic.IEnumerable<a> coll):::ENTER
+coll has only one value
+coll.GetType() == Microsoft.FSharp.Collections.FSharpSet`1[System.Int32].class
+msg has only one value
+msg.ToString() == "Collection"
+===========================================================================
+FSharp.printCollection(System.String msg, System.Collections.Generic.IEnumerable<a> coll):::EXIT13
+===========================================================================
+FSharp.printCollection(System.String msg, System.Collections.Generic.IEnumerable<a> coll):::EXIT
+msg.ToString() == "Collection"
+msg.ToString() == orig(msg.ToString())
+===========================================================================
+FSharp.set.get():::EXIT1
+===========================================================================
+FSharp.set.get():::EXIT
+return != null
+return.contents@[] elements >= 0
+return.contents@[] sorted by <
+return.contents@[i] == i
