@@ -1022,6 +1022,11 @@ namespace DotNetFrontEnd
     /// <returns>True if the method wasn't written by the programer, false otherwise</returns>
     public bool IsMethodCompilerGenerated(IMethodDefinition methodDef)
     {
+      if (methodDef.ToString().Contains("<>"))
+      {
+        return true;
+      }
+
       DNFETypeDeclaration typeDecl = this.ConvertAssemblyQualifiedNameToType(
         this.ConvertCCITypeToAssemblyQualifiedName(methodDef.ContainingType));
       foreach (Type type in typeDecl.GetAllTypes)
