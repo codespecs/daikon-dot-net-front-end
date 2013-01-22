@@ -81,12 +81,14 @@ namespace DotNetFrontEnd
     internal enum PossibleArgument
     {
       // Comments indicate section argument is defined under in documentation
+      /* */
       // Program Point Options
       ppt_omit_pattern,
       ppt_select_pattern,
       sample_start,
       // Variables options
       arrays_only,
+      is_property_flags,
       nesting_depth,
       omit_var,
       purity_file,
@@ -707,6 +709,15 @@ namespace DotNetFrontEnd
     public bool WPF
     {
       get { return this.programArguments.ContainsKey(PossibleArgument.wpf); }
+    }
+
+    /// <summary>
+    /// Whether to print the is_property flag for Properties. Not compatible
+    /// with old versions of Daikon.
+    /// </summary>
+    public bool IsPropertyFlags
+    {
+      get { return this.programArguments.ContainsKey(PossibleArgument.is_property_flags); }
     }
 
     #endregion

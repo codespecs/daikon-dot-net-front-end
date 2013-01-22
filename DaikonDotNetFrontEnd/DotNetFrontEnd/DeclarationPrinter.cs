@@ -75,6 +75,11 @@ namespace DotNetFrontEnd
     /// </summary>
     public const string ToStringMethodCall = "ToString()";
 
+    /// <summary>
+    /// The string that prefixes the generate method name for getter properties
+    /// </summary>
+    private const string GetterPropertyPrefix = "get_";
+
     #endregion
 
     /// <summary>
@@ -104,7 +109,8 @@ namespace DotNetFrontEnd
       to_string = classname << 1,
       is_param = to_string << 1,
       no_dups = is_param << 1,
-      not_ordered = no_dups << 1
+      not_ordered = no_dups << 1,
+      is_property = not_ordered << 1,
     }
 
     /// <summary>
@@ -273,11 +279,18 @@ namespace DotNetFrontEnd
         foreach (var pureMethod in typeManager.GetPureMethodsForType(type))
         {
           string methodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Value.Name);
+
+          VariableFlags pureMethodFlags =
+            (frontEndArgs.IsPropertyFlags &&
+              pureMethod.Value.Name.StartsWith(GetterPropertyPrefix)) ?
+            VariableFlags.is_property : VariableFlags.none;
+
           DeclareVariable(name + "." + methodName,
             pureMethod.Value.ReturnType,
             enclosingVar: name,
             relativeName: methodName,
             kind: VariableKind.function,
+            flags: pureMethodFlags,
             nestingDepth: nestingDepth + 1);
         }
 
@@ -477,10 +490,15 @@ namespace DotNetFrontEnd
       foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType))
       {
         string methodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Value.Name);
+        VariableFlags pureMethodFlags = 
+          (frontEndArgs.IsPropertyFlags && 
+            pureMethod.Value.Name.StartsWith(GetterPropertyPrefix)) ?
+          VariableFlags.is_property : VariableFlags.none;
         PrintList(name + "." + methodName, 
           pureMethod.Value.ReturnType, name,
           relativeName: methodName,
           kind: VariableKind.function,
+          flags: pureMethodFlags,
           nestingDepth: nestingDepth + 1, parentName: parentName);
       }
     }
@@ -703,9 +721,9 @@ namespace DotNetFrontEnd
     /// <returns>Property name as the developer would recognize it</returns>
     public static string SanitizePropertyName(string propertyNameInIL)
     {
-      if (propertyNameInIL.StartsWith("get_"))
+      if (propertyNameInIL.StartsWith(GetterPropertyPrefix))
       {
-        propertyNameInIL = propertyNameInIL.Replace("get_", "");
+        propertyNameInIL = propertyNameInIL.Replace(GetterPropertyPrefix, "");
       }
       return propertyNameInIL;
     }

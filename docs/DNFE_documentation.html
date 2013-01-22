@@ -164,6 +164,16 @@
 				inspected, e.g. a[0], ..., a[n]. False by default.
 				</p>
 			</dd>
+			<dt><samp><span class="option">--is-property-flags</span></samp></dt>
+			<dd>
+				<p>When specified will add the flag is_property to the list of flags that
+				are printed for Pure methods variables that are getter
+				properties. This requires still that the properties be specified in a 
+				purity file found with the --purity-file argument.
+				Be aware that this will not work with old versions of Daikon because they
+				did not use the is_property flag.
+				</p>
+			</dd>
 			<dt><samp><span class="option">--nesting-depth=<var>n</var></span></samp></dt>
 			<dd>				
 				<p>Depth to which to examine structure components (default 2).
