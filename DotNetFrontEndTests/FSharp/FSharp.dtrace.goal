@@ -29,7 +29,7 @@ ppt-type enter
     flags no_dups not_ordered
     comparability 22
 
-ppt <StartupCode$FSharp>.$FSharp.main@():::EXIT39
+ppt <StartupCode$FSharp>.$FSharp.main@():::EXIT41
 ppt-type subexit
   variable $FSharp.init@
     var-kind variable
@@ -125,7 +125,7 @@ parent parent FSharp:::CLASS 1
     flags no_dups not_ordered
     comparability 22
 
-ppt FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT60
+ppt FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT65
 ppt-type subexit
 parent parent FSharp:::CLASS 1
   variable exception
@@ -327,7 +327,7 @@ parent parent FSharp:::CLASS 1
     flags synthetic to_string
     comparability 22
 
-ppt FSharp.printCollection(System.String\_msg,\_System.Collections.Generic.IEnumerable<a>\_coll):::EXIT13
+ppt FSharp.printCollection(System.String\_msg,\_System.Collections.Generic.IEnumerable<a>\_coll):::EXIT14
 ppt-type subexit
 parent parent FSharp:::CLASS 1
   variable coll
@@ -702,7 +702,7 @@ set[..]
 [0]
 1
 
-FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT60
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT65
 this_invocation_nonce
 5
 exception
@@ -780,7 +780,7 @@ set[..]
 [0 1]
 1
 
-FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT60
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT65
 this_invocation_nonce
 8
 exception
@@ -858,7 +858,7 @@ set[..]
 [0 1 2]
 1
 
-FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT60
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT65
 this_invocation_nonce
 11
 exception
@@ -936,7 +936,7 @@ set[..]
 [0 1 2 3]
 1
 
-FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT60
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT65
 this_invocation_nonce
 14
 exception
@@ -1014,7 +1014,7 @@ set[..]
 [0 1 2 3 4]
 1
 
-FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT60
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT65
 this_invocation_nonce
 17
 exception
@@ -1075,7 +1075,7 @@ msg.ToString()
 "Collection"
 1
 
-FSharp.printCollection(System.String\_msg,\_System.Collections.Generic.IEnumerable<a>\_coll):::EXIT13
+FSharp.printCollection(System.String\_msg,\_System.Collections.Generic.IEnumerable<a>\_coll):::EXIT14
 this_invocation_nonce
 19
 coll
@@ -1097,7 +1097,7 @@ msg.ToString()
 "Collection"
 1
 
-<StartupCode$FSharp>.$FSharp.main@():::EXIT39
+<StartupCode$FSharp>.$FSharp.main@():::EXIT41
 this_invocation_nonce
 0
 $FSharp.init@
