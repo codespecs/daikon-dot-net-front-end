@@ -523,8 +523,8 @@ namespace DotNetFrontEnd
       }
       else
       {
-        string dirName = Path.GetDirectoryName(frontEndArgs.OutputLocation);
-        if (Directory.Exists(dirName))
+        string dirName = Path.GetDirectoryName(Path.GetFullPath(frontEndArgs.OutputLocation));
+        if (!Directory.Exists(dirName))
         {
           Directory.CreateDirectory(dirName);
         }
