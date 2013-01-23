@@ -673,7 +673,7 @@ namespace DotNetFrontEnd
         {
           ReflectiveVisit(name + '.' + DeclarationPrinter.SanitizePropertyName(item.Value.Name),
               GetMethodValue(obj, item.Value, item.Value.Name), item.Value.ReturnType, writer,
-                  depth + 1);
+                  depth + 1, fieldFlags: fieldFlags);
         }
       }
 
