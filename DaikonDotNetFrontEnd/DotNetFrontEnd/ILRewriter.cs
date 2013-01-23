@@ -203,6 +203,7 @@ namespace DotNetFrontEnd
       }
       // If the method is compiler generated don't insert instrumentation code.
       if (typeManager.IsMethodCompilerGenerated(methodBody.MethodDefinition) ||
+        // Don't add instrumentation code to Pure methods
           typeManager.GetPureMethodsForType(methodBody.MethodDefinition.ContainingType).Any(
             meth => meth.Value.Name.ToString() == methodBody.MethodDefinition.Name.ToString()))
       {
@@ -2010,7 +2011,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Visit module and add instrumentation code to functions obtained from program at p
+    /// Visit module and add instrumentation code to functions.
     /// </summary>
     /// <param name="module">Module to instrument</param>
     /// <param name="pathToVisitor">Path to the .dll of the reflective visitor</param>
