@@ -593,8 +593,7 @@ namespace DotNetFrontEnd
           }
           else if (prevOp.Value is Microsoft.Cci.MutableCodeModel.MethodReference)
           {
-            exType = ((Microsoft.Cci.MutableCodeModel.MethodReference)prevOp.Value)
-              .ResolvedMethod.Type;
+            exType = ((Microsoft.Cci.MutableCodeModel.MethodReference)prevOp.Value).ContainingType;
           }
           else if (prevOp.Value is TypeReference)
           {
