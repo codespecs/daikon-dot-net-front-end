@@ -305,8 +305,21 @@ namespace DotNetFrontEnd
                 if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
                 {
                   staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
-                  ReflectiveVisit(staticFieldName, staticField.GetValue(null),
-                        staticField.FieldType, writer, staticFieldName.Count(c => c == '.'));
+                  // TODO(#68):
+                  // Static fields of generic types cause an exception, so don't visit them
+                  object val = null;
+                  VariableModifiers flags = VariableModifiers.none;
+                  if (!type.ContainsGenericParameters)
+                  {
+                    val = staticField.GetValue(null);
+                  }
+                  else
+                  {
+                    flags = VariableModifiers.nonsensical;
+                  }
+                  ReflectiveVisit(staticFieldName, val,
+                        staticField.FieldType, writer, staticFieldName.Count(c => c == '.'),
+                        fieldFlags: flags);
                 }
               }
               catch (ArgumentException)
