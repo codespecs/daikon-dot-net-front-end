@@ -233,78 +233,95 @@ namespace DotNetFrontEnd
       }
       else
       {
-        foreach (FieldInfo field in
-            type.GetFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(type)))
-        {
-          if (!this.typeManager.ShouldIgnoreField(type, field.Name))
-          {
-            DeclareVariable(name + "." + field.Name, field.FieldType,
-                VariableKind.field, enclosingVar: name, relativeName: field.Name,
-                nestingDepth: nestingDepth + 1, parentName: parentName);
-          }
-        }
+        DeclarationChildPrinting(name, type, kind, flags, parentName, nestingDepth);
+      }
+    }
 
-        foreach (FieldInfo staticField in
-            type.GetFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
-        {
-          if (!this.typeManager.ShouldIgnoreField(type, staticField.Name))
-          {
-            string staticFieldName = type.Name + "." + staticField.Name;
-            if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
-            {
-              this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
-              DeclareVariable(staticFieldName, staticField.FieldType,
-                  nestingDepth: staticFieldName.Count(c => c == '.'));
-            }
-          }
-        }
+    /// <summary>
+    /// Prints the children fields of a variable, including static fields, pure methods,
+    /// ToString(), GetType(), etc.
+    /// </summary>
+    /// <param name="name">Name of the variable</param>
+    /// <param name="type">Type of the variable</param>
+    /// <param name="kind">Daikon kind of the variable</param>
+    /// <param name="flags">Variable flags</param>
+    /// <param name="parentName">Name of the parent of the variable if any</param>
+    /// <param name="nestingDepth">Nesting depth of the variable</param>
+    private void DeclarationChildPrinting(string name, Type type, VariableKind kind, 
+      VariableFlags flags, string parentName, int nestingDepth)
+    {
 
-        if (!type.IsSealed)
+      foreach (FieldInfo field in
+          type.GetFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(type)))
+      {
+        if (!this.typeManager.ShouldIgnoreField(type, field.Name))
         {
-          DeclareVariable(name + "." + GetTypeMethodCall, TypeManager.TypeType,
-              VariableKind.function, VariableFlags.classname |
-              VariableFlags.synthetic, enclosingVar: name, relativeName: GetTypeMethodCall,
+          DeclareVariable(name + "." + field.Name, field.FieldType,
+              VariableKind.field, enclosingVar: name, relativeName: field.Name,
               nestingDepth: nestingDepth + 1, parentName: parentName);
         }
+      }
 
-        if (type == TypeManager.StringType)
+      foreach (FieldInfo staticField in
+          type.GetFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
+      {
+        if (!this.typeManager.ShouldIgnoreField(type, staticField.Name))
         {
-          DeclareVariable(name + "." + ToStringMethodCall, TypeManager.StringType,
-              VariableKind.function, VariableFlags.to_string |
-              VariableFlags.synthetic,
-              enclosingVar: name, relativeName: ToStringMethodCall,
-              nestingDepth: nestingDepth + 1, parentName: parentName);
+          string staticFieldName = type.Name + "." + staticField.Name;
+          if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
+          {
+            this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
+            DeclareVariable(staticFieldName, staticField.FieldType,
+                nestingDepth: staticFieldName.Count(c => c == '.'));
+          }
         }
+      }
 
-        foreach (var pureMethod in typeManager.GetPureMethodsForType(type))
-        {
-          string methodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Value.Name);
+      if (!type.IsSealed)
+      {
+        DeclareVariable(name + "." + GetTypeMethodCall, TypeManager.TypeType,
+            VariableKind.function, VariableFlags.classname |
+            VariableFlags.synthetic, enclosingVar: name, relativeName: GetTypeMethodCall,
+            nestingDepth: nestingDepth + 1, parentName: parentName);
+      }
 
-          VariableFlags pureMethodFlags =
-            (frontEndArgs.IsPropertyFlags &&
-              pureMethod.Value.Name.StartsWith(GetterPropertyPrefix)) ?
-            VariableFlags.is_property : VariableFlags.none;
+      if (type == TypeManager.StringType)
+      {
+        DeclareVariable(name + "." + ToStringMethodCall, TypeManager.StringType,
+            VariableKind.function, VariableFlags.to_string |
+            VariableFlags.synthetic,
+            enclosingVar: name, relativeName: ToStringMethodCall,
+            nestingDepth: nestingDepth + 1, parentName: parentName);
+      }
 
-          DeclareVariable(name + "." + methodName,
-            pureMethod.Value.ReturnType,
-            enclosingVar: name,
-            relativeName: methodName,
-            kind: VariableKind.function,
-            flags: pureMethodFlags,
-            nestingDepth: nestingDepth + 1);
-        }
+      foreach (var pureMethod in typeManager.GetPureMethodsForType(type))
+      {
+        string methodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Value.Name);
 
-        // Don't look at linked-lists of synthetic variables or fields to prevent children 
-        // also printing linked-lists, when they are really just deeper levels of the current 
-        // linked list.
-        if (((flags & VariableFlags.synthetic) == 0) && kind != VariableKind.field
-            && frontEndArgs.LinkedLists
-            && this.typeManager.IsLinkedListImplementer(type))
-        {
-          FieldInfo linkedListField = TypeManager.FindLinkedListField(type);
-          PrintList(name + "[..]", linkedListField.FieldType, name, VariableKind.array,
-              nestingDepth: nestingDepth, parentName: parentName, flags: flags);
-        }
+        VariableFlags pureMethodFlags =
+          (frontEndArgs.IsPropertyFlags &&
+            pureMethod.Value.Name.StartsWith(GetterPropertyPrefix)) ?
+          VariableFlags.is_property : VariableFlags.none;
+
+        DeclareVariable(name + "." + methodName,
+          pureMethod.Value.ReturnType,
+          enclosingVar: name,
+          relativeName: methodName,
+          kind: VariableKind.function,
+          flags: pureMethodFlags,
+          nestingDepth: nestingDepth + 1);
+      }
+
+      // Don't look at linked-lists of synthetic variables or fields to prevent children 
+      // also printing linked-lists, when they are really just deeper levels of the current 
+      // linked list.
+      if (((flags & VariableFlags.synthetic) == 0) && kind != VariableKind.field
+          && frontEndArgs.LinkedLists
+          && this.typeManager.IsLinkedListImplementer(type))
+      {
+        FieldInfo linkedListField = TypeManager.FindLinkedListField(type);
+        PrintList(name + "[..]", linkedListField.FieldType, name, VariableKind.array,
+            nestingDepth: nestingDepth, parentName: parentName, flags: flags);
       }
     }
 
