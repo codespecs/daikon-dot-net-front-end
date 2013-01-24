@@ -1084,7 +1084,8 @@ namespace DotNetFrontEnd
           }
         }
         ListReflectiveVisit(name + "." + pureMethodName, pureMethodResults,
-          pureMethod.Value.ReturnType, writer, depth + 1);
+          pureMethod.Value.ReturnType, writer, depth + 1, 
+          nonsensicalElements: nonsensicalElements);
       }
     }
 
