@@ -963,6 +963,7 @@ namespace DotNetFrontEnd
         {
           nonsensicalElements = new bool[list.Count];
         }
+
         VisitListChildren(name, list, elementType, writer, depth, nonsensicalElements);
       }
     }
@@ -983,6 +984,7 @@ namespace DotNetFrontEnd
         ListReflectiveVisit(name + "." + staticElementField.Name, null,
             staticElementField.FieldType, writer, depth + 1);
       }
+
       foreach (FieldInfo staticElementField in
           elementType.GetFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(elementType)))
       {
@@ -996,6 +998,12 @@ namespace DotNetFrontEnd
                 staticFieldName.Count(c => c == '.'));
           }
         }
+      }
+      
+      if (!elementType.IsSealed)
+      {
+        ListReflectiveVisit(name + "." + DeclarationPrinter.GetTypeMethodCall, null,
+            TypeManager.TypeType, writer, depth + 1, VariableModifiers.classname);
       }
 
       if (elementType == TypeManager.StringType)
