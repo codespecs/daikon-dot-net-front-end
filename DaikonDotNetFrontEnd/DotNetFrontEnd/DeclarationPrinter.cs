@@ -1012,8 +1012,12 @@ namespace DotNetFrontEnd
     {
       if (name.Length == 0)
       {
+        name = "UNNAMED_VARIABLE";
+        // TODO(#69): Investigate
+        /*
         throw new NotSupportedException("An error occurred in the instrumentation process"
             + " and a varible was encountered with no name.");
+         */
       }
       if (type == null)
       {
