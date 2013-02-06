@@ -366,6 +366,11 @@ namespace DotNetFrontEnd
     /// <returns>True if the variable should be printed, false otherwise</returns>
     public bool ShouldPrintVariable(string varName)
     {
+      // value__ is an extra field added describing enum values.
+      if (varName.EndsWith("value__"))
+      {
+        return false;
+      }
       return this.OmitVar == null || !this.OmitVar.IsMatch(varName);
     }
 
