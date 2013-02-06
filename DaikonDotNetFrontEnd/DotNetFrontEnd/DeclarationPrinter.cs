@@ -309,7 +309,8 @@ namespace DotNetFrontEnd
           relativeName: methodName,
           kind: VariableKind.function,
           flags: pureMethodFlags,
-          nestingDepth: nestingDepth + 1);
+          nestingDepth: nestingDepth + 1,
+          parentName: parentName);
       }
 
       // Don't look at linked-lists of synthetic variables or fields to prevent children 

@@ -54,18 +54,21 @@ parent parent PureMethods.A:::OBJECT 1
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod1
     var-kind function PureMethod1
     enclosing-var this
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod2
     var-kind function PureMethod2
     enclosing-var this
     dec-type java.lang.String
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod2.ToString()
     var-kind function ToString()
     enclosing-var this.PureMethod2
@@ -73,18 +76,21 @@ parent parent PureMethods.A:::OBJECT 1
     rep-type java.lang.String
     flags synthetic to_string
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod3
     var-kind function PureMethod3
     enclosing-var this
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4
     var-kind function PureMethod4
     enclosing-var this
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.GetType()
     var-kind function GetType()
     enclosing-var this.PureMethod4
@@ -92,54 +98,63 @@ parent parent PureMethods.A:::OBJECT 1
     rep-type java.lang.String
     flags synthetic classname
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.NPlusOne
     var-kind function NPlusOne
     enclosing-var this.PureMethod4
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.PureMethod1
     var-kind function PureMethod1
     enclosing-var this.PureMethod4
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.PureMethod2
     var-kind function PureMethod2
     enclosing-var this.PureMethod4
     dec-type java.lang.String
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.PureMethod3
     var-kind function PureMethod3
     enclosing-var this.PureMethod4
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.PureMethod4
     var-kind function PureMethod4
     enclosing-var this.PureMethod4
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.This
     var-kind function This
     enclosing-var this.PureMethod4
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.n
     var-kind field n
     enclosing-var this.PureMethod4
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This
     var-kind function This
     enclosing-var this
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.GetType()
     var-kind function GetType()
     enclosing-var this.This
@@ -147,48 +162,56 @@ parent parent PureMethods.A:::OBJECT 1
     rep-type java.lang.String
     flags synthetic classname
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.NPlusOne
     var-kind function NPlusOne
     enclosing-var this.This
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.PureMethod1
     var-kind function PureMethod1
     enclosing-var this.This
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.PureMethod2
     var-kind function PureMethod2
     enclosing-var this.This
     dec-type java.lang.String
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.PureMethod3
     var-kind function PureMethod3
     enclosing-var this.This
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.PureMethod4
     var-kind function PureMethod4
     enclosing-var this.This
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.This
     var-kind function This
     enclosing-var this.This
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.n
     var-kind field n
     enclosing-var this.This
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.n
     var-kind field n
     enclosing-var this
@@ -239,18 +262,21 @@ parent parent PureMethods.A:::OBJECT 1
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod1
     var-kind function PureMethod1
     enclosing-var this
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod2
     var-kind function PureMethod2
     enclosing-var this
     dec-type java.lang.String
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod2.ToString()
     var-kind function ToString()
     enclosing-var this.PureMethod2
@@ -258,18 +284,21 @@ parent parent PureMethods.A:::OBJECT 1
     rep-type java.lang.String
     flags synthetic to_string
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod3
     var-kind function PureMethod3
     enclosing-var this
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4
     var-kind function PureMethod4
     enclosing-var this
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.GetType()
     var-kind function GetType()
     enclosing-var this.PureMethod4
@@ -277,54 +306,63 @@ parent parent PureMethods.A:::OBJECT 1
     rep-type java.lang.String
     flags synthetic classname
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.NPlusOne
     var-kind function NPlusOne
     enclosing-var this.PureMethod4
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.PureMethod1
     var-kind function PureMethod1
     enclosing-var this.PureMethod4
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.PureMethod2
     var-kind function PureMethod2
     enclosing-var this.PureMethod4
     dec-type java.lang.String
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.PureMethod3
     var-kind function PureMethod3
     enclosing-var this.PureMethod4
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.PureMethod4
     var-kind function PureMethod4
     enclosing-var this.PureMethod4
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.This
     var-kind function This
     enclosing-var this.PureMethod4
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.n
     var-kind field n
     enclosing-var this.PureMethod4
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This
     var-kind function This
     enclosing-var this
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.GetType()
     var-kind function GetType()
     enclosing-var this.This
@@ -332,48 +370,56 @@ parent parent PureMethods.A:::OBJECT 1
     rep-type java.lang.String
     flags synthetic classname
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.NPlusOne
     var-kind function NPlusOne
     enclosing-var this.This
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.PureMethod1
     var-kind function PureMethod1
     enclosing-var this.This
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.PureMethod2
     var-kind function PureMethod2
     enclosing-var this.This
     dec-type java.lang.String
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.PureMethod3
     var-kind function PureMethod3
     enclosing-var this.This
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.PureMethod4
     var-kind function PureMethod4
     enclosing-var this.This
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.This
     var-kind function This
     enclosing-var this.This
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.n
     var-kind field n
     enclosing-var this.This
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.n
     var-kind field n
     enclosing-var this
@@ -406,18 +452,21 @@ parent parent PureMethods.A:::OBJECT 1
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod1
     var-kind function PureMethod1
     enclosing-var this
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod2
     var-kind function PureMethod2
     enclosing-var this
     dec-type java.lang.String
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod2.ToString()
     var-kind function ToString()
     enclosing-var this.PureMethod2
@@ -425,18 +474,21 @@ parent parent PureMethods.A:::OBJECT 1
     rep-type java.lang.String
     flags synthetic to_string
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod3
     var-kind function PureMethod3
     enclosing-var this
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4
     var-kind function PureMethod4
     enclosing-var this
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.GetType()
     var-kind function GetType()
     enclosing-var this.PureMethod4
@@ -444,54 +496,63 @@ parent parent PureMethods.A:::OBJECT 1
     rep-type java.lang.String
     flags synthetic classname
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.NPlusOne
     var-kind function NPlusOne
     enclosing-var this.PureMethod4
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.PureMethod1
     var-kind function PureMethod1
     enclosing-var this.PureMethod4
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.PureMethod2
     var-kind function PureMethod2
     enclosing-var this.PureMethod4
     dec-type java.lang.String
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.PureMethod3
     var-kind function PureMethod3
     enclosing-var this.PureMethod4
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.PureMethod4
     var-kind function PureMethod4
     enclosing-var this.PureMethod4
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.This
     var-kind function This
     enclosing-var this.PureMethod4
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.n
     var-kind field n
     enclosing-var this.PureMethod4
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This
     var-kind function This
     enclosing-var this
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.GetType()
     var-kind function GetType()
     enclosing-var this.This
@@ -499,48 +560,56 @@ parent parent PureMethods.A:::OBJECT 1
     rep-type java.lang.String
     flags synthetic classname
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.NPlusOne
     var-kind function NPlusOne
     enclosing-var this.This
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.PureMethod1
     var-kind function PureMethod1
     enclosing-var this.This
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.PureMethod2
     var-kind function PureMethod2
     enclosing-var this.This
     dec-type java.lang.String
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.PureMethod3
     var-kind function PureMethod3
     enclosing-var this.This
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.PureMethod4
     var-kind function PureMethod4
     enclosing-var this.This
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.This
     var-kind function This
     enclosing-var this.This
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.n
     var-kind field n
     enclosing-var this.This
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.n
     var-kind field n
     enclosing-var this
@@ -585,18 +654,21 @@ parent parent PureMethods.A:::OBJECT 1
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod1
     var-kind function PureMethod1
     enclosing-var this
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod2
     var-kind function PureMethod2
     enclosing-var this
     dec-type java.lang.String
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod2.ToString()
     var-kind function ToString()
     enclosing-var this.PureMethod2
@@ -604,18 +676,21 @@ parent parent PureMethods.A:::OBJECT 1
     rep-type java.lang.String
     flags synthetic to_string
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod3
     var-kind function PureMethod3
     enclosing-var this
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4
     var-kind function PureMethod4
     enclosing-var this
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.GetType()
     var-kind function GetType()
     enclosing-var this.PureMethod4
@@ -623,54 +698,63 @@ parent parent PureMethods.A:::OBJECT 1
     rep-type java.lang.String
     flags synthetic classname
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.NPlusOne
     var-kind function NPlusOne
     enclosing-var this.PureMethod4
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.PureMethod1
     var-kind function PureMethod1
     enclosing-var this.PureMethod4
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.PureMethod2
     var-kind function PureMethod2
     enclosing-var this.PureMethod4
     dec-type java.lang.String
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.PureMethod3
     var-kind function PureMethod3
     enclosing-var this.PureMethod4
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.PureMethod4
     var-kind function PureMethod4
     enclosing-var this.PureMethod4
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.This
     var-kind function This
     enclosing-var this.PureMethod4
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.n
     var-kind field n
     enclosing-var this.PureMethod4
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This
     var-kind function This
     enclosing-var this
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.GetType()
     var-kind function GetType()
     enclosing-var this.This
@@ -678,48 +762,56 @@ parent parent PureMethods.A:::OBJECT 1
     rep-type java.lang.String
     flags synthetic classname
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.NPlusOne
     var-kind function NPlusOne
     enclosing-var this.This
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.PureMethod1
     var-kind function PureMethod1
     enclosing-var this.This
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.PureMethod2
     var-kind function PureMethod2
     enclosing-var this.This
     dec-type java.lang.String
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.PureMethod3
     var-kind function PureMethod3
     enclosing-var this.This
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.PureMethod4
     var-kind function PureMethod4
     enclosing-var this.This
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.This
     var-kind function This
     enclosing-var this.This
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.n
     var-kind field n
     enclosing-var this.This
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.n
     var-kind field n
     enclosing-var this
@@ -764,18 +856,21 @@ parent parent PureMethods.A:::OBJECT 1
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod1
     var-kind function PureMethod1
     enclosing-var this
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod2
     var-kind function PureMethod2
     enclosing-var this
     dec-type java.lang.String
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod2.ToString()
     var-kind function ToString()
     enclosing-var this.PureMethod2
@@ -783,18 +878,21 @@ parent parent PureMethods.A:::OBJECT 1
     rep-type java.lang.String
     flags synthetic to_string
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod3
     var-kind function PureMethod3
     enclosing-var this
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4
     var-kind function PureMethod4
     enclosing-var this
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.GetType()
     var-kind function GetType()
     enclosing-var this.PureMethod4
@@ -802,54 +900,63 @@ parent parent PureMethods.A:::OBJECT 1
     rep-type java.lang.String
     flags synthetic classname
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.NPlusOne
     var-kind function NPlusOne
     enclosing-var this.PureMethod4
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.PureMethod1
     var-kind function PureMethod1
     enclosing-var this.PureMethod4
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.PureMethod2
     var-kind function PureMethod2
     enclosing-var this.PureMethod4
     dec-type java.lang.String
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.PureMethod3
     var-kind function PureMethod3
     enclosing-var this.PureMethod4
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.PureMethod4
     var-kind function PureMethod4
     enclosing-var this.PureMethod4
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.This
     var-kind function This
     enclosing-var this.PureMethod4
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.PureMethod4.n
     var-kind field n
     enclosing-var this.PureMethod4
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This
     var-kind function This
     enclosing-var this
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.GetType()
     var-kind function GetType()
     enclosing-var this.This
@@ -857,48 +964,56 @@ parent parent PureMethods.A:::OBJECT 1
     rep-type java.lang.String
     flags synthetic classname
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.NPlusOne
     var-kind function NPlusOne
     enclosing-var this.This
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.PureMethod1
     var-kind function PureMethod1
     enclosing-var this.This
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.PureMethod2
     var-kind function PureMethod2
     enclosing-var this.This
     dec-type java.lang.String
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.PureMethod3
     var-kind function PureMethod3
     enclosing-var this.This
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.PureMethod4
     var-kind function PureMethod4
     enclosing-var this.This
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.This
     var-kind function This
     enclosing-var this.This
     dec-type PureMethods.A
     rep-type hashcode
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.This.n
     var-kind field n
     enclosing-var this.This
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.A:::OBJECT 1
   variable this.n
     var-kind field n
     enclosing-var this
@@ -1114,12 +1229,14 @@ parent parent PureMethods.PureMethods:::OBJECT 1
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.PureMethods:::OBJECT 1
   variable this.StaticPureMethod2
     var-kind function StaticPureMethod2
     enclosing-var this
     dec-type java.lang.String
     rep-type hashcode
     comparability 22
+    parent PureMethods.PureMethods:::OBJECT 1
   variable this.StaticPureMethod2.ToString()
     var-kind function ToString()
     enclosing-var this.StaticPureMethod2
@@ -1127,6 +1244,7 @@ parent parent PureMethods.PureMethods:::OBJECT 1
     rep-type java.lang.String
     flags synthetic to_string
     comparability 22
+    parent PureMethods.PureMethods:::OBJECT 1
 
 ppt PureMethods.PureMethods..ctor():::EXIT_EX_Runtime
 ppt-type subexit
@@ -1164,12 +1282,14 @@ parent parent PureMethods.PureMethods:::OBJECT 1
     dec-type int
     rep-type int
     comparability 22
+    parent PureMethods.PureMethods:::OBJECT 1
   variable this.StaticPureMethod2
     var-kind function StaticPureMethod2
     enclosing-var this
     dec-type java.lang.String
     rep-type hashcode
     comparability 22
+    parent PureMethods.PureMethods:::OBJECT 1
   variable this.StaticPureMethod2.ToString()
     var-kind function ToString()
     enclosing-var this.StaticPureMethod2
@@ -1177,6 +1297,7 @@ parent parent PureMethods.PureMethods:::OBJECT 1
     rep-type java.lang.String
     flags synthetic to_string
     comparability 22
+    parent PureMethods.PureMethods:::OBJECT 1
 
 ppt PureMethods.PureMethods.Main(System.String[]\_args):::ENTER
 ppt-type enter
