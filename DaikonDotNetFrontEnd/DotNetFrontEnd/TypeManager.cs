@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using Microsoft.Cci;
 using Microsoft.Cci.MutableCodeModel;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace DotNetFrontEnd
 {
@@ -228,10 +229,10 @@ namespace DotNetFrontEnd
           // The user will declare a single type name
           Type type = ConvertAssemblyQualifiedNameToType(typeName).GetSingleType;
           // Pure methods have no parameters
-          MethodInfo method = type.GetMethod(methodName, 
-            BindingFlags.Public | 
-            BindingFlags.NonPublic | 
-            BindingFlags.Static | 
+          MethodInfo method = type.GetMethod(methodName,
+            BindingFlags.Public |
+            BindingFlags.NonPublic |
+            BindingFlags.Static |
             BindingFlags.Instance
           );
           if (method == null)
@@ -733,12 +734,31 @@ namespace DotNetFrontEnd
         return simpleTypeName;
       }
 
-      // If the type is a vector, then proceed on the element type, but rememeber that it was a 
-      // vector so the [] suffix can be added at the end.
-      bool isVectorTypeReference = type is VectorTypeReference;
-      if (isVectorTypeReference)
+      // If the type is a vector or matrix, then proceed on the element type, but rememeber that it was a 
+      // vector or matrix so suffix can be added at the end. These could be nested somewhat deeply so 
+      // continue while we it's still a vector or matrix. Need to insert at the beginning of the suffix
+      // each time.
+      StringBuilder typeSuffix = new StringBuilder();
+      while (type is VectorTypeReference || type is MatrixTypeReference)
       {
-        type = ((VectorTypeReference)type).ElementType;
+        if (type is VectorTypeReference)
+        {
+          type = ((VectorTypeReference)type).ElementType;
+          typeSuffix.Insert(0, "[]");
+        }
+        if (type is MatrixTypeReference)
+        {
+          MatrixTypeReference mtr = ((MatrixTypeReference)type);
+          typeSuffix.Insert(0, "[");
+          for (int i = 0; i < mtr.Rank; i++)
+          {
+            typeSuffix.Insert(1,",");
+          }
+          // If someone went really crazy with their rank this could actually be negative :O
+          Debug.Assert((int)mtr.Rank > 0);
+          typeSuffix.Insert(1 + (int)mtr.Rank, "]");
+          type = mtr.ElementType;
+        }
       }
 
       // TODO(#16): In a future version it'd be nice to get some more
@@ -752,7 +772,7 @@ namespace DotNetFrontEnd
         }
         // return "System.Object";
       }
-      
+
       if (type is SpecializedNestedTypeReference)
       {
         type = ((SpecializedNestedTypeReference)type).UnspecializedVersion;
@@ -782,10 +802,7 @@ namespace DotNetFrontEnd
         type = castedType.GenericType;
       }
 
-      if (isVectorTypeReference)
-      {
-        typeName = typeName + "[]";
-      }
+      typeName += typeSuffix.ToString();
 
       AssemblyIdentity identity = DetermineAssemblyIdentity(type);
 
