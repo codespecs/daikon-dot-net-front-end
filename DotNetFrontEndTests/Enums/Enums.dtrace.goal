@@ -79,34 +79,16 @@ parent parent Enums.Enums.BoilingPoints:::CLASS 1
     dec-type Enums.Enums+BoilingPoints
     rep-type java.lang.String
     comparability 22
-  variable BoilingPoints.Celsius.value__
-    var-kind field value__
-    enclosing-var BoilingPoints.Celsius
-    dec-type int
-    rep-type int
-    comparability 22
   variable BoilingPoints.Fahrenheit
     var-kind variable
     dec-type Enums.Enums+BoilingPoints
     rep-type java.lang.String
-    comparability 22
-  variable BoilingPoints.Fahrenheit.value__
-    var-kind field value__
-    enclosing-var BoilingPoints.Fahrenheit
-    dec-type int
-    rep-type int
     comparability 22
   variable this
     var-kind variable
     dec-type Enums.Enums+BoilingPoints
     rep-type java.lang.String
     flags is_param
-    comparability 22
-  variable this.value__
-    var-kind field value__
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
 
 ppt Enums.Enums.Colors:::CLASS
@@ -120,56 +102,26 @@ parent parent Enums.Enums.Colors:::CLASS 1
     dec-type Enums.Enums+Colors
     rep-type java.lang.String
     comparability 22
-  variable Colors.Blue.value__
-    var-kind field value__
-    enclosing-var Colors.Blue
-    dec-type int
-    rep-type int
-    comparability 22
   variable Colors.Green
     var-kind variable
     dec-type Enums.Enums+Colors
     rep-type java.lang.String
-    comparability 22
-  variable Colors.Green.value__
-    var-kind field value__
-    enclosing-var Colors.Green
-    dec-type int
-    rep-type int
     comparability 22
   variable Colors.Red
     var-kind variable
     dec-type Enums.Enums+Colors
     rep-type java.lang.String
     comparability 22
-  variable Colors.Red.value__
-    var-kind field value__
-    enclosing-var Colors.Red
-    dec-type int
-    rep-type int
-    comparability 22
   variable Colors.Yellow
     var-kind variable
     dec-type Enums.Enums+Colors
     rep-type java.lang.String
-    comparability 22
-  variable Colors.Yellow.value__
-    var-kind field value__
-    enclosing-var Colors.Yellow
-    dec-type int
-    rep-type int
     comparability 22
   variable this
     var-kind variable
     dec-type Enums.Enums+Colors
     rep-type java.lang.String
     flags is_param
-    comparability 22
-  variable this.value__
-    var-kind field value__
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
 
 ppt Enums.Enums.Days:::CLASS
@@ -183,89 +135,41 @@ parent parent Enums.Enums.Days:::CLASS 1
     dec-type Enums.Enums+Days
     rep-type java.lang.String
     comparability 22
-  variable Days.Friday.value__
-    var-kind field value__
-    enclosing-var Days.Friday
-    dec-type int
-    rep-type int
-    comparability 22
   variable Days.Monday
     var-kind variable
     dec-type Enums.Enums+Days
     rep-type java.lang.String
-    comparability 22
-  variable Days.Monday.value__
-    var-kind field value__
-    enclosing-var Days.Monday
-    dec-type int
-    rep-type int
     comparability 22
   variable Days.Saturday
     var-kind variable
     dec-type Enums.Enums+Days
     rep-type java.lang.String
     comparability 22
-  variable Days.Saturday.value__
-    var-kind field value__
-    enclosing-var Days.Saturday
-    dec-type int
-    rep-type int
-    comparability 22
   variable Days.Sunday
     var-kind variable
     dec-type Enums.Enums+Days
     rep-type java.lang.String
-    comparability 22
-  variable Days.Sunday.value__
-    var-kind field value__
-    enclosing-var Days.Sunday
-    dec-type int
-    rep-type int
     comparability 22
   variable Days.Thursday
     var-kind variable
     dec-type Enums.Enums+Days
     rep-type java.lang.String
     comparability 22
-  variable Days.Thursday.value__
-    var-kind field value__
-    enclosing-var Days.Thursday
-    dec-type int
-    rep-type int
-    comparability 22
   variable Days.Tuesday
     var-kind variable
     dec-type Enums.Enums+Days
     rep-type java.lang.String
-    comparability 22
-  variable Days.Tuesday.value__
-    var-kind field value__
-    enclosing-var Days.Tuesday
-    dec-type int
-    rep-type int
     comparability 22
   variable Days.Wednesday
     var-kind variable
     dec-type Enums.Enums+Days
     rep-type java.lang.String
     comparability 22
-  variable Days.Wednesday.value__
-    var-kind field value__
-    enclosing-var Days.Wednesday
-    dec-type int
-    rep-type int
-    comparability 22
   variable this
     var-kind variable
     dec-type Enums.Enums+Days
     rep-type java.lang.String
     flags is_param
-    comparability 22
-  variable this.value__
-    var-kind field value__
-    enclosing-var this
-    dec-type int
-    rep-type int
     comparability 22
 
 ppt Enums.Enums.Main():::ENTER
@@ -312,56 +216,26 @@ parent parent Enums.Enums:::CLASS 1
     dec-type Enums.Enums+Colors
     rep-type java.lang.String
     comparability 22
-  variable Colors.Blue.value__
-    var-kind field value__
-    enclosing-var Colors.Blue
-    dec-type int
-    rep-type int
-    comparability 22
   variable Colors.Green
     var-kind variable
     dec-type Enums.Enums+Colors
     rep-type java.lang.String
-    comparability 22
-  variable Colors.Green.value__
-    var-kind field value__
-    enclosing-var Colors.Green
-    dec-type int
-    rep-type int
     comparability 22
   variable Colors.Red
     var-kind variable
     dec-type Enums.Enums+Colors
     rep-type java.lang.String
     comparability 22
-  variable Colors.Red.value__
-    var-kind field value__
-    enclosing-var Colors.Red
-    dec-type int
-    rep-type int
-    comparability 22
   variable Colors.Yellow
     var-kind variable
     dec-type Enums.Enums+Colors
     rep-type java.lang.String
-    comparability 22
-  variable Colors.Yellow.value__
-    var-kind field value__
-    enclosing-var Colors.Yellow
-    dec-type int
-    rep-type int
     comparability 22
   variable myColors
     var-kind variable
     dec-type Enums.Enums+Colors
     rep-type java.lang.String
     flags is_param
-    comparability 22
-  variable myColors.value__
-    var-kind field value__
-    enclosing-var myColors
-    dec-type int
-    rep-type int
     comparability 22
 
 ppt Enums.Enums.PrintColors(Enums.Enums.Colors\_myColors):::EXIT6
@@ -372,44 +246,20 @@ parent parent Enums.Enums:::CLASS 1
     dec-type Enums.Enums+Colors
     rep-type java.lang.String
     comparability 22
-  variable Colors.Blue.value__
-    var-kind field value__
-    enclosing-var Colors.Blue
-    dec-type int
-    rep-type int
-    comparability 22
   variable Colors.Green
     var-kind variable
     dec-type Enums.Enums+Colors
     rep-type java.lang.String
-    comparability 22
-  variable Colors.Green.value__
-    var-kind field value__
-    enclosing-var Colors.Green
-    dec-type int
-    rep-type int
     comparability 22
   variable Colors.Red
     var-kind variable
     dec-type Enums.Enums+Colors
     rep-type java.lang.String
     comparability 22
-  variable Colors.Red.value__
-    var-kind field value__
-    enclosing-var Colors.Red
-    dec-type int
-    rep-type int
-    comparability 22
   variable Colors.Yellow
     var-kind variable
     dec-type Enums.Enums+Colors
     rep-type java.lang.String
-    comparability 22
-  variable Colors.Yellow.value__
-    var-kind field value__
-    enclosing-var Colors.Yellow
-    dec-type int
-    rep-type int
     comparability 22
   variable exception
     var-kind return
@@ -428,12 +278,6 @@ parent parent Enums.Enums:::CLASS 1
     dec-type Enums.Enums+Colors
     rep-type java.lang.String
     flags is_param
-    comparability 22
-  variable myColors.value__
-    var-kind field value__
-    enclosing-var myColors
-    dec-type int
-    rep-type int
     comparability 22
 
 ppt Enums.Enums.PrintColors(Enums.Enums.Colors\_myColors):::EXIT_EX_Runtime
@@ -444,44 +288,20 @@ parent parent Enums.Enums:::CLASS 1
     dec-type Enums.Enums+Colors
     rep-type java.lang.String
     comparability 22
-  variable Colors.Blue.value__
-    var-kind field value__
-    enclosing-var Colors.Blue
-    dec-type int
-    rep-type int
-    comparability 22
   variable Colors.Green
     var-kind variable
     dec-type Enums.Enums+Colors
     rep-type java.lang.String
-    comparability 22
-  variable Colors.Green.value__
-    var-kind field value__
-    enclosing-var Colors.Green
-    dec-type int
-    rep-type int
     comparability 22
   variable Colors.Red
     var-kind variable
     dec-type Enums.Enums+Colors
     rep-type java.lang.String
     comparability 22
-  variable Colors.Red.value__
-    var-kind field value__
-    enclosing-var Colors.Red
-    dec-type int
-    rep-type int
-    comparability 22
   variable Colors.Yellow
     var-kind variable
     dec-type Enums.Enums+Colors
     rep-type java.lang.String
-    comparability 22
-  variable Colors.Yellow.value__
-    var-kind field value__
-    enclosing-var Colors.Yellow
-    dec-type int
-    rep-type int
     comparability 22
   variable exception
     var-kind return
@@ -500,12 +320,6 @@ parent parent Enums.Enums:::CLASS 1
     dec-type Enums.Enums+Colors
     rep-type java.lang.String
     flags is_param
-    comparability 22
-  variable myColors.value__
-    var-kind field value__
-    enclosing-var myColors
-    dec-type int
-    rep-type int
     comparability 22
 
 ppt Enums.Enums.PrintEnumType(System.Type\_weekdays):::ENTER
@@ -2075,32 +1889,17 @@ this_invocation_nonce
 Colors.Blue
 "Blue"
 1
-Colors.Blue.value__
-4
-1
 Colors.Green
 "Green"
-1
-Colors.Green.value__
-2
 1
 Colors.Red
 "Red"
 1
-Colors.Red.value__
-1
-1
 Colors.Yellow
 "Yellow"
 1
-Colors.Yellow.value__
-8
-1
 myColors
 "Red, Blue, Yellow"
-1
-myColors.value__
-13
 1
 
 Enums.Enums.PrintColors(Enums.Enums.Colors\_myColors):::EXIT6
@@ -2109,26 +1908,14 @@ this_invocation_nonce
 Colors.Blue
 "Blue"
 1
-Colors.Blue.value__
-4
-1
 Colors.Green
 "Green"
-1
-Colors.Green.value__
-2
 1
 Colors.Red
 "Red"
 1
-Colors.Red.value__
-1
-1
 Colors.Yellow
 "Yellow"
-1
-Colors.Yellow.value__
-8
 1
 exception
 nonsensical
@@ -2138,9 +1925,6 @@ nonsensical
 2
 myColors
 "Red, Blue, Yellow"
-1
-myColors.value__
-13
 1
 
 Enums.Enums.Main():::EXIT27
