@@ -1688,12 +1688,24 @@ namespace DotNetFrontEnd
       generator.Emit(OperationCode.Ldstr, "this");
       generator.Emit(OperationCode.Ldarg_0);
 
-      var parentType = methodBody.MethodDefinition.ContainingType;
-      if (parentType.IsValueType)
+      var parentType = methodBody.MethodDefinition.ContainingTypeDefinition;
+      if (parentType.IsGeneric && parentType.IsValueType)
       {
-        generator.Emit(OperationCode.Ldobj, parentType);
+        var instanceReference = parentType.InstanceType;
+        if (parentType.IsValueType)
+        {
+          generator.Emit(OperationCode.Ldobj, instanceReference);
+        }
+        this.EmitInstrumentationCall(generator, instanceReference);
       }
-      this.EmitInstrumentationCall(generator, parentType);
+      else
+      {
+        if (parentType.IsValueType)
+        {
+          generator.Emit(OperationCode.Ldobj, parentType);
+        }
+        this.EmitInstrumentationCall(generator, parentType);
+      }
       if (this.printDeclarations)
       {
         this.declPrinter.PrintParentObjectFields(methodBody.MethodDefinition.ContainingType
