@@ -91,11 +91,11 @@ namespace DotNetFrontEnd
 
     // Variables used during rewriting
     PdbReader/*?*/ pdbReader = null;
-    ILGenerator currentGenerator;
+    ILGenerator generator;
     IEnumerator<ILocalScope>/*?*/ scopeEnumerator;
     bool scopeEnumeratorIsValid;
     Stack<ILocalScope> scopeStack = new Stack<ILocalScope>();
-
+    
     /// <summary>
     /// Reference to the VariableVisitor method that loads assembly name and path
     /// </summary>
@@ -245,7 +245,7 @@ namespace DotNetFrontEnd
         }
       }
 
-      this.currentGenerator = generator;
+      this.generator = generator;
       this.scopeEnumerator = this.pdbReader == null ?
           null : this.pdbReader.GetLocalScopes(immutableMethodBody).GetEnumerator();
       this.scopeEnumeratorIsValid = this.scopeEnumerator != null && this.scopeEnumerator.MoveNext();
@@ -255,7 +255,7 @@ namespace DotNetFrontEnd
 
       // Add a nonce-holding variable and set it.
       mutableMethodBody.LocalVariables = CreateNonceVariable(mutableMethodBody);
-      SetNonce(immutableMethodBody.MethodDefinition, generator);
+      SetNonce(immutableMethodBody.MethodDefinition);
       mutableMethodBody.LocalsAreZeroed = true;
 
       immutableMethodBody = (IMethodBody)mutableMethodBody;
@@ -265,11 +265,11 @@ namespace DotNetFrontEnd
       mutableMethodBody.MaxStack = Math.Max((ushort)6, immutableMethodBody.MaxStack);
 
       // We need the writer lock to emit the values of method parameters.
-      AcquireWriterLock(generator);
+      AcquireWriterLock();
 
-      EmitMethodSignature(MethodTransition.ENTER, immutableMethodBody, generator);
+      EmitMethodSignature(MethodTransition.ENTER, immutableMethodBody);
 
-      ReleaseWriterLock(generator);
+      ReleaseWriterLock();
 
       // The label that early returns should jump to, exists inside the try block that 
       // contains the whole method
@@ -307,10 +307,9 @@ namespace DotNetFrontEnd
       for (int i = 0; i < operations.Count; i++)
       {
         IOperation op = operations[i];
-        MarkLabels(immutableMethodBody, generator, offsetsUsedInExceptionInformation,
-            offset2Label, op);
+        MarkLabels(immutableMethodBody, offsetsUsedInExceptionInformation, offset2Label, op);
         this.EmitDebugInformationFor(op);
-        EmitOperation(op, i, generator, ref mutableMethodBody, offset2Label,
+        EmitOperation(op, i, ref mutableMethodBody, offset2Label,
             ref tryBodyStarted, exceptions, commonExit, lastReturnOperation, synthesizedReturns);
       }
 
@@ -494,7 +493,7 @@ namespace DotNetFrontEnd
     /// <param name="operation">Operation to emit debug information for</param>
     private void EmitDebugInformationFor(IOperation operation)
     {
-      this.currentGenerator.MarkSequencePoint(operation.Location);
+      this.generator.MarkSequencePoint(operation.Location);
       if (this.scopeEnumerator == null) return;
       ILocalScope/*?*/ currentScope = null;
       while (this.scopeStack.Count > 0)
@@ -502,7 +501,7 @@ namespace DotNetFrontEnd
         currentScope = this.scopeStack.Peek();
         if (operation.Offset < currentScope.Offset + currentScope.Length) break;
         this.scopeStack.Pop();
-        this.currentGenerator.EndScope();
+        this.generator.EndScope();
         currentScope = null;
       }
       while (this.scopeEnumeratorIsValid)
@@ -512,11 +511,11 @@ namespace DotNetFrontEnd
             currentScope.Length)
         {
           this.scopeStack.Push(currentScope);
-          this.currentGenerator.BeginScope();
+          this.generator.BeginScope();
           foreach (var local in this.pdbReader.GetVariablesInScope(currentScope))
-            this.currentGenerator.AddVariableToCurrentScope(local);
+            this.generator.AddVariableToCurrentScope(local);
           foreach (var constant in this.pdbReader.GetConstantsInScope(currentScope))
-            this.currentGenerator.AddConstantToCurrentScope(constant);
+            this.generator.AddConstantToCurrentScope(constant);
           this.scopeEnumeratorIsValid = this.scopeEnumerator.MoveNext();
         }
         else
@@ -530,12 +529,11 @@ namespace DotNetFrontEnd
     /// Emit the code to store the nonce as a local variable
     /// </summary>
     /// <param name="methodDefinition">Method to store the nonce for</param>
-    /// <param name="generator">Generator used to emit the IL</param>
-    private void SetNonce(IMethodDefinition methodDefinition, ILGenerator generator)
+    private void SetNonce(IMethodDefinition methodDefinition)
     {
       generator.Emit(OperationCode.Ldstr, FormatMethodName(methodDefinition));
       // Call the IncGlobalCounter function
-      EmitInvocationNonceSetter(generator);
+      EmitInvocationNonceSetter();
       // Store the result in the nonce variable
       generator.Emit(OperationCode.Stloc, this.nonceVariableDictionary[methodDefinition]);
     }
@@ -654,7 +652,6 @@ namespace DotNetFrontEnd
     /// emitted</param>
     /// <param name="offset2Label">Mapping of offset to label at that offset</param>
     /// <param name="op">The operation being omitted</param>
-    /// <param name="generator">Generator being used to emit IL for this method</param>
     /// <param name="returnLabelMapping">Mapping from return operation to label that operation jumps 
     /// to</param>
     /// <param name="tryBodyStarted">Whether the try-body that wraps the entire method for 
@@ -670,7 +667,7 @@ namespace DotNetFrontEnd
     /// pseudo-return (branch to the end of the method)</param>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability",
       "CA1502:AvoidExcessiveComplexity")]
-    private void EmitOperation(IOperation op, int i, ILGenerator generator, ref MethodBody methodBody,
+    private void EmitOperation(IOperation op, int i, ref MethodBody methodBody,
       Dictionary<uint, ILGeneratorLabel> offset2Label, ref bool tryBodyStarted,
       List<ITypeReference> exceptions, ILGeneratorLabel commonExit,
       IOperation lastReturnInstruction, ISet<IOperation> synthesizedReturns)
@@ -735,13 +732,12 @@ namespace DotNetFrontEnd
 
             generator.MarkLabel(branchTaken);
 
-
             generator.Emit(OperationCode.Ldstr, "Starting true branch");
             generator.Emit(OperationCode.Pop);
 
-            if (DeclareReturnProgramPoint(methodBody, generator, i))
+            if (DeclareReturnProgramPoint(methodBody, i))
             {
-              InstrumentReturn(methodBody, generator);
+              InstrumentReturn(methodBody);
             }
 
             // Save the return var
@@ -821,14 +817,13 @@ namespace DotNetFrontEnd
           // block, add handlers for all exceptions, and mark the common exit point.
           if (op == lastReturnInstruction)
           {
-            methodBody = EndExceptionHandling(methodBody, generator, exceptions);
+            methodBody = EndExceptionHandling(methodBody, exceptions);
 
-            bool shouldInstrumentReturn = DeclareReturnProgramPoint(methodBody,
-                generator, i);
+            bool shouldInstrumentReturn = DeclareReturnProgramPoint(methodBody, i);
 
             if (shouldInstrumentReturn)
             {
-              InstrumentReturn(methodBody, generator);
+              InstrumentReturn(methodBody);
             }
 
             generator.Emit(op.OperationCode);
@@ -846,8 +841,8 @@ namespace DotNetFrontEnd
           // and jump to the common exit point, which will unstash the return val before returning.
           else
           {
-            DeclareReturnProgramPoint(methodBody, generator, i);
-            InstrumentReturn(methodBody, generator);
+            DeclareReturnProgramPoint(methodBody, i);
+            InstrumentReturn(methodBody);
 
             if (returnVar != null)
             {
@@ -956,10 +951,9 @@ namespace DotNetFrontEnd
     /// should be visited.
     /// </summary>
     /// <param name="methodBody">Method being exited</param>
-    /// <param name="generator">IL generator to use to emit the calls</param>
     /// <param name="i">Label for the exit</param>
     /// <returns>Whether the declaration was pushed into the stack</returns>
-    private bool DeclareReturnProgramPoint(IMethodBody methodBody, ILGenerator generator, int i)
+    private bool DeclareReturnProgramPoint(IMethodBody methodBody, int i)
     {
       // If we don't want to instrument returns then don't do anything special here
       bool instrumentReturns = frontEndArgs.ShouldPrintProgramPoint(FormatMethodName(
@@ -970,13 +964,12 @@ namespace DotNetFrontEnd
         return false;
       }
 
-      AcquireWriterLock(generator);
+      AcquireWriterLock();
 
       // Add the i to the end of exit to ensure uniqueness
       // A ret command is added even at the end of functions without
       // a return in the code by the compiler, so we catch that scenario
-      EmitMethodSignature(MethodTransition.EXIT, methodBody, generator,
-          label: i.ToString(CultureInfo.InvariantCulture));
+      EmitMethodSignature(MethodTransition.EXIT, methodBody, label: i.ToString(CultureInfo.InvariantCulture));
 
       return true;
     }
@@ -984,10 +977,9 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Add the instrumentation calls for the return statement of the method
     /// </summary>
-    /// 
     /// <param name="op">The actual return operation</param>
     /// <param name="methodBody">Body of the method being returned from</param>
-    private void InstrumentReturn(IMethodBody methodBody, ILGenerator generator)
+    private void InstrumentReturn(IMethodBody methodBody)
     {
       if (methodBody.MethodDefinition.Type.TypeCode != host.PlatformType.SystemVoid.TypeCode)
       {
@@ -998,14 +990,14 @@ namespace DotNetFrontEnd
         // non-standard instrumentation call where the value comes before its 
         // name
         generator.Emit(OperationCode.Dup);
-        this.EmitSpecialInstrumentationCall(generator, methodBody.MethodDefinition.Type);
+        this.EmitSpecialInstrumentationCall(methodBody.MethodDefinition.Type);
       }
 
       // Every exit needs to have an exception value, even if the 
       // exception doesn't exist
-      this.EmitExceptionInstrumentationCall(generator, false);
+      this.EmitExceptionInstrumentationCall(false);
 
-      ReleaseWriterLock(generator);
+      ReleaseWriterLock();
     }
 
     /// <summary>
@@ -1013,10 +1005,9 @@ namespace DotNetFrontEnd
     /// 
     /// <param name="methodBody">Reference to a mutable method body, will modify it for exception
     /// handling, including adding a local stash var if necessary </param>
-    /// <param name="generator">IL emitter to use</param>
     /// <param name="exceptions">Sorted list of exceptions to instrument</param>
     /// </summary>
-    private MethodBody EndExceptionHandling(IMethodBody methodBody, ILGenerator generator, List<ITypeReference> exceptions)
+    private MethodBody EndExceptionHandling(IMethodBody methodBody, List<ITypeReference> exceptions)
     {
       MethodBody mutableMethodBody = (MethodBody)methodBody;
       // We will need to store the return value (at the top of the stack)
@@ -1035,7 +1026,7 @@ namespace DotNetFrontEnd
       generator.Emit(ILGenerator.LongVersionOf(OperationCode.Leave), returnPointLabel);
       if (generator.InTryBody)
       {
-        EmitCatchBlock(mutableMethodBody, generator, exceptions);
+        EmitCatchBlock(mutableMethodBody, exceptions);
         generator.EndTryBody();
       }
       generator.Emit(OperationCode.Nop);
@@ -1056,34 +1047,32 @@ namespace DotNetFrontEnd
     /// Instrument a method exit via exception
     /// </summary>
     /// <param name="methodBody">Method being exited</param>
-    /// <param name="generator">IL writer</param>
     /// <param name="ex">Exception throw at exit</param>
     /// <param name="label">Label for the program point</param>
     /// Remove the parameter when Daikon exception printing is fixed or abandoned.
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage",
       "CA1801:ReviewUnusedParameters", MessageId = "ex")]
-    private void InstrumentExceptionExit(MethodBody methodBody,
-        ILGenerator generator, ITypeReference ex, string label)
+    private void InstrumentExceptionExit(MethodBody methodBody, ITypeReference ex, string label)
     {
       // If we don't want to instrument returns don't do anything special here
       bool instrumentReturns = frontEndArgs.ShouldPrintProgramPoint(FormatMethodName(
           MethodTransition.EXIT, methodBody.MethodDefinition), label);
       if (instrumentReturns)
       {
-        AcquireWriterLock(generator);
+        AcquireWriterLock();
 
         // Add the i to the end of exit name to ensure uniqueness
         // A ret command is added even at the end of functions without
         // a return in the code by the compiler, so we catch that scenario
         // TODO(#15): Daikon seems to not like printing exceptions, when that
         // is fixed add null as a parameter on the end here
-        EmitMethodSignature(MethodTransition.EXIT, methodBody, generator, label/*, ex*/);
+        EmitMethodSignature(MethodTransition.EXIT, methodBody, label/*, ex*/);
 
         // TODO(#15): Daikon seems to not like printing exceptions
         // Instrument the exception exit
-        this.EmitExceptionInstrumentationCall(generator, true);
+        this.EmitExceptionInstrumentationCall(true);
 
-        ReleaseWriterLock(generator);
+        ReleaseWriterLock();
       }
     }
 
@@ -1135,9 +1124,7 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="methodBody">The method body containing the catch block</param>
     /// <param name="exceptions">The exceptions to catch in this catch block</param>
-    /// <param name="generator">Writer to use</param>
-    private void EmitCatchBlock(MethodBody methodBody,
-        ILGenerator generator, List<ITypeReference> exceptions)
+    private void EmitCatchBlock(MethodBody methodBody, List<ITypeReference> exceptions)
     {
       generator.BeginCatchBlock(host.PlatformType.SystemObject);
 
@@ -1170,8 +1157,7 @@ namespace DotNetFrontEnd
                 MethodTransition.EXIT, methodBody.MethodDefinition),
                 FormatExceptionProgramPoint(ex)))
         {
-          this.InstrumentExceptionExit(methodBody, generator, ex,
-              FormatExceptionProgramPoint(ex));
+          this.InstrumentExceptionExit(methodBody, ex, FormatExceptionProgramPoint(ex));
         }
         generator.Emit(OperationCode.Rethrow);
       }
@@ -1188,8 +1174,7 @@ namespace DotNetFrontEnd
                   FormatExceptionProgramPoint(host.PlatformType.SystemObject)))
       {
         generator.Emit(OperationCode.Dup);
-        InstrumentExceptionExit(methodBody,
-            generator, host.PlatformType.SystemObject,
+        InstrumentExceptionExit(methodBody, host.PlatformType.SystemObject, 
             FormatExceptionProgramPoint(host.PlatformType.SystemObject));
       }
 
@@ -1199,10 +1184,8 @@ namespace DotNetFrontEnd
     /// <summary>
     /// CCI implemented method to mark labels with the proper locations
     /// </summary>
-    private static void MarkLabels(IMethodBody methodBody,
-        ILGenerator generator,
-        HashSet<uint> offsetsUsedInExceptionInformation,
-        Dictionary<uint, ILGeneratorLabel> offset2Label, IOperation op)
+    private void MarkLabels(IMethodBody methodBody, HashSet<uint> offsetsUsedInExceptionInformation, 
+      Dictionary<uint, ILGeneratorLabel> offset2Label, IOperation op)
     {
       ILGeneratorLabel label;
       if (op.Location is IILLocation)
@@ -1252,7 +1235,9 @@ namespace DotNetFrontEnd
             generator.BeginFilterBlock();
           }
           if (offset == exceptionInfo.HandlerEndOffset)
+          {
             generator.EndTryBody();
+          }
         }
       }
     }
@@ -1369,14 +1354,12 @@ namespace DotNetFrontEnd
     /// <param name="transition">How do we describe the transition state of the method
     /// e.g. enter, exit</param>
     /// <param name="methodBody">The body of the method to</param>
-    /// <param name="generator">The generator to use for IL emission</param>
     /// <param name="label">Optional label for differentiating methods where the same
     /// transition occurs more than once, e.g. multiple exits</param>
     /// <param name="exceptionType"></param>
     /// <returns>True if the method parameters were printed, otherwise false</returns>
-    private bool EmitMethodSignature(MethodTransition transition,
-        IMethodBody methodBody, ILGenerator generator, string label = "",
-        ITypeReference exceptionType = null)
+    private bool EmitMethodSignature(MethodTransition transition, IMethodBody methodBody, 
+        string label = "", ITypeReference exceptionType = null)
     {
       string methodName = FormatMethodName(transition, methodBody.MethodDefinition);
 
@@ -1397,28 +1380,28 @@ namespace DotNetFrontEnd
       // have no entry point.
       if (this.frontEndArgs.SaveProgram != null && transition == MethodTransition.ENTER)
       {
-        this.EmitFrontEndArgInitializationCall(generator);
+        this.EmitFrontEndArgInitializationCall();
       }
 
       // Emit the method name as a program point
       generator.Emit(OperationCode.Ldstr, methodName);
       generator.Emit(OperationCode.Ldstr, label);
-      this.EmitProgramPoint(generator);
+      this.EmitProgramPoint();
 
       // Emit the nonce
       generator.Emit(OperationCode.Ldloc, nonceVariableDictionary[methodBody.MethodDefinition]);
-      this.EmitWriteInvocationNonceCall(generator);
+      this.EmitWriteInvocationNonceCall();
 
       PrintParentNameDeclarationIfNecessary(transition, methodBody);
 
-      EmitParentClassFields(methodBody, generator);
+      EmitParentClassFields(methodBody);
 
       // Sometimes we want to describe 'this', which is the 0th parameter. Don't describe this if 
       // the method is static, or the call is the entrance to a constructor. EmitParentObject
       // will check this.
-      EmitParentObject(transition, methodBody, generator);
+      EmitParentObject(transition, methodBody);
 
-      EmitParameters(methodBody, generator);
+      EmitParameters(methodBody);
 
       // If we are at a method exit we may need to print the declaration 
       // for the method's return value
@@ -1474,13 +1457,11 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Emit the instrumentation and print the declaration for any static fields of the parent class.
     /// </summary>
-    /// 
     /// <param name="methodBody">Method body for the program point</param>
-    /// <param name="generator">ILGenerator used to perform the emission</param>
-    private void EmitParentClassFields(IMethodBody methodBody, ILGenerator generator)
+    private void EmitParentClassFields(IMethodBody methodBody)
     {
       ITypeReference parentType = methodBody.MethodDefinition.ContainingType;
-      this.EmitStaticInstrumentationCall(generator, parentType);
+      this.EmitStaticInstrumentationCall(parentType);
 
       if (this.printDeclarations)
       {
@@ -1492,11 +1473,10 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Insert IL call to the method to release the lock on the writer
     /// </summary>
-    /// <param name="generator">Generator to insert call with</param>
     /// Suppresion safe because we control the string in the GetNameFor call
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
         "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void ReleaseWriterLock(ILGenerator generator)
+    private void ReleaseWriterLock()
     {
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
           this.host, this.variableVisitorType, CallingConvention.Default,
@@ -1506,12 +1486,11 @@ namespace DotNetFrontEnd
 
     /// <summary>
     /// Insert IL call to the method to acquire the lock on the writer
-    /// </summary>
-    /// <param name="generator">Generator to insert call with</param>
+    /// </summary>s
     /// Suppresion safe because we control the string in the GetNameFor call
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
         "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void AcquireWriterLock(ILGenerator generator)
+    private void AcquireWriterLock()
     {
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
           this.host, this.variableVisitorType, CallingConvention.Default,
@@ -1523,14 +1502,13 @@ namespace DotNetFrontEnd
     /// Insert call to set whether output should be suppressed.
     /// </summary>
     /// <param name="shouldSuppress">The desired state of output suppression</param>
-    /// <param name="generator">Generator to insert call with</param>
     /// Suppresion safe because we control the string in the GetNameFor call
     /// Performance warning suppressed becuase the calls to this method are inserted in the 
     /// source programs
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode"), 
      System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
          "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void InsertShouldSuppressOutputCall(bool shouldSuppress, ILGenerator generator)
+    private void InsertShouldSuppressOutputCall(bool shouldSuppress)
     {
       // .NET opcode semantics for boolean values are: 0 => false, other => true
       generator.Emit(OperationCode.Ldc_I4, shouldSuppress ? 1 : 0);
@@ -1615,8 +1593,7 @@ namespace DotNetFrontEnd
     /// parameters.
     /// </summary>
     /// <param name="methodBody">Method body being instrumented</param>
-    /// <param name="generator">Generator used to write the instrumentation calls</param>
-    private void EmitParameters(IMethodBody methodBody, ILGenerator generator)
+    private void EmitParameters(IMethodBody methodBody)
     {
       int i = 0;
       foreach (var param in methodBody.MethodDefinition.Parameters)
@@ -1660,11 +1637,11 @@ namespace DotNetFrontEnd
         // Print a string with the param type and the instrumentation call.
         if (param.IsByReference)
         {
-          this.EmitReferenceInstrumentationCall(generator, param.Type);
+          this.EmitReferenceInstrumentationCall(param.Type);
         }
         else
         {
-          this.EmitInstrumentationCall(generator, param.Type);
+          this.EmitInstrumentationCall(param.Type);
         }
 
         i++;
@@ -1677,9 +1654,7 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="transition">Whether we are entering or exiting this method</param>
     /// <param name="methodBody">The method of interest</param>
-    /// <param name="generator">IL writer used to add the instrumentation calls</param>
-    private void EmitParentObject(MethodTransition transition, IMethodBody methodBody,
-        ILGenerator generator)
+    private void EmitParentObject(MethodTransition transition, IMethodBody methodBody)
     {
       if (!IsThisValid(transition, methodBody.MethodDefinition))
       {
@@ -1696,7 +1671,7 @@ namespace DotNetFrontEnd
         {
           generator.Emit(OperationCode.Ldobj, instanceReference);
         }
-        this.EmitInstrumentationCall(generator, instanceReference);
+        this.EmitInstrumentationCall(instanceReference);
       }
       else
       {
@@ -1704,7 +1679,7 @@ namespace DotNetFrontEnd
         {
           generator.Emit(OperationCode.Ldobj, parentType);
         }
-        this.EmitInstrumentationCall(generator, parentType);
+        this.EmitInstrumentationCall(parentType);
       }
       if (this.printDeclarations)
       {
@@ -1751,15 +1726,13 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Call to add the "exception" variable at a method exit
     /// </summary>
-    /// <param name="generator">The generator used to emit the IL</param>
     /// <param name="exceptionExists">Whether there is actually an
     /// exception to instrument or not. If there isn't an exception then a nonsensical
     /// entry for the variable will be made.</param>
     /// Variable containing method name reference is private, static, final and can be trusted.
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
       "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void EmitExceptionInstrumentationCall(ILGenerator generator,
-        bool exceptionExists)
+    private void EmitExceptionInstrumentationCall(bool exceptionExists)
     {
       if (!exceptionExists)
       {
@@ -1785,19 +1758,17 @@ namespace DotNetFrontEnd
     /// loaded onto the stack. Adds "return" as the name of the variable. This type of 
     /// instrumentation call is appropriate when printing a function's return value.
     /// </summary>
-    /// <param name="generator">Generator to use for emission</param>
     /// <param name="param">The param to visit</param>
     /// <param name="label">What to label the point as, defaults to return
     /// </param>
     /// Variable containing method reference is private static final and can be trusted.
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
       "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void EmitSpecialInstrumentationCall(ILGenerator generator,
-        ITypeReference param, string label = "return")
+    private void EmitSpecialInstrumentationCall(ITypeReference param, string label = "return")
     {
       // Mostly copied from EmitInstrumentationCall below, with changes noted
       // Box first
-      BoxIfNecessary(generator, param);
+      BoxIfNecessary(param);
       // Then add the name of the variable
       generator.Emit(OperationCode.Ldstr, label);
       generator.Emit(OperationCode.Ldstr,
@@ -1806,16 +1777,15 @@ namespace DotNetFrontEnd
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
          this.host, this.variableVisitorType, CallingConvention.Default,
          this.systemVoid, this.nameTable.GetNameFor(
-          VariableVisitor.ValueFirstInstrumentationMethodName), 0,
+            VariableVisitor.ValueFirstInstrumentationMethodName), 0,
          this.systemObject, this.systemString, this.systemString));
     }
 
     /// <summary>
     /// Box the item at the top of the stack if necessary to convert it to an object type
     /// </summary>
-    /// <param name="generator">Generator to emit box call with</param>
-    /// <param name="param">Paramter to box if necessary</param>
-    private static void BoxIfNecessary(ILGenerator generator, ITypeReference param)
+    /// <param name="param">Parameter to box if necessary</param>
+    private void BoxIfNecessary(ITypeReference param)
     {
       if (param.IsValueType
           || param is GenericTypeParameter || param is GenericTypeParameterReference
@@ -1829,13 +1799,13 @@ namespace DotNetFrontEnd
     /// Emit the call to the instrumentation program, assuming name, then the param are loaded
     /// onto the stack.
     /// </summary>
-    /// <param name="generator">Generator to use for emission</param>
+    /// 
     /// <param name="param">The Type of the param to visit</param>
     /// Warning suppressed because variable containing method reference name is private, static, 
     /// final and can be trusted.
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
       "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void EmitStaticInstrumentationCall(ILGenerator generator, ITypeReference param)
+    private void EmitStaticInstrumentationCall(ITypeReference param)
     {
       generator.Emit(OperationCode.Ldstr,
           this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param).ToString());
@@ -1849,26 +1819,24 @@ namespace DotNetFrontEnd
     /// Emit the call to the instrumentation program, assuming name, then the param are loaded
     /// onto the stack
     /// </summary>
-    /// <param name="generator">Generator to use for emission</param>
     /// <param name="param">The Type of the param to visit</param>
-    private void EmitInstrumentationCall(ILGenerator generator, ITypeReference param)
+    private void EmitInstrumentationCall(ITypeReference param)
     {
-      BoxIfNecessary(generator, param);
-      EmitInstrumentationCall(generator,
-          this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param).ToString());
+      BoxIfNecessary(param);
+      EmitInstrumentationCall(this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param).ToString());
     }
 
     /// <summary>
     /// Emit the call to the instrumentation program, assuming name, then the param are loaded
     /// onto the stack
     /// </summary>
-    /// <param name="generator">Generator to use for emission</param>
+    /// 
     /// <param name="paramTypeName">String containing the assembly-qualified name of the type of 
     /// the param to visit</param>
     /// Variable containing method name is private, static, final and can be trusted.
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
       "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void EmitInstrumentationCall(ILGenerator generator, string paramTypeName)
+    private void EmitInstrumentationCall(string paramTypeName)
     {
       generator.Emit(OperationCode.Ldstr, paramTypeName);
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
@@ -1881,10 +1849,8 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Insert instrmentation call for a pass-by-reference variable
     /// </summary>
-    /// <param name="generator">Generator to use to emit the call</param>
     /// <param name="paramType">Type of the variable to instrument</param>
-    private void EmitReferenceInstrumentationCall(ILGenerator generator,
-        ITypeReference paramType)
+    private void EmitReferenceInstrumentationCall(ITypeReference paramType)
     {
       // Make the correct indirect reference call, then proceed as normal
       if (!paramType.IsValueType)
@@ -1936,18 +1902,17 @@ namespace DotNetFrontEnd
         // The verifier will complain but the program will run.
         generator.Emit(OperationCode.Ldind_Ref);
       }
-      this.EmitInstrumentationCall(generator, paramType);
+      this.EmitInstrumentationCall(paramType);
     }
 
     /// <summary>
     /// Add the instruction to print a print a new program printer. 
     /// Assumes method name is pushed onto the IL stack.
     /// </summary>
-    /// <param name="generator">The generator to print the instructions with</param>
     /// Variable containing method reference name is private, static, final and can be trusted.
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
       "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void EmitProgramPoint(ILGenerator generator)
+    private void EmitProgramPoint()
     {
       if (programPointWriterMethod == null)
       {
@@ -1964,11 +1929,10 @@ namespace DotNetFrontEnd
     /// Write the name and output path of the assembly to be instrumented and a method call to
     /// initialize the variable visitor with these.
     /// </summary>
-    /// <param name="generator">The generator to print the instructions with</param>
     /// Variable containing method reference name is private, static, final and can be trusted.
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
       "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void EmitFrontEndArgInitializationCall(ILGenerator generator)
+    private void EmitFrontEndArgInitializationCall()
     {
       if (argumentStoringMethodReference == null)
       {
@@ -1984,11 +1948,10 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Emit the call to write the invocation nonce
     /// </summary>
-    /// <param name="generator">Generator to use to emit the call</param>
     /// Suppression is ok because we only lookup methods whose names we control
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
       "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void EmitWriteInvocationNonceCall(ILGenerator generator)
+    private void EmitWriteInvocationNonceCall()
     {
       if (invocationNonceWriterMethod == null)
       {
@@ -2005,11 +1968,10 @@ namespace DotNetFrontEnd
     /// Emit a call to the VariableVisitor method that will set the invocation nonce variable for
     /// this method.
     /// </summary>
-    /// <param name="generator">Generator to use to emit the method call</param>
     /// Suppression is ok because we only lookup methods whose names we control
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
       "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void EmitInvocationNonceSetter(ILGenerator generator)
+    private void EmitInvocationNonceSetter()
     {
       if (invocationNonceSetterMethod == null)
       {
