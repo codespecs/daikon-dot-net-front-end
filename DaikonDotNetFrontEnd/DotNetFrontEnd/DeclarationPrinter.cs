@@ -162,7 +162,7 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="name">The name of the variable</param>
     /// <param name="type">The declared type of the variable</param> 
-    /// <param name="kind">Optional, the daikon kind of the varible</param>
+    /// <param name="kind">Optional, the daikon kind of the variable</param>
     /// <param name="flags">Optional, the daikon flags for the variable</param>
     /// <param name="enclosingVar">Optional, the daikon enclosing var of the variable 
     /// (its parent) </param>
@@ -377,7 +377,7 @@ namespace DotNetFrontEnd
     /// <param name="name">The name of the list</param>
     /// <param name="elementType">The declared element type of the list</param> 
     /// <param name="enclosingVar">The daikon enclosing var of the variable (its parent)</param>
-    /// <param name="kind">Optional. The daikon kind of the varible</param>
+    /// <param name="kind">Optional. The daikon kind of the variable</param>
     /// <param name="flags">Optional. The daikon flags for the variable</param>       
     /// <param name="relativeName">Optional. The daikon relative name for the variable 
     /// (how to get to it) </param>
@@ -530,7 +530,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Print the declarations fpr the fields of the parent of the current object: "this".
+    /// Print the declarations for the fields of the parent of the current object: "this".
     /// </summary>
     /// <param name="parentName">Name of the parent, as it would appear in the program point
     /// </param>
@@ -945,7 +945,7 @@ namespace DotNetFrontEnd
     /// Print the daikon rep-type for a variable of a given type
     /// </summary>
     /// <param name="type">Type of the variable</param>
-    /// <param name="flags">Flags may modify the type of the varible. i.e. in a ToString() 
+    /// <param name="flags">Flags may modify the type of the variable. i.e. in a ToString() 
     /// call</param>
     private void PrintRepType(Type type, VariableFlags flags)
     {
@@ -1016,20 +1016,20 @@ namespace DotNetFrontEnd
         // TODO(#69): Investigate
         /*
         throw new NotSupportedException("An error occurred in the instrumentation process"
-            + " and a varible was encountered with no name.");
+            + " and a variable was encountered with no name.");
          */
       }
       if (type == null)
       {
         throw new NotSupportedException("An error occurred in the instrumentation process"
-            + " and type was null for varible named: " + name);
+            + " and type was null for variable named: " + name);
       }
 
       if ((kind == VariableKind.field || kind == VariableKind.array) &&
         enclosingVar.Length == 0)
       {
         throw new ArgumentException("Enclosing var requried for staticField and array and none"
-            + " was present for varible named: " + name + " of kind: " + kind);
+            + " was present for variable named: " + name + " of kind: " + kind);
       }
 
       if (nestingDepth > this.frontEndArgs.MaxNestingDepth ||
