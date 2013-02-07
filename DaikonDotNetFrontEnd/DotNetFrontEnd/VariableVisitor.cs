@@ -7,7 +7,7 @@
 // 1) The name of the variable is pushed on the stack.
 // 2) The variable value is pushed on the stack.
 // 3) The assembly-qualified name of the variable is pushed on the stack.
-// 4) The call to VisitVarible is added to the method's IL. It wil consume all variable and push
+// 4) The call to VisitVariable is added to the method's IL. It wil consume all variable and push
 //    nothing back onto the stack.
 
 // We use assembly-qualified name because it is easy to load a string into the IL stack.
@@ -189,7 +189,7 @@ namespace DotNetFrontEnd
     private static HashSet<string> staticFieldsVisitedForCurrentProgramPoint = new HashSet<string>();
 
     /// <summary>
-    /// Collection of varibles that have been visited during the current prorgram point
+    /// Collection of variables that have been visited during the current prorgram point
     /// </summary>
     private static HashSet<string> variablesVisitedForCurrentProgramPoint = new HashSet<string>();
 
@@ -775,7 +775,7 @@ namespace DotNetFrontEnd
     /// Print simple fields of the object (e.g. name, type, etc.). Specifically excludes
     /// printing of the object's fields.
     /// </summary>
-    /// <param name="name">Name of the varibles</param>
+    /// <param name="name">Name of the variables</param>
     /// <param name="obj">Variable's value</param>
     /// <param name="type">Type of the variable</param>
     /// <param name="writer">Writer used to print the variable</param>
@@ -833,7 +833,7 @@ namespace DotNetFrontEnd
     /// Process the given variable of list type, calling GetType if necessary and visiting 
     /// the children elements.
     /// </summary>
-    /// <param name="name">Name of the varible</param>
+    /// <param name="name">Name of the variable</param>
     /// <param name="obj">List being visited</param>
     /// <param name="type">Type of the list</param>
     /// <param name="writer">Writer to output to</param>

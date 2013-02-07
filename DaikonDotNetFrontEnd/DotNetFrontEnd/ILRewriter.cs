@@ -720,7 +720,7 @@ namespace DotNetFrontEnd
             generator.Emit(OperationCode.Ldstr, "Getting to exit branch");
             generator.Emit(OperationCode.Pop);
             // The program may normally be expecting to leave, but this would clear the stack.
-            // We need the stack intact since we will be using the return varible. So replace this
+            // We need the stack intact since we will be using the return variable. So replace this
             // leave with a branch (we do also leave after branching).
             if (op.OperationCode == OperationCode.Leave_S
              || op.OperationCode == OperationCode.Leave)
