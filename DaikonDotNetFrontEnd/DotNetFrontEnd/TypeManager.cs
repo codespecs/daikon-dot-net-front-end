@@ -789,12 +789,12 @@ namespace DotNetFrontEnd
       {
         typeName = typeName + '`' + namedType.GenericParameterCount;
       }
-      else if (type is GenericTypeInstanceReference)
+      else if (type is IGenericTypeInstanceReference)
       {
-        var castedType = (GenericTypeInstanceReference)type;
+        var castedType = (IGenericTypeInstanceReference)type;
         typeName = TypeHelper.GetTypeName(castedType.GenericType,
             NameFormattingOptions.UseReflectionStyleForNestedTypeNames) + '`' +
-            castedType.GenericArguments.Count;
+            castedType.GenericArguments.Count();
         if (deeplyInspectGenericParameters)
         {
           typeName = AddGenericTypeArguments(typeName, castedType);
@@ -971,7 +971,7 @@ namespace DotNetFrontEnd
     /// placed</param>
     /// <param name="castedType">Generic type containing the type arguments</param>
     /// <returns>Type name with the generic arguments included</returns>
-    private string AddGenericTypeArguments(string typeName, GenericTypeInstanceReference castedType)
+    private string AddGenericTypeArguments(string typeName, IGenericTypeInstanceReference castedType)
     {
       StringBuilder builder = new StringBuilder();
       builder.Append(typeName);
