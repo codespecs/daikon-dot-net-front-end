@@ -235,7 +235,7 @@ namespace DotNetFrontEnd
       // nops.
       int operationIndexForLastReturnJumpTarget = GetIndexOfLastReturnJumpTarget(operations);
 
-      ILGenerator generator = new ILGenerator(this.host, immutableMethodBody.MethodDefinition);
+      this.generator = new ILGenerator(this.host, immutableMethodBody.MethodDefinition);
       if (this.pdbReader != null)
       {
         foreach (var ns in this.pdbReader.GetNamespaceScopes(immutableMethodBody))
@@ -245,7 +245,6 @@ namespace DotNetFrontEnd
         }
       }
 
-      this.generator = generator;
       this.scopeEnumerator = this.pdbReader == null ?
           null : this.pdbReader.GetLocalScopes(immutableMethodBody).GetEnumerator();
       this.scopeEnumeratorIsValid = this.scopeEnumerator != null && this.scopeEnumerator.MoveNext();
@@ -388,6 +387,7 @@ namespace DotNetFrontEnd
     {
       int opCount = operations.Count;
       // Add a return instruction at the end if one doesn't exist
+      /*
       if (!(operations[opCount - 1].OperationCode == OperationCode.Ret))
       {
         Operation op = new Operation();
@@ -395,10 +395,10 @@ namespace DotNetFrontEnd
         // Add padding for the previous instructions
         op.Offset = operations[opCount - 1].Offset + 4;
         operations.Add(op);
-        // Update the opCount with the added operationd
+        // Update the opCount with the added operation
         opCount++;
       }
-
+      */
       // Save the last return instruction
       return operations[opCount - 1];
     }
@@ -714,8 +714,6 @@ namespace DotNetFrontEnd
             // as normal.
             ILGeneratorLabel branchTaken = new ILGeneratorLabel();
             ILGeneratorLabel branchNotTaken = new ILGeneratorLabel();
-            generator.Emit(OperationCode.Ldstr, "Getting to exit branch");
-            generator.Emit(OperationCode.Pop);
             // The program may normally be expecting to leave, but this would clear the stack.
             // We need the stack intact since we will be using the return variable. So replace this
             // leave with a branch (we do also leave after branching).
@@ -1039,6 +1037,16 @@ namespace DotNetFrontEnd
       {
         generator.Emit(OperationCode.Ldloc, localStoringReturnValue);
       }
+      else
+      {
+        // No real return value that would ever be called but we need to provide one
+        // to make the program structure correct.
+        if (!methodBody.Operations.Any(x => x.OperationCode == OperationCode.Ret))
+        {
+          localStoringReturnValue = FindLocalMatchingReturnType(ref mutableMethodBody, false);
+          generator.Emit(OperationCode.Ldloc, localStoringReturnValue);
+        }
+      }
 
       return mutableMethodBody;
     }
@@ -1083,10 +1091,20 @@ namespace DotNetFrontEnd
     /// if none already existed</param>
     /// <returns>The local that has the same type as the method's return value, or null in 
     /// the case of a void method.</returns>
-    private ILocalDefinition FindLocalMatchingReturnType(ref MethodBody methodBody)
+    private ILocalDefinition FindLocalMatchingReturnType(ref MethodBody methodBody,
+        bool performNoReturnsCheck = true)
     {
       ITypeReference returnType = methodBody.MethodDefinition.Type;
       if (returnType.TypeCode == host.PlatformType.SystemVoid.TypeCode)
+      {
+        return null;
+      }
+      // If the method is not void and there's no return statement then there's no
+      // return value we'll have to store to. Return null so we don't get a stack
+      // underflow.
+      // TODO(#70): Refactor this method not to have a boolean parameter.
+      if (performNoReturnsCheck &&
+          !methodBody.Operations.Any(x => x.OperationCode == OperationCode.Ret))
       {
         return null;
       }
@@ -1407,9 +1425,9 @@ namespace DotNetFrontEnd
       // for the method's return value
       if (transition == MethodTransition.EXIT && this.printDeclarations)
       {
-        // Declare the return if it's not a void method
-        if (methodBody.MethodDefinition.Type.TypeCode !=
-            host.PlatformType.SystemVoid.TypeCode)
+        // Declare the return if it's not a void method and there's any return statement
+        if ((methodBody.MethodDefinition.Type.TypeCode !=
+            host.PlatformType.SystemVoid.TypeCode))
         {
           this.declPrinter.PrintReturn("return",
               this.typeManager.ConvertCCITypeToAssemblyQualifiedName(
@@ -1505,7 +1523,7 @@ namespace DotNetFrontEnd
     /// Suppresion safe because we control the string in the GetNameFor call
     /// Performance warning suppressed becuase the calls to this method are inserted in the 
     /// source programs
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode"), 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode"),
      System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
          "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
     private void InsertShouldSuppressOutputCall(bool shouldSuppress)
