@@ -3,3 +3,10 @@ syntax: glob
 */obj/*
 *.exe
 *.pdb
+*.bak
+*.aux
+*.bbl
+*.log
+*.blg
+*.orig
+*.rej
