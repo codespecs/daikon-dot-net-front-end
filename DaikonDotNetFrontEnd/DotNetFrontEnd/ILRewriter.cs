@@ -19,10 +19,10 @@ using System.Text.RegularExpressions;
 using Microsoft.Cci;
 using Microsoft.Cci.MutableCodeModel;
 
-// This file and ProgramRewriter.cs originally came from the CCIMetadata (http://ccimetadata.codeplex.com/) 
+// This file and ProgramRewriter.cs originally came from the CCIMetadata (http://ccimetadata.codeplex.com/)
 // sample programs. Specifically, it was Samples/ILMutator/ILMutator.cs. The original code inserted
 // a System.WriteLine call for each store to a local variable defined by the programmer. It has been
-// modified to insert the call to the instrumentation function at the beginning and exit of every 
+// modified to insert the call to the instrumentation function at the beginning and exit of every
 // method. This is mostly done in the ProcessOperations() method, with many support methods added.
 
 namespace DotNetFrontEnd
@@ -37,12 +37,12 @@ namespace DotNetFrontEnd
     #region Public Constants
 
     /// <summary>
-    /// The name of the class stroing the DNFE arguments when the program is run in offline mode.
+    /// The name of the class storing the DNFE arguments when the program is run in offline mode.
     /// </summary>
     public static readonly string ArgumentStoringClassName = "DNFE_ArgumentStoringClass";
 
     /// <summary>
-    /// The name of the method stroing the DNFE arguments when the program is run in offline mode.
+    /// The name of the method storing the DNFE arguments when the program is run in offline mode.
     /// </summary>
     public static readonly string ArgumentStoringMethodName = "DNFE_ArgumentStroingMethod";
 
@@ -61,7 +61,7 @@ namespace DotNetFrontEnd
     private static readonly string RuntimeExceptionExitProgamPointSuffix = "_EX_Runtime";
 
     /// <summary>
-    /// Suffix to appear at the end of the exception-specific exceptional program point exit, 
+    /// Suffix to appear at the end of the exception-specific exceptional program point exit,
     /// before the exception name
     /// </summary>
     private static readonly string ExceptionExitSuffix = "_EX_";
@@ -95,7 +95,7 @@ namespace DotNetFrontEnd
     IEnumerator<ILocalScope>/*?*/ scopeEnumerator;
     bool scopeEnumeratorIsValid;
     Stack<ILocalScope> scopeStack = new Stack<ILocalScope>();
-    
+
     /// <summary>
     /// Reference to the VariableVisitor method that loads assembly name and path
     /// </summary>
@@ -191,7 +191,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Mutuate the method body by adding the instrumentation calls.
+    /// Mutate the method body by adding the instrumentation calls.
     /// </summary>
     /// <param name="methodBody">The original methodBody</param>
     /// <returns>methodBody with instrumentation calls added</returns>
@@ -259,7 +259,7 @@ namespace DotNetFrontEnd
 
       immutableMethodBody = (IMethodBody)mutableMethodBody;
 
-      // We will need to add at least 2, and possibly 6 items onto 
+      // We will need to add at least 2, and possibly 6 items onto
       // the stack at the end to print values.
       mutableMethodBody.MaxStack = Math.Max((ushort)6, immutableMethodBody.MaxStack);
 
@@ -270,7 +270,7 @@ namespace DotNetFrontEnd
 
       ReleaseWriterLock();
 
-      // The label that early returns should jump to, exists inside the try block that 
+      // The label that early returns should jump to, exists inside the try block that
       // contains the whole method
       ILGeneratorLabel commonExit = new ILGeneratorLabel();
 
@@ -294,7 +294,7 @@ namespace DotNetFrontEnd
 
       List<ITypeReference> exceptions = DetermineAndSortExceptions(operations);
 
-      // If the method is non-void, return in debug builds will contain a store before a jump to 
+      // If the method is non-void, return in debug builds will contain a store before a jump to
       // the return point. Figure out what the store will be to detect these returns later.
       ISet<IOperation> synthesizedReturns = DetermineSynthesizedReturns(
         immutableMethodBody, operations, commonExit);
@@ -336,7 +336,7 @@ namespace DotNetFrontEnd
     /// <param name="immutableMethodBody">Method body under consideration</param>
     /// <param name="operations">List of operations in which to look for the synthesized
     /// returns</param>
-    /// <param name="commonExit">Common exit the synsethized returns will jump to</param>
+    /// <param name="commonExit">Common exit the synthesized returns will jump to</param>
     /// <returns>The list of operations if any, otherwise null</returns>
     private static ISet<IOperation> DetermineSynthesizedReturns(IMethodBody immutableMethodBody,
       List<IOperation> operations, ILGeneratorLabel commonExit)
@@ -404,19 +404,19 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Find the returns that have been synthesized (in a debug build) to a store then a jump, 
+    /// Find the returns that have been synthesized (in a debug build) to a store then a jump,
     /// and adjust the jump operation to target commonExit.
     /// </summary>
     /// <param name="operations">Operations to the the synthesized returns in</param>
-    /// <param name="lastStoreOperation">The store operation that will preceed a jump</param>
-    /// <param name="commonExit">The exit point that all syntehsized returns should jump to
+    /// <param name="lastStoreOperation">The store operation that will precede a jump</param>
+    /// <param name="commonExit">The exit point that all synthesized returns should jump to
     /// after instrumentation is complete</param>
     /// <returns>The set of store commands comprising part of the synthesized return</returns>
     private static ISet<IOperation> FindAndAdjustSynthesizedReturns(List<IOperation> operations,
         OperationCode lastStoreOperation, ILGeneratorLabel commonExit)
     {
       HashSet<IOperation> synthesizedReturns = new HashSet<IOperation>();
-      // Need a pair of instructions for the synthesized return, so stop looking 1 before you 
+      // Need a pair of instructions for the synthesized return, so stop looking 1 before you
       // hit the end of the operations.
       for (int i = 0; i < operations.Count - 1; i++)
       {
@@ -440,7 +440,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Get the store instruction that will precede any pseudo-return 
+    /// Get the store instruction that will precede any pseudo-return
     /// (store then a branch) found in a debug build.
     /// </summary>
     /// <param name="methodBody">Method for which to get the last store</param>
@@ -648,22 +648,22 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Emit operation along with any injection
     /// </summary>
-    /// <param name="exceptions">Sorted list of exceptions present in the method being 
+    /// <param name="exceptions">Sorted list of exceptions present in the method being
     /// emitted</param>
     /// <param name="offset2Label">Mapping of offset to label at that offset</param>
     /// <param name="op">The operation being omitted</param>
-    /// <param name="returnLabelMapping">Mapping from return operation to label that operation jumps 
+    /// <param name="returnLabelMapping">Mapping from return operation to label that operation jumps
     /// to</param>
-    /// <param name="tryBodyStarted">Whether the try-body that wraps the entire method for 
+    /// <param name="tryBodyStarted">Whether the try-body that wraps the entire method for
     /// purposes of exception handling has been started.</param>
     /// <param name="i">Index of this operation in the method's operations list</param>
-    /// <param name="methodBody">Body of this method containing this opertaion</param>
+    /// <param name="methodBody">Body of this method containing this operation</param>
     /// Yes this method is long, it has to have a switch statement over all operation types.
     /// <param name="commonExit">A label for the point in the IL all programs will jump to
     /// for a return</param>
-    /// <param name="lastReturnInstruction">The last return instruction of the method, or the first 
+    /// <param name="lastReturnInstruction">The last return instruction of the method, or the first
     /// of a series of no-ops before the last instruction</param>
-    /// <param name="lastStoreInstruction">The last store instruction before a return or a 
+    /// <param name="lastStoreInstruction">The last store instruction before a return or a
     /// pseudo-return (branch to the end of the method)</param>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability",
       "CA1502:AvoidExcessiveComplexity")]
@@ -703,7 +703,7 @@ namespace DotNetFrontEnd
         case OperationCode.Brfalse_S:
         case OperationCode.Brtrue_S:
         case OperationCode.Leave_S:
-          // The value may be the common exit, which is a generator label, otherwise it'll be an 
+          // The value may be the common exit, which is a generator label, otherwise it'll be an
           // offset, do a lookup in the map for the label corresponding to that offset.
           ILGeneratorLabel branchLoc = op.Value is ILGeneratorLabel ? (ILGeneratorLabel)op.Value :
               offset2Label[(uint)op.Value];
@@ -794,12 +794,12 @@ namespace DotNetFrontEnd
           break;
         case OperationCode.Call:
           generator.Emit(op.OperationCode, (IMethodReference)op.Value);
-          // This is false only for constuctors, before the base constructor is called
+          // This is false only for constructors, before the base constructor is called
           if (!tryBodyStarted)
           {
             // The constructor calls a base constructor, either object or another
-            // constructor in the same class (instrumentation happens before we 
-            // iterate over actual operations so it doesn't count). So emit the 
+            // constructor in the same class (instrumentation happens before we
+            // iterate over actual operations so it doesn't count). So emit the
             // call, then start the try body.
             IMethodReference methRef = (IMethodReference)op.Value;
             if (methRef.Name.ToString().Contains(ConstructorSuffix))
@@ -982,16 +982,16 @@ namespace DotNetFrontEnd
       if (methodBody.MethodDefinition.Type.TypeCode != host.PlatformType.SystemVoid.TypeCode)
       {
         // The instrumentor method call will consume the return val
-        // which is on the top of the stack. Thus we need to copy 
-        // the top item on the stack. We aren't guaranteed that we 
-        // can store this value anywhere, so we need to make a 
-        // non-standard instrumentation call where the value comes before its 
+        // which is on the top of the stack. Thus we need to copy
+        // the top item on the stack. We aren't guaranteed that we
+        // can store this value anywhere, so we need to make a
+        // non-standard instrumentation call where the value comes before its
         // name
         generator.Emit(OperationCode.Dup);
         this.EmitSpecialInstrumentationCall(methodBody.MethodDefinition.Type);
       }
 
-      // Every exit needs to have an exception value, even if the 
+      // Every exit needs to have an exception value, even if the
       // exception doesn't exist
       this.EmitExceptionInstrumentationCall(false);
 
@@ -1000,7 +1000,7 @@ namespace DotNetFrontEnd
 
     /// <summary>
     /// Ends the try block associated with the method and adds the handler.
-    /// 
+    ///
     /// <param name="methodBody">Reference to a mutable method body, will modify it for exception
     /// handling, including adding a local stash var if necessary </param>
     /// <param name="exceptions">Sorted list of exceptions to instrument</param>
@@ -1010,7 +1010,7 @@ namespace DotNetFrontEnd
       MethodBody mutableMethodBody = (MethodBody)methodBody;
       // We will need to store the return value (at the top of the stack)
       // in a local variable because it will be clobbered when we cross
-      // the try block boundary                            
+      // the try block boundary
       ILocalDefinition localStoringReturnValue = FindLocalMatchingReturnType(ref mutableMethodBody);
 
       // If we have a void method there's no return value, otherwise save the return value.
@@ -1089,7 +1089,7 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="methodBody">Method to inspect, will be modified to hold a local stash variable
     /// if none already existed</param>
-    /// <returns>The local that has the same type as the method's return value, or null in 
+    /// <returns>The local that has the same type as the method's return value, or null in
     /// the case of a void method.</returns>
     private ILocalDefinition FindLocalMatchingReturnType(ref MethodBody methodBody,
         bool performNoReturnsCheck = true)
@@ -1192,7 +1192,7 @@ namespace DotNetFrontEnd
                   FormatExceptionProgramPoint(host.PlatformType.SystemObject)))
       {
         generator.Emit(OperationCode.Dup);
-        InstrumentExceptionExit(methodBody, host.PlatformType.SystemObject, 
+        InstrumentExceptionExit(methodBody, host.PlatformType.SystemObject,
             FormatExceptionProgramPoint(host.PlatformType.SystemObject));
       }
 
@@ -1202,7 +1202,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// CCI implemented method to mark labels with the proper locations
     /// </summary>
-    private void MarkLabels(IMethodBody methodBody, HashSet<uint> offsetsUsedInExceptionInformation, 
+    private void MarkLabels(IMethodBody methodBody, HashSet<uint> offsetsUsedInExceptionInformation,
       Dictionary<uint, ILGeneratorLabel> offset2Label, IOperation op)
     {
       ILGeneratorLabel label;
@@ -1226,7 +1226,7 @@ namespace DotNetFrontEnd
           if (offset == exceptionInfo.TryStartOffset)
             generator.BeginTryBody();
 
-          // Never need to do anthing when offset == exceptionInfo.TryEndOffset because
+          // Never need to do anything when offset == exceptionInfo.TryEndOffset because
           // we pick up an EndTryBody from the HandlerEndOffset below
           // generator.EndTryBody();
 
@@ -1267,7 +1267,7 @@ namespace DotNetFrontEnd
     private static Dictionary<uint, ILGeneratorLabel> LabelBranchTargets(
         List<IOperation> operations, int lastReturnIndex, ILGeneratorLabel commonExit)
     {
-      // Jump instructions refer to an offest. Since we are adding new code the jump targets will
+      // Jump instructions refer to an offset. Since we are adding new code the jump targets will
       // be wrong, we will insert a label at each jump point so the jump will be correct.
       // The dictionary maps from the original offset to the label we inserted.
       Dictionary<uint, ILGeneratorLabel> offset2Label = new Dictionary<uint, ILGeneratorLabel>();
@@ -1342,7 +1342,7 @@ namespace DotNetFrontEnd
     /// CCI-implemented method to gather information about exception handler
     /// offsets.
     /// </summary>
-    /// <param name="methodBody">Method body exception handler offsets are being gathered 
+    /// <param name="methodBody">Method body exception handler offsets are being gathered
     /// from</param>
     private static HashSet<uint> RecordExceptionHandlerOffsets(
         IMethodBody methodBody)
@@ -1376,7 +1376,7 @@ namespace DotNetFrontEnd
     /// transition occurs more than once, e.g. multiple exits</param>
     /// <param name="exceptionType"></param>
     /// <returns>True if the method parameters were printed, otherwise false</returns>
-    private bool EmitMethodSignature(MethodTransition transition, IMethodBody methodBody, 
+    private bool EmitMethodSignature(MethodTransition transition, IMethodBody methodBody,
         string label = "", ITypeReference exceptionType = null)
     {
       string methodName = FormatMethodName(transition, methodBody.MethodDefinition);
@@ -1414,14 +1414,14 @@ namespace DotNetFrontEnd
 
       EmitParentClassFields(methodBody);
 
-      // Sometimes we want to describe 'this', which is the 0th parameter. Don't describe this if 
+      // Sometimes we want to describe 'this', which is the 0th parameter. Don't describe this if
       // the method is static, or the call is the entrance to a constructor. EmitParentObject
       // will check this.
       EmitParentObject(transition, methodBody);
 
       EmitParameters(methodBody);
 
-      // If we are at a method exit we may need to print the declaration 
+      // If we are at a method exit we may need to print the declaration
       // for the method's return value
       if (transition == MethodTransition.EXIT && this.printDeclarations)
       {
@@ -1450,10 +1450,10 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Print the declaration of the refernce to the parent program point for the given method, 
+    /// Print the declaration of the reference to the parent program point for the given method,
     /// if necessary.
     /// </summary>
-    /// <param name="transition">Transtition of the current program point</param>
+    /// <param name="transition">Transition of the current program point</param>
     /// <param name="methodBody">Method body of the current program point</param>
     private void PrintParentNameDeclarationIfNecessary(MethodTransition transition,
         IMethodBody methodBody)
@@ -1491,7 +1491,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Insert IL call to the method to release the lock on the writer
     /// </summary>
-    /// Suppresion safe because we control the string in the GetNameFor call
+    /// Suppression safe because we control the string in the GetNameFor call
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
         "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
     private void ReleaseWriterLock()
@@ -1505,7 +1505,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Insert IL call to the method to acquire the lock on the writer
     /// </summary>s
-    /// Suppresion safe because we control the string in the GetNameFor call
+    /// Suppression safe because we control the string in the GetNameFor call
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
         "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
     private void AcquireWriterLock()
@@ -1520,8 +1520,8 @@ namespace DotNetFrontEnd
     /// Insert call to set whether output should be suppressed.
     /// </summary>
     /// <param name="shouldSuppress">The desired state of output suppression</param>
-    /// Suppresion safe because we control the string in the GetNameFor call
-    /// Performance warning suppressed becuase the calls to this method are inserted in the 
+    /// Suppression safe because we control the string in the GetNameFor call
+    /// Performance warning suppressed because the calls to this method are inserted in the
     /// source programs
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode"),
      System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
@@ -1537,7 +1537,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Create a new list of locals with a nonce variable added. Add the nonce to the 
+    /// Create a new list of locals with a nonce variable added. Add the nonce to the
     /// method/nonce lookup dictionary.
     /// </summary>
     /// <param name="methodBody">Method to add the local nonce too</param>
@@ -1598,7 +1598,7 @@ namespace DotNetFrontEnd
     /// Return the formatted name of the exception point
     /// </summary>
     /// <param name="ex">CCI type of the exception</param>
-    /// <returns>Name of the exception program point, following Daikon 
+    /// <returns>Name of the exception program point, following Daikon
     /// convention</returns>
     private string FormatExceptionProgramPoint(ITypeReference ex)
     {
@@ -1623,7 +1623,7 @@ namespace DotNetFrontEnd
           i++;
         }
 
-        // Load the name of the parameter onto the stack, print the parameter 
+        // Load the name of the parameter onto the stack, print the parameter
         // to the decls file if necessary.
         generator.Emit(OperationCode.Ldstr, param.Name.ToString());
         if (this.printDeclarations)
@@ -1632,7 +1632,7 @@ namespace DotNetFrontEnd
               this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param.Type));
         }
 
-        // In the i-th iteration, load the i-th parmeter onto the stack.
+        // In the i-th iteration, load the i-th parameter onto the stack.
         switch (i)
         {
           case 0:
@@ -1667,7 +1667,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Add the calls to instrument the "this" parent object and print the declarations for, 
+    /// Add the calls to instrument the "this" parent object and print the declarations for,
     /// if necessary
     /// </summary>
     /// <param name="transition">Whether we are entering or exiting this method</param>
@@ -1709,14 +1709,14 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Returns whether the "this" object is valid at the given program point.
     /// </summary>
-    /// <param name="transition">Transition ocurring at this program point.</param>
+    /// <param name="transition">Transition occurring at this program point.</param>
     /// <param name="methodBody">Method body defining the program point.</param>
     /// <returns>True if this is valid, that is we are not entering a constructor and the method
     /// is non static.</returns>
-    private static bool IsThisValid(MethodTransition transition, IMethodDefinition methodDefiniton)
+    private static bool IsThisValid(MethodTransition transition, IMethodDefinition methodDefinition)
     {
-      return !(methodDefiniton.IsStatic ||
-               (transition == MethodTransition.ENTER && methodDefiniton.IsConstructor));
+      return !(methodDefinition.IsStatic ||
+               (transition == MethodTransition.ENTER && methodDefinition.IsConstructor));
     }
 
     /// <summary>
@@ -1772,8 +1772,8 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Emit a special call to the instrumentation program, assuming the param only is 
-    /// loaded onto the stack. Adds "return" as the name of the variable. This type of 
+    /// Emit a special call to the instrumentation program, assuming the param only is
+    /// loaded onto the stack. Adds "return" as the name of the variable. This type of
     /// instrumentation call is appropriate when printing a function's return value.
     /// </summary>
     /// <param name="param">The param to visit</param>
@@ -1817,9 +1817,9 @@ namespace DotNetFrontEnd
     /// Emit the call to the instrumentation program, assuming name, then the param are loaded
     /// onto the stack.
     /// </summary>
-    /// 
+    ///
     /// <param name="param">The Type of the param to visit</param>
-    /// Warning suppressed because variable containing method reference name is private, static, 
+    /// Warning suppressed because variable containing method reference name is private, static,
     /// final and can be trusted.
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
       "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
@@ -1848,8 +1848,8 @@ namespace DotNetFrontEnd
     /// Emit the call to the instrumentation program, assuming name, then the param are loaded
     /// onto the stack
     /// </summary>
-    /// 
-    /// <param name="paramTypeName">String containing the assembly-qualified name of the type of 
+    ///
+    /// <param name="paramTypeName">String containing the assembly-qualified name of the type of
     /// the param to visit</param>
     /// Variable containing method name is private, static, final and can be trusted.
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
@@ -1865,7 +1865,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Insert instrmentation call for a pass-by-reference variable
+    /// Insert instrumentation call for a pass-by-reference variable
     /// </summary>
     /// <param name="paramType">Type of the variable to instrument</param>
     private void EmitReferenceInstrumentationCall(ITypeReference paramType)
@@ -1924,7 +1924,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Add the instruction to print a print a new program printer. 
+    /// Add the instruction to print a print a new program printer.
     /// Assumes method name is pushed onto the IL stack.
     /// </summary>
     /// Variable containing method reference name is private, static, final and can be trusted.
@@ -2077,12 +2077,12 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Creates and emites a new class, which contains a single method returning the front end
+    /// Creates and emits a new class, which contains a single method returning the front end
     /// arguments used during instrumentation. Necessary for running the front-end in offline
     /// mode since these would otherwise not be available.
     /// </summary>
     /// <param name="mutableAssembly">Assembly to emit the class into</param>
-    /// <param name="host">Metadatahost to use during rewriting</param>
+    /// <param name="host">IMetadataHost to use during rewriting</param>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
         "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
     private void WriteClassStoringArguments(Assembly mutableAssembly, IMetadataHost host)

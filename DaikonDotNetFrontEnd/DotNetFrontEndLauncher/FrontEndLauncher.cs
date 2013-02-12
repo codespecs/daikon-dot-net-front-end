@@ -68,7 +68,7 @@ namespace DotNetFrontEndLauncher
     /// Process the provided front-end arguments, creating FrontEndArgs and TypeManager objects
     /// </summary>
     /// <param name="args">Arguments provided to the front end, including program arguments</param>
-    /// <returns>FrontEndArgs and TypeManager obejcts to use during visiting</returns>
+    /// <returns>FrontEndArgs and TypeManager objects to use during visiting</returns>
     private static Tuple<FrontEndArgs, TypeManager> ProcessArguments(string[] args)
     {
       if (args == null || args.Length < 1)

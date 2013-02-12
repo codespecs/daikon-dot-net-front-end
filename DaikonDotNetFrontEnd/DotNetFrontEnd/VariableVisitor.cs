@@ -1,5 +1,5 @@
 ﻿// VariableVisitor defines the methods used to inspect variables at runtime. Calls to this class 
-// are inserted by the profiler, and are inserted for each variable in the source progaram.
+// are inserted by the profiler, and are inserted for each variable in the source program.
 // The visitor receives an object name, value, and type, and prints this
 // information to the datatrace file. The object's fields are visited recursively.
 
@@ -7,7 +7,7 @@
 // 1) The name of the variable is pushed on the stack.
 // 2) The variable value is pushed on the stack.
 // 3) The assembly-qualified name of the variable is pushed on the stack.
-// 4) The call to VisitVariable is added to the method's IL. It wil consume all variable and push
+// 4) The call to VisitVariable is added to the method's IL. It will consume all variable and push
 //    nothing back onto the stack.
 
 // We use assembly-qualified name because it is easy to load a string into the IL stack.
@@ -39,7 +39,7 @@ namespace DotNetFrontEnd
   {
     none = 1,
     /*
-    // TODO(#11): Implement programatic program point recognition, until then a flag is used
+    // TODO(#11): Implement programmatic program point recognition, until then a flag is used
     // as the name, and the program point is the value
     // Any value will be ignored, only the name will be printed
     program_point = none << 1,
@@ -74,7 +74,7 @@ namespace DotNetFrontEnd
     public static readonly string AcquireWriterLockFunctionName = "AcquireLock";
 
     /// <summary>
-    /// Name of the function to be inserted into the IL to relase the lock on the writer.
+    /// Name of the function to be inserted into the IL to release the lock on the writer.
     /// </summary>
     public static readonly string ReleaseWriterLockFunctionName = "ReleaseLock";
 
@@ -85,8 +85,8 @@ namespace DotNetFrontEnd
     public static readonly string InstrumentationMethodName = "VisitVariable";
 
     /// <summary>
-    /// The name of the static instrumentation method in VaraibleVisitor.cs. This is the method
-    /// which will be caleed when only the static fields of a variable should be visited.
+    /// The name of the static instrumentation method in VariableVisitor.cs. This is the method
+    /// which will be called when only the static fields of a variable should be visited.
     /// </summary>
     public static readonly string StaticInstrumentationMethodName = "PerformStaticInstrumentation";
 
@@ -189,7 +189,7 @@ namespace DotNetFrontEnd
     private static HashSet<string> staticFieldsVisitedForCurrentProgramPoint = new HashSet<string>();
 
     /// <summary>
-    /// Collection of variables that have been visited during the current prorgram point
+    /// Collection of variables that have been visited during the current program point
     /// </summary>
     private static HashSet<string> variablesVisitedForCurrentProgramPoint = new HashSet<string>();
 
@@ -206,7 +206,7 @@ namespace DotNetFrontEnd
     #endregion
 
     /// <summary>
-    /// Set the canoncical representation for refArgs. Allows decl printer and reflective visitor
+    /// Set the canonical representation for refArgs. Allows decl printer and reflective visitor
     /// to reference the given args. Once this method is called the refArgs can't be changed.
     /// </summary>
     /// <exception cref="NotSupportedException">Thrown during an attempt to set args after they 
@@ -252,7 +252,7 @@ namespace DotNetFrontEnd
 
     /// <summary>
     /// Special version of VisitVariable with different parameter ordering for convenient calling 
-    /// convention compatability.
+    /// convention compatibility.
     /// </summary>
     /// <param name="variable">The object</param>
     /// <param name="name">The name of the variable</param>
@@ -370,7 +370,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Relase the lock on the writer.
+    /// Release the lock on the writer.
     /// </summary>
     public static void ReleaseLock()
     {
@@ -601,7 +601,7 @@ namespace DotNetFrontEnd
         IEnumerable set = (IEnumerable)obj;
         // A set can have only one generic argument -- the element type
         Type setElementType = type.GetGenericArguments()[0];
-        // We don't statically know the element type or array length so create a temprorary list
+        // We don't statically know the element type or array length so create a temporary list
         // that can take objects of any type and have any length. Then create an array of the
         // proper length and type and hand that off.
         IList result = new ArrayList();
@@ -651,7 +651,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Perform full inspection for non list variables, printing necessary
     /// values to the given writer. Includes children if any, and toString
-    /// or hasCode calls.
+    /// or HashCode calls.
     /// </summary>
     private static void PerformNonListInspection(string name, object obj, 
       Type type, TextWriter writer, int depth, VariableModifiers fieldFlags)
@@ -803,10 +803,10 @@ namespace DotNetFrontEnd
 
     /// <summary>
     /// Checks whether the front end should exit early due to already visiting the variable,
-    /// for exceeding depth, or for user-supressed variables. Updates the list of variables
+    /// for exceeding depth, or for user-suppressed variables. Updates the list of variables
     /// visited for this program point to include this one.
     /// </summary>
-    /// <param name="name">Name of the variable to be potentailly instrumented</param>
+    /// <param name="name">Name of the variable to be potentially instrumented</param>
     /// <param name="depth">Nesting depth of the variable</param>
     /// <returns>True if the variable should be skipped, otherwise false</returns>
     private static bool PerformEarlyExitChecks(string name, int depth)
@@ -872,7 +872,7 @@ namespace DotNetFrontEnd
     /// <param name="list">The list to print</param>
     /// <param name="elementType">The type of the list's elements</param>
     /// <param name="writer">The writer to write with</param>
-    /// <param name="depth">The depth of the current visitaton</param>
+    /// <param name="depth">The depth of the current visitation</param>
     /// <param name="flags">The flags for the list, if any</param>
     /// <param name="nonsensicalElements">If any elements are non-sensical, an array 
     /// indicating which ones are</param>
@@ -1259,7 +1259,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Get the result resturned by invoking the given method on the given object.
+    /// Get the result returned by invoking the given method on the given object.
     /// </summary>
     /// <param name="obj">Object to invoke the method on</param>
     /// <param name="method">Method to invoke</param>

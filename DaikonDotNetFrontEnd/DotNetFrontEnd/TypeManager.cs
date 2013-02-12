@@ -17,7 +17,7 @@ using System.Diagnostics;
 namespace DotNetFrontEnd
 {
   /// <summary>
-  /// Keeps canoncial type references. Converts between CCIMetadata and .NET types.
+  /// Keeps canonical type references. Converts between CCIMetadata and .NET types.
   /// </summary>
   [Serializable]
   public class TypeManager
@@ -25,7 +25,7 @@ namespace DotNetFrontEnd
     #region static readonly Types
 
     // Type stores used by ReflectionArgs and DeclarationPrinter
-    // Keep these alphabatized.
+    // Keep these alphabetized.
     public static readonly Type BigIntegerType = typeof(BigInteger);
     public static readonly Type BooleanType = typeof(bool);
     public static readonly Type ByteType = typeof(byte);
@@ -325,7 +325,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Explicit test for wheter the given type is an F# list.
+    /// Explicit test for whether the given type is an F# list.
     /// </summary>
     /// <param name="type">Type to test</param>
     /// <returns>True if the type is an F# list, false otherwise.</returns>
@@ -353,7 +353,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Explicity test whether type is a C# list.
+    /// Explicitly test whether type is a C# list.
     /// </summary>
     /// <param name="type">Type to check</param>
     /// <returns>Whether type is a C# list</returns>
@@ -404,7 +404,7 @@ namespace DotNetFrontEnd
     /// Returns whether the given type is any of the numeric types, e.g. int, float, BigInteger.
     /// </summary>
     /// <param name="type">Type to test</param>
-    /// <returns>True if the type is numerio, false otherwise</returns>
+    /// <returns>True if the type is numeric, false otherwise</returns>
     public static bool IsAnyNumericType(Type type)
     {
       return type.IsValueType && (type == TypeManager.ByteType || type == TypeManager.CharType
@@ -417,7 +417,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Explicity tests whether the given type is a C# linked list.
+    /// Explicitly tests whether the given type is a C# linked list.
     /// </summary>
     /// <param name="type">Type to test</param>
     /// <returns>Whether type is a linked list.</returns>
@@ -468,7 +468,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Delegate used to see if an interface statifies a condition
+    /// Delegate used to see if an interface satisfies a condition
     /// </summary>
     /// <param name="interfaceToCheck">Interface to test</param>
     /// <returns>True if the interface satisfies the condition, otherwise false</returns>
@@ -635,11 +635,11 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="assemblyQualifiedName">An assembly qualified name for a type in 
     /// the program to be profiled</param>
-    /// <exception cref="Exception">Occurs if the conversion cannot be successfully compeleted.
+    /// <exception cref="Exception">Occurs if the conversion cannot be successfully completed.
     /// </exception>
     /// <returns>The type having that assembly qualified name, or null if the call was unsuccessful
     /// </returns>
-    /// Warning supresesd because there is no way to avoid this call.
+    /// Warning suppressed because there is no way to avoid this call.
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability",
       "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadFrom")]
     public DNFETypeDeclaration ConvertAssemblyQualifiedNameToType(string assemblyQualifiedName)
@@ -721,7 +721,7 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="type">A reference to a CCI Type defined in the program to be profiled</param>
     /// <param name="deeplyInspectGenericParameters">Whether to investigate constraints on
-    /// generic parmeters</param>
+    /// generic parameters</param>
     /// <returns>A reflection type</returns>
     public string ConvertCCITypeToAssemblyQualifiedName(ITypeReference type,
       bool deeplyInspectGenericParameters)
@@ -734,7 +734,7 @@ namespace DotNetFrontEnd
         return simpleTypeName;
       }
 
-      // If the type is a vector or matrix, then proceed on the element type, but rememeber that it was a 
+      // If the type is a vector or matrix, then proceed on the element type, but rememberer that it was a 
       // vector or matrix so suffix can be added at the end. These could be nested somewhat deeply so 
       // continue while we it's still a vector or matrix. Need to insert at the beginning of the suffix
       // each time.
@@ -860,7 +860,7 @@ namespace DotNetFrontEnd
     /// Once the typeName and assembly identity have been determined stitch them together in
     /// the format of an assembly qualified type name.
     /// </summary>
-    /// <param name="typeName">Fully compelted type name for the type under investigation</param>
+    /// <param name="typeName">Fully completed type name for the type under investigation</param>
     /// <param name="identity">AssemblyIdentity for the type under investigation</param>
     /// <returns>Complete assembly-qualified name for the type under investigation</returns>
     private static string CompleteAssemblyQualifiedTypeNameProcessing(string typeName,
@@ -906,7 +906,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Update the given type name to account for nested type paramaters if the given type is a 
+    /// Update the given type name to account for nested type parameters if the given type is a 
     /// NestedTypeDefinition.
     /// </summary>
     /// <param name="type">The type to process</param>
@@ -937,7 +937,7 @@ namespace DotNetFrontEnd
     /// Determine the assembly identity for the given type
     /// </summary>
     /// <param name="type">Type to determine the assembly identity for</param>
-    /// <returns>Assemnly identity for the given type</returns>
+    /// <returns>Assembly identity for the given type</returns>
     private AssemblyIdentity DetermineAssemblyIdentity(ITypeReference type)
     {
       AssemblyIdentity identity;
@@ -1036,7 +1036,7 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="type">The type the method comes from</param>
     /// <param name="methodName">Name of the method to test</param>
-    /// <returns>True if the method wasn't written by the programer, false otherwise</returns>
+    /// <returns>True if the method wasn't written by the programmer, false otherwise</returns>
     public bool IsMethodCompilerGenerated(IMethodDefinition methodDef)
     {
       if (methodDef.ToString().Contains("<>"))

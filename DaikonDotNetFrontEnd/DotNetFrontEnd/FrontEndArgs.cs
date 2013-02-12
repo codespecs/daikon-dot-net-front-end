@@ -244,7 +244,7 @@ namespace DotNetFrontEnd
       this.programArguments.Add(PossibleArgument.nesting_depth,
           DefaultNestingDepth.ToString(CultureInfo.InvariantCulture));
 
-      // TODO(#28): Remove before relase.
+      // TODO(#28): Remove before release.
       this.programArguments.Add(PossibleArgument.verbose, DefaultVerboseMode.ToString());
 
       // TODO(#30): This is true for chicory, so should be true for us as well.
@@ -420,7 +420,7 @@ namespace DotNetFrontEnd
     /// Get the appropriate binding flags for field inspection, without specifying static or instance
     /// </summary>
     /// <param name="type">Type to inspect</param>
-    /// <returns>Binding flag specfying visibility of fields to inspect</returns>
+    /// <returns>Binding flag specifying visibility of fields to inspect</returns>
     private System.Reflection.BindingFlags GetAccessOptionsForFieldInspection(Type type)
     {
       if (type == null)
@@ -440,7 +440,7 @@ namespace DotNetFrontEnd
     /// Get the appropriate binding flags for field inspection of instance variables only
     /// </summary>
     /// <param name="type">Type to inspect</param>
-    /// <returns>Binding flag specfying visibility of fields to inspect</returns>
+    /// <returns>Binding flag specifying visibility of fields to inspect</returns>
     public BindingFlags GetInstanceAccessOptionsForFieldInspection(Type type)
     {
       return BindingFlags.Instance | this.GetAccessOptionsForFieldInspection(type);
@@ -450,7 +450,7 @@ namespace DotNetFrontEnd
     /// Get the appropriate binding flags for field inspection of static variables only
     /// </summary>
     /// <param name="type">Type to inspect</param>
-    /// <returns>Binding flag specfying visibility of fields to inspect</returns>
+    /// <returns>Binding flag specifying visibility of fields to inspect</returns>
     public BindingFlags GetStaticAccessOptionsForFieldInspection(Type type)
     {
       return BindingFlags.Static | this.GetAccessOptionsForFieldInspection(type);
@@ -536,7 +536,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// The maximum level of inspection to vist (e.g. a is 1, a.a is 2, a.a.a is 3, etc.)
+    /// The maximum level of inspection to visit (e.g. a is 1, a.a is 2, a.a.a is 3, etc.)
     /// </summary>
     public int MaxNestingDepth
     {
@@ -636,7 +636,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Whether to intrepret class that are of linked list type (they have a single field of their
+    /// Whether to interpret class that are of linked list type (they have a single field of their
     /// own type) as arrays.
     /// </summary>
     public bool LinkedLists
@@ -658,7 +658,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// File specifying methods considered to be pure -- they will be evalutated and listed as 
+    /// File specifying methods considered to be pure -- they will be evaluated and listed as 
     /// fields
     /// </summary>
     public string PurityFile
@@ -728,7 +728,7 @@ namespace DotNetFrontEnd
     #endregion
 
     /// <summary>
-    /// Set the extenion on the output location to be the one for a declaration file
+    /// Set the extension on the output location to be the one for a declaration file
     /// </summary>
     public void SetDeclExtension()
     {
@@ -740,7 +740,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Set the extenion on the output location to be the one for a dtrace file
+    /// Set the extension on the output location to be the one for a dtrace file
     /// </summary>
     public void SetDtraceExtension()
     {

@@ -333,9 +333,9 @@ namespace DotNetFrontEnd
     /// <param name="name">Name of the variable to be declared</param>
     /// <param name="type">(.NET) Type of the variable to be declared</param>
     /// <param name="kind">Daikon-kind of the variable to be declared</param>
-    /// <param name="flags">Daikong-flags describing the variable</param>
+    /// <param name="flags">Daikon-flags describing the variable</param>
     /// <param name="enclosingVar">Variable enclosing the one to be declared</param>
-    /// <param name="relativeName">Relative name of the variable to be decalred</param>
+    /// <param name="relativeName">Relative name of the variable to be declared</param>
     /// <param name="parentName">Parent name of the variable to be declared</param>
     private void PrintSimpleDescriptors(string name, Type type, VariableKind kind, 
       VariableFlags flags, string enclosingVar, string relativeName, string parentName)
@@ -372,7 +372,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Print the declaration for the given list, and all its children
+    /// Print the declaration for the given list, and all its children.
     /// </summary>
     /// <param name="name">The name of the list</param>
     /// <param name="elementType">The declared element type of the list</param> 
@@ -411,7 +411,7 @@ namespace DotNetFrontEnd
       // Lists must always have enclosing var
       if (enclosingVar.Length == 0)
       {
-        throw new NotSupportedException("Enclosing var requried for list"
+        throw new NotSupportedException("Enclosing var required for list"
             + " but not found for list named: " + name);
       }
       else
@@ -496,6 +496,7 @@ namespace DotNetFrontEnd
             VariableFlags.synthetic, relativeName: GetTypeMethodCall,
             nestingDepth: nestingDepth + 1, parentName: parentName);
       }
+
       if (elementType == TypeManager.StringType)
       {
         PrintList(name + "." + ToStringMethodCall, TypeManager.StringType, name,
@@ -522,7 +523,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Close the file wrtier
+    /// Close the file writer
     /// </summary>
     public void CloseWriter()
     {
@@ -603,7 +604,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Write the entrace to a method call.
+    /// Write the entrance to a method call.
     /// </summary>
     /// <param name="methodName">Name of the program point being entered</param>
     public void PrintCallEntrance(string methodName)
@@ -666,7 +667,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Print the declaration of the object with the given qualified assembly name
     /// </summary>
-    /// <param name="objectName">How the object should be described in the declaraion</param>
+    /// <param name="objectName">How the object should be described in the declaration</param>
     /// <param name="objectAssemblyQualifiedName">Assembly qualified name of the object,
     /// used to fetch the Type</param>
     public void PrintObjectDefinition(string objectName, string objectAssemblyQualifiedName)
@@ -805,7 +806,7 @@ namespace DotNetFrontEnd
       this.WritePair("// Declarations written", DateTime.Now);
       this.fileWriter.WriteLine();
       this.WritePair("decl-version", "2.0");
-      // TODO(#22): Update when we have real compatability.
+      // TODO(#22): Update when we have real comparability.
       this.WritePair("var-comparability", "none");
       this.WritePair("input-language", "C#.NET");
     }
@@ -1028,7 +1029,7 @@ namespace DotNetFrontEnd
       if ((kind == VariableKind.field || kind == VariableKind.array) &&
         enclosingVar.Length == 0)
       {
-        throw new ArgumentException("Enclosing var requried for staticField and array and none"
+        throw new ArgumentException("Enclosing var required for staticField and array and none"
             + " was present for variable named: " + name + " of kind: " + kind);
       }
 
