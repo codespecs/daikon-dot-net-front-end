@@ -1871,7 +1871,7 @@ namespace DotNetFrontEnd
     private void EmitReferenceInstrumentationCall(ITypeReference paramType)
     {
       // Make the correct indirect reference call, then proceed as normal
-      if (!paramType.IsValueType)
+      if (!paramType.IsValueType || paramType.TypeCode == PrimitiveTypeCode.NotPrimitive)
       {
         generator.Emit(OperationCode.Ldobj, paramType);
       }
