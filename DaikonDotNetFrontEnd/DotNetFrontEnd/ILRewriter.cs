@@ -1876,7 +1876,7 @@ namespace DotNetFrontEnd
         generator.Emit(OperationCode.Ldobj, paramType);
       }
       else if (paramType.TypeCode == host.PlatformType.SystemInt32.TypeCode
-            || paramType.TypeCode == host.PlatformType.SystemEnum.TypeCode)
+            || paramType == host.PlatformType.SystemEnum)
       {
         generator.Emit(OperationCode.Ldind_I4);
       }
