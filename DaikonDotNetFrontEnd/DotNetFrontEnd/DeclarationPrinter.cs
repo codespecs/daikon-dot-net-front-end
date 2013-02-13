@@ -267,7 +267,7 @@ namespace DotNetFrontEnd
       {
         if (!this.typeManager.ShouldIgnoreField(type, staticField.Name))
         {
-          string staticFieldName = type.Name + "." + staticField.Name;
+          string staticFieldName = type.FullName + "." + staticField.Name;
           if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
           {
             this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
@@ -479,7 +479,7 @@ namespace DotNetFrontEnd
       {
         if (!this.typeManager.ShouldIgnoreField(elementType, staticField.Name))
         {
-          string staticFieldName = elementType.Name + "." + staticField.Name;
+          string staticFieldName = elementType.FullName + "." + staticField.Name;
           if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
           {
             this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
@@ -592,7 +592,7 @@ namespace DotNetFrontEnd
       {
         if (!this.typeManager.ShouldIgnoreField(type, staticField.Name))
         {
-          string staticFieldName = type.Name + "." + staticField.Name;
+          string staticFieldName = type.FullName + "." + staticField.Name;
           if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
           {
             this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
