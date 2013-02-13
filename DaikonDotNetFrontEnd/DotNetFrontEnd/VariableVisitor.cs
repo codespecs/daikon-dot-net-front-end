@@ -299,7 +299,7 @@ namespace DotNetFrontEnd
           {
             if (!typeManager.ShouldIgnoreField(type, staticField.Name))
             {
-              string staticFieldName = type.Name + "." + staticField.Name;
+              string staticFieldName = type.FullName + "." + staticField.Name;
               try
               {
                 if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
@@ -749,7 +749,7 @@ namespace DotNetFrontEnd
         {
           try
           {
-            string staticFieldName = type.Name + "." + staticField.Name;
+            string staticFieldName = type.FullName + "." + staticField.Name;
             if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
             {
               staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
@@ -990,7 +990,7 @@ namespace DotNetFrontEnd
       {
         if (!typeManager.ShouldIgnoreField(elementType, staticElementField.Name))
         {
-          string staticFieldName = elementType.Name + "." + staticElementField.Name;
+          string staticFieldName = elementType.FullName + "." + staticElementField.Name;
           if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
           {
             staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
@@ -1041,7 +1041,7 @@ namespace DotNetFrontEnd
       {
         if (!typeManager.ShouldIgnoreField(elementType, elementField.Name))
         {
-          string staticFieldName = elementType.Name + "." + elementField.Name;
+          string staticFieldName = elementType.FullName + "." + elementField.Name;
           if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
           {
             staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
