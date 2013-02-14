@@ -18,6 +18,27 @@ using System.Runtime.CompilerServices;
 
 namespace DotNetFrontEnd
 {
+
+    public static class TypeManagerExtensions
+    {
+        /// <summary>
+        /// Returns the fields for the <code>System.Type</code> in alphabetical order by name. 
+        /// </summary>
+        /// <param name="type">the type</param>
+        /// <param name="bindingAttr">binding constraints</param>
+        /// <seealso cref="Type.GetFields"/>
+        /// <returns>the fields for the <code>System.Type</code> in alphabetical order by name. </returns>
+        public static FieldInfo[] GetSortedFields(this Type type, BindingFlags bindingAttr)
+        {
+            FieldInfo[] fields = type.GetFields(bindingAttr);
+            Array.Sort(fields, delegate(FieldInfo lhs, FieldInfo rhs)
+            {
+                return lhs.Name.CompareTo(rhs.Name);
+            });
+            return fields;
+        }
+    }
+
   /// <summary>
   /// Keeps canonical type references. Converts between CCIMetadata and .NET types.
   /// </summary>

@@ -296,7 +296,7 @@ namespace DotNetFrontEnd
         foreach (Type type in typeDecl.GetAllTypes)
         {
           foreach (FieldInfo staticField in
-           type.GetFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
+           type.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
           {
             if (!typeManager.ShouldIgnoreField(type, staticField.Name))
             {
@@ -732,7 +732,7 @@ namespace DotNetFrontEnd
       TextWriter writer, int depth, VariableModifiers fieldFlags)
     {
       foreach (FieldInfo field in
-          type.GetFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(type)))
+          type.GetSortedFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(type)))
       {
         try
         {
@@ -754,7 +754,7 @@ namespace DotNetFrontEnd
       }
 
       foreach (FieldInfo staticField in
-          type.GetFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
+          type.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
       {
         if (!typeManager.ShouldIgnoreField(type, staticField.Name))
         {
@@ -993,14 +993,14 @@ namespace DotNetFrontEnd
         TextWriter writer, int depth)
     {
       foreach (FieldInfo staticElementField in
-          elementType.GetFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(elementType)))
+          elementType.GetSortedFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(elementType)))
       {
         ListReflectiveVisit(name + "." + staticElementField.Name, null,
             staticElementField.FieldType, writer, depth + 1);
       }
 
       foreach (FieldInfo staticElementField in
-          elementType.GetFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(elementType)))
+          elementType.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(elementType)))
       {
         if (!typeManager.ShouldIgnoreField(elementType, staticElementField.Name))
         {
@@ -1041,7 +1041,7 @@ namespace DotNetFrontEnd
         TextWriter writer, int depth, bool[] nonsensicalElements)
     {
       foreach (FieldInfo elementField in
-          elementType.GetFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(elementType)))
+          elementType.GetSortedFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(elementType)))
       {
         if (!typeManager.ShouldIgnoreField(elementType, elementField.Name))
         {
@@ -1051,7 +1051,7 @@ namespace DotNetFrontEnd
 
       // Static fields will have the same value for every element so just visit them once
       foreach (FieldInfo elementField in
-          elementType.GetFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(elementType)))
+          elementType.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(elementType)))
       {
         if (!typeManager.ShouldIgnoreField(elementType, elementField.Name))
         {

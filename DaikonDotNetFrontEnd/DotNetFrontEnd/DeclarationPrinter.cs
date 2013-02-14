@@ -252,7 +252,7 @@ namespace DotNetFrontEnd
     {
 
       foreach (FieldInfo field in
-          type.GetFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(type)))
+          type.GetSortedFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(type)))
       {
         if (!this.typeManager.ShouldIgnoreField(type, field.Name))
         {
@@ -263,7 +263,7 @@ namespace DotNetFrontEnd
       }
 
       foreach (FieldInfo staticField in
-          type.GetFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
+          type.GetSortedFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
       {
         if (!this.typeManager.ShouldIgnoreField(type, staticField.Name))
         {
@@ -463,7 +463,7 @@ namespace DotNetFrontEnd
       }
 
       foreach (FieldInfo field in
-          elementType.GetFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(elementType)))
+          elementType.GetSortedFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(elementType)))
       {
         if (!this.typeManager.ShouldIgnoreField(elementType, field.Name))
         {
@@ -474,7 +474,7 @@ namespace DotNetFrontEnd
       }
 
       foreach (FieldInfo staticField in
-          elementType.GetFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(
+          elementType.GetSortedFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(
               elementType)))
       {
         if (!this.typeManager.ShouldIgnoreField(elementType, staticField.Name))
@@ -588,7 +588,7 @@ namespace DotNetFrontEnd
     private void DeclareStaticFieldsForType(Type type)
     {
       foreach (FieldInfo staticField in
-        type.GetFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
+        type.GetSortedFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
       {
         if (!this.typeManager.ShouldIgnoreField(type, staticField.Name))
         {
