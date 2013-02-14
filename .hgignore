@@ -3,3 +3,6 @@ syntax: glob
 */obj/*
 *.exe
 *.pdb
+*.csproj.user
+*.orig
+*~
