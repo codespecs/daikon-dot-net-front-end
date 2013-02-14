@@ -197,22 +197,26 @@ namespace DotNetFrontEnd
     /// <returns>methodBody with instrumentation calls added</returns>
     public override IMethodBody Rewrite(IMethodBody methodBody)
     {
-      if (methodBody == null)
-      {
-        throw new ArgumentNullException("methodBody");
-      }
-      // If the method is compiler generated don't insert instrumentation code.
-      if (typeManager.IsMethodCompilerGenerated(methodBody.MethodDefinition) ||
-        // Don't add instrumentation code to Pure methods
-          typeManager.GetPureMethodsForType(methodBody.MethodDefinition.ContainingType).Any(
-            meth => meth.Value.Name.ToString() == methodBody.MethodDefinition.Name.ToString()))
-      {
-        return base.Rewrite(methodBody);
-      }
-      else
-      {
-        return ProcessOperations(methodBody);
-      }
+        if (methodBody == null)
+        {
+            throw new ArgumentNullException("methodBody");
+        }
+
+        var method = methodBody.MethodDefinition;
+        var containingType = method.ContainingType;
+
+        // If the method is compiler generated don't insert instrumentation code.
+        if (typeManager.IsTypeCompilerGenerated(containingType.ResolvedType) ||
+            typeManager.IsMethodCompilerGenerated(method) ||
+            // Don't add instrumentation code to Pure methods
+            typeManager.GetPureMethodsForType(containingType).Select(m => m.Value.Name).Contains(method.Name.Value))
+        {
+            return base.Rewrite(methodBody);
+        }
+        else
+        {
+            return ProcessOperations(methodBody);
+        }
     }
 
     #endregion
@@ -589,6 +593,10 @@ namespace DotNetFrontEnd
               exType = methDef.Type;
             }
           }
+          else if (prevOp.Value is LocalDefinition)
+          {
+              exType = ((LocalDefinition)prevOp.Value).Type;
+          }
           else if (prevOp.Value is Microsoft.Cci.MutableCodeModel.MethodReference)
           {
             exType = ((Microsoft.Cci.MutableCodeModel.MethodReference)prevOp.Value).ContainingType;
@@ -607,7 +615,7 @@ namespace DotNetFrontEnd
           }
           else
           {
-            throw new NotSupportedException("How was this exception type reached?");
+              throw new NotSupportedException("Unexpected operation of type " + prevOp.Value.GetType());
           }
           // Convert from CCI Type to String Type
           // Exception name must be a single class

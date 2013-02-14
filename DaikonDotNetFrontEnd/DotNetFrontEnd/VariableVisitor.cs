@@ -28,6 +28,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
+using Microsoft.Cci;
 
 namespace DotNetFrontEnd
 {
@@ -327,7 +328,7 @@ namespace DotNetFrontEnd
                 Console.Error.WriteLine(" Name: " + staticFieldName + " Type: " + type + " Field Name: "
                     + staticField.Name + " Field Type: " + staticField.FieldType);
                 // The field is declared in the decls so Daikon still needs a value, 
-                ReflectiveVisit(staticFieldName + "." + staticField.Name, null,
+                ReflectiveVisit(staticFieldName, null,
                     staticField.FieldType, writer, depth + 1, VariableModifiers.nonsensical);
               }
             }
@@ -464,7 +465,10 @@ namespace DotNetFrontEnd
         offlineAssemblyName = assemblyName;
         offlineAssemblyPath = assemblyPath;
         frontEndArgs = new FrontEndArgs(arguments.Split());
-        typeManager = new TypeManager(frontEndArgs);
+
+        IMetadataHost host = new PeReader.DefaultHost();
+
+        typeManager = new TypeManager(host, frontEndArgs);
       }
     }
 
@@ -555,6 +559,11 @@ namespace DotNetFrontEnd
     
     #region Reflective Visitor and helper methods
 
+    private static bool IsTypeOf<T>(object t)
+    {
+        return (t is T);
+    }
+
     /// <summary>
     /// Print the 3 line (name, value, mod bit) triple for the given variable and all its 
     /// children.
@@ -598,6 +607,8 @@ namespace DotNetFrontEnd
       }
       else if (typeManager.IsSet(type) || typeManager.IsFSharpSet(type))
       {
+        
+
         IEnumerable set = (IEnumerable)obj;
         // A set can have only one generic argument -- the element type
         Type setElementType = type.GetGenericArguments()[0];
@@ -747,9 +758,12 @@ namespace DotNetFrontEnd
       {
         if (!typeManager.ShouldIgnoreField(type, staticField.Name))
         {
+            
+          string staticFieldName = type.FullName + "." + staticField.Name;
+          
           try
           {
-            string staticFieldName = type.FullName + "." + staticField.Name;
+            
             if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
             {
               staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
@@ -763,7 +777,7 @@ namespace DotNetFrontEnd
             Console.Error.WriteLine(" Name: " + name + " Type: " + type + " Field Name: "
                 + staticField.Name + " Field Type: " + staticField.FieldType);
             // The field is declared in the decls so Daikon still needs a value. 
-            ReflectiveVisit(name + "." + staticField.Name, null,
+            ReflectiveVisit(staticFieldName, null,
                 staticField.FieldType, writer, depth + 1, fieldFlags
                 | VariableModifiers.nonsensical);
           }
