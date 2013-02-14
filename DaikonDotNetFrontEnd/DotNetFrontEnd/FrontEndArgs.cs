@@ -91,6 +91,8 @@ namespace DotNetFrontEnd
       is_property_flags,
       nesting_depth,
       omit_var,
+      omit_dec_type,
+      omit_parent_dec_type,
       purity_file,
       std_visibility,
       // Misc. options
@@ -366,7 +368,7 @@ namespace DotNetFrontEnd
     /// <returns>True if the variable should be printed, false otherwise</returns>
     public bool ShouldPrintVariable(string varName)
     {
-      // value__ is an extra field added describing enum values.
+      // value__ is an extra field added describing enum values.    
       if (varName.EndsWith("value__"))
       {
         return false;
@@ -493,6 +495,34 @@ namespace DotNetFrontEnd
         this.TryGetArgumentValue(PossibleArgument.omit_var, out val);
         return (val == null) ? null : new Regex(val);
       }
+    }
+
+    /// <summary>
+    /// Regex describing variables to omit.
+    /// </summary>
+    public Regex OmitDecType
+    {
+        // Optional arg
+        get
+        {
+            string val;
+            this.TryGetArgumentValue(PossibleArgument.omit_dec_type, out val);
+            return (val == null) ? null : new Regex(val);
+        }
+    }
+
+    /// <summary>
+    /// Regex describing variables to omit.
+    /// </summary>
+    public Regex OmitParentDecType
+    {
+        // Optional arg
+        get
+        {
+            string val;
+            this.TryGetArgumentValue(PossibleArgument.omit_parent_dec_type, out val);
+            return (val == null) ? null : new Regex(val);
+        }
     }
 
     /// <summary>
