@@ -254,7 +254,7 @@ namespace DotNetFrontEnd
       foreach (FieldInfo field in
           type.GetSortedFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(type)))
       {
-        if (!this.typeManager.ShouldIgnoreField(type, field.Name))
+        if (!this.typeManager.ShouldIgnoreField(type, field))
         {
           DeclareVariable(name + "." + field.Name, field.FieldType,
               VariableKind.field, enclosingVar: name, relativeName: field.Name,
@@ -265,7 +265,7 @@ namespace DotNetFrontEnd
       foreach (FieldInfo staticField in
           type.GetSortedFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
       {
-        if (!this.typeManager.ShouldIgnoreField(type, staticField.Name))
+        if (!this.typeManager.ShouldIgnoreField(type, staticField))
         {
           string staticFieldName = type.FullName + "." + staticField.Name;
           if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
@@ -465,7 +465,7 @@ namespace DotNetFrontEnd
       foreach (FieldInfo field in
           elementType.GetSortedFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(elementType)))
       {
-        if (!this.typeManager.ShouldIgnoreField(elementType, field.Name))
+        if (!this.typeManager.ShouldIgnoreField(elementType, field))
         {
           PrintList(name + "." + field.Name, field.FieldType, name,
               VariableKind.field, relativeName: field.Name,
@@ -477,7 +477,7 @@ namespace DotNetFrontEnd
           elementType.GetSortedFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(
               elementType)))
       {
-        if (!this.typeManager.ShouldIgnoreField(elementType, staticField.Name))
+        if (!this.typeManager.ShouldIgnoreField(elementType, staticField))
         {
           string staticFieldName = elementType.FullName + "." + staticField.Name;
           if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
@@ -590,7 +590,7 @@ namespace DotNetFrontEnd
       foreach (FieldInfo staticField in
         type.GetSortedFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
       {
-        if (!this.typeManager.ShouldIgnoreField(type, staticField.Name))
+        if (!this.typeManager.ShouldIgnoreField(type, staticField))
         {
           string staticFieldName = type.FullName + "." + staticField.Name;
           if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))

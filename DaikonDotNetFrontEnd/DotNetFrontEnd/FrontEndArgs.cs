@@ -507,7 +507,7 @@ namespace DotNetFrontEnd
         {
             string val;
             this.TryGetArgumentValue(PossibleArgument.omit_dec_type, out val);
-            return (val == null) ? null : new Regex(val);
+            return (val == null) ? null : new Regex(val); 
         }
     }
 

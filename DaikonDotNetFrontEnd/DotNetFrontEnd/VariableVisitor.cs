@@ -298,7 +298,7 @@ namespace DotNetFrontEnd
           foreach (FieldInfo staticField in
            type.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
           {
-            if (!typeManager.ShouldIgnoreField(type, staticField.Name))
+            if (!typeManager.ShouldIgnoreField(type, staticField))
             {
               string staticFieldName = type.FullName + "." + staticField.Name;
               try
@@ -736,7 +736,7 @@ namespace DotNetFrontEnd
       {
         try
         {
-          if (!typeManager.ShouldIgnoreField(type, field.Name))
+          if (!typeManager.ShouldIgnoreField(type, field))
           {
             ReflectiveVisit(name + "." + field.Name, GetFieldValue(obj, field, field.Name),
                 field.FieldType, writer, depth + 1,
@@ -756,7 +756,7 @@ namespace DotNetFrontEnd
       foreach (FieldInfo staticField in
           type.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
       {
-        if (!typeManager.ShouldIgnoreField(type, staticField.Name))
+        if (!typeManager.ShouldIgnoreField(type, staticField))
         {
             
           string staticFieldName = type.FullName + "." + staticField.Name;
@@ -911,7 +911,7 @@ namespace DotNetFrontEnd
           || flags.HasFlag(VariableModifiers.classname);
 
       // Write name of the list, which possibly is its path.
-      writer.WriteLine(name);
+        writer.WriteLine(name);
 
       // If a reference to a list is null the reference is nonsensical.
       if (list == null)
@@ -992,17 +992,20 @@ namespace DotNetFrontEnd
     private static void VisitNullListChildren(string name, Type elementType,
         TextWriter writer, int depth)
     {
-      foreach (FieldInfo staticElementField in
+      foreach (FieldInfo field in
           elementType.GetSortedFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(elementType)))
       {
-        ListReflectiveVisit(name + "." + staticElementField.Name, null,
-            staticElementField.FieldType, writer, depth + 1);
+          if (!typeManager.ShouldIgnoreField(elementType, field))
+          {
+              ListReflectiveVisit(name + "." + field.Name, null,
+                field.FieldType, writer, depth + 1);
+          }
       }
 
       foreach (FieldInfo staticElementField in
           elementType.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(elementType)))
       {
-        if (!typeManager.ShouldIgnoreField(elementType, staticElementField.Name))
+        if (!typeManager.ShouldIgnoreField(elementType, staticElementField))
         {
           string staticFieldName = elementType.FullName + "." + staticElementField.Name;
           if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
@@ -1043,7 +1046,7 @@ namespace DotNetFrontEnd
       foreach (FieldInfo elementField in
           elementType.GetSortedFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(elementType)))
       {
-        if (!typeManager.ShouldIgnoreField(elementType, elementField.Name))
+        if (!typeManager.ShouldIgnoreField(elementType, elementField))
         {
           VisitListField(name, list, elementType, writer, depth, nonsensicalElements, elementField);
         }
@@ -1053,7 +1056,7 @@ namespace DotNetFrontEnd
       foreach (FieldInfo elementField in
           elementType.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(elementType)))
       {
-        if (!typeManager.ShouldIgnoreField(elementType, elementField.Name))
+        if (!typeManager.ShouldIgnoreField(elementType, elementField))
         {
           string staticFieldName = elementType.FullName + "." + elementField.Name;
           if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))

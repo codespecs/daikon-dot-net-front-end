@@ -421,12 +421,24 @@ namespace DotNetFrontEnd
     /// Returns whether the given field should be ignored.
     /// </summary>
     /// <param name="type">Parent type of the field to test</param>
-    /// <param name="fieldName">Name of the field to test</param>
+    /// <param name="field">The field to test</param>
     /// <returns>True if the field should be ignored, false otherwise</returns>
-    public bool ShouldIgnoreField(Type type, string fieldName)
+    public bool ShouldIgnoreField(Type parentType, FieldInfo field)
     {
-      // TODO(#58): Should be able to switch this test off with a command line arg.
-      return this.ignoredValues.Contains(type.AssemblyQualifiedName + ";" + fieldName);
+        Debug.Assert(parentType != null);
+        Debug.Assert(field != null);
+
+        if (frontEndArgs.OmitParentDecType != null && frontEndArgs.OmitParentDecType.IsMatch(parentType.FullName))
+        {
+            return true;
+        }
+        else if (frontEndArgs.OmitDecType != null && frontEndArgs.OmitDecType.IsMatch(field.FieldType.FullName))
+        {
+            return true;
+        }
+      
+        // TODO(#58): Should be able to switch this test off with a command line arg.
+        return this.ignoredValues.Contains(parentType.AssemblyQualifiedName + ";" + field.Name);
     }
 
     /// <summary>
