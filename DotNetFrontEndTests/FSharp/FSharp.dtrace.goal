@@ -1,0 +1,1121 @@
+decl-version 2.0
+var-comparability none
+input-language C#.NET
+
+ppt <StartupCode$FSharp>.$FSharp.main@():::ENTER
+ppt-type enter
+  variable $FSharp.init@
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable $FSharp.set@4
+    var-kind variable
+    dec-type Microsoft.FSharp.Core.FSharpRef`1[Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]]
+    rep-type hashcode
+    comparability 22
+  variable $FSharp.set@4.contents@
+    var-kind field contents@
+    enclosing-var $FSharp.set@4
+    dec-type Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]
+    rep-type hashcode
+    comparability 22
+  variable $FSharp.set@4.contents@[..]
+    var-kind array
+    enclosing-var $FSharp.set@4.contents@
+    array 1
+    dec-type int[]
+    rep-type int[]
+    flags no_dups not_ordered
+    comparability 22
+
+ppt <StartupCode$FSharp>.$FSharp.main@():::EXIT41
+ppt-type subexit
+  variable $FSharp.init@
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable $FSharp.set@4
+    var-kind variable
+    dec-type Microsoft.FSharp.Core.FSharpRef`1[Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]]
+    rep-type hashcode
+    comparability 22
+  variable $FSharp.set@4.contents@
+    var-kind field contents@
+    enclosing-var $FSharp.set@4
+    dec-type Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]
+    rep-type hashcode
+    comparability 22
+  variable $FSharp.set@4.contents@[..]
+    var-kind array
+    enclosing-var $FSharp.set@4.contents@
+    array 1
+    dec-type int[]
+    rep-type int[]
+    flags no_dups not_ordered
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt <StartupCode$FSharp>.$FSharp.main@():::EXIT_EX_Runtime
+ppt-type subexit
+  variable $FSharp.init@
+    var-kind variable
+    dec-type int
+    rep-type int
+    comparability 22
+  variable $FSharp.set@4
+    var-kind variable
+    dec-type Microsoft.FSharp.Core.FSharpRef`1[Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]]
+    rep-type hashcode
+    comparability 22
+  variable $FSharp.set@4.contents@
+    var-kind field contents@
+    enclosing-var $FSharp.set@4
+    dec-type Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]
+    rep-type hashcode
+    comparability 22
+  variable $FSharp.set@4.contents@[..]
+    var-kind array
+    enclosing-var $FSharp.set@4.contents@
+    array 1
+    dec-type int[]
+    rep-type int[]
+    flags no_dups not_ordered
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::ENTER
+ppt-type enter
+parent parent FSharp:::CLASS 1
+  variable set
+    var-kind variable
+    dec-type Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]
+    rep-type hashcode
+    flags is_param
+    comparability 22
+  variable set[..]
+    var-kind array
+    enclosing-var set
+    array 1
+    dec-type int[]
+    rep-type int[]
+    flags no_dups not_ordered
+    comparability 22
+
+ppt FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT65
+ppt-type subexit
+parent parent FSharp:::CLASS 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable return
+    var-kind return
+    dec-type Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]
+    rep-type hashcode
+    comparability 22
+  variable return[..]
+    var-kind array
+    enclosing-var return
+    array 1
+    dec-type int[]
+    rep-type int[]
+    flags no_dups not_ordered
+    comparability 22
+  variable set
+    var-kind variable
+    dec-type Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]
+    rep-type hashcode
+    flags is_param
+    comparability 22
+  variable set[..]
+    var-kind array
+    enclosing-var set
+    array 1
+    dec-type int[]
+    rep-type int[]
+    flags no_dups not_ordered
+    comparability 22
+
+ppt FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent FSharp:::CLASS 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable return
+    var-kind return
+    dec-type Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]
+    rep-type hashcode
+    comparability 22
+  variable return[..]
+    var-kind array
+    enclosing-var return
+    array 1
+    dec-type int[]
+    rep-type int[]
+    flags no_dups not_ordered
+    comparability 22
+  variable set
+    var-kind variable
+    dec-type Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]
+    rep-type hashcode
+    flags is_param
+    comparability 22
+  variable set[..]
+    var-kind array
+    enclosing-var set
+    array 1
+    dec-type int[]
+    rep-type int[]
+    flags no_dups not_ordered
+    comparability 22
+
+ppt FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT_EX_System.ArgumentException
+ppt-type subexit
+parent parent FSharp:::CLASS 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable return
+    var-kind return
+    dec-type Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]
+    rep-type hashcode
+    comparability 22
+  variable return[..]
+    var-kind array
+    enclosing-var return
+    array 1
+    dec-type int[]
+    rep-type int[]
+    flags no_dups not_ordered
+    comparability 22
+  variable set
+    var-kind variable
+    dec-type Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]
+    rep-type hashcode
+    flags is_param
+    comparability 22
+  variable set[..]
+    var-kind array
+    enclosing-var set
+    array 1
+    dec-type int[]
+    rep-type int[]
+    flags no_dups not_ordered
+    comparability 22
+
+ppt FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT_EX_System.ArgumentNullException
+ppt-type subexit
+parent parent FSharp:::CLASS 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable return
+    var-kind return
+    dec-type Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]
+    rep-type hashcode
+    comparability 22
+  variable return[..]
+    var-kind array
+    enclosing-var return
+    array 1
+    dec-type int[]
+    rep-type int[]
+    flags no_dups not_ordered
+    comparability 22
+  variable set
+    var-kind variable
+    dec-type Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]
+    rep-type hashcode
+    flags is_param
+    comparability 22
+  variable set[..]
+    var-kind array
+    enclosing-var set
+    array 1
+    dec-type int[]
+    rep-type int[]
+    flags no_dups not_ordered
+    comparability 22
+
+ppt FSharp.printCollection(System.String\_msg,\_System.Collections.Generic.IEnumerable<a>\_coll):::ENTER
+ppt-type enter
+parent parent FSharp:::CLASS 1
+  variable coll
+    var-kind variable
+    dec-type System.Collections.Generic.IEnumerable`1[System.Object]
+    rep-type hashcode
+    flags is_param
+    comparability 22
+  variable coll.GetType()
+    var-kind function GetType()
+    enclosing-var coll
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable msg
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    flags is_param
+    comparability 22
+  variable msg.ToString()
+    var-kind function ToString()
+    enclosing-var msg
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+
+ppt FSharp.printCollection(System.String\_msg,\_System.Collections.Generic.IEnumerable<a>\_coll):::EXIT14
+ppt-type subexit
+parent parent FSharp:::CLASS 1
+  variable coll
+    var-kind variable
+    dec-type System.Collections.Generic.IEnumerable`1[System.Object]
+    rep-type hashcode
+    flags is_param
+    comparability 22
+  variable coll.GetType()
+    var-kind function GetType()
+    enclosing-var coll
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable msg
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    flags is_param
+    comparability 22
+  variable msg.ToString()
+    var-kind function ToString()
+    enclosing-var msg
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+
+ppt FSharp.printCollection(System.String\_msg,\_System.Collections.Generic.IEnumerable<a>\_coll):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent FSharp:::CLASS 1
+  variable coll
+    var-kind variable
+    dec-type System.Collections.Generic.IEnumerable`1[System.Object]
+    rep-type hashcode
+    flags is_param
+    comparability 22
+  variable coll.GetType()
+    var-kind function GetType()
+    enclosing-var coll
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable msg
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    flags is_param
+    comparability 22
+  variable msg.ToString()
+    var-kind function ToString()
+    enclosing-var msg
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+
+ppt FSharp.printCollection@24-1:::CLASS
+ppt-type class
+
+ppt FSharp.printCollection@24-1:::OBJECT
+ppt-type object
+parent parent FSharp.printCollection@24-1:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type FSharp+printCollection@24-1[a]
+    rep-type hashcode
+    flags is_param
+    comparability 22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable this.clo1
+    var-kind field clo1
+    enclosing-var this
+    dec-type Microsoft.FSharp.Core.FSharpFunc`2[System.Int32,Microsoft.FSharp.Core.FSharpFunc`2[a,Microsoft.FSharp.Core.Unit]]
+    rep-type hashcode
+    comparability 22
+  variable this.clo1.GetType()
+    var-kind function GetType()
+    enclosing-var this.clo1
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt FSharp.printCollection@24-2:::CLASS
+ppt-type class
+
+ppt FSharp.printCollection@24-2:::OBJECT
+ppt-type object
+parent parent FSharp.printCollection@24-2:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type FSharp+printCollection@24-2[a]
+    rep-type hashcode
+    flags is_param
+    comparability 22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable this.clo2
+    var-kind field clo2
+    enclosing-var this
+    dec-type Microsoft.FSharp.Core.FSharpFunc`2[a,Microsoft.FSharp.Core.Unit]
+    rep-type hashcode
+    comparability 22
+  variable this.clo2.GetType()
+    var-kind function GetType()
+    enclosing-var this.clo2
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt FSharp.printCollection@24:::CLASS
+ppt-type class
+
+ppt FSharp.printCollection@24:::OBJECT
+ppt-type object
+parent parent FSharp.printCollection@24:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type FSharp+printCollection@24[a]
+    rep-type hashcode
+    flags is_param
+    comparability 22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt FSharp.set.get():::ENTER
+ppt-type enter
+parent parent FSharp:::CLASS 1
+
+ppt FSharp.set.get():::EXIT1
+ppt-type subexit
+parent parent FSharp:::CLASS 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable return
+    var-kind return
+    dec-type Microsoft.FSharp.Core.FSharpRef`1[Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]]
+    rep-type hashcode
+    comparability 22
+  variable return.contents@
+    var-kind field contents@
+    enclosing-var return
+    dec-type Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]
+    rep-type hashcode
+    comparability 22
+  variable return.contents@[..]
+    var-kind array
+    enclosing-var return.contents@
+    array 1
+    dec-type int[]
+    rep-type int[]
+    flags no_dups not_ordered
+    comparability 22
+
+ppt FSharp.set.get():::EXIT_EX_Runtime
+ppt-type subexit
+parent parent FSharp:::CLASS 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+  variable return
+    var-kind return
+    dec-type Microsoft.FSharp.Core.FSharpRef`1[Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]]
+    rep-type hashcode
+    comparability 22
+  variable return.contents@
+    var-kind field contents@
+    enclosing-var return
+    dec-type Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]
+    rep-type hashcode
+    comparability 22
+  variable return.contents@[..]
+    var-kind array
+    enclosing-var return.contents@
+    array 1
+    dec-type int[]
+    rep-type int[]
+    flags no_dups not_ordered
+    comparability 22
+
+ppt FSharp:::CLASS
+ppt-type class
+
+ppt FSharp:::OBJECT
+ppt-type object
+parent parent FSharp:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type FSharp
+    rep-type hashcode
+    flags is_param
+    comparability 22
+
+<StartupCode$FSharp>.$FSharp.main@():::ENTER
+this_invocation_nonce
+0
+$FSharp.init@
+0
+1
+$FSharp.set@4
+null
+1
+$FSharp.set@4.contents@
+nonsensical
+2
+$FSharp.set@4.contents@[..]
+[]
+1
+
+FSharp.set.get():::ENTER
+this_invocation_nonce
+1
+
+FSharp.set.get():::EXIT1
+this_invocation_nonce
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+-1640531527
+1
+return.contents@
+0
+1
+return.contents@[..]
+[]
+1
+
+FSharp.set.get():::ENTER
+this_invocation_nonce
+2
+
+FSharp.set.get():::EXIT1
+this_invocation_nonce
+2
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+-1640531527
+1
+return.contents@
+0
+1
+return.contents@[..]
+[]
+1
+
+FSharp.set.get():::ENTER
+this_invocation_nonce
+3
+
+FSharp.set.get():::EXIT1
+this_invocation_nonce
+3
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+-1640530896
+1
+return.contents@
+631
+1
+return.contents@[..]
+[0]
+1
+
+FSharp.set.get():::ENTER
+this_invocation_nonce
+4
+
+FSharp.set.get():::EXIT1
+this_invocation_nonce
+4
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+-1640530896
+1
+return.contents@
+631
+1
+return.contents@[..]
+[0]
+1
+
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::ENTER
+this_invocation_nonce
+5
+set
+631
+1
+set[..]
+[0]
+1
+
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT65
+this_invocation_nonce
+5
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+1894
+1
+return[..]
+[0 1]
+1
+set
+631
+1
+set[..]
+[0]
+1
+
+FSharp.set.get():::ENTER
+this_invocation_nonce
+6
+
+FSharp.set.get():::EXIT1
+this_invocation_nonce
+6
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+-1640529633
+1
+return.contents@
+1894
+1
+return.contents@[..]
+[0 1]
+1
+
+FSharp.set.get():::ENTER
+this_invocation_nonce
+7
+
+FSharp.set.get():::EXIT1
+this_invocation_nonce
+7
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+-1640529633
+1
+return.contents@
+1894
+1
+return.contents@[..]
+[0 1]
+1
+
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::ENTER
+this_invocation_nonce
+8
+set
+1894
+1
+set[..]
+[0 1]
+1
+
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT65
+this_invocation_nonce
+8
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+4421
+1
+return[..]
+[0 1 2]
+1
+set
+1894
+1
+set[..]
+[0 1]
+1
+
+FSharp.set.get():::ENTER
+this_invocation_nonce
+9
+
+FSharp.set.get():::EXIT1
+this_invocation_nonce
+9
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+-1640527106
+1
+return.contents@
+4421
+1
+return.contents@[..]
+[0 1 2]
+1
+
+FSharp.set.get():::ENTER
+this_invocation_nonce
+10
+
+FSharp.set.get():::EXIT1
+this_invocation_nonce
+10
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+-1640527106
+1
+return.contents@
+4421
+1
+return.contents@[..]
+[0 1 2]
+1
+
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::ENTER
+this_invocation_nonce
+11
+set
+4421
+1
+set[..]
+[0 1 2]
+1
+
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT65
+this_invocation_nonce
+11
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+9476
+1
+return[..]
+[0 1 2 3]
+1
+set
+4421
+1
+set[..]
+[0 1 2]
+1
+
+FSharp.set.get():::ENTER
+this_invocation_nonce
+12
+
+FSharp.set.get():::EXIT1
+this_invocation_nonce
+12
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+-1640522051
+1
+return.contents@
+9476
+1
+return.contents@[..]
+[0 1 2 3]
+1
+
+FSharp.set.get():::ENTER
+this_invocation_nonce
+13
+
+FSharp.set.get():::EXIT1
+this_invocation_nonce
+13
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+-1640522051
+1
+return.contents@
+9476
+1
+return.contents@[..]
+[0 1 2 3]
+1
+
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::ENTER
+this_invocation_nonce
+14
+set
+9476
+1
+set[..]
+[0 1 2 3]
+1
+
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT65
+this_invocation_nonce
+14
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+19587
+1
+return[..]
+[0 1 2 3 4]
+1
+set
+9476
+1
+set[..]
+[0 1 2 3]
+1
+
+FSharp.set.get():::ENTER
+this_invocation_nonce
+15
+
+FSharp.set.get():::EXIT1
+this_invocation_nonce
+15
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+-1640511940
+1
+return.contents@
+19587
+1
+return.contents@[..]
+[0 1 2 3 4]
+1
+
+FSharp.set.get():::ENTER
+this_invocation_nonce
+16
+
+FSharp.set.get():::EXIT1
+this_invocation_nonce
+16
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+-1640511940
+1
+return.contents@
+19587
+1
+return.contents@[..]
+[0 1 2 3 4]
+1
+
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::ENTER
+this_invocation_nonce
+17
+set
+19587
+1
+set[..]
+[0 1 2 3 4]
+1
+
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT65
+this_invocation_nonce
+17
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+39810
+1
+return[..]
+[0 1 2 3 4 5]
+1
+set
+19587
+1
+set[..]
+[0 1 2 3 4]
+1
+
+FSharp.set.get():::ENTER
+this_invocation_nonce
+18
+
+FSharp.set.get():::EXIT1
+this_invocation_nonce
+18
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+-1640491717
+1
+return.contents@
+39810
+1
+return.contents@[..]
+[0 1 2 3 4 5]
+1
+
+FSharp.printCollection(System.String\_msg,\_System.Collections.Generic.IEnumerable<a>\_coll):::ENTER
+this_invocation_nonce
+19
+coll
+39810
+1
+coll.GetType()
+"Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]"
+1
+msg
+-571290164
+1
+msg.ToString()
+"Collection"
+1
+
+FSharp.printCollection(System.String\_msg,\_System.Collections.Generic.IEnumerable<a>\_coll):::EXIT14
+this_invocation_nonce
+19
+coll
+39810
+1
+coll.GetType()
+"Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]"
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+msg
+-571290164
+1
+msg.ToString()
+"Collection"
+1
+
+<StartupCode$FSharp>.$FSharp.main@():::EXIT41
+this_invocation_nonce
+0
+$FSharp.init@
+0
+1
+$FSharp.set@4
+null
+1
+$FSharp.set@4.contents@
+nonsensical
+2
+$FSharp.set@4.contents@[..]
+[]
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
