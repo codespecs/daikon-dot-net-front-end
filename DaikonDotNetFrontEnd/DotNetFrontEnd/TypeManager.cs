@@ -13,6 +13,8 @@ using Microsoft.Cci;
 using Microsoft.Cci.MutableCodeModel;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
+
 
 namespace DotNetFrontEnd
 {
@@ -166,13 +168,19 @@ namespace DotNetFrontEnd
     private int globalPureMethodCount;
 
     /// <summary>
+    /// needed to be able to map the contracts from a contract class proxy method to an abstract method
+    /// </summary>
+    public IMetadataHost Host { get; private set; }
+
+    /// <summary>
     /// Create a new TypeManager instance, will be able to resolve types of the given assembly 
     /// without registering the assembly with the GAC.
     /// </summary>
     /// <param name="args">The front-end args applicable to the types being managed here</param>
-    public TypeManager(FrontEndArgs args)
+    public TypeManager(IMetadataHost host, FrontEndArgs args)
     {
       this.frontEndArgs = args;
+      this.Host = host;
 
       this.isListHashmap = new Dictionary<Type, bool>();
       this.isFSharpListHashmap = new Dictionary<Type, bool>();
@@ -457,17 +465,6 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Explicitly tests whether type is a C# set.
-    /// </summary>
-    /// <param name="type">Type to test</param>
-    /// <returns>True if type is a C# test, false otherwise.</returns>
-    private bool IsSetTest(Type type)
-    {
-      return SearchForMatchingInterface(type,
-          interfaceToTest => interfaceToTest.Name.Contains(SetInterfaceName));
-    }
-
-    /// <summary>
     /// Delegate used to see if an interface statifies a condition
     /// </summary>
     /// <param name="interfaceToCheck">Interface to test</param>
@@ -502,14 +499,9 @@ namespace DotNetFrontEnd
       }
     }
 
-    /// <summary>
-    /// Memoized test whether type is in a C# Set.
-    /// </summary>
-    /// <param name="type">Type to test</param>
-    /// <returns>True if the type is a C# test, false otherwise</returns>
     public bool IsSet(Type type)
     {
-      return IsElementOfCollectionType(type, this.isSetHashmap, IsSetTest);
+        return type.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ISet<>));
     }
 
     /// <summary>
@@ -599,9 +591,13 @@ namespace DotNetFrontEnd
     {
       Dictionary<int, MethodInfo> result = new Dictionary<int, MethodInfo>();
 
-      DNFETypeDeclaration typeDecl = this.ConvertAssemblyQualifiedNameToType(
-          this.ConvertCCITypeToAssemblyQualifiedName(cciType));
-      foreach (Type type in typeDecl.GetAllTypes)
+      var typeName = this.ConvertCCITypeToAssemblyQualifiedName(cciType);
+
+      var typeDecl = this.ConvertAssemblyQualifiedNameToType(typeName);
+     
+      var allTypes = typeDecl.GetAllTypes;
+
+      foreach (Type type in allTypes)
       {
         foreach (var x in GetPureMethodsForType(type))
         {
@@ -1031,95 +1027,44 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Returns whether the method with the given name is non-regular -- meaning it was added by the 
-    /// compiler.
+    /// Creates a type reference anchored in the given assembly reference and whose names are relative to the given host.
+    /// When the type name has periods in it, a structured reference with nested namespaces is created.
     /// </summary>
-    /// <param name="type">The type the method comes from</param>
-    /// <param name="methodName">Name of the method to test</param>
-    /// <returns>True if the method wasn't written by the programer, false otherwise</returns>
+    public static INamespaceTypeReference CreateTypeReference(IMetadataHost host, IAssemblyReference assemblyReference, string typeName)
+    {
+        IUnitNamespaceReference ns = new Microsoft.Cci.Immutable.RootUnitNamespaceReference(assemblyReference);
+        string[] names = typeName.Split('.');
+        for (int i = 0, n = names.Length - 1; i < n; i++)
+            ns = new Microsoft.Cci.Immutable.NestedUnitNamespaceReference(ns, host.NameTable.GetNameFor(names[i]));
+        return new Microsoft.Cci.Immutable.NamespaceTypeReference(host, ns, host.NameTable.GetNameFor(names[names.Length - 1]), 0, false, false, PrimitiveTypeCode.NotPrimitive);
+    }
+
+    private bool IsCompilerGenerated(IDefinition def)
+    {
+        var host = this.Host;
+        if (AttributeHelper.Contains(def.Attributes, host.PlatformType.SystemRuntimeCompilerServicesCompilerGeneratedAttribute)) return true;
+        var systemDiagnosticsDebuggerNonUserCodeAttribute = CreateTypeReference(host, new Microsoft.Cci.Immutable.AssemblyReference(host, host.ContractAssemblySymbolicIdentity), "System.Diagnostics.DebuggerNonUserCodeAttribute");
+        return AttributeHelper.Contains(def.Attributes, systemDiagnosticsDebuggerNonUserCodeAttribute);
+    }
+
+    /// <summary>
+    /// Returns <code>true</code> if <param name="methodDef"/> is compiler generated.
+    /// </summary>
+    /// <param name="methodDef">The method definition</param>
+    /// <returns><code>true</code> if <param name="methodDef"/> is compiler generated.</returns>
     public bool IsMethodCompilerGenerated(IMethodDefinition methodDef)
     {
-      if (methodDef.ToString().Contains("<>"))
-      {
-        return true;
-      }
+        return IsCompilerGenerated(methodDef);
+    }
 
-      DNFETypeDeclaration typeDecl = this.ConvertAssemblyQualifiedNameToType(
-        this.ConvertCCITypeToAssemblyQualifiedName(methodDef.ContainingType));
-      foreach (Type type in typeDecl.GetAllTypes)
-      {
-        IEnumerable<IParameterDefinition> parameters = methodDef.Parameters;
-        string methodName = methodDef.Name.ToString();
-
-        if (type == null)
-        {
-          // TODO(#56): Figure out better things to do here
-          // throw new ArgumentNullException("type");
-          return false;
-        }
-        // @ is not a valid character in a type name, so any type that contains it must be compiler generated
-        if (type.Name.Contains("@")) { return true; }
-        try
-        {
-          // Extract all the param types and try to resolve a method containing them
-          var paramTypes = parameters.ToArray();
-          Type[] reflectionTypes = new Type[paramTypes.Length];
-          int i = 0;
-          foreach (var currType in paramTypes)
-          {
-            // Get the param type
-            // Convert from CCI Type to .NET Type
-            DNFETypeDeclaration paramTypeDecl = ConvertAssemblyQualifiedNameToType(
-                ConvertCCITypeToAssemblyQualifiedName(currType.Type));
-            if (paramTypeDecl.GetDeclartionType != DNFETypeDeclaration.DeclarationType.SingleClass)
-            {
-              // There's no way to resolve the method type with multiple classes so we can 
-              // GetSingleType(), if there's any failure the only result is that a method that 
-              // possibly could be skipped won't be.
-              return false;
-            }
-            reflectionTypes[i] = paramTypeDecl.GetSingleType;
-            if (reflectionTypes[i] == null)
-            {
-              // If anything can't be resolved we are hosed
-              reflectionTypes = null;
-              break;
-            }
-            i++;
-          }
-
-          MethodInfo methodInfo;
-          if (reflectionTypes != null)
-          {
-            methodInfo = type.GetMethod(methodName, reflectionTypes);
-          }
-          else
-          {
-            methodInfo = type.GetMethod(methodName);
-          }
-          if (methodInfo == null)
-          {
-            // TODO(#56): Figure out better things to do here
-            //throw new Exception(
-            //  String.Format("Couldn't resolve method named {0} of type {1}", methodName, type.Name));
-            return false;
-          }
-          var customAttrs = methodInfo.GetCustomAttributes(true);
-          foreach (var attr in customAttrs)
-          {
-            if (attr.GetType() == typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute))
-            {
-              return true;
-            }
-          }
-        }
-        catch (AmbiguousMatchException ex)
-        {
-          // TODO(#56): Figure out better things to do here
-          Console.WriteLine(ex.Message);
-        }
-      }
-      return false;
+    /// <summary>
+    /// Returns <code>true</code> if <param name="typeDef"/> is compiler generated.
+    /// </summary>
+    /// <param name="typeDef">The method definition</param>
+    /// <returns><code>true</code> if <param name="typeDef"/> is compiler generated.</returns>
+    public bool IsTypeCompilerGenerated(ITypeDefinition typeDef)
+    {
+        return IsCompilerGenerated(typeDef);
     }
 
     /// <summary>

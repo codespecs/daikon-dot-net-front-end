@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System.Diagnostics;
+using Microsoft.Cci;
 
 namespace DotNetFrontEndLauncher
 {
@@ -78,7 +79,7 @@ namespace DotNetFrontEndLauncher
       }
 
       FrontEndArgs frontEndArgs = new FrontEndArgs(args);
-      TypeManager typeManager = new TypeManager(frontEndArgs);
+      TypeManager typeManager = new TypeManager(new PeReader.DefaultHost(), frontEndArgs);
 
       if (!File.Exists(frontEndArgs.AssemblyPath))
       {

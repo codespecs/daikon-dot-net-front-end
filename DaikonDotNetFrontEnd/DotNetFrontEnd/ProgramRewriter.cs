@@ -57,8 +57,7 @@ namespace DotNetFrontEnd
        "CA2202:Do not dispose objects multiple times"),
      System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability",
        "CA2000:Dispose objects before losing scope")]
-    public static MemoryStream RewriteProgramIL(FrontEndArgs frontEndArgs,
-        TypeManager typeManager)
+    public static MemoryStream RewriteProgramIL(FrontEndArgs frontEndArgs, TypeManager typeManager)
     {
       if (String.IsNullOrWhiteSpace(frontEndArgs.AssemblyPath))
       {
@@ -66,8 +65,8 @@ namespace DotNetFrontEnd
       }
 
       Stream resultStream;
-      using (var host = new PeReader.DefaultHost())
-      {
+      var host = typeManager.Host;
+
         IModule/*?*/ module = host.LoadUnitFrom(frontEndArgs.AssemblyPath) as IModule;
         if (module == null || module == Dummy.Module || module == Dummy.Assembly)
         {
@@ -144,7 +143,7 @@ namespace DotNetFrontEnd
                 pdbWriter);
           }
         }
-      }
+      
 
       if (frontEndArgs.SaveProgram != null)
       {
