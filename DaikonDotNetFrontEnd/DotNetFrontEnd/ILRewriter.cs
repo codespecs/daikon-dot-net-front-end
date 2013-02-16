@@ -197,26 +197,26 @@ namespace DotNetFrontEnd
     /// <returns>methodBody with instrumentation calls added</returns>
     public override IMethodBody Rewrite(IMethodBody methodBody)
     {
-        if (methodBody == null)
-        {
-            throw new ArgumentNullException("methodBody");
-        }
+      if (methodBody == null)
+      {
+        throw new ArgumentNullException("methodBody");
+      }
 
-        var method = methodBody.MethodDefinition;
-        var containingType = method.ContainingType;
+      var method = methodBody.MethodDefinition;
+      var containingType = method.ContainingType;
 
-        // If the method is compiler generated don't insert instrumentation code.
-        if (typeManager.IsTypeCompilerGenerated(containingType.ResolvedType) ||
-            typeManager.IsMethodCompilerGenerated(method) ||
-            // Don't add instrumentation code to Pure methods
-            typeManager.GetPureMethodsForType(containingType).Select(m => m.Value.Name).Contains(method.Name.Value))
-        {
-            return base.Rewrite(methodBody);
-        }
-        else
-        {
-            return ProcessOperations(methodBody);
-        }
+      // If the method is compiler generated don't insert instrumentation code.
+      if (typeManager.IsTypeCompilerGenerated(containingType.ResolvedType) ||
+          typeManager.IsMethodCompilerGenerated(method) ||
+        // Don't add instrumentation code to Pure methods
+          typeManager.GetPureMethodsForType(containingType).Select(m => m.Value.Name).Contains(method.Name.Value))
+      {
+        return base.Rewrite(methodBody);
+      }
+      else
+      {
+        return ProcessOperations(methodBody);
+      }
     }
 
     #endregion
@@ -232,12 +232,10 @@ namespace DotNetFrontEnd
         ? new List<IOperation>()
         : new List<IOperation>(immutableMethodBody.Operations));
 
-      IOperation lastReturnOperation = GetLastReturnInstruction(operations);
-
       // There may be many nops before the ret instruction, we want to catch anything
       // branching into the last return, so we need to catch anything branching into these
       // nops.
-      int operationIndexForLastReturnJumpTarget = GetIndexOfLastReturnJumpTarget(operations);
+      int operationIndexForFirstReturnJumpTarget = GetIndexOfFirstReturnJumpTarget(operations);
 
       this.generator = new ILGenerator(this.host, immutableMethodBody.MethodDefinition);
       if (this.pdbReader != null)
@@ -261,17 +259,15 @@ namespace DotNetFrontEnd
       SetNonce(immutableMethodBody.MethodDefinition);
       mutableMethodBody.LocalsAreZeroed = true;
 
-      immutableMethodBody = (IMethodBody)mutableMethodBody;
-
       // We will need to add at least 2, and possibly 6 items onto
       // the stack at the end to print values.
-      mutableMethodBody.MaxStack = Math.Max((ushort)6, immutableMethodBody.MaxStack);
+      mutableMethodBody.MaxStack = Math.Max((ushort)6, mutableMethodBody.MaxStack);
+
+      immutableMethodBody = (IMethodBody)mutableMethodBody;
 
       // We need the writer lock to emit the values of method parameters.
       AcquireWriterLock();
-
       EmitMethodSignature(MethodTransition.ENTER, immutableMethodBody);
-
       ReleaseWriterLock();
 
       // The label that early returns should jump to, exists inside the try block that
@@ -280,18 +276,17 @@ namespace DotNetFrontEnd
 
       // Generate branch target map.
       Dictionary<uint, ILGeneratorLabel> offset2Label =
-          LabelBranchTargets(operations, operationIndexForLastReturnJumpTarget, commonExit);
-
-      // Whether we've started the try body the whole method will be wrapped in
-      bool tryBodyStarted = false;
+          LabelBranchTargets(operations, operationIndexForFirstReturnJumpTarget, commonExit);
 
       // Constructors need to initialize the object before the try body starts.
       if (!immutableMethodBody.MethodDefinition.IsConstructor &&
           !IsConstructorWithNoObjectConstructorCall(immutableMethodBody))
       {
         generator.BeginTryBody();
-        tryBodyStarted = true;
       }
+
+      // Whether we've started the try body the whole method will be wrapped in
+      bool tryBodyStarted = true;
 
       HashSet<uint> offsetsUsedInExceptionInformation =
           RecordExceptionHandlerOffsets(immutableMethodBody);
@@ -301,7 +296,8 @@ namespace DotNetFrontEnd
       // If the method is non-void, return in debug builds will contain a store before a jump to
       // the return point. Figure out what the store will be to detect these returns later.
       ISet<IOperation> synthesizedReturns = DetermineSynthesizedReturns(
-        immutableMethodBody, operations, commonExit);
+        immutableMethodBody, operations, 
+        operations[operationIndexForFirstReturnJumpTarget].Offset, commonExit);
 
       // We may need to mutate the method body during rewriting, so obtain a mutable version.
       mutableMethodBody = (MethodBody)immutableMethodBody;
@@ -313,7 +309,7 @@ namespace DotNetFrontEnd
         MarkLabels(immutableMethodBody, offsetsUsedInExceptionInformation, offset2Label, op);
         this.EmitDebugInformationFor(op);
         EmitOperation(op, i, ref mutableMethodBody, offset2Label,
-            ref tryBodyStarted, exceptions, commonExit, lastReturnOperation, synthesizedReturns);
+            ref tryBodyStarted, exceptions, commonExit, operations.Last(), synthesizedReturns);
       }
 
       while (generator.InTryBody)
@@ -337,13 +333,15 @@ namespace DotNetFrontEnd
     /// returns. These are returns in the C#, but are implemented in the CIL as jumps
     /// to the given commonExit point.
     /// </summary>
+    /// <param name="originalReturnJumpOffset">The offset for the first nop for the last return 
+    /// in the compiler generated IL</param>
     /// <param name="immutableMethodBody">Method body under consideration</param>
     /// <param name="operations">List of operations in which to look for the synthesized
     /// returns</param>
     /// <param name="commonExit">Common exit the synthesized returns will jump to</param>
     /// <returns>The list of operations if any, otherwise null</returns>
     private static ISet<IOperation> DetermineSynthesizedReturns(IMethodBody immutableMethodBody,
-      List<IOperation> operations, ILGeneratorLabel commonExit)
+      List<IOperation> operations, uint originalReturnJumpOffset, ILGeneratorLabel commonExit)
     {
       if (immutableMethodBody.MethodDefinition.Type.TypeCode != PrimitiveTypeCode.Void)
       {
@@ -351,7 +349,7 @@ namespace DotNetFrontEnd
         if (lastStoreOperation != 0)
         {
           return FindAndAdjustSynthesizedReturns(operations, lastStoreOperation,
-              commonExit);
+              originalReturnJumpOffset, commonExit);
         }
       }
       return null;
@@ -360,64 +358,42 @@ namespace DotNetFrontEnd
     /// <summary>
     /// The compiler translates multiple return statements to a jump to the some
     /// number of noops inserted before the final return instruction. This method
-    /// gets the index of the last return jump target in the given list of operations.
+    /// gets the index of the first return jump target in the given list of operations.
+    /// If there are no noops preceeding the ret instruction, then this method returns
+    /// the address of the ret instruction.
     /// </summary>
     /// <param name="operations">Operations to inspect</param>
     /// <returns>The index of the last return jump target</returns>
-    private static int GetIndexOfLastReturnJumpTarget(List<IOperation> operations)
-    {
-      int opCount = operations.Count - 1;
-      int operationIndexForLastReturnJumpTarget = 0;
-      if (opCount > 1)
-      {
-        operationIndexForLastReturnJumpTarget = opCount - 2;
-        while (operationIndexForLastReturnJumpTarget > 0 &&
-               operations[operationIndexForLastReturnJumpTarget].OperationCode == OperationCode.Nop)
-        {
-          operationIndexForLastReturnJumpTarget--;
-        }
-        // We went one too far, so increment again by 1
-        operationIndexForLastReturnJumpTarget++;
-      }
-      return operationIndexForLastReturnJumpTarget;
-    }
-
-    /// <summary>
-    /// Create if necessary and return the last return instruction for the method
-    /// </summary>
-    /// <param name="operations">List of operations for the method</param>
-    /// <returns>The last return instruction</returns>
-    private static IOperation GetLastReturnInstruction(List<IOperation> operations)
+    private static int GetIndexOfFirstReturnJumpTarget(List<IOperation> operations)
     {
       int opCount = operations.Count;
-      // Add a return instruction at the end if one doesn't exist
-      /*
-      if (!(operations[opCount - 1].OperationCode == OperationCode.Ret))
+      int operationIndexForFirstReturnJumpTarget = opCount - 2;
+      if (opCount > 1)
       {
-        Operation op = new Operation();
-        op.OperationCode = OperationCode.Ret;
-        // Add padding for the previous instructions
-        op.Offset = operations[opCount - 1].Offset + 4;
-        operations.Add(op);
-        // Update the opCount with the added operation
-        opCount++;
+        while (operationIndexForFirstReturnJumpTarget > 0 &&
+               operations[operationIndexForFirstReturnJumpTarget].OperationCode == OperationCode.Nop)
+        {
+          operationIndexForFirstReturnJumpTarget--;
+        }
+        // We went one too far, so increment again by 1
+        operationIndexForFirstReturnJumpTarget++;
       }
-      */
-      // Save the last return instruction
-      return operations[opCount - 1];
+      return operationIndexForFirstReturnJumpTarget;
     }
 
     /// <summary>
     /// Find the returns that have been synthesized (in a debug build) to a store then a jump,
     /// and adjust the jump operation to target commonExit.
     /// </summary>
+    /// <param name="offsetForOldLastReturn">The offset for the first nop for the last return 
+    /// in the compiler generated IL</param>
     /// <param name="operations">Operations to the the synthesized returns in</param>
     /// <param name="lastStoreOperation">The store operation that will precede a jump</param>
     /// <param name="commonExit">The exit point that all synthesized returns should jump to
     /// after instrumentation is complete</param>
     /// <returns>The set of store commands comprising part of the synthesized return</returns>
     private static ISet<IOperation> FindAndAdjustSynthesizedReturns(List<IOperation> operations,
-        OperationCode lastStoreOperation, ILGeneratorLabel commonExit)
+        OperationCode lastStoreOperation, uint offsetForOldLastReturn, ILGeneratorLabel commonExit)
     {
       HashSet<IOperation> synthesizedReturns = new HashSet<IOperation>();
       // Need a pair of instructions for the synthesized return, so stop looking 1 before you
@@ -426,7 +402,7 @@ namespace DotNetFrontEnd
       {
         // Look for cases where the current instruction is a store...
         if (operations[i].OperationCode == lastStoreOperation &&
-          // ... and the next instruction is a branch.
+          // ... and the next instruction is a branch .. 
           (operations[i + 1].OperationCode == OperationCode.Br
           || operations[i + 1].OperationCode == OperationCode.Leave
           || operations[i + 1].OperationCode == OperationCode.Brtrue
@@ -434,7 +410,9 @@ namespace DotNetFrontEnd
           || operations[i + 1].OperationCode == OperationCode.Br_S
           || operations[i + 1].OperationCode == OperationCode.Leave_S
           || operations[i + 1].OperationCode == OperationCode.Brtrue_S
-          || operations[i + 1].OperationCode == OperationCode.Brfalse_S))
+          || operations[i + 1].OperationCode == OperationCode.Brfalse_S) &&
+          // ... and the branch location is to the old return offset.
+          (uint)operations[i+1].Value >= offsetForOldLastReturn)
         {
           synthesizedReturns.Add(operations[i]);
           ((Operation)operations[i + 1]).Value = commonExit;
@@ -595,7 +573,7 @@ namespace DotNetFrontEnd
           }
           else if (prevOp.Value is LocalDefinition)
           {
-              exType = ((LocalDefinition)prevOp.Value).Type;
+            exType = ((LocalDefinition)prevOp.Value).Type;
           }
           else if (prevOp.Value is Microsoft.Cci.MutableCodeModel.MethodReference)
           {
@@ -615,7 +593,7 @@ namespace DotNetFrontEnd
           }
           else
           {
-              throw new NotSupportedException("Unexpected operation of type " + prevOp.Value.GetType());
+            throw new NotSupportedException("Unexpected operation of type " + prevOp.Value.GetType());
           }
           // Convert from CCI Type to String Type
           // Exception name must be a single class
@@ -737,9 +715,6 @@ namespace DotNetFrontEnd
             }
 
             generator.MarkLabel(branchTaken);
-
-            generator.Emit(OperationCode.Ldstr, "Starting true branch");
-            generator.Emit(OperationCode.Pop);
 
             if (DeclareReturnProgramPoint(methodBody, i))
             {
@@ -1689,7 +1664,7 @@ namespace DotNetFrontEnd
       generator.Emit(OperationCode.Ldstr, "this");
       generator.Emit(OperationCode.Ldarg_0);
       var parentType = methodBody.MethodDefinition.ContainingTypeDefinition;
-      
+
       if (parentType is NestedTypeDefinition)
       {
         var x = ((NestedTypeDefinition)parentType);
@@ -1704,7 +1679,7 @@ namespace DotNetFrontEnd
           parentType = (ITypeDefinition)container.GetMembersNamed(x.Name, true).First();
         }
       }
-      
+
       if (parentType.IsGeneric && parentType.IsValueType)
       {
         var instanceReference = parentType.InstanceType;
