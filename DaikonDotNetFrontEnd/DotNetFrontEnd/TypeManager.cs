@@ -807,9 +807,10 @@ namespace DotNetFrontEnd
         // return "System.Object";
       }
 
-      if (type is SpecializedNestedTypeReference)
+
+      if (type is ISpecializedNestedTypeReference)
       {
-        type = ((SpecializedNestedTypeReference)type).UnspecializedVersion;
+        type = ((ISpecializedNestedTypeReference)type).UnspecializedVersion;
       }
 
       // Get the full name of the specified type
