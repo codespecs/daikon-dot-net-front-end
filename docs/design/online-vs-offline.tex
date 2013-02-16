@@ -1,0 +1,28 @@
+\documentclass{article}
+
+\usepackage{url}
+\usepackage{geometry}
+\usepackage{graphicx}
+
+\title{.NET Daikon Front End -- Online vs. Offline Use}
+
+\begin{document}
+\maketitle
+
+\section{Distinction}
+The Front End can be run in an online or offline manner. Online means the program is modified in memory to have the necessary instrumentation IL added, and then immediately executed. Offline means the instrumentation code is added and the resulting binary is saved. Offline mode is useful for debugging instrumented programs and repeated executions of a program without readding instrumentation code.
+
+\section{Online Mode}
+This is the default mode. No changes are made to the disk for purposes of binary rewriting. The modified binary is executed in memory. The FrontEndArgs and TypeManager classes are set statically during the IL rewriting and declaration printing phase, and are available to VariableVisitor.
+
+\section{Offline Mode}
+To specify Offline Mode the user must supply the --save-program command, optionally in the form of --save-program=filename to save to a custom filename, if none is supplied the name InstrumentedProgram.exe is used. The FrontEndArgs and TypeManager classes must be stored during the first phase, and then loaded when the instrumented program is run.
+
+\subsection{Static Class Serialization}
+Offline mode introduces a variety of complexities when the instrumented program is executed. The flags supplied to the front-end must be preserved. To accomplish the FrontEndArgs object is constructed and used when the program was instrumented and then the FrontEndArgs object is serialized and stored on disk in the form of {program name}.args. The TypeManager object used is stored in a similar fashion with the .tm extension. Then when the instrumented version of the program is run the FrontEndArgs and TypeManager objects are deserialized.
+
+\subsection{Writing the .dtrace file}
+In offline mode the .decls portion of the datatrace file is written in the first phase (when the binary with instrumentation code is constructed). This portion is preserved when the instrumented program is executed because it will append to the existing .dtrace file. The .decls portion would need to be preserved and restored for multiple simultaneous executions of the instrumented binary.
+\end{document}
+
+

@@ -1,0 +1,4 @@
+<StartupCode$FSharp>.$FSharp.main@() ENTER/15: 1 EXIT41/21: 1
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set) ENTER/9: 5 EXIT65/21: 5
+FSharp.printCollection(System.String\_msg,\_System.Collections.Generic.IEnumerable<a>\_coll) ENTER/15: 1 EXIT14/21: 1
+FSharp.set.get() ENTER/3: 13 EXIT1/18: 13
