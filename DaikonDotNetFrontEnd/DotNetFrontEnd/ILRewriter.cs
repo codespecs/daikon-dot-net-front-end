@@ -1688,8 +1688,23 @@ namespace DotNetFrontEnd
       }
       generator.Emit(OperationCode.Ldstr, "this");
       generator.Emit(OperationCode.Ldarg_0);
-
       var parentType = methodBody.MethodDefinition.ContainingTypeDefinition;
+      
+      if (parentType is NestedTypeDefinition)
+      {
+        var x = ((NestedTypeDefinition)parentType);
+        var container = x.ContainingTypeDefinition;
+        if (container.IsGeneric)
+        {
+          var genericContainer = container.InstanceType.ResolvedType;
+          parentType = (ITypeDefinition)genericContainer.GetMembersNamed(x.Name, true).First();
+        }
+        else
+        {
+          parentType = (ITypeDefinition)container.GetMembersNamed(x.Name, true).First();
+        }
+      }
+      
       if (parentType.IsGeneric && parentType.IsValueType)
       {
         var instanceReference = parentType.InstanceType;
