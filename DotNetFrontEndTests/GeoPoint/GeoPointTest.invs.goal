@@ -20,16 +20,16 @@ this.latitude one of { 42343845, 42358333, 42372821 }
 this.longitude one of { -71079857, -71060278, -71040699 }
 ===========================================================================
 GeoPoint.GeoPoint..cctor():::ENTER
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
 ===========================================================================
 GeoPoint.GeoPoint..cctor():::EXIT2
 ===========================================================================
 GeoPoint.GeoPoint..cctor():::EXIT
-GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.REP_SCALE_FACTOR)
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.GeoPoint.REP_SCALE_FACTOR)
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
 ===========================================================================
 GeoPoint.GeoPoint..ctor(System.Int32 latitude, System.Int32 longitude):::ENTER
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
 latitude one of { 42343845, 42358333, 42372821 }
 longitude one of { -71079857, -71060278, -71040699 }
 latitude > longitude
@@ -37,14 +37,14 @@ latitude > longitude
 GeoPoint.GeoPoint..ctor(System.Int32 latitude, System.Int32 longitude):::EXIT35
 ===========================================================================
 GeoPoint.GeoPoint..ctor(System.Int32 latitude, System.Int32 longitude):::EXIT
-GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.REP_SCALE_FACTOR)
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.GeoPoint.REP_SCALE_FACTOR)
 this.latitude == orig(latitude)
 this.longitude == orig(longitude)
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
 this.latitude > this.longitude
 ===========================================================================
 GeoPoint.GeoPoint.ToString():::ENTER
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
 this has only one value
 this.latitude == 42358333
 this.longitude == -71060278
@@ -52,10 +52,10 @@ this.longitude == -71060278
 GeoPoint.GeoPoint.ToString():::EXIT37
 ===========================================================================
 GeoPoint.GeoPoint.ToString():::EXIT
-GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.REP_SCALE_FACTOR)
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.GeoPoint.REP_SCALE_FACTOR)
 this.latitude == orig(this.latitude)
 this.longitude == orig(this.longitude)
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
 return has only one value
 return.ToString() == "Pt{42.358333,-71.060278}"
 this.latitude == 42358333
@@ -63,7 +63,7 @@ this.longitude == -71060278
 ===========================================================================
 GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint gp):::ENTER
 gp.longitude == this.longitude
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
 gp.GetType() == GeoPoint.GeoPoint.class
 gp.latitude one of { 42343845, 42358333, 42372821 }
 this.latitude one of { 42358333, 42372821 }
@@ -73,20 +73,20 @@ gp.GetType() == this.GetType()
 GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint gp):::EXIT35
 ===========================================================================
 GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint gp):::EXIT
-GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.REP_SCALE_FACTOR)
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.GeoPoint.REP_SCALE_FACTOR)
 gp.latitude == orig(gp.latitude)
 gp.longitude == this.longitude
 gp.longitude == orig(gp.longitude)
 gp.longitude == orig(this.longitude)
 this.latitude == orig(this.latitude)
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
 gp.latitude one of { 42343845, 42358333, 42372821 }
 gp.longitude == -71060278
 return one of { 0.0, 1.000005224 }
 this.latitude one of { 42358333, 42372821 }
 ===========================================================================
 GeoPoint.GeoPoint.equals(System.Object o):::ENTER
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
 ===========================================================================
 GeoPoint.GeoPoint.equals(System.Object o):::EXIT10
 return == false
@@ -112,7 +112,7 @@ GeoPoint.GeoPoint.equals(System.Object o):::EXIT27;condition="return == true"
 GeoPoint.GeoPoint.equals(System.Object o):::EXIT27;condition="not(return == true)"
 ===========================================================================
 GeoPoint.GeoPoint.equals(System.Object o):::EXIT
-GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.REP_SCALE_FACTOR)
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.GeoPoint.REP_SCALE_FACTOR)
 this.latitude == orig(this.latitude)
 this.longitude == orig(this.longitude)
 (return == false)  ==>  (this.latitude one of { 42358333, 42372821 })
@@ -122,7 +122,7 @@ this.longitude == orig(this.longitude)
 (return == true)  ==>  (this.latitude > this.longitude)
 (return == true)  ==>  (this.latitude one of { 42343845, 42358333, 42372821 })
 (return == true)  ==>  (this.longitude == -71060278)
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
 ===========================================================================
 GeoPoint.GeoPoint.equals(System.Object o):::EXIT;condition="return == true"
 return == true
@@ -136,23 +136,23 @@ return == false
 this.latitude one of { 42358333, 42372821 }
 ===========================================================================
 GeoPoint.GeoPoint.hashCode():::ENTER
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
 this.latitude == 42358333
 this.longitude == -71060278
 ===========================================================================
 GeoPoint.GeoPoint.hashCode():::EXIT11
 ===========================================================================
 GeoPoint.GeoPoint.hashCode():::EXIT
-GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.REP_SCALE_FACTOR)
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.GeoPoint.REP_SCALE_FACTOR)
 this.latitude == orig(this.latitude)
 this.longitude == orig(this.longitude)
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
 return == 1678004229
 this.latitude == 42358333
 this.longitude == -71060278
 ===========================================================================
 GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint gp):::ENTER
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
 gp.GetType() == GeoPoint.GeoPoint.class
 gp.latitude one of { 42343845, 42358333, 42372821 }
 gp.longitude one of { -71079857, -71060278, -71040699 }
@@ -166,16 +166,16 @@ this.latitude > this.longitude
 GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint gp):::EXIT57
 ===========================================================================
 GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint gp):::EXIT
-GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.REP_SCALE_FACTOR)
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.GeoPoint.REP_SCALE_FACTOR)
 gp.latitude == orig(gp.latitude)
 gp.longitude == orig(gp.longitude)
 this.latitude == orig(this.latitude)
 this.longitude == orig(this.longitude)
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
 gp.latitude one of { 42343845, 42358333, 42372821 }
 gp.longitude one of { -71079857, -71060278, -71040699 }
 this.latitude == 42358333
-GeoPoint.REP_SCALE_FACTOR > return
+GeoPoint.GeoPoint.REP_SCALE_FACTOR > return
 gp.latitude > gp.longitude
 gp.latitude > this.longitude
 gp.longitude < this.latitude
@@ -205,16 +205,16 @@ this.gpDowntown.GetType() == this.gpSouthEast.GetType()
 this.gpDowntown.GetType() == this.gpWest.GetType()
 ===========================================================================
 GeoPoint.GeoPointTest..cctor():::ENTER
-GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPointTest.tolerance == 0.01
 ===========================================================================
 GeoPoint.GeoPointTest..cctor():::EXIT2
 ===========================================================================
 GeoPoint.GeoPointTest..cctor():::EXIT
-GeoPointTest.tolerance == orig(GeoPointTest.tolerance)
-GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPointTest.tolerance == orig(GeoPoint.GeoPointTest.tolerance)
+GeoPoint.GeoPointTest.tolerance == 0.01
 ===========================================================================
 GeoPoint.GeoPointTest..ctor(System.String name):::ENTER
-GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPointTest.tolerance == 0.01
 name has only one value
 name.ToString() == "test"
 ===========================================================================
@@ -227,13 +227,13 @@ this.gpDowntown == this.gpNorth
 this.gpDowntown == this.gpSouth
 this.gpDowntown == this.gpSouthEast
 this.gpDowntown == this.gpWest
-GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPointTest.tolerance == 0.01
 name.ToString() == "test"
 this.gpDowntown == null
 name.ToString() == orig(name.ToString())
 ===========================================================================
 GeoPoint.GeoPointTest.Main(System.String[] args):::ENTER
-GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPointTest.tolerance == 0.01
 args has only one value
 args[] == []
 args[].ToString() == []
@@ -241,28 +241,28 @@ args[].ToString() == []
 GeoPoint.GeoPointTest.Main(System.String[] args):::EXIT53
 ===========================================================================
 GeoPoint.GeoPointTest.Main(System.String[] args):::EXIT
-GeoPointTest.tolerance == orig(GeoPointTest.tolerance)
+GeoPoint.GeoPointTest.tolerance == orig(GeoPoint.GeoPointTest.tolerance)
 args[] == orig(args[])
-GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPointTest.tolerance == 0.01
 args[] == []
 args[].ToString() == []
 ===========================================================================
 GeoPoint.GeoPointTest.assertEquals(System.String msg, System.Double a, System.Double b, System.Double tol):::ENTER
-GeoPointTest.tolerance == tol
+GeoPoint.GeoPointTest.tolerance == tol
 a == b
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
-GeoPointTest.tolerance == 0.01
-GeoPoint.REP_SCALE_FACTOR > a
-GeoPoint.REP_SCALE_FACTOR > b
-GeoPointTest.tolerance != a
-GeoPointTest.tolerance != b
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPoint.REP_SCALE_FACTOR > a
+GeoPoint.GeoPoint.REP_SCALE_FACTOR > b
+GeoPoint.GeoPointTest.tolerance != a
+GeoPoint.GeoPointTest.tolerance != b
 ===========================================================================
 GeoPoint.GeoPointTest.assertEquals(System.String msg, System.Double a, System.Double b, System.Double tol):::EXIT10
 ===========================================================================
 GeoPoint.GeoPointTest.assertEquals(System.String msg, System.Double a, System.Double b, System.Double tol):::EXIT
-GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.REP_SCALE_FACTOR)
-GeoPointTest.tolerance == orig(GeoPointTest.tolerance)
-GeoPointTest.tolerance == orig(tol)
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.GeoPoint.REP_SCALE_FACTOR)
+GeoPoint.GeoPointTest.tolerance == orig(GeoPoint.GeoPointTest.tolerance)
+GeoPoint.GeoPointTest.tolerance == orig(tol)
 this.gpDowntown == orig(this.gpDowntown)
 this.gpDowntown.latitude == orig(this.gpDowntown.latitude)
 this.gpDowntown.latitude == orig(this.gpEast.latitude)
@@ -282,12 +282,12 @@ this.gpSouth.latitude == orig(this.gpSouthEast.latitude)
 this.gpSouthEast == orig(this.gpSouthEast)
 this.gpWest == orig(this.gpWest)
 this.gpWest.longitude == orig(this.gpWest.longitude)
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
-GeoPointTest.tolerance == 0.01
-GeoPoint.REP_SCALE_FACTOR > orig(a)
-GeoPoint.REP_SCALE_FACTOR > orig(b)
-GeoPointTest.tolerance != orig(a)
-GeoPointTest.tolerance != orig(b)
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPoint.REP_SCALE_FACTOR > orig(a)
+GeoPoint.GeoPoint.REP_SCALE_FACTOR > orig(b)
+GeoPoint.GeoPointTest.tolerance != orig(a)
+GeoPoint.GeoPointTest.tolerance != orig(b)
 msg.ToString() == orig(msg.ToString())
 this.gpDowntown.GetType() == orig(this.gpDowntown.GetType())
 this.gpDowntown.GetType() == orig(this.gpEast.GetType())
@@ -297,8 +297,8 @@ this.gpDowntown.GetType() == orig(this.gpSouthEast.GetType())
 this.gpDowntown.GetType() == orig(this.gpWest.GetType())
 ===========================================================================
 GeoPoint.GeoPointTest.assertTrue(System.String message, System.Boolean test):::ENTER
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
-GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPointTest.tolerance == 0.01
 message != null
 test == true
 this.gpDowntown != null
@@ -311,8 +311,8 @@ this.gpWest != null
 GeoPoint.GeoPointTest.assertTrue(System.String message, System.Boolean test):::EXIT4
 ===========================================================================
 GeoPoint.GeoPointTest.assertTrue(System.String message, System.Boolean test):::EXIT
-GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.REP_SCALE_FACTOR)
-GeoPointTest.tolerance == orig(GeoPointTest.tolerance)
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.GeoPoint.REP_SCALE_FACTOR)
+GeoPoint.GeoPointTest.tolerance == orig(GeoPoint.GeoPointTest.tolerance)
 this.gpDowntown == orig(this.gpDowntown)
 this.gpDowntown.latitude == orig(this.gpDowntown.latitude)
 this.gpDowntown.latitude == orig(this.gpEast.latitude)
@@ -332,8 +332,8 @@ this.gpSouth.latitude == orig(this.gpSouthEast.latitude)
 this.gpSouthEast == orig(this.gpSouthEast)
 this.gpWest == orig(this.gpWest)
 this.gpWest.longitude == orig(this.gpWest.longitude)
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
-GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPointTest.tolerance == 0.01
 this.gpDowntown != null
 this.gpEast != null
 this.gpNorth != null
@@ -349,14 +349,14 @@ this.gpDowntown.GetType() == orig(this.gpSouthEast.GetType())
 this.gpDowntown.GetType() == orig(this.gpWest.GetType())
 ===========================================================================
 GeoPoint.GeoPointTest.setUp():::ENTER
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
-GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPointTest.tolerance == 0.01
 ===========================================================================
 GeoPoint.GeoPointTest.setUp():::EXIT31
 ===========================================================================
 GeoPoint.GeoPointTest.setUp():::EXIT
-GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.REP_SCALE_FACTOR)
-GeoPointTest.tolerance == orig(GeoPointTest.tolerance)
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.GeoPoint.REP_SCALE_FACTOR)
+GeoPoint.GeoPointTest.tolerance == orig(GeoPoint.GeoPointTest.tolerance)
 this.gpDowntown.latitude == orig(this.gpDowntown.latitude)
 this.gpDowntown.longitude == orig(this.gpDowntown.longitude)
 this.gpEast.longitude == orig(this.gpEast.longitude)
@@ -364,13 +364,13 @@ this.gpMit == orig(this.gpMit)
 this.gpNorth.latitude == orig(this.gpNorth.latitude)
 this.gpSouth.latitude == orig(this.gpSouth.latitude)
 this.gpWest.longitude == orig(this.gpWest.longitude)
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
-GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPointTest.tolerance == 0.01
 this.gpDowntown.GetType() == orig(this.gpDowntown.GetType())
 ===========================================================================
 GeoPoint.GeoPointTest.testDistanceTo():::ENTER
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
-GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPointTest.tolerance == 0.01
 this.gpDowntown has only one value
 this.gpEast has only one value
 this.gpNorth has only one value
@@ -381,8 +381,8 @@ this.gpWest has only one value
 GeoPoint.GeoPointTest.testDistanceTo():::EXIT38
 ===========================================================================
 GeoPoint.GeoPointTest.testDistanceTo():::EXIT
-GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.REP_SCALE_FACTOR)
-GeoPointTest.tolerance == orig(GeoPointTest.tolerance)
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.GeoPoint.REP_SCALE_FACTOR)
+GeoPoint.GeoPointTest.tolerance == orig(GeoPoint.GeoPointTest.tolerance)
 this.gpDowntown == orig(this.gpDowntown)
 this.gpDowntown.latitude == orig(this.gpDowntown.latitude)
 this.gpDowntown.latitude == orig(this.gpEast.latitude)
@@ -402,8 +402,8 @@ this.gpSouth.latitude == orig(this.gpSouthEast.latitude)
 this.gpSouthEast == orig(this.gpSouthEast)
 this.gpWest == orig(this.gpWest)
 this.gpWest.longitude == orig(this.gpWest.longitude)
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
-GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPointTest.tolerance == 0.01
 this.gpDowntown has only one value
 this.gpEast has only one value
 this.gpNorth has only one value
@@ -412,8 +412,8 @@ this.gpSouthEast has only one value
 this.gpWest has only one value
 ===========================================================================
 GeoPoint.GeoPointTest.testEquals():::ENTER
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
-GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPointTest.tolerance == 0.01
 this.gpDowntown has only one value
 this.gpEast has only one value
 this.gpNorth has only one value
@@ -424,8 +424,8 @@ this.gpWest has only one value
 GeoPoint.GeoPointTest.testEquals():::EXIT31
 ===========================================================================
 GeoPoint.GeoPointTest.testEquals():::EXIT
-GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.REP_SCALE_FACTOR)
-GeoPointTest.tolerance == orig(GeoPointTest.tolerance)
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.GeoPoint.REP_SCALE_FACTOR)
+GeoPoint.GeoPointTest.tolerance == orig(GeoPoint.GeoPointTest.tolerance)
 this.gpDowntown == orig(this.gpDowntown)
 this.gpDowntown.latitude == orig(this.gpDowntown.latitude)
 this.gpDowntown.latitude == orig(this.gpEast.latitude)
@@ -445,8 +445,8 @@ this.gpSouth.latitude == orig(this.gpSouthEast.latitude)
 this.gpSouthEast == orig(this.gpSouthEast)
 this.gpWest == orig(this.gpWest)
 this.gpWest.longitude == orig(this.gpWest.longitude)
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
-GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPointTest.tolerance == 0.01
 this.gpDowntown has only one value
 this.gpEast has only one value
 this.gpNorth has only one value
@@ -455,8 +455,8 @@ this.gpSouthEast has only one value
 this.gpWest has only one value
 ===========================================================================
 GeoPoint.GeoPointTest.testEquals2():::ENTER
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
-GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPointTest.tolerance == 0.01
 this.gpDowntown has only one value
 this.gpEast has only one value
 this.gpNorth has only one value
@@ -467,8 +467,8 @@ this.gpWest has only one value
 GeoPoint.GeoPointTest.testEquals2():::EXIT21
 ===========================================================================
 GeoPoint.GeoPointTest.testEquals2():::EXIT
-GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.REP_SCALE_FACTOR)
-GeoPointTest.tolerance == orig(GeoPointTest.tolerance)
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.GeoPoint.REP_SCALE_FACTOR)
+GeoPoint.GeoPointTest.tolerance == orig(GeoPoint.GeoPointTest.tolerance)
 this.gpDowntown == orig(this.gpDowntown)
 this.gpDowntown.latitude == orig(this.gpDowntown.latitude)
 this.gpDowntown.latitude == orig(this.gpEast.latitude)
@@ -488,8 +488,8 @@ this.gpSouth.latitude == orig(this.gpSouthEast.latitude)
 this.gpSouthEast == orig(this.gpSouthEast)
 this.gpWest == orig(this.gpWest)
 this.gpWest.longitude == orig(this.gpWest.longitude)
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
-GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPointTest.tolerance == 0.01
 this.gpDowntown has only one value
 this.gpEast has only one value
 this.gpNorth has only one value
@@ -498,8 +498,8 @@ this.gpSouthEast has only one value
 this.gpWest has only one value
 ===========================================================================
 GeoPoint.GeoPointTest.testHashCode():::ENTER
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
-GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPointTest.tolerance == 0.01
 this.gpDowntown has only one value
 this.gpEast has only one value
 this.gpNorth has only one value
@@ -510,8 +510,8 @@ this.gpWest has only one value
 GeoPoint.GeoPointTest.testHashCode():::EXIT15
 ===========================================================================
 GeoPoint.GeoPointTest.testHashCode():::EXIT
-GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.REP_SCALE_FACTOR)
-GeoPointTest.tolerance == orig(GeoPointTest.tolerance)
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.GeoPoint.REP_SCALE_FACTOR)
+GeoPoint.GeoPointTest.tolerance == orig(GeoPoint.GeoPointTest.tolerance)
 this.gpDowntown == orig(this.gpDowntown)
 this.gpDowntown.latitude == orig(this.gpDowntown.latitude)
 this.gpDowntown.latitude == orig(this.gpEast.latitude)
@@ -531,8 +531,8 @@ this.gpSouth.latitude == orig(this.gpSouthEast.latitude)
 this.gpSouthEast == orig(this.gpSouthEast)
 this.gpWest == orig(this.gpWest)
 this.gpWest.longitude == orig(this.gpWest.longitude)
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
-GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPointTest.tolerance == 0.01
 this.gpDowntown has only one value
 this.gpEast has only one value
 this.gpNorth has only one value
@@ -541,8 +541,8 @@ this.gpSouthEast has only one value
 this.gpWest has only one value
 ===========================================================================
 GeoPoint.GeoPointTest.testHeadingTo():::ENTER
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
-GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPointTest.tolerance == 0.01
 this.gpDowntown has only one value
 this.gpEast has only one value
 this.gpNorth has only one value
@@ -553,8 +553,8 @@ this.gpWest has only one value
 GeoPoint.GeoPointTest.testHeadingTo():::EXIT102
 ===========================================================================
 GeoPoint.GeoPointTest.testHeadingTo():::EXIT
-GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.REP_SCALE_FACTOR)
-GeoPointTest.tolerance == orig(GeoPointTest.tolerance)
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.GeoPoint.REP_SCALE_FACTOR)
+GeoPoint.GeoPointTest.tolerance == orig(GeoPoint.GeoPointTest.tolerance)
 this.gpDowntown == orig(this.gpDowntown)
 this.gpDowntown.latitude == orig(this.gpDowntown.latitude)
 this.gpDowntown.latitude == orig(this.gpEast.latitude)
@@ -574,8 +574,8 @@ this.gpSouth.latitude == orig(this.gpSouthEast.latitude)
 this.gpSouthEast == orig(this.gpSouthEast)
 this.gpWest == orig(this.gpWest)
 this.gpWest.longitude == orig(this.gpWest.longitude)
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
-GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPointTest.tolerance == 0.01
 this.gpDowntown has only one value
 this.gpEast has only one value
 this.gpNorth has only one value
@@ -584,8 +584,8 @@ this.gpSouthEast has only one value
 this.gpWest has only one value
 ===========================================================================
 GeoPoint.GeoPointTest.testImmutability():::ENTER
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
-GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPointTest.tolerance == 0.01
 this.gpDowntown has only one value
 this.gpEast has only one value
 this.gpNorth has only one value
@@ -596,8 +596,8 @@ this.gpWest has only one value
 GeoPoint.GeoPointTest.testImmutability():::EXIT71
 ===========================================================================
 GeoPoint.GeoPointTest.testImmutability():::EXIT
-GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.REP_SCALE_FACTOR)
-GeoPointTest.tolerance == orig(GeoPointTest.tolerance)
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.GeoPoint.REP_SCALE_FACTOR)
+GeoPoint.GeoPointTest.tolerance == orig(GeoPoint.GeoPointTest.tolerance)
 this.gpDowntown == orig(this.gpDowntown)
 this.gpDowntown.latitude == orig(this.gpDowntown.latitude)
 this.gpDowntown.latitude == orig(this.gpEast.latitude)
@@ -617,8 +617,8 @@ this.gpSouth.latitude == orig(this.gpSouthEast.latitude)
 this.gpSouthEast == orig(this.gpSouthEast)
 this.gpWest == orig(this.gpWest)
 this.gpWest.longitude == orig(this.gpWest.longitude)
-GeoPoint.REP_SCALE_FACTOR == 1000000.0
-GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPointTest.tolerance == 0.01
 this.gpDowntown has only one value
 this.gpEast has only one value
 this.gpNorth has only one value
