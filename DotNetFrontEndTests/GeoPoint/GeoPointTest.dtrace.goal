@@ -322,7 +322,7 @@ parent parent GeoPoint.Assert:::CLASS 1
 ppt GeoPoint.GeoPoint..cctor():::ENTER
 ppt-type enter
 parent parent GeoPoint.GeoPoint:::CLASS 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -331,7 +331,7 @@ parent parent GeoPoint.GeoPoint:::CLASS 1
 ppt GeoPoint.GeoPoint..cctor():::EXIT2
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::CLASS 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -352,7 +352,7 @@ parent parent GeoPoint.GeoPoint:::CLASS 1
 ppt GeoPoint.GeoPoint..cctor():::EXIT_EX_Runtime
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::CLASS 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -373,7 +373,7 @@ parent parent GeoPoint.GeoPoint:::CLASS 1
 ppt GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 ppt-type enter
 parent parent GeoPoint.GeoPoint:::CLASS 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -394,7 +394,7 @@ parent parent GeoPoint.GeoPoint:::CLASS 1
 ppt GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -456,7 +456,7 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
 ppt GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT_EX_Runtime
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -518,7 +518,7 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
 ppt GeoPoint.GeoPoint.ToString():::ENTER
 ppt-type enter
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -556,7 +556,7 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
 ppt GeoPoint.GeoPoint.ToString():::EXIT37
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -618,7 +618,7 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
 ppt GeoPoint.GeoPoint.ToString():::EXIT39
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -680,7 +680,7 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
 ppt GeoPoint.GeoPoint.ToString():::EXIT_EX_Runtime
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -742,7 +742,7 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
 ppt GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::ENTER
 ppt-type enter
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -805,7 +805,7 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
 ppt GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::EXIT35
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -885,7 +885,7 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
 ppt GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::EXIT37
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -965,7 +965,7 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
 ppt GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::EXIT_EX_Runtime
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -1045,7 +1045,7 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
 ppt GeoPoint.GeoPoint.equals(System.Object\_o):::ENTER
 ppt-type enter
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -1096,7 +1096,7 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
 ppt GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT10
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -1164,7 +1164,7 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
 ppt GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT27
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -1232,7 +1232,7 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
 ppt GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT29
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -1300,7 +1300,7 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
 ppt GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT_EX_Runtime
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -1368,7 +1368,7 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
 ppt GeoPoint.GeoPoint.hashCode():::ENTER
 ppt-type enter
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -1406,7 +1406,7 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
 ppt GeoPoint.GeoPoint.hashCode():::EXIT11
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -1461,7 +1461,7 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
 ppt GeoPoint.GeoPoint.hashCode():::EXIT13
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -1516,7 +1516,7 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
 ppt GeoPoint.GeoPoint.hashCode():::EXIT_EX_Runtime
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -1571,7 +1571,7 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
 ppt GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::ENTER
 ppt-type enter
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -1634,7 +1634,7 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
 ppt GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT57
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -1714,7 +1714,7 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
 ppt GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT59
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -1794,7 +1794,7 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
 ppt GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT_EX_Runtime
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -1877,7 +1877,7 @@ ppt-type class
 ppt GeoPoint.GeoPoint:::OBJECT
 ppt-type object
 parent parent GeoPoint.GeoPoint:::CLASS 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
@@ -1911,7 +1911,7 @@ parent parent GeoPoint.GeoPoint:::CLASS 1
 ppt GeoPoint.GeoPointTest..cctor():::ENTER
 ppt-type enter
 parent parent GeoPoint.GeoPointTest:::CLASS 1
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -1920,7 +1920,7 @@ parent parent GeoPoint.GeoPointTest:::CLASS 1
 ppt GeoPoint.GeoPointTest..cctor():::EXIT2
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::CLASS 1
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -1941,7 +1941,7 @@ parent parent GeoPoint.GeoPointTest:::CLASS 1
 ppt GeoPoint.GeoPointTest..cctor():::EXIT_EX_Runtime
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::CLASS 1
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -1962,7 +1962,7 @@ parent parent GeoPoint.GeoPointTest:::CLASS 1
 ppt GeoPoint.GeoPointTest..ctor(System.String\_name):::ENTER
 ppt-type enter
 parent parent GeoPoint.GeoPointTest:::CLASS 1
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -1984,12 +1984,12 @@ parent parent GeoPoint.GeoPointTest:::CLASS 1
 ppt GeoPoint.GeoPointTest..ctor(System.String\_name):::EXIT26
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -2241,12 +2241,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest..ctor(System.String\_name):::EXIT_EX_Runtime
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -2498,7 +2498,7 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.Main(System.String[]\_args):::ENTER
 ppt-type enter
 parent parent GeoPoint.GeoPointTest:::CLASS 1
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -2528,7 +2528,7 @@ parent parent GeoPoint.GeoPointTest:::CLASS 1
 ppt GeoPoint.GeoPointTest.Main(System.String[]\_args):::EXIT53
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::CLASS 1
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -2570,7 +2570,7 @@ parent parent GeoPoint.GeoPointTest:::CLASS 1
 ppt GeoPoint.GeoPointTest.Main(System.String[]\_args):::EXIT_EX_Runtime
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::CLASS 1
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -2612,12 +2612,12 @@ parent parent GeoPoint.GeoPointTest:::CLASS 1
 ppt GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::ENTER
 ppt-type enter
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -2875,12 +2875,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::EXIT10
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -3150,12 +3150,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::EXIT11
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -3425,12 +3425,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::EXIT_EX_Runtime
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -3700,12 +3700,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.assertTrue(System.Boolean\_test):::ENTER
 ppt-type enter
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -3938,12 +3938,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.assertTrue(System.Boolean\_test):::EXIT6
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -4188,12 +4188,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.assertTrue(System.Boolean\_test):::EXIT_EX_Runtime
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -4438,12 +4438,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::ENTER
 ppt-type enter
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -4689,12 +4689,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::EXIT4
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -4952,12 +4952,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::EXIT9
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -5215,12 +5215,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::EXIT_EX_Runtime
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -5478,12 +5478,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::EXIT_EX_System.ArgumentException
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -5741,12 +5741,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.setUp():::ENTER
 ppt-type enter
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -5973,12 +5973,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.setUp():::EXIT31
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -6217,12 +6217,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.setUp():::EXIT_EX_Runtime
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -6461,12 +6461,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.testDistanceTo():::ENTER
 ppt-type enter
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -6693,12 +6693,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.testDistanceTo():::EXIT38
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -6937,12 +6937,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.testDistanceTo():::EXIT_EX_Runtime
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -7181,12 +7181,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.testEquals():::ENTER
 ppt-type enter
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -7413,12 +7413,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.testEquals():::EXIT31
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -7657,12 +7657,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.testEquals():::EXIT_EX_Runtime
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -7901,12 +7901,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.testEquals2():::ENTER
 ppt-type enter
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -8133,12 +8133,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.testEquals2():::EXIT21
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -8377,12 +8377,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.testEquals2():::EXIT_EX_Runtime
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -8621,12 +8621,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.testHashCode():::ENTER
 ppt-type enter
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -8853,12 +8853,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.testHashCode():::EXIT15
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -9097,12 +9097,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.testHashCode():::EXIT_EX_Runtime
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -9341,12 +9341,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.testHeadingTo():::ENTER
 ppt-type enter
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -9573,12 +9573,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.testHeadingTo():::EXIT102
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -9817,12 +9817,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.testHeadingTo():::EXIT_EX_Runtime
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -10061,12 +10061,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.testImmutability():::ENTER
 ppt-type enter
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -10293,12 +10293,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.testImmutability():::EXIT71
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -10537,12 +10537,12 @@ parent parent GeoPoint.GeoPointTest:::OBJECT 1
 ppt GeoPoint.GeoPointTest.testImmutability():::EXIT_EX_Runtime
 ppt-type subexit
 parent parent GeoPoint.GeoPointTest:::OBJECT 1
-  variable GeoPoint.REP_SCALE_FACTOR
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
     var-kind variable
     dec-type double
     rep-type double
     comparability 22
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -10784,7 +10784,7 @@ ppt-type class
 ppt GeoPoint.GeoPointTest:::OBJECT
 ppt-type object
 parent parent GeoPoint.GeoPointTest:::CLASS 1
-  variable GeoPointTest.tolerance
+  variable GeoPoint.GeoPointTest.tolerance
     var-kind variable
     dec-type double
     rep-type double
@@ -10981,14 +10981,14 @@ parent parent GeoPoint.GeoPointTest:::CLASS 1
 GeoPoint.GeoPointTest..cctor():::ENTER
 this_invocation_nonce
 0
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 
 GeoPoint.GeoPointTest..cctor():::EXIT2
 this_invocation_nonce
 0
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -11001,7 +11001,7 @@ nonsensical
 GeoPoint.GeoPointTest.Main(System.String[]\_args):::ENTER
 this_invocation_nonce
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 args
@@ -11017,7 +11017,7 @@ args[..].ToString()
 GeoPoint.GeoPointTest..ctor(System.String\_name):::ENTER
 this_invocation_nonce
 2
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 name
@@ -11030,10 +11030,10 @@ name.ToString()
 GeoPoint.GeoPointTest..ctor(System.String\_name):::EXIT26
 this_invocation_nonce
 2
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 nonsensical
 2
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -11142,10 +11142,10 @@ nonsensical
 GeoPoint.GeoPointTest.setUp():::ENTER
 this_invocation_nonce
 3
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 nonsensical
 2
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
@@ -11242,14 +11242,14 @@ nonsensical
 GeoPoint.GeoPoint..cctor():::ENTER
 this_invocation_nonce
 4
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 
 GeoPoint.GeoPoint..cctor():::EXIT2
 this_invocation_nonce
 4
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -11262,7 +11262,7 @@ nonsensical
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 5
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -11315,7 +11315,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 5
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -11346,7 +11346,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 8
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -11399,7 +11399,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 8
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -11430,7 +11430,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 11
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -11483,7 +11483,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 11
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -11514,7 +11514,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 14
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -11567,7 +11567,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 14
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -11598,7 +11598,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 17
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -11651,7 +11651,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 17
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -11682,7 +11682,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 20
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -11735,7 +11735,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 20
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -11766,10 +11766,10 @@ this.longitude
 GeoPoint.GeoPointTest.setUp():::EXIT31
 this_invocation_nonce
 3
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -11872,10 +11872,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.testImmutability():::ENTER
 this_invocation_nonce
 23
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
@@ -11972,7 +11972,7 @@ this.gpWest.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 24
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -12025,7 +12025,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 24
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -12056,7 +12056,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 27
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -12109,7 +12109,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 27
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -12140,7 +12140,7 @@ this.longitude
 GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::ENTER
 this_invocation_nonce
 30
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
@@ -12197,7 +12197,7 @@ obj.GetType()
 GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::EXIT35
 this_invocation_nonce
 30
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -12237,7 +12237,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::ENTER
 this_invocation_nonce
 32
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
@@ -12262,7 +12262,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT27
 this_invocation_nonce
 32
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -12296,10 +12296,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::ENTER
 this_invocation_nonce
 33
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
@@ -12405,10 +12405,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::EXIT4
 this_invocation_nonce
 33
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -12520,7 +12520,7 @@ this.gpWest.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::ENTER
 this_invocation_nonce
 34
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
@@ -12545,7 +12545,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT27
 this_invocation_nonce
 34
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -12579,10 +12579,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::ENTER
 this_invocation_nonce
 35
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
@@ -12688,10 +12688,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::EXIT4
 this_invocation_nonce
 35
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -12803,7 +12803,7 @@ this.gpWest.longitude
 GeoPoint.GeoPoint.hashCode():::ENTER
 this_invocation_nonce
 36
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 this
@@ -12822,7 +12822,7 @@ this.longitude
 GeoPoint.GeoPoint.hashCode():::EXIT11
 this_invocation_nonce
 36
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -12850,7 +12850,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::ENTER
 this_invocation_nonce
 37
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
@@ -12875,7 +12875,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT27
 this_invocation_nonce
 37
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -12909,10 +12909,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::ENTER
 this_invocation_nonce
 38
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
@@ -13018,10 +13018,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::EXIT4
 this_invocation_nonce
 38
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -13133,7 +13133,7 @@ this.gpWest.longitude
 GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::ENTER
 this_invocation_nonce
 39
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
@@ -13190,7 +13190,7 @@ obj.GetType()
 GeoPoint.GeoPoint.equals(System.Object\_o):::ENTER
 this_invocation_nonce
 41
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
@@ -13215,7 +13215,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT27
 this_invocation_nonce
 41
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -13269,7 +13269,7 @@ true
 GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT57
 this_invocation_nonce
 39
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -13309,7 +13309,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::ENTER
 this_invocation_nonce
 43
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
@@ -13334,7 +13334,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT27
 this_invocation_nonce
 43
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -13368,10 +13368,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::ENTER
 this_invocation_nonce
 44
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
@@ -13477,10 +13477,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::EXIT4
 this_invocation_nonce
 44
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -13592,7 +13592,7 @@ this.gpWest.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::ENTER
 this_invocation_nonce
 45
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
@@ -13617,7 +13617,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT27
 this_invocation_nonce
 45
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -13651,10 +13651,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::ENTER
 this_invocation_nonce
 46
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
@@ -13760,10 +13760,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::EXIT4
 this_invocation_nonce
 46
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -13875,7 +13875,7 @@ this.gpWest.longitude
 GeoPoint.GeoPoint.ToString():::ENTER
 this_invocation_nonce
 47
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 this
@@ -13894,7 +13894,7 @@ this.longitude
 GeoPoint.GeoPoint.ToString():::EXIT37
 this_invocation_nonce
 47
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -13925,7 +13925,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::ENTER
 this_invocation_nonce
 48
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
@@ -13950,7 +13950,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT27
 this_invocation_nonce
 48
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -13984,10 +13984,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::ENTER
 this_invocation_nonce
 49
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
@@ -14093,10 +14093,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::EXIT4
 this_invocation_nonce
 49
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -14208,10 +14208,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.testImmutability():::EXIT71
 this_invocation_nonce
 23
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -14314,10 +14314,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.setUp():::ENTER
 this_invocation_nonce
 50
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
@@ -14414,7 +14414,7 @@ this.gpWest.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 51
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -14467,7 +14467,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 51
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -14498,7 +14498,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 54
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -14551,7 +14551,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 54
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -14582,7 +14582,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 57
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -14635,7 +14635,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 57
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -14666,7 +14666,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 60
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -14719,7 +14719,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 60
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -14750,7 +14750,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 63
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -14803,7 +14803,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 63
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -14834,7 +14834,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 66
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -14887,7 +14887,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 66
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -14918,10 +14918,10 @@ this.longitude
 GeoPoint.GeoPointTest.setUp():::EXIT31
 this_invocation_nonce
 50
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -15024,10 +15024,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.testEquals():::ENTER
 this_invocation_nonce
 69
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
@@ -15124,7 +15124,7 @@ this.gpWest.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::ENTER
 this_invocation_nonce
 70
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
@@ -15149,7 +15149,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT27
 this_invocation_nonce
 70
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -15183,10 +15183,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::ENTER
 this_invocation_nonce
 71
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
@@ -15292,10 +15292,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::EXIT4
 this_invocation_nonce
 71
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -15407,7 +15407,7 @@ this.gpWest.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 72
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -15460,7 +15460,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 72
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -15491,7 +15491,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::ENTER
 this_invocation_nonce
 75
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
@@ -15516,7 +15516,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT27
 this_invocation_nonce
 75
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -15550,10 +15550,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::ENTER
 this_invocation_nonce
 76
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
@@ -15659,10 +15659,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::EXIT4
 this_invocation_nonce
 76
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -15774,7 +15774,7 @@ this.gpWest.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::ENTER
 this_invocation_nonce
 77
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
@@ -15799,7 +15799,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT27
 this_invocation_nonce
 77
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -15833,10 +15833,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::ENTER
 this_invocation_nonce
 78
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
@@ -15942,10 +15942,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::EXIT4
 this_invocation_nonce
 78
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -16057,10 +16057,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.testEquals():::EXIT31
 this_invocation_nonce
 69
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -16163,10 +16163,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.setUp():::ENTER
 this_invocation_nonce
 79
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
@@ -16263,7 +16263,7 @@ this.gpWest.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 80
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -16316,7 +16316,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 80
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -16347,7 +16347,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 83
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -16400,7 +16400,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 83
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -16431,7 +16431,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 86
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -16484,7 +16484,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 86
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -16515,7 +16515,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 89
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -16568,7 +16568,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 89
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -16599,7 +16599,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 92
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -16652,7 +16652,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 92
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -16683,7 +16683,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 95
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -16736,7 +16736,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 95
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -16767,10 +16767,10 @@ this.longitude
 GeoPoint.GeoPointTest.setUp():::EXIT31
 this_invocation_nonce
 79
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -16873,10 +16873,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.testEquals2():::ENTER
 this_invocation_nonce
 98
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
@@ -16973,7 +16973,7 @@ this.gpWest.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::ENTER
 this_invocation_nonce
 99
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
@@ -16998,7 +16998,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT10
 this_invocation_nonce
 99
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -17032,10 +17032,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::ENTER
 this_invocation_nonce
 100
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
@@ -17141,10 +17141,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::EXIT4
 this_invocation_nonce
 100
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -17256,7 +17256,7 @@ this.gpWest.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::ENTER
 this_invocation_nonce
 101
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
@@ -17281,7 +17281,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT10
 this_invocation_nonce
 101
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -17315,10 +17315,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::ENTER
 this_invocation_nonce
 102
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
@@ -17424,10 +17424,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::EXIT4
 this_invocation_nonce
 102
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -17539,10 +17539,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.testEquals2():::EXIT21
 this_invocation_nonce
 98
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -17645,10 +17645,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.setUp():::ENTER
 this_invocation_nonce
 103
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
@@ -17745,7 +17745,7 @@ this.gpWest.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 104
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -17798,7 +17798,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 104
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -17829,7 +17829,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 107
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -17882,7 +17882,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 107
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -17913,7 +17913,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 110
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -17966,7 +17966,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 110
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -17997,7 +17997,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 113
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -18050,7 +18050,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 113
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -18081,7 +18081,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 116
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -18134,7 +18134,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 116
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -18165,7 +18165,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 119
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -18218,7 +18218,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 119
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -18249,10 +18249,10 @@ this.longitude
 GeoPoint.GeoPointTest.setUp():::EXIT31
 this_invocation_nonce
 103
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -18355,10 +18355,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.testDistanceTo():::ENTER
 this_invocation_nonce
 122
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
@@ -18455,7 +18455,7 @@ this.gpWest.longitude
 GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::ENTER
 this_invocation_nonce
 123
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
@@ -18512,7 +18512,7 @@ obj.GetType()
 GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::EXIT35
 this_invocation_nonce
 123
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -18552,10 +18552,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::ENTER
 this_invocation_nonce
 125
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 a
@@ -18667,10 +18667,10 @@ tol
 GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::EXIT10
 this_invocation_nonce
 125
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 a
@@ -18788,7 +18788,7 @@ tol
 GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::ENTER
 this_invocation_nonce
 126
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
@@ -18845,7 +18845,7 @@ obj.GetType()
 GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::EXIT35
 this_invocation_nonce
 126
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -18885,7 +18885,7 @@ this.longitude
 GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::ENTER
 this_invocation_nonce
 128
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
@@ -18942,7 +18942,7 @@ obj.GetType()
 GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::EXIT35
 this_invocation_nonce
 128
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -18982,10 +18982,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::ENTER
 this_invocation_nonce
 130
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 a
@@ -19097,10 +19097,10 @@ tol
 GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::EXIT10
 this_invocation_nonce
 130
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 a
@@ -19218,7 +19218,7 @@ tol
 GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::ENTER
 this_invocation_nonce
 131
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
@@ -19275,7 +19275,7 @@ obj.GetType()
 GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::EXIT35
 this_invocation_nonce
 131
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -19315,10 +19315,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::ENTER
 this_invocation_nonce
 133
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 a
@@ -19430,10 +19430,10 @@ tol
 GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::EXIT10
 this_invocation_nonce
 133
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 a
@@ -19551,10 +19551,10 @@ tol
 GeoPoint.GeoPointTest.testDistanceTo():::EXIT38
 this_invocation_nonce
 122
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -19657,10 +19657,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.setUp():::ENTER
 this_invocation_nonce
 134
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
@@ -19757,7 +19757,7 @@ this.gpWest.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 135
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -19810,7 +19810,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 135
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -19841,7 +19841,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 138
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -19894,7 +19894,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 138
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -19925,7 +19925,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 141
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -19978,7 +19978,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 141
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -20009,7 +20009,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 144
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -20062,7 +20062,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 144
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -20093,7 +20093,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 147
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -20146,7 +20146,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 147
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -20177,7 +20177,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 150
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -20230,7 +20230,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 150
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -20261,10 +20261,10 @@ this.longitude
 GeoPoint.GeoPointTest.setUp():::EXIT31
 this_invocation_nonce
 134
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -20367,10 +20367,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.testHeadingTo():::ENTER
 this_invocation_nonce
 153
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
@@ -20467,7 +20467,7 @@ this.gpWest.longitude
 GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::ENTER
 this_invocation_nonce
 154
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
@@ -20524,7 +20524,7 @@ obj.GetType()
 GeoPoint.GeoPoint.equals(System.Object\_o):::ENTER
 this_invocation_nonce
 156
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
@@ -20549,7 +20549,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT27
 this_invocation_nonce
 156
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -20603,7 +20603,7 @@ true
 GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT57
 this_invocation_nonce
 154
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -20643,10 +20643,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::ENTER
 this_invocation_nonce
 158
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 a
@@ -20758,10 +20758,10 @@ tol
 GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::EXIT10
 this_invocation_nonce
 158
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 a
@@ -20879,7 +20879,7 @@ tol
 GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::ENTER
 this_invocation_nonce
 159
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
@@ -20936,7 +20936,7 @@ obj.GetType()
 GeoPoint.GeoPoint.equals(System.Object\_o):::ENTER
 this_invocation_nonce
 161
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
@@ -20961,7 +20961,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT27
 this_invocation_nonce
 161
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -21015,7 +21015,7 @@ true
 GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT57
 this_invocation_nonce
 159
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -21055,10 +21055,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::ENTER
 this_invocation_nonce
 163
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 a
@@ -21170,10 +21170,10 @@ tol
 GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::EXIT10
 this_invocation_nonce
 163
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 a
@@ -21291,7 +21291,7 @@ tol
 GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::ENTER
 this_invocation_nonce
 164
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
@@ -21348,7 +21348,7 @@ obj.GetType()
 GeoPoint.GeoPoint.equals(System.Object\_o):::ENTER
 this_invocation_nonce
 166
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
@@ -21373,7 +21373,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT27
 this_invocation_nonce
 166
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -21427,7 +21427,7 @@ true
 GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT57
 this_invocation_nonce
 164
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -21467,10 +21467,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::ENTER
 this_invocation_nonce
 168
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
@@ -21576,10 +21576,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::EXIT4
 this_invocation_nonce
 168
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -21691,7 +21691,7 @@ this.gpWest.longitude
 GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::ENTER
 this_invocation_nonce
 169
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
@@ -21748,7 +21748,7 @@ obj.GetType()
 GeoPoint.GeoPoint.equals(System.Object\_o):::ENTER
 this_invocation_nonce
 171
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
@@ -21773,7 +21773,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT27
 this_invocation_nonce
 171
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -21827,7 +21827,7 @@ true
 GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT57
 this_invocation_nonce
 169
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -21867,10 +21867,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::ENTER
 this_invocation_nonce
 173
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 a
@@ -21982,10 +21982,10 @@ tol
 GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::EXIT10
 this_invocation_nonce
 173
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 a
@@ -22103,7 +22103,7 @@ tol
 GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::ENTER
 this_invocation_nonce
 174
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
@@ -22160,7 +22160,7 @@ obj.GetType()
 GeoPoint.GeoPoint.equals(System.Object\_o):::ENTER
 this_invocation_nonce
 176
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
@@ -22185,7 +22185,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT27
 this_invocation_nonce
 176
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -22239,7 +22239,7 @@ true
 GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT57
 this_invocation_nonce
 174
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -22279,10 +22279,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::ENTER
 this_invocation_nonce
 178
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 a
@@ -22394,10 +22394,10 @@ tol
 GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::EXIT10
 this_invocation_nonce
 178
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 a
@@ -22515,7 +22515,7 @@ tol
 GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::ENTER
 this_invocation_nonce
 179
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
@@ -22572,7 +22572,7 @@ obj.GetType()
 GeoPoint.GeoPoint.equals(System.Object\_o):::ENTER
 this_invocation_nonce
 181
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
@@ -22597,7 +22597,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT27
 this_invocation_nonce
 181
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -22651,7 +22651,7 @@ true
 GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT57
 this_invocation_nonce
 179
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -22691,10 +22691,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::ENTER
 this_invocation_nonce
 183
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 a
@@ -22806,10 +22806,10 @@ tol
 GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::EXIT10
 this_invocation_nonce
 183
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 a
@@ -22927,7 +22927,7 @@ tol
 GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::ENTER
 this_invocation_nonce
 184
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
@@ -22984,7 +22984,7 @@ obj.GetType()
 GeoPoint.GeoPoint.equals(System.Object\_o):::ENTER
 this_invocation_nonce
 186
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
@@ -23009,7 +23009,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT27
 this_invocation_nonce
 186
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -23063,7 +23063,7 @@ true
 GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT57
 this_invocation_nonce
 184
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -23103,10 +23103,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::ENTER
 this_invocation_nonce
 188
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 a
@@ -23218,10 +23218,10 @@ tol
 GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::EXIT10
 this_invocation_nonce
 188
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 a
@@ -23339,7 +23339,7 @@ tol
 GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::ENTER
 this_invocation_nonce
 189
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
@@ -23396,7 +23396,7 @@ obj.GetType()
 GeoPoint.GeoPoint.equals(System.Object\_o):::ENTER
 this_invocation_nonce
 191
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
@@ -23421,7 +23421,7 @@ this.longitude
 GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT27
 this_invocation_nonce
 191
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -23475,7 +23475,7 @@ true
 GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT57
 this_invocation_nonce
 189
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -23515,10 +23515,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::ENTER
 this_invocation_nonce
 193
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 a
@@ -23630,10 +23630,10 @@ tol
 GeoPoint.GeoPointTest.assertEquals(System.String\_msg,\_System.Double\_a,\_System.Double\_b,\_System.Double\_tol):::EXIT10
 this_invocation_nonce
 193
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 a
@@ -23751,10 +23751,10 @@ tol
 GeoPoint.GeoPointTest.testHeadingTo():::EXIT102
 this_invocation_nonce
 153
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -23857,10 +23857,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.setUp():::ENTER
 this_invocation_nonce
 194
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
@@ -23957,7 +23957,7 @@ this.gpWest.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 195
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -24010,7 +24010,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 195
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -24041,7 +24041,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 198
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -24094,7 +24094,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 198
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -24125,7 +24125,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 201
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -24178,7 +24178,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 201
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -24209,7 +24209,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 204
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -24262,7 +24262,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 204
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -24293,7 +24293,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 207
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -24346,7 +24346,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 207
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -24377,7 +24377,7 @@ this.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 210
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -24430,7 +24430,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 210
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -24461,10 +24461,10 @@ this.longitude
 GeoPoint.GeoPointTest.setUp():::EXIT31
 this_invocation_nonce
 194
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -24567,10 +24567,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.testHashCode():::ENTER
 this_invocation_nonce
 213
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
@@ -24667,7 +24667,7 @@ this.gpWest.longitude
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::ENTER
 this_invocation_nonce
 214
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 latitude
@@ -24720,7 +24720,7 @@ true
 GeoPoint.GeoPoint..ctor(System.Int32\_latitude,\_System.Int32\_longitude):::EXIT35
 this_invocation_nonce
 214
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -24751,7 +24751,7 @@ this.longitude
 GeoPoint.GeoPoint.hashCode():::ENTER
 this_invocation_nonce
 217
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 this
@@ -24770,7 +24770,7 @@ this.longitude
 GeoPoint.GeoPoint.hashCode():::EXIT11
 this_invocation_nonce
 217
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -24798,7 +24798,7 @@ this.longitude
 GeoPoint.GeoPoint.hashCode():::ENTER
 this_invocation_nonce
 218
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 this
@@ -24817,7 +24817,7 @@ this.longitude
 GeoPoint.GeoPoint.hashCode():::EXIT11
 this_invocation_nonce
 218
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 exception
@@ -24845,10 +24845,10 @@ this.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::ENTER
 this_invocation_nonce
 219
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
@@ -24954,10 +24954,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.assertTrue(System.String\_message,\_System.Boolean\_test):::EXIT4
 this_invocation_nonce
 219
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -25069,10 +25069,10 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.testHashCode():::EXIT15
 this_invocation_nonce
 213
-GeoPoint.REP_SCALE_FACTOR
+GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 exception
@@ -25175,7 +25175,7 @@ this.gpWest.longitude
 GeoPoint.GeoPointTest.Main(System.String[]\_args):::EXIT53
 this_invocation_nonce
 1
-GeoPointTest.tolerance
+GeoPoint.GeoPointTest.tolerance
 0.01
 1
 args
