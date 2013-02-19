@@ -423,19 +423,27 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="type">Type to inspect</param>
     /// <returns>Binding flag specifying visibility of fields to inspect</returns>
-    private System.Reflection.BindingFlags GetAccessOptionsForFieldInspection(Type type)
+    private System.Reflection.BindingFlags GetAccessOptionsForFieldInspection(Type type, 
+	Type originatingType)
     {
       if (type == null)
       {
         throw new ArgumentNullException("type");
       }
+
+      var memberAccessOptionToUse = this.BaseMemberAccessOptions;
+      if (type.AssemblyQualifiedName.Equals(originatingType.AssemblyQualifiedName))
+      {
+        memberAccessOptionToUse |= BindingFlags.NonPublic;
+      }
+      
       // We don't want the internal fields of System objects
       // Assumes that the Assembly of StringType and the Assembly of HashSetType are the Assemblies
       // that we want to exclude.
-      return this.BaseMemberAccessOptions & (
+      return memberAccessOptionToUse & (
              (TypeManager.StringType.Assembly.Equals(type.Assembly)
            || TypeManager.HashSetType.Assembly.Equals(type.Assembly)) ?
-        ~System.Reflection.BindingFlags.NonPublic : this.BaseMemberAccessOptions);
+        ~System.Reflection.BindingFlags.NonPublic : memberAccessOptionToUse);
     }
 
     /// <summary>
@@ -443,9 +451,9 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="type">Type to inspect</param>
     /// <returns>Binding flag specifying visibility of fields to inspect</returns>
-    public BindingFlags GetInstanceAccessOptionsForFieldInspection(Type type)
+    public BindingFlags GetInstanceAccessOptionsForFieldInspection(Type type, Type originatingType)
     {
-      return BindingFlags.Instance | this.GetAccessOptionsForFieldInspection(type);
+      return BindingFlags.Instance | this.GetAccessOptionsForFieldInspection(type, originatingType);
     }
 
     /// <summary>
@@ -453,9 +461,11 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="type">Type to inspect</param>
     /// <returns>Binding flag specifying visibility of fields to inspect</returns>
-    public BindingFlags GetStaticAccessOptionsForFieldInspection(Type type)
+    public BindingFlags GetStaticAccessOptionsForFieldInspection(Type type, 
+	Type originatingType)
     {
-      return BindingFlags.Static | this.GetAccessOptionsForFieldInspection(type);
+      return BindingFlags.Static | this.GetAccessOptionsForFieldInspection(type, 
+	originatingType);
     }
 
     #endregion

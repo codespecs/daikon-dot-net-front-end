@@ -402,7 +402,7 @@ namespace DotNetFrontEnd
       {
         // Look for cases where the current instruction is a store...
         if (operations[i].OperationCode == lastStoreOperation &&
-          // ... and the next instruction is a branch .. 
+          // ... and the next instruction is a branch ... 
           (operations[i + 1].OperationCode == OperationCode.Br
           || operations[i + 1].OperationCode == OperationCode.Leave
           || operations[i + 1].OperationCode == OperationCode.Brtrue

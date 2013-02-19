@@ -171,7 +171,8 @@ namespace DotNetFrontEnd
     /// <param name="nestingDepth">The nesting depth of the current variable. If not given 
     /// assumed to be the root value of 0.</param>
     private void DeclareVariable(string name, Type type,
-        VariableKind kind = VariableKind.variable, VariableFlags flags = VariableFlags.none,
+        Type originatingType, VariableKind kind = VariableKind.variable, 
+        VariableFlags flags = VariableFlags.none,
         string enclosingVar = "", string relativeName = "", string parentName = "",
         int nestingDepth = 0)
     {
@@ -193,21 +194,21 @@ namespace DotNetFrontEnd
       {
         // It's not an array it's a set. Investigate element type.
         // Will resolve with TODO(#52).
-        DeclareVariableAsList(name, type, parentName, nestingDepth);
+        DeclareVariableAsList(name, type, parentName, nestingDepth, originatingType);
       }
       else if (this.typeManager.IsFSharpListImplementer(type))
       {
         // We don't get information about generics, so all we know for sure is that the elements
         // are objects.
         // FSharpLists get converted into object[].
-        DeclareVariableAsList(name, typeof(object[]), parentName, nestingDepth);
+        DeclareVariableAsList(name, typeof(object[]), parentName, nestingDepth, originatingType);
       }
       else if (this.typeManager.IsSet(type))
       {
         // It's not an array it's a set. Investigate element type.
         // Will resolve with TODO(#52).
         DeclareVariableAsList(name, type, parentName, nestingDepth,
-            VariableFlags.no_dups | VariableFlags.not_ordered);
+            originatingType, VariableFlags.no_dups | VariableFlags.not_ordered);
       }
       else if (this.typeManager.IsFSharpSet(type))
       {
@@ -218,22 +219,24 @@ namespace DotNetFrontEnd
         // It's not an array it's a set. Investigate element type.
         // Will resolve with TODO(#52).
         DeclareVariableAsList(name, Array.CreateInstance(elementType, 0).GetType(),
-            parentName, nestingDepth, VariableFlags.no_dups | VariableFlags.not_ordered);
+            parentName, nestingDepth, originatingType, 
+            VariableFlags.no_dups | VariableFlags.not_ordered);
       }
       else if (this.typeManager.IsDictionary(type))
       {
         // TODO(#54): Implement
         DeclareVariableAsList(name, typeof(List<DictionaryEntry>), parentName, nestingDepth,
-          VariableFlags.no_dups | VariableFlags.not_ordered);
+          originatingType, VariableFlags.no_dups | VariableFlags.not_ordered);
       }
       else if (this.typeManager.IsFSharpMap(type))
       {
-        DeclareVariableAsList(name, typeof(List<DictionaryEntry>), parentName, nestingDepth,
-            VariableFlags.no_dups | VariableFlags.not_ordered);
+        DeclareVariableAsList(name, typeof(List<DictionaryEntry>), parentName, nestingDepth, 
+            originatingType, VariableFlags.no_dups | VariableFlags.not_ordered);
       }
       else
       {
-        DeclarationChildPrinting(name, type, kind, flags, parentName, nestingDepth);
+        DeclarationChildPrinting(name, type, kind, flags, parentName, nestingDepth, 
+            originatingType);
       }
     }
 
@@ -248,22 +251,24 @@ namespace DotNetFrontEnd
     /// <param name="parentName">Name of the parent of the variable if any</param>
     /// <param name="nestingDepth">Nesting depth of the variable</param>
     private void DeclarationChildPrinting(string name, Type type, VariableKind kind, 
-      VariableFlags flags, string parentName, int nestingDepth)
+      VariableFlags flags, string parentName, int nestingDepth, Type originatingType)
     {
 
       foreach (FieldInfo field in
-          type.GetSortedFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(type)))
+          type.GetSortedFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
+              type, originatingType)))
       {
         if (!this.typeManager.ShouldIgnoreField(type, field))
         {
-          DeclareVariable(name + "." + field.Name, field.FieldType,
+          DeclareVariable(name + "." + field.Name, field.FieldType, originatingType,
               VariableKind.field, enclosingVar: name, relativeName: field.Name,
               nestingDepth: nestingDepth + 1, parentName: parentName);
         }
       }
 
       foreach (FieldInfo staticField in
-          type.GetSortedFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
+          type.GetSortedFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(
+              type, originatingType)))
       {
         if (!this.typeManager.ShouldIgnoreField(type, staticField))
         {
@@ -272,14 +277,15 @@ namespace DotNetFrontEnd
           {
             this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
             DeclareVariable(staticFieldName, staticField.FieldType,
-                nestingDepth: staticFieldName.Count(c => c == '.'));
+                nestingDepth: staticFieldName.Count(c => c == '.'), 
+                originatingType: originatingType);
           }
         }
       }
 
       if (!type.IsSealed)
       {
-        DeclareVariable(name + "." + GetTypeMethodCall, TypeManager.TypeType,
+        DeclareVariable(name + "." + GetTypeMethodCall, TypeManager.TypeType, originatingType, 
             VariableKind.function, VariableFlags.classname |
             VariableFlags.synthetic, enclosingVar: name, relativeName: GetTypeMethodCall,
             nestingDepth: nestingDepth + 1, parentName: parentName);
@@ -288,6 +294,7 @@ namespace DotNetFrontEnd
       if (type == TypeManager.StringType)
       {
         DeclareVariable(name + "." + ToStringMethodCall, TypeManager.StringType,
+            originatingType,
             VariableKind.function, VariableFlags.to_string |
             VariableFlags.synthetic,
             enclosingVar: name, relativeName: ToStringMethodCall,
@@ -304,6 +311,7 @@ namespace DotNetFrontEnd
           VariableFlags.is_property : VariableFlags.none;
 
         DeclareVariable(name + "." + methodName,
+          originatingType,
           pureMethod.Value.ReturnType,
           enclosingVar: name,
           relativeName: methodName,
@@ -321,7 +329,8 @@ namespace DotNetFrontEnd
           && this.typeManager.IsLinkedListImplementer(type))
       {
         FieldInfo linkedListField = TypeManager.FindLinkedListField(type);
-        PrintList(name + "[..]", linkedListField.FieldType, name, VariableKind.array,
+        PrintList(name + "[..]", linkedListField.FieldType, name, originatingType, 
+            VariableKind.array,
             nestingDepth: nestingDepth, parentName: parentName, flags: flags);
       }
     }
@@ -384,7 +393,8 @@ namespace DotNetFrontEnd
     /// <param name="nestingDepth">The nesting depth of the current variable. If not given 
     /// assumed to be the root value of 0.</param>
     private void PrintList(string name, Type elementType, string enclosingVar,
-        VariableKind kind = VariableKind.array, VariableFlags flags = VariableFlags.none,
+        Type originatingType, VariableKind kind = VariableKind.array, 
+        VariableFlags flags = VariableFlags.none,
         string relativeName = "", string parentName = "", int nestingDepth = 0)
     {
       if (name.Length == 0)
@@ -463,19 +473,20 @@ namespace DotNetFrontEnd
       }
 
       foreach (FieldInfo field in
-          elementType.GetSortedFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(elementType)))
+          elementType.GetSortedFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
+              elementType, originatingType)))
       {
         if (!this.typeManager.ShouldIgnoreField(elementType, field))
         {
           PrintList(name + "." + field.Name, field.FieldType, name,
-              VariableKind.field, relativeName: field.Name,
+              originatingType, VariableKind.field, relativeName: field.Name,
               nestingDepth: nestingDepth + 1, parentName: parentName);
         }
       }
 
       foreach (FieldInfo staticField in
           elementType.GetSortedFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(
-              elementType)))
+              elementType, originatingType)))
       {
         if (!this.typeManager.ShouldIgnoreField(elementType, staticField))
         {
@@ -484,6 +495,7 @@ namespace DotNetFrontEnd
           {
             this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
             DeclareVariable(staticFieldName, staticField.FieldType,
+                originatingType: originatingType,
                 nestingDepth: staticFieldName.Count(c => c == '.'));
           }
         }
@@ -492,7 +504,7 @@ namespace DotNetFrontEnd
       if (!elementType.IsSealed)
       {
         PrintList(name + "." + GetTypeMethodCall, TypeManager.TypeType, name,
-            VariableKind.function, VariableFlags.classname |
+            originatingType, VariableKind.function, VariableFlags.classname |
             VariableFlags.synthetic, relativeName: GetTypeMethodCall,
             nestingDepth: nestingDepth + 1, parentName: parentName);
       }
@@ -500,7 +512,7 @@ namespace DotNetFrontEnd
       if (elementType == TypeManager.StringType)
       {
         PrintList(name + "." + ToStringMethodCall, TypeManager.StringType, name,
-            VariableKind.function, VariableFlags.to_string |
+            originatingType, VariableKind.function, VariableFlags.to_string |
             VariableFlags.synthetic,
             relativeName: ToStringMethodCall,
             nestingDepth: nestingDepth + 1, parentName: parentName);
@@ -515,6 +527,7 @@ namespace DotNetFrontEnd
           VariableFlags.is_property : VariableFlags.none;
         PrintList(name + "." + methodName, 
           pureMethod.Value.ReturnType, name,
+          originatingType,
           relativeName: methodName,
           kind: VariableKind.function,
           flags: pureMethodFlags,
@@ -549,7 +562,8 @@ namespace DotNetFrontEnd
         // If we can't resolve the parent object type don't write anything
         if (type != null)
         {
-          this.DeclareVariable("this", type, flags: VariableFlags.is_param, parentName: parentName);
+          this.DeclareVariable("this", type, type, flags: VariableFlags.is_param,
+              parentName: parentName);
         }
         else
         {
@@ -588,7 +602,9 @@ namespace DotNetFrontEnd
     private void DeclareStaticFieldsForType(Type type)
     {
       foreach (FieldInfo staticField in
-        type.GetSortedFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
+        // type passed in as originating type so we get all the fields for it
+        type.GetSortedFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(
+            type, type)))
       {
         if (!this.typeManager.ShouldIgnoreField(type, staticField))
         {
@@ -596,7 +612,7 @@ namespace DotNetFrontEnd
           if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
           {
             this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
-            DeclareVariable(staticFieldName, staticField.FieldType,
+            DeclareVariable(staticFieldName, staticField.FieldType, type,
                 nestingDepth: staticFieldName.Count(c => c == '.'));
           }
         }
@@ -642,7 +658,7 @@ namespace DotNetFrontEnd
       {
         if (type != null)
         {
-          DeclareVariable(name, type, flags: VariableFlags.is_param);
+          DeclareVariable(name, type, type, flags: VariableFlags.is_param);
         }
       }
     }
@@ -659,7 +675,7 @@ namespace DotNetFrontEnd
       {
         if (type != null)
         {
-          DeclareVariable(name, type, kind: VariableKind.Return, nestingDepth: 0);
+          DeclareVariable(name, type, type, kind: VariableKind.Return, nestingDepth: 0);
         }
       }
     }
@@ -686,7 +702,9 @@ namespace DotNetFrontEnd
             this.WritePair("ppt", nameToPrint);
             this.WritePair("ppt-type", "object");
             this.WritePair("parent", "parent " + nameToPrint.Replace(":::OBJECT", ":::CLASS 1"));
-            this.DeclareVariable("this", objectType, VariableKind.variable, VariableFlags.is_param);
+            // Pass objectType in as originating type so we get all its private fields.
+            this.DeclareVariable("this", objectType, objectType, VariableKind.variable, 
+                VariableFlags.is_param);
           }
         }
       }
@@ -1060,7 +1078,8 @@ namespace DotNetFrontEnd
     /// <param name="parentName">Name of the parent</param>
     /// <param name="nestingDepth">Nesting depth for the list variable</param>
     /// <param name="collectionFlags">Flags to describe the collection, e.g. no_dups, if any</param>
-    private void DeclareVariableAsList(string name, Type type, string parentName, int nestingDepth,
+    private void DeclareVariableAsList(string name, Type type, string parentName, 
+        int nestingDepth, Type originatingType,
         VariableFlags collectionFlags = VariableFlags.none)
     {
       Type elementType = TypeManager.GetListElementType(type);
@@ -1068,11 +1087,12 @@ namespace DotNetFrontEnd
       if (!elementType.IsSealed)
       {
         DeclareVariable(name + "." + GetTypeMethodCall, TypeManager.TypeType,
+            originatingType,
             VariableKind.function, VariableFlags.classname | VariableFlags.synthetic,
             enclosingVar: name, relativeName: GetTypeMethodCall,
             nestingDepth: nestingDepth + 1, parentName: parentName);
       }
-      PrintList(name + "[..]", elementType, name, VariableKind.array,
+      PrintList(name + "[..]", elementType, name, originatingType, VariableKind.array,
           nestingDepth: nestingDepth, parentName: parentName, flags: collectionFlags);
     }
 
