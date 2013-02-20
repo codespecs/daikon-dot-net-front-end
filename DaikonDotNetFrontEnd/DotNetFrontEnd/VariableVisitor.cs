@@ -296,7 +296,8 @@ namespace DotNetFrontEnd
         foreach (Type type in typeDecl.GetAllTypes)
         {
           foreach (FieldInfo staticField in
-           type.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
+            // Pass type in as originating type so we get all the fields.
+           type.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type, type)))
           {
             if (!typeManager.ShouldIgnoreField(type, staticField))
             {
@@ -320,6 +321,7 @@ namespace DotNetFrontEnd
                   }
                   ReflectiveVisit(staticFieldName, val,
                         staticField.FieldType, writer, staticFieldName.Count(c => c == '.'),
+                        type,
                         fieldFlags: flags);
                 }
               }
@@ -329,7 +331,7 @@ namespace DotNetFrontEnd
                     + staticField.Name + " Field Type: " + staticField.FieldType);
                 // The field is declared in the decls so Daikon still needs a value, 
                 ReflectiveVisit(staticFieldName, null,
-                    staticField.FieldType, writer, depth + 1, VariableModifiers.nonsensical);
+                    staticField.FieldType, writer, depth + 1, type, VariableModifiers.nonsensical);
               }
             }
           }
@@ -505,7 +507,7 @@ namespace DotNetFrontEnd
           }
 
           int depth = 0;
-          ReflectiveVisit(name, variable, type, writer, depth, flags);
+          ReflectiveVisit(name, variable, type, writer, depth, type, flags);
         }
       }
       //catch (Exception ex)
@@ -575,7 +577,8 @@ namespace DotNetFrontEnd
     /// <param name="depth">The current call depth</param>
     /// <param name="fieldFlags">Flags indicating special printing</param>
     private static void ReflectiveVisit(string name, object obj, Type type,
-        TextWriter writer, int depth, VariableModifiers fieldFlags = VariableModifiers.none)
+        TextWriter writer, int depth, Type originatingType, 
+        VariableModifiers fieldFlags = VariableModifiers.none)
     {
       if (PerformEarlyExitChecks(name, depth))
       {
@@ -593,7 +596,7 @@ namespace DotNetFrontEnd
 
       if (typeManager.IsListImplementer(type))
       {
-        ProcessVariableAsList(name, obj, type, writer, depth);
+        ProcessVariableAsList(name, obj, type, writer, depth, originatingType);
       }
       else if (typeManager.IsFSharpListImplementer(type))
       {
@@ -603,7 +606,7 @@ namespace DotNetFrontEnd
           result = TypeManager.ConvertFSharpListToCSharpArray(obj);
         }
 
-        ProcessVariableAsList(name, result, result.GetType(), writer, depth);
+        ProcessVariableAsList(name, result, result.GetType(), writer, depth, originatingType);
       }
       else if (typeManager.IsSet(type) || typeManager.IsFSharpSet(type))
       {
@@ -625,7 +628,8 @@ namespace DotNetFrontEnd
         }
         Array convertedList = Array.CreateInstance(setElementType, result.Count);
         result.CopyTo(convertedList, 0);
-        ProcessVariableAsList(name, convertedList, convertedList.GetType(), writer, depth);
+        ProcessVariableAsList(name, convertedList, convertedList.GetType(), writer, depth, 
+          originatingType);
       }
       else if (typeManager.IsDictionary(type))
       {
@@ -639,7 +643,7 @@ namespace DotNetFrontEnd
           }
         }
 
-        ProcessVariableAsList(name, entries, entries.GetType(), writer, depth);
+        ProcessVariableAsList(name, entries, entries.GetType(), writer, depth, originatingType);
       }
       else if (typeManager.IsFSharpMap(type))
       {
@@ -651,11 +655,11 @@ namespace DotNetFrontEnd
             entries.Add(item);
           }
         }
-        ProcessVariableAsList(name, entries, entries.GetType(), writer, depth);
+        ProcessVariableAsList(name, entries, entries.GetType(), writer, depth, originatingType);
       }
       else
       {
-        PerformNonListInspection(name, obj, type, writer, depth, fieldFlags);
+        PerformNonListInspection(name, obj, type, writer, depth, fieldFlags, originatingType);
       }
     }
 
@@ -665,20 +669,20 @@ namespace DotNetFrontEnd
     /// or HashCode calls.
     /// </summary>
     private static void PerformNonListInspection(string name, object obj, 
-      Type type, TextWriter writer, int depth, VariableModifiers fieldFlags)
+      Type type, TextWriter writer, int depth, VariableModifiers fieldFlags, Type originatingType)
     {
       if (obj == null)
       {
         fieldFlags |= VariableModifiers.nonsensical;
       }
 
-      PrintFieldValues(name, obj, type, writer, depth, fieldFlags);
+      PrintFieldValues(name, obj, type, writer, depth, fieldFlags, originatingType);
 
       if (!type.IsSealed)
       {
         object xType = (obj == null ? null : obj.GetType());
         ReflectiveVisit(name + '.' + DeclarationPrinter.GetTypeMethodCall, xType,
-            TypeManager.TypeType, writer, depth + 1,
+            TypeManager.TypeType, writer, depth + 1, originatingType,
             (obj == null ? VariableModifiers.nonsensical : VariableModifiers.none)
             | VariableModifiers.classname);
       }
@@ -687,7 +691,7 @@ namespace DotNetFrontEnd
       {
         object xString = (obj == null ? null : obj.ToString());
         ReflectiveVisit(name + '.' + DeclarationPrinter.ToStringMethodCall, xString,
-            TypeManager.StringType, writer, depth + 1,
+            TypeManager.StringType, writer, depth + 1, originatingType,
             fieldFlags | VariableModifiers.to_string);
       }
 
@@ -697,7 +701,7 @@ namespace DotNetFrontEnd
         {
           ReflectiveVisit(name + '.' + DeclarationPrinter.SanitizePropertyName(item.Value.Name),
               GetMethodValue(obj, item.Value, item.Value.Name), item.Value.ReturnType, writer,
-                  depth + 1, fieldFlags: fieldFlags);
+                  depth + 1, originatingType, fieldFlags: fieldFlags);
         }
       }
 
@@ -715,7 +719,8 @@ namespace DotNetFrontEnd
           expandedList.Add(curr);
           curr = GetFieldValue(curr, linkedListField, linkedListField.Name);
         }
-        ListReflectiveVisit(name + "[..]", (IList)expandedList, type, writer, depth, fieldFlags);
+        ListReflectiveVisit(name + "[..]", (IList)expandedList, type, writer, depth, 
+            originatingType, fieldFlags);
       }
     }
 
@@ -729,17 +734,18 @@ namespace DotNetFrontEnd
     /// <param name="depth">Depth of the variable</param>
     /// <param name="fieldFlags">Flags describing the current variable</param>
     private static void PrintFieldValues(string name, object obj, Type type, 
-      TextWriter writer, int depth, VariableModifiers fieldFlags)
+      TextWriter writer, int depth, VariableModifiers fieldFlags, Type originatingType)
     {
       foreach (FieldInfo field in
-          type.GetSortedFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(type)))
+          type.GetSortedFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
+            type, originatingType)))
       {
         try
         {
           if (!typeManager.ShouldIgnoreField(type, field))
           {
             ReflectiveVisit(name + "." + field.Name, GetFieldValue(obj, field, field.Name),
-                field.FieldType, writer, depth + 1,
+                field.FieldType, writer, depth + 1, originatingType,
                 fieldFlags | VariableModifiers.ignore_linked_list);
           }
         }
@@ -749,12 +755,14 @@ namespace DotNetFrontEnd
               + field.Name + " Field Type: " + field.FieldType);
           // The field is declared in the decls so Daikon still needs a value. 
           ReflectiveVisit(name + "." + field.Name, null,
-              field.FieldType, writer, depth + 1, fieldFlags | VariableModifiers.nonsensical);
+              field.FieldType, writer, depth + 1, originatingType, 
+              fieldFlags | VariableModifiers.nonsensical);
         }
       }
 
       foreach (FieldInfo staticField in
-          type.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type)))
+          type.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(
+              type, originatingType)))
       {
         if (!typeManager.ShouldIgnoreField(type, staticField))
         {
@@ -769,7 +777,7 @@ namespace DotNetFrontEnd
               staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
               ReflectiveVisit(staticFieldName, GetFieldValue(obj, staticField, staticField.Name),
                     staticField.FieldType, writer, staticFieldName.Count(c => c == '.'),
-                    fieldFlags | VariableModifiers.ignore_linked_list);
+                    originatingType, fieldFlags | VariableModifiers.ignore_linked_list);
             }
           }
           catch (ArgumentException)
@@ -778,8 +786,8 @@ namespace DotNetFrontEnd
                 + staticField.Name + " Field Type: " + staticField.FieldType);
             // The field is declared in the decls so Daikon still needs a value. 
             ReflectiveVisit(staticFieldName, null,
-                staticField.FieldType, writer, depth + 1, fieldFlags
-                | VariableModifiers.nonsensical);
+                staticField.FieldType, writer, depth + 1, originatingType,
+                fieldFlags | VariableModifiers.nonsensical);
           }
         }
       }
@@ -854,14 +862,15 @@ namespace DotNetFrontEnd
     /// <param name="depth">Depth of the list variable</param>
     /// <param name="flags">Field flags for the list variable</param>
     private static void ProcessVariableAsList(string name, object obj, Type type,
-        TextWriter writer, int depth, VariableModifiers flags = VariableModifiers.none)
+        TextWriter writer, int depth, Type originatingType, 
+        VariableModifiers flags = VariableModifiers.none)
     {
       // Call GetType() on the list if necessary.
       Type elementType = TypeManager.GetListElementType(type);
       if (!elementType.IsSealed)
       {
         ReflectiveVisit(name + "." + DeclarationPrinter.GetTypeMethodCall, type,
-            TypeManager.TypeType, writer, depth + 1,
+            TypeManager.TypeType, writer, depth + 1, originatingType,
             VariableModifiers.classname);
       }
       // Now visit each element.
@@ -874,7 +883,8 @@ namespace DotNetFrontEnd
       }
       else
       {
-        ListReflectiveVisit(name + "[..]", (IList)obj, elementType, writer, depth, flags);
+        ListReflectiveVisit(name + "[..]", (IList)obj, elementType, writer, depth, 
+            originatingType, flags);
       }
     }
 
@@ -891,7 +901,8 @@ namespace DotNetFrontEnd
     /// <param name="nonsensicalElements">If any elements are non-sensical, an array 
     /// indicating which ones are</param>
     private static void ListReflectiveVisit(string name, IList list, Type elementType,
-        TextWriter writer, int depth, VariableModifiers flags = VariableModifiers.none,
+        TextWriter writer, int depth, Type originatingType, 
+        VariableModifiers flags = VariableModifiers.none,
         bool[] nonsensicalElements = null)
     {
       if (depth > frontEndArgs.MaxNestingDepth ||
@@ -969,7 +980,7 @@ namespace DotNetFrontEnd
       // If the list was null then we can't visit the children, just print nonsensical for them.
       if (list == null)
       {
-        VisitNullListChildren(name, elementType, writer, depth);
+        VisitNullListChildren(name, elementType, writer, depth, originatingType);
       }
       else
       {
@@ -978,7 +989,7 @@ namespace DotNetFrontEnd
           nonsensicalElements = new bool[list.Count];
         }
 
-        VisitListChildren(name, list, elementType, writer, depth, nonsensicalElements);
+        VisitListChildren(name, list, elementType, writer, depth, nonsensicalElements, originatingType);
       }
     }
 
@@ -990,20 +1001,22 @@ namespace DotNetFrontEnd
     /// <param name="writer">Writer to write the results of the visit using to</param>
     /// <param name="depth">Current nesting depth</param>
     private static void VisitNullListChildren(string name, Type elementType,
-        TextWriter writer, int depth)
+        TextWriter writer, int depth, Type originatingType)
     {
       foreach (FieldInfo field in
-          elementType.GetSortedFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(elementType)))
+          elementType.GetSortedFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
+              elementType, originatingType)))
       {
           if (!typeManager.ShouldIgnoreField(elementType, field))
           {
               ListReflectiveVisit(name + "." + field.Name, null,
-                field.FieldType, writer, depth + 1);
+                field.FieldType, writer, depth + 1, originatingType);
           }
       }
 
       foreach (FieldInfo staticElementField in
-          elementType.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(elementType)))
+          elementType.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(
+              elementType, originatingType)))
       {
         if (!typeManager.ShouldIgnoreField(elementType, staticElementField))
         {
@@ -1012,7 +1025,7 @@ namespace DotNetFrontEnd
           {
             staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
             ListReflectiveVisit(staticFieldName, null, staticElementField.FieldType, writer,
-                staticFieldName.Count(c => c == '.'));
+                staticFieldName.Count(c => c == '.'), originatingType);
           }
         }
       }
@@ -1020,13 +1033,15 @@ namespace DotNetFrontEnd
       if (!elementType.IsSealed)
       {
         ListReflectiveVisit(name + "." + DeclarationPrinter.GetTypeMethodCall, null,
-            TypeManager.TypeType, writer, depth + 1, VariableModifiers.classname);
+            TypeManager.TypeType, writer, depth + 1, originatingType,
+            VariableModifiers.classname);
       }
 
       if (elementType == TypeManager.StringType)
       {
         ListReflectiveVisit(name + "." + DeclarationPrinter.ToStringMethodCall, null,
-            TypeManager.StringType, writer, depth + 1, VariableModifiers.to_string);
+            TypeManager.StringType, writer, depth + 1, originatingType, 
+            VariableModifiers.to_string);
       }
     }
 
@@ -1041,20 +1056,23 @@ namespace DotNetFrontEnd
     /// <param name="writer">Writer to write the results of the visit using to</param>
     /// <param name="depth">Current nesting depth</param>
     private static void VisitListChildren(string name, IList list, Type elementType,
-        TextWriter writer, int depth, bool[] nonsensicalElements)
+        TextWriter writer, int depth, bool[] nonsensicalElements, Type originatingType)
     {
       foreach (FieldInfo elementField in
-          elementType.GetSortedFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(elementType)))
+          elementType.GetSortedFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
+              elementType, originatingType)))
       {
         if (!typeManager.ShouldIgnoreField(elementType, elementField))
         {
-          VisitListField(name, list, elementType, writer, depth, nonsensicalElements, elementField);
+          VisitListField(name, list, elementType, writer, depth, nonsensicalElements, elementField,
+              originatingType);
         }
       }
 
       // Static fields will have the same value for every element so just visit them once
       foreach (FieldInfo elementField in
-          elementType.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(elementType)))
+          elementType.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(
+              elementType, originatingType)))
       {
         if (!typeManager.ShouldIgnoreField(elementType, elementField))
         {
@@ -1063,7 +1081,8 @@ namespace DotNetFrontEnd
           {
             staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
             ReflectiveVisit(staticFieldName, elementField.GetValue(null),
-                elementField.FieldType, writer, staticFieldName.Count(c => c == '.'));
+                elementField.FieldType, writer, staticFieldName.Count(c => c == '.'), 
+                originatingType);
           }
         }
       }
@@ -1084,7 +1103,7 @@ namespace DotNetFrontEnd
           nonsensicalElements[i] = list[i] == null;
         }
         ListReflectiveVisit(name + "." + DeclarationPrinter.GetTypeMethodCall, typeArray,
-            TypeManager.TypeType, writer, depth + 1, VariableModifiers.classname,
+            TypeManager.TypeType, writer, depth + 1, originatingType, VariableModifiers.classname,
             nonsensicalElements: nonsensicalElements);
       }
 
@@ -1103,7 +1122,8 @@ namespace DotNetFrontEnd
           }
         }
         ListReflectiveVisit(name + "." + DeclarationPrinter.ToStringMethodCall, stringArray,
-            TypeManager.StringType, writer, depth + 1, VariableModifiers.to_string);
+            TypeManager.StringType, writer, depth + 1, originatingType, 
+            VariableModifiers.to_string);
       }
 
       foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType))
@@ -1122,7 +1142,7 @@ namespace DotNetFrontEnd
           }
         }
         ListReflectiveVisit(name + "." + pureMethodName, pureMethodResults,
-          pureMethod.Value.ReturnType, writer, depth + 1, 
+          pureMethod.Value.ReturnType, writer, depth + 1, originatingType,
           nonsensicalElements: nonsensicalElements);
       }
     }
@@ -1139,7 +1159,7 @@ namespace DotNetFrontEnd
     /// locations in the list containing non-sensical elements</param>
     /// <param name="elementField">The field to be inspected</param>
     private static void VisitListField(string name, IList list, Type elementType, TextWriter writer,
-        int depth, bool[] nonsensicalElements, FieldInfo elementField)
+        int depth, bool[] nonsensicalElements, FieldInfo elementField, Type originatingType)
     {
       // If we have a non-null list then build an array comprising the calls on each 
       // element. The array must be object type so it can take any children.
@@ -1160,7 +1180,7 @@ namespace DotNetFrontEnd
         nonsensicalElements[i] = (list[i] == null);
       }
       ListReflectiveVisit(name + "." + elementField.Name, childArray,
-          elementField.FieldType, writer, depth + 1,
+          elementField.FieldType, writer, depth + 1, originatingType,
           nonsensicalElements: nonsensicalElements);
     }
 
