@@ -79,7 +79,9 @@ namespace DotNetFrontEndLauncher
       }
 
       FrontEndArgs frontEndArgs = new FrontEndArgs(args);
-      TypeManager typeManager = new TypeManager(new PeReader.DefaultHost(), frontEndArgs);
+      TypeManager typeManager = new TypeManager(
+          frontEndArgs.IsPortableDll ? (IMetadataHost) new PortableHost() : new PeReader.DefaultHost(), 
+          frontEndArgs);
 
       if (!File.Exists(frontEndArgs.AssemblyPath))
       {

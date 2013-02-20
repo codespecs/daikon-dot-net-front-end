@@ -466,8 +466,8 @@ namespace DotNetFrontEnd
         offlineAssemblyPath = assemblyPath;
         frontEndArgs = new FrontEndArgs(arguments.Split());
 
-        IMetadataHost host = new PeReader.DefaultHost();
-
+        IMetadataHost host = frontEndArgs.IsPortableDll ? (IMetadataHost)new PortableHost() : new PeReader.DefaultHost();
+          
         typeManager = new TypeManager(host, frontEndArgs);
       }
     }

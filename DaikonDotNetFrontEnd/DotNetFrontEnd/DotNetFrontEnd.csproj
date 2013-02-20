@@ -104,6 +104,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="FrontEndArgs.cs" />
     <Compile Include="ILRewriter.cs" />
+    <Compile Include="PortableHost.cs" />
     <Compile Include="ProgramRewriter.cs" />
     <Compile Include="VariableVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
