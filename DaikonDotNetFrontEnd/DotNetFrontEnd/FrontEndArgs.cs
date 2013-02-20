@@ -106,6 +106,7 @@ namespace DotNetFrontEnd
       output_location,
       save_and_run,
       save_program,
+      portable_dll, 
       verbose,
       wpf,
       // Not an option -- the location of the program to be profiled
@@ -754,6 +755,11 @@ namespace DotNetFrontEnd
     public bool WPF
     {
       get { return this.programArguments.ContainsKey(PossibleArgument.wpf); }
+    }
+
+    public bool IsPortableDll
+    {
+        get { return this.programArguments.ContainsKey(PossibleArgument.portable_dll); }
     }
 
     /// <summary>
