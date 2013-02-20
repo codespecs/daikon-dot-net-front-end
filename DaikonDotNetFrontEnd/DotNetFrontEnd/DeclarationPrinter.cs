@@ -78,7 +78,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// The string that prefixes the generate method name for getter properties
     /// </summary>
-    private const string GetterPropertyPrefix = "get_";
+    public const string GetterPropertyPrefix = "get_";
 
     #endregion
 
@@ -253,7 +253,6 @@ namespace DotNetFrontEnd
     private void DeclarationChildPrinting(string name, Type type, VariableKind kind, 
       VariableFlags flags, string parentName, int nestingDepth, Type originatingType)
     {
-
       foreach (FieldInfo field in
           type.GetSortedFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
               type, originatingType)))

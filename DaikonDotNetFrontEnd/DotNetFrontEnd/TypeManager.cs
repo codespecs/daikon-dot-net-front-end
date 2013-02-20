@@ -252,35 +252,51 @@ namespace DotNetFrontEnd
         string[] methodDescriptions = str.Split(';');
         try
         {
-          string typeName = methodDescriptions[0];
-          string methodName = methodDescriptions[1];
-
-          // The user will declare a single type name
-          Type type = ConvertAssemblyQualifiedNameToType(typeName).GetSingleType;
-          // Pure methods have no parameters
-          MethodInfo method = type.GetMethod(methodName,
-            BindingFlags.Public |
-            BindingFlags.NonPublic |
-            BindingFlags.Static |
-            BindingFlags.Instance
-          );
-          if (method == null)
-          {
-            throw new ArgumentException("No method of name: " + methodName + " on type:" + typeName
-                + " exists.");
-          }
-          if (!this.pureMethodKeys.ContainsKey(type))
-          {
-            pureMethodKeys[type] = new HashSet<int>();
-          }
-          pureMethodKeys[type].Add(++globalPureMethodCount);
-          pureMethods[globalPureMethodCount] = method;
+          AddPureMethod( methodDescriptions[0], methodDescriptions[1]);
         }
         catch (IndexOutOfRangeException)
         {
-          throw new InvalidOperationException("Malformed purity file -- line with contents: " + str);
+          throw new InvalidOperationException(
+              "Malformed purity file -- line with contents: " + str);
         }
       }
+    }
+
+    /// <summary>
+    /// Add the method described by the given method and type names as a pure method.
+    /// If the method given matches an already pure method then take no externally-
+    /// visible action.
+    /// </summary>
+    /// <param name="typeName">Assembly qualfied name of the type having the method
+    /// to be marked as pure.</param>
+    /// <param name="methodName">Name of the method to be marked as pure, with 
+    /// no parens or type qualifier.</param>
+    public void AddPureMethod(string typeName, string methodName)
+    {
+      // The user will declare a single type name
+      Type type = ConvertAssemblyQualifiedNameToType(typeName).GetSingleType;
+      // Pure methods have no parameters
+      MethodInfo method = type.GetMethod(methodName,
+        BindingFlags.Public |
+        BindingFlags.NonPublic |
+        BindingFlags.Static |
+        BindingFlags.Instance
+      );
+      if (method == null)
+      {
+        throw new ArgumentException("No method of name: " + methodName + " on type:" + typeName
+            + " exists.");
+      }
+      if (pureMethods.ContainsValue(method))
+      {
+        return;
+      }
+      if (!this.pureMethodKeys.ContainsKey(type))
+      {
+        pureMethodKeys[type] = new HashSet<int>();
+      }
+      pureMethodKeys[type].Add(++globalPureMethodCount);
+      pureMethods[globalPureMethodCount] = method;
     }
 
     /// <summary>
