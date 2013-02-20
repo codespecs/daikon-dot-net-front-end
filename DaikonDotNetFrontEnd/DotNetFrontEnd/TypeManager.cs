@@ -432,7 +432,12 @@ namespace DotNetFrontEnd
         {
             return true;
         }
-        else if (frontEndArgs.OmitDecType != null && frontEndArgs.OmitDecType.IsMatch(field.FieldType.FullName))
+        else if (frontEndArgs.OmitDecType != null && 
+                 field.FieldType.FullName != null && // is null if the current instance represents a generic type parameter, 
+                                                     // an array type, pointer type, or byref type based on a type parameter, 
+                                                     // or a generic type that is not a generic type definition but contains 
+                                                     // unresolved type parameters.
+                 frontEndArgs.OmitDecType.IsMatch(field.FieldType.FullName))
         {
             return true;
         }
