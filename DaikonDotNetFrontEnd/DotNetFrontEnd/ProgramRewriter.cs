@@ -44,7 +44,7 @@ namespace DotNetFrontEnd
     public static readonly string VisitorDll = "DotNetFrontEnd.dll";
 
     #endregion
-    
+
     /// <summary>
     /// Rewrite program IL with instrumentation calls, returning a MemoryStream, or null if the
     /// program was saved to a file.
@@ -67,83 +67,83 @@ namespace DotNetFrontEnd
       Stream resultStream;
       var host = typeManager.Host;
 
-        IModule/*?*/ module = host.LoadUnitFrom(frontEndArgs.AssemblyPath) as IModule;
-        if (module == null || module == Dummy.Module || module == Dummy.Assembly)
+      IModule/*?*/ module = host.LoadUnitFrom(frontEndArgs.AssemblyPath) as IModule;
+      if (module == null || module == Dummy.Module || module == Dummy.Assembly)
+      {
+        throw new FileNotFoundException("Given path is not a PE file containing a CLR"
+          + " assembly, or an error occurred when loading it.", frontEndArgs.AssemblyPath);
+      }
+
+      PdbReader/*?*/ pdbReader = null;
+      string pdbFile = Path.ChangeExtension(module.Location, "pdb");
+      try
+      {
+        using (var pdbStream = File.OpenRead(pdbFile))
         {
-          throw new FileNotFoundException("Given path is not a PE file containing a CLR"
-            + " assembly, or an error occurred when loading it.", frontEndArgs.AssemblyPath);
+          pdbReader = new PdbReader(pdbStream, host);
+        }
+      }
+      catch
+      {
+        // TODO(#25): Figure out how what happens if we can't load the PDB file.
+        // It seems to be non-fatal, so print the error and continue.
+        Console.Error.WriteLine("Could not load the PDB file for '" + module.Name.Value +
+            "' . Proceeding anyway.");
+      }
+      using (pdbReader)
+      {
+        ILRewriter mutator = new ILRewriter(host, pdbReader, frontEndArgs, typeManager);
+
+        // Look for the path to the reflector, it's an environment variable, check the user space 
+        // first.
+        string daikonDir = Environment.GetEnvironmentVariable(DaikonEnvVar,
+            EnvironmentVariableTarget.User);
+        if (daikonDir == null)
+        {
+          // If that didn't work check the machine space
+          daikonDir = Environment.GetEnvironmentVariable(DaikonEnvVar,
+              EnvironmentVariableTarget.Machine);
         }
 
-        PdbReader/*?*/ pdbReader = null;
-        string pdbFile = Path.ChangeExtension(module.Location, "pdb");
+        if (daikonDir == null)
+        {
+          // We can't proceed without this
+          Console.WriteLine("Must define" + DaikonEnvVar + " environment variable");
+          Environment.Exit(1);
+        }
+        module = mutator.Visit(module, Path.Combine(daikonDir, VisitorDll));
+
+        // Remove the old PDB file
         try
         {
-          using (var pdbStream = File.OpenRead(pdbFile))
-          {
-            pdbReader = new PdbReader(pdbStream, host);
-          }
+          File.Delete(pdbFile);
         }
-        catch
+        catch (UnauthorizedAccessException)
         {
-          // TODO(#25): Figure out how what happens if we can't load the PDB file.
-          // It seems to be non-fatal, so print the error and continue.
-          Console.Error.WriteLine("Could not load the PDB file for '" + module.Name.Value +
-              "' . Proceeding anyway.");
+          // If they are running the debugger we might not be able to delete the file
+          // Save the pdb elsewhere in this case.
+          pdbFile = module.Location + ".pdb";
         }
-        using (pdbReader)
+
+        if (frontEndArgs.SaveProgram != null)
         {
-          ILRewriter mutator = new ILRewriter(host, pdbReader, frontEndArgs, typeManager);
-
-          // Look for the path to the reflector, it's an environment variable, check the user space 
-          // first.
-          string daikonDir = Environment.GetEnvironmentVariable(DaikonEnvVar,
-              EnvironmentVariableTarget.User);
-          if (daikonDir == null)
-          {
-            // If that didn't work check the machine space
-            daikonDir = Environment.GetEnvironmentVariable(DaikonEnvVar,
-                EnvironmentVariableTarget.Machine);
-          }
-
-          if (daikonDir == null)
-          {
-            // We can't proceed without this
-            Console.WriteLine("Must define" + DaikonEnvVar + " environment variable");
-            Environment.Exit(1);
-          }
-          module = mutator.Visit(module, Path.Combine(daikonDir, VisitorDll));
-
-          // Remove the old PDB file
-          try
-          {
-            File.Delete(pdbFile);
-          }
-          catch (UnauthorizedAccessException)
-          {
-            // If they are running the debugger we might not be able to delete the file
-            // Save the pdb elsewhere in this case.
-            pdbFile = module.Location + ".pdb";
-          }
-
-          if (frontEndArgs.SaveProgram != null)
-          {
-            resultStream = new FileStream(frontEndArgs.SaveProgram, FileMode.Create);
-          }
-          else
-          {
-            resultStream = new MemoryStream();
-          }
-
-          // Need to not pass in a local scope provider until such time as we have one 
-          // that will use the mutator to remap things (like the type of a scope 
-          // constant) from the original assembly to the mutated one.
-          using (var pdbWriter = new PdbWriter(pdbFile, pdbReader))
-          {
-            PeWriter.WritePeToStream(module, host, resultStream, pdbReader, null,
-                pdbWriter);
-          }
+          resultStream = new FileStream(frontEndArgs.SaveProgram, FileMode.Create);
         }
-      
+        else
+        {
+          resultStream = new MemoryStream();
+        }
+
+        // Need to not pass in a local scope provider until such time as we have one 
+        // that will use the mutator to remap things (like the type of a scope 
+        // constant) from the original assembly to the mutated one.
+        using (var pdbWriter = new PdbWriter(pdbFile, pdbReader))
+        {
+          PeWriter.WritePeToStream(module, host, resultStream, pdbReader, null,
+              pdbWriter);
+        }
+      }
+
 
       if (frontEndArgs.SaveProgram != null)
       {

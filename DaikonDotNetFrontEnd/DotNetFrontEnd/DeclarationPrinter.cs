@@ -311,8 +311,8 @@ namespace DotNetFrontEnd
           VariableFlags.is_property : VariableFlags.none;
 
         DeclareVariable(name + "." + methodName,
-          originatingType,
           pureMethod.Value.ReturnType,
+          originatingType,
           enclosingVar: name,
           relativeName: methodName,
           kind: VariableKind.function,

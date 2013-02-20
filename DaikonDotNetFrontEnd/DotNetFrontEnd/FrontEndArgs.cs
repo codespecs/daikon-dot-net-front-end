@@ -424,7 +424,7 @@ namespace DotNetFrontEnd
     /// <param name="type">Type to inspect</param>
     /// <returns>Binding flag specifying visibility of fields to inspect</returns>
     private System.Reflection.BindingFlags GetAccessOptionsForFieldInspection(Type type, 
-	Type originatingType)
+	      Type originatingType)
     {
       if (type == null)
       {
