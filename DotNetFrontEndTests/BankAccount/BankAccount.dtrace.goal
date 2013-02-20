@@ -1,0 +1,3226 @@
+// Declarations for BankAccount
+// Declarations written 12/4/2012 3:45:32 AM
+
+decl-version 2.0
+var-comparability none
+input-language C#.NET
+
+ppt BankAccountNS.BankAccount:::OBJECT
+ppt-type object
+parent parent BankAccountNS.BankAccount:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount:::CLASS
+ppt-type class
+
+ppt BankAccountNS.BankAccount..ctor():::ENTER
+ppt-type enter
+parent parent BankAccountNS.BankAccount:::CLASS 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+
+ppt BankAccountNS.BankAccount..ctor():::EXIT_EX_Runtime
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount..ctor():::EXIT8
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount..ctor(System.String\_customerName,\_System.Double\_balance):::ENTER
+ppt-type enter
+parent parent BankAccountNS.BankAccount:::CLASS 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable customerName
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    flags is_param
+    comparability 22
+  variable customerName.ToString()
+    var-kind function ToString()
+    enclosing-var customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable balance
+    var-kind variable
+    dec-type double
+    rep-type double
+    flags is_param
+    comparability 22
+
+ppt BankAccountNS.BankAccount..ctor(System.String\_customerName,\_System.Double\_balance):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable customerName
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    flags is_param
+    comparability 22
+  variable customerName.ToString()
+    var-kind function ToString()
+    enclosing-var customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable balance
+    var-kind variable
+    dec-type double
+    rep-type double
+    flags is_param
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount..ctor(System.String\_customerName,\_System.Double\_balance):::EXIT14
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable customerName
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    flags is_param
+    comparability 22
+  variable customerName.ToString()
+    var-kind function ToString()
+    enclosing-var customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable balance
+    var-kind variable
+    dec-type double
+    rep-type double
+    flags is_param
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount.CustomerName.get():::ENTER
+ppt-type enter
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+
+ppt BankAccountNS.BankAccount.CustomerName.get():::EXIT4
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable return
+    var-kind return
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable return.ToString()
+    var-kind function ToString()
+    enclosing-var return
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount.CustomerName.get():::EXIT_EX_Runtime
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable return
+    var-kind return
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable return.ToString()
+    var-kind function ToString()
+    enclosing-var return
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount.CustomerName.get():::EXIT6
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable return
+    var-kind return
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable return.ToString()
+    var-kind function ToString()
+    enclosing-var return
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount.Balance.get():::ENTER
+ppt-type enter
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+
+ppt BankAccountNS.BankAccount.Balance.get():::EXIT4
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable return
+    var-kind return
+    dec-type double
+    rep-type double
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount.Balance.get():::EXIT_EX_Runtime
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable return
+    var-kind return
+    dec-type double
+    rep-type double
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount.Balance.get():::EXIT6
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable return
+    var-kind return
+    dec-type double
+    rep-type double
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount.Debit(System.Double\_amount):::ENTER
+ppt-type enter
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable amount
+    var-kind variable
+    dec-type double
+    rep-type double
+    flags is_param
+    comparability 22
+
+ppt BankAccountNS.BankAccount.Debit(System.Double\_amount):::EXIT_EX_System.Exception
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable amount
+    var-kind variable
+    dec-type double
+    rep-type double
+    flags is_param
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount.Debit(System.Double\_amount):::EXIT_EX_System.ArgumentOutOfRangeException
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable amount
+    var-kind variable
+    dec-type double
+    rep-type double
+    flags is_param
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount.Debit(System.Double\_amount):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable amount
+    var-kind variable
+    dec-type double
+    rep-type double
+    flags is_param
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount.Debit(System.Double\_amount):::EXIT49
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable amount
+    var-kind variable
+    dec-type double
+    rep-type double
+    flags is_param
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount.Credit(System.Double\_amount):::ENTER
+ppt-type enter
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable amount
+    var-kind variable
+    dec-type double
+    rep-type double
+    flags is_param
+    comparability 22
+
+ppt BankAccountNS.BankAccount.Credit(System.Double\_amount):::EXIT_EX_System.Exception
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable amount
+    var-kind variable
+    dec-type double
+    rep-type double
+    flags is_param
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount.Credit(System.Double\_amount):::EXIT_EX_System.ArgumentOutOfRangeException
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable amount
+    var-kind variable
+    dec-type double
+    rep-type double
+    flags is_param
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount.Credit(System.Double\_amount):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable amount
+    var-kind variable
+    dec-type double
+    rep-type double
+    flags is_param
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount.Credit(System.Double\_amount):::EXIT30
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable amount
+    var-kind variable
+    dec-type double
+    rep-type double
+    flags is_param
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount.FreezeAccount():::ENTER
+ppt-type enter
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+
+ppt BankAccountNS.BankAccount.FreezeAccount():::EXIT_EX_Runtime
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount.FreezeAccount():::EXIT4
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount.UnfreezeAccount():::ENTER
+ppt-type enter
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+
+ppt BankAccountNS.BankAccount.UnfreezeAccount():::EXIT_EX_Runtime
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount.UnfreezeAccount():::EXIT4
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::OBJECT 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable this
+    var-kind variable
+    dec-type BankAccountNS.BankAccount
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName
+    var-kind field m_customerName
+    enclosing-var this
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_customerName.ToString()
+    var-kind function ToString()
+    enclosing-var this.m_customerName
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_balance
+    var-kind field m_balance
+    enclosing-var this
+    dec-type double
+    rep-type double
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.m_frozen
+    var-kind field m_frozen
+    enclosing-var this
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent BankAccountNS.BankAccount:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount.Main():::ENTER
+ppt-type enter
+parent parent BankAccountNS.BankAccount:::CLASS 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+
+ppt BankAccountNS.BankAccount.Main():::EXIT_EX_Runtime
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::CLASS 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt BankAccountNS.BankAccount.Main():::EXIT19
+ppt-type subexit
+parent parent BankAccountNS.BankAccount:::CLASS 1
+  variable BankAccount.DebitAmountExceedsBalanceMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountExceedsBalanceMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability 22
+  variable BankAccount.DebitAmountLessThanZeroMessage.ToString()
+    var-kind function ToString()
+    enclosing-var BankAccount.DebitAmountLessThanZeroMessage
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+BankAccountNS.BankAccount..ctor(System.String\_customerName,\_System.Double\_balance):::ENTER
+this_invocation_nonce
+0
+BankAccount.DebitAmountExceedsBalanceMessage
+794743466
+1
+BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+"Debit amount exceeds balance"
+1
+BankAccount.DebitAmountLessThanZeroMessage
+-1908342790
+1
+BankAccount.DebitAmountLessThanZeroMessage.ToString()
+"Debit amount less than zero"
+1
+customerName
+-381399723
+1
+customerName.ToString()
+"Mr. Bryan Walton"
+1
+balance
+11.99
+1
+
+BankAccountNS.BankAccount..ctor(System.String\_customerName,\_System.Double\_balance):::EXIT14
+this_invocation_nonce
+0
+BankAccount.DebitAmountExceedsBalanceMessage
+794743466
+1
+BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+"Debit amount exceeds balance"
+1
+BankAccount.DebitAmountLessThanZeroMessage
+-1908342790
+1
+BankAccount.DebitAmountLessThanZeroMessage.ToString()
+"Debit amount less than zero"
+1
+this
+23484798
+1
+this.m_customerName
+-381399723
+1
+this.m_customerName.ToString()
+"Mr. Bryan Walton"
+1
+this.m_balance
+11.99
+1
+this.m_frozen
+false
+1
+this.GetType()
+"BankAccountNS.BankAccount"
+1
+customerName
+-381399723
+1
+customerName.ToString()
+"Mr. Bryan Walton"
+1
+balance
+11.99
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+BankAccountNS.BankAccount.Debit(System.Double\_amount):::ENTER
+this_invocation_nonce
+1
+BankAccount.DebitAmountExceedsBalanceMessage
+794743466
+1
+BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+"Debit amount exceeds balance"
+1
+BankAccount.DebitAmountLessThanZeroMessage
+-1908342790
+1
+BankAccount.DebitAmountLessThanZeroMessage.ToString()
+"Debit amount less than zero"
+1
+this
+23484798
+1
+this.m_customerName
+-381399723
+1
+this.m_customerName.ToString()
+"Mr. Bryan Walton"
+1
+this.m_balance
+11.99
+1
+this.m_frozen
+false
+1
+this.GetType()
+"BankAccountNS.BankAccount"
+1
+amount
+20
+1
+
+BankAccountNS.BankAccount.Debit(System.Double\_amount):::EXIT_EX_System.Exception
+this_invocation_nonce
+1
+BankAccount.DebitAmountExceedsBalanceMessage
+794743466
+1
+BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+"Debit amount exceeds balance"
+1
+BankAccount.DebitAmountLessThanZeroMessage
+-1908342790
+1
+BankAccount.DebitAmountLessThanZeroMessage.ToString()
+"Debit amount less than zero"
+1
+this
+23484798
+1
+this.m_customerName
+-381399723
+1
+this.m_customerName.ToString()
+"Mr. Bryan Walton"
+1
+this.m_balance
+11.99
+1
+this.m_frozen
+false
+1
+this.GetType()
+"BankAccountNS.BankAccount"
+1
+amount
+20
+1
+exception
+11819884
+1
+exception.GetType()
+"System.ArgumentOutOfRangeException"
+1
+
+BankAccountNS.BankAccount..ctor(System.String\_customerName,\_System.Double\_balance):::ENTER
+this_invocation_nonce
+2
+BankAccount.DebitAmountExceedsBalanceMessage
+794743466
+1
+BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+"Debit amount exceeds balance"
+1
+BankAccount.DebitAmountLessThanZeroMessage
+-1908342790
+1
+BankAccount.DebitAmountLessThanZeroMessage.ToString()
+"Debit amount less than zero"
+1
+customerName
+-381399723
+1
+customerName.ToString()
+"Mr. Bryan Walton"
+1
+balance
+11.99
+1
+
+BankAccountNS.BankAccount..ctor(System.String\_customerName,\_System.Double\_balance):::EXIT14
+this_invocation_nonce
+2
+BankAccount.DebitAmountExceedsBalanceMessage
+794743466
+1
+BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+"Debit amount exceeds balance"
+1
+BankAccount.DebitAmountLessThanZeroMessage
+-1908342790
+1
+BankAccount.DebitAmountLessThanZeroMessage.ToString()
+"Debit amount less than zero"
+1
+this
+54794976
+1
+this.m_customerName
+-381399723
+1
+this.m_customerName.ToString()
+"Mr. Bryan Walton"
+1
+this.m_balance
+11.99
+1
+this.m_frozen
+false
+1
+this.GetType()
+"BankAccountNS.BankAccount"
+1
+customerName
+-381399723
+1
+customerName.ToString()
+"Mr. Bryan Walton"
+1
+balance
+11.99
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+BankAccountNS.BankAccount.Debit(System.Double\_amount):::ENTER
+this_invocation_nonce
+3
+BankAccount.DebitAmountExceedsBalanceMessage
+794743466
+1
+BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+"Debit amount exceeds balance"
+1
+BankAccount.DebitAmountLessThanZeroMessage
+-1908342790
+1
+BankAccount.DebitAmountLessThanZeroMessage.ToString()
+"Debit amount less than zero"
+1
+this
+54794976
+1
+this.m_customerName
+-381399723
+1
+this.m_customerName.ToString()
+"Mr. Bryan Walton"
+1
+this.m_balance
+11.99
+1
+this.m_frozen
+false
+1
+this.GetType()
+"BankAccountNS.BankAccount"
+1
+amount
+-100
+1
+
+BankAccountNS.BankAccount.Debit(System.Double\_amount):::EXIT_EX_System.Exception
+this_invocation_nonce
+3
+BankAccount.DebitAmountExceedsBalanceMessage
+794743466
+1
+BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+"Debit amount exceeds balance"
+1
+BankAccount.DebitAmountLessThanZeroMessage
+-1908342790
+1
+BankAccount.DebitAmountLessThanZeroMessage.ToString()
+"Debit amount less than zero"
+1
+this
+54794976
+1
+this.m_customerName
+-381399723
+1
+this.m_customerName.ToString()
+"Mr. Bryan Walton"
+1
+this.m_balance
+11.99
+1
+this.m_frozen
+false
+1
+this.GetType()
+"BankAccountNS.BankAccount"
+1
+amount
+-100
+1
+exception
+9208092
+1
+exception.GetType()
+"System.ArgumentOutOfRangeException"
+1
+
+BankAccountNS.BankAccount..ctor(System.String\_customerName,\_System.Double\_balance):::ENTER
+this_invocation_nonce
+4
+BankAccount.DebitAmountExceedsBalanceMessage
+794743466
+1
+BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+"Debit amount exceeds balance"
+1
+BankAccount.DebitAmountLessThanZeroMessage
+-1908342790
+1
+BankAccount.DebitAmountLessThanZeroMessage.ToString()
+"Debit amount less than zero"
+1
+customerName
+-381399723
+1
+customerName.ToString()
+"Mr. Bryan Walton"
+1
+balance
+11.99
+1
+
+BankAccountNS.BankAccount..ctor(System.String\_customerName,\_System.Double\_balance):::EXIT14
+this_invocation_nonce
+4
+BankAccount.DebitAmountExceedsBalanceMessage
+794743466
+1
+BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+"Debit amount exceeds balance"
+1
+BankAccount.DebitAmountLessThanZeroMessage
+-1908342790
+1
+BankAccount.DebitAmountLessThanZeroMessage.ToString()
+"Debit amount less than zero"
+1
+this
+56631850
+1
+this.m_customerName
+-381399723
+1
+this.m_customerName.ToString()
+"Mr. Bryan Walton"
+1
+this.m_balance
+11.99
+1
+this.m_frozen
+false
+1
+this.GetType()
+"BankAccountNS.BankAccount"
+1
+customerName
+-381399723
+1
+customerName.ToString()
+"Mr. Bryan Walton"
+1
+balance
+11.99
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+BankAccountNS.BankAccount.Debit(System.Double\_amount):::ENTER
+this_invocation_nonce
+5
+BankAccount.DebitAmountExceedsBalanceMessage
+794743466
+1
+BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+"Debit amount exceeds balance"
+1
+BankAccount.DebitAmountLessThanZeroMessage
+-1908342790
+1
+BankAccount.DebitAmountLessThanZeroMessage.ToString()
+"Debit amount less than zero"
+1
+this
+56631850
+1
+this.m_customerName
+-381399723
+1
+this.m_customerName.ToString()
+"Mr. Bryan Walton"
+1
+this.m_balance
+11.99
+1
+this.m_frozen
+false
+1
+this.GetType()
+"BankAccountNS.BankAccount"
+1
+amount
+4.55
+1
+
+BankAccountNS.BankAccount.Debit(System.Double\_amount):::EXIT49
+this_invocation_nonce
+5
+BankAccount.DebitAmountExceedsBalanceMessage
+794743466
+1
+BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+"Debit amount exceeds balance"
+1
+BankAccount.DebitAmountLessThanZeroMessage
+-1908342790
+1
+BankAccount.DebitAmountLessThanZeroMessage.ToString()
+"Debit amount less than zero"
+1
+this
+56631850
+1
+this.m_customerName
+-381399723
+1
+this.m_customerName.ToString()
+"Mr. Bryan Walton"
+1
+this.m_balance
+7.44
+1
+this.m_frozen
+false
+1
+this.GetType()
+"BankAccountNS.BankAccount"
+1
+amount
+4.55
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+BankAccountNS.BankAccount.Balance.get():::ENTER
+this_invocation_nonce
+6
+BankAccount.DebitAmountExceedsBalanceMessage
+794743466
+1
+BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+"Debit amount exceeds balance"
+1
+BankAccount.DebitAmountLessThanZeroMessage
+-1908342790
+1
+BankAccount.DebitAmountLessThanZeroMessage.ToString()
+"Debit amount less than zero"
+1
+this
+56631850
+1
+this.m_customerName
+-381399723
+1
+this.m_customerName.ToString()
+"Mr. Bryan Walton"
+1
+this.m_balance
+7.44
+1
+this.m_frozen
+false
+1
+this.GetType()
+"BankAccountNS.BankAccount"
+1
+
+BankAccountNS.BankAccount.Balance.get():::EXIT4
+this_invocation_nonce
+6
+BankAccount.DebitAmountExceedsBalanceMessage
+794743466
+1
+BankAccount.DebitAmountExceedsBalanceMessage.ToString()
+"Debit amount exceeds balance"
+1
+BankAccount.DebitAmountLessThanZeroMessage
+-1908342790
+1
+BankAccount.DebitAmountLessThanZeroMessage.ToString()
+"Debit amount less than zero"
+1
+this
+56631850
+1
+this.m_customerName
+-381399723
+1
+this.m_customerName.ToString()
+"Mr. Bryan Walton"
+1
+this.m_balance
+7.44
+1
+this.m_frozen
+false
+1
+this.GetType()
+"BankAccountNS.BankAccount"
+1
+return
+7.44
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
