@@ -679,10 +679,10 @@ namespace DotNetFrontEnd
         this.variablesForCurrentProgramPoint.Clear();
         if (objectType != null)
         {
-          this.WriteLine();
           string nameToPrint = SanitizeProgramPointName(objectName + ":::OBJECT");
           if (frontEndArgs.ShouldPrintProgramPoint(nameToPrint))
           {
+            this.WriteLine();
             this.WritePair("ppt", nameToPrint);
             this.WritePair("ppt-type", "object");
             this.WritePair("parent", "parent " + nameToPrint.Replace(":::OBJECT", ":::CLASS 1"));
@@ -705,14 +705,15 @@ namespace DotNetFrontEnd
       foreach (Type objectType in objectTypeDecl.GetAllTypes)
       {
         this.variablesForCurrentProgramPoint.Clear();
-        this.WriteLine();
         string nameToPrint = SanitizeProgramPointName(className + ":::CLASS");
         if (frontEndArgs.ShouldPrintProgramPoint(nameToPrint))
         {
+          this.WriteLine();
           this.WritePair("ppt", nameToPrint);
           this.WritePair("ppt-type", "class");
+          DeclareStaticFieldsForType(objectType);
         }
-        DeclareStaticFieldsForType(objectType);
+       
       }
     }
 
