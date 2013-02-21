@@ -307,7 +307,9 @@ namespace DotNetFrontEnd
       for (int i = 0; i < operations.Count; i++)
       {
         IOperation op = operations[i];
-        MarkLabels(immutableMethodBody, offsetsUsedInExceptionInformation, offset2Label, op);
+
+        MarkLabels(immutableMethodBody, offsetsUsedInExceptionInformation, offset2Label, commonExit, op);
+        
         this.EmitDebugInformationFor(op);
         EmitOperation(op, i, ref mutableMethodBody, offset2Label,
             ref tryBodyStarted, exceptions, commonExit, operations.Last(), synthesizedReturns);
@@ -838,11 +840,17 @@ namespace DotNetFrontEnd
           // the entire method in a try/catch block, we thus can't use it at all.
           break;
         default:
-          if (op.Value == null)
+          if (op.Value == null ||
+              // CCI added values for the short instructions; they modified the Emit(..., object) function
+              // to not emit values for the short instructions, but below we would call the Emit(..., int) 
+              // function.
+              op.OperationCode == OperationCode.Ldnull ||
+              op.OperationCode == OperationCode.Ldc_I4_M1 ||
+              (op.OperationCode >= OperationCode.Ldc_I4_0 && op.OperationCode <= OperationCode.Ldc_I4_8))
           {
             generator.Emit(op.OperationCode);
             break;
-          }
+          } 
           var typeCode = System.Convert.GetTypeCode(op.Value);
           switch (typeCode)
           {
@@ -1187,7 +1195,7 @@ namespace DotNetFrontEnd
     /// CCI implemented method to mark labels with the proper locations
     /// </summary>
     private void MarkLabels(IMethodBody methodBody, HashSet<uint> offsetsUsedInExceptionInformation,
-      Dictionary<uint, ILGeneratorLabel> offset2Label, IOperation op)
+      Dictionary<uint, ILGeneratorLabel> offset2Label, ILGeneratorLabel commonExit, IOperation op)
     {
       ILGeneratorLabel label;
       if (op.Location is IILLocation)
@@ -1195,10 +1203,12 @@ namespace DotNetFrontEnd
         generator.MarkSequencePoint(op.Location);
       }
 
-      //  Mark operation if it is a label for a branch
-      if (offset2Label.TryGetValue(op.Offset, out label))
+      //  Mark operation if it is a label for a branch.
+      //  Common exit is labelled in Emit function when last return is reached
+      if (offset2Label.TryGetValue(op.Offset, out label)
+          && label != commonExit)
       {
-        generator.MarkLabel(label);
+          generator.MarkLabel(label);
       }
 
       // Mark operation if it is pointed to by an exception handler
