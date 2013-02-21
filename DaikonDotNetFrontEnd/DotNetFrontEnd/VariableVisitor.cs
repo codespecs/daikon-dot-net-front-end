@@ -68,7 +68,7 @@ namespace DotNetFrontEnd
     /// which Type to use for the instrumentation calls.
     /// </summary>
     public static readonly string VariableVisitorClassName = "VariableVisitor";
-    
+
     /// <summary>
     /// Name of the function to be inserted into the IL to acquire a lock on the writer.
     /// </summary>
@@ -127,6 +127,16 @@ namespace DotNetFrontEnd
     /// Name of the method to suppress any output
     /// </summary>
     public static readonly string ShouldSuppressOutputMethodName = "SetOutputSuppression";
+
+    /// <summary>
+    /// Name of the method to increment the pure method call depth for the current thread.
+    /// </summary>
+    public static readonly string IncrementThreadDepthMethodName = "IncrementDepthCount";
+
+    /// <summary>
+    /// Name of the method to decrement the pure method call depth for the current thread.
+    /// </summary>
+    public static readonly string DecrementThreadDepthMethodName = "DecrementDepthCount";
 
     /// <summary>
     /// The name of the exception variable added at the end of every method
@@ -203,6 +213,11 @@ namespace DotNetFrontEnd
     /// The name of the assembly being instrumented. Necessary when DNFE is run in offline-mode
     /// </summary>
     private static string offlineAssemblyName = null;
+
+    /// <summary>
+    /// Depth of the thread in visit calls
+    /// </summary>
+    private static Dictionary<Thread, int> threadDepthMap = new Dictionary<Thread, int>();
 
     #endregion
 
@@ -423,7 +438,7 @@ namespace DotNetFrontEnd
     {
       staticFieldsVisitedForCurrentProgramPoint.Clear();
       variablesVisitedForCurrentProgramPoint.Clear();
-      
+
       if (frontEndArgs.SampleStart != FrontEndArgs.NoSampleStart)
       {
         int oldOccurrences;
@@ -469,9 +484,31 @@ namespace DotNetFrontEnd
         frontEndArgs = new FrontEndArgs(arguments.Split());
 
         IMetadataHost host = frontEndArgs.IsPortableDll ? (IMetadataHost)new PortableHost() : new PeReader.DefaultHost();
-          
+
         typeManager = new TypeManager(host, frontEndArgs);
       }
+    }
+
+    /// <summary>
+    /// Increment the pure method depth count for the current thread.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+    public static void IncrementDepthCount()
+    {
+      if (!threadDepthMap.ContainsKey(Thread.CurrentThread))
+      {
+        threadDepthMap[Thread.CurrentThread] = 0;
+      }
+      threadDepthMap[Thread.CurrentThread]++;
+    }
+
+    /// <summary>
+    /// Decrement the pure method depth count for the current thread.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+    public static void DecrementDepthCount()
+    {
+      threadDepthMap[Thread.CurrentThread]--;
     }
 
     #endregion
@@ -488,6 +525,12 @@ namespace DotNetFrontEnd
     private static void DoVisit(object variable, string name, string typeName,
         VariableModifiers flags = VariableModifiers.none)
     {
+      if (threadDepthMap.ContainsKey(Thread.CurrentThread) &&
+         (threadDepthMap[Thread.CurrentThread] > 1))
+      {
+        return;
+      }
+
       // TODO(#15): Can we pull any fields from exceptions?
       // Exceptions shouldn't be recursed any further down than the 
       // variable itself, because we only know that they are an exception.
@@ -558,12 +601,12 @@ namespace DotNetFrontEnd
 
       return writer;
     }
-    
+
     #region Reflective Visitor and helper methods
 
     private static bool IsTypeOf<T>(object t)
     {
-        return (t is T);
+      return (t is T);
     }
 
     /// <summary>
@@ -577,14 +620,14 @@ namespace DotNetFrontEnd
     /// <param name="depth">The current call depth</param>
     /// <param name="fieldFlags">Flags indicating special printing</param>
     private static void ReflectiveVisit(string name, object obj, Type type,
-        TextWriter writer, int depth, Type originatingType, 
+        TextWriter writer, int depth, Type originatingType,
         VariableModifiers fieldFlags = VariableModifiers.none)
     {
       if (PerformEarlyExitChecks(name, depth))
       {
         return;
       }
-      
+
       PrintSimpleVisitFields(name, obj, type, writer, fieldFlags);
 
       // Don't visit the fields of variables with certain flags.
@@ -610,7 +653,7 @@ namespace DotNetFrontEnd
       }
       else if (typeManager.IsSet(type) || typeManager.IsFSharpSet(type))
       {
-        
+
 
         IEnumerable set = (IEnumerable)obj;
         // A set can have only one generic argument -- the element type
@@ -628,7 +671,7 @@ namespace DotNetFrontEnd
         }
         Array convertedList = Array.CreateInstance(setElementType, result.Count);
         result.CopyTo(convertedList, 0);
-        ProcessVariableAsList(name, convertedList, convertedList.GetType(), writer, depth, 
+        ProcessVariableAsList(name, convertedList, convertedList.GetType(), writer, depth,
           originatingType);
       }
       else if (typeManager.IsDictionary(type))
@@ -668,7 +711,7 @@ namespace DotNetFrontEnd
     /// values to the given writer. Includes children if any, and toString
     /// or HashCode calls.
     /// </summary>
-    private static void PerformNonListInspection(string name, object obj, 
+    private static void PerformNonListInspection(string name, object obj,
       Type type, TextWriter writer, int depth, VariableModifiers fieldFlags, Type originatingType)
     {
       if (obj == null)
@@ -719,7 +762,7 @@ namespace DotNetFrontEnd
           expandedList.Add(curr);
           curr = GetFieldValue(curr, linkedListField, linkedListField.Name);
         }
-        ListReflectiveVisit(name + "[..]", (IList)expandedList, type, writer, depth, 
+        ListReflectiveVisit(name + "[..]", (IList)expandedList, type, writer, depth,
             originatingType, fieldFlags);
       }
     }
@@ -733,7 +776,7 @@ namespace DotNetFrontEnd
     /// <param name="writer">Writer to use when printing</param>
     /// <param name="depth">Depth of the variable</param>
     /// <param name="fieldFlags">Flags describing the current variable</param>
-    private static void PrintFieldValues(string name, object obj, Type type, 
+    private static void PrintFieldValues(string name, object obj, Type type,
       TextWriter writer, int depth, VariableModifiers fieldFlags, Type originatingType)
     {
       foreach (FieldInfo field in
@@ -755,7 +798,7 @@ namespace DotNetFrontEnd
               + field.Name + " Field Type: " + field.FieldType);
           // The field is declared in the decls so Daikon still needs a value. 
           ReflectiveVisit(name + "." + field.Name, null,
-              field.FieldType, writer, depth + 1, originatingType, 
+              field.FieldType, writer, depth + 1, originatingType,
               fieldFlags | VariableModifiers.nonsensical);
         }
       }
@@ -766,12 +809,12 @@ namespace DotNetFrontEnd
       {
         if (!typeManager.ShouldIgnoreField(type, staticField))
         {
-            
+
           string staticFieldName = type.FullName + "." + staticField.Name;
-          
+
           try
           {
-            
+
             if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
             {
               staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
@@ -802,7 +845,7 @@ namespace DotNetFrontEnd
     /// <param name="type">Type of the variable</param>
     /// <param name="writer">Writer used to print the variable</param>
     /// <param name="fieldFlags">Flags for the field, if any</param>
-    private static void PrintSimpleVisitFields(string name, object obj, Type type, 
+    private static void PrintSimpleVisitFields(string name, object obj, Type type,
       TextWriter writer, VariableModifiers fieldFlags)
     {
       // Print variable's name.
@@ -862,7 +905,7 @@ namespace DotNetFrontEnd
     /// <param name="depth">Depth of the list variable</param>
     /// <param name="flags">Field flags for the list variable</param>
     private static void ProcessVariableAsList(string name, object obj, Type type,
-        TextWriter writer, int depth, Type originatingType, 
+        TextWriter writer, int depth, Type originatingType,
         VariableModifiers flags = VariableModifiers.none)
     {
       // Call GetType() on the list if necessary.
@@ -883,7 +926,7 @@ namespace DotNetFrontEnd
       }
       else
       {
-        ListReflectiveVisit(name + "[..]", (IList)obj, elementType, writer, depth, 
+        ListReflectiveVisit(name + "[..]", (IList)obj, elementType, writer, depth,
             originatingType, flags);
       }
     }
@@ -901,7 +944,7 @@ namespace DotNetFrontEnd
     /// <param name="nonsensicalElements">If any elements are non-sensical, an array 
     /// indicating which ones are</param>
     private static void ListReflectiveVisit(string name, IList list, Type elementType,
-        TextWriter writer, int depth, Type originatingType, 
+        TextWriter writer, int depth, Type originatingType,
         VariableModifiers flags = VariableModifiers.none,
         bool[] nonsensicalElements = null)
     {
@@ -922,7 +965,7 @@ namespace DotNetFrontEnd
           || flags.HasFlag(VariableModifiers.classname);
 
       // Write name of the list, which possibly is its path.
-        writer.WriteLine(name);
+      writer.WriteLine(name);
 
       // If a reference to a list is null the reference is nonsensical.
       if (list == null)
@@ -1007,11 +1050,11 @@ namespace DotNetFrontEnd
           elementType.GetSortedFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
               elementType, originatingType)))
       {
-          if (!typeManager.ShouldIgnoreField(elementType, field))
-          {
-              ListReflectiveVisit(name + "." + field.Name, null,
-                field.FieldType, writer, depth + 1, originatingType);
-          }
+        if (!typeManager.ShouldIgnoreField(elementType, field))
+        {
+          ListReflectiveVisit(name + "." + field.Name, null,
+            field.FieldType, writer, depth + 1, originatingType);
+        }
       }
 
       foreach (FieldInfo staticElementField in
@@ -1029,7 +1072,7 @@ namespace DotNetFrontEnd
           }
         }
       }
-      
+
       if (!elementType.IsSealed)
       {
         ListReflectiveVisit(name + "." + DeclarationPrinter.GetTypeMethodCall, null,
@@ -1040,7 +1083,7 @@ namespace DotNetFrontEnd
       if (elementType == TypeManager.StringType)
       {
         ListReflectiveVisit(name + "." + DeclarationPrinter.ToStringMethodCall, null,
-            TypeManager.StringType, writer, depth + 1, originatingType, 
+            TypeManager.StringType, writer, depth + 1, originatingType,
             VariableModifiers.to_string);
       }
     }
@@ -1081,7 +1124,7 @@ namespace DotNetFrontEnd
           {
             staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
             ReflectiveVisit(staticFieldName, elementField.GetValue(null),
-                elementField.FieldType, writer, staticFieldName.Count(c => c == '.'), 
+                elementField.FieldType, writer, staticFieldName.Count(c => c == '.'),
                 originatingType);
           }
         }
@@ -1122,7 +1165,7 @@ namespace DotNetFrontEnd
           }
         }
         ListReflectiveVisit(name + "." + DeclarationPrinter.ToStringMethodCall, stringArray,
-            TypeManager.StringType, writer, depth + 1, originatingType, 
+            TypeManager.StringType, writer, depth + 1, originatingType,
             VariableModifiers.to_string);
       }
 

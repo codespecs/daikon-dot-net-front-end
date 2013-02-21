@@ -216,8 +216,8 @@ namespace DotNetFrontEnd
       this.pureMethods = new Dictionary<int, MethodInfo>();
       this.ignoredValues = new HashSet<string>();
       this.PopulateIgnoredValues();
-      this.ProcessPurityMethods();
       this.globalPureMethodCount = 0;
+      this.ProcessPurityMethods();
     }
 
     /// <summary>
