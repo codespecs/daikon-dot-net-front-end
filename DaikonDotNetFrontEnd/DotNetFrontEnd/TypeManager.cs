@@ -252,7 +252,7 @@ namespace DotNetFrontEnd
         string[] methodDescriptions = str.Split(';');
         try
         {
-          AddPureMethod( methodDescriptions[0], methodDescriptions[1]);
+          AddPureMethod(methodDescriptions[0], methodDescriptions[1]);
         }
         catch (IndexOutOfRangeException)
         {
