@@ -457,7 +457,11 @@ namespace DotNetFrontEnd
         {
             return true;
         }
-      
+        else if (field.GetCustomAttributes(false).Any(x => x is CompilerGeneratedAttribute || x is DebuggerNonUserCodeAttribute))
+        {
+            return true;
+        }
+        
         // TODO(#58): Should be able to switch this test off with a command line arg.
         return this.ignoredValues.Contains(parentType.AssemblyQualifiedName + ";" + field.Name);
     }
