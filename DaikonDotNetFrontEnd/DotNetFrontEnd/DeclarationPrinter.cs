@@ -111,6 +111,7 @@ namespace DotNetFrontEnd
       no_dups = is_param << 1,
       not_ordered = no_dups << 1,
       is_property = not_ordered << 1,
+      is_enum = is_property << 1,
     }
 
     /// <summary>
@@ -181,6 +182,10 @@ namespace DotNetFrontEnd
         return;
       }
 
+      if (type.IsEnum)
+      {
+        flags |= VariableFlags.is_enum;
+      }
       PrintSimpleDescriptors(name, type, kind, flags, enclosingVar, relativeName, parentName);
 
       // If the variable is an object, then look at its fields or elements.
@@ -411,6 +416,11 @@ namespace DotNetFrontEnd
       if (elementType == null)
       {
         elementType = TypeManager.ObjectType;
+      }
+
+      if (elementType.IsEnum)
+      {
+        flags |= VariableFlags.is_enum;
       }
 
       this.WritePair("variable", name, IndentsForName);

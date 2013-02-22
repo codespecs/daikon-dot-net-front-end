@@ -88,6 +88,7 @@ namespace DotNetFrontEnd
       sample_start,
       // Variables options
       arrays_only,
+      is_enum_flags,
       is_property_flags,
       nesting_depth,
       omit_var,
@@ -777,6 +778,15 @@ namespace DotNetFrontEnd
     public bool IsPropertyFlags
     {
       get { return this.programArguments.ContainsKey(PossibleArgument.is_property_flags); }
+    }
+
+    /// <summary>
+    /// Whether to print the is_Enum flag for Enums. Not compatible
+    /// with old versions of Daikon.
+    /// </summary>
+    public bool IsEnumFlags
+    {
+      get { return this.programArguments.ContainsKey(PossibleArgument.is_enum_flags); }
     }
 
     #endregion
