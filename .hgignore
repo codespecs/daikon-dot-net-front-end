@@ -1,0 +1,19 @@
+syntax: glob
+*/bin/*
+*/obj/*
+*.exe
+*.pdb
+<<<<<<< local
+*.csproj.user
+=======
+*.bak
+*.aux
+*.bbl
+*.log
+*.blg
+>>>>>>> other
+*.orig
+<<<<<<< local
+*~
+=======
+*.rej>>>>>>> other
