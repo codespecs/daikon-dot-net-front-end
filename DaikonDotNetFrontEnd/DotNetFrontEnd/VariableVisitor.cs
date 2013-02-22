@@ -476,7 +476,7 @@ namespace DotNetFrontEnd
         occurenceCounts[programPointName] = oldOccurrences + 1;
       }
       TextWriter writer = InitializeWriter();
-      if (programPointName == null)
+      if (string.IsNullOrEmpty(programPointName))
       {
         throw new ArgumentNullException("programPointName");
       }
@@ -1398,10 +1398,23 @@ namespace DotNetFrontEnd
         throw new ArgumentException("Method " + methodName + " not found in type or supertypes");
       }
 
+      object val;
       SetOutputSuppression(true);
-      var val = runtimeMethod.Invoke(obj, null);
-      SetOutputSuppression(false);
+      try
+      {
+          val = runtimeMethod.Invoke(obj, null);
+      }
+      catch
+      {
+          Console.WriteLine("Error invoking " + runtimeMethod.Name + " on type " + obj.GetType().Name);
+          val = "nonsensical";
+      }
+      finally
+      {
+          SetOutputSuppression(false);
+      }
       return val;
+      
     }
 
     /// <summary>
