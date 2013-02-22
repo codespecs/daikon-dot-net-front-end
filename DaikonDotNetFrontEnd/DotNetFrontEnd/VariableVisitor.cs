@@ -740,7 +740,7 @@ namespace DotNetFrontEnd
 
       if (!shouldSuppressOutput)
       {
-        foreach (var item in typeManager.GetPureMethodsForType(type))
+        foreach (var item in typeManager.GetPureMethodsForType(type, originatingType))
         {
           ReflectiveVisit(name + '.' + DeclarationPrinter.SanitizePropertyName(item.Value.Name),
               GetMethodValue(obj, item.Value, item.Value.Name), item.Value.ReturnType, writer,
@@ -1169,7 +1169,7 @@ namespace DotNetFrontEnd
             VariableModifiers.to_string);
       }
 
-      foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType))
+      foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType, originatingType))
       {
         string pureMethodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Value.Name);
         object[] pureMethodResults = new object[list.Count];
