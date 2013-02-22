@@ -599,6 +599,14 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
+    /// Whether to limit the output fields to those visible at the given program point.
+    /// </summary>
+    public bool StdVisibility
+    {
+      get { return this.IsArgumentSpecified(PossibleArgument.std_visibility); }
+    }
+
+    /// <summary>
     /// Defines which members to visit
     /// </summary>
     private System.Reflection.BindingFlags BaseMemberAccessOptions
