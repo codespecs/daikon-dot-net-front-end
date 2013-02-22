@@ -105,6 +105,9 @@ namespace DotNetFrontEnd
     [NonSerialized]
     private AssemblyIdentity assemblyIdentity;
 
+    [NonSerialized]
+    private HashSet<Type> markedSystemTypes;
+
     #region Collection / Pure Method Memoization Caches
 
     /// <summary>
@@ -220,6 +223,7 @@ namespace DotNetFrontEnd
       this.nameTypeMap = new Dictionary<string, Type>();
       this.pureMethodsForType = new Dictionary<Type, ISet<MethodInfo>>();
       this.pureMethods = new HashSet<MethodInfo>();
+      this.markedSystemTypes = new HashSet<Type>();
       this.ignoredValues = new HashSet<string>();
       this.PopulateIgnoredValues();
       this.ProcessPurityMethods();
@@ -267,6 +271,21 @@ namespace DotNetFrontEnd
       }
     }
 
+    public void AddPureMethod(Type type, MethodInfo method)
+    {
+        if (pureMethods.Contains(method))
+        {
+            return;
+        }
+        if (!this.pureMethodsForType.ContainsKey(type))
+        {
+            pureMethodsForType[type] = new HashSet<MethodInfo>();
+        }
+        pureMethodsForType[type].Add(method);
+        pureMethods.Add(method);
+    
+    }
+
     /// <summary>
     /// Add the method described by the given method and type names as a pure method.
     /// If the method given matches an already pure method then take no externally-
@@ -292,16 +311,7 @@ namespace DotNetFrontEnd
         throw new ArgumentException("No method of name: " + methodName + " on type:" + typeName
             + " exists.");
       }
-      if (pureMethods.Contains(method))
-      {
-        return;
-      }
-      if (!this.pureMethodsForType.ContainsKey(type))
-      {
-          pureMethodsForType[type] = new HashSet<MethodInfo>();
-      }
-      pureMethodsForType[type].Add(method);
-      pureMethods.Add(method);
+      AddPureMethod(type, method);
     }
 
     /// <summary>
@@ -660,6 +670,8 @@ namespace DotNetFrontEnd
     /// </returns>
     public List<MethodInfo> GetPureMethodsForType(Type type, Type originatingType)
     {
+      if (markedSystemTypes == null) markedSystemTypes = new HashSet<Type>();
+
       var result = new List<MethodInfo>();
       if (this.pureMethodsForType.ContainsKey(type))
       {
@@ -670,12 +682,27 @@ namespace DotNetFrontEnd
           // --std-visibility has been supplied.
           // TODO(#71): Add logic for more visibility types
           if (frontEndArgs.StdVisibility && 
-              method.IsPrivate && originatingType.FullName != type.FullName)
+              method.IsPrivate && !originatingType.FullName.Equals(type.FullName))
           {
             continue;
           }
           result.Add(method);
         }
+      } 
+      else if (type.Namespace.StartsWith("System") && !markedSystemTypes.Contains(type))
+      {
+          if (!type.Name.Equals("RuntimeType") && !type.Name.Equals("RuntimeMethodInfo") && !type.IsSubclassOf(typeof(Exception)))
+          {
+              foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
+              {
+                  if (method.Name.StartsWith(DeclarationPrinter.GetterPropertyPrefix) && method.GetParameters().Length == 0)
+                  {
+                      AddPureMethod(type, method);
+                      result.Add(method);
+                  }
+              }
+              markedSystemTypes.Add(type);
+          }
       }
 
       result.Sort(delegate(MethodInfo lhs, MethodInfo rhs)
