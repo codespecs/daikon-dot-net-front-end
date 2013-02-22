@@ -19,25 +19,25 @@ using System.Runtime.CompilerServices;
 namespace DotNetFrontEnd
 {
 
-    public static class TypeManagerExtensions
+  public static class TypeManagerExtensions
+  {
+    /// <summary>
+    /// Returns the fields for the <code>System.Type</code> in alphabetical order by name. 
+    /// </summary>
+    /// <param name="type">the type</param>
+    /// <param name="bindingAttr">binding constraints</param>
+    /// <seealso cref="Type.GetFields"/>
+    /// <returns>the fields for the <code>System.Type</code> in alphabetical order by name. </returns>
+    public static FieldInfo[] GetSortedFields(this Type type, BindingFlags bindingAttr)
     {
-        /// <summary>
-        /// Returns the fields for the <code>System.Type</code> in alphabetical order by name. 
-        /// </summary>
-        /// <param name="type">the type</param>
-        /// <param name="bindingAttr">binding constraints</param>
-        /// <seealso cref="Type.GetFields"/>
-        /// <returns>the fields for the <code>System.Type</code> in alphabetical order by name. </returns>
-        public static FieldInfo[] GetSortedFields(this Type type, BindingFlags bindingAttr)
-        {
-            FieldInfo[] fields = type.GetFields(bindingAttr);
-            Array.Sort(fields, delegate(FieldInfo lhs, FieldInfo rhs)
-            {
-                return lhs.Name.CompareTo(rhs.Name);
-            });
-            return fields;
-        }
+      FieldInfo[] fields = type.GetFields(bindingAttr);
+      Array.Sort(fields, delegate(FieldInfo lhs, FieldInfo rhs)
+      {
+        return lhs.Name.CompareTo(rhs.Name);
+      });
+      return fields;
     }
+  }
 
   /// <summary>
   /// Keeps canonical type references. Converts between CCIMetadata and .NET types.
@@ -441,29 +441,29 @@ namespace DotNetFrontEnd
     /// <returns>True if the field should be ignored, false otherwise</returns>
     public bool ShouldIgnoreField(Type parentType, FieldInfo field)
     {
-        Debug.Assert(parentType != null);
-        Debug.Assert(field != null);
+      Debug.Assert(parentType != null);
+      Debug.Assert(field != null);
 
-        if (frontEndArgs.OmitParentDecType != null && frontEndArgs.OmitParentDecType.IsMatch(parentType.FullName))
-        {
-            return true;
-        }
-        else if (frontEndArgs.OmitDecType != null && 
-                 field.FieldType.FullName != null && // is null if the current instance represents a generic type parameter, 
-                                                     // an array type, pointer type, or byref type based on a type parameter, 
-                                                     // or a generic type that is not a generic type definition but contains 
-                                                     // unresolved type parameters.
-                 frontEndArgs.OmitDecType.IsMatch(field.FieldType.FullName))
-        {
-            return true;
-        }
-        else if (field.GetCustomAttributes(false).Any(x => x is CompilerGeneratedAttribute || x is DebuggerNonUserCodeAttribute))
-        {
-            return true;
-        }
-        
-        // TODO(#58): Should be able to switch this test off with a command line arg.
-        return this.ignoredValues.Contains(parentType.AssemblyQualifiedName + ";" + field.Name);
+      if (frontEndArgs.OmitParentDecType != null && frontEndArgs.OmitParentDecType.IsMatch(parentType.FullName))
+      {
+        return true;
+      }
+      else if (frontEndArgs.OmitDecType != null &&
+               field.FieldType.FullName != null && // is null if the current instance represents a generic type parameter, 
+        // an array type, pointer type, or byref type based on a type parameter, 
+        // or a generic type that is not a generic type definition but contains 
+        // unresolved type parameters.
+               frontEndArgs.OmitDecType.IsMatch(field.FieldType.FullName))
+      {
+        return true;
+      }
+      else if (field.GetCustomAttributes(false).Any(x => x is CompilerGeneratedAttribute || x is DebuggerNonUserCodeAttribute))
+      {
+        return true;
+      }
+
+      // TODO(#58): Should be able to switch this test off with a command line arg.
+      return this.ignoredValues.Contains(parentType.AssemblyQualifiedName + ";" + field.Name);
     }
 
     /// <summary>
@@ -564,7 +564,7 @@ namespace DotNetFrontEnd
     /// <returns><code>true</code> if <paramref name="type"/> implements <code>ISet</code></returns>
     public bool IsSet(Type type)
     {
-        return type.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ISet<>));
+      return type.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ISet<>));
     }
 
     /// <summary>
@@ -647,42 +647,27 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Get a list of the pure methods that should be called for the given type.
     /// </summary>
-    /// <param name="cciType">CCI Type Reference to the type to get pure methods for</param>
-    /// <returns>Map from key to method object of all the pure methods for the given type
-    /// </returns>
-    public Dictionary<int, MethodInfo> GetPureMethodsForType(ITypeReference cciType)
-    {
-      Dictionary<int, MethodInfo> result = new Dictionary<int, MethodInfo>();
-
-      var typeName = this.ConvertCCITypeToAssemblyQualifiedName(cciType);
-
-      var typeDecl = this.ConvertAssemblyQualifiedNameToType(typeName);
-     
-      var allTypes = typeDecl.GetAllTypes;
-
-      foreach (Type type in allTypes)
-      {
-        foreach (var x in GetPureMethodsForType(type))
-        {
-          result.Add(x.Key, x.Value);
-        }
-      }
-      return result;
-    }
-
-    /// <summary>
-    /// Get a list of the pure methods that should be called for the given type.
-    /// </summary>
     /// <param name="type">Type to get the pure methods for</param>
+    /// <param name="originatingType">The type of variable that originatiated 
+    /// this inspection</param>
     /// <returns>Map from key to method object of all the pure methods for the given type
     /// </returns>
-    public Dictionary<int, MethodInfo> GetPureMethodsForType(Type type)
+    public Dictionary<int, MethodInfo> GetPureMethodsForType(Type type, Type originatingType)
     {
       Dictionary<int, MethodInfo> result = new Dictionary<int, MethodInfo>();
       if (this.pureMethodKeys.ContainsKey(type))
       {
         foreach (int key in this.pureMethodKeys[type])
         {
+          MethodInfo method = pureMethods[key];
+          // Ensure the pure method can be seen by the originating type if 
+          // --std-visibility has been supplied.
+          // TODO(#71): Add logic for more visibility types
+          if (frontEndArgs.StdVisibility && 
+              method.IsPrivate && originatingType.FullName != type.FullName)
+          {
+            continue;
+          }
           result.Add(key, pureMethods[key]);
         }
       }
@@ -811,7 +796,7 @@ namespace DotNetFrontEnd
           typeSuffix.Insert(0, "[");
           for (int i = 0; i < mtr.Rank; i++)
           {
-            typeSuffix.Insert(1,",");
+            typeSuffix.Insert(1, ",");
           }
           // If someone went really crazy with their rank this could actually be negative :O
           Debug.Assert((int)mtr.Rank > 0);
@@ -1096,19 +1081,19 @@ namespace DotNetFrontEnd
     /// </summary>
     public static INamespaceTypeReference CreateTypeReference(IMetadataHost host, IAssemblyReference assemblyReference, string typeName)
     {
-        IUnitNamespaceReference ns = new Microsoft.Cci.Immutable.RootUnitNamespaceReference(assemblyReference);
-        string[] names = typeName.Split('.');
-        for (int i = 0, n = names.Length - 1; i < n; i++)
-            ns = new Microsoft.Cci.Immutable.NestedUnitNamespaceReference(ns, host.NameTable.GetNameFor(names[i]));
-        return new Microsoft.Cci.Immutable.NamespaceTypeReference(host, ns, host.NameTable.GetNameFor(names[names.Length - 1]), 0, false, false, true, PrimitiveTypeCode.NotPrimitive);
+      IUnitNamespaceReference ns = new Microsoft.Cci.Immutable.RootUnitNamespaceReference(assemblyReference);
+      string[] names = typeName.Split('.');
+      for (int i = 0, n = names.Length - 1; i < n; i++)
+        ns = new Microsoft.Cci.Immutable.NestedUnitNamespaceReference(ns, host.NameTable.GetNameFor(names[i]));
+      return new Microsoft.Cci.Immutable.NamespaceTypeReference(host, ns, host.NameTable.GetNameFor(names[names.Length - 1]), 0, false, false, true, PrimitiveTypeCode.NotPrimitive);
     }
 
     private bool IsCompilerGenerated(IDefinition def)
     {
-        var host = this.Host;
-        if (AttributeHelper.Contains(def.Attributes, host.PlatformType.SystemRuntimeCompilerServicesCompilerGeneratedAttribute)) return true;
-        var systemDiagnosticsDebuggerNonUserCodeAttribute = CreateTypeReference(host, new Microsoft.Cci.Immutable.AssemblyReference(host, host.ContractAssemblySymbolicIdentity), "System.Diagnostics.DebuggerNonUserCodeAttribute");
-        return AttributeHelper.Contains(def.Attributes, systemDiagnosticsDebuggerNonUserCodeAttribute);
+      var host = this.Host;
+      if (AttributeHelper.Contains(def.Attributes, host.PlatformType.SystemRuntimeCompilerServicesCompilerGeneratedAttribute)) return true;
+      var systemDiagnosticsDebuggerNonUserCodeAttribute = CreateTypeReference(host, new Microsoft.Cci.Immutable.AssemblyReference(host, host.ContractAssemblySymbolicIdentity), "System.Diagnostics.DebuggerNonUserCodeAttribute");
+      return AttributeHelper.Contains(def.Attributes, systemDiagnosticsDebuggerNonUserCodeAttribute);
     }
 
     /// <summary>
@@ -1118,7 +1103,7 @@ namespace DotNetFrontEnd
     /// <returns><code>true</code> if <param name="methodDef"/> is compiler generated.</returns>
     public bool IsMethodCompilerGenerated(IMethodDefinition methodDef)
     {
-        return IsCompilerGenerated(methodDef);
+      return IsCompilerGenerated(methodDef);
     }
 
     /// <summary>
@@ -1128,7 +1113,7 @@ namespace DotNetFrontEnd
     /// <returns><code>true</code> if <param name="typeDef"/> is compiler generated.</returns>
     public bool IsTypeCompilerGenerated(ITypeDefinition typeDef)
     {
-        return IsCompilerGenerated(typeDef);
+      return IsCompilerGenerated(typeDef);
     }
 
     /// <summary>

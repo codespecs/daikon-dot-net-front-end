@@ -2135,14 +2135,7 @@ namespace DotNetFrontEnd
       {
         foreach (MethodDefinition method in type.Methods)
         {
-          // Would be much better if CCI had used flags for visibilities here.
-          TypeMemberVisibility[] acceptableVisibilities = new TypeMemberVisibility[]
-            { TypeMemberVisibility.Public, 
-              TypeMemberVisibility.Assembly, 
-              TypeMemberVisibility.Default, 
-              TypeMemberVisibility.FamilyOrAssembly };
           if (typeManager.IsMethodCompilerGenerated(method) && 
-              acceptableVisibilities.Contains(method.Visibility) &&
               method.Name.ToString().StartsWith(DeclarationPrinter.GetterPropertyPrefix))
           {
             typeManager.AddPureMethod(typeManager.ConvertCCITypeToAssemblyQualifiedName(
