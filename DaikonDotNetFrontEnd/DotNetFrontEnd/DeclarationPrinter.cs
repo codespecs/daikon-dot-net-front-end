@@ -300,7 +300,7 @@ namespace DotNetFrontEnd
             nestingDepth: nestingDepth + 1, parentName: parentName);
       }
 
-      foreach (var pureMethod in typeManager.GetPureMethodsForType(type))
+      foreach (var pureMethod in typeManager.GetPureMethodsForType(type, originatingType))
       {
         string methodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Name);
 
@@ -516,7 +516,7 @@ namespace DotNetFrontEnd
             nestingDepth: nestingDepth + 1, parentName: parentName);
       }
 
-      foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType))
+      foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType, originatingType))
       {
         string methodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Name);
         VariableFlags pureMethodFlags = 
