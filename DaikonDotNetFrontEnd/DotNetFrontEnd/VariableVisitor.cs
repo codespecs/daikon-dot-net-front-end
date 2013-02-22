@@ -1267,16 +1267,15 @@ namespace DotNetFrontEnd
       {
         if (frontEndArgs.EnumUnderlyingValues)
         {
-          return Convert.ChangeType(x, Enum.GetUnderlyingType(type),
-            CultureInfo.InvariantCulture).ToString();
+          return Convert.ChangeType(x, Enum.GetUnderlyingType(type), CultureInfo.InvariantCulture).ToString();
         }
         else
         {
-          StringBuilder builder = new StringBuilder();
-          builder.Append("\"");
-          builder.Append(x.ToString());
-          builder.Append("\"");
-          return builder.ToString();
+            // Type is an enum, print out its hash
+            SetOutputSuppression(true);
+            string enumHash = (x.GetType().GetHashCode() + x.GetHashCode() + 1).ToString(CultureInfo.InvariantCulture); // add one since base element has code 0
+            SetOutputSuppression(false);
+            return enumHash;
         }
       }
       else if (flags.HasFlag(VariableModifiers.classname) ||
@@ -1286,25 +1285,25 @@ namespace DotNetFrontEnd
       }
       else if (type.IsValueType)
       {
-        if (type == TypeManager.BooleanType)
-        {
-          if ((bool)x)
+          if (type == TypeManager.BooleanType)
           {
-            return "true";
+              if ((bool)x)
+              {
+                  return "true";
+              }
+              else
+              {
+                  return "false";
+              }
           }
-          else
+          else if (type == TypeManager.CharType)
           {
-            return "false";
+              return ((int)(char)x).ToString(CultureInfo.InvariantCulture);
           }
-        }
-        else if (type == TypeManager.CharType)
-        {
-          return ((int)(char)x).ToString(CultureInfo.InvariantCulture);
-        }
-        else if (TypeManager.IsAnyNumericType(type))
-        {
-          return x.ToString();
-        }
+          else if (TypeManager.IsAnyNumericType(type))
+          {
+              return x.ToString();
+          } 
       }
 
       // Type is either an object or a user-defined struct, print out its hashcode.
@@ -1312,6 +1311,7 @@ namespace DotNetFrontEnd
       string hashcode = x.GetHashCode().ToString(CultureInfo.InvariantCulture);
       SetOutputSuppression(false);
       return hashcode;
+      
     }
 
     /// <summary>
