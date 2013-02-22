@@ -961,7 +961,7 @@ namespace DotNetFrontEnd
       }
       else if (type.IsEnum && !frontEndArgs.EnumUnderlyingValues)
       {
-        return "string";
+        return "hashcode";
       }
       else
       {
@@ -978,19 +978,8 @@ namespace DotNetFrontEnd
     private void PrintRepType(Type type, VariableFlags flags)
     {
       string repType;
-      if (type.IsEnum)
-      {
-        if (this.frontEndArgs.EnumUnderlyingValues)
-        {
-          repType = DaikonIntName;
-        }
-        else
-        {
-          repType = DaikonStringName;
-        }
-      }
-      else if (flags.HasFlag(VariableFlags.to_string)
-          || flags.HasFlag(VariableFlags.classname))
+     
+      if (flags.HasFlag(VariableFlags.to_string) || flags.HasFlag(VariableFlags.classname))
       {
         repType = DaikonStringName;
       }
@@ -1000,6 +989,7 @@ namespace DotNetFrontEnd
       }
       this.WritePair("rep-type", repType, 2);
     }
+
 
     /// <summary>
     /// Print the daikon var-kind
