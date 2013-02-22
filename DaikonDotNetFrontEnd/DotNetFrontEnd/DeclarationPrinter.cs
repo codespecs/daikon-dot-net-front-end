@@ -302,15 +302,14 @@ namespace DotNetFrontEnd
 
       foreach (var pureMethod in typeManager.GetPureMethodsForType(type))
       {
-        string methodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Value.Name);
+        string methodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Name);
 
-        VariableFlags pureMethodFlags =
-          (frontEndArgs.IsPropertyFlags &&
-            pureMethod.Value.Name.StartsWith(GetterPropertyPrefix)) ?
-          VariableFlags.is_property : VariableFlags.none;
+        VariableFlags pureMethodFlags = (frontEndArgs.IsPropertyFlags && pureMethod.Name.StartsWith(GetterPropertyPrefix)) 
+            ? VariableFlags.is_property 
+            : VariableFlags.none;
 
         DeclareVariable(name + "." + methodName,
-          pureMethod.Value.ReturnType,
+          pureMethod.ReturnType,
           originatingType,
           enclosingVar: name,
           relativeName: methodName,
@@ -519,13 +518,13 @@ namespace DotNetFrontEnd
 
       foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType))
       {
-        string methodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Value.Name);
+        string methodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Name);
         VariableFlags pureMethodFlags = 
           (frontEndArgs.IsPropertyFlags && 
-            pureMethod.Value.Name.StartsWith(GetterPropertyPrefix)) ?
+            pureMethod.Name.StartsWith(GetterPropertyPrefix)) ?
           VariableFlags.is_property : VariableFlags.none;
         PrintList(name + "." + methodName, 
-          pureMethod.Value.ReturnType, name,
+          pureMethod.ReturnType, name,
           originatingType,
           relativeName: methodName,
           kind: VariableKind.function,

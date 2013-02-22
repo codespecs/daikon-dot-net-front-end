@@ -166,14 +166,16 @@ namespace DotNetFrontEnd
     private Dictionary<string, Type> nameTypeMap;
 
     /// <summary>
-    /// Map from type to a set of keys for the pure methods to call for that type
+    /// Map from type to set of pure methods
     /// </summary>
-    private Dictionary<Type, ISet<int>> pureMethodKeys;
+    /// <seealso cref="pureMethods"/>
+    private Dictionary<Type, ISet<MethodInfo>> pureMethodsForType;
 
     /// <summary>
-    /// Map from key to method info for pure methods
+    /// All pure methods
     /// </summary>
-    private Dictionary<int, MethodInfo> pureMethods;
+    /// <seealso cref="pureMethodsForType"/>
+    private ISet<MethodInfo> pureMethods;
 
     #endregion
 
@@ -184,24 +186,28 @@ namespace DotNetFrontEnd
     private ISet<string> ignoredValues;
 
     /// <summary>
-    /// Used when adding methods to ensure that keys are unique
-    /// </summary>
-    private int globalPureMethodCount;
-
-    /// <summary>
     /// needed to be able to map the contracts from a contract class proxy method to an abstract method
     /// </summary>
-    public IMetadataHost Host { get; private set; }
+    [NonSerializedAttribute]
+    private IMetadataHost host;
+
+    public IMetadataHost Host
+    {
+        get
+        {
+            return host;
+        }
+    }
 
     /// <summary>
     /// Create a new TypeManager instance, will be able to resolve types of the given assembly 
     /// without registering the assembly with the GAC.
     /// </summary>
     /// <param name="args">The front-end args applicable to the types being managed here</param>
-    public TypeManager(IMetadataHost host, FrontEndArgs args)
+    public TypeManager(FrontEndArgs args)
     {
       this.frontEndArgs = args;
-      this.Host = host;
+      this.host = frontEndArgs.IsPortableDll ? (IMetadataHost)new PortableHost() : new PeReader.DefaultHost();
 
       this.isListHashmap = new Dictionary<Type, bool>();
       this.isFSharpListHashmap = new Dictionary<Type, bool>();
@@ -212,12 +218,11 @@ namespace DotNetFrontEnd
       this.isFSharpMapHashmap = new Dictionary<Type, bool>();
 
       this.nameTypeMap = new Dictionary<string, Type>();
-      this.pureMethodKeys = new Dictionary<Type, ISet<int>>();
-      this.pureMethods = new Dictionary<int, MethodInfo>();
+      this.pureMethodsForType = new Dictionary<Type, ISet<MethodInfo>>();
+      this.pureMethods = new HashSet<MethodInfo>();
       this.ignoredValues = new HashSet<string>();
       this.PopulateIgnoredValues();
       this.ProcessPurityMethods();
-      this.globalPureMethodCount = 0;
     }
 
     /// <summary>
@@ -287,16 +292,16 @@ namespace DotNetFrontEnd
         throw new ArgumentException("No method of name: " + methodName + " on type:" + typeName
             + " exists.");
       }
-      if (pureMethods.ContainsValue(method))
+      if (pureMethods.Contains(method))
       {
         return;
       }
-      if (!this.pureMethodKeys.ContainsKey(type))
+      if (!this.pureMethodsForType.ContainsKey(type))
       {
-        pureMethodKeys[type] = new HashSet<int>();
+          pureMethodsForType[type] = new HashSet<MethodInfo>();
       }
-      pureMethodKeys[type].Add(++globalPureMethodCount);
-      pureMethods[globalPureMethodCount] = method;
+      pureMethodsForType[type].Add(method);
+      pureMethods.Add(method);
     }
 
     /// <summary>
@@ -645,14 +650,15 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Get a list of the pure methods that should be called for the given type.
+    /// Get a list of the pure methods that should be called for the given type in alphabetical order
+    /// by name.
     /// </summary>
     /// <param name="cciType">CCI Type Reference to the type to get pure methods for</param>
     /// <returns>Map from key to method object of all the pure methods for the given type
     /// </returns>
-    public Dictionary<int, MethodInfo> GetPureMethodsForType(ITypeReference cciType)
+    public List<MethodInfo> GetPureMethodsForType(ITypeReference cciType)
     {
-      Dictionary<int, MethodInfo> result = new Dictionary<int, MethodInfo>();
+      var result = new List<MethodInfo>();
 
       var typeName = this.ConvertCCITypeToAssemblyQualifiedName(cciType);
 
@@ -662,30 +668,36 @@ namespace DotNetFrontEnd
 
       foreach (Type type in allTypes)
       {
-        foreach (var x in GetPureMethodsForType(type))
-        {
-          result.Add(x.Key, x.Value);
-        }
+          result.AddRange(GetPureMethodsForType(type));
       }
+
+      result.Sort(delegate(MethodInfo lhs, MethodInfo rhs)
+      {
+          return DeclarationPrinter.SanitizePropertyName(lhs.Name).CompareTo(DeclarationPrinter.SanitizePropertyName(rhs.Name));
+      });
+
       return result;
     }
 
     /// <summary>
-    /// Get a list of the pure methods that should be called for the given type.
+    /// Get a list of the pure methods that should be called for the given type sorted in alphabetical order by name.
     /// </summary>
     /// <param name="type">Type to get the pure methods for</param>
     /// <returns>Map from key to method object of all the pure methods for the given type
     /// </returns>
-    public Dictionary<int, MethodInfo> GetPureMethodsForType(Type type)
+    public List<MethodInfo> GetPureMethodsForType(Type type)
     {
-      Dictionary<int, MethodInfo> result = new Dictionary<int, MethodInfo>();
-      if (this.pureMethodKeys.ContainsKey(type))
+      var result = new List<MethodInfo>();
+      if (this.pureMethodsForType.ContainsKey(type))
       {
-        foreach (int key in this.pureMethodKeys[type])
-        {
-          result.Add(key, pureMethods[key]);
-        }
+          result.AddRange(pureMethodsForType[type]);
       }
+
+      result.Sort(delegate(MethodInfo lhs, MethodInfo rhs)
+      {
+          return DeclarationPrinter.SanitizePropertyName(lhs.Name).CompareTo(DeclarationPrinter.SanitizePropertyName(rhs.Name));
+      });
+
       return result;
     }
 
@@ -1078,16 +1090,6 @@ namespace DotNetFrontEnd
       }
       throw new ArgumentException("Type has no staticField of its own type -- it's not a linked list.",
           "type");
-    }
-
-    /// <summary>
-    /// Get the method object for the given key
-    /// </summary>
-    /// <param name="key">Integer key for the method</param>
-    /// <returns>The corresponding MethodInfo</returns>
-    public MethodInfo GetPureMethodValue(int key)
-    {
-      return pureMethods[key];
     }
 
     /// <summary>

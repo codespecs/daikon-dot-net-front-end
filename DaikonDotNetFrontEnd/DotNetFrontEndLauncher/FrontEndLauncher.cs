@@ -54,14 +54,28 @@ namespace DotNetFrontEndLauncher
       
       if (frontEndArgs.SaveAndRun)
       {
-        ExecuteProgramFromDisk(args, frontEndArgs);
+          // Do we need to serialize the type manager here?
+          ExecuteProgramFromDisk(args, frontEndArgs);
       }
-      // Don't execute the program if it should just be saved to disk
       else if (String.IsNullOrEmpty(frontEndArgs.SaveProgram))
       {
-        Assembly rewrittenAssembly = Assembly.Load(resultStream.ToArray());
-        resultStream.Close();
-        ExecuteProgramFromMemory(args, frontEndArgs, rewrittenAssembly);
+          // Run the program from memory
+          Assembly rewrittenAssembly = Assembly.Load(resultStream.ToArray());
+          resultStream.Close();
+          ExecuteProgramFromMemory(args, frontEndArgs, rewrittenAssembly);
+      }
+      else
+      {
+          // Don't execute the program if it should just be saved to disk
+          IFormatter formatter = new BinaryFormatter();
+          Stream stream = new FileStream(
+              ProgramRewriter.VisitorDll + VariableVisitor.TypeManagerFileExtension,
+              FileMode.Create, FileAccess.Write, FileShare.None);
+
+          using (stream)
+          {
+              formatter.Serialize(stream, typeManager);
+          }
       }
     }
     
@@ -79,9 +93,7 @@ namespace DotNetFrontEndLauncher
       }
 
       FrontEndArgs frontEndArgs = new FrontEndArgs(args);
-      TypeManager typeManager = new TypeManager(
-          frontEndArgs.IsPortableDll ? (IMetadataHost) new PortableHost() : new PeReader.DefaultHost(), 
-          frontEndArgs);
+      TypeManager typeManager = new TypeManager(frontEndArgs);
 
       if (!File.Exists(frontEndArgs.AssemblyPath))
       {

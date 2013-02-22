@@ -29,6 +29,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
 using Microsoft.Cci;
+using System.Diagnostics;
 
 namespace DotNetFrontEnd
 {
@@ -84,6 +85,11 @@ namespace DotNetFrontEnd
     /// which will be called from the added instrumentation calls
     /// </summary>
     public static readonly string InstrumentationMethodName = "VisitVariable";
+
+    /// <summary>
+    /// The file extension for the serialized type manager
+    /// </summary>
+    public static readonly string TypeManagerFileExtension = ".tm";
 
     /// <summary>
     /// The name of the static instrumentation method in VariableVisitor.cs. This is the method
@@ -276,6 +282,23 @@ namespace DotNetFrontEnd
       DoVisit(variable, name, typeName);
     }
 
+    private static void LoadTypeManagerFromDisk()
+    {
+        var path = Assembly.GetExecutingAssembly().Location + TypeManagerFileExtension;
+
+        Console.WriteLine("Reading Serialized Type Manager @ " + path);
+
+        IFormatter formatter = new BinaryFormatter();
+        Stream stream = new FileStream(
+            path,
+            FileMode.Open, FileAccess.Read, FileShare.Read);
+
+        using (stream)
+        {
+             SetTypeManager((TypeManager)formatter.Deserialize(stream));
+        }
+    }
+
     /// <summary>
     /// Visit all the static variables of the given type.
     /// </summary>
@@ -423,7 +446,7 @@ namespace DotNetFrontEnd
     {
       staticFieldsVisitedForCurrentProgramPoint.Clear();
       variablesVisitedForCurrentProgramPoint.Clear();
-      
+
       if (frontEndArgs.SampleStart != FrontEndArgs.NoSampleStart)
       {
         int oldOccurrences;
@@ -468,9 +491,7 @@ namespace DotNetFrontEnd
         offlineAssemblyPath = assemblyPath;
         frontEndArgs = new FrontEndArgs(arguments.Split());
 
-        IMetadataHost host = frontEndArgs.IsPortableDll ? (IMetadataHost)new PortableHost() : new PeReader.DefaultHost();
-          
-        typeManager = new TypeManager(host, frontEndArgs);
+        LoadTypeManagerFromDisk();
       }
     }
 
@@ -699,8 +720,8 @@ namespace DotNetFrontEnd
       {
         foreach (var item in typeManager.GetPureMethodsForType(type))
         {
-          ReflectiveVisit(name + '.' + DeclarationPrinter.SanitizePropertyName(item.Value.Name),
-              GetMethodValue(obj, item.Value, item.Value.Name), item.Value.ReturnType, writer,
+          ReflectiveVisit(name + '.' + DeclarationPrinter.SanitizePropertyName(item.Name),
+              GetMethodValue(obj, item, item.Name), item.ReturnType, writer,
                   depth + 1, originatingType, fieldFlags: fieldFlags);
         }
       }
@@ -1128,7 +1149,7 @@ namespace DotNetFrontEnd
 
       foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType))
       {
-        string pureMethodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Value.Name);
+        string pureMethodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Name);
         object[] pureMethodResults = new object[list.Count];
         for (int i = 0; i < list.Count; i++)
         {
@@ -1138,11 +1159,11 @@ namespace DotNetFrontEnd
           }
           else
           {
-            pureMethodResults[i] = GetMethodValue(list[i], pureMethod.Value, pureMethod.Value.Name);
+            pureMethodResults[i] = GetMethodValue(list[i], pureMethod, pureMethod.Name);
           }
         }
         ListReflectiveVisit(name + "." + pureMethodName, pureMethodResults,
-          pureMethod.Value.ReturnType, writer, depth + 1, originatingType,
+          pureMethod.ReturnType, writer, depth + 1, originatingType,
           nonsensicalElements: nonsensicalElements);
       }
     }
@@ -1316,8 +1337,11 @@ namespace DotNetFrontEnd
       // Ensure we are at the declared type, and not possibly a subtype
       while ((currentType.Name != null) && (currentType.Name != method.DeclaringType.Name))
       {
-        currentType = currentType.BaseType;
+         currentType = currentType.BaseType;
       }
+
+      Debug.Assert(currentType != null, 
+          "Reached top when locating declaring type for method " + methodName + " (instance type: " + obj.GetType().Name + ")");
 
       // Climb the supertypes as necessary to get the desired field
       do

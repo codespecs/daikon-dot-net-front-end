@@ -209,7 +209,7 @@ namespace DotNetFrontEnd
       if (typeManager.IsTypeCompilerGenerated(containingType.ResolvedType) ||
           typeManager.IsMethodCompilerGenerated(method) ||
         // Don't add instrumentation code to Pure methods
-          typeManager.GetPureMethodsForType(containingType).Select(m => m.Value.Name).Contains(method.Name.Value) ||
+          typeManager.GetPureMethodsForType(containingType).Select(m => m.Name).Contains(method.Name.Value) ||
           !frontEndArgs.ShouldPrintProgramPoint(FormatMethodName(methodBody.MethodDefinition)))
       {
         return base.Rewrite(methodBody);
