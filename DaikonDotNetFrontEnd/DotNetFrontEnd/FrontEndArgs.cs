@@ -97,6 +97,7 @@ namespace DotNetFrontEnd
       purity_file,
       std_visibility,
       // Misc. options
+      comparability,
       assembly_name,
       dont_catch_exceptions,
       dtrace_append,
@@ -645,6 +646,14 @@ namespace DotNetFrontEnd
         this.programArguments.TryGetValue(PossibleArgument.save_program, out result);
         return result;
       }
+    }
+
+    /// <summary>
+    /// Whether to perform a comparability calculation
+    /// </summary>
+    public bool StaticComparability
+    {
+        get { return this.IsArgumentSpecified(PossibleArgument.comparability); }
     }
 
     /// <summary>

@@ -9,6 +9,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using DotNetFrontEnd.Comparability;
+using Microsoft.Cci;
 
 namespace DotNetFrontEnd
 {
@@ -27,6 +29,8 @@ namespace DotNetFrontEnd
     /// The type manager to be used for determining variable type.
     /// </summary>
     private TypeManager typeManager;
+
+    private AssemblyComparability comparabilityManager;
 
     /// <summary>
     /// Collection of static fields that have been visited at this program point.
@@ -58,7 +62,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Until real comparability works (TODO(#22)) print a constant value everywhere.
     /// </summary>
-    private const int ComparabilityConstant = 22;
+    private const int ComparabilityConstant = -22;
 
     // Daikon is hard coded to recognize the Java full names for dec/rep types
     private const string DaikonStringName = "java.lang.String";
@@ -86,7 +90,7 @@ namespace DotNetFrontEnd
     /// The possible values for variable kind
     /// Violates enum naming convention for ease of printing.
     /// </summary>
-    internal enum VariableKind
+    public enum VariableKind
     {
       field,
       function,
@@ -120,7 +124,7 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="args">Arguments to use while printing the declaration file</param>
     /// <param name="typeManager">Type manager to use while printing the declaration file</param>
-    public DeclarationPrinter(FrontEndArgs args, TypeManager typeManager)
+    public DeclarationPrinter(FrontEndArgs args, TypeManager typeManager, AssemblyComparability comparabilityManager)
     {
       if (args == null)
       {
@@ -133,6 +137,8 @@ namespace DotNetFrontEnd
         throw new ArgumentNullException("typeManager");
       }
       this.typeManager = typeManager;
+
+      this.comparabilityManager = comparabilityManager;
 
       if (args.PrintOutput)
       {
@@ -175,7 +181,8 @@ namespace DotNetFrontEnd
         Type originatingType, VariableKind kind = VariableKind.variable, 
         VariableFlags flags = VariableFlags.none,
         string enclosingVar = "", string relativeName = "", string parentName = "",
-        int nestingDepth = 0)
+        int nestingDepth = 0,
+        INamedTypeDefinition containingType = null, IMethodDefinition method = null)
     {
       if (PerformEarlyExitChecks(name, type, kind, enclosingVar, nestingDepth))
       {
@@ -186,7 +193,7 @@ namespace DotNetFrontEnd
       {
         flags |= VariableFlags.is_enum;
       }
-      PrintSimpleDescriptors(name, type, kind, flags, enclosingVar, relativeName, parentName);
+      PrintSimpleDescriptors(name, type, kind, flags, enclosingVar, relativeName, parentName, containingType, method);
 
       // If the variable is an object, then look at its fields or elements.
       // Don't look at the fields if the variable is a ToString or Classname call.
@@ -241,7 +248,7 @@ namespace DotNetFrontEnd
       else
       {
         DeclarationChildPrinting(name, type, kind, flags, parentName, nestingDepth, 
-            originatingType);
+            originatingType, containingType);
       }
     }
 
@@ -256,7 +263,7 @@ namespace DotNetFrontEnd
     /// <param name="parentName">Name of the parent of the variable if any</param>
     /// <param name="nestingDepth">Nesting depth of the variable</param>
     private void DeclarationChildPrinting(string name, Type type, VariableKind kind, 
-      VariableFlags flags, string parentName, int nestingDepth, Type originatingType)
+      VariableFlags flags, string parentName, int nestingDepth, Type originatingType, INamedTypeDefinition containingType = null)
     {
       foreach (FieldInfo field in
           type.GetSortedFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
@@ -266,7 +273,7 @@ namespace DotNetFrontEnd
         {
           DeclareVariable(name + "." + field.Name, field.FieldType, originatingType,
               VariableKind.field, enclosingVar: name, relativeName: field.Name,
-              nestingDepth: nestingDepth + 1, parentName: parentName);
+              nestingDepth: nestingDepth + 1, parentName: parentName, containingType: containingType);
         }
       }
 
@@ -350,7 +357,8 @@ namespace DotNetFrontEnd
     /// <param name="relativeName">Relative name of the variable to be declared</param>
     /// <param name="parentName">Parent name of the variable to be declared</param>
     private void PrintSimpleDescriptors(string name, Type type, VariableKind kind, 
-      VariableFlags flags, string enclosingVar, string relativeName, string parentName)
+      VariableFlags flags, string enclosingVar, string relativeName, string parentName, 
+      INamedTypeDefinition containingType = null, IMethodDefinition method = null)
     {
       this.WritePair("variable", name, 1);
 
@@ -375,8 +383,16 @@ namespace DotNetFrontEnd
       this.PrintFlags(flags);
 
       // TODO(#4): Implement real comparability.
-      this.WritePair("comparability", 22, 2);
+      if (comparabilityManager != null)
+      {
+          this.WritePair("comparability", comparabilityManager.GetComparability(name, containingType, kind, method), 2);
+      }
+      else
+      {
+          this.WritePair("comparability", ComparabilityConstant, 2);
+      }
 
+      
       if (ShouldPrintParentPptIfNecessary(parentName))
       {
         this.WritePair("parent", parentName, 2);
@@ -659,14 +675,14 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="name">The name of the parameter to print</param>
     /// <param name="paramType">The assembly-qualified name of the program to print</param>
-    public void PrintParameter(string name, string paramType)
+    public void PrintParameter(string name, string paramType, IMethodDefinition methodDefinition)
     {
       DNFETypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(paramType);
       foreach (Type type in typeDecl.GetAllTypes)
       {
         if (type != null)
         {
-          DeclareVariable(name, type, type, flags: VariableFlags.is_param);
+            DeclareVariable(name, type, type, flags: VariableFlags.is_param, method: methodDefinition);
         }
       }
     }
@@ -694,7 +710,7 @@ namespace DotNetFrontEnd
     /// <param name="objectName">How the object should be described in the declaration</param>
     /// <param name="objectAssemblyQualifiedName">Assembly qualified name of the object,
     /// used to fetch the Type</param>
-    public void PrintObjectDefinition(string objectName, string objectAssemblyQualifiedName)
+    public void PrintObjectDefinition(string objectName, string objectAssemblyQualifiedName, INamedTypeDefinition type)
     {
       DNFETypeDeclaration objectTypeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
@@ -711,8 +727,8 @@ namespace DotNetFrontEnd
             this.WritePair("ppt-type", "object");
             this.WritePair("parent", "parent " + nameToPrint.Replace(":::OBJECT", ":::CLASS 1"));
             // Pass objectType in as originating type so we get all its private fields.
-            this.DeclareVariable("this", objectType, objectType, VariableKind.variable, 
-                VariableFlags.is_param);
+            this.DeclareVariable("this", objectType, objectType, VariableKind.variable,
+                VariableFlags.is_param, containingType: type);
           }
         }
       }

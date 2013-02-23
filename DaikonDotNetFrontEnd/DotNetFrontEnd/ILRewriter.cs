@@ -88,6 +88,7 @@ namespace DotNetFrontEnd
     private DotNetFrontEnd.DeclarationPrinter declPrinter;
     private DotNetFrontEnd.FrontEndArgs frontEndArgs;
     private DotNetFrontEnd.TypeManager typeManager;
+    private Comparability.AssemblyComparability comparabilityManager;
 
     // Variables used during rewriting
     PdbReader/*?*/ pdbReader = null;
@@ -142,7 +143,7 @@ namespace DotNetFrontEnd
     #region CCI Code
 
     public ILRewriter(IMetadataHost host, PdbReader pdbReader, DotNetFrontEnd.FrontEndArgs frontEndArgs,
-        DotNetFrontEnd.TypeManager typeManager)
+        DotNetFrontEnd.TypeManager typeManager, Comparability.AssemblyComparability comparabilityManager)
       : base(host)
     {
       this.pdbReader = pdbReader;
@@ -152,6 +153,7 @@ namespace DotNetFrontEnd
       }
       this.frontEndArgs = frontEndArgs;
       this.typeManager = typeManager;
+      this.comparabilityManager = comparabilityManager;
       this.nameTable = this.host.NameTable;
 
       this.systemString = host.PlatformType.SystemString;
@@ -251,7 +253,7 @@ namespace DotNetFrontEnd
       this.scopeEnumeratorIsValid = this.scopeEnumerator != null && this.scopeEnumerator.MoveNext();
 
       // Need the method body to be mutable to add the nonce variable
-      MethodBody mutableMethodBody = (MethodBody)immutableMethodBody;
+      MethodBody mutableMethodBody = (MethodBody) immutableMethodBody;
 
       // Add a nonce-holding variable and set it.
       mutableMethodBody.LocalVariables = CreateNonceVariable(mutableMethodBody);
@@ -1621,7 +1623,7 @@ namespace DotNetFrontEnd
         if (this.printDeclarations)
         {
           this.declPrinter.PrintParameter(param.Name.ToString(),
-              this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param.Type));
+              this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param.Type), methodBody.MethodDefinition);
         }
 
         // In the i-th iteration, load the i-th parameter onto the stack.
@@ -2052,14 +2054,8 @@ namespace DotNetFrontEnd
     /// <param name="module">Module to instrument</param>
     /// <param name="pathToVisitor">Path to the .dll of the reflective visitor</param>
     /// <returns>Modified assembly with instrumentation code added</returns>
-    public IModule Visit(IModule module, string pathToVisitor)
+    public IModule Visit(Assembly mutableAssembly, string pathToVisitor)
     {
-      var assembly = module as IAssembly;
-      if (assembly == null)
-      {
-        throw new ILMutatorException("Couldn't modify assembly");
-      }
-      Assembly mutableAssembly = (Assembly)MetadataCopier.DeepCopy(host, assembly);
       this.assemblyIdentity = UnitHelper.GetAssemblyIdentity(mutableAssembly);
       this.typeManager.SetAssemblyIdentity(assemblyIdentity);
       if (!File.Exists(pathToVisitor))
@@ -2098,8 +2094,7 @@ namespace DotNetFrontEnd
 
       if (this.printDeclarations)
       {
-        this.declPrinter = new DotNetFrontEnd.DeclarationPrinter(this.frontEndArgs,
-                                                                    this.typeManager);
+        this.declPrinter = new DotNetFrontEnd.DeclarationPrinter(this.frontEndArgs, this.typeManager, this.comparabilityManager);
 
         Regex ignoreRegex = new Regex(TypeManager.RegexForTypesToIgnoreForProgramPoint);
         foreach (INamedTypeDefinition type in mutableAssembly.AllTypes)
@@ -2110,7 +2105,7 @@ namespace DotNetFrontEnd
           if (!(ignoreRegex.IsMatch(type.ToString()) || type.ToString() == ArgumentStoringClassName))
           {
             this.declPrinter.PrintObjectDefinition(typeName,
-                this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type));
+                this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type),type);
             this.declPrinter.PrintParentClassDefinition(typeName,
                 this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type));
           }
