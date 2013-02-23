@@ -283,7 +283,8 @@ namespace DotNetFrontEnd
         }
         pureMethodsForType[type].Add(method);
         pureMethods.Add(method);
-    
+
+        Console.WriteLine("[Pure] " + method.Name + " (" + type.Name + ")");
     }
 
     /// <summary>
@@ -689,16 +690,21 @@ namespace DotNetFrontEnd
           result.Add(method);
         }
       } 
-      else if (type.Namespace.StartsWith("System") && !markedSystemTypes.Contains(type))
+      else if (type.Namespace != null && type.Namespace.StartsWith("System") && !markedSystemTypes.Contains(type))
       {
-          if (!type.Name.Equals("RuntimeType") && !type.Name.Equals("RuntimeMethodInfo") && !type.IsSubclassOf(typeof(Exception)))
+          if (!type.Name.Equals("RuntimeType") && 
+              !type.Name.Equals("RuntimeMethodInfo") && 
+              !type.Equals(typeof(Exception)) &&
+              !type.IsSubclassOf(typeof(Exception)) &&
+              !originatingType.Equals(typeof(Exception)))
           {
               foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
               {
                   if (method.Name.StartsWith(DeclarationPrinter.GetterPropertyPrefix) && method.GetParameters().Length == 0)
                   {
-                      AddPureMethod(type, method);
-                      result.Add(method);
+                      //AddPureMethod(type, method);
+                      //result.Add(method);
+                      Console.WriteLine(type.AssemblyQualifiedName + ";" + method.Name);
                   }
               }
               markedSystemTypes.Add(type);
