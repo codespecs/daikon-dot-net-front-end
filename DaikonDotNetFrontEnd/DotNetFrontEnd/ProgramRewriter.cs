@@ -22,6 +22,10 @@
 using System;
 using System.IO;
 using Microsoft.Cci;
+using Microsoft.Cci.ILToCodeModel;
+using Microsoft.Cci.MutableCodeModel;
+using DotNetFrontEnd.Comparability;
+using System.Diagnostics;
 
 namespace DotNetFrontEnd
 {
@@ -74,6 +78,11 @@ namespace DotNetFrontEnd
           + " assembly, or an error occurred when loading it.", frontEndArgs.AssemblyPath);
       }
 
+      IAssembly assembly = module as IAssembly;
+
+      Assembly mutable = null;
+      Assembly decompiled = null;
+
       PdbReader/*?*/ pdbReader = null;
       string pdbFile = Path.ChangeExtension(module.Location, "pdb");
       try
@@ -85,14 +94,33 @@ namespace DotNetFrontEnd
       }
       catch
       {
-        // TODO(#25): Figure out how what happens if we can't load the PDB file.
-        // It seems to be non-fatal, so print the error and continue.
-        Console.Error.WriteLine("Could not load the PDB file for '" + module.Name.Value +
-            "' . Proceeding anyway.");
+          if (frontEndArgs.StaticComparability)
+          {
+              throw new Exception("Error loading PDB file for '" + module.Name.Value + "' (required for static comparability analysis)");
+          }
+          else
+          {
+              // TODO(#25): Figure out how what happens if we can't load the PDB file.
+              // It seems to be non-fatal, so print the error and continue.
+              Console.Error.WriteLine("WARNING: Could not load the PDB file for '" + module.Name.Value +"'");
+          }
       }
+
       using (pdbReader)
       {
-        ILRewriter mutator = new ILRewriter(host, pdbReader, frontEndArgs, typeManager);
+          AssemblyComparability comparabilityManager = null;
+
+          mutable = MetadataCopier.DeepCopy(host, assembly);
+
+          if (frontEndArgs.StaticComparability)
+          {
+              Console.WriteLine("Generating Comparability Information");
+              decompiled = Decompiler.GetCodeModelFromMetadataModel(host, mutable, pdbReader);
+              //mutable = new CodeDeepCopier(host).Copy(mutable);
+              comparabilityManager = new AssemblyComparability(mutable, host);
+          }
+    
+          ILRewriter mutator = new ILRewriter(host, pdbReader, frontEndArgs, typeManager, comparabilityManager);
 
         // Look for the path to the reflector, it's an environment variable, check the user space 
         // first.
@@ -111,7 +139,7 @@ namespace DotNetFrontEnd
           Console.WriteLine("Must define" + DaikonEnvVar + " environment variable");
           Environment.Exit(1);
         }
-        module = mutator.Visit(module, Path.Combine(daikonDir, VisitorDll));
+        module = mutator.Visit(mutable, Path.Combine(daikonDir, VisitorDll));
 
         // Remove the old PDB file
         try
