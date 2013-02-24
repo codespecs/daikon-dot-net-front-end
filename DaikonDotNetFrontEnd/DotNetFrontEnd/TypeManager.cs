@@ -1198,5 +1198,44 @@ namespace DotNetFrontEnd
       }
       return elementType;
     }
+
+    [NonSerializedAttribute]
+    private static Dictionary<Type, bool> immutability = new Dictionary<Type, bool>()
+    {
+        { typeof(object), true },
+        { typeof(string), true },
+    };
+
+    /// <summary>
+    /// Returns <code>true</code> if the type contains only readonly fields.
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public static bool IsImmutable(Type type)
+    {
+        if (immutability.ContainsKey(type))
+        {
+            return immutability[type];
+        }
+        bool result = type.GetFields().All(f => IsReadOnly(f)) && type.GetProperties().All(p => !p.CanWrite);
+        immutability.Add(type, result);
+        return result;
+    }
+
+    public static bool IsReadOnly(PropertyInfo property)
+    {
+        return !property.CanWrite && (property.PropertyType.IsValueType || IsImmutable(property.PropertyType));
+    }
+
+    /// <summary>
+    /// Returns <code>true</code> if a field is read-only and is a value type (reference types
+    /// can by modified through the reference).
+    /// </summary>
+    /// <param name="field"></param>
+    /// <returns><code>true</code> if a field is read-only and is a value type</returns>
+    public static bool IsReadOnly(FieldInfo field)
+    {
+        return field.IsInitOnly && (field.FieldType.IsValueType || IsImmutable(field.FieldType));
+    }
   }
 }
