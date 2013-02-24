@@ -6,16 +6,87 @@ using Microsoft.Cci;
 using Comparability;
 using EmilStefanov;
 using System.Reflection;
+using Microsoft.Cci.ILToCodeModel;
 
 namespace DotNetFrontEnd.Comparability
 {
+    public class TypeSummary
+    {
+        private Dictionary<string, int> ids = new Dictionary<string,int>();
+        
+        private Dictionary<string, HashSet<string>> arrayIndexes = new Dictionary<string, HashSet<string>>();
+
+        private DisjointSets comparability = new DisjointSets();
+
+        public TypeSummary(NameBuilder names, IEnumerable<MethodVisitor> methods)
+        {
+            // give a union-find id to each instance expression name
+            foreach (var name in names.InstanceNames)
+            {
+                ids.Add(name, comparability.AddElement());
+            }
+
+            // union the sets, according to each method's opinion
+            foreach (var name in names.InstanceNames)
+            {
+                HashSet<string> indexOpinion = new HashSet<string>();
+
+                foreach (var method in methods)
+                {
+                    var opinion = method.ComparabilitySet(name).Intersect(ids.Keys);
+                    string last = null;
+                    foreach (var other in opinion)
+                    {
+                        if (last != null)
+                        {
+                            comparability.Union(comparability.FindSet(ids[last]), comparability.FindSet(ids[name]));
+                        }
+                        last = other;
+                    }
+
+                    indexOpinion.UnionWith(method.IndexComparabilityOpinion(name).Intersect(names.InstanceNames));
+                }
+
+                if (indexOpinion.Count > 0)
+                {
+                    arrayIndexes.Add(name, names.InstanceNames);
+                }
+            }
+        }
+
+        public int GetIndex(string name)
+        {
+            if (!arrayIndexes.ContainsKey(name))
+            {
+                // create a dummy index
+                var synthetic = "<" + name + ">";
+                
+                ids.Add(synthetic, comparability.AddElement());
+
+                var cmp = new HashSet<string>();
+                cmp.Add(synthetic);
+                arrayIndexes.Add(name, cmp);
+            }
+            return Get(arrayIndexes[name].First());
+        }
+
+        public int Get(string name)
+        {
+            if (!ids.ContainsKey(name))
+            {
+                ids.Add(name, comparability.AddElement());
+            }
+            return comparability.FindSet(ids[name]);
+        }
+    }
+
     public class AssemblyComparability
     {
         public Dictionary<IMethodDefinition, MethodVisitor> MethodComparability { get;  set; }
         public Dictionary<INamedTypeDefinition, NameBuilder> TypeNames { get;  set;}
-        private Dictionary<INamedTypeDefinition, Dictionary<string, int>> TypeComparability { get; set; }
+        private Dictionary<INamedTypeDefinition, TypeSummary> TypeComparability { get; set; }
 
-        public AssemblyComparability(Microsoft.Cci.MutableCodeModel.Assembly decompiled, IMetadataHost host)
+        public AssemblyComparability(Microsoft.Cci.MutableCodeModel.Assembly decompiled, IMetadataHost host, PdbReader reader)
         {
             MethodComparability = new Dictionary<IMethodDefinition, MethodVisitor>();
             TypeNames = new Dictionary<INamedTypeDefinition, NameBuilder>();
@@ -56,84 +127,71 @@ namespace DotNetFrontEnd.Comparability
             } while (changed);
 
 
-            TypeComparability = new Dictionary<INamedTypeDefinition, Dictionary<string, int>>();
+            TypeComparability = new Dictionary<INamedTypeDefinition, TypeSummary>();
             foreach (var type in decompiled.AllTypes)
             {
-                var typeCmp = CalculateTypeComparability(
+
+                var typeCmp = new TypeSummary(
                     TypeNames[type],
                     type.Methods.Where(m => MethodComparability.ContainsKey(m)).Select(m => MethodComparability[m]));
                 TypeComparability.Add(type, typeCmp);
             }
         }
 
+        public int GetElementComparability(string name, INamedTypeDefinition type, IMethodDefinition method)
+        {
+            if (method != null)
+            {
+                var match = MethodComparability.Keys.First(m => MemberHelper.MethodsAreEquivalent(m, method));
+                return MethodComparability[match].GetArrayIndexComparability(name);
+            }
+            else if (type != null)
+            {
+                var match = TypeNames.Keys.First(t => TypeHelper.TypesAreEquivalent(t, type, true));
+                return TypeComparability[match].GetIndex(name);
+            }
+            else
+            {
+                Console.WriteLine("WARNING: No type context for elements of array:" + name);
+                return -8;
+            }
+        }
+
         public int GetComparability(string name, INamedTypeDefinition type, DeclarationPrinter.VariableKind kind, IMethodDefinition method = null)
         {
-            if (kind == DeclarationPrinter.VariableKind.field && type != null)
+            if (type != null && method == null)
             {
-                if (TypeNames.ContainsKey(type))
+                var match = TypeNames.Keys.FirstOrDefault(t => TypeHelper.TypesAreEquivalent(t, type, true));
+
+                if (match != null)
                 {
-                    return -2;
-                    //return TypeComparability[type][name];
+                    return TypeComparability[match].Get(name);
                 }
                 else
                 {
-                    return -1;
+                    Console.WriteLine("Missing type name information for type " + type.Name);
+                    return -2;
                 }
             }
-            else if (kind == DeclarationPrinter.VariableKind.variable && method != null)
+            else if (method != null)
             {
-                if (MethodComparability.ContainsKey(method))
+                var match = MethodComparability.Keys.FirstOrDefault(m => MemberHelper.MethodsAreEquivalent(m, method));
+
+                if (match != null)
                 {
-                    return MethodComparability[method].Comparability[name];
+                    return MethodComparability[match].GetComparability(name);
                 }
                 else
                 {
-                    return -1;
+                    Console.WriteLine("Missing method name information for " + name);
+                    return -3;
                 }
             }
             else
             {
+                Console.WriteLine("No comparability information for " + name);
                 return -1;
             }
-        }
-
-        static Dictionary<string, int> CalculateTypeComparability(NameBuilder names, IEnumerable<MethodVisitor> methods)
-        {
-            // give a union-find id to each instance expression name
-            var ids = new Dictionary<string, int>();
-            DisjointSets comparability = new DisjointSets();
-            foreach (var name in names.InstanceNames)
-            {
-                ids.Add(name, comparability.AddElement());
-            }
-
-            // union the sets, according to each method's opinion
-            foreach (var name in names.InstanceNames)
-            {
-                foreach (var method in methods)
-                {
-                    var opinion = method.ComparabilitySet(name).Intersect(ids.Keys);
-                    string last = null;
-                    foreach (var other in opinion)
-                    {
-
-                        if (last != null)
-                        {
-                            comparability.Union(comparability.FindSet(ids[last]), comparability.FindSet(ids[name]));
-                        }
-                        last = other;
-
-                    }
-                }
-            }
-
-            // create the final lookup table
-            Dictionary<string, int> result = new Dictionary<string, int>();
-            foreach (var name in ids.Keys)
-            {
-                result.Add(name, comparability.FindSet(ids[name]));
-            }
-            return result;
         }
 
     }

@@ -37,17 +37,17 @@ namespace Comparability
             IAssembly assembly = LoadAssembly(assemblyName, host);
 
             Assembly decompiled;
+            AssemblyComparability assemblyCmp = null;
 
             using (var f = File.OpenRead(pdbName))
             {
                 using (var pdbReader = new PdbReader(f, host))
                 {
                     decompiled = Decompiler.GetCodeModelFromMetadataModel(host, assembly, pdbReader);
-                    decompiled = new CodeDeepCopier(host).Copy(decompiled);
+                    //decompiled = new CodeDeepCopier(host).Copy(decompiled);
+                    assemblyCmp = new AssemblyComparability(decompiled, host, pdbReader);
                 }
             }
-
-            AssemblyComparability assemblyCmp = new AssemblyComparability(decompiled, host);
 
             foreach (var method in assemblyCmp.MethodComparability.Values)
             {

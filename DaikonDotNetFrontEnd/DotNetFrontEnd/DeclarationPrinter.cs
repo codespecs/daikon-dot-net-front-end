@@ -182,7 +182,7 @@ namespace DotNetFrontEnd
         VariableFlags flags = VariableFlags.none,
         string enclosingVar = "", string relativeName = "", string parentName = "",
         int nestingDepth = 0,
-        INamedTypeDefinition containingType = null, IMethodDefinition method = null)
+        INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
       if (PerformEarlyExitChecks(name, type, kind, enclosingVar, nestingDepth))
       {
@@ -193,7 +193,7 @@ namespace DotNetFrontEnd
       {
         flags |= VariableFlags.is_enum;
       }
-      PrintSimpleDescriptors(name, type, kind, flags, enclosingVar, relativeName, parentName, containingType, method);
+      PrintSimpleDescriptors(name, type, kind, flags, enclosingVar, relativeName, parentName, typeContext, methodContext);
 
       // If the variable is an object, then look at its fields or elements.
       // Don't look at the fields if the variable is a ToString or Classname call.
@@ -206,21 +206,22 @@ namespace DotNetFrontEnd
       {
         // It's not an array it's a set. Investigate element type.
         // Will resolve with TODO(#52).
-        DeclareVariableAsList(name, type, parentName, nestingDepth, originatingType);
+          DeclareVariableAsList(name, type, parentName, nestingDepth, originatingType, typeContext: typeContext, methodContext: methodContext);
       }
       else if (this.typeManager.IsFSharpListImplementer(type))
       {
         // We don't get information about generics, so all we know for sure is that the elements
         // are objects.
         // FSharpLists get converted into object[].
-        DeclareVariableAsList(name, typeof(object[]), parentName, nestingDepth, originatingType);
+          DeclareVariableAsList(name, typeof(object[]), parentName, nestingDepth, originatingType, typeContext: typeContext, methodContext: methodContext);
       }
       else if (this.typeManager.IsSet(type))
       {
         // It's not an array it's a set. Investigate element type.
         // Will resolve with TODO(#52).
         DeclareVariableAsList(name, type, parentName, nestingDepth,
-            originatingType, VariableFlags.no_dups | VariableFlags.not_ordered);
+            originatingType, VariableFlags.no_dups | VariableFlags.not_ordered,
+            typeContext: typeContext, methodContext: methodContext);
       }
       else if (this.typeManager.IsFSharpSet(type))
       {
@@ -232,23 +233,26 @@ namespace DotNetFrontEnd
         // Will resolve with TODO(#52).
         DeclareVariableAsList(name, Array.CreateInstance(elementType, 0).GetType(),
             parentName, nestingDepth, originatingType, 
-            VariableFlags.no_dups | VariableFlags.not_ordered);
+            VariableFlags.no_dups | VariableFlags.not_ordered,
+            typeContext: typeContext, methodContext: methodContext);
       }
       else if (this.typeManager.IsDictionary(type))
       {
         // TODO(#54): Implement
         DeclareVariableAsList(name, typeof(List<DictionaryEntry>), parentName, nestingDepth,
-          originatingType, VariableFlags.no_dups | VariableFlags.not_ordered);
+          originatingType, VariableFlags.no_dups | VariableFlags.not_ordered,
+          typeContext: typeContext, methodContext: methodContext);
       }
       else if (this.typeManager.IsFSharpMap(type))
       {
         DeclareVariableAsList(name, typeof(List<DictionaryEntry>), parentName, nestingDepth, 
-            originatingType, VariableFlags.no_dups | VariableFlags.not_ordered);
+            originatingType, VariableFlags.no_dups | VariableFlags.not_ordered,
+            typeContext: typeContext, methodContext: methodContext);
       }
       else
       {
         DeclarationChildPrinting(name, type, kind, flags, parentName, nestingDepth, 
-            originatingType, containingType);
+            originatingType, typeContext, methodContext);
       }
     }
 
@@ -263,7 +267,8 @@ namespace DotNetFrontEnd
     /// <param name="parentName">Name of the parent of the variable if any</param>
     /// <param name="nestingDepth">Nesting depth of the variable</param>
     private void DeclarationChildPrinting(string name, Type type, VariableKind kind, 
-      VariableFlags flags, string parentName, int nestingDepth, Type originatingType, INamedTypeDefinition containingType = null)
+      VariableFlags flags, string parentName, int nestingDepth, Type originatingType, 
+      INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
       foreach (FieldInfo field in
           type.GetSortedFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
@@ -273,7 +278,7 @@ namespace DotNetFrontEnd
         {
           DeclareVariable(name + "." + field.Name, field.FieldType, originatingType,
               VariableKind.field, enclosingVar: name, relativeName: field.Name,
-              nestingDepth: nestingDepth + 1, parentName: parentName, containingType: containingType);
+              nestingDepth: nestingDepth + 1, parentName: parentName, typeContext: typeContext, methodContext: methodContext);
         }
       }
 
@@ -289,7 +294,8 @@ namespace DotNetFrontEnd
             this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
             DeclareVariable(staticFieldName, staticField.FieldType,
                 nestingDepth: staticFieldName.Count(c => c == '.'), 
-                originatingType: originatingType);
+                originatingType: originatingType, 
+                typeContext: typeContext, methodContext: methodContext);
           }
         }
       }
@@ -299,7 +305,8 @@ namespace DotNetFrontEnd
         DeclareVariable(name + "." + GetTypeMethodCall, TypeManager.TypeType, originatingType, 
             VariableKind.function, VariableFlags.classname |
             VariableFlags.synthetic, enclosingVar: name, relativeName: GetTypeMethodCall,
-            nestingDepth: nestingDepth + 1, parentName: parentName);
+            nestingDepth: nestingDepth + 1, parentName: parentName, 
+            typeContext: typeContext, methodContext: methodContext);
       }
 
       if (type == TypeManager.StringType)
@@ -309,7 +316,8 @@ namespace DotNetFrontEnd
             VariableKind.function, VariableFlags.to_string |
             VariableFlags.synthetic,
             enclosingVar: name, relativeName: ToStringMethodCall,
-            nestingDepth: nestingDepth + 1, parentName: parentName);
+            nestingDepth: nestingDepth + 1, parentName: parentName, 
+            typeContext: typeContext, methodContext: methodContext);
       }
 
       foreach (var pureMethod in typeManager.GetPureMethodsForType(type, originatingType))
@@ -328,7 +336,8 @@ namespace DotNetFrontEnd
           kind: VariableKind.function,
           flags: pureMethodFlags,
           nestingDepth: nestingDepth + 1,
-          parentName: parentName);
+          parentName: parentName,
+          typeContext: typeContext, methodContext: methodContext);
       }
 
       // Don't look at linked-lists of synthetic variables or fields to prevent children 
@@ -358,7 +367,7 @@ namespace DotNetFrontEnd
     /// <param name="parentName">Parent name of the variable to be declared</param>
     private void PrintSimpleDescriptors(string name, Type type, VariableKind kind, 
       VariableFlags flags, string enclosingVar, string relativeName, string parentName, 
-      INamedTypeDefinition containingType = null, IMethodDefinition method = null)
+      INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
       this.WritePair("variable", name, 1);
 
@@ -385,7 +394,16 @@ namespace DotNetFrontEnd
       // TODO(#4): Implement real comparability.
       if (comparabilityManager != null)
       {
-          this.WritePair("comparability", comparabilityManager.GetComparability(name, containingType, kind, method), 2);
+          if (type.IsArray)
+          {
+              this.WritePair("comparability", 
+                  comparabilityManager.GetComparability(name, typeContext, kind, methodContext) + "[" + comparabilityManager.GetElementComparability(name, typeContext, methodContext) + "]", 
+                  2);
+          }
+          else
+          {
+              this.WritePair("comparability", comparabilityManager.GetComparability(name, typeContext, kind, methodContext), 2);
+          }
       }
       else
       {
@@ -414,7 +432,8 @@ namespace DotNetFrontEnd
     private void PrintList(string name, Type elementType, string enclosingVar,
         Type originatingType, VariableKind kind = VariableKind.array, 
         VariableFlags flags = VariableFlags.none,
-        string relativeName = "", string parentName = "", int nestingDepth = 0)
+        string relativeName = "", string parentName = "", int nestingDepth = 0,
+        INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
       if (name.Length == 0)
       {
@@ -472,7 +491,17 @@ namespace DotNetFrontEnd
       this.PrintFlags(flags);
 
       // TODO(#4): Implement real comparability
-      this.WritePair("comparability", ComparabilityConstant, IndentsForEntry);
+      if (comparabilityManager != null)
+      {
+          this.WritePair(
+              "comparability",
+              comparabilityManager.GetElementComparability(enclosingVar, typeContext, methodContext),
+              IndentsForEntry);
+      }
+      else
+      {
+          this.WritePair("comparability", ComparabilityConstant, IndentsForEntry);
+      }
 
       if (ShouldPrintParentPptIfNecessary(parentName))
       {
@@ -504,7 +533,8 @@ namespace DotNetFrontEnd
         {
           PrintList(name + "." + field.Name, field.FieldType, name,
               originatingType, VariableKind.field, relativeName: field.Name,
-              nestingDepth: nestingDepth + 1, parentName: parentName);
+              nestingDepth: nestingDepth + 1, parentName: parentName,
+              typeContext: typeContext, methodContext: methodContext);
         }
       }
 
@@ -520,7 +550,8 @@ namespace DotNetFrontEnd
             this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
             DeclareVariable(staticFieldName, staticField.FieldType,
                 originatingType: originatingType,
-                nestingDepth: staticFieldName.Count(c => c == '.'));
+                nestingDepth: staticFieldName.Count(c => c == '.'),
+                typeContext: typeContext, methodContext: methodContext);
           }
         }
       }
@@ -530,7 +561,8 @@ namespace DotNetFrontEnd
         PrintList(name + "." + GetTypeMethodCall, TypeManager.TypeType, name,
             originatingType, VariableKind.function, VariableFlags.classname |
             VariableFlags.synthetic, relativeName: GetTypeMethodCall,
-            nestingDepth: nestingDepth + 1, parentName: parentName);
+            nestingDepth: nestingDepth + 1, parentName: parentName,
+            typeContext: typeContext, methodContext: methodContext);
       }
 
       if (elementType == TypeManager.StringType)
@@ -539,7 +571,8 @@ namespace DotNetFrontEnd
             originatingType, VariableKind.function, VariableFlags.to_string |
             VariableFlags.synthetic,
             relativeName: ToStringMethodCall,
-            nestingDepth: nestingDepth + 1, parentName: parentName);
+            nestingDepth: nestingDepth + 1, parentName: parentName,
+            typeContext: typeContext, methodContext: methodContext);
       }
 
       foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType, originatingType))
@@ -555,7 +588,8 @@ namespace DotNetFrontEnd
           relativeName: methodName,
           kind: VariableKind.function,
           flags: pureMethodFlags,
-          nestingDepth: nestingDepth + 1, parentName: parentName);
+          nestingDepth: nestingDepth + 1, parentName: parentName,
+          typeContext: typeContext, methodContext: methodContext);
       }
     }
 
@@ -574,7 +608,7 @@ namespace DotNetFrontEnd
     /// </param>
     /// <param name="parentObjectType">Assembly-qualified name of the type of the parent
     /// </param>
-    public void PrintParentObjectFields(string parentName, string assemblyQualifiedName)
+    public void PrintParentObjectFields(string parentName, string assemblyQualifiedName, INamedTypeDefinition typeContext)
     {
       parentName = parentName + ":::OBJECT 1";
 
@@ -587,7 +621,8 @@ namespace DotNetFrontEnd
         if (type != null)
         {
           this.DeclareVariable("this", type, type, flags: VariableFlags.is_param,
-              parentName: parentName);
+              parentName: parentName,
+              typeContext: typeContext);
         }
         else
         {
@@ -603,7 +638,7 @@ namespace DotNetFrontEnd
     /// </param>
     /// <param name="parentObjectType">Assembly-qualified name of the type of the parent
     /// </param>
-    public void PrintParentClassFields(string parentObjectType)
+    public void PrintParentClassFields(string parentObjectType, IMethodDefinition method)
     {
       // TODO(#48): Parent type like we do for instance fields.
       DNFETypeDeclaration typeDecl =
@@ -615,7 +650,8 @@ namespace DotNetFrontEnd
           throw new ArgumentException("Unable to resolve parent object type to a type.",
               "parentObjectType");
         }
-        DeclareStaticFieldsForType(type);
+
+        DeclareStaticFieldsForType(type, null, methodContext: method); // TWS what type to use for context?
       }
     }
 
@@ -623,7 +659,7 @@ namespace DotNetFrontEnd
     /// Print the declarations for all fields of the given type.
     /// </summary>
     /// <param name="type">Type to print declarations of the static fields of</param>
-    private void DeclareStaticFieldsForType(Type type)
+    private void DeclareStaticFieldsForType(Type type, INamedTypeDefinition typeContext, IMethodDefinition methodContext = null)
     {
       foreach (FieldInfo staticField in
         // type passed in as originating type so we get all the fields for it
@@ -637,7 +673,8 @@ namespace DotNetFrontEnd
           {
             this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
             DeclareVariable(staticFieldName, staticField.FieldType, type,
-                nestingDepth: staticFieldName.Count(c => c == '.'));
+                nestingDepth: staticFieldName.Count(c => c == '.'),
+                typeContext: typeContext, methodContext: methodContext);
           }
         }
       }
@@ -682,7 +719,7 @@ namespace DotNetFrontEnd
       {
         if (type != null)
         {
-            DeclareVariable(name, type, type, flags: VariableFlags.is_param, method: methodDefinition);
+            DeclareVariable(name, type, type, flags: VariableFlags.is_param, methodContext: methodDefinition);
         }
       }
     }
@@ -692,14 +729,14 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="name">Name of the return value, commonly "return"</param>
     /// <param name="returnType">Assembly qualified name of the return type</param>
-    public void PrintReturn(string name, string returnType)
+    public void PrintReturn(string name, string returnType, IMethodDefinition methodDefinition)
     {
       DNFETypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(returnType);
       foreach (Type type in typeDecl.GetAllTypes)
       {
         if (type != null)
         {
-          DeclareVariable(name, type, type, kind: VariableKind.Return, nestingDepth: 0);
+            DeclareVariable(name, type, type, kind: VariableKind.Return, nestingDepth: 0, methodContext: methodDefinition);
         }
       }
     }
@@ -728,7 +765,7 @@ namespace DotNetFrontEnd
             this.WritePair("parent", "parent " + nameToPrint.Replace(":::OBJECT", ":::CLASS 1"));
             // Pass objectType in as originating type so we get all its private fields.
             this.DeclareVariable("this", objectType, objectType, VariableKind.variable,
-                VariableFlags.is_param, containingType: type);
+                VariableFlags.is_param, typeContext: type);
           }
         }
       }
@@ -740,7 +777,7 @@ namespace DotNetFrontEnd
     /// <param name="className">Name of the class whose static fields are being examined</param>
     /// <param name="objectAssemblyQualifiedName">The assembly qualified name of the object whose 
     /// static fields to print</param>
-    public void PrintParentClassDefinition(string className, string objectAssemblyQualifiedName)
+    public void PrintParentClassDefinition(string className, string objectAssemblyQualifiedName, INamedTypeDefinition typeContext)
     {
       DNFETypeDeclaration objectTypeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
@@ -753,7 +790,7 @@ namespace DotNetFrontEnd
           this.WriteLine();
           this.WritePair("ppt", nameToPrint);
           this.WritePair("ppt-type", "class");
-          DeclareStaticFieldsForType(objectType);
+          DeclareStaticFieldsForType(objectType, typeContext);
         }
        
       }
@@ -1095,7 +1132,8 @@ namespace DotNetFrontEnd
     /// <param name="collectionFlags">Flags to describe the collection, e.g. no_dups, if any</param>
     private void DeclareVariableAsList(string name, Type type, string parentName, 
         int nestingDepth, Type originatingType,
-        VariableFlags collectionFlags = VariableFlags.none)
+        VariableFlags collectionFlags = VariableFlags.none,
+        INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
       Type elementType = TypeManager.GetListElementType(type);
       // Print the type of the list if it's not primitive
@@ -1108,7 +1146,8 @@ namespace DotNetFrontEnd
             nestingDepth: nestingDepth + 1, parentName: parentName);
       }
       PrintList(name + "[..]", elementType, name, originatingType, VariableKind.array,
-          nestingDepth: nestingDepth, parentName: parentName, flags: collectionFlags);
+          nestingDepth: nestingDepth, parentName: parentName, flags: collectionFlags,
+          typeContext: typeContext, methodContext: methodContext);
     }
 
     #endregion
