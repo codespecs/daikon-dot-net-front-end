@@ -107,8 +107,8 @@ namespace DotNetFrontEnd
       MessageId = "Flags"), Flags]
     internal enum VariableFlags
     {
-      none = 1,
-      synthetic = none << 1,
+      none = 0,
+      synthetic = 1,
       classname = synthetic << 1,
       to_string = classname << 1,
       is_param = to_string << 1,
@@ -116,6 +116,7 @@ namespace DotNetFrontEnd
       not_ordered = no_dups << 1,
       is_property = not_ordered << 1,
       is_enum = is_property << 1,
+      is_readonly = is_enum << 1,
     }
 
     /// <summary>
@@ -191,7 +192,7 @@ namespace DotNetFrontEnd
 
       if (type.IsEnum)
       {
-        flags |= VariableFlags.is_enum;
+          flags = ExtendFlags(flags, VariableFlags.is_enum);
       }
       PrintSimpleDescriptors(name, type, kind, flags, enclosingVar, relativeName, parentName, typeContext, methodContext);
 
@@ -256,6 +257,7 @@ namespace DotNetFrontEnd
       }
     }
 
+
     /// <summary>
     /// Prints the children fields of a variable, including static fields, pure methods,
     /// ToString(), GetType(), etc.
@@ -278,7 +280,9 @@ namespace DotNetFrontEnd
         {
           DeclareVariable(name + "." + field.Name, field.FieldType, originatingType,
               VariableKind.field, enclosingVar: name, relativeName: field.Name,
-              nestingDepth: nestingDepth + 1, parentName: parentName, typeContext: typeContext, methodContext: methodContext);
+              nestingDepth: nestingDepth + 1,
+              flags: ExtendFlags(TypeManager.IsReadOnly(field) ? VariableFlags.is_readonly : VariableFlags.none),
+              parentName: parentName, typeContext: typeContext, methodContext: methodContext);
         }
       }
 
@@ -294,7 +298,8 @@ namespace DotNetFrontEnd
             this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
             DeclareVariable(staticFieldName, staticField.FieldType,
                 nestingDepth: staticFieldName.Count(c => c == '.'), 
-                originatingType: originatingType, 
+                originatingType: originatingType,
+                flags: ExtendFlags(TypeManager.IsReadOnly(staticField) ? VariableFlags.is_readonly : VariableFlags.none),
                 typeContext: typeContext, methodContext: methodContext);
           }
         }
@@ -303,9 +308,10 @@ namespace DotNetFrontEnd
       if (!type.IsSealed)
       {
         DeclareVariable(name + "." + GetTypeMethodCall, TypeManager.TypeType, originatingType, 
-            VariableKind.function, VariableFlags.classname |
-            VariableFlags.synthetic, enclosingVar: name, relativeName: GetTypeMethodCall,
-            nestingDepth: nestingDepth + 1, parentName: parentName, 
+            VariableKind.function,
+            ExtendFlags(VariableFlags.classname, VariableFlags.synthetic, (TypeManager.IsImmutable(type) ? VariableFlags.is_readonly : VariableFlags.none)), 
+            enclosingVar: name, relativeName: GetTypeMethodCall,
+            nestingDepth: nestingDepth + 1, parentName: parentName,
             typeContext: typeContext, methodContext: methodContext);
       }
 
@@ -313,8 +319,9 @@ namespace DotNetFrontEnd
       {
         DeclareVariable(name + "." + ToStringMethodCall, TypeManager.StringType,
             originatingType,
-            VariableKind.function, VariableFlags.to_string |
-            VariableFlags.synthetic,
+            VariableKind.function, 
+            // TODO is this right? An immutable object could use the environment to generate a string
+            ExtendFlags(VariableFlags.to_string, VariableFlags.synthetic, (TypeManager.IsImmutable(type) ? VariableFlags.is_readonly : VariableFlags.none)),
             enclosingVar: name, relativeName: ToStringMethodCall,
             nestingDepth: nestingDepth + 1, parentName: parentName, 
             typeContext: typeContext, methodContext: methodContext);
@@ -324,9 +331,9 @@ namespace DotNetFrontEnd
       {
         string methodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Name);
 
-        VariableFlags pureMethodFlags = (frontEndArgs.IsPropertyFlags && pureMethod.Name.StartsWith(GetterPropertyPrefix)) 
-            ? VariableFlags.is_property 
-            : VariableFlags.none;
+        var pureMethodFlags = ExtendFlags(
+            pureMethod.Name.StartsWith(GetterPropertyPrefix) ? VariableFlags.is_property : VariableFlags.none,
+            TypeManager.IsImmutable(type) ? VariableFlags.is_readonly : VariableFlags.none);
 
         DeclareVariable(name + "." + methodName,
           pureMethod.ReturnType,
@@ -454,7 +461,7 @@ namespace DotNetFrontEnd
 
       if (elementType.IsEnum)
       {
-        flags |= VariableFlags.is_enum;
+          flags = ExtendFlags(flags, VariableFlags.is_enum);
       }
 
       this.WritePair("variable", name, IndentsForName);
@@ -578,10 +585,11 @@ namespace DotNetFrontEnd
       foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType, originatingType))
       {
         string methodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Name);
-        VariableFlags pureMethodFlags = 
-          (frontEndArgs.IsPropertyFlags && 
-            pureMethod.Name.StartsWith(GetterPropertyPrefix)) ?
-          VariableFlags.is_property : VariableFlags.none;
+
+        var pureMethodFlags = ExtendFlags(
+          pureMethod.Name.StartsWith(GetterPropertyPrefix) ? VariableFlags.is_property : VariableFlags.none,
+          TypeManager.IsImmutable(originatingType) ? VariableFlags.is_readonly : VariableFlags.none);
+
         PrintList(name + "." + methodName, 
           pureMethod.ReturnType, name,
           originatingType,
@@ -851,6 +859,49 @@ namespace DotNetFrontEnd
     }
 
     #region Private Helper Methods
+
+    /// <summary>
+    /// Mask with unset options at 0
+    /// </summary>
+    private VariableFlags FlagMask
+    {
+        get
+        {
+            VariableFlags mask = 0;
+    
+           
+            return ~mask;
+        }
+    }
+
+    /// <summary>
+    /// Returns union of <code>flags</code>, respecting the front-end options
+    /// </summary>
+    /// <param name="flags"></param>
+    /// <param name="toAdd"></param>
+    /// <returns>union of <code>flags</code>, respecting the front-end options</returns>
+    private VariableFlags ExtendFlags(params VariableFlags[] flags)
+    {
+        var result = VariableFlags.none;
+        foreach (var fs in flags)
+        {
+            result |= fs;
+        }
+        if (!frontEndArgs.IsPropertyFlags)
+        {
+            result &= (result | VariableFlags.is_property) ^ VariableFlags.is_property;
+        }
+        if (!frontEndArgs.IsEnumFlags)
+        {
+            result &= (result | VariableFlags.is_enum) ^ VariableFlags.is_enum;
+        }
+        if (!frontEndArgs.IsReadOnlyFlags)
+        {
+            result &= (result | VariableFlags.is_readonly) ^ VariableFlags.is_readonly;
+        }
+
+        return result & FlagMask;
+    }
 
     /// <summary>
     /// Print a space separated pair of values, followed by a new line to the class writer.
