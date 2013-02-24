@@ -203,7 +203,7 @@ namespace Comparability
                         // The front-end uses reflection-style names for inner types, need to be consistent here
                         var name = string.Join(".", TypeHelper.GetTypeName(container, NameFormattingOptions.UseReflectionStyleForNestedTypeNames), def.ResolvedField.Name);
                         TryAdd(outer, name);
-                        Console.WriteLine("Add static field " + name); 
+                        // Console.WriteLine("Add static field " + name); 
                         AddInstanceExpr(container, outer);
                         StaticNames.Add(outer);
                     }
@@ -213,7 +213,7 @@ namespace Comparability
                         {
                             var name = NameTable[instance] + "." + def.ResolvedField.Name;
                             TryAdd(outer, name);
-                            Console.WriteLine("Add field " + name); 
+                            // Console.WriteLine("Add field " + name); 
                             AddInstanceExpr(Type, outer);
                         }
                         else
@@ -274,7 +274,7 @@ namespace Comparability
                     // The front-end uses reflection-style names for inner types, need to be consistent here
                     var name = string.Join(".", TypeHelper.GetTypeName(targetType, NameFormattingOptions.UseReflectionStyleForNestedTypeNames), value.Name);
                     TryAdd(constantExpr, name);
-                    Console.WriteLine("Add enum constant " + name);
+                    // Console.WriteLine("Add enum constant " + name);
                     AddInstanceExpr(targetType, constantExpr);
                     StaticNames.Add(constantExpr);
                 }
