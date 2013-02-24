@@ -17,16 +17,35 @@ namespace Comparability
         public Dictionary<IExpression, IExpression> Parent { get; private set; }
         public IMetadataHost Host { get; private set; }
 
-        public HashSet<IExpression> InstanceExpressions { get; private set; }
+        /// <summary>
+        /// Map from type to field, property, and methods referenced in <code>Type</code>. 
+        /// </summary>
+        public Dictionary<ITypeReference, HashSet<IExpression>> InstanceExpressions;
+        
+        /// <summary>
+        /// Map from instance expressions to their respective types.
+        /// </summary>
+        public Dictionary<IExpression, ITypeReference> InstanceExpressionsReferredTypes;
        
         public NameBuilder(INamedTypeDefinition type, IMetadataHost host)
         {
             Type = type;
             Host = host;
-            InstanceExpressions = new HashSet<IExpression>();
+            InstanceExpressions = new Dictionary<ITypeReference, HashSet<IExpression>>();
+            InstanceExpressionsReferredTypes = new Dictionary<IExpression, ITypeReference>();
             NameTable = new Dictionary<IExpression, string>();
             NamedChildren = new Dictionary<IExpression, HashSet<IExpression>>();
             Parent = new Dictionary<IExpression, IExpression>();
+        }
+
+        private void AddInstanceExpr(ITypeReference type, IExpression expr)
+        {
+            if (!InstanceExpressions.ContainsKey(type))
+            {
+                InstanceExpressions.Add(type, new HashSet<IExpression>());
+            }
+            InstanceExpressions[type].Add(expr);
+            InstanceExpressionsReferredTypes.Add(expr, type);
         }
 
         private void TryAdd(IExpression expression, string name)
@@ -52,7 +71,9 @@ namespace Comparability
         {
             get
             {
-                return new HashSet<string>(InstanceExpressions.Select(x => NameTable[x]));
+                return InstanceExpressions.Count == 0 ?
+                    new HashSet<string>() :
+                    new HashSet<string>(InstanceExpressions[Type].Select(x => NameTable[x]));
             }
         }
 
@@ -72,20 +93,10 @@ namespace Comparability
             }
         }
 
-        public override void Visit(IMethodBody addition)
-        {
-            base.Visit(addition);
-        }
-
-        public override void Visit(IMethodDefinition addition)
-        {
-            base.Visit(addition);
-        }
-
         public override void Visit(IThisReference thisRef)
         {
             TryAdd(thisRef, "this");
-            InstanceExpressions.Add(thisRef);
+            AddInstanceExpr(Type, thisRef);
             Parent.Add(thisRef, null);
         }
 
@@ -97,6 +108,7 @@ namespace Comparability
         public override void Visit(IAssignment op)
         {
             AddChildren(op, op.Source, op.Target);
+            ResolveEnum(op.Target, op.Source);
         }
 
         /// <summary>
@@ -123,38 +135,76 @@ namespace Comparability
 
         public override void Visit(ITargetExpression bounded)
         {
-            if (bounded.Definition is IParameterDefinition)
+            HandleBundle(bounded, bounded.Definition, bounded.Instance);
+        }
+
+        public override void Visit(IBoundExpression bounded)
+        {
+            HandleBundle(bounded, bounded.Definition, bounded.Instance);
+        }
+
+        private void HandleBundle(IExpression outer, object definition, IExpression instance)
+        {
+            if (definition is IParameterDefinition)
             {
-                TryAdd(bounded, ((IParameterDefinition)bounded.Definition).Name.Value);
-                Parent.Add(bounded, bounded.Instance);
+                TryAdd(outer, ((IParameterDefinition)definition).Name.Value);
             }
-            else if (bounded.Definition is IFieldReference)
+            else if (definition is IFieldReference)
             {
-                var def = ((IFieldReference)bounded.Definition);
+                var def = ((IFieldReference)definition);
 
-                if (!def.IsStatic &&
-                    !def.ResolvedField.Attributes.Any(a => IsCompilerGenerated(def.ResolvedField)))
+                if (!def.ResolvedField.Attributes.Any(a => IsCompilerGenerated(def.ResolvedField)))
                 {
-
-                    if (NameTable.ContainsKey(bounded.Instance))
+                    if (def.IsStatic)
                     {
-                        TryAdd(bounded, NameTable[bounded.Instance] + "." + def.ResolvedField.Name);
-                        InstanceExpressions.Add(bounded);
-                        Parent.Add(bounded, bounded.Instance);
+                        var container = def.ContainingType.ResolvedType;
+                        // The front-end uses reflection-style names for inner types, need to be consistent here
+                        var name = string.Join(".", TypeHelper.GetTypeName(container, NameFormattingOptions.UseReflectionStyleForNestedTypeNames), def.ResolvedField.Name);
+                        TryAdd(outer, name);
+                        Console.WriteLine("Add static field " + name); 
+                        AddInstanceExpr(container, outer);
                     }
                     else
                     {
-                        Console.WriteLine("Skip field " + def.ResolvedField.Name);
+                        if (NameTable.ContainsKey(instance))
+                        {
+                            var name = NameTable[instance] + "." + def.ResolvedField.Name;
+                            TryAdd(outer, name);
+                            Console.WriteLine("Add field " + name); 
+                            AddInstanceExpr(Type, outer);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Skip field (instance not named): " + def.ResolvedField.Name);
+                        }
                     }
                 }
             }
-            else if (bounded.Definition is ILocalDefinition)
+            else if (definition is IArrayIndexer)
             {
-                TryAdd(bounded, "<local>" + ((ILocalDefinition)bounded.Definition).Name.Value);
+                var def = (IArrayIndexer)definition;
+                if (NameTable.ContainsKey(def.IndexedObject))
+                {
+                    TryAdd(outer, NameTable[def.IndexedObject] + "[..]");
+
+                    // propogate instance expression information
+                    if (InstanceExpressionsReferredTypes.ContainsKey(def.IndexedObject))
+                    {
+                        AddInstanceExpr(InstanceExpressionsReferredTypes[def.IndexedObject], outer);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Skip array indexer (indexed object not named)");
+                }
+            }
+            else if (definition is ILocalDefinition)
+            {
+                TryAdd(outer, "<local>" + ((ILocalDefinition)definition).Name.Value);
             }
             else
             {
-                Console.WriteLine("Miss (Target): " + bounded.Definition.GetType().Name);
+                Console.WriteLine("WARNING: unexpected bundled type " + definition.GetType().Name);
             }
         }
 
@@ -167,47 +217,44 @@ namespace Comparability
             }
         }
 
-        public override void Visit(IBoundExpression bounded)
+        private void ResolveEnum(IExpression enumExpr, IExpression constantExpr)
         {
-            if (bounded.Definition is IParameterDefinition)
-            {
-                TryAdd(bounded, ((IParameterDefinition) bounded.Definition).Name.Value);
-            }
-            else if (bounded.Definition is IFieldReference)
-            {
-                var def = ((IFieldReference)bounded.Definition);
-                if (!def.IsStatic &&
-                    !def.ResolvedField.Attributes.Any(a => IsCompilerGenerated(def.ResolvedField)))
-                {
+            var targetType = enumExpr.Type.ResolvedType;
 
-                    if (NameTable.ContainsKey(bounded.Instance))
-                    {
-                        TryAdd(bounded, NameTable[bounded.Instance] + "." + def.ResolvedField.Name);
-                        InstanceExpressions.Add(bounded);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Skip field " + def.ResolvedField.Name);
-                    }
+            if (targetType.IsEnum && constantExpr is ICompileTimeConstant)
+            {
+                var constant = (ICompileTimeConstant)constantExpr;
+
+                var value = targetType.Fields.FirstOrDefault(f => f.IsCompileTimeConstant && constant.Value.Equals(f.CompileTimeValue.Value));
+                if (value != null)
+                {
+                    // The front-end uses reflection-style names for inner types, need to be consistent here
+                    var name = string.Join(".", TypeHelper.GetTypeName(targetType, NameFormattingOptions.UseReflectionStyleForNestedTypeNames), value.Name);
+                    TryAdd(constantExpr, name);
+                    Console.WriteLine("Add enum constant " + name);
+                    AddInstanceExpr(targetType, constantExpr);
                 }
-            }
-            else if (bounded.Definition is ILocalDefinition)
-            {
-                TryAdd(bounded, "<local>" + ((ILocalDefinition)bounded.Definition).Name.Value);
-            }
-            else
-            {
-                Console.WriteLine("Miss (Bound): " + bounded.Definition.GetType().Name);
+                else
+                {
+                    Console.WriteLine("WARNING: Could not find enum constant for assignment");
+                }
             }
         }
 
         public override void Visit(IMethodCall call)
         {
-            if (!call.IsStaticCall && call.MethodToCall.ParameterCount == 0 && NameTable.ContainsKey(call.ThisArgument))
-            {
+            var receiver = call.ThisArgument;
+
+            if (!call.IsStaticCall && call.MethodToCall.ParameterCount == 0 && NameTable.ContainsKey(receiver))
+            {               
                 TryAdd(call, NameTable[call.ThisArgument] + "." + call.MethodToCall.Name + "()");
-                InstanceExpressions.Add(call);
                 Parent.Add(call, call.ThisArgument);
+
+                // propogate the instance information
+                if (InstanceExpressionsReferredTypes.ContainsKey(receiver))
+                {
+                    AddInstanceExpr(InstanceExpressionsReferredTypes[receiver], call);
+                }
             }
         }
 

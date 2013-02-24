@@ -616,7 +616,7 @@ namespace DotNetFrontEnd
     /// </param>
     /// <param name="parentObjectType">Assembly-qualified name of the type of the parent
     /// </param>
-    public void PrintParentObjectFields(string parentName, string assemblyQualifiedName, INamedTypeDefinition typeContext)
+    public void PrintParentObjectFields(string parentName, string assemblyQualifiedName, INamedTypeDefinition typeContext, IMethodDefinition methodContext)
     {
       parentName = parentName + ":::OBJECT 1";
 
@@ -630,7 +630,7 @@ namespace DotNetFrontEnd
         {
           this.DeclareVariable("this", type, type, flags: VariableFlags.is_param,
               parentName: parentName,
-              typeContext: typeContext);
+              typeContext: typeContext, methodContext: methodContext);
         }
         else
         {

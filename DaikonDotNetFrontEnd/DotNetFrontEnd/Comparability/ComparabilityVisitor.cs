@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Cci;
 using EmilStefanov;
+using System.Diagnostics;
 
 namespace Comparability
 {
@@ -105,6 +106,22 @@ namespace Comparability
                 result.Add(new HashSet<string>(group.Intersect(names)));
             }
             return result;
+        }
+
+        public HashSet<HashSet<string>> Opinion
+        {
+            get
+            {
+                var cmp = Comparability;
+
+                HashSet<HashSet<string>> result = new HashSet<HashSet<string>>();
+                foreach (var group in ids.Keys.Where(n => cmp.ContainsKey(n)).GroupBy(n => cmp[n]))
+                {
+                    var cmpId = group.Key;
+                    result.Add(new HashSet<string>(group));
+                }
+                return result;
+            }
         }
 
         public HashSet<string> IndexComparabilityOpinion(string array)
@@ -394,7 +411,7 @@ namespace Comparability
 
         public override void Visit(IAssignment assignment)
         {
-            var expanded = Expand(new [] {assignment.Source, assignment.Target});
+            var expanded = Expand(new[] { assignment.Source, assignment.Target });
             Mark(expanded);
         }
 
