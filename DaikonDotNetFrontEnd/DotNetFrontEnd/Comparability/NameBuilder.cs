@@ -29,6 +29,25 @@ namespace Comparability
             Parent = new Dictionary<IExpression, IExpression>();
         }
 
+        private void TryAdd(IExpression expression, string name)
+        {
+            if (NameTable.ContainsKey(expression))
+            {
+                if (!name.Equals(NameTable[expression]))
+                {
+                    throw new Exception("Expression already exists in table with different name. Table: " + NameTable[expression] + " New: " + name); 
+                }
+                else
+                {
+                    // NO OP (when would this occur?)
+                }
+            }
+            else
+            {
+                NameTable.Add(expression, name);
+            }
+        }
+
         public HashSet<string> InstanceNames
         {
             get
@@ -65,7 +84,7 @@ namespace Comparability
 
         public override void Visit(IThisReference thisRef)
         {
-            NameTable.Add(thisRef, "this");
+            TryAdd(thisRef, "this");
             InstanceExpressions.Add(thisRef);
             Parent.Add(thisRef, null);
         }
@@ -106,7 +125,7 @@ namespace Comparability
         {
             if (bounded.Definition is IParameterDefinition)
             {
-                NameTable.Add(bounded, ((IParameterDefinition)bounded.Definition).Name.Value);
+                TryAdd(bounded, ((IParameterDefinition)bounded.Definition).Name.Value);
                 Parent.Add(bounded, bounded.Instance);
             }
             else if (bounded.Definition is IFieldReference)
@@ -119,7 +138,7 @@ namespace Comparability
 
                     if (NameTable.ContainsKey(bounded.Instance))
                     {
-                        NameTable.Add(bounded, NameTable[bounded.Instance] + "." + def.ResolvedField.Name);
+                        TryAdd(bounded, NameTable[bounded.Instance] + "." + def.ResolvedField.Name);
                         InstanceExpressions.Add(bounded);
                         Parent.Add(bounded, bounded.Instance);
                     }
@@ -131,7 +150,7 @@ namespace Comparability
             }
             else if (bounded.Definition is ILocalDefinition)
             {
-                NameTable.Add(bounded, "<local>" + ((ILocalDefinition)bounded.Definition).Name.Value);
+                TryAdd(bounded, "<local>" + ((ILocalDefinition)bounded.Definition).Name.Value);
             }
             else
             {
@@ -144,7 +163,7 @@ namespace Comparability
             if (arrayIndexer.Indices.Count() == 1 && NameTable.ContainsKey(arrayIndexer.IndexedObject))
             {
                 var arrayName = NameTable[arrayIndexer.IndexedObject];
-                NameTable.Add(arrayIndexer, arrayName + "[..]");
+                TryAdd(arrayIndexer, arrayName + "[..]");
             }
         }
 
@@ -152,7 +171,7 @@ namespace Comparability
         {
             if (bounded.Definition is IParameterDefinition)
             {
-                NameTable.Add(bounded, ((IParameterDefinition) bounded.Definition).Name.Value);
+                TryAdd(bounded, ((IParameterDefinition) bounded.Definition).Name.Value);
             }
             else if (bounded.Definition is IFieldReference)
             {
@@ -163,7 +182,7 @@ namespace Comparability
 
                     if (NameTable.ContainsKey(bounded.Instance))
                     {
-                        NameTable.Add(bounded, NameTable[bounded.Instance] + "." + def.ResolvedField.Name);
+                        TryAdd(bounded, NameTable[bounded.Instance] + "." + def.ResolvedField.Name);
                         InstanceExpressions.Add(bounded);
                     }
                     else
@@ -174,7 +193,7 @@ namespace Comparability
             }
             else if (bounded.Definition is ILocalDefinition)
             {
-                NameTable.Add(bounded, "<local>" + ((ILocalDefinition)bounded.Definition).Name.Value);
+                TryAdd(bounded, "<local>" + ((ILocalDefinition)bounded.Definition).Name.Value);
             }
             else
             {
@@ -186,7 +205,7 @@ namespace Comparability
         {
             if (!call.IsStaticCall && call.MethodToCall.ParameterCount == 0 && NameTable.ContainsKey(call.ThisArgument))
             {
-                NameTable.Add(call, NameTable[call.ThisArgument] + "." + call.MethodToCall.Name + "()");
+                TryAdd(call, NameTable[call.ThisArgument] + "." + call.MethodToCall.Name + "()");
                 InstanceExpressions.Add(call);
                 Parent.Add(call, call.ThisArgument);
             }
