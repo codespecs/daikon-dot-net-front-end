@@ -21,13 +21,13 @@ namespace DotNetFrontEnd.Comparability
         public TypeSummary(NameBuilder names, IEnumerable<MethodVisitor> methods)
         {
             // give a union-find id to each instance expression name
-            foreach (var name in names.InstanceNames)
+            foreach (var name in names.ThisNames())
             {
                 ids.Add(name, comparability.AddElement());
             }
 
             // union the sets, according to each method's opinion
-            foreach (var name in names.InstanceNames)
+            foreach (var name in names.ThisNames())
             {
                 HashSet<string> indexOpinion = new HashSet<string>();
 
@@ -44,12 +44,12 @@ namespace DotNetFrontEnd.Comparability
                         last = other;
                     }
 
-                    indexOpinion.UnionWith(method.IndexComparabilityOpinion(name).Intersect(names.InstanceNames));
+                    indexOpinion.UnionWith(method.IndexComparabilityOpinion(name).Intersect(names.ThisNames()));
                 }
 
                 if (indexOpinion.Count > 0)
                 {
-                    arrayIndexes.Add(name, names.InstanceNames);
+                    arrayIndexes.Add(name, names.ThisNames());
                 }
             }
         }

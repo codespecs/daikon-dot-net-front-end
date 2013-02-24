@@ -26,10 +26,18 @@ namespace Comparability
         private HashSet<IReturnStatement> returns = new HashSet<IReturnStatement>();
         private HashSet<IMethodCall> calls = new HashSet<IMethodCall>();
 
+        /// <summary>
+        /// Map from instance expressions to their respective types.
+        /// </summary>
+        public Dictionary<IExpression, ITypeReference> ReferencedTypes;
+
+        private HashSet<IExpression> namedExpressions = new HashSet<IExpression>();
+        
         public MethodVisitor(IMethodDefinition method, NameBuilder names)
         {
             Names = names;
             Method = method;
+            ReferencedTypes = new Dictionary<IExpression, ITypeReference>();
 
             ids.Add("return", comparability.AddElement());
             
@@ -39,7 +47,33 @@ namespace Comparability
             }
         }
 
+        private void PropogateTypeReference(IExpression inner, IExpression outer)
+        {
+            if (ReferencedTypes.ContainsKey(inner))
+            {
+                AddTypeReference(ReferencedTypes[inner], outer);
+            }
+        }
 
+        private void AddTypeReference(ITypeReference type, IExpression expr)
+        {
+            ReferencedTypes.Add(expr, type);
+        }
+
+        private Dictionary<string, string> ZipArguments(IMethodCall callsite)
+        {
+            var calleeDefinition = callsite.MethodToCall.ResolvedMethod;
+
+            var paramsToArgs = new Dictionary<string, string>();
+            foreach (var binding in calleeDefinition.Parameters.Zip(callsite.Arguments, (x, y) => Tuple.Create(x, y)))
+            {
+                if (Names.NameTable.ContainsKey(binding.Item2))
+                {
+                    paramsToArgs.Add(binding.Item1.Name.Value, Names.NameTable[binding.Item2]);
+                }
+            }
+            return paramsToArgs;
+        }
 
         public bool ApplyMethodSummaries(Dictionary<IMethodDefinition, MethodVisitor> methodData)
         {
@@ -47,36 +81,46 @@ namespace Comparability
 
             foreach (var callsite in calls)
             {
-                var resolved = callsite.MethodToCall.ResolvedMethod;
-                var sameClass = Method.ContainingTypeDefinition == resolved.ContainingTypeDefinition;
-                
-                if (methodData.ContainsKey(resolved))
+                var calleeDefinition = callsite.MethodToCall.ResolvedMethod;
+                var argBindings = ZipArguments(callsite);
+
+                if (methodData.ContainsKey(calleeDefinition))
                 {
-                    var data = methodData[resolved];
+                    var calleeSummary = methodData[calleeDefinition];
 
-                    // incorporate instance variable opinion directly if methods are in the same type
-                    if (sameClass)
-                    {
-                        modified |= MergeOpinion(data.InstanceVariableOpinion);
-                    }
+                    bool sameClass = calleeDefinition.ContainingType.ResolvedType == Names.Type;
+                    
+                    // Incorporate parameter opinion
+                    // 1. Generate opinion for parameter comparability
+                    // 2. Rebase using argument bindings and remove unused parameters
+                    // 3. Merge the comparability sets
+                    var names = Union(
+                        calleeSummary.ParameterNames, calleeSummary.StaticNames,
+                        (sameClass ? Names.ThisNames() : new HashSet<string>()));
 
-                    var paramsToArgs = new Dictionary<string, string>();
-                    foreach (var binding in resolved.Parameters.Zip(callsite.Arguments, (x,y) => Tuple.Create(x,y)))
-                    {
-                        if (Names.NameTable.ContainsKey(binding.Item2))
-                        {
-                            paramsToArgs.Add(binding.Item1.Name.Value, Names.NameTable[binding.Item2]);
-                        }
-                    }
-                        
-                    // incorporate parameter opinion
-                    var opinion = sameClass ? data.ParameterOpinionSameClass : data.ParameterOpinion;
-                    var rebased = Rebase(opinion, paramsToArgs);
+                    var opinion = calleeSummary.ForNames(names);
+                    var rebased = Filter(Rebase(opinion, argBindings), calleeSummary.ParameterNames);
                     modified |= MergeOpinion(rebased);
-                        
-                    // TODO HANDLE RETURN METHODS
+
+                    // update this method's opinion about the referenced type (possibly itself)
+                    foreach (var referencedType in ReferencedTypes.Values)
+                    {
+                        // TODO account for indirect comparability information via type references
+                    }
+
+                    // TODO account for return value
                 }
-            }
+                else if (calleeDefinition.ParameterCount > 0)
+                {
+                    var opinion = ParameterTypeComparability(calleeDefinition.Parameters);
+                    var rebased = Filter(
+                        Rebase(opinion, argBindings), 
+                        new HashSet<string>(calleeDefinition.Parameters.Select(p => p.Name.Value)));
+
+                    modified |= MergeOpinion(rebased);
+                }
+            }  
+            
 
             if (modified)
             {
@@ -84,6 +128,35 @@ namespace Comparability
             }
 
             return modified;
+        }
+
+        public static HashSet<HashSet<string>> ParameterTypeComparability(IEnumerable<IParameterDefinition> parameters)
+        {
+            Dictionary<IParameterDefinition, int> ids = new Dictionary<IParameterDefinition, int>();
+            DisjointSets cmp = new DisjointSets();
+            foreach (var p in parameters)
+            {
+                ids.Add(p, cmp.AddElement());
+            }
+
+            foreach (var lhs in parameters)
+            {
+                foreach (var rhs in parameters)
+                {
+                    if (TypeHelper.TypesAreAssignmentCompatible(lhs.Type.ResolvedType, rhs.Type.ResolvedType, true))
+                    {
+                        cmp.Union(cmp.FindSet(ids[lhs]), cmp.FindSet(ids[rhs]));
+                    }
+                }
+            }
+            
+            var result = new HashSet<HashSet<string>>(ids.Keys.GroupBy(p => cmp.FindSet(ids[p])).Select(g => new HashSet<string>(g.Select(p => p.Name.Value))));
+            return result;
+        }
+
+        public static HashSet<string> Union(params IEnumerable<string>[] collections)
+        {
+            return collections.Aggregate(new HashSet<string>(), (a, c) => new HashSet<string>(a.Union(c)));
         }
 
         public HashSet<string> ParameterNames
@@ -95,6 +168,11 @@ namespace Comparability
             }
         }
 
+        /// <summary>
+        /// Returns the comparability set for <code>names</code>, containing only those <code>names</code>.
+        /// </summary>
+        /// <param name="names"></param>
+        /// <returns>the comparability set for <code>names</code>, containing only those <code>names</code></returns>
         private HashSet<HashSet<string>> ForNames(HashSet<string> names)
         {
             var cmp = Comparability;
@@ -131,16 +209,18 @@ namespace Comparability
                    : new HashSet<string>();
         }
 
-        public HashSet<HashSet<string>> ParameterOpinionSameClass
+        public HashSet<string> StaticNames
         {
             get
             {
-                var ps = ParameterNames;
-                var cs = Names.InstanceNames;
-                return ForNames(new HashSet<string>(ps.Union(cs)));
+                return new HashSet<string>(Names.Names(Names.StaticNames.Intersect(namedExpressions)));
             }
         }
 
+        
+        /// <summary>
+        /// Comparability opinion containing only parameter names.
+        /// </summary>
         public HashSet<HashSet<string>> ParameterOpinion
         {
             get
@@ -153,7 +233,7 @@ namespace Comparability
         {
             get
             {
-                return ForNames(Names.InstanceNames);
+                return ForNames(Names.ThisNames());
             }
         }
 
@@ -214,6 +294,16 @@ namespace Comparability
             {
                 return str;   
             }
+        }
+
+        private static HashSet<HashSet<string>> Filter(HashSet<HashSet<string>> sets, HashSet<string> names)
+        {
+            var result = new HashSet<HashSet<string>>();
+            foreach (var x in sets)
+            {
+                result.Add(new HashSet<string>(x.Where(n => !names.Contains(n))));
+            }
+            return result;
         }
 
         private static HashSet<HashSet<string>> Rebase(HashSet<HashSet<string>> sets, Dictionary<string, string> map)
@@ -366,9 +456,32 @@ namespace Comparability
            return Mark(exprs.Select(x => GetId(x)).Where(x => x.HasValue).Select(x => x.Value));
         }
 
+        private void HandleComposite(IExpression composite, object definition, IExpression instance)
+        {
+            if (instance != null)
+            {
+                PropogateTypeReference(instance, composite);
+            }  
+        }
+
+        public override void Visit(IBoundExpression bound)
+        {
+            HandleComposite(bound, bound.Definition, bound.Instance);
+        }
+
+        public override void Visit(ITargetExpression target)
+        {
+            HandleComposite(target, target.Definition, target.Instance);
+        }
+
         public override void Visit(IMethodCall call)
         {
             calls.Add(call);
+
+            if (!call.IsStaticCall)
+            {
+                PropogateTypeReference(call.ThisArgument, call);
+            }
         }
 
         public override void Visit(IArrayIndexer arrayIndexer)
@@ -392,6 +505,8 @@ namespace Comparability
                         Mark(arrayIndexes[arrayName]);
                     }
                 }
+
+                PropogateTypeReference(arrayIndexer.IndexedObject, arrayIndexer);
             }
         }
 
@@ -409,10 +524,23 @@ namespace Comparability
             }
         }
 
+        public override void Visit(IThisReference thisRef)
+        {
+            AddTypeReference(Names.Type, thisRef);
+        }
+
         public override void Visit(IAssignment assignment)
         {
             var expanded = Expand(new[] { assignment.Source, assignment.Target });
             Mark(expanded);
+        }
+
+        public override void Visit(IExpression expr)
+        {
+            if (Names.NameTable.ContainsKey(expr))
+            {
+                namedExpressions.Add(expr);
+            }
         }
 
         public override void Visit(IBinaryOperation binary)
