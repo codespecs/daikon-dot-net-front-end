@@ -9,10 +9,12 @@ using System.Threading.Tasks;
 
 namespace Comparability
 {
+
     public class NameBuilder : CodeVisitor
     {
         public INamedTypeDefinition Type { get; private set; }
         public Dictionary<IExpression, string> NameTable { get; private set; }
+        public HashSet<IExpression> StaticNames { get; private set; }
         public Dictionary<IExpression, HashSet<IExpression>> NamedChildren { get; private set; }
         public Dictionary<IExpression, IExpression> Parent { get; private set; }
         public IMetadataHost Host { get; private set; }
@@ -31,11 +33,28 @@ namespace Comparability
         {
             Type = type;
             Host = host;
+            StaticNames = new HashSet<IExpression>();
             InstanceExpressions = new Dictionary<ITypeReference, HashSet<IExpression>>();
             InstanceExpressionsReferredTypes = new Dictionary<IExpression, ITypeReference>();
             NameTable = new Dictionary<IExpression, string>();
             NamedChildren = new Dictionary<IExpression, HashSet<IExpression>>();
             Parent = new Dictionary<IExpression, IExpression>();
+        }
+
+        public IEnumerable<string> Names(IEnumerable<IExpression> exprs)
+        {
+            foreach (var e in exprs)
+            {
+                if (NameTable.ContainsKey(e))
+                {
+                    yield return NameTable[e];
+                }
+            }
+        }
+
+        public HashSet<string> NamesForType(ITypeReference type, HashSet<IExpression> exprs)
+        {
+            return new HashSet<string>(Names(InstanceExpressions[type].Intersect(exprs)));
         }
 
         private void AddInstanceExpr(ITypeReference type, IExpression expr)
@@ -67,14 +86,37 @@ namespace Comparability
             }
         }
 
-        public HashSet<string> InstanceNames
+        /// <summary>
+        /// Returns names that refer to this <code>Type</code>.
+        /// </summary>
+        /// <returns>names that refer to this <code>Type</code>.</returns>
+        public HashSet<string> ThisNames()
         {
-            get
+            return InstanceNames(Type);
+        }
+
+        /// <summary>
+        /// Returns names that refer to any type.
+        /// </summary>
+        /// <returns>names that refer to any type.</returns>
+        public HashSet<string> InstanceNames()
+        {
+            HashSet<string> result = new HashSet<string>();
+            foreach (var typeRef in InstanceExpressions.Keys)
             {
-                return InstanceExpressions.Count == 0 ?
-                    new HashSet<string>() :
-                    new HashSet<string>(InstanceExpressions[Type].Select(x => NameTable[x]));
+                if (typeRef is INamedTypeDefinition)
+                {
+                    result.UnionWith(InstanceNames((INamedTypeDefinition)typeRef));
+                }
             }
+            return result;
+        }
+
+        public HashSet<string> InstanceNames(INamedTypeDefinition type)
+        {
+            return InstanceExpressions.Count == 0 ?
+                new HashSet<string>() :
+                new HashSet<string>(InstanceExpressions[type].Select(x => NameTable[x]));
         }
 
         private void AddChildren(IExpression parent, params IExpression[] exprs)
@@ -163,6 +205,7 @@ namespace Comparability
                         TryAdd(outer, name);
                         Console.WriteLine("Add static field " + name); 
                         AddInstanceExpr(container, outer);
+                        StaticNames.Add(outer);
                     }
                     else
                     {
@@ -233,6 +276,7 @@ namespace Comparability
                     TryAdd(constantExpr, name);
                     Console.WriteLine("Add enum constant " + name);
                     AddInstanceExpr(targetType, constantExpr);
+                    StaticNames.Add(constantExpr);
                 }
                 else
                 {
