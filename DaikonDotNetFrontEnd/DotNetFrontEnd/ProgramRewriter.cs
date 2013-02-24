@@ -117,7 +117,7 @@ namespace DotNetFrontEnd
               Console.WriteLine("Generating Comparability Information");
               decompiled = Decompiler.GetCodeModelFromMetadataModel(host, mutable, pdbReader);
               //mutable = new CodeDeepCopier(host).Copy(mutable);
-              comparabilityManager = new AssemblyComparability(mutable, host);
+              comparabilityManager = new AssemblyComparability(decompiled, host, pdbReader);
           }
     
           ILRewriter mutator = new ILRewriter(host, pdbReader, frontEndArgs, typeManager, comparabilityManager);

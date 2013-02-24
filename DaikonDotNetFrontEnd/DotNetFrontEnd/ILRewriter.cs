@@ -1423,20 +1423,23 @@ namespace DotNetFrontEnd
         if ((methodBody.MethodDefinition.Type.TypeCode !=
             host.PlatformType.SystemVoid.TypeCode))
         {
-          this.declPrinter.PrintReturn("return",
-              this.typeManager.ConvertCCITypeToAssemblyQualifiedName(
-                  methodBody.MethodDefinition.Type));
+          this.declPrinter.PrintReturn(
+              "return",
+              this.typeManager.ConvertCCITypeToAssemblyQualifiedName(methodBody.MethodDefinition.Type), 
+              methodBody.MethodDefinition);
         }
 
         // Declare the exception, always present for an exceptional exit
         if (exceptionType != null)
         {
-          this.declPrinter.PrintReturn(ExceptionVariableName,
-              this.typeManager.ConvertCCITypeToAssemblyQualifiedName(exceptionType));
+          this.declPrinter.PrintReturn(
+              ExceptionVariableName,
+              this.typeManager.ConvertCCITypeToAssemblyQualifiedName(exceptionType),
+              methodBody.MethodDefinition);
         }
         else
         {
-          this.declPrinter.PrintReturn(ExceptionVariableName, "System.Exception");
+          this.declPrinter.PrintReturn(ExceptionVariableName, "System.Exception", methodBody.MethodDefinition);
         }
       }
 
@@ -1478,7 +1481,8 @@ namespace DotNetFrontEnd
       if (this.printDeclarations)
       {
         this.declPrinter.PrintParentClassFields(
-            this.typeManager.ConvertCCITypeToAssemblyQualifiedName(parentType));
+            this.typeManager.ConvertCCITypeToAssemblyQualifiedName(parentType),
+            methodBody.MethodDefinition);
       }
     }
 
@@ -1711,7 +1715,8 @@ namespace DotNetFrontEnd
       if (this.printDeclarations)
       {
         this.declPrinter.PrintParentObjectFields(methodBody.MethodDefinition.ContainingType
-            .ToString(), this.typeManager.ConvertCCITypeToAssemblyQualifiedName(parentType));
+            .ToString(), this.typeManager.ConvertCCITypeToAssemblyQualifiedName(parentType),
+            parentType as INamedTypeDefinition);
       }
     }
 
@@ -2105,9 +2110,9 @@ namespace DotNetFrontEnd
           if (!(ignoreRegex.IsMatch(type.ToString()) || type.ToString() == ArgumentStoringClassName))
           {
             this.declPrinter.PrintObjectDefinition(typeName,
-                this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type),type);
+                this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type), type);
             this.declPrinter.PrintParentClassDefinition(typeName,
-                this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type));
+                this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type), type);
           }
         }
       }

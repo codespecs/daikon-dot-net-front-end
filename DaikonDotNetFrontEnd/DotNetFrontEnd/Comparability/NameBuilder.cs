@@ -12,12 +12,13 @@ namespace Comparability
     public class NameBuilder : CodeVisitor
     {
         public INamedTypeDefinition Type { get; private set; }
-        public HashSet<IExpression> InstanceExpressions { get; private set; }
         public Dictionary<IExpression, string> NameTable { get; private set; }
         public Dictionary<IExpression, HashSet<IExpression>> NamedChildren { get; private set; }
         public Dictionary<IExpression, IExpression> Parent { get; private set; }
         public IMetadataHost Host { get; private set; }
 
+        public HashSet<IExpression> InstanceExpressions { get; private set; }
+       
         public NameBuilder(INamedTypeDefinition type, IMetadataHost host)
         {
             Type = type;
@@ -50,6 +51,16 @@ namespace Comparability
                     NamedChildren[parent].UnionWith(children);
                 }
             }
+        }
+
+        public override void Visit(IMethodBody addition)
+        {
+            base.Visit(addition);
+        }
+
+        public override void Visit(IMethodDefinition addition)
+        {
+            base.Visit(addition);
         }
 
         public override void Visit(IThisReference thisRef)
@@ -125,6 +136,15 @@ namespace Comparability
             else
             {
                 Console.WriteLine("Miss (Target): " + bounded.Definition.GetType().Name);
+            }
+        }
+
+        public override void Visit(IArrayIndexer arrayIndexer)
+        {
+            if (arrayIndexer.Indices.Count() == 1 && NameTable.ContainsKey(arrayIndexer.IndexedObject))
+            {
+                var arrayName = NameTable[arrayIndexer.IndexedObject];
+                NameTable.Add(arrayIndexer, arrayName + "[..]");
             }
         }
 

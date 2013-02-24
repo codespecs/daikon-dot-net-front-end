@@ -31,12 +31,14 @@ namespace Comparability
             Method = method;
 
             ids.Add("return", comparability.AddElement());
-
+            
             foreach (var param in Method.Parameters)
             {
                 ids.Add(param.Name.Value, comparability.AddElement());
             }
         }
+
+
 
         public bool ApplyMethodSummaries(Dictionary<IMethodDefinition, MethodVisitor> methodData)
         {
@@ -103,6 +105,13 @@ namespace Comparability
                 result.Add(new HashSet<string>(group.Intersect(names)));
             }
             return result;
+        }
+
+        public HashSet<string> IndexComparabilityOpinion(string array)
+        {
+            return arrayIndexes.ContainsKey(array) 
+                   ? arrayIndexes[array] 
+                   : new HashSet<string>();
         }
 
         public HashSet<HashSet<string>> ParameterOpinionSameClass
@@ -261,7 +270,6 @@ namespace Comparability
         {
             HashSet<IExpression> result = new HashSet<IExpression>();
 
-
             result.Add(parent);
             if (Names.NamedChildren.ContainsKey(parent))
             {
@@ -269,6 +277,24 @@ namespace Comparability
             }
 
             return result;
+        }
+
+        public int GetArrayIndexComparability(string array)
+        {
+            if (!arrayIndexes.ContainsKey(array))
+            {
+                var synthetic = "<" + array + ">";
+
+                // create a dummy index
+                var cmp = new HashSet<string>();
+                cmp.Add(synthetic);
+                arrayIndexes.Add(array, cmp);
+            }
+            return GetComparability(arrayIndexes[array].First());
+        }
+
+        public int GetComparability(string name){
+            return comparability.FindSet(GetId(name));
         }
 
         private int GetId(string name)
@@ -339,11 +365,13 @@ namespace Comparability
                     arrayIndexes.Add(arrayName, new HashSet<string>());
                 }
 
+                // mark array indexes as compatible
                 var index = arrayIndexer.Indices.First();
                 if (Names.NameTable.ContainsKey(index))
                 {
                     if (arrayIndexes[arrayName].Add(Names.NameTable[index]))
                     {
+                        // we haven't seen this index before, so re-mark indexes
                         Mark(arrayIndexes[arrayName]);
                     }
                 }
