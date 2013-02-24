@@ -111,17 +111,20 @@ namespace Comparability
                     // TODO account for return value
                 }
                 else if (calleeDefinition.ParameterCount > 0)
-                {
-                    var opinion = ParameterTypeComparability(calleeDefinition.Parameters);
+                {   
+                    HashSet<IParameterDefinition> fix = new HashSet<IParameterDefinition>(calleeDefinition.Parameters);
+
+                    var opinion = ParameterTypeComparability(fix);
                     var rebased = Filter(
                         Rebase(opinion, argBindings), 
                         new HashSet<string>(calleeDefinition.Parameters.Select(p => p.Name.Value)));
 
                     modified |= MergeOpinion(rebased);
+
+                    // TODO account for return value
                 }
             }  
             
-
             if (modified)
             {
                 Console.WriteLine("Updated " + Method.Name);
@@ -141,10 +144,14 @@ namespace Comparability
 
             foreach (var lhs in parameters)
             {
+                Debug.Assert(ids.ContainsKey(lhs), "Error tracking parameter " + lhs.Name);
                 foreach (var rhs in parameters)
                 {
+                    Debug.Assert(ids.ContainsKey(rhs), "Error tracking parameter " + rhs.Name);
                     if (TypeHelper.TypesAreAssignmentCompatible(lhs.Type.ResolvedType, rhs.Type.ResolvedType, true))
                     {
+                        
+
                         cmp.Union(cmp.FindSet(ids[lhs]), cmp.FindSet(ids[rhs]));
                     }
                 }
