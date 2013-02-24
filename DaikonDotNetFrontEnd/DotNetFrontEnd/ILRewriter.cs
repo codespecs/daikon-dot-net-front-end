@@ -1716,7 +1716,7 @@ namespace DotNetFrontEnd
       {
         this.declPrinter.PrintParentObjectFields(methodBody.MethodDefinition.ContainingType
             .ToString(), this.typeManager.ConvertCCITypeToAssemblyQualifiedName(parentType),
-            parentType as INamedTypeDefinition);
+            parentType as INamedTypeDefinition, methodBody.MethodDefinition);
       }
     }
 

@@ -135,6 +135,21 @@ namespace DotNetFrontEnd.Comparability
                     TypeNames[type],
                     type.Methods.Where(m => MethodComparability.ContainsKey(m)).Select(m => MethodComparability[m]));
                 TypeComparability.Add(type, typeCmp);
+            
+            }
+
+            foreach (var method in MethodComparability.Values)
+            {
+                var interesting = method.Opinion.Where(x => x.Count > 1);
+                if (interesting.Count() > 0)
+                {
+                    Console.WriteLine("-- " + method.Method.Name);
+                    foreach (var x in interesting)
+                    {
+                        Console.WriteLine(string.Join(" ", x));
+                    }
+                    Console.WriteLine();
+                }
             }
         }
 
