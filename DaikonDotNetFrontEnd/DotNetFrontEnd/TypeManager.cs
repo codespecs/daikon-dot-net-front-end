@@ -1217,7 +1217,9 @@ namespace DotNetFrontEnd
         {
             return immutability[type];
         }
-        bool result = type.GetFields().All(f => IsReadOnly(f)) && type.GetProperties().All(p => !p.CanWrite);
+        bool result = 
+            type.GetFields().All(f => (f.FieldType == type && f.IsInitOnly) || (f.FieldType != type && IsReadOnly(f))) 
+            && type.GetProperties().All(p => !p.CanWrite);
         immutability.Add(type, result);
         return result;
     }
