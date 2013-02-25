@@ -1273,7 +1273,7 @@ namespace DotNetFrontEnd
         {
             // Type is an enum, print out its hash
             SetOutputSuppression(true);
-            string enumHash = (x.GetType().GetHashCode() + x.GetHashCode() + 1).ToString(CultureInfo.InvariantCulture); // add one since base element has code 0
+            string enumHash = RuntimeHelpers.GetHashCode(x).ToString(CultureInfo.InvariantCulture); 
             SetOutputSuppression(false);
             return enumHash;
         }
@@ -1308,7 +1308,7 @@ namespace DotNetFrontEnd
 
       // Type is either an object or a user-defined struct, print out its hashcode.
       SetOutputSuppression(true);
-      string hashcode = x.GetHashCode().ToString(CultureInfo.InvariantCulture);
+      string hashcode = RuntimeHelpers.GetHashCode(x).ToString(CultureInfo.InvariantCulture);
       SetOutputSuppression(false);
       return hashcode;
       
