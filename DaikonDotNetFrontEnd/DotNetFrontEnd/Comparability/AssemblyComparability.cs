@@ -111,7 +111,7 @@ namespace DotNetFrontEnd.Comparability
             bool changed = false;
             do
             {
-                Console.WriteLine("Method Call Summary Iteration: " + round);
+                Console.WriteLine("Method Summary Propogation Round #" + round);
                 changed = false;
                 foreach (var type in decompiled.AllTypes)
                 {
@@ -167,47 +167,26 @@ namespace DotNetFrontEnd.Comparability
             }
             else
             {
-                Console.WriteLine("WARNING: No type context for elements of array:" + name);
-                return -8;
+                throw new Exception("No type or method context provided for array variable '" + name + "'");
             }
         }
 
         public int GetComparability(string name, INamedTypeDefinition type, DeclarationPrinter.VariableKind kind, IMethodDefinition method = null)
         {
-            if (type != null && method == null)
-            {
-                var match = TypeNames.Keys.FirstOrDefault(t => TypeHelper.TypesAreEquivalent(t, type, true));
-
-                if (match != null)
-                {
-                    return TypeComparability[match].Get(name);
-                }
-                else
-                {
-                    Console.WriteLine("Missing type name information for type " + type.Name);
-                    return -2;
-                }
-            }
-            else if (method != null)
+            if (method != null)
             {
                 var match = MethodComparability.Keys.FirstOrDefault(m => MemberHelper.MethodsAreEquivalent(m, method));
-
-                if (match != null)
-                {
-                    return MethodComparability[match].GetComparability(name);
-                }
-                else
-                {
-                    Console.WriteLine("Missing method name information for " + name);
-                    return -3;
-                }
+                return MethodComparability[match].GetComparability(name);
+            }
+            if (type != null)
+            {
+                var match = TypeNames.Keys.FirstOrDefault(t => TypeHelper.TypesAreEquivalent(t, type, true));
+                return TypeComparability[match].Get(name);
             }
             else
             {
-                Console.WriteLine("No comparability information for " + name);
-                return -1;
+                throw new Exception("No type or method context provided for variable '" + name + "'");
             }
         }
-
     }
 }

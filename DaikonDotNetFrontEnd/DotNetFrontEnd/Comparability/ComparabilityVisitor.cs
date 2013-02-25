@@ -60,6 +60,19 @@ namespace Comparability
             ReferencedTypes.Add(expr, type);
         }
 
+        private string NameForArg(IExpression arg)
+        {
+            if (Names.NameTable.ContainsKey(arg))
+            {
+                return Names.NameTable[arg];
+            }
+            else
+            {
+                var names = new HashSet<string>(Names.Names(Expand(arg)));
+                return names.Count == 1 ? names.First() : null;
+            }
+        }
+
         private Dictionary<string, string> ZipArguments(IMethodCall callsite)
         {
             var calleeDefinition = callsite.MethodToCall.ResolvedMethod;
@@ -67,9 +80,10 @@ namespace Comparability
             var paramsToArgs = new Dictionary<string, string>();
             foreach (var binding in calleeDefinition.Parameters.Zip(callsite.Arguments, (x, y) => Tuple.Create(x, y)))
             {
-                if (Names.NameTable.ContainsKey(binding.Item2))
+                var nameForArg = NameForArg(binding.Item2);
+                if (nameForArg != null)
                 {
-                    paramsToArgs.Add(binding.Item1.Name.Value, Names.NameTable[binding.Item2]);
+                    paramsToArgs.Add(binding.Item1.Name.Value, nameForArg);
                 }
             }
             return paramsToArgs;
@@ -127,7 +141,7 @@ namespace Comparability
             
             if (modified)
             {
-                Console.WriteLine("Updated " + Method.Name);
+                // Console.WriteLine("Updated " + Method.Name);
             }
 
             return modified;
@@ -150,8 +164,6 @@ namespace Comparability
                     Debug.Assert(ids.ContainsKey(rhs), "Error tracking parameter " + rhs.Name);
                     if (TypeHelper.TypesAreAssignmentCompatible(lhs.Type.ResolvedType, rhs.Type.ResolvedType, true))
                     {
-                        
-
                         cmp.Union(cmp.FindSet(ids[lhs]), cmp.FindSet(ids[rhs]));
                     }
                 }
