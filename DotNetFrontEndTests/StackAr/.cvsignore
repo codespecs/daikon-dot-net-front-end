@@ -1,0 +1,7 @@
+DataStructures
+*.diff
+*.counts
+*.out
+*.comp
+ran-kvasir
+daikon-output
