@@ -88,9 +88,9 @@ namespace DotNetFrontEnd
       sample_start,
       // Variables options
       arrays_only,
-      is_readonly_flags,
-      is_enum_flags,
-      is_property_flags,
+      is_readonly_flags,    // Flag in development
+      is_enum_flags,        // Flag in development
+      is_property_flags,    // Flag in development
       nesting_depth,
       omit_var,
       omit_dec_type,
@@ -436,7 +436,8 @@ namespace DotNetFrontEnd
       }
 
       var memberAccessOptionToUse = this.BaseMemberAccessOptions;
-      if (type.AssemblyQualifiedName.Equals(originatingType.AssemblyQualifiedName))
+      if (type.AssemblyQualifiedName != null && 
+          type.AssemblyQualifiedName.Equals(originatingType.AssemblyQualifiedName))
       {
         memberAccessOptionToUse |= BindingFlags.NonPublic;
       }
@@ -791,7 +792,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Whether to print the is_Enum flag for Enums. Not compatible
+    /// Whether to print the is_readonly flag for read only variables. Not compatible
     /// with old versions of Daikon.
     /// </summary>
     public bool IsReadOnlyFlags
