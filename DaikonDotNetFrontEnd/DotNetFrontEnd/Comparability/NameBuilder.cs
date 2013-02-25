@@ -147,6 +147,11 @@ namespace Comparability
             AddChildren(op, op.LeftOperand, op.RightOperand);
         }
 
+        public override void Visit(IUnaryOperation op)
+        {
+            AddChildren(op, op.Operand);
+        }
+
         public override void Visit(IAssignment op)
         {
             AddChildren(op, op.Source, op.Target);
@@ -218,7 +223,7 @@ namespace Comparability
                         }
                         else
                         {
-                            Console.WriteLine("Skip field (instance not named): " + def.ResolvedField.Name);
+                            // Console.WriteLine("Skip field (instance not named): " + def.ResolvedField.Name);
                         }
                     }
                 }
@@ -238,12 +243,17 @@ namespace Comparability
                 }
                 else
                 {
-                    Console.WriteLine("Skip array indexer (indexed object not named)");
+                    // Console.WriteLine("Skip array indexer (indexed object not named)");
                 }
             }
             else if (definition is ILocalDefinition)
             {
                 TryAdd(outer, "<local>" + ((ILocalDefinition)definition).Name.Value);
+            }
+            else if (definition is IAddressDereference)
+            {
+                var def = (IAddressDereference)definition;
+                
             }
             else
             {

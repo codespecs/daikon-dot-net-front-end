@@ -11,6 +11,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using DotNetFrontEnd.Comparability;
 using Microsoft.Cci;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace DotNetFrontEnd
 {
@@ -54,6 +56,8 @@ namespace DotNetFrontEnd
     /// </summary>
     private const int IndentsForEntry = 2;
 
+    private const bool EnableTrace = true;
+
     /// <summary>
     /// Number of indentations for the name of a variable
     /// </summary>
@@ -83,6 +87,24 @@ namespace DotNetFrontEnd
     /// The string that prefixes the generate method name for getter properties
     /// </summary>
     public const string GetterPropertyPrefix = "get_";
+
+    private int lastStack = 0;
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private void MonitorRecursion()
+    {
+        
+
+        var st = new StackTrace();
+        var sf = st.GetFrame(1);
+
+        if (st.FrameCount - lastStack > 100)
+        {
+            Console.WriteLine("Stack Size: " + st.FrameCount);
+        }
+
+        lastStack = st.FrameCount;
+    }
 
     #endregion
 
@@ -185,6 +207,8 @@ namespace DotNetFrontEnd
         int nestingDepth = 0,
         INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
+        MonitorRecursion();
+
       if (PerformEarlyExitChecks(name, type, kind, enclosingVar, nestingDepth))
       {
         return;
@@ -272,6 +296,7 @@ namespace DotNetFrontEnd
       VariableFlags flags, string parentName, int nestingDepth, Type originatingType, 
       INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
+        MonitorRecursion();
       foreach (FieldInfo field in
           type.GetSortedFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
               type, originatingType)))
@@ -307,6 +332,7 @@ namespace DotNetFrontEnd
 
       if (!type.IsSealed)
       {
+       
         DeclareVariable(name + "." + GetTypeMethodCall, TypeManager.TypeType, originatingType, 
             VariableKind.function,
             ExtendFlags(VariableFlags.classname, VariableFlags.synthetic, (TypeManager.IsImmutable(type) ? VariableFlags.is_readonly : VariableFlags.none)), 
@@ -317,6 +343,7 @@ namespace DotNetFrontEnd
 
       if (type == TypeManager.StringType)
       {
+  
         DeclareVariable(name + "." + ToStringMethodCall, TypeManager.StringType,
             originatingType,
             VariableKind.function, 
@@ -376,6 +403,8 @@ namespace DotNetFrontEnd
       VariableFlags flags, string enclosingVar, string relativeName, string parentName, 
       INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
+        MonitorRecursion();
+    
       this.WritePair("variable", name, 1);
 
       PrintVarKind(kind, relativeName);
@@ -422,6 +451,7 @@ namespace DotNetFrontEnd
       {
         this.WritePair("parent", parentName, 2);
       }
+    
     }
 
     /// <summary>
@@ -442,6 +472,8 @@ namespace DotNetFrontEnd
         string relativeName = "", string parentName = "", int nestingDepth = 0,
         INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
+        MonitorRecursion();
+       
       if (name.Length == 0)
       {
         throw new NotSupportedException("Reflection error resulted in list without name");
@@ -618,6 +650,8 @@ namespace DotNetFrontEnd
     /// </param>
     public void PrintParentObjectFields(string parentName, string assemblyQualifiedName, INamedTypeDefinition typeContext, IMethodDefinition methodContext)
     {
+        MonitorRecursion();
+
       parentName = parentName + ":::OBJECT 1";
 
       DNFETypeDeclaration typeDecl =
@@ -648,6 +682,8 @@ namespace DotNetFrontEnd
     /// </param>
     public void PrintParentClassFields(string parentObjectType, IMethodDefinition method)
     {
+        MonitorRecursion();
+
       // TODO(#48): Parent type like we do for instance fields.
       DNFETypeDeclaration typeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(parentObjectType);
@@ -661,6 +697,7 @@ namespace DotNetFrontEnd
 
         DeclareStaticFieldsForType(type, null, methodContext: method); // TWS what type to use for context?
       }
+
     }
 
     /// <summary>
@@ -669,6 +706,8 @@ namespace DotNetFrontEnd
     /// <param name="type">Type to print declarations of the static fields of</param>
     private void DeclareStaticFieldsForType(Type type, INamedTypeDefinition typeContext, IMethodDefinition methodContext = null)
     {
+        MonitorRecursion();
+
       foreach (FieldInfo staticField in
         // type passed in as originating type so we get all the fields for it
         type.GetSortedFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(
@@ -722,6 +761,8 @@ namespace DotNetFrontEnd
     /// <param name="paramType">The assembly-qualified name of the program to print</param>
     public void PrintParameter(string name, string paramType, IMethodDefinition methodDefinition)
     {
+        MonitorRecursion();
+
       DNFETypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(paramType);
       foreach (Type type in typeDecl.GetAllTypes)
       {
@@ -757,6 +798,8 @@ namespace DotNetFrontEnd
     /// used to fetch the Type</param>
     public void PrintObjectDefinition(string objectName, string objectAssemblyQualifiedName, INamedTypeDefinition type)
     {
+        MonitorRecursion();
+
       DNFETypeDeclaration objectTypeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
       foreach (Type objectType in objectTypeDecl.GetAllTypes)
@@ -787,6 +830,8 @@ namespace DotNetFrontEnd
     /// static fields to print</param>
     public void PrintParentClassDefinition(string className, string objectAssemblyQualifiedName, INamedTypeDefinition typeContext)
     {
+        MonitorRecursion();
+
       DNFETypeDeclaration objectTypeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
       foreach (Type objectType in objectTypeDecl.GetAllTypes)
@@ -1186,6 +1231,8 @@ namespace DotNetFrontEnd
         VariableFlags collectionFlags = VariableFlags.none,
         INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
+        MonitorRecursion();
+
       Type elementType = TypeManager.GetListElementType(type);
       // Print the type of the list if it's not primitive
       if (!elementType.IsSealed)
@@ -1194,7 +1241,8 @@ namespace DotNetFrontEnd
             originatingType,
             VariableKind.function, VariableFlags.classname | VariableFlags.synthetic,
             enclosingVar: name, relativeName: GetTypeMethodCall,
-            nestingDepth: nestingDepth + 1, parentName: parentName);
+            nestingDepth: nestingDepth + 1, parentName: parentName,
+            typeContext: typeContext, methodContext: methodContext);
       }
       PrintList(name + "[..]", elementType, name, originatingType, VariableKind.array,
           nestingDepth: nestingDepth, parentName: parentName, flags: collectionFlags,

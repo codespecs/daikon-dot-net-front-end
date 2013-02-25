@@ -212,11 +212,12 @@ namespace DotNetFrontEnd
           typeManager.IsMethodCompilerGenerated(method) ||
           !frontEndArgs.ShouldPrintProgramPoint(FormatMethodName(methodBody.MethodDefinition)))
       {
-        return base.Rewrite(methodBody);
+           return base.Rewrite(methodBody);
       }
       else
       {
-        return ProcessOperations(methodBody);
+          var rewritten = ProcessOperations(methodBody);
+          return rewritten;
       }
     }
 
@@ -2116,7 +2117,11 @@ namespace DotNetFrontEnd
           }
         }
       }
+
+      Console.WriteLine("Rewrite Assembly " + mutableAssembly.Name);
       IModule result = this.Rewrite(mutableAssembly);
+      Console.WriteLine("Rewrite Assembly (Done) " + mutableAssembly.Name);
+      
 
       if (this.printDeclarations)
       {
