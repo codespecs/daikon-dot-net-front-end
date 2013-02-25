@@ -494,8 +494,17 @@ namespace Comparability
         }
 
         public override void Visit(IMethodCall call)
-        {
-            calls.Add(call);
+        {            
+            var callee = call.MethodToCall.ResolvedMethod;
+
+            if (NameBuilder.IsSetter(callee))
+            {
+                Mark(Expand(new[] { call, call.Arguments.First() }));
+            }
+            else
+            {
+                calls.Add(call);
+            }
 
             if (!call.IsStaticCall)
             {
@@ -560,6 +569,19 @@ namespace Comparability
             {
                 namedExpressions.Add(expr);
             }
+        }
+
+        public override void Visit(ISwitchStatement expr)
+        {
+            HashSet<IExpression> cmp = new HashSet<IExpression>();
+            cmp.Add(expr.Expression);
+            cmp.UnionWith(expr.Cases.Select(c => c.Expression));
+            Mark(Expand(cmp));
+        }
+
+        public override void Visit(IConditional conditional)
+        {
+            Mark(Expand(new[] { conditional.ResultIfTrue, conditional.ResultIfFalse }));
         }
 
         public override void Visit(IBinaryOperation binary)

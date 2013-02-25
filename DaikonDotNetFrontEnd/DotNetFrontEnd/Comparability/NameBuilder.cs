@@ -295,22 +295,84 @@ namespace Comparability
             }
         }
 
+        /// <summary>
+        /// Returns true if <code>method</code> is a setter
+        /// </summary>
+        /// <param name="method"></param>
+        /// <returns></returns>
+        /// <remarks>MemberHelper.IsSetter requires that the method be public</remarks>
+        public static bool IsSetter(IMethodDefinition method)
+        {
+            return method.IsSpecialName && method.Name.Value.StartsWith("set_");
+        }
+
+        /// <summary>
+        /// Returns true if <code>method</code> is a getter
+        /// </summary>
+        /// <param name="method"></param>
+        /// <returns></returns>
+        /// <remarks>MemberHelper.IsGetter requires that the method be public</remarks>
+        public static bool IsGetter(IMethodDefinition method)
+        {
+            return method.IsSpecialName && method.Name.Value.StartsWith("get_");
+        }
+
         public override void Visit(IMethodCall call)
         {
             var receiver = call.ThisArgument;
+            var callee = call.MethodToCall.ResolvedMethod;
 
-            if (!call.IsStaticCall && call.MethodToCall.ParameterCount == 0 && NameTable.ContainsKey(receiver))
-            {               
-                TryAdd(call, NameTable[call.ThisArgument] + "." + call.MethodToCall.Name + "()");
-                Parent.Add(call, call.ThisArgument);
-
-                // propogate the instance information
-                if (InstanceExpressionsReferredTypes.ContainsKey(receiver))
+            if (call.IsStaticCall)
+            {
+                // no op
+            }
+            else if (NameTable.ContainsKey(receiver))
+            {
+                string name = null;
+                if (callee.ParameterCount == 0)
                 {
-                    AddInstanceExpr(InstanceExpressionsReferredTypes[receiver], call);
+                    name = NameTable[call.ThisArgument] + "." +
+                           (IsGetter(callee) ? callee.Name.Value.Substring("get_".Length) : callee.Name.Value + "()");
+
                 }
+                else if (IsSetter(callee))
+                {
+                    name = NameTable[call.ThisArgument] + "." + callee.Name.Value.Substring("set_".Length);
+                }
+
+                if (name != null)
+                {
+                    TryAdd(call, name);
+                    Parent.Add(call, call.ThisArgument);
+                    // propogate the instance information
+                    if (InstanceExpressionsReferredTypes.ContainsKey(receiver))
+                    {
+                        AddInstanceExpr(InstanceExpressionsReferredTypes[receiver], call);
+                    }
+                }         
             }
         }
 
+        public override void Visit(IVectorLength length)
+        {
+            if (NameTable.ContainsKey(length.Vector))
+            {
+                TryAdd(length, NameTable[length.Vector] + ".Length");
+                Parent.Add(length, length.Vector);
+            }
+        }
+
+        public override void Visit(ISwitchStatement expr)
+        {
+            var exprType = expr.Expression.Type.ResolvedType;
+
+            if (exprType.IsEnum)
+            {
+                foreach (var c in expr.Cases)
+                {
+                    ResolveEnum(expr.Expression, c.Expression);
+                }
+            }
+        }
     }
 }
