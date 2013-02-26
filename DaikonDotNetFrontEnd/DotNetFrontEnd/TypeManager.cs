@@ -1207,37 +1207,32 @@ namespace DotNetFrontEnd
     };
 
     /// <summary>
-    /// Returns <code>true</code> if the type contains only readonly fields.
+    /// Returns <code>true</code> if the type is a primitive type or contains only readonly references
+    /// to other immutable types.
     /// </summary>
-    /// <param name="type"></param>
-    /// <returns></returns>
+    /// <param name="type">the type</param>
+    /// <returns><code>true</code> if the type is a primitive type or contains only readonly references
+    /// to other immutable types</returns>
     public static bool IsImmutable(Type type)
     {
         if (immutability.ContainsKey(type))
         {
             return immutability[type];
         }
-        bool result = 
-            type.GetFields().All(f => (f.FieldType == type && f.IsInitOnly) || (f.FieldType != type && IsReadOnly(f))) 
-            && type.GetProperties().All(p => !p.CanWrite);
-        immutability.Add(type, result);
-        return result;
-    }
+        else if (type.IsPrimitive)
+        {
+            return true;
+        }
+        else
+        {
+            // don't recurse if a field references the containing type
+            var fieldsAreImmutable = type.GetFields().All(f => f.IsInitOnly && (f.FieldType == type || IsImmutable(f.FieldType)));
+            var propertiesAreReadOnly = type.GetProperties().All(p => !p.CanWrite);
+            var result = fieldsAreImmutable && propertiesAreReadOnly;
 
-    public static bool IsReadOnly(PropertyInfo property)
-    {
-        return !property.CanWrite && (property.PropertyType.IsValueType || IsImmutable(property.PropertyType));
-    }
-
-    /// <summary>
-    /// Returns <code>true</code> if a field is read-only and is a value type (reference types
-    /// can by modified through the reference).
-    /// </summary>
-    /// <param name="field"></param>
-    /// <returns><code>true</code> if a field is read-only and is a value type</returns>
-    public static bool IsReadOnly(FieldInfo field)
-    {
-        return field.IsInitOnly && (field.FieldType.IsValueType || IsImmutable(field.FieldType));
+            immutability.Add(type, result);
+            return result;
+        }
     }
   }
 }
