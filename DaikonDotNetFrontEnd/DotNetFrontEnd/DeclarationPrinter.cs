@@ -88,24 +88,6 @@ namespace DotNetFrontEnd
     /// </summary>
     public const string GetterPropertyPrefix = "get_";
 
-    private int lastStack = 0;
-
-    [MethodImpl(MethodImplOptions.NoInlining)]
-    private void MonitorRecursion()
-    {
-        
-
-        var st = new StackTrace();
-        var sf = st.GetFrame(1);
-
-        if (st.FrameCount - lastStack > 100)
-        {
-            Console.WriteLine("Stack Size: " + st.FrameCount);
-        }
-
-        lastStack = st.FrameCount;
-    }
-
     #endregion
 
     /// <summary>
@@ -119,6 +101,14 @@ namespace DotNetFrontEnd
       array,
       variable,
       Return, // Lowercase "R" in return is a keyword.
+    }
+
+    [Flags]
+    internal enum ImmutabilityFlags
+    {
+        None = 0,
+        ReadOnly = 1,
+        Immutable = ReadOnly << 1,
     }
 
     /// <summary>
@@ -138,7 +128,16 @@ namespace DotNetFrontEnd
       not_ordered = no_dups << 1,
       is_property = not_ordered << 1,
       is_enum = is_property << 1,
-      is_readonly = is_enum << 1,
+
+      /// <summary>
+      /// The variable reference is fixed, and the path to the variable fixed.
+      /// </summary>
+      is_reference_immutable = is_enum << 1,
+
+      /// <summary>
+      /// The variable value is fixed, and the path to the variable is fixed.
+      /// </summary>
+      is_value_immutable = is_reference_immutable << 1,
     }
 
     /// <summary>
@@ -204,11 +203,9 @@ namespace DotNetFrontEnd
         Type originatingType, VariableKind kind = VariableKind.variable, 
         VariableFlags flags = VariableFlags.none,
         string enclosingVar = "", string relativeName = "", string parentName = "",
-        int nestingDepth = 0,
+        int nestingDepth = 0, 
         INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
-        MonitorRecursion();
-
       if (PerformEarlyExitChecks(name, type, kind, enclosingVar, nestingDepth))
       {
         return;
@@ -231,7 +228,7 @@ namespace DotNetFrontEnd
       {
         // It's not an array it's a set. Investigate element type.
         // Will resolve with TODO(#52).
-          DeclareVariableAsList(name, type, parentName, nestingDepth, originatingType, typeContext: typeContext, methodContext: methodContext);
+        DeclareVariableAsList(name, type, parentName, nestingDepth, originatingType, typeContext: typeContext, methodContext: methodContext);
       }
       else if (this.typeManager.IsFSharpListImplementer(type))
       {
@@ -277,7 +274,7 @@ namespace DotNetFrontEnd
       else
       {
         DeclarationChildPrinting(name, type, kind, flags, parentName, nestingDepth, 
-            originatingType, typeContext, methodContext);
+            originatingType, typeContext: typeContext, methodContext: methodContext);
       }
     }
 
@@ -293,20 +290,25 @@ namespace DotNetFrontEnd
     /// <param name="parentName">Name of the parent of the variable if any</param>
     /// <param name="nestingDepth">Nesting depth of the variable</param>
     private void DeclarationChildPrinting(string name, Type type, VariableKind kind, 
-      VariableFlags flags, string parentName, int nestingDepth, Type originatingType, 
+      VariableFlags flags, string parentName, int nestingDepth, Type originatingType,
+      ImmutabilityFlags variableImmutability = ImmutabilityFlags.None,  
       INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
-        MonitorRecursion();
-      foreach (FieldInfo field in
+        foreach (FieldInfo field in
           type.GetSortedFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
               type, originatingType)))
       {
         if (!this.typeManager.ShouldIgnoreField(type, field))
         {
+            // Propogate the reference immutability chain; if the field holds an immutable value, introduce an immutability flag
+            var fieldFlags = ExtendFlags(
+                MarkIf(flags.HasFlag(VariableFlags.is_reference_immutable) && field.IsInitOnly, VariableFlags.is_reference_immutable),
+                MarkIf(flags.HasFlag(VariableFlags.is_reference_immutable) && field.IsInitOnly && TypeManager.IsImmutable(field.FieldType), VariableFlags.is_value_immutable));
+
           DeclareVariable(name + "." + field.Name, field.FieldType, originatingType,
               VariableKind.field, enclosingVar: name, relativeName: field.Name,
               nestingDepth: nestingDepth + 1,
-              flags: ExtendFlags(TypeManager.IsReadOnly(field) ? VariableFlags.is_readonly : VariableFlags.none),
+              flags: fieldFlags,
               parentName: parentName, typeContext: typeContext, methodContext: methodContext);
         }
       }
@@ -321,10 +323,16 @@ namespace DotNetFrontEnd
           if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
           {
             this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
-            DeclareVariable(staticFieldName, staticField.FieldType,
+
+              var fieldFlags = 
+                  ExtendFlags(
+                    MarkIf(staticField.IsInitOnly, VariableFlags.is_reference_immutable),
+                    MarkIf(staticField.IsLiteral || (staticField.IsInitOnly && TypeManager.IsImmutable(staticField.FieldType)), VariableFlags.is_value_immutable));
+                
+              DeclareVariable(staticFieldName, staticField.FieldType,
                 nestingDepth: staticFieldName.Count(c => c == '.'), 
                 originatingType: originatingType,
-                flags: ExtendFlags(TypeManager.IsReadOnly(staticField) ? VariableFlags.is_readonly : VariableFlags.none),
+                flags: fieldFlags,
                 typeContext: typeContext, methodContext: methodContext);
           }
         }
@@ -332,10 +340,12 @@ namespace DotNetFrontEnd
 
       if (!type.IsSealed)
       {
-       
+        var immutability =  MarkIf(flags.HasFlag(VariableFlags.is_reference_immutable), VariableFlags.is_reference_immutable | VariableFlags.is_value_immutable);
+
         DeclareVariable(name + "." + GetTypeMethodCall, TypeManager.TypeType, originatingType, 
             VariableKind.function,
-            ExtendFlags(VariableFlags.classname, VariableFlags.synthetic, (TypeManager.IsImmutable(type) ? VariableFlags.is_readonly : VariableFlags.none)), 
+            // Parent must be reference immutable to for ToType() to remain constant
+            ExtendFlags(VariableFlags.classname, VariableFlags.synthetic, immutability), 
             enclosingVar: name, relativeName: GetTypeMethodCall,
             nestingDepth: nestingDepth + 1, parentName: parentName,
             typeContext: typeContext, methodContext: methodContext);
@@ -343,12 +353,14 @@ namespace DotNetFrontEnd
 
       if (type == TypeManager.StringType)
       {
-  
+        var immutability =  MarkIf(
+            flags.HasFlag(VariableFlags.is_reference_immutable) && flags.HasFlag(VariableFlags.is_value_immutable), VariableFlags.is_value_immutable);
+
         DeclareVariable(name + "." + ToStringMethodCall, TypeManager.StringType,
             originatingType,
             VariableKind.function, 
-            // TODO is this right? An immutable object could use the environment to generate a string
-            ExtendFlags(VariableFlags.to_string, VariableFlags.synthetic, (TypeManager.IsImmutable(type) ? VariableFlags.is_readonly : VariableFlags.none)),
+            // Parent must be value-immutable for ToString() value to remain constant (assuming it doesn't access outside state)
+            ExtendFlags(VariableFlags.to_string, VariableFlags.synthetic, immutability),
             enclosingVar: name, relativeName: ToStringMethodCall,
             nestingDepth: nestingDepth + 1, parentName: parentName, 
             typeContext: typeContext, methodContext: methodContext);
@@ -359,8 +371,9 @@ namespace DotNetFrontEnd
         string methodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Name);
 
         var pureMethodFlags = ExtendFlags(
-            pureMethod.Name.StartsWith(GetterPropertyPrefix) ? VariableFlags.is_property : VariableFlags.none,
-            TypeManager.IsImmutable(type) ? VariableFlags.is_readonly : VariableFlags.none);
+            MarkIf(pureMethod.Name.StartsWith(GetterPropertyPrefix), VariableFlags.is_property),
+            MarkIf(flags.HasFlag(VariableFlags.is_reference_immutable) && pureMethod.ReturnType.IsValueType, VariableFlags.is_reference_immutable),
+            MarkIf(flags.HasFlag(VariableFlags.is_reference_immutable) && flags.HasFlag(VariableFlags.is_value_immutable) && TypeManager.IsImmutable(pureMethod.ReturnType), VariableFlags.is_value_immutable));
 
         DeclareVariable(name + "." + methodName,
           pureMethod.ReturnType,
@@ -403,7 +416,7 @@ namespace DotNetFrontEnd
       VariableFlags flags, string enclosingVar, string relativeName, string parentName, 
       INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
-        MonitorRecursion();
+        
     
       this.WritePair("variable", name, 1);
 
@@ -425,7 +438,7 @@ namespace DotNetFrontEnd
 
       PrintRepType(type, flags);
 
-      this.PrintFlags(flags);
+      this.PrintFlags(flags, type.IsValueType);
 
       // TODO(#4): Implement real comparability.
       if (comparabilityManager != null)
@@ -472,8 +485,7 @@ namespace DotNetFrontEnd
         string relativeName = "", string parentName = "", int nestingDepth = 0,
         INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
-        MonitorRecursion();
-       
+        
       if (name.Length == 0)
       {
         throw new NotSupportedException("Reflection error resulted in list without name");
@@ -527,7 +539,7 @@ namespace DotNetFrontEnd
       }
       this.WritePair("rep-type", repType + "[]", IndentsForEntry);
 
-      this.PrintFlags(flags);
+      this.PrintFlags(flags, elementType.IsValueType);
 
       // TODO(#4): Implement real comparability
       if (comparabilityManager != null)
@@ -598,8 +610,9 @@ namespace DotNetFrontEnd
       if (!elementType.IsSealed)
       {
         PrintList(name + "." + GetTypeMethodCall, TypeManager.TypeType, name,
-            originatingType, VariableKind.function, VariableFlags.classname |
-            VariableFlags.synthetic, relativeName: GetTypeMethodCall,
+            originatingType, VariableKind.function, 
+            ExtendFlags(VariableFlags.classname, VariableFlags.synthetic),
+            relativeName: GetTypeMethodCall,
             nestingDepth: nestingDepth + 1, parentName: parentName,
             typeContext: typeContext, methodContext: methodContext);
       }
@@ -607,8 +620,8 @@ namespace DotNetFrontEnd
       if (elementType == TypeManager.StringType)
       {
         PrintList(name + "." + ToStringMethodCall, TypeManager.StringType, name,
-            originatingType, VariableKind.function, VariableFlags.to_string |
-            VariableFlags.synthetic,
+            originatingType, VariableKind.function, 
+            ExtendFlags(VariableFlags.to_string, VariableFlags.synthetic),
             relativeName: ToStringMethodCall,
             nestingDepth: nestingDepth + 1, parentName: parentName,
             typeContext: typeContext, methodContext: methodContext);
@@ -619,8 +632,7 @@ namespace DotNetFrontEnd
         string methodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Name);
 
         var pureMethodFlags = ExtendFlags(
-          pureMethod.Name.StartsWith(GetterPropertyPrefix) ? VariableFlags.is_property : VariableFlags.none,
-          TypeManager.IsImmutable(originatingType) ? VariableFlags.is_readonly : VariableFlags.none);
+          pureMethod.Name.StartsWith(GetterPropertyPrefix) ? VariableFlags.is_property : VariableFlags.none);
 
         PrintList(name + "." + methodName, 
           pureMethod.ReturnType, name,
@@ -650,8 +662,6 @@ namespace DotNetFrontEnd
     /// </param>
     public void PrintParentObjectFields(string parentName, string assemblyQualifiedName, INamedTypeDefinition typeContext, IMethodDefinition methodContext)
     {
-        MonitorRecursion();
-
       parentName = parentName + ":::OBJECT 1";
 
       DNFETypeDeclaration typeDecl =
@@ -662,8 +672,8 @@ namespace DotNetFrontEnd
         // If we can't resolve the parent object type don't write anything
         if (type != null)
         {
-          this.DeclareVariable("this", type, type, flags: VariableFlags.is_param,
-              parentName: parentName,
+          this.DeclareVariable("this", type, type, parentName: parentName,
+              flags: ExtendFlags(VariableFlags.is_param, VariableFlags.is_reference_immutable, MarkIf(TypeManager.IsImmutable(type), VariableFlags.is_value_immutable)),
               typeContext: typeContext, methodContext: methodContext);
         }
         else
@@ -682,8 +692,6 @@ namespace DotNetFrontEnd
     /// </param>
     public void PrintParentClassFields(string parentObjectType, IMethodDefinition method)
     {
-        MonitorRecursion();
-
       // TODO(#48): Parent type like we do for instance fields.
       DNFETypeDeclaration typeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(parentObjectType);
@@ -706,7 +714,7 @@ namespace DotNetFrontEnd
     /// <param name="type">Type to print declarations of the static fields of</param>
     private void DeclareStaticFieldsForType(Type type, INamedTypeDefinition typeContext, IMethodDefinition methodContext = null)
     {
-        MonitorRecursion();
+        
 
       foreach (FieldInfo staticField in
         // type passed in as originating type so we get all the fields for it
@@ -761,8 +769,6 @@ namespace DotNetFrontEnd
     /// <param name="paramType">The assembly-qualified name of the program to print</param>
     public void PrintParameter(string name, string paramType, IMethodDefinition methodDefinition)
     {
-        MonitorRecursion();
-
       DNFETypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(paramType);
       foreach (Type type in typeDecl.GetAllTypes)
       {
@@ -798,8 +804,6 @@ namespace DotNetFrontEnd
     /// used to fetch the Type</param>
     public void PrintObjectDefinition(string objectName, string objectAssemblyQualifiedName, INamedTypeDefinition type)
     {
-        MonitorRecursion();
-
       DNFETypeDeclaration objectTypeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
       foreach (Type objectType in objectTypeDecl.GetAllTypes)
@@ -816,7 +820,8 @@ namespace DotNetFrontEnd
             this.WritePair("parent", "parent " + nameToPrint.Replace(":::OBJECT", ":::CLASS 1"));
             // Pass objectType in as originating type so we get all its private fields.
             this.DeclareVariable("this", objectType, objectType, VariableKind.variable,
-                VariableFlags.is_param, typeContext: type);
+                flags: ExtendFlags(VariableFlags.is_param, VariableFlags.is_reference_immutable, MarkIf(TypeManager.IsImmutable(objectType), VariableFlags.is_reference_immutable)), 
+                typeContext: type);
           }
         }
       }
@@ -830,7 +835,7 @@ namespace DotNetFrontEnd
     /// static fields to print</param>
     public void PrintParentClassDefinition(string className, string objectAssemblyQualifiedName, INamedTypeDefinition typeContext)
     {
-        MonitorRecursion();
+        
 
       DNFETypeDeclaration objectTypeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
@@ -920,6 +925,18 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
+    /// If <code>condition</code> is true, returns <code>flag</code>, otherwise returns
+    /// empty flags.
+    /// </summary>
+    /// <param name="condition"></param>
+    /// <param name="flag"></param>
+    /// <returns></returns>
+    private VariableFlags MarkIf(bool condition, VariableFlags flag)
+    {
+        return condition ? flag : VariableFlags.none;
+    }
+
+    /// <summary>
     /// Returns union of <code>flags</code>, respecting the front-end options
     /// </summary>
     /// <param name="flags"></param>
@@ -942,7 +959,8 @@ namespace DotNetFrontEnd
         }
         if (!frontEndArgs.IsReadOnlyFlags)
         {
-            result &= (result | VariableFlags.is_readonly) ^ VariableFlags.is_readonly;
+            result &= (result | VariableFlags.is_value_immutable) ^ VariableFlags.is_value_immutable;
+            result &= (result | VariableFlags.is_reference_immutable) ^ VariableFlags.is_reference_immutable;
         }
 
         return result & FlagMask;
@@ -982,8 +1000,7 @@ namespace DotNetFrontEnd
       this.WritePair("// Declarations written", DateTime.Now);
       this.fileWriter.WriteLine();
       this.WritePair("decl-version", "2.0");
-      // TODO(#22): Update when we have real comparability.
-      this.WritePair("var-comparability", "none");
+      this.WritePair("var-comparability", frontEndArgs.StaticComparability ? "implicit" : "none");
       this.WritePair("input-language", "C#.NET");
     }
 
@@ -991,22 +1008,27 @@ namespace DotNetFrontEnd
     /// Write the given flags to the class printer on a single line, space separated.
     /// </summary>
     /// <param name="variableFlags">The flags to print</param>
-    private void PrintFlags(VariableFlags variableFlags)
+    private void PrintFlags(VariableFlags variableFlags, bool isValueType)
     {
       StringBuilder flagsToPrint = new StringBuilder();
 
-      foreach (VariableFlags candidateFlag in Enum.GetValues(typeof(VariableFlags)))
+      foreach (VariableFlags f in Enum.GetValues(typeof(VariableFlags)))
       {
-        // Don't print the none flag.
-        if (candidateFlag != VariableFlags.none)
-        {
-          // Print the flag followed by a space.
-          if (variableFlags.HasFlag(candidateFlag))
+          if (variableFlags.HasFlag(f) && f != VariableFlags.none)
           {
-            flagsToPrint.Append(candidateFlag);
-            flagsToPrint.Append(" ");
+              var toPrint = f.ToString();
+              if ((f == VariableFlags.is_reference_immutable && !isValueType) ||
+                  (f == VariableFlags.is_value_immutable && isValueType))
+              {
+                  toPrint = "is_readonly";
+              }
+              else if (f == VariableFlags.is_reference_immutable || f == VariableFlags.is_value_immutable)
+              {
+                  continue;
+              }
+
+              flagsToPrint.Append(toPrint).Append(" ");
           }
-        }
       }
 
       if (flagsToPrint.Length > 0)
@@ -1231,7 +1253,7 @@ namespace DotNetFrontEnd
         VariableFlags collectionFlags = VariableFlags.none,
         INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
-        MonitorRecursion();
+        
 
       Type elementType = TypeManager.GetListElementType(type);
       // Print the type of the list if it's not primitive

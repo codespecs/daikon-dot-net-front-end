@@ -1247,6 +1247,27 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
+    /// Returns the hashcode for a value, using reference-based hashcode for reference types and a 
+    /// value-based hashcode for value types.
+    /// </summary>
+    /// <param name="x">the value</param>
+    /// <param name="type">the type to use when determining how to print</param>
+    /// <returns></returns>
+    private static string GetHashCode(object x, Type type)
+    {
+        if (type.IsValueType)
+        {
+            Debug.Assert(x.GetType().IsValueType, "Runtime value is not a value type.");
+            return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
+        }
+        else
+        {
+            Debug.Assert(!x.GetType().IsValueType, "Runtime value is not a reference type.");
+            return RuntimeHelpers.GetHashCode(x).ToString(CultureInfo.InvariantCulture);
+        }
+    }
+
+    /// <summary>
     /// Generate a string representation of the value of variable, based on its type.
     /// </summary>
     /// <param name="variable">The object to print</param>
@@ -1271,9 +1292,12 @@ namespace DotNetFrontEnd
         }
         else
         {
-            // Type is an enum, print out its hash
+            // Type is an enum, print out it's hash. Since were using a hashcode rep-type, we need to make sure the
+            // hashcode is non-zero.
             SetOutputSuppression(true);
-            string enumHash = RuntimeHelpers.GetHashCode(x).ToString(CultureInfo.InvariantCulture); 
+            int hash = type.GetHashCode() + x.GetHashCode();
+            hash = hash == 0 ? hash + 1 : hash;
+            string enumHash = hash.ToString(CultureInfo.InvariantCulture);
             SetOutputSuppression(false);
             return enumHash;
         }
@@ -1308,7 +1332,7 @@ namespace DotNetFrontEnd
 
       // Type is either an object or a user-defined struct, print out its hashcode.
       SetOutputSuppression(true);
-      string hashcode = RuntimeHelpers.GetHashCode(x).ToString(CultureInfo.InvariantCulture);
+      string hashcode = GetHashCode(x, type);
       SetOutputSuppression(false);
       return hashcode;
       
