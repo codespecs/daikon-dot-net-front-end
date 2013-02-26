@@ -1183,18 +1183,14 @@ namespace DotNetFrontEnd
     {
       // Element type is in HasElementType for arrays and a generic parameter for generic lists,
       // and if we have no type information let it be object
-      Type elementType;
-      if (type.HasElementType)
+      Type elementType = ObjectType;
+      if (type != null && type.HasElementType)
       {
         elementType = type.GetElementType();
       }
-      else if (type.IsGenericType && type.GetGenericArguments().Length == 1)
+      else if (type != null && type.IsGenericType && type.GetGenericArguments().Length == 1)
       {
         elementType = type.GetGenericArguments()[0];
-      }
-      else
-      {
-        elementType = TypeManager.ObjectType;
       }
       return elementType;
     }
