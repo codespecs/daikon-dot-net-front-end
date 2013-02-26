@@ -115,7 +115,7 @@ namespace DotNetFrontEnd
           if (frontEndArgs.StaticComparability)
           {
               Console.WriteLine("Generating Comparability Information");
-              decompiled = Decompiler.GetCodeModelFromMetadataModel(host, mutable, pdbReader);
+              decompiled = Decompiler.GetCodeModelFromMetadataModel(host, mutable, pdbReader, DecompilerOptions.AnonymousDelegates | DecompilerOptions.Iterators);
               //mutable = new CodeDeepCopier(host).Copy(mutable);
               comparabilityManager = new AssemblyComparability(decompiled, host, pdbReader);
           }

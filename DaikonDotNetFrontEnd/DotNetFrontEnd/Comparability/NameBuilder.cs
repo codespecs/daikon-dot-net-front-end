@@ -18,6 +18,7 @@ namespace Comparability
         public Dictionary<IExpression, HashSet<IExpression>> NamedChildren { get; private set; }
         public Dictionary<IExpression, IExpression> Parent { get; private set; }
         public IMetadataHost Host { get; private set; }
+        public HashSet<IReturnStatement> AnonymousDelegateReturns { get; private set; }
 
         /// <summary>
         /// Map from type to field, property, and methods referenced in <code>Type</code>. 
@@ -28,7 +29,9 @@ namespace Comparability
         /// Map from instance expressions to their respective types.
         /// </summary>
         public Dictionary<IExpression, ITypeReference> InstanceExpressionsReferredTypes;
-       
+
+        private int methodCallCnt = 0;
+
         public NameBuilder(INamedTypeDefinition type, IMetadataHost host)
         {
             Type = type;
@@ -39,6 +42,7 @@ namespace Comparability
             NameTable = new Dictionary<IExpression, string>();
             NamedChildren = new Dictionary<IExpression, HashSet<IExpression>>();
             Parent = new Dictionary<IExpression, IExpression>();
+            AnonymousDelegateReturns = new HashSet<IReturnStatement>();
         }
 
         public IEnumerable<string> Names(IEnumerable<IExpression> exprs)
@@ -67,6 +71,11 @@ namespace Comparability
             InstanceExpressionsReferredTypes.Add(expr, type);
         }
 
+        /// <summary>
+        /// Associate <code>name</code> with <code>expression</code>.
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <param name="name"></param>
         private void TryAdd(IExpression expression, string name)
         {
             if (NameTable.ContainsKey(expression))
@@ -248,7 +257,8 @@ namespace Comparability
             }
             else if (definition is ILocalDefinition)
             {
-                TryAdd(outer, "<local>" + ((ILocalDefinition)definition).Name.Value);
+                var def = (ILocalDefinition)definition;
+                TryAdd(outer, "<local>" + def.Name.Value);
             }
             else if (definition is IAddressDereference)
             {
@@ -322,13 +332,9 @@ namespace Comparability
             var receiver = call.ThisArgument;
             var callee = call.MethodToCall.ResolvedMethod;
 
-            if (call.IsStaticCall)
+            string name = null;
+            if (!call.IsStaticCall && NameTable.ContainsKey(receiver))
             {
-                // no op
-            }
-            else if (NameTable.ContainsKey(receiver))
-            {
-                string name = null;
                 if (callee.ParameterCount == 0)
                 {
                     name = NameTable[call.ThisArgument] + "." +
@@ -340,17 +346,22 @@ namespace Comparability
                     name = NameTable[call.ThisArgument] + "." + callee.Name.Value.Substring("set_".Length);
                 }
 
-                if (name != null)
+                Parent.Add(call, call.ThisArgument);
+                // propogate the instance information
+                if (InstanceExpressionsReferredTypes.ContainsKey(receiver))
                 {
-                    TryAdd(call, name);
-                    Parent.Add(call, call.ThisArgument);
-                    // propogate the instance information
-                    if (InstanceExpressionsReferredTypes.ContainsKey(receiver))
-                    {
-                        AddInstanceExpr(InstanceExpressionsReferredTypes[receiver], call);
-                    }
-                }         
+                    AddInstanceExpr(InstanceExpressionsReferredTypes[receiver], call);
+                }
             }
+            
+            if (name == null)
+            {
+                // Assign a unique generated name (required for return value comparability)
+                name ="<method>" + call.MethodToCall.Name + "__" + methodCallCnt;
+                methodCallCnt++;
+            }
+
+            TryAdd(call, name);
         }
 
         public override void Visit(IVectorLength length)
@@ -372,6 +383,14 @@ namespace Comparability
                 {
                     ResolveEnum(expr.Expression, c.Expression);
                 }
+            }
+        }
+
+        public override void Visit(IAnonymousDelegate del)
+        {
+            foreach (var r in del.Body.Statements.Where(s => s is IReturnStatement))
+            {
+                AnonymousDelegateReturns.Add((IReturnStatement) r);
             }
         }
     }

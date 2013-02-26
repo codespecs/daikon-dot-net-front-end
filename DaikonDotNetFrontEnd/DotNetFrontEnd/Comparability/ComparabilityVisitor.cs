@@ -97,6 +97,7 @@ namespace Comparability
             {
                 var calleeDefinition = callsite.MethodToCall.ResolvedMethod;
                 var argBindings = ZipArguments(callsite);
+                argBindings.Add("return", Names.NameTable[callsite]);
 
                 if (methodData.ContainsKey(calleeDefinition))
                 {
@@ -183,6 +184,7 @@ namespace Comparability
             get
             {
                 var ps = new HashSet<string>(Method.Parameters.Select(p => p.Name.Value));
+                ps.Add("return");
                 return new HashSet<string>(ids.Keys.Where(n => ps.Any(p => n.Equals(p) || n.StartsWith(p + "."))));
             }
         }
@@ -437,6 +439,11 @@ namespace Comparability
             }
         }
 
+        /// <summary>
+        /// Returns the id of a named expression, or <code>null</code> if the expression is not named.
+        /// </summary>
+        /// <param name="expr"></param>
+        /// <returns>the id of a named expression, or <code>null</code> if the expression is not named.</returns>
         private int? GetId(IExpression expr)
         {
             if (Names.NameTable.ContainsKey(expr))
@@ -538,23 +545,33 @@ namespace Comparability
             }
         }
 
+        
+
         public override void Visit(IReturnStatement ret)
-        {
-            if (ret.Expression != null)
+        {   
+            if (ret.Expression != null && !Names.AnonymousDelegateReturns.Contains(ret))
             {
                 returns.Add(ret);
                 
-                var returnId = ids["return"];
-                foreach (var id in returns.Select(r => GetId(r.Expression)).Where(x => x.HasValue))
-                {
-                    comparability.Union(comparability.FindSet(returnId), comparability.FindSet(id.Value));
-                }
+                var expanded = new HashSet<string>(Names.Names(Expand(ret.Expression)));
+                expanded.Add("return");
+                Mark(expanded);
             }
         }
 
         public override void Visit(IThisReference thisRef)
         {
             AddTypeReference(Names.Type, thisRef);
+        }
+
+        public override void Visit(ILocalDeclarationStatement dec)
+        {
+            if (dec.InitialValue != null)
+            {
+                var expanded = new HashSet<string>(Names.Names(Expand(dec.InitialValue)));
+                expanded.Add("<local>" + dec.LocalVariable.Name.Value);
+                Mark(expanded);
+            }
         }
 
         public override void Visit(IAssignment assignment)
