@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace EmilStefanov
 {
     public class DisjointSets
@@ -146,8 +145,6 @@ namespace EmilStefanov
         {
             get { return m_setCount; }
         }
-
-
 
         /// <summary>
         /// Internal Node data structure used for representing an element.
