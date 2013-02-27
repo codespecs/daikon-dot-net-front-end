@@ -940,7 +940,6 @@ namespace DotNetFrontEnd
     /// Returns union of <code>flags</code>, respecting the front-end options
     /// </summary>
     /// <param name="flags"></param>
-    /// <param name="toAdd"></param>
     /// <returns>union of <code>flags</code>, respecting the front-end options</returns>
     private VariableFlags ExtendFlags(params VariableFlags[] flags)
     {

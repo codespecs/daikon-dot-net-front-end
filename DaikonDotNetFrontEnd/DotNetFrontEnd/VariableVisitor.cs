@@ -668,12 +668,11 @@ namespace DotNetFrontEnd
           result = TypeManager.ConvertFSharpListToCSharpArray(obj);
         }
 
-        ProcessVariableAsList(name, result, result.GetType(), writer, depth, originatingType);
+        ProcessVariableAsList(name, result, result == null ? null : result.GetType(), 
+            writer, depth, originatingType);
       }
       else if (typeManager.IsSet(type) || typeManager.IsFSharpSet(type))
       {
-
-
         IEnumerable set = (IEnumerable)obj;
         // A set can have only one generic argument -- the element type
         Type setElementType = type.GetGenericArguments()[0];
