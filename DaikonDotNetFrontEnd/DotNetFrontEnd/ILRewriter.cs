@@ -67,6 +67,11 @@ namespace DotNetFrontEnd
     private static readonly string ExceptionExitSuffix = "_EX_";
 
     /// <summary>
+    /// The string appended to the end of implicit overload methods in the IL.
+    /// </summary>
+    private static readonly string ImplicitMethodSuffix = "_Implicit";
+
+    /// <summary>
     /// The string that ends every constructor
     /// </summary>
     private static readonly string ConstructorSuffix = "ctor";
@@ -1568,7 +1573,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Format the method name to fit the output specification
+    /// Format the method name to fit the output specification.
     /// </summary>
     /// <param name="transition">The transition State of the method</param>
     /// <param name="methodDef">Definition of the method -- used to determine the name</param>
@@ -1581,16 +1586,24 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Format the method name, without any transition
+    /// Format the method name, without any transition.
     /// </summary>
     /// <param name="methodDef">Definition of the method whose name to format</param>
     /// <returns>Name of the method that an be output</returns>
     private static string FormatMethodName(IMethodDefinition methodDef)
     {
-      return MemberHelper.GetMemberSignature(methodDef,
+      string methodName = MemberHelper.GetMemberSignature(methodDef,
             NameFormattingOptions.ParameterName
           | NameFormattingOptions.SmartTypeName
           | NameFormattingOptions.Signature);
+      // Implicit overloads could produce unique program points with duplicate names.
+      // This will cause problems in Daikon, so disambiguate them the return type
+      // of the method.
+      if (methodDef.Name.ToString().EndsWith(ImplicitMethodSuffix))
+      {
+        methodName = methodName.Replace(ImplicitMethodSuffix, ImplicitMethodSuffix + "_" + methodDef.Type);
+      }
+      return methodName;
     }
 
     /// <summary>
