@@ -60,6 +60,19 @@ namespace Comparability
             ReferencedTypes.Add(expr, type);
         }
 
+        private string NameForArg(IExpression arg)
+        {
+            if (Names.NameTable.ContainsKey(arg))
+            {
+                return Names.NameTable[arg];
+            }
+            else
+            {
+                var names = new HashSet<string>(Names.Names(Expand(arg)));
+                return names.Count == 1 ? names.First() : null;
+            }
+        }
+
         private Dictionary<string, string> ZipArguments(IMethodCall callsite)
         {
             var calleeDefinition = callsite.MethodToCall.ResolvedMethod;
@@ -67,9 +80,10 @@ namespace Comparability
             var paramsToArgs = new Dictionary<string, string>();
             foreach (var binding in calleeDefinition.Parameters.Zip(callsite.Arguments, (x, y) => Tuple.Create(x, y)))
             {
-                if (Names.NameTable.ContainsKey(binding.Item2))
+                var nameForArg = NameForArg(binding.Item2);
+                if (nameForArg != null)
                 {
-                    paramsToArgs.Add(binding.Item1.Name.Value, Names.NameTable[binding.Item2]);
+                    paramsToArgs.Add(binding.Item1.Name.Value, nameForArg);
                 }
             }
             return paramsToArgs;
@@ -83,6 +97,7 @@ namespace Comparability
             {
                 var calleeDefinition = callsite.MethodToCall.ResolvedMethod;
                 var argBindings = ZipArguments(callsite);
+                argBindings.Add("return", Names.NameTable[callsite]);
 
                 if (methodData.ContainsKey(calleeDefinition))
                 {
@@ -127,7 +142,7 @@ namespace Comparability
             
             if (modified)
             {
-                Console.WriteLine("Updated " + Method.Name);
+                // Console.WriteLine("Updated " + Method.Name);
             }
 
             return modified;
@@ -150,8 +165,6 @@ namespace Comparability
                     Debug.Assert(ids.ContainsKey(rhs), "Error tracking parameter " + rhs.Name);
                     if (TypeHelper.TypesAreAssignmentCompatible(lhs.Type.ResolvedType, rhs.Type.ResolvedType, true))
                     {
-                        
-
                         cmp.Union(cmp.FindSet(ids[lhs]), cmp.FindSet(ids[rhs]));
                     }
                 }
@@ -171,6 +184,7 @@ namespace Comparability
             get
             {
                 var ps = new HashSet<string>(Method.Parameters.Select(p => p.Name.Value));
+                ps.Add("return");
                 return new HashSet<string>(ids.Keys.Where(n => ps.Any(p => n.Equals(p) || n.StartsWith(p + "."))));
             }
         }
@@ -425,6 +439,11 @@ namespace Comparability
             }
         }
 
+        /// <summary>
+        /// Returns the id of a named expression, or <code>null</code> if the expression is not named.
+        /// </summary>
+        /// <param name="expr"></param>
+        /// <returns>the id of a named expression, or <code>null</code> if the expression is not named.</returns>
         private int? GetId(IExpression expr)
         {
             if (Names.NameTable.ContainsKey(expr))
@@ -482,8 +501,17 @@ namespace Comparability
         }
 
         public override void Visit(IMethodCall call)
-        {
-            calls.Add(call);
+        {            
+            var callee = call.MethodToCall.ResolvedMethod;
+
+            if (NameBuilder.IsSetter(callee))
+            {
+                Mark(Expand(new[] { call, call.Arguments.First() }));
+            }
+            else
+            {
+                calls.Add(call);
+            }
 
             if (!call.IsStaticCall)
             {
@@ -517,23 +545,33 @@ namespace Comparability
             }
         }
 
+        
+
         public override void Visit(IReturnStatement ret)
-        {
-            if (ret.Expression != null)
+        {   
+            if (ret.Expression != null && !Names.AnonymousDelegateReturns.Contains(ret))
             {
                 returns.Add(ret);
                 
-                var returnId = ids["return"];
-                foreach (var id in returns.Select(r => GetId(r.Expression)).Where(x => x.HasValue))
-                {
-                    comparability.Union(comparability.FindSet(returnId), comparability.FindSet(id.Value));
-                }
+                var expanded = new HashSet<string>(Names.Names(Expand(ret.Expression)));
+                expanded.Add("return");
+                Mark(expanded);
             }
         }
 
         public override void Visit(IThisReference thisRef)
         {
             AddTypeReference(Names.Type, thisRef);
+        }
+
+        public override void Visit(ILocalDeclarationStatement dec)
+        {
+            if (dec.InitialValue != null)
+            {
+                var expanded = new HashSet<string>(Names.Names(Expand(dec.InitialValue)));
+                expanded.Add("<local>" + dec.LocalVariable.Name.Value);
+                Mark(expanded);
+            }
         }
 
         public override void Visit(IAssignment assignment)
@@ -548,6 +586,19 @@ namespace Comparability
             {
                 namedExpressions.Add(expr);
             }
+        }
+
+        public override void Visit(ISwitchStatement expr)
+        {
+            HashSet<IExpression> cmp = new HashSet<IExpression>();
+            cmp.Add(expr.Expression);
+            cmp.UnionWith(expr.Cases.Select(c => c.Expression));
+            Mark(Expand(cmp));
+        }
+
+        public override void Visit(IConditional conditional)
+        {
+            Mark(Expand(new[] { conditional.ResultIfTrue, conditional.ResultIfFalse }));
         }
 
         public override void Visit(IBinaryOperation binary)

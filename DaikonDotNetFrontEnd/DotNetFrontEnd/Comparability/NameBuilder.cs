@@ -18,6 +18,7 @@ namespace Comparability
         public Dictionary<IExpression, HashSet<IExpression>> NamedChildren { get; private set; }
         public Dictionary<IExpression, IExpression> Parent { get; private set; }
         public IMetadataHost Host { get; private set; }
+        public HashSet<IReturnStatement> AnonymousDelegateReturns { get; private set; }
 
         /// <summary>
         /// Map from type to field, property, and methods referenced in <code>Type</code>. 
@@ -28,7 +29,9 @@ namespace Comparability
         /// Map from instance expressions to their respective types.
         /// </summary>
         public Dictionary<IExpression, ITypeReference> InstanceExpressionsReferredTypes;
-       
+
+        private int methodCallCnt = 0;
+
         public NameBuilder(INamedTypeDefinition type, IMetadataHost host)
         {
             Type = type;
@@ -39,6 +42,7 @@ namespace Comparability
             NameTable = new Dictionary<IExpression, string>();
             NamedChildren = new Dictionary<IExpression, HashSet<IExpression>>();
             Parent = new Dictionary<IExpression, IExpression>();
+            AnonymousDelegateReturns = new HashSet<IReturnStatement>();
         }
 
         public IEnumerable<string> Names(IEnumerable<IExpression> exprs)
@@ -67,6 +71,11 @@ namespace Comparability
             InstanceExpressionsReferredTypes.Add(expr, type);
         }
 
+        /// <summary>
+        /// Associate <code>name</code> with <code>expression</code>.
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <param name="name"></param>
         private void TryAdd(IExpression expression, string name)
         {
             if (NameTable.ContainsKey(expression))
@@ -147,6 +156,11 @@ namespace Comparability
             AddChildren(op, op.LeftOperand, op.RightOperand);
         }
 
+        public override void Visit(IUnaryOperation op)
+        {
+            AddChildren(op, op.Operand);
+        }
+
         public override void Visit(IAssignment op)
         {
             AddChildren(op, op.Source, op.Target);
@@ -218,7 +232,7 @@ namespace Comparability
                         }
                         else
                         {
-                            Console.WriteLine("Skip field (instance not named): " + def.ResolvedField.Name);
+                            // Console.WriteLine("Skip field (instance not named): " + def.ResolvedField.Name);
                         }
                     }
                 }
@@ -238,12 +252,18 @@ namespace Comparability
                 }
                 else
                 {
-                    Console.WriteLine("Skip array indexer (indexed object not named)");
+                    // Console.WriteLine("Skip array indexer (indexed object not named)");
                 }
             }
             else if (definition is ILocalDefinition)
             {
-                TryAdd(outer, "<local>" + ((ILocalDefinition)definition).Name.Value);
+                var def = (ILocalDefinition)definition;
+                TryAdd(outer, "<local>" + def.Name.Value);
+            }
+            else if (definition is IAddressDereference)
+            {
+                var def = (IAddressDereference)definition;
+                
             }
             else
             {
@@ -285,22 +305,93 @@ namespace Comparability
             }
         }
 
+        /// <summary>
+        /// Returns true if <code>method</code> is a setter
+        /// </summary>
+        /// <param name="method"></param>
+        /// <returns></returns>
+        /// <remarks>MemberHelper.IsSetter requires that the method be public</remarks>
+        public static bool IsSetter(IMethodDefinition method)
+        {
+            return method.IsSpecialName && method.Name.Value.StartsWith("set_");
+        }
+
+        /// <summary>
+        /// Returns true if <code>method</code> is a getter
+        /// </summary>
+        /// <param name="method"></param>
+        /// <returns></returns>
+        /// <remarks>MemberHelper.IsGetter requires that the method be public</remarks>
+        public static bool IsGetter(IMethodDefinition method)
+        {
+            return method.IsSpecialName && method.Name.Value.StartsWith("get_");
+        }
+
         public override void Visit(IMethodCall call)
         {
             var receiver = call.ThisArgument;
+            var callee = call.MethodToCall.ResolvedMethod;
 
-            if (!call.IsStaticCall && call.MethodToCall.ParameterCount == 0 && NameTable.ContainsKey(receiver))
-            {               
-                TryAdd(call, NameTable[call.ThisArgument] + "." + call.MethodToCall.Name + "()");
+            string name = null;
+            if (!call.IsStaticCall && NameTable.ContainsKey(receiver))
+            {
+                if (callee.ParameterCount == 0)
+                {
+                    name = NameTable[call.ThisArgument] + "." +
+                           (IsGetter(callee) ? callee.Name.Value.Substring("get_".Length) : callee.Name.Value + "()");
+
+                }
+                else if (IsSetter(callee))
+                {
+                    name = NameTable[call.ThisArgument] + "." + callee.Name.Value.Substring("set_".Length);
+                }
+
                 Parent.Add(call, call.ThisArgument);
-
                 // propogate the instance information
                 if (InstanceExpressionsReferredTypes.ContainsKey(receiver))
                 {
                     AddInstanceExpr(InstanceExpressionsReferredTypes[receiver], call);
                 }
             }
+            
+            if (name == null)
+            {
+                // Assign a unique generated name (required for return value comparability)
+                name ="<method>" + call.MethodToCall.Name + "__" + methodCallCnt;
+                methodCallCnt++;
+            }
+
+            TryAdd(call, name);
         }
 
+        public override void Visit(IVectorLength length)
+        {
+            if (NameTable.ContainsKey(length.Vector))
+            {
+                TryAdd(length, NameTable[length.Vector] + ".Length");
+                Parent.Add(length, length.Vector);
+            }
+        }
+
+        public override void Visit(ISwitchStatement expr)
+        {
+            var exprType = expr.Expression.Type.ResolvedType;
+
+            if (exprType.IsEnum)
+            {
+                foreach (var c in expr.Cases)
+                {
+                    ResolveEnum(expr.Expression, c.Expression);
+                }
+            }
+        }
+
+        public override void Visit(IAnonymousDelegate del)
+        {
+            foreach (var r in del.Body.Statements.Where(s => s is IReturnStatement))
+            {
+                AnonymousDelegateReturns.Add((IReturnStatement) r);
+            }
+        }
     }
 }
