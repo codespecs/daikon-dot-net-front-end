@@ -423,7 +423,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Get the appropriate binding flags for field inspection, without specifying static or instance
+    /// Get the appropriate binding flags for field inspection, without specifying static or instance.
     /// </summary>
     /// <param name="type">Type to inspect</param>
     /// <returns>Binding flag specifying visibility of fields to inspect</returns>

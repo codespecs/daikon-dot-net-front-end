@@ -304,7 +304,6 @@ namespace Comparability
                 }
             }
         }
-
         /// <summary>
         /// Returns true if <code>method</code> is a setter
         /// </summary>

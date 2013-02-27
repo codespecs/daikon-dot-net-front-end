@@ -913,7 +913,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Mask with unset options at 0
     /// </summary>
-    private VariableFlags FlagMask
+    private static VariableFlags FlagMask
     {
         get
         {
