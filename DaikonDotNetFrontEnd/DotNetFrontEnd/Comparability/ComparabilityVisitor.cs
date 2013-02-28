@@ -57,7 +57,14 @@ namespace Comparability
 
         private void AddTypeReference(ITypeReference type, IExpression expr)
         {
-            ReferencedTypes.Add(expr, type);
+            if (!ReferencedTypes.ContainsKey(expr))
+            {
+                ReferencedTypes.Add(expr, type);
+            }
+            else
+            {
+                Debug.Assert(ReferencedTypes[expr] == type);
+            }
         }
 
         private string NameForArg(IExpression arg)

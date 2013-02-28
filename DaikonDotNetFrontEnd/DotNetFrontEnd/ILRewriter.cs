@@ -18,6 +18,7 @@ using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using Microsoft.Cci;
 using Microsoft.Cci.MutableCodeModel;
+using System.Diagnostics;
 
 // This file and ProgramRewriter.cs originally came from the CCIMetadata (http://ccimetadata.codeplex.com/)
 // sample programs. Specifically, it was Samples/ILMutator/ILMutator.cs. The original code inserted
@@ -216,6 +217,7 @@ namespace DotNetFrontEnd
       }
       else
       {
+          Debug.Assert(!method.Name.Value.StartsWith("<"), "Compiler generated method was not filtered: " + method.Name);
           var rewritten = ProcessOperations(methodBody);
           return rewritten;
       }
@@ -267,10 +269,17 @@ namespace DotNetFrontEnd
 
       immutableMethodBody = (IMethodBody)mutableMethodBody;
 
+      var pptEnterEnd = new ILGeneratorLabel();
+      EmitIncrementDepth(pptEnterEnd);
+      
       // We need the writer lock to emit the values of method parameters.
-      AcquireWriterLock();
+      EmitAcquireWriterLock();
       EmitMethodSignature(MethodTransition.ENTER, immutableMethodBody);
-      ReleaseWriterLock();
+      EmitReleaseWriterLock();
+
+      // Mark the end of the PPT writing section (jumped to if increment depth returns false)
+      generator.MarkLabel(pptEnterEnd);
+      EmitDecrementDepth();
 
       // The label that early returns should jump to, exists inside the try block that
       // contains the whole method
@@ -304,6 +313,9 @@ namespace DotNetFrontEnd
       // We may need to mutate the method body during rewriting, so obtain a mutable version.
       mutableMethodBody = (MethodBody)immutableMethodBody;
 
+      // The end of the current ppt writing block; reset whenever the label is marked
+      ILGeneratorLabel currentPptEnd = new ILGeneratorLabel();
+
       // Emit each operation, along with labels
       for (int i = 0; i < operations.Count; i++)
       {
@@ -313,7 +325,7 @@ namespace DotNetFrontEnd
         
         this.EmitDebugInformationFor(op);
         EmitOperation(op, i, ref mutableMethodBody, offset2Label,
-            ref tryBodyStarted, exceptions, commonExit, operations.Last(), synthesizedReturns);
+            ref tryBodyStarted, exceptions, commonExit, operations.Last(), synthesizedReturns, ref currentPptEnd);
       }
 
       while (generator.InTryBody)
@@ -660,7 +672,8 @@ namespace DotNetFrontEnd
     private void EmitOperation(IOperation op, int i, ref MethodBody methodBody,
       Dictionary<uint, ILGeneratorLabel> offset2Label, ref bool tryBodyStarted,
       List<ITypeReference> exceptions, ILGeneratorLabel commonExit,
-      IOperation lastReturnInstruction, ISet<IOperation> synthesizedReturns)
+      IOperation lastReturnInstruction, ISet<IOperation> synthesizedReturns,
+      ref ILGeneratorLabel pptEnd)
     {
       switch (op.OperationCode)
       {
@@ -720,9 +733,9 @@ namespace DotNetFrontEnd
 
             generator.MarkLabel(branchTaken);
 
-            if (DeclareReturnProgramPoint(methodBody, i))
+            if (DeclareReturnProgramPoint(methodBody, i, pptEnd))
             {
-              InstrumentReturn(methodBody);
+              InstrumentReturn(methodBody, ref pptEnd);
             }
 
             // Save the return var
@@ -804,11 +817,11 @@ namespace DotNetFrontEnd
           {
             methodBody = EndExceptionHandling(methodBody, exceptions);
 
-            bool shouldInstrumentReturn = DeclareReturnProgramPoint(methodBody, i);
+            bool shouldInstrumentReturn = DeclareReturnProgramPoint(methodBody, i, pptEnd);
 
             if (shouldInstrumentReturn)
             {
-              InstrumentReturn(methodBody);
+              InstrumentReturn(methodBody, ref pptEnd);
             }
 
             generator.Emit(op.OperationCode);
@@ -826,8 +839,8 @@ namespace DotNetFrontEnd
           // and jump to the common exit point, which will unstash the return val before returning.
           else
           {
-            DeclareReturnProgramPoint(methodBody, i);
-            InstrumentReturn(methodBody);
+            DeclareReturnProgramPoint(methodBody, i, pptEnd);
+            InstrumentReturn(methodBody, ref pptEnd);
 
             if (returnVar != null)
             {
@@ -943,19 +956,21 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="methodBody">Method being exited</param>
     /// <param name="i">Label for the exit</param>
+    /// <param name="pptEnd">The end of the PPT writing block</param>
     /// <returns>Whether the declaration was pushed into the stack</returns>
-    private bool DeclareReturnProgramPoint(IMethodBody methodBody, int i)
+    private bool DeclareReturnProgramPoint(IMethodBody methodBody, int i, ILGeneratorLabel pptEnd)
     {
       // If we don't want to instrument returns then don't do anything special here
-      bool instrumentReturns = frontEndArgs.ShouldPrintProgramPoint(FormatMethodName(
-          MethodTransition.EXIT, methodBody.MethodDefinition),
+      bool instrumentReturns = frontEndArgs.ShouldPrintProgramPoint(
+          FormatMethodName(MethodTransition.EXIT, methodBody.MethodDefinition),
           i.ToString(CultureInfo.InvariantCulture));
       if (!instrumentReturns)
       {
         return false;
       }
 
-      AcquireWriterLock();
+      EmitIncrementDepth(pptEnd);
+      EmitAcquireWriterLock();
 
       // Add the i to the end of exit to ensure uniqueness
       // A ret command is added even at the end of functions without
@@ -970,7 +985,7 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="op">The actual return operation</param>
     /// <param name="methodBody">Body of the method being returned from</param>
-    private void InstrumentReturn(IMethodBody methodBody)
+    private void InstrumentReturn(IMethodBody methodBody, ref ILGeneratorLabel pptEnd)
     {
       if (methodBody.MethodDefinition.Type.TypeCode != host.PlatformType.SystemVoid.TypeCode)
       {
@@ -988,7 +1003,12 @@ namespace DotNetFrontEnd
       // exception doesn't exist
       this.EmitExceptionInstrumentationCall(false);
 
-      ReleaseWriterLock();
+      EmitReleaseWriterLock();
+      // Mark the end of the PPT writing section (jumped to if increment depth returns false)
+      generator.MarkLabel(pptEnd);
+      // Reset for the next PPT writing section
+      pptEnd = new ILGeneratorLabel();
+      EmitDecrementDepth();
     }
 
     /// <summary>
@@ -1060,7 +1080,7 @@ namespace DotNetFrontEnd
           MethodTransition.EXIT, methodBody.MethodDefinition), label);
       if (instrumentReturns)
       {
-        AcquireWriterLock();
+        EmitAcquireWriterLock();
 
         // Add the i to the end of exit name to ensure uniqueness
         // A ret command is added even at the end of functions without
@@ -1073,7 +1093,7 @@ namespace DotNetFrontEnd
         // Instrument the exception exit
         this.EmitExceptionInstrumentationCall(true);
 
-        ReleaseWriterLock();
+        EmitReleaseWriterLock();
       }
     }
 
@@ -1493,12 +1513,13 @@ namespace DotNetFrontEnd
     /// Suppression safe because we control the string in the GetNameFor call
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
         "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void ReleaseWriterLock()
+    private void EmitReleaseWriterLock()
     {
-      generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
+      var releaseName = this.nameTable.GetNameFor(VariableVisitor.ReleaseWriterLockFunctionName);
+      var releaseReference = new Microsoft.Cci.MethodReference(
           this.host, this.variableVisitorType, CallingConvention.Default,
-          this.systemVoid, this.nameTable.GetNameFor(
-              VariableVisitor.ReleaseWriterLockFunctionName), 0));
+          this.systemVoid, releaseName, 0);
+      generator.Emit(OperationCode.Call, releaseReference);
     }
 
     /// <summary>
@@ -1507,12 +1528,45 @@ namespace DotNetFrontEnd
     /// Suppression safe because we control the string in the GetNameFor call
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
         "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void AcquireWriterLock()
+    private void EmitAcquireWriterLock()
     {
-      generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
+      var acquireName = this.nameTable.GetNameFor(VariableVisitor.AcquireWriterLockFunctionName);
+      var acquireReference = new Microsoft.Cci.MethodReference(
           this.host, this.variableVisitorType, CallingConvention.Default,
-          this.systemVoid, this.nameTable.GetNameFor(
-              VariableVisitor.AcquireWriterLockFunctionName), 0));
+          this.systemVoid, acquireName, 0);
+      generator.Emit(OperationCode.Call, acquireReference);
+    }
+
+    /// <summary>
+    /// Decrement the visiting depth
+    /// </summary>s
+    /// Suppression safe because we control the string in the GetNameFor call
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
+        "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
+    private void EmitDecrementDepth()
+    {
+        var decrementName = this.nameTable.GetNameFor(VariableVisitor.DecrementDepthFunctionName);
+        var decrementReference = new Microsoft.Cci.MethodReference(
+            this.host, this.variableVisitorType, CallingConvention.Default,
+            this.systemVoid, decrementName, 0);
+        generator.Emit(OperationCode.Call, decrementReference);
+    }
+
+    /// <summary>
+    /// Increment the visiting depth, and jump to the end of the PPT writing block
+    /// if the thread is not at the based depth.
+    /// </summary>
+    /// Suppression safe because we control the string in the GetNameFor call
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
+        "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
+    private void EmitIncrementDepth(ILGeneratorLabel writePptEnd)
+    {
+        var incrementName = this.nameTable.GetNameFor(VariableVisitor.IncrementDepthFunctionName);
+        var incrementReference = new Microsoft.Cci.MethodReference(
+            this.host, this.variableVisitorType, CallingConvention.Default,
+            this.host.PlatformType.SystemBoolean, incrementName, 0);
+        generator.Emit(OperationCode.Call, incrementReference);
+        generator.Emit(OperationCode.Brfalse, writePptEnd);
     }
 
     /// <summary>
@@ -1775,7 +1829,6 @@ namespace DotNetFrontEnd
       {
         generator.Emit(OperationCode.Dup);
       }
-      this.EmitIncrementDepthCall();
       // Note the signature is different than the other instrumentation
       // call methods. Here we don't send name, since it's always
       // "exception", or Type, since we are limited about the type info
@@ -1785,7 +1838,6 @@ namespace DotNetFrontEnd
          this.systemVoid, this.nameTable.GetNameFor(
             VariableVisitor.ExceptionInstrumentationMethodName),
          0, this.systemObject));
-      this.EmitDecrementDepthCall();
     }
 
     /// <summary>
@@ -1809,13 +1861,11 @@ namespace DotNetFrontEnd
       generator.Emit(OperationCode.Ldstr,
           this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param).ToString());
       // Make special instrumentation call instead of regular, with parameters reordered
-      this.EmitIncrementDepthCall();
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
          this.host, this.variableVisitorType, CallingConvention.Default,
          this.systemVoid, this.nameTable.GetNameFor(
             VariableVisitor.ValueFirstInstrumentationMethodName), 0,
          this.systemObject, this.systemString, this.systemString));
-      this.EmitDecrementDepthCall();
     }
 
     /// <summary>
@@ -1846,12 +1896,10 @@ namespace DotNetFrontEnd
     {
       generator.Emit(OperationCode.Ldstr,
           this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param).ToString());
-      this.EmitIncrementDepthCall();
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
          this.host, this.variableVisitorType, CallingConvention.Default,
          this.systemVoid, this.nameTable.GetNameFor(
             VariableVisitor.StaticInstrumentationMethodName), 0, this.systemString));
-      this.EmitDecrementDepthCall();
     }
 
     /// <summary>
@@ -1865,35 +1913,6 @@ namespace DotNetFrontEnd
       EmitInstrumentationCall(this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param).ToString());
     }
 
-    /// <summary>
-    /// Emit the call to the increment the count for the running thread,
-    /// </summary>
-    /// 
-    /// Variable containing method name is private, static, final and can be trusted.
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
-      "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void EmitIncrementDepthCall()
-    {
-      generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
-         this.host, this.variableVisitorType, CallingConvention.Default,
-         this.systemVoid, this.nameTable.GetNameFor(
-            VariableVisitor.IncrementThreadDepthMethodName), 0));
-    }
-
-    /// <summary>
-    /// Emit the call to the decrement the count for the running thread,
-    /// </summary>
-    /// 
-    /// Variable containing method name is private, static, final and can be trusted.
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
-      "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void EmitDecrementDepthCall()
-    {
-      generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
-         this.host, this.variableVisitorType, CallingConvention.Default,
-         this.systemVoid, this.nameTable.GetNameFor(
-            VariableVisitor.DecrementThreadDepthMethodName), 0));
-    }
 
     /// <summary>
     /// Emit the call to the instrumentation program, assuming name, then the param are loaded
@@ -1908,13 +1927,11 @@ namespace DotNetFrontEnd
     private void EmitInstrumentationCall(string paramTypeName)
     {
       generator.Emit(OperationCode.Ldstr, paramTypeName);
-      this.EmitIncrementDepthCall();
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
          this.host, this.variableVisitorType, CallingConvention.Default,
          this.systemVoid, this.nameTable.GetNameFor(
             VariableVisitor.InstrumentationMethodName), 0,
          this.systemString, this.systemObject, this.systemString));
-      this.EmitDecrementDepthCall();
     }
 
     /// <summary>
@@ -2102,26 +2119,28 @@ namespace DotNetFrontEnd
       {
         this.declPrinter = new DotNetFrontEnd.DeclarationPrinter(this.frontEndArgs, this.typeManager, this.comparabilityManager);
 
-        Regex ignoreRegex = new Regex(TypeManager.RegexForTypesToIgnoreForProgramPoint);
         foreach (INamedTypeDefinition type in mutableAssembly.AllTypes)
         {
           // CCI components come up named <*>, and we want to exclude them.
           // Also exclude the name of the class storing arguments (for offline programs)
-          string typeName = ((ITypeDefinition)type).ToString();
-          if (!(ignoreRegex.IsMatch(type.ToString()) || type.ToString() == ArgumentStoringClassName))
+          string typeName = type.ToString();
+          if (!TypeManager.RegexForTypesToIgnoreForProgramPoint.IsMatch(typeName) && 
+              !typeName.Equals(ArgumentStoringClassName) &&
+              !typeManager.IsCompilerGenerated(type))
           {
-            this.declPrinter.PrintObjectDefinition(typeName,
-                this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type), type);
-            this.declPrinter.PrintParentClassDefinition(typeName,
-                this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type), type);
+              this.declPrinter.PrintObjectDefinition(typeName,
+                  this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type), type);
+              this.declPrinter.PrintParentClassDefinition(typeName,
+                  this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type), type);
+          }
+          else
+          {
+              // Console.WriteLine("Skipping CLASS and OBJECT declarations for type " + typeName);
           }
         }
       }
 
-      Console.WriteLine("Rewrite Assembly " + mutableAssembly.Name);
       IModule result = this.Rewrite(mutableAssembly);
-      Console.WriteLine("Rewrite Assembly (Done) " + mutableAssembly.Name);
-      
 
       if (this.printDeclarations)
       {
