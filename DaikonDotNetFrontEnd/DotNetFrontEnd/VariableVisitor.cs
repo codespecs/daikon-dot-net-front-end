@@ -1229,15 +1229,26 @@ namespace DotNetFrontEnd
     {
         if (type.IsValueType)
         {
+            // Use a value-based hashcode for value types
             Debug.Assert(x.GetType().IsValueType, 
                 "Runtime value is not a value type. Runtime Type: " + x.GetType().ToString() + " Declared: " + type.Name);
             return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
         }
         else
         {
-            Debug.Assert(!x.GetType().IsValueType,
-                    "Runtime value is not a reference type. Runtime Type: " + x.GetType().ToString() + " Declared: " + type.Name);
-            return RuntimeHelpers.GetHashCode(x).ToString(CultureInfo.InvariantCulture);
+             if (!x.GetType().IsValueType)
+             {
+                  // Use a reference-based hashcode for reference types
+                  return RuntimeHelpers.GetHashCode(x).ToString(CultureInfo.InvariantCulture);
+             }
+             else
+             {
+                 // Assume there's a type mismatch because we didn't have enough information.
+                 Debug.Assert(type.Equals(typeof(object)),
+                      "Runtime value is not a reference type. Runtime Type: " + x.GetType().ToString() + " Declared: " + type.Name);
+                 // Use the value's hashcode and hope it does something reasonable.
+                 return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
+             }
         }
     }
 
