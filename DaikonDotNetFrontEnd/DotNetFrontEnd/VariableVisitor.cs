@@ -30,6 +30,7 @@ using System.Text;
 using System.Threading;
 using Microsoft.Cci;
 using System.Diagnostics;
+using System.Collections.Concurrent;
 
 namespace DotNetFrontEnd
 {
@@ -79,6 +80,17 @@ namespace DotNetFrontEnd
     /// Name of the function to be inserted into the IL to release the lock on the writer.
     /// </summary>
     public static readonly string ReleaseWriterLockFunctionName = "ReleaseLock";
+
+    /// <summary>
+    /// Name of the function to be inserted into the IL to increment the call nesting depth.
+    /// </summary>
+    public static readonly string IncrementDepthFunctionName = "IncrementThreadDepth";
+
+    /// <summary>
+    /// Name of the function to be inserted into the IL to decrement the call nesting depth.
+    /// </summary>
+    public static readonly string DecrementDepthFunctionName = "DecrementThreadDepth";
+
 
     /// <summary>
     /// The name of the standard instrumentation method in VariableVisitor.cs, this is the method
@@ -133,16 +145,6 @@ namespace DotNetFrontEnd
     /// Name of the method to suppress any output
     /// </summary>
     public static readonly string ShouldSuppressOutputMethodName = "SetOutputSuppression";
-
-    /// <summary>
-    /// Name of the method to increment the pure method call depth for the current thread.
-    /// </summary>
-    public static readonly string IncrementThreadDepthMethodName = "IncrementDepthCount";
-
-    /// <summary>
-    /// Name of the method to decrement the pure method call depth for the current thread.
-    /// </summary>
-    public static readonly string DecrementThreadDepthMethodName = "DecrementDepthCount";
 
     /// <summary>
     /// The name of the exception variable added at the end of every method
@@ -223,7 +225,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Depth of the thread in visit calls
     /// </summary>
-    private static Dictionary<Thread, int> threadDepthMap = new Dictionary<Thread, int>();
+    private static ConcurrentDictionary<Thread, int> threadDepthMap = new ConcurrentDictionary<Thread, int>();
 
     #endregion
 
@@ -328,55 +330,29 @@ namespace DotNetFrontEnd
             " instrumentation.", "typeName");
         }
 
-        int depth = 0;
         foreach (Type type in typeDecl.GetAllTypes)
         {
           foreach (FieldInfo staticField in
             // Pass type in as originating type so we get all the fields.
-           type.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type, type)))
+            type.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type, type)))
           {
-            if (!typeManager.ShouldIgnoreField(type, staticField))
+            string staticFieldName = type.FullName + "." + staticField.Name;
+            if (!typeManager.ShouldIgnoreField(type, staticField) &&
+                !staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
             {
-              string staticFieldName = type.FullName + "." + staticField.Name;
-              try
-              {
-                if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
-                {
-                  staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
-                  // TODO(#68):
-                  // Static fields of generic types cause an exception, so don't visit them
-                  object val = null;
-                  VariableModifiers flags = VariableModifiers.none;
-                  if (!type.ContainsGenericParameters)
-                  {
-                    val = staticField.GetValue(null);
-                  }
-                  else
-                  {
-                    flags = VariableModifiers.nonsensical;
-                  }
-                  ReflectiveVisit(staticFieldName, val,
-                        staticField.FieldType, writer, staticFieldName.Count(c => c == '.'),
-                        type,
-                        fieldFlags: flags);
-                }
-              }
-              catch (ArgumentException)
-              {
-                Console.Error.WriteLine(" Name: " + staticFieldName + " Type: " + type + " Field Name: "
-                    + staticField.Name + " Field Type: " + staticField.FieldType);
-                // The field is declared in the decls so Daikon still needs a value, 
-                ReflectiveVisit(staticFieldName, null,
-                    staticField.FieldType, writer, depth + 1, type, VariableModifiers.nonsensical);
-              }
+                staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
+                // TODO(#68):
+                // Static fields of generic types cause an exception, so don't visit them
+                object val = type.ContainsGenericParameters ? null : staticField.GetValue(null);
+                VariableModifiers flags = type.ContainsGenericParameters ? VariableModifiers.nonsensical : VariableModifiers.none;
+                ReflectiveVisit(staticFieldName, val,
+                      staticField.FieldType, writer, staticFieldName.Count(c => c == '.'),
+                      type,
+                      fieldFlags: flags);
             }
           }
         }
       }
-      //catch (Exception ex)
-      //{
-      //  throw new VariableVisitorException(ex);
-      //}
       finally
       {
         // Close the writer so it can be used elsewhere
@@ -400,20 +376,53 @@ namespace DotNetFrontEnd
       DoVisit(exception, ExceptionVariableName, ExceptionTypeName, flags);
     }
 
+    private const int MAX_LOCK_ACQUIRE_TIME_MILLIS = 10 * 1000;
+
     /// <summary>
-    /// Acquire the lock on the writer.
+    /// Increment the depth count for the current thread. Returns <code>true</code> if the ppt
+    /// should be visit, that is the depth count is 1.
     /// </summary>
-    public static void AcquireLock()
+    /// <returns></returns>
+    public static bool IncrementThreadDepth()
     {
-      Monitor.Enter(WriterLock);
+        return threadDepthMap.AddOrUpdate(Thread.CurrentThread, 1, (t, x) => x + 1) == 1;
     }
 
     /// <summary>
-    /// Release the lock on the writer.
+    /// Decrement the depth count for the current thread.
+    /// </summary>
+    public static void DecrementThreadDepth()
+    {
+        if (threadDepthMap.AddOrUpdate(Thread.CurrentThread, 0, (t, x) => x - 1) == 0)
+        {
+            int value;
+            threadDepthMap.TryRemove(Thread.CurrentThread, out value);
+            Debug.Assert(value == 0, "Atomicity violation");
+        }
+    }
+
+    /// <summary>
+    /// Acquire the lock on the PPT writer and increment the thread depth.
+    /// </summary>
+    public static void AcquireLock()
+    {
+      bool acquired = false;
+      var timer = Stopwatch.StartNew();
+      do{
+          if (timer.ElapsedMilliseconds > MAX_LOCK_ACQUIRE_TIME_MILLIS)
+          {
+              Thread.CurrentThread.Abort("Could not acquire writer thread after " + MAX_LOCK_ACQUIRE_TIME_MILLIS + " ms");
+          }
+          Monitor.TryEnter(WriterLock, TimeSpan.FromSeconds(1), ref acquired);
+      }while(!acquired);
+    }
+
+    /// <summary>
+    /// Decrement the thread depth and release the lock on the PPT writer.
     /// </summary>
     public static void ReleaseLock()
     {
-      Monitor.Exit(WriterLock);
+        Monitor.Exit(WriterLock);
     }
 
     /// <summary>
@@ -430,10 +439,20 @@ namespace DotNetFrontEnd
     /// Set the invocation nonce for this method by storing it in an appropriate local var
     /// </summary>
     /// <returns>The invocation nonce for the method</returns>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "programPointName"), MethodImpl(MethodImplOptions.Synchronized)]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "programPointName")]
     public static int SetInvocationNonce(string programPointName)
     {
-      return globalNonce++;
+        return Interlocked.Increment(ref globalNonce);
+    }
+
+    /// <summary>
+    /// Asserts (in debug mode) that a thread is at a top-level PPT for writing.
+    /// </summary>
+    private static void CheckDepth()
+    {
+        int x;
+        threadDepthMap.TryGetValue(Thread.CurrentThread, out x);
+        Debug.Assert(x == 1, "Illegal PPT callback from thread in nested call");
     }
 
     /// <summary>
@@ -442,6 +461,8 @@ namespace DotNetFrontEnd
     /// <param name="nonce">Nonce-value to print</param>
     public static void WriteInvocationNonce(int nonce)
     {
+      CheckDepth();
+
       TextWriter writer = InitializeWriter();
       writer.WriteLine("this_invocation_nonce");
       writer.WriteLine(nonce);
@@ -454,9 +475,10 @@ namespace DotNetFrontEnd
     /// <param name="programPointName">Name of program point to print</param>
     /// <param name="label">Label used to differentiate the specific program point from other with 
     /// the same name.</param>
-    [MethodImpl(MethodImplOptions.Synchronized)]
     public static void WriteProgramPoint(string programPointName, string label)
     {
+      CheckDepth();
+
       staticFieldsVisitedForCurrentProgramPoint.Clear();
       variablesVisitedForCurrentProgramPoint.Clear();
 
@@ -495,7 +517,7 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="assemblyName">Name of the assembly being profiled.</param>
     /// <param name="assemblyPath">Relative path to the rewritten assembly.</param>
-    [MethodImpl(MethodImplOptions.Synchronized)]
+    /// <remarks>Called from DNFE_ArgumentStroingMethod</remarks>
     public static void InitializeFrontEndArgs(string assemblyName, string assemblyPath, string arguments)
     {
       if (frontEndArgs == null)
@@ -508,28 +530,6 @@ namespace DotNetFrontEnd
       }
     }
 
-    /// <summary>
-    /// Increment the pure method depth count for the current thread.
-    /// </summary>
-    [MethodImpl(MethodImplOptions.Synchronized)]
-    public static void IncrementDepthCount()
-    {
-      if (!threadDepthMap.ContainsKey(Thread.CurrentThread))
-      {
-        threadDepthMap[Thread.CurrentThread] = 0;
-      }
-      threadDepthMap[Thread.CurrentThread]++;
-    }
-
-    /// <summary>
-    /// Decrement the pure method depth count for the current thread.
-    /// </summary>
-    [MethodImpl(MethodImplOptions.Synchronized)]
-    public static void DecrementDepthCount()
-    {
-      threadDepthMap[Thread.CurrentThread]--;
-    }
-
     #endregion
 
     /// <summary>
@@ -540,15 +540,10 @@ namespace DotNetFrontEnd
     /// path</param>
     /// <param name="typeName">Assembly-qualified name of the object's type as a string</param>
     /// <param name="flags">Flags providing additional information about the variable.</param>
-    [MethodImpl(MethodImplOptions.Synchronized)]
     private static void DoVisit(object variable, string name, string typeName,
         VariableModifiers flags = VariableModifiers.none)
     {
-      if (threadDepthMap.ContainsKey(Thread.CurrentThread) &&
-         (threadDepthMap[Thread.CurrentThread] > 1))
-      {
-        return;
-      }
+      CheckDepth();
 
       // TODO(#15): Can we pull any fields from exceptions?
       // Exceptions shouldn't be recursed any further down than the 
@@ -825,31 +820,27 @@ namespace DotNetFrontEnd
           type.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(
               type, originatingType)))
       {
-        if (!typeManager.ShouldIgnoreField(type, staticField))
+        string staticFieldName = type.FullName + "." + staticField.Name;
+        if (!typeManager.ShouldIgnoreField(type, staticField) &&
+            !staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
         {
+          //try
+          //{
 
-          string staticFieldName = type.FullName + "." + staticField.Name;
-
-          try
-          {
-
-            if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
-            {
-              staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
-              ReflectiveVisit(staticFieldName, GetFieldValue(obj, staticField, staticField.Name),
-                    staticField.FieldType, writer, staticFieldName.Count(c => c == '.'),
-                    originatingType, fieldFlags | VariableModifiers.ignore_linked_list);
-            }
-          }
-          catch (ArgumentException)
-          {
-            Console.Error.WriteLine(" Name: " + name + " Type: " + type + " Field Name: "
-                + staticField.Name + " Field Type: " + staticField.FieldType);
-            // The field is declared in the decls so Daikon still needs a value. 
-            ReflectiveVisit(staticFieldName, null,
-                staticField.FieldType, writer, depth + 1, originatingType,
-                fieldFlags | VariableModifiers.nonsensical);
-          }
+            staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
+            ReflectiveVisit(staticFieldName, GetFieldValue(obj, staticField, staticField.Name),
+                  staticField.FieldType, writer, staticFieldName.Count(c => c == '.'),
+                  originatingType, fieldFlags | VariableModifiers.ignore_linked_list);
+          //}
+          //catch (ArgumentException)
+          //{
+          //  Console.Error.WriteLine(" Name: " + name + " Type: " + type + " Field Name: "
+          //      + staticField.Name + " Field Type: " + staticField.FieldType);
+          //  // The field is declared in the decls so Daikon still needs a value. 
+          //  ReflectiveVisit(staticFieldName, null,
+          //      staticField.FieldType, writer, depth + 1, originatingType,
+          //      fieldFlags | VariableModifiers.nonsensical);
+          //}
         }
       }
     }
@@ -975,7 +966,7 @@ namespace DotNetFrontEnd
       // We might not know the type, e.g. for non-generic ArrayList
       if (elementType == null)
       {
-        elementType = TypeManager.ObjectType;
+         elementType = TypeManager.ObjectType;
       }
 
       // Don't inspect fields on some calls.
@@ -1038,26 +1029,22 @@ namespace DotNetFrontEnd
         return;
       }
 
-      // If the list was null then we can't visit the children, just print nonsensical for them.
       if (list == null)
       {
+        // If the list was null then we can't visit the children, just print nonsensical for them.
         VisitNullListChildren(name, elementType, writer, depth, originatingType);
       }
       else
       {
-        if (nonsensicalElements == null)
-        {
-          nonsensicalElements = new bool[list.Count];
-        }
-
+        nonsensicalElements = nonsensicalElements ?? new bool[list.Count];
         VisitListChildren(name, list, elementType, writer, depth, nonsensicalElements, originatingType);
       }
     }
 
     /// <summary>
-    /// Visit all children of a null list -- printing nonsensical at each step.
+    /// Visit all children of a <code>null</code> list. Prints <code>nonsensical</code> for each variable value.
     /// </summary>
-    /// <param name="name">name of the null array</param>
+    /// <param name="name">name of the null list</param>
     /// <param name="elementType">Type of the elements that would be in the list</param>
     /// <param name="writer">Writer to write the results of the visit using to</param>
     /// <param name="depth">Current nesting depth</param>
@@ -1079,15 +1066,13 @@ namespace DotNetFrontEnd
           elementType.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(
               elementType, originatingType)))
       {
-        if (!typeManager.ShouldIgnoreField(elementType, staticElementField))
+        string staticFieldName = elementType.FullName + "." + staticElementField.Name;
+        if (!typeManager.ShouldIgnoreField(elementType, staticElementField) &&
+            !staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
         {
-          string staticFieldName = elementType.FullName + "." + staticElementField.Name;
-          if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
-          {
             staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
             ListReflectiveVisit(staticFieldName, null, staticElementField.FieldType, writer,
-                staticFieldName.Count(c => c == '.'), originatingType);
-          }
+                staticFieldName.Count(c => c == '.'), originatingType);   
         }
       }
 
@@ -1104,6 +1089,13 @@ namespace DotNetFrontEnd
             TypeManager.StringType, writer, depth + 1, originatingType,
             VariableModifiers.to_string);
       }
+
+      foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType, originatingType))
+      {
+          string pureMethodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Name);
+          ListReflectiveVisit(name + "." + pureMethodName, null,
+            pureMethod.ReturnType, writer, depth + 1, originatingType);
+      }
     }
 
     /// <summary>
@@ -1119,6 +1111,9 @@ namespace DotNetFrontEnd
     private static void VisitListChildren(string name, IList list, Type elementType,
         TextWriter writer, int depth, bool[] nonsensicalElements, Type originatingType)
     {
+      Debug.Assert(list != null, "Cannot visit children of null list");
+      Debug.Assert(list.Count == nonsensicalElements.Length, "Length mismatch between list length and non-sensical array");
+
       foreach (FieldInfo elementField in
           elementType.GetSortedFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
               elementType, originatingType)))
@@ -1135,16 +1130,14 @@ namespace DotNetFrontEnd
           elementType.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(
               elementType, originatingType)))
       {
-        if (!typeManager.ShouldIgnoreField(elementType, elementField))
+        string staticFieldName = elementType.FullName + "." + elementField.Name;
+        if (!typeManager.ShouldIgnoreField(elementType, elementField) &&
+            !staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
         {
-          string staticFieldName = elementType.FullName + "." + elementField.Name;
-          if (!staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
-          {
             staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
             ReflectiveVisit(staticFieldName, elementField.GetValue(null),
                 elementField.FieldType, writer, staticFieldName.Count(c => c == '.'),
                 originatingType);
-          }
         }
       }
 
@@ -1153,15 +1146,7 @@ namespace DotNetFrontEnd
         Type[] typeArray = new Type[list.Count];
         for (int i = 0; i < list.Count; i++)
         {
-          if (list[i] == null)
-          {
-            typeArray[i] = null;
-          }
-          else
-          {
-            typeArray[i] = list[i].GetType();
-          }
-          nonsensicalElements[i] = list[i] == null;
+            typeArray[i] = nonsensicalElements[i] ? null : list[i].GetType();
         }
         ListReflectiveVisit(name + "." + DeclarationPrinter.GetTypeMethodCall, typeArray,
             TypeManager.TypeType, writer, depth + 1, originatingType, VariableModifiers.classname,
@@ -1173,34 +1158,21 @@ namespace DotNetFrontEnd
         string[] stringArray = new string[list.Count];
         for (int i = 0; i < list.Count; i++)
         {
-          if (list[i] == null)
-          {
-            stringArray[i] = null;
-          }
-          else
-          {
-            stringArray[i] = list[i].ToString();
-          }
+          stringArray[i] = nonsensicalElements[i] ? null : list[i].ToString();
         }
         ListReflectiveVisit(name + "." + DeclarationPrinter.ToStringMethodCall, stringArray,
-            TypeManager.StringType, writer, depth + 1, originatingType,
-            VariableModifiers.to_string);
+            TypeManager.StringType, writer, depth + 1, originatingType, VariableModifiers.to_string,
+            nonsensicalElements: nonsensicalElements);
       }
 
       foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType, originatingType))
       {
         string pureMethodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Name);
         object[] pureMethodResults = new object[list.Count];
+        
         for (int i = 0; i < list.Count; i++)
         {
-          if (list[i] == null)
-          {
-            pureMethodResults[i] = null;
-          }
-          else
-          {
-            pureMethodResults[i] = GetMethodValue(list[i], pureMethod, pureMethod.Name);
-          }
+          pureMethodResults[i] = nonsensicalElements[i] ? null : GetMethodValue(list[i], pureMethod, pureMethod.Name);
         }
         ListReflectiveVisit(name + "." + pureMethodName, pureMethodResults,
           pureMethod.ReturnType, writer, depth + 1, originatingType,
@@ -1256,13 +1228,26 @@ namespace DotNetFrontEnd
     {
         if (type.IsValueType)
         {
-            Debug.Assert(x.GetType().IsValueType, "Runtime value is not a value type.");
+            // Use a value-based hashcode for value types
+            Debug.Assert(x.GetType().IsValueType, 
+                "Runtime value is not a value type. Runtime Type: " + x.GetType().ToString() + " Declared: " + type.Name);
             return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
         }
         else
         {
-            Debug.Assert(!x.GetType().IsValueType, "Runtime value is not a reference type.");
-            return RuntimeHelpers.GetHashCode(x).ToString(CultureInfo.InvariantCulture);
+             if (!x.GetType().IsValueType)
+             {
+                  // Use a reference-based hashcode for reference types
+                  return RuntimeHelpers.GetHashCode(x).ToString(CultureInfo.InvariantCulture);
+             }
+             else
+             {
+                 // Assume there's a type mismatch because we didn't have enough information.
+                 Debug.Assert(type.Equals(typeof(object)),
+                      "Runtime value is not a reference type. Runtime Type: " + x.GetType().ToString() + " Declared: " + type.Name);
+                 // Use the value's hashcode and hope it does something reasonable.
+                 return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
+             }
         }
     }
 

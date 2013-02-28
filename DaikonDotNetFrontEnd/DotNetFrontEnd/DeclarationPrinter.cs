@@ -317,24 +317,22 @@ namespace DotNetFrontEnd
           type.GetSortedFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(
               type, originatingType)))
       {
-        if (!this.typeManager.ShouldIgnoreField(type, staticField))
+        string staticFieldName = type.FullName + "." + staticField.Name;  
+        if (!this.typeManager.ShouldIgnoreField(type, staticField) &&
+            !this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
         {
-          string staticFieldName = type.FullName + "." + staticField.Name;
-          if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
-          {
             this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
 
-              var fieldFlags = 
-                  ExtendFlags(
-                    MarkIf(staticField.IsInitOnly, VariableFlags.is_reference_immutable),
-                    MarkIf(staticField.IsLiteral || (staticField.IsInitOnly && TypeManager.IsImmutable(staticField.FieldType)), VariableFlags.is_value_immutable));
-                
-              DeclareVariable(staticFieldName, staticField.FieldType,
-                nestingDepth: staticFieldName.Count(c => c == '.'), 
-                originatingType: originatingType,
-                flags: fieldFlags,
-                typeContext: typeContext, methodContext: methodContext);
-          }
+            var fieldFlags =
+                ExtendFlags(
+                  MarkIf(staticField.IsInitOnly, VariableFlags.is_reference_immutable),
+                  MarkIf(staticField.IsLiteral || (staticField.IsInitOnly && TypeManager.IsImmutable(staticField.FieldType)), VariableFlags.is_value_immutable));
+
+            DeclareVariable(staticFieldName, staticField.FieldType,
+              nestingDepth: staticFieldName.Count(c => c == '.'),
+              originatingType: originatingType,
+              flags: fieldFlags,
+              typeContext: typeContext, methodContext: methodContext); 
         }
       }
 
@@ -593,17 +591,15 @@ namespace DotNetFrontEnd
           elementType.GetSortedFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(
               elementType, originatingType)))
       {
-        if (!this.typeManager.ShouldIgnoreField(elementType, staticField))
+        string staticFieldName = elementType.FullName + "." + staticField.Name;
+        if (!this.typeManager.ShouldIgnoreField(elementType, staticField) &&
+            !this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
         {
-          string staticFieldName = elementType.FullName + "." + staticField.Name;
-          if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
-          {
             this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
             DeclareVariable(staticFieldName, staticField.FieldType,
                 originatingType: originatingType,
                 nestingDepth: staticFieldName.Count(c => c == '.'),
                 typeContext: typeContext, methodContext: methodContext);
-          }
         }
       }
 
@@ -721,16 +717,14 @@ namespace DotNetFrontEnd
         type.GetSortedFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(
             type, type)))
       {
-        if (!this.typeManager.ShouldIgnoreField(type, staticField))
+        string staticFieldName = type.FullName + "." + staticField.Name;
+        if (!this.typeManager.ShouldIgnoreField(type, staticField) &&
+            !this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
         {
-          string staticFieldName = type.FullName + "." + staticField.Name;
-          if (!this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
-          {
             this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
             DeclareVariable(staticFieldName, staticField.FieldType, type,
                 nestingDepth: staticFieldName.Count(c => c == '.'),
                 typeContext: typeContext, methodContext: methodContext);
-          }
         }
       }
     }
@@ -836,7 +830,6 @@ namespace DotNetFrontEnd
     public void PrintParentClassDefinition(string className, string objectAssemblyQualifiedName, INamedTypeDefinition typeContext)
     {
         
-
       DNFETypeDeclaration objectTypeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
       foreach (Type objectType in objectTypeDecl.GetAllTypes)
@@ -1192,7 +1185,7 @@ namespace DotNetFrontEnd
     private static bool ShouldPrintParentPptIfNecessary(String parentTypeName)
     {
       return !String.IsNullOrEmpty(parentTypeName) &&
-          !Regex.IsMatch(parentTypeName, TypeManager.RegexForTypesToIgnoreForProgramPoint);
+             !TypeManager.RegexForTypesToIgnoreForProgramPoint.IsMatch(parentTypeName);
     }
 
     private bool PerformEarlyExitChecks(string name, Type type, VariableKind kind,

@@ -111,7 +111,7 @@ namespace DotNetFrontEnd.Comparability
             bool changed = false;
             do
             {
-                Console.WriteLine("Method Summary Propogation Round #" + round);
+                // Console.WriteLine("Method Summary Propogation Round #" + round);
                 changed = false;
                 foreach (var type in decompiled.AllTypes)
                 {
@@ -138,19 +138,19 @@ namespace DotNetFrontEnd.Comparability
             
             }
 
-            foreach (var method in MethodComparability.Values)
-            {
-                var interesting = method.Opinion.Where(x => x.Count > 1);
-                if (interesting.Count() > 0)
-                {
-                    Console.WriteLine("-- " + method.Method.Name);
-                    foreach (var x in interesting)
-                    {
-                        Console.WriteLine(string.Join(" ", x));
-                    }
-                    Console.WriteLine();
-                }
-            }
+            //foreach (var method in MethodComparability.Values)
+            //{
+            //    var interesting = method.Opinion.Where(x => x.Count > 1);
+            //    if (interesting.Count() > 0)
+            //    {
+            //        Console.WriteLine("-- " + method.Method.Name);
+            //        foreach (var x in interesting)
+            //        {
+            //            Console.WriteLine(string.Join(" ", x));
+            //        }
+            //        Console.WriteLine();
+            //    }
+            //}
         }
 
         public int GetElementComparability(string name, INamedTypeDefinition type, IMethodDefinition method)

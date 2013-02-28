@@ -89,7 +89,7 @@ namespace DotNetFrontEnd
     /// Don't print object definition program points or references to types whose name matches
     /// this signature, they are system generated.
     /// </summary>
-    public readonly static string RegexForTypesToIgnoreForProgramPoint = "<*>";
+    public readonly static Regex RegexForTypesToIgnoreForProgramPoint = new Regex(@"(\.<.*?>)|(^<.*?>)");
 
     /// <summary>
     /// When dec-type of a generic variable with multiple constraints is being printed, use this
@@ -284,7 +284,7 @@ namespace DotNetFrontEnd
         pureMethodsForType[type].Add(method);
         pureMethods.Add(method);
 
-        Console.WriteLine("[Pure] " + method.Name + " (" + type.Name + ")");
+        // Console.WriteLine("[Pure] " + method.Name + " (" + type.Name + ")");
     }
 
     /// <summary>
@@ -704,7 +704,7 @@ namespace DotNetFrontEnd
                   {
                       //AddPureMethod(type, method);
                       //result.Add(method);
-                      Console.WriteLine(type.AssemblyQualifiedName + ";" + method.Name);
+                      //Console.WriteLine(type.AssemblyQualifiedName + ";" + method.Name);
                   }
               }
               markedSystemTypes.Add(type);
@@ -1123,12 +1123,25 @@ namespace DotNetFrontEnd
       return new Microsoft.Cci.Immutable.NamespaceTypeReference(host, ns, host.NameTable.GetNameFor(names[names.Length - 1]), 0, false, false, true, PrimitiveTypeCode.NotPrimitive);
     }
 
-    private bool IsCompilerGenerated(IDefinition def)
+    public bool IsCompilerGenerated(IDefinition def)
     {
       var host = this.Host;
-      if (AttributeHelper.Contains(def.Attributes, host.PlatformType.SystemRuntimeCompilerServicesCompilerGeneratedAttribute)) return true;
+      
+      if (AttributeHelper.Contains(def.Attributes, host.PlatformType.SystemRuntimeCompilerServicesCompilerGeneratedAttribute)) return true;  
+      
       var systemDiagnosticsDebuggerNonUserCodeAttribute = CreateTypeReference(host, new Microsoft.Cci.Immutable.AssemblyReference(host, host.ContractAssemblySymbolicIdentity), "System.Diagnostics.DebuggerNonUserCodeAttribute");
-      return AttributeHelper.Contains(def.Attributes, systemDiagnosticsDebuggerNonUserCodeAttribute);
+      if (AttributeHelper.Contains(def.Attributes, systemDiagnosticsDebuggerNonUserCodeAttribute)) return true;
+
+      // Issue #72 (Convert to Type Reference Equality Check)
+      var compilerGeneratedAttributeName = host.PlatformType.SystemRuntimeCompilerServicesCompilerGeneratedAttribute.ResolvedType.ToString();
+      foreach (var a in def.Attributes)
+      {
+          if (a.Type.ToString().Equals(compilerGeneratedAttributeName))
+          {
+              return true;
+          }
+      }
+      return false;
     }
 
     /// <summary>
