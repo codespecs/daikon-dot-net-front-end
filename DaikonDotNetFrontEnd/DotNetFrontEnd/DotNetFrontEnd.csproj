@@ -168,7 +168,9 @@
     <None Include="app.config" />
     <None Include="DotNetFrontEndKeyFile.snk" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Utilities\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="CCI_DLLs\Microsoft.Cci.ILGenerator.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

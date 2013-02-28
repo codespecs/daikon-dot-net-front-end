@@ -155,7 +155,7 @@ namespace DotNetFrontEnd
       this.argsToWrite = String.Join(" ", args);
       this.programArguments = new Dictionary<PossibleArgument, string>();
       this.ProgramArgIndex = 0;
-      this.PptAlwaysExclude = new Regex("<>");
+      this.PptAlwaysExclude = new Regex(@"(^<.?>)|(\.<.*?>)");
       this.PopulateDefaultArguments();
 
       // Used to allow enumeration of PossibleArgument
