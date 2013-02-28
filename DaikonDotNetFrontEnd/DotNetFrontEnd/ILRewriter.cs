@@ -584,8 +584,13 @@ namespace DotNetFrontEnd
           {
             exType = ((LocalDefinition)prevOp.Value).Type;
           }
+          else if (prevOp.Value is Microsoft.Cci.MutableCodeModel.GenericMethodInstanceReference)
+          {
+            exType = ((Microsoft.Cci.MutableCodeModel.GenericMethodInstanceReference)prevOp.Value).Type;
+          }
           else if (prevOp.Value is Microsoft.Cci.MutableCodeModel.MethodReference)
           {
+            // These seem to always be constructors.
             exType = ((Microsoft.Cci.MutableCodeModel.MethodReference)prevOp.Value).ContainingType;
           }
           else if (prevOp.Value is TypeReference)
@@ -1701,11 +1706,15 @@ namespace DotNetFrontEnd
         if (container.IsGeneric)
         {
           var genericContainer = container.InstanceType.ResolvedType;
-          parentType = (ITypeDefinition)genericContainer.GetMembersNamed(x.Name, true).First();
+          // Don't ignore case because the source may contain something like Point point
+          // and the field definition would come before the type definition, making First
+          // not what we want. 
+          parentType = (ITypeDefinition)genericContainer.GetMembersNamed(x.Name, false).First();
         }
         else
         {
-          parentType = (ITypeDefinition)container.GetMembersNamed(x.Name, true).First();
+          // Same reasoning as above for not ignoring case.
+          parentType = (ITypeDefinition)container.GetMembersNamed(x.Name, false).First();
         }
       }
 
