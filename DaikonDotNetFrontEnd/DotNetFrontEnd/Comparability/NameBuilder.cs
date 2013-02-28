@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Comparability
 {
@@ -68,7 +69,15 @@ namespace Comparability
                 InstanceExpressions.Add(type, new HashSet<IExpression>());
             }
             InstanceExpressions[type].Add(expr);
-            InstanceExpressionsReferredTypes.Add(expr, type);
+
+            if (!InstanceExpressionsReferredTypes.ContainsKey(expr))
+            {
+                InstanceExpressionsReferredTypes.Add(expr, type);
+            }
+            else
+            {
+                Debug.Assert(InstanceExpressionsReferredTypes[expr] == type);
+            }
         }
 
         /// <summary>
@@ -148,7 +157,11 @@ namespace Comparability
         {
             TryAdd(thisRef, "this");
             AddInstanceExpr(Type, thisRef);
-            Parent.Add(thisRef, null);
+
+            if (!Parent.ContainsKey(thisRef))
+            {
+                Parent.Add(thisRef, null);
+            }
         }
 
         public override void Visit(IBinaryOperation op)

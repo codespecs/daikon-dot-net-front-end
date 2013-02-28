@@ -10,6 +10,7 @@ namespace DotNetFrontEnd
   using System.Linq;
   using System.Text;
   using System.Collections.ObjectModel;
+    using System.Diagnostics;
 
   public class DNFETypeDeclaration
   {
@@ -39,6 +40,10 @@ namespace DotNetFrontEnd
     /// <param name="t">The single type to declare</param>
     public DNFETypeDeclaration(Type t)
     {
+      if (t == null)
+      {
+         throw new ArgumentNullException("Null type argument provided for DNFETypeDeclaration");
+      }
       this.type = t;
       this.declarationType = DeclarationType.SingleClass;
     }
@@ -118,6 +123,7 @@ namespace DotNetFrontEnd
     {
       get
       {
+ 
         // With the current two types this will always be true but won't be if new declaration types
         // are added.
         if ((this.declarationType != DeclarationType.ListOfClasses)
@@ -135,6 +141,7 @@ namespace DotNetFrontEnd
         {
           resultList.Add(this.type);
         }
+        Debug.Assert(!resultList.Contains(null));
         return new Collection<Type>(resultList);
       }
     }
