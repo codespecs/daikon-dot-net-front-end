@@ -10,19 +10,21 @@ namespace DotNetFrontEnd
   using System.Linq;
   using System.Text;
   using System.Collections.ObjectModel;
-    using System.Diagnostics;
+  using System.Diagnostics;
+  using System.Diagnostics.Contracts;
+  using DotNetFrontEnd.Contracts;
 
   public class DNFETypeDeclaration
   {
     /// <summary>
     /// Single type of the declaration
     /// </summary>
-    private Type type;
+    private readonly Type type;
 
     /// <summary>
     /// The List of types for the delcaration
     /// </summary>
-    private List<Type> list;
+    private readonly List<Type> list;
 
     /// <summary>
     /// The possible formats this declaration type could take on.
@@ -32,19 +34,28 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Internal record for what type of declaration this is
     /// </summary>
-    DeclarationType declarationType;
+    private readonly DeclarationType declarationType;
+
+    [ContractInvariantMethod]
+    private void ObjectInvariant()
+    {
+        Contract.Invariant((declarationType == DeclarationType.SingleClass).Implies(type != null));
+        Contract.Invariant((declarationType == DeclarationType.ListOfClasses).Implies(list != null));
+        
+        Contract.Invariant(list == null || type == null);
+        Contract.Invariant(list != null || type != null);
+    }
 
     /// <summary>
     /// Create a new type delcaration holding a single type
     /// </summary>
     /// <param name="t">The single type to declare</param>
-    public DNFETypeDeclaration(Type t)
+    public DNFETypeDeclaration(Type type)
     {
-      if (t == null)
-      {
-         throw new ArgumentNullException("Null type argument provided for DNFETypeDeclaration");
-      }
-      this.type = t;
+      Contract.Requires(type != null);
+      Contract.Ensures(this.type == type);
+      Contract.Ensures(this.declarationType == DeclarationType.SingleClass);
+      this.type = type;
       this.declarationType = DeclarationType.SingleClass;
     }
 
@@ -54,8 +65,14 @@ namespace DotNetFrontEnd
     /// <param name="list">The list of types for the type declaration</param>
     public DNFETypeDeclaration(Collection<Type> list)
     {
+      Contract.Requires(list != null);
+      Contract.Requires(list.Count > 0);
+      Contract.Requires(Contract.ForAll<Type>(list, t => t != null));
+      Contract.Ensures(this.list.Equals(list));
+      Contract.Ensures(this.GetDeclarationType == DeclarationType.ListOfClasses);
+
       this.list = new List<Type>(list.Count);
-      this.list.AddRange(list);// list.ForEach(x => this.list.Add(x));
+      this.list.AddRange(list);
       this.declarationType = DeclarationType.ListOfClasses;
     }
 
@@ -64,10 +81,11 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <returns>The declaration type enum value corresponding to the type of declaration this
     /// declaration type was created with.</returns>
-    internal DeclarationType GetDeclartionType
+    internal DeclarationType GetDeclarationType
     {
       get
       {
+        Contract.Ensures(Contract.Result<DeclarationType>() == this.declarationType);
         return this.declarationType;
       }
     }
@@ -82,11 +100,8 @@ namespace DotNetFrontEnd
     {
       get
       {
-        if (this.declarationType != DeclarationType.SingleClass)
-        {
-          throw new InvalidOperationException("Can't get a single type on a declaration object" +
-              " that isn't a single class.");
-        }
+        Contract.Requires(this.declarationType == DeclarationType.SingleClass);
+        Contract.Ensures(Contract.Result<Type>() != null);
         return this.type;
       }
     }
@@ -101,11 +116,10 @@ namespace DotNetFrontEnd
     {
       get
       {
-        if (this.declarationType != DeclarationType.ListOfClasses)
-        {
-          throw new InvalidOperationException("Can't get a list of types on a declaration object" +
-              " that isn't a list of types.");
-        }
+        Contract.Requires(this.declarationType == DeclarationType.ListOfClasses);
+        Contract.Ensures(Contract.Result<Collection<Type>>() != null);
+        Contract.Ensures(Contract.Result<Collection<Type>>().Equals(this.list));
+
         List<Type> resultList = new List<Type>(this.list.Count);
         list.ForEach(x => resultList.Add(x));
         return new Collection<Type>(resultList);
@@ -123,25 +137,18 @@ namespace DotNetFrontEnd
     {
       get
       {
- 
-        // With the current two types this will always be true but won't be if new declaration types
-        // are added.
-        if ((this.declarationType != DeclarationType.ListOfClasses)
-          && (this.declarationType != DeclarationType.SingleClass))
-        {
-          throw new InvalidOperationException("Can't get a list of types on a declaration object" +
-              " that isn't a list of types or a single type.");
-        }
+        Contract.Ensures(Contract.Result<Collection<Type>>() != null);
+        Contract.Ensures(Contract.ForAll(Contract.Result<Collection<Type>>(), t => t != null));
+
         List<Type> resultList = new List<Type>();
         if (this.declarationType == DeclarationType.ListOfClasses)
         {
-          this.list.ForEach(x => resultList.Add(x));
+          resultList.AddRange(this.list);
         }
-        else
+        else if (this.declarationType == DeclarationType.SingleClass)
         {
           resultList.Add(this.type);
         }
-        Debug.Assert(!resultList.Contains(null));
         return new Collection<Type>(resultList);
       }
     }

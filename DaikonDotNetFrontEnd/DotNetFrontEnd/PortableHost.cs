@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Cci;
 using System.IO;
+using System.Diagnostics.Contracts;
 
 namespace DotNetFrontEnd
 {
@@ -12,7 +13,15 @@ namespace DotNetFrontEnd
          /// <summary>
       /// The PeReader instance that is used to implement LoadUnitFrom.
       /// </summary>
-      protected PeReader peReader;
+      private readonly PeReader peReader;
+
+      private AssemblyIdentity/*?*/ coreAssemblySymbolicIdentity;
+
+      [ContractInvariantMethod]
+      private void ObjectInvariants()
+      {
+          Contract.Invariant(peReader != null);
+      }
 
       /// <summary>x
       /// Allocates a simple host environment using default settings inherited from MetadataReaderHost and that
@@ -34,6 +43,10 @@ namespace DotNetFrontEnd
       /// </param>
       public PortableHost(INameTable nameTable)
         : base(nameTable, new InternFactory(), 0, null, false) {
+
+        Contract.Requires(nameTable != null);
+        Contract.Ensures(base.NameTable == nameTable);
+
         this.peReader = new PeReader(this);
       }
 
@@ -74,6 +87,8 @@ namespace DotNetFrontEnd
       {
           get
           {
+              Contract.Ensures(Contract.Result<AssemblyIdentity>() != null);
+
               if (this.coreAssemblySymbolicIdentity == null)
               {
                   var path = @"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETPortable\v4.5\Profile\Profile7\mscorlib.dll";
@@ -84,7 +99,5 @@ namespace DotNetFrontEnd
               return this.coreAssemblySymbolicIdentity;
           }
       }
-      AssemblyIdentity/*?*/ coreAssemblySymbolicIdentity;
-     
     }
 }
