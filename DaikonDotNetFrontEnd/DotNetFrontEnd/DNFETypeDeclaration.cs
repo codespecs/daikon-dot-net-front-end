@@ -29,7 +29,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// The possible formats this declaration type could take on.
     /// </summary>
-    internal enum DeclarationType { SingleClass, ListOfClasses }
+    public enum DeclarationType { SingleClass, ListOfClasses }
 
     /// <summary>
     /// Internal record for what type of declaration this is
@@ -81,7 +81,7 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <returns>The declaration type enum value corresponding to the type of declaration this
     /// declaration type was created with.</returns>
-    internal DeclarationType GetDeclarationType
+    public DeclarationType GetDeclarationType
     {
       get
       {
@@ -100,7 +100,7 @@ namespace DotNetFrontEnd
     {
       get
       {
-        Contract.Requires(this.declarationType == DeclarationType.SingleClass);
+        Contract.Requires(GetDeclarationType == DeclarationType.SingleClass);
         Contract.Ensures(Contract.Result<Type>() != null);
         return this.type;
       }
@@ -116,7 +116,7 @@ namespace DotNetFrontEnd
     {
       get
       {
-        Contract.Requires(this.declarationType == DeclarationType.ListOfClasses);
+        Contract.Requires(GetDeclarationType == DeclarationType.ListOfClasses);
         Contract.Ensures(Contract.Result<Collection<Type>>() != null);
         Contract.Ensures(Contract.Result<Collection<Type>>().Equals(this.list));
 

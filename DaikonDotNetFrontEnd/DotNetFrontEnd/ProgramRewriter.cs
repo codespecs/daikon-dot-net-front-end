@@ -89,7 +89,7 @@ namespace DotNetFrontEnd
       {
         using (var pdbStream = File.OpenRead(pdbFile))
         {
-          pdbReader = new PdbReader(pdbStream, host);
+          pdbReader = new PdbReader(pdbStream, typeManager.Host);
         }
       }
       catch
@@ -115,9 +115,9 @@ namespace DotNetFrontEnd
           if (frontEndArgs.StaticComparability)
           {
               Console.WriteLine("Generating Comparability Information");
-              decompiled = Decompiler.GetCodeModelFromMetadataModel(host, mutable, pdbReader, DecompilerOptions.AnonymousDelegates | DecompilerOptions.Iterators);
+              decompiled = Decompiler.GetCodeModelFromMetadataModel(typeManager.Host, mutable, pdbReader, DecompilerOptions.AnonymousDelegates | DecompilerOptions.Iterators);
               //mutable = new CodeDeepCopier(host).Copy(mutable);
-              comparabilityManager = new AssemblyComparability(decompiled, host, pdbReader);
+              comparabilityManager = new AssemblyComparability(decompiled, typeManager, pdbReader);
           }
     
           ILRewriter mutator = new ILRewriter(host, pdbReader, frontEndArgs, typeManager, comparabilityManager);

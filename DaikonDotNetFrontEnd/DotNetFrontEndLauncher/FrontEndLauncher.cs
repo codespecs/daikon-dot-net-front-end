@@ -127,8 +127,8 @@ namespace DotNetFrontEndLauncher
       }
 
       // Statically set the arguments for the reflector. 
-      DotNetFrontEnd.VariableVisitor.SetReflectionArgs(frontEndArgs);
-      DotNetFrontEnd.VariableVisitor.SetTypeManager(typeManager);
+      DotNetFrontEnd.VariableVisitor.ReflectionArgs = frontEndArgs;
+      DotNetFrontEnd.VariableVisitor.TypeManager = typeManager;
       if (frontEndArgs.VerboseMode)
       {
         Console.WriteLine("Argument processing complete");

@@ -160,6 +160,8 @@ namespace DotNetFrontEnd
         Contract.Invariant(comparabilityManager != null);
 
         Contract.Invariant(nameTable == host.NameTable);
+        Contract.Invariant(nameTable != null);
+        
         Contract.Invariant(systemString == host.PlatformType.SystemString);
         Contract.Invariant(systemObject == host.PlatformType.SystemObject);
         Contract.Invariant(systemVoid == host.PlatformType.SystemVoid);
@@ -1671,9 +1673,7 @@ namespace DotNetFrontEnd
     /// <returns>The name of the method, suitable for printing to dtrace file</returns>
     private static string FormatMethodName(MethodTransition transition, IMethodDefinition methodDef)
     {
-      Contract.Requires(transition != null);
       Contract.Requires(methodDef != null);
-
       return string.Join(":::", FormatMethodName(methodDef), transition.ToString().ToUpper(CultureInfo.InvariantCulture));
     }
 

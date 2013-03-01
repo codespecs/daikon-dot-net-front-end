@@ -7,19 +7,28 @@ using Comparability;
 using EmilStefanov;
 using System.Reflection;
 using Microsoft.Cci.ILToCodeModel;
+using System.Diagnostics.Contracts;
 
 namespace DotNetFrontEnd.Comparability
 {
     public class TypeSummary
     {
-        private Dictionary<string, int> ids = new Dictionary<string,int>();
-        
-        private Dictionary<string, HashSet<string>> arrayIndexes = new Dictionary<string, HashSet<string>>();
+        private readonly Dictionary<string, int> ids = new Dictionary<string,int>();
+        private readonly Dictionary<string, HashSet<string>> arrayIndexes = new Dictionary<string, HashSet<string>>();
+        private readonly DisjointSets comparability = new DisjointSets();
 
-        private DisjointSets comparability = new DisjointSets();
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(Contract.ForAll(arrayIndexes.Keys, i => ids.ContainsKey(i)));
+        }
 
         public TypeSummary(NameBuilder names, IEnumerable<MethodVisitor> methods)
         {
+            Contract.Requires(names != null);
+            Contract.Requires(methods != null);
+            Contract.Ensures(ids.Keys.Equals(names.ThisNames()));
+
             // give a union-find id to each instance expression name
             foreach (var name in names.ThisNames())
             {
@@ -56,6 +65,8 @@ namespace DotNetFrontEnd.Comparability
 
         public int GetIndex(string name)
         {
+            Contract.Requires(!string.IsNullOrWhiteSpace(name));
+
             if (!arrayIndexes.ContainsKey(name))
             {
                 // create a dummy index
@@ -72,6 +83,7 @@ namespace DotNetFrontEnd.Comparability
 
         public int Get(string name)
         {
+            Contract.Requires(!string.IsNullOrWhiteSpace(name));
             if (!ids.ContainsKey(name))
             {
                 ids.Add(name, comparability.AddElement());
@@ -82,18 +94,30 @@ namespace DotNetFrontEnd.Comparability
 
     public class AssemblyComparability
     {
-        public Dictionary<IMethodDefinition, MethodVisitor> MethodComparability { get;  set; }
-        public Dictionary<INamedTypeDefinition, NameBuilder> TypeNames { get;  set;}
+        public Dictionary<IMethodDefinition, MethodVisitor> MethodComparability { get; private set; }
+        public Dictionary<INamedTypeDefinition, NameBuilder> TypeNames { get; private set;}
         private Dictionary<INamedTypeDefinition, TypeSummary> TypeComparability { get; set; }
 
-        public AssemblyComparability(Microsoft.Cci.MutableCodeModel.Assembly decompiled, IMetadataHost host, PdbReader reader)
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
         {
+            Contract.Invariant(MethodComparability != null);
+            Contract.Invariant(TypeNames != null);
+            Contract.Invariant(TypeComparability != null);
+        }
+
+        public AssemblyComparability(Microsoft.Cci.MutableCodeModel.Assembly decompiled, TypeManager typeManager, PdbReader reader)
+        {
+            Contract.Requires(decompiled != null);
+            Contract.Requires(typeManager != null);
+            Contract.Requires(reader != null);
+
             MethodComparability = new Dictionary<IMethodDefinition, MethodVisitor>();
             TypeNames = new Dictionary<INamedTypeDefinition, NameBuilder>();
 
             foreach (var type in decompiled.AllTypes)
             {
-                var names = new NameBuilder(type, host);
+                var names = new NameBuilder(type, typeManager);
                 new CodeTraverser() { PostorderVisitor = names }.Traverse(type);
 
                 foreach (var method in type.Methods)
@@ -155,37 +179,37 @@ namespace DotNetFrontEnd.Comparability
 
         public int GetElementComparability(string name, INamedTypeDefinition type, IMethodDefinition method)
         {
+            Contract.Requires(!string.IsNullOrWhiteSpace(name));
+            Contract.Requires(type != null || method != null);
+            Contract.Ensures(Contract.Result<int>() >= 0);
+
             if (method != null)
             {
                 var match = MethodComparability.Keys.First(m => MemberHelper.MethodsAreEquivalent(m, method));
                 return MethodComparability[match].GetArrayIndexComparability(name);
             }
-            else if (type != null)
+            else
             {
                 var match = TypeNames.Keys.First(t => TypeHelper.TypesAreEquivalent(t, type, true));
                 return TypeComparability[match].GetIndex(name);
-            }
-            else
-            {
-                throw new Exception("No type or method context provided for array variable '" + name + "'");
             }
         }
 
         public int GetComparability(string name, INamedTypeDefinition type, DeclarationPrinter.VariableKind kind, IMethodDefinition method = null)
         {
+            Contract.Requires(!string.IsNullOrWhiteSpace(name));
+            Contract.Requires(type != null || method != null);
+            Contract.Ensures(Contract.Result<int>() >= 0);
+
             if (method != null)
             {
                 var match = MethodComparability.Keys.FirstOrDefault(m => MemberHelper.MethodsAreEquivalent(m, method));
                 return MethodComparability[match].GetComparability(name);
             }
-            if (type != null)
+            else
             {
                 var match = TypeNames.Keys.FirstOrDefault(t => TypeHelper.TypesAreEquivalent(t, type, true));
                 return TypeComparability[match].Get(name);
-            }
-            else
-            {
-                throw new Exception("No type or method context provided for variable '" + name + "'");
             }
         }
     }
