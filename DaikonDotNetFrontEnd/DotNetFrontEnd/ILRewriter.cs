@@ -1128,6 +1128,8 @@ namespace DotNetFrontEnd
           MethodTransition.EXIT, methodBody.MethodDefinition), label);
       if (instrumentReturns)
       {
+        ILGeneratorLabel pptEnd = new ILGeneratorLabel();
+        EmitIncrementDepth(pptEnd);
         EmitAcquireWriterLock();
 
         // Add the i to the end of exit name to ensure uniqueness
@@ -1142,6 +1144,8 @@ namespace DotNetFrontEnd
         this.EmitExceptionInstrumentationCall(true);
 
         EmitReleaseWriterLock();
+        this.generator.MarkLabel(pptEnd);
+        EmitDecrementDepth();
       }
     }
 
@@ -1856,9 +1860,9 @@ namespace DotNetFrontEnd
     /// <param name="transition">The enter/exit status</param>
     /// <param name="methodName">Name of method in transition</param>
     /// <param name="label">Optional text that can be appended to end of exit call</param>
-    private void DeclareMethodTransition(MethodTransition transition, string methodName,
-        string label)
+    private void DeclareMethodTransition(MethodTransition transition, string methodName, string label)
     {
+      Contract.Requires(!string.IsNullOrWhiteSpace(methodName));
       switch (transition)
       {
         case MethodTransition.ENTER:
@@ -1897,8 +1901,8 @@ namespace DotNetFrontEnd
       // and it's always downcast to System.Object
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
          this.host, this.variableVisitorType, CallingConvention.Default,
-         this.systemVoid, this.nameTable.GetNameFor(
-            VariableVisitor.ExceptionInstrumentationMethodName),
+         this.systemVoid, 
+         this.nameTable.GetNameFor(VariableVisitor.ExceptionInstrumentationMethodName),
          0, this.systemObject));
     }
 
@@ -1925,8 +1929,8 @@ namespace DotNetFrontEnd
       // Make special instrumentation call instead of regular, with parameters reordered
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
          this.host, this.variableVisitorType, CallingConvention.Default,
-         this.systemVoid, this.nameTable.GetNameFor(
-            VariableVisitor.ValueFirstInstrumentationMethodName), 0,
+         this.systemVoid, 
+         this.nameTable.GetNameFor(VariableVisitor.ValueFirstInstrumentationMethodName), 0,
          this.systemObject, this.systemString, this.systemString));
     }
 
@@ -1991,8 +1995,8 @@ namespace DotNetFrontEnd
       generator.Emit(OperationCode.Ldstr, paramTypeName);
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
          this.host, this.variableVisitorType, CallingConvention.Default,
-         this.systemVoid, this.nameTable.GetNameFor(
-            VariableVisitor.InstrumentationMethodName), 0,
+         this.systemVoid, 
+         this.nameTable.GetNameFor(VariableVisitor.InstrumentationMethodName), 0,
          this.systemString, this.systemObject, this.systemString));
     }
 
@@ -2141,28 +2145,20 @@ namespace DotNetFrontEnd
     /// <returns>Modified assembly with instrumentation code added</returns>
     public IModule Visit(Assembly mutableAssembly, string pathToVisitor)
     {
-      this.assemblyIdentity = UnitHelper.GetAssemblyIdentity(mutableAssembly);
-      this.typeManager.SetAssemblyIdentity(assemblyIdentity);
       if (!File.Exists(pathToVisitor))
       {
-        throw new FileNotFoundException("DLL for Reflector doesn't exist");
+          throw new ArgumentException("DLL for Reflector does not exist at " + pathToVisitor);
       }
 
+      this.assemblyIdentity = UnitHelper.GetAssemblyIdentity(mutableAssembly);
+      this.typeManager.SetAssemblyIdentity(assemblyIdentity);
+     
       IAssembly variableVisitorAssembly = this.host.LoadUnitFrom(pathToVisitor) as IAssembly;
-      if (variableVisitorAssembly == null)
-      {
-        throw new ArgumentException("Reflector was null");
-      }
-
-      foreach (INamedTypeDefinition type in variableVisitorAssembly.GetAllTypes())
-      {
-        // Get the VariableVisitor Type, mostly filtering out the system assemblies.
-        if (type.Name.ToString() == DotNetFrontEnd.VariableVisitor.VariableVisitorClassName)
-        {
-          this.variableVisitorType = type;
-          break;
-        }
-      }
+      Contract.Assume(variableVisitorAssembly != null, "Error loading reflector");
+     
+      this.variableVisitorType = variableVisitorAssembly.GetAllTypes().First(
+          t => t.Name.ToString().Equals(DotNetFrontEnd.VariableVisitor.VariableVisitorClassName));
+      Contract.Assume(this.variableVisitorType != null, "Error locating variable visitor in assembly");
 
       if (this.frontEndArgs.SaveProgram != null)
       {
