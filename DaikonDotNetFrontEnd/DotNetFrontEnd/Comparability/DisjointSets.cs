@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics.Contracts;
 
 namespace EmilStefanov
 {
     public class DisjointSets
     {
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.m_elementCount >= 0);
+            Contract.Invariant(this.m_setCount >= 0 && this.m_setCount <= this.m_elementCount);
+        }
+
         /// <summary>
         /// Create an empty DisjointSets data structure
         /// </summary>
@@ -22,6 +30,8 @@ namespace EmilStefanov
         /// <param name="count"></param>
         public DisjointSets(int count)
         {
+            Contract.Requires(count >= 0);
+
             m_elementCount = 0;
             m_setCount = 0;
             m_nodes = new List<Node>();
@@ -36,9 +46,9 @@ namespace EmilStefanov
         /// <returns></returns>
         public int FindSet(int elementId)
         {
-            if (elementId >= m_elementCount)
-                throw new ArgumentOutOfRangeException("elementId");
-
+            Contract.Requires(elementId >= 0 && elementId <= this.ElementCount);
+            Contract.Ensures(Contract.Result<int>() >= 0 && Contract.Result<int>() <= this.SetCount);
+        
             Node curNode;
 
             // Find the root element that represents the set which `elementId` belongs to
@@ -67,10 +77,8 @@ namespace EmilStefanov
         /// <param name="setId2"></param>
         public bool Union(int setId1, int setId2)
         {
-            if (setId1 >= m_elementCount)
-                throw new ArgumentOutOfRangeException("setId1");
-            if (setId2 >= m_elementCount)
-                throw new ArgumentOutOfRangeException("setId2");
+            Contract.Requires(setId1 >= 0 && setId1 <= ElementCount);
+            Contract.Requires(setId2 >= 0 && setId2 <= ElementCount);
 
             if (setId1 == setId2)
             {
@@ -101,6 +109,10 @@ namespace EmilStefanov
 
         public int AddElement()
         {
+            Contract.Ensures(Contract.Result<int>() == ElementCount - 1);
+            Contract.Ensures(ElementCount == Contract.OldValue(ElementCount) + 1);
+            Contract.Ensures(SetCount == Contract.OldValue(SetCount) + 1);
+            
             AddElements(1);
             return ElementCount - 1;
         }
@@ -112,8 +124,9 @@ namespace EmilStefanov
         /// <param name="addCount"></param>
         public void AddElements(int addCount)
         {
-            if (addCount < 0)
-                throw new ArgumentOutOfRangeException("addCount");
+            Contract.Requires(addCount >= 0);
+            Contract.Ensures(this.ElementCount == Contract.OldValue<int>(this.ElementCount) + addCount);
+            Contract.Ensures(this.SetCount == Contract.OldValue<int>(this.SetCount) + addCount);
 
             // insert and initialize the specified number of element nodes to the end of the `m_nodes` array
             for (int i = m_elementCount; i < m_elementCount + addCount; ++i)
@@ -135,7 +148,12 @@ namespace EmilStefanov
         /// </summary>
         public int ElementCount
         {
-            get { return m_elementCount; }
+            get 
+            {
+                Contract.Ensures(Contract.Result<int>() == m_elementCount);
+                Contract.Ensures(Contract.Result<int>() > 0);
+                return m_elementCount; 
+            }
         }
 
         /// <summary>
@@ -143,7 +161,12 @@ namespace EmilStefanov
         /// </summary>
         public int SetCount
         {
-            get { return m_setCount; }
+            get 
+            {
+                Contract.Ensures(Contract.Result<int>() == m_setCount);
+                Contract.Ensures(Contract.Result<int>() >= 0 && Contract.Result<int>() <= ElementCount);
+                return m_setCount; 
+            }
         }
 
         /// <summary>
@@ -180,6 +203,6 @@ namespace EmilStefanov
         /// <summary>
         /// The list of nodes representing the elements.
         /// </summary>
-        private List<Node> m_nodes;
+        private readonly List<Node> m_nodes;
     }
 }

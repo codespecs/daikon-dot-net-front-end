@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Cci;
 using EmilStefanov;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace Comparability
 {
@@ -16,31 +17,42 @@ namespace Comparability
     public class MethodVisitor : CodeVisitor
     {
         public NameBuilder Names { get; private set; }
-
-        private Dictionary<string, int> ids = new Dictionary<string, int>();
-        private DisjointSets comparability = new DisjointSets();
         public IMethodDefinition Method { get; private set; }
 
-        private Dictionary<string, HashSet<string>> arrayIndexes = new Dictionary<string, HashSet<string>>();
+        private readonly Dictionary<string, int> ids = new Dictionary<string, int>();
+        private readonly DisjointSets comparability = new DisjointSets();
+        
+        private readonly Dictionary<string, HashSet<string>> arrayIndexes = new Dictionary<string, HashSet<string>>();
 
-        private HashSet<IReturnStatement> returns = new HashSet<IReturnStatement>();
-        private HashSet<IMethodCall> calls = new HashSet<IMethodCall>();
+        private readonly HashSet<IReturnStatement> returns = new HashSet<IReturnStatement>();
+        private readonly HashSet<IMethodCall> calls = new HashSet<IMethodCall>();
 
         /// <summary>
         /// Map from instance expressions to their respective types.
         /// </summary>
-        public Dictionary<IExpression, ITypeReference> ReferencedTypes;
+        public readonly Dictionary<IExpression, ITypeReference> ReferencedTypes = new Dictionary<IExpression, ITypeReference>();
 
-        private HashSet<IExpression> namedExpressions = new HashSet<IExpression>();
-        
+        private readonly HashSet<IExpression> namedExpressions = new HashSet<IExpression>();
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(Names != null);
+            Contract.Invariant(Method != null);
+            Contract.Invariant(ReferencedTypes != null);
+        }
+
         public MethodVisitor(IMethodDefinition method, NameBuilder names)
         {
+            Contract.Requires(method != null);
+            Contract.Requires(names != null);
+            Contract.Ensures(Names == names);
+            Contract.Ensures(Method == method);
+
             Names = names;
             Method = method;
-            ReferencedTypes = new Dictionary<IExpression, ITypeReference>();
-
-            ids.Add("return", comparability.AddElement());
             
+            ids.Add("return", comparability.AddElement());
             foreach (var param in Method.Parameters)
             {
                 ids.Add(param.Name.Value, comparability.AddElement());
@@ -49,6 +61,9 @@ namespace Comparability
 
         private void PropogateTypeReference(IExpression inner, IExpression outer)
         {
+            Contract.Requires(inner != null);
+            Contract.Requires(outer != null);
+
             if (ReferencedTypes.ContainsKey(inner))
             {
                 AddTypeReference(ReferencedTypes[inner], outer);
@@ -57,18 +72,24 @@ namespace Comparability
 
         private void AddTypeReference(ITypeReference type, IExpression expr)
         {
+            Contract.Requires(type != null);
+            Contract.Requires(expr != null);
+            Contract.Ensures(ReferencedTypes.ContainsKey(expr));
+            Contract.Ensures(ReferencedTypes[expr] == type);
+            
             if (!ReferencedTypes.ContainsKey(expr))
             {
                 ReferencedTypes.Add(expr, type);
             }
             else
             {
-                Debug.Assert(ReferencedTypes[expr] == type);
+                Contract.Assume(ReferencedTypes[expr] == type);
             }
         }
 
         private string NameForArg(IExpression arg)
         {
+            Contract.Requires(arg != null);
             if (Names.NameTable.ContainsKey(arg))
             {
                 return Names.NameTable[arg];
@@ -183,6 +204,8 @@ namespace Comparability
 
         public static HashSet<string> Union(params IEnumerable<string>[] collections)
         {
+            Contract.Requires(collections != null);
+            Contract.Ensures(Contract.Result<HashSet<string>>() != null);
             return collections.Aggregate(new HashSet<string>(), (a, c) => new HashSet<string>(a.Union(c)));
         }
 
@@ -190,6 +213,7 @@ namespace Comparability
         {
             get
             {
+                Contract.Ensures(Contract.Result<HashSet<string>>() != null);
                 var ps = new HashSet<string>(Method.Parameters.Select(p => p.Name.Value));
                 ps.Add("return");
                 return new HashSet<string>(ids.Keys.Where(n => ps.Any(p => n.Equals(p) || n.StartsWith(p + "."))));
@@ -203,6 +227,9 @@ namespace Comparability
         /// <returns>the comparability set for <code>names</code>, containing only those <code>names</code></returns>
         private HashSet<HashSet<string>> ForNames(HashSet<string> names)
         {
+            Contract.Requires(names != null);
+            Contract.Ensures(Contract.Result<HashSet<HashSet<string>>>() != null);
+
             var cmp = Comparability;
 
             HashSet<HashSet<string>> result = new HashSet<HashSet<string>>();
@@ -218,6 +245,8 @@ namespace Comparability
         {
             get
             {
+                Contract.Ensures(Contract.Result<HashSet<HashSet<string>>>() != null);
+
                 var cmp = Comparability;
 
                 HashSet<HashSet<string>> result = new HashSet<HashSet<string>>();
@@ -232,6 +261,9 @@ namespace Comparability
 
         public HashSet<string> IndexComparabilityOpinion(string array)
         {
+            Contract.Requires(string.IsNullOrWhiteSpace(array));
+            Contract.Ensures(Contract.Result<HashSet<string>>() != null);
+
             return arrayIndexes.ContainsKey(array) 
                    ? arrayIndexes[array] 
                    : new HashSet<string>();
@@ -241,6 +273,7 @@ namespace Comparability
         {
             get
             {
+                Contract.Ensures(Contract.Result<HashSet<string>>() != null);
                 return new HashSet<string>(Names.Names(Names.StaticNames.Intersect(namedExpressions)));
             }
         }
@@ -253,6 +286,7 @@ namespace Comparability
         {
             get
             {
+                Contract.Ensures(Contract.Result<HashSet<HashSet<string>>>() != null);
                 return ForNames(ParameterNames);   
             }
         }
@@ -261,6 +295,7 @@ namespace Comparability
         {
             get
             {
+                Contract.Ensures(Contract.Result<HashSet<HashSet<string>>>() != null);
                 return ForNames(Names.ThisNames());
             }
         }
@@ -272,6 +307,9 @@ namespace Comparability
         /// <returns><code>true</code> if a change occured</returns>
         public bool MergeOpinion(HashSet<HashSet<string>> opinion)
         {
+            Contract.Requires(opinion != null);
+            Contract.Requires(!opinion.Contains(null));
+
             bool changed = false;
             foreach (var cmp in opinion)
             {
@@ -287,7 +325,6 @@ namespace Comparability
                 return returns.Any(r => r.Expression != null);
             }
         }
-
 
         private static string Rebase(string name, Dictionary<string, string> map)
         {

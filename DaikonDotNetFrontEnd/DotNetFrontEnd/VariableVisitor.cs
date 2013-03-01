@@ -243,17 +243,26 @@ namespace DotNetFrontEnd
     /// <exception cref="NotSupportedException">Thrown during an attempt to set args after they 
     /// have already been set.</exception>
     /// <param name="reflectionArgs">The reflection args to set.</param>
-    public static void SetReflectionArgs(FrontEndArgs reflectionArgs)
+    public static FrontEndArgs ReflectionArgs
     {
-      Contract.Requires(frontEndArgs == null, "Attempt to set arguments on the reflector twice.");
-      Contract.Requires(reflectionArgs != null);
-      Contract.Ensures(frontEndArgs == reflectionArgs);
+        get
+        {
+            Contract.Ensures(Contract.Result<FrontEndArgs>() == VariableVisitor.frontEndArgs);
+            return VariableVisitor.frontEndArgs;
+        }
+        set
+        {
+            Contract.Requires(ReflectionArgs == null, "Attempt to set arguments on the reflector twice.");
+            Contract.Requires(value != null);
+            Contract.Ensures(ReflectionArgs == value);
+            Contract.Ensures(VariableVisitor.frontEndArgs == value);
 
-      frontEndArgs = reflectionArgs;
-      if (frontEndArgs.SampleStart != FrontEndArgs.NoSampleStart)
-      {
-        occurenceCounts = new Dictionary<string, int>();
-      }
+            VariableVisitor.frontEndArgs = value;
+            if (frontEndArgs.SampleStart != FrontEndArgs.NoSampleStart)
+            {
+                occurenceCounts = new Dictionary<string, int>();
+            }
+        }
     }
 
     /// <summary>
@@ -263,13 +272,22 @@ namespace DotNetFrontEnd
     /// <exception cref="NotSupportedException">Thrown during an attempt to set the type manager
     /// after it has already been set.</exception>
     /// <param name="typeManager">The TypeManager to use for reflective visiting.</param>
-    public static void SetTypeManager(TypeManager typeManager)
+    public static TypeManager TypeManager
     {
-        Contract.Requires(VariableVisitor.typeManager == null, "Attempt to set type manager on the reflector twice.");
-        Contract.Requires(typeManager != null);
-        Contract.Ensures(VariableVisitor.typeManager == typeManager);
+        get
+        {
+            Contract.Ensures(Contract.Result<TypeManager>() == VariableVisitor.typeManager);
+            return VariableVisitor.typeManager;   
+        }
+        set
+        {
+            Contract.Requires(VariableVisitor.TypeManager == null, "Attempt to set type manager on the reflector twice.");
+            Contract.Requires(value != null);
+            Contract.Ensures(VariableVisitor.TypeManager == value);
+            Contract.Ensures(VariableVisitor.typeManager == value);
+            VariableVisitor.typeManager = value;
+        }
 
-        VariableVisitor.typeManager = typeManager;
     }
 
     #region Methods to be called from program to be profiled
@@ -310,7 +328,7 @@ namespace DotNetFrontEnd
 
         using (stream)
         {
-            SetTypeManager((TypeManager)formatter.Deserialize(stream));
+            TypeManager = (TypeManager)formatter.Deserialize(stream);
         }
     }
 
@@ -442,8 +460,12 @@ namespace DotNetFrontEnd
         return Interlocked.Increment(ref globalNonce);
     }
 
+    /// <summary>
+    /// Returns the current PPT visiting nesting depth for the current thread.
+    /// </summary>
+    /// <returns>The current PPT visiting nesting depth for the current thread.</returns>
     [Pure]
-    private static int NestingDepth()
+    public static int NestingDepth()
     {
         Contract.Ensures(Contract.Result<int>() > 0);
         int x;

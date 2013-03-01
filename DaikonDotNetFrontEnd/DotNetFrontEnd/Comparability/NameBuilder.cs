@@ -7,6 +7,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
+using DotNetFrontEnd;
 
 namespace Comparability
 {
@@ -14,6 +16,7 @@ namespace Comparability
     public class NameBuilder : CodeVisitor
     {
         public INamedTypeDefinition Type { get; private set; }
+        public TypeManager TypeManager { get; private set; }
         public Dictionary<IExpression, string> NameTable { get; private set; }
         public HashSet<IExpression> StaticNames { get; private set; }
         public Dictionary<IExpression, HashSet<IExpression>> NamedChildren { get; private set; }
@@ -24,19 +27,39 @@ namespace Comparability
         /// <summary>
         /// Map from type to field, property, and methods referenced in <code>Type</code>. 
         /// </summary>
-        public Dictionary<ITypeReference, HashSet<IExpression>> InstanceExpressions;
+        public readonly Dictionary<ITypeReference, HashSet<IExpression>> InstanceExpressions;
         
         /// <summary>
         /// Map from instance expressions to their respective types.
         /// </summary>
-        public Dictionary<IExpression, ITypeReference> InstanceExpressionsReferredTypes;
+        public readonly Dictionary<IExpression, ITypeReference> InstanceExpressionsReferredTypes;
 
         private int methodCallCnt = 0;
 
-        public NameBuilder(INamedTypeDefinition type, IMetadataHost host)
+        [ContractInvariantMethod]
+        private void ObjectInvariants()
         {
+            Contract.Invariant(methodCallCnt >= 0);
+            Contract.Invariant(Host != null);
+            Contract.Invariant(Type != null);
+            Contract.Invariant(NamedChildren != null);
+            Contract.Invariant(NameTable != null);
+            Contract.Invariant(StaticNames != null);
+            Contract.Invariant(Parent != null);
+            Contract.Invariant(AnonymousDelegateReturns != null);
+        }
+
+        public NameBuilder(INamedTypeDefinition type, TypeManager typeManager)
+        {
+            Contract.Requires(type != null);
+            Contract.Requires(typeManager != null);
+            Contract.Ensures(Type == type);
+            Contract.Ensures(TypeManager == typeManager);
+            Contract.Ensures(Host == typeManager.Host);
+
             Type = type;
-            Host = host;
+            TypeManager = typeManager;
+            Host = typeManager.Host;
             StaticNames = new HashSet<IExpression>();
             InstanceExpressions = new Dictionary<ITypeReference, HashSet<IExpression>>();
             InstanceExpressionsReferredTypes = new Dictionary<IExpression, ITypeReference>();
@@ -46,8 +69,11 @@ namespace Comparability
             AnonymousDelegateReturns = new HashSet<IReturnStatement>();
         }
 
+        [Pure]
         public IEnumerable<string> Names(IEnumerable<IExpression> exprs)
         {
+            Contract.Requires(exprs != null);
+            Contract.Ensures(Contract.ForAll(Contract.Result<IEnumerable<string>>(), n => NameTable.ContainsValue(n)));
             foreach (var e in exprs)
             {
                 if (NameTable.ContainsKey(e))
@@ -57,13 +83,26 @@ namespace Comparability
             }
         }
 
+        [Pure]
         public HashSet<string> NamesForType(ITypeReference type, HashSet<IExpression> exprs)
         {
+            Contract.Requires(type != null);
+            Contract.Requires(exprs != null);
+            Contract.Requires(InstanceExpressions.ContainsKey(type));
+            Contract.Ensures(Contract.ForAll(Contract.Result<HashSet<string>>(), n => NameTable.ContainsValue(n)));
+            
             return new HashSet<string>(Names(InstanceExpressions[type].Intersect(exprs)));
         }
 
         private void AddInstanceExpr(ITypeReference type, IExpression expr)
         {
+            Contract.Requires(type != null);
+            Contract.Requires(expr != null);
+            Contract.Ensures(InstanceExpressions.ContainsKey(type));
+            Contract.Ensures(InstanceExpressions[type].Contains(expr));
+            Contract.Ensures(InstanceExpressionsReferredTypes.ContainsKey(expr));
+            Contract.Ensures(InstanceExpressionsReferredTypes[expr] == type); 
+
             if (!InstanceExpressions.ContainsKey(type))
             {
                 InstanceExpressions.Add(type, new HashSet<IExpression>());
@@ -87,16 +126,15 @@ namespace Comparability
         /// <param name="name"></param>
         private void TryAdd(IExpression expression, string name)
         {
+            Contract.Requires(expression != null);
+            Contract.Requires(!string.IsNullOrWhiteSpace(name));
+            Contract.Ensures(NameTable.ContainsKey(expression));
+            Contract.Ensures(NameTable[expression].Equals(name));
+
             if (NameTable.ContainsKey(expression))
             {
-                if (!name.Equals(NameTable[expression]))
-                {
-                    throw new Exception("Expression already exists in table with different name. Table: " + NameTable[expression] + " New: " + name); 
-                }
-                else
-                {
-                    // NO OP (when would this occur?)
-                }
+                Contract.Assume(name.Equals(NameTable[expression]),
+                    "Expression already exists in table with different name. Table: " + NameTable[expression] + " New: " + name);
             }
             else
             {
@@ -108,8 +146,11 @@ namespace Comparability
         /// Returns names that refer to this <code>Type</code>.
         /// </summary>
         /// <returns>names that refer to this <code>Type</code>.</returns>
+        [Pure]
         public HashSet<string> ThisNames()
         {
+            Contract.Ensures(Contract.Result<HashSet<string>>() != null);
+            Contract.Ensures(Contract.ForAll(Contract.Result<HashSet<string>>(), n => NameTable.ContainsValue(n)));
             return InstanceNames(Type);
         }
 
@@ -117,8 +158,12 @@ namespace Comparability
         /// Returns names that refer to any type.
         /// </summary>
         /// <returns>names that refer to any type.</returns>
+        [Pure]
         public HashSet<string> InstanceNames()
         {
+            Contract.Ensures(Contract.Result<HashSet<string>>() != null);
+            Contract.Ensures(Contract.ForAll(Contract.Result<HashSet<string>>(), n => NameTable.ContainsValue(n)));
+            
             HashSet<string> result = new HashSet<string>();
             foreach (var typeRef in InstanceExpressions.Keys)
             {
@@ -130,8 +175,15 @@ namespace Comparability
             return result;
         }
 
+        [Pure]
         public HashSet<string> InstanceNames(INamedTypeDefinition type)
         {
+            Contract.Requires(type != null);
+            Contract.Requires(InstanceExpressions.ContainsKey(type));
+            Contract.Ensures(Contract.Result<HashSet<string>>() != null);
+            Contract.Ensures(Contract.Result<HashSet<string>>().Count == InstanceExpressions[type].Count);
+            Contract.Ensures(Contract.ForAll(Contract.Result<HashSet<string>>(), n => NameTable.ContainsValue(n)));
+           
             return InstanceExpressions.Count == 0 ?
                 new HashSet<string>() :
                 new HashSet<string>(InstanceExpressions[type].Select(x => NameTable[x]));
@@ -180,28 +232,6 @@ namespace Comparability
             ResolveEnum(op.Target, op.Source);
         }
 
-        /// <summary>
-        /// Creates a type reference anchored in the given assembly reference and whose names are relative to the given host.
-        /// When the type name has periods in it, a structured reference with nested namespaces is created.
-        /// </summary>
-        public static INamespaceTypeReference CreateTypeReference(IMetadataHost host, IAssemblyReference assemblyReference, string typeName)
-        {
-            IUnitNamespaceReference ns = new Microsoft.Cci.Immutable.RootUnitNamespaceReference(assemblyReference);
-            string[] names = typeName.Split('.');
-            for (int i = 0, n = names.Length - 1; i < n; i++)
-                ns = new Microsoft.Cci.Immutable.NestedUnitNamespaceReference(ns, host.NameTable.GetNameFor(names[i]));
-            return new Microsoft.Cci.Immutable.NamespaceTypeReference(host, ns, host.NameTable.GetNameFor(names[names.Length - 1]), 0, false, false, true, PrimitiveTypeCode.NotPrimitive);
-        }
-
-        private bool IsCompilerGenerated(IDefinition def)
-        {
-            var host = this.Host;
-            if (AttributeHelper.Contains(def.Attributes, host.PlatformType.SystemRuntimeCompilerServicesCompilerGeneratedAttribute)) return true;
-            var systemDiagnosticsDebuggerNonUserCodeAttribute = CreateTypeReference(host, new Microsoft.Cci.Immutable.AssemblyReference(host, host.ContractAssemblySymbolicIdentity), "System.Diagnostics.DebuggerNonUserCodeAttribute");
-            return AttributeHelper.Contains(def.Attributes, systemDiagnosticsDebuggerNonUserCodeAttribute);
-        }
-
-
         public override void Visit(ITargetExpression bounded)
         {
             HandleBundle(bounded, bounded.Definition, bounded.Instance);
@@ -214,6 +244,9 @@ namespace Comparability
 
         private void HandleBundle(IExpression outer, object definition, IExpression instance)
         {
+            Contract.Requires(outer != null);
+            Contract.Requires(definition != null);
+
             if (definition is IParameterDefinition)
             {
                 TryAdd(outer, ((IParameterDefinition)definition).Name.Value);
@@ -222,7 +255,7 @@ namespace Comparability
             {
                 var def = ((IFieldReference)definition);
 
-                if (!def.ResolvedField.Attributes.Any(a => IsCompilerGenerated(def.ResolvedField)))
+                if (!def.ResolvedField.Attributes.Any(a => TypeManager.IsCompilerGenerated(def.ResolvedField)))
                 {
                     if (def.IsStatic)
                     {
@@ -295,6 +328,9 @@ namespace Comparability
 
         private void ResolveEnum(IExpression enumExpr, IExpression constantExpr)
         {
+            Contract.Requires(enumExpr != null);
+            Contract.Requires(constantExpr != null);
+
             var targetType = enumExpr.Type.ResolvedType;
 
             if (targetType.IsEnum && constantExpr is ICompileTimeConstant)
@@ -325,6 +361,8 @@ namespace Comparability
         /// <remarks>MemberHelper.IsSetter requires that the method be public</remarks>
         public static bool IsSetter(IMethodDefinition method)
         {
+            Contract.Requires(method != null);
+            Contract.Ensures(Contract.Result<bool>() == (method.IsSpecialName && method.Name.Value.StartsWith("set_")));
             return method.IsSpecialName && method.Name.Value.StartsWith("set_");
         }
 
@@ -336,6 +374,8 @@ namespace Comparability
         /// <remarks>MemberHelper.IsGetter requires that the method be public</remarks>
         public static bool IsGetter(IMethodDefinition method)
         {
+            Contract.Requires(method != null);
+            Contract.Ensures(Contract.Result<bool>() == (method.IsSpecialName && method.Name.Value.StartsWith("get")));
             return method.IsSpecialName && method.Name.Value.StartsWith("get_");
         }
 

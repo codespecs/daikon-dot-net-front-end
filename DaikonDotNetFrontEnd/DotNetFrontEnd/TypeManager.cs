@@ -32,6 +32,11 @@ namespace DotNetFrontEnd
     [Pure]
     public static FieldInfo[] GetSortedFields(this Type type, BindingFlags bindingAttr)
     {
+      Contract.Requires(type != null);
+      Contract.Ensures(Contract.Result<FieldInfo[]>() != null);
+      Contract.Ensures(Contract.ForAll(0, Contract.Result<FieldInfo[]>().Length - 2,
+          i => Contract.Result<FieldInfo[]>()[i].Name.CompareTo(Contract.Result<FieldInfo[]>()[i + 1].Name) <= 0));
+
       FieldInfo[] fields = type.GetFields(bindingAttr);
       Array.Sort(fields, delegate(FieldInfo lhs, FieldInfo rhs)
       {
@@ -205,6 +210,15 @@ namespace DotNetFrontEnd
         }
     }
 
+    public AssemblyIdentity AssemblyIdentity
+    {
+        get
+        {
+            Contract.Ensures(Contract.Result<AssemblyIdentity>() == this.assemblyIdentity);
+            return this.assemblyIdentity;
+        }
+    }
+
     [ContractInvariantMethod]
     private void ObjectInvariants()
     {
@@ -325,7 +339,7 @@ namespace DotNetFrontEnd
         BindingFlags.Public | BindingFlags.NonPublic |
         BindingFlags.Static | BindingFlags.Instance
       );
-      Contract.Assume(type != null);
+      Contract.Assert(type != null);
       Contract.Assume(method != null, "No method of name " + methodName + " exists for type on type " + typeName);
       AddPureMethod(type, method);
     }
@@ -385,8 +399,8 @@ namespace DotNetFrontEnd
     public void SetAssemblyIdentity(AssemblyIdentity identity)
     {
       Contract.Requires(identity != null);
-      Contract.Requires(this.assemblyIdentity == null,  "Cannot reset assembly identity");
-      Contract.Ensures(this.assemblyIdentity != identity);
+      Contract.Requires(this.AssemblyIdentity == null,  "Cannot reset assembly identity");
+      Contract.Ensures(this.AssemblyIdentity == identity);
       this.assemblyIdentity = identity;
     }
 
@@ -397,13 +411,14 @@ namespace DotNetFrontEnd
     /// <returns>True if the type is an F# list, false otherwise.</returns>
     private bool IsFSharpListTest(Type type)
     {
+      Contract.Requires(type != null);
       if (this.frontEndArgs.ElementInspectArraysOnly)
       {
         return type.IsArray;
       }
       else
       {
-        return type.Namespace == "Microsoft.FSharp.Collections" && type.Name.StartsWith("FSharpList");
+        return type.Namespace.Equals("Microsoft.FSharp.Collections") && type.Name.StartsWith("FSharpList");
       }
     }
 
@@ -415,6 +430,7 @@ namespace DotNetFrontEnd
     /// false</returns>
     public bool IsFSharpListImplementer(Type type)
     {
+      Contract.Requires(type != null);
       return IsElementOfCollectionType(type, this.isFSharpListHashmap, IsFSharpListTest);
     }
 
@@ -425,8 +441,8 @@ namespace DotNetFrontEnd
     /// <returns>Whether type is a C# list</returns>
     private bool IsListTest(Type type)
     {
-      return SearchForMatchingInterface(type,
-          interfaceToTest => interfaceToTest == TypeManager.ListType);
+      Contract.Requires(type != null);
+      return SearchForMatchingInterface(type, interfaceToTest => interfaceToTest == TypeManager.ListType);
     }
 
     /// <summary>
@@ -436,6 +452,7 @@ namespace DotNetFrontEnd
     /// <returns>True if the type implements System.Collections.List, otherwise false</returns>
     public bool IsListImplementer(Type type)
     {
+      Contract.Requires(type != null);
       return IsElementOfCollectionType(type, this.isListHashmap, IsListTest);
     }
 
@@ -448,10 +465,8 @@ namespace DotNetFrontEnd
     /// <returns>True if the type is on the non int-types, otherwise false.</returns>
     public static bool IsNonstandardIntType(Type type)
     {
-      return
-          type == TypeManager.sByteType ||
-          type == TypeManager.uShortType ||
-          type == TypeManager.uIntType;
+      Contract.Requires(type != null);
+      return type == TypeManager.sByteType || type == TypeManager.uShortType || type == TypeManager.uIntType;
     }
 
     /// <summary>
@@ -534,6 +549,7 @@ namespace DotNetFrontEnd
     /// <returns>True if the type meets the linked-list qualification, otherwise false</returns>
     public bool IsLinkedListImplementer(Type type)
     {
+        Contract.Requires(type != null);
       // The implementation appears to the test as a linked list.
       if (type.AssemblyQualifiedName != null && type.AssemblyQualifiedName.Contains("System"))
       {
@@ -585,6 +601,7 @@ namespace DotNetFrontEnd
     /// <returns><code>true</code> if <paramref name="type"/> implements <code>ISet</code></returns>
     public bool IsSet(Type type)
     {
+      Contract.Requires(type != null);
       return type.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ISet<>));
     }
 
@@ -826,11 +843,10 @@ namespace DotNetFrontEnd
     /// <param name="deeplyInspectGenericParameters">Whether to investigate constraints on
     /// generic parameters</param>
     /// <returns>A reflection type</returns>
-    public string ConvertCCITypeToAssemblyQualifiedName(ITypeReference type,
-      bool deeplyInspectGenericParameters)
+    public string ConvertCCITypeToAssemblyQualifiedName(ITypeReference type, bool deeplyInspectGenericParameters)
     {
-      //try
-      //{
+      Contract.Requires(type != null);
+  
       string simpleTypeName = CheckSimpleCases(type);
       if (simpleTypeName != null)
       {
@@ -911,12 +927,6 @@ namespace DotNetFrontEnd
       AssemblyIdentity identity = DetermineAssemblyIdentity(type);
 
       return CompleteAssemblyQualifiedTypeNameProcessing(typeName, identity);
-      //}
-      //catch (Exception ex)
-      //{
-      //  throw new Exception(String.Format("Unable to convert CCI type named {0} to assembly"
-      //      + " qualified name", type), ex);
-      //}
     }
 
     /// <summary>
@@ -930,6 +940,8 @@ namespace DotNetFrontEnd
     /// of the classes or interfaces constraining the generic parameter is printed.</returns>
     private string PrintListOfGenericParameterClassesAndInterfaces(ITypeReference type)
     {
+      Contract.Requires(type != null);
+
       GenericParameter gtp = (GenericParameter)type;
       if (gtp != null && gtp.Constraints != null)
       {
@@ -995,6 +1007,7 @@ namespace DotNetFrontEnd
     /// <returns>Name of the type if it is simple, and null otherwise</returns>
     private static string CheckSimpleCases(ITypeReference type)
     {
+      Contract.Requires(type != null);
       try
       {
         if (Type.GetType(type.ToString()) != null)
@@ -1016,9 +1029,12 @@ namespace DotNetFrontEnd
     /// <param name="type">The type to process</param>
     /// <param name="typeName">Typename built up so far</param>
     /// <returns>Typename updated to reflected nested types if necessary</returns>
-    private static string UpdateTypeNameForNestedTypeDefinitions(ITypeReference type,
-        string typeName)
+    private static string UpdateTypeNameForNestedTypeDefinitions(ITypeReference type, string typeName)
     {
+      Contract.Requires(type != null);
+      Contract.Requires(!string.IsNullOrWhiteSpace(typeName));
+      Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+
       if (type is NestedTypeDefinition)
       {
         ITypeDefinition parentType = ((NestedTypeDefinition)type).ContainingTypeDefinition;
@@ -1059,10 +1075,7 @@ namespace DotNetFrontEnd
       }
       else
       {
-        if (this.assemblyIdentity == null)
-        {
-          throw new ArgumentException("Assembly identity must be set");
-        }
+        Contract.Assume(this.assemblyIdentity == null, "Assembly identity not set");
         identity = this.assemblyIdentity;
       }
       return identity;
@@ -1077,6 +1090,10 @@ namespace DotNetFrontEnd
     /// <returns>Type name with the generic arguments included</returns>
     private string AddGenericTypeArguments(string typeName, IGenericTypeInstanceReference castedType)
     {
+      Contract.Requires(!string.IsNullOrWhiteSpace(typeName));
+      Contract.Requires(castedType != null);
+      Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+
       StringBuilder builder = new StringBuilder();
       builder.Append(typeName);
 
@@ -1128,6 +1145,10 @@ namespace DotNetFrontEnd
     /// </summary>
     public static INamespaceTypeReference CreateTypeReference(IMetadataHost host, IAssemblyReference assemblyReference, string typeName)
     {
+      Contract.Requires(host != null);
+      Contract.Requires(assemblyReference != null);
+      Contract.Requires(!string.IsNullOrWhiteSpace(typeName));
+
       IUnitNamespaceReference ns = new Microsoft.Cci.Immutable.RootUnitNamespaceReference(assemblyReference);
       string[] names = typeName.Split('.');
       for (int i = 0, n = names.Length - 1; i < n; i++)
@@ -1137,6 +1158,8 @@ namespace DotNetFrontEnd
 
     public bool IsCompilerGenerated(IDefinition def)
     {
+      Contract.Requires(def != null);
+
       var host = this.Host;
       
       if (AttributeHelper.Contains(def.Attributes, host.PlatformType.SystemRuntimeCompilerServicesCompilerGeneratedAttribute)) return true;  
@@ -1163,6 +1186,7 @@ namespace DotNetFrontEnd
     /// <returns><code>true</code> if <param name="methodDef"/> is compiler generated.</returns>
     public bool IsMethodCompilerGenerated(IMethodDefinition methodDef)
     {
+      Contract.Requires(methodDef != null);
       return IsCompilerGenerated(methodDef);
     }
 
@@ -1173,6 +1197,7 @@ namespace DotNetFrontEnd
     /// <returns><code>true</code> if <param name="typeDef"/> is compiler generated.</returns>
     public bool IsTypeCompilerGenerated(ITypeDefinition typeDef)
     {
+      Contract.Requires(typeDef != null);
       return IsCompilerGenerated(typeDef);
     }
 
@@ -1236,6 +1261,8 @@ namespace DotNetFrontEnd
     /// to other immutable types</returns>
     public static bool IsImmutable(Type type)
     {
+        Contract.Requires(type != null);
+       
         if (immutability.ContainsKey(type))
         {
             return immutability[type];
