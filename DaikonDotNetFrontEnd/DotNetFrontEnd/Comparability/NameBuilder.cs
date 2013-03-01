@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using DotNetFrontEnd;
+using DotNetFrontEnd.Contracts;
 
 namespace Comparability
 {
@@ -27,12 +28,12 @@ namespace Comparability
         /// <summary>
         /// Map from type to field, property, and methods referenced in <code>Type</code>. 
         /// </summary>
-        public readonly Dictionary<ITypeReference, HashSet<IExpression>> InstanceExpressions;
+        public Dictionary<ITypeReference, HashSet<IExpression>> InstanceExpressions { get; private set; }
         
         /// <summary>
         /// Map from instance expressions to their respective types.
         /// </summary>
-        public readonly Dictionary<IExpression, ITypeReference> InstanceExpressionsReferredTypes;
+        public Dictionary<IExpression, ITypeReference> InstanceExpressionsReferredTypes { get; private set; }
 
         private int methodCallCnt = 0;
 
@@ -47,6 +48,10 @@ namespace Comparability
             Contract.Invariant(StaticNames != null);
             Contract.Invariant(Parent != null);
             Contract.Invariant(AnonymousDelegateReturns != null);
+            Contract.Invariant(InstanceExpressionsReferredTypes != null);
+            Contract.Invariant(InstanceExpressions != null);
+
+            Contract.Invariant(Contract.ForAll(StaticNames, n => NameTable.ContainsKey(n)));
         }
 
         public NameBuilder(INamedTypeDefinition type, TypeManager typeManager)
@@ -179,18 +184,20 @@ namespace Comparability
         public HashSet<string> InstanceNames(INamedTypeDefinition type)
         {
             Contract.Requires(type != null);
-            Contract.Requires(InstanceExpressions.ContainsKey(type));
             Contract.Ensures(Contract.Result<HashSet<string>>() != null);
-            Contract.Ensures(Contract.Result<HashSet<string>>().Count == InstanceExpressions[type].Count);
+            Contract.Ensures((!InstanceExpressions.ContainsKey(type)).Implies(Contract.Result<HashSet<string>>().Count == 0));
             Contract.Ensures(Contract.ForAll(Contract.Result<HashSet<string>>(), n => NameTable.ContainsValue(n)));
            
-            return InstanceExpressions.Count == 0 ?
-                new HashSet<string>() :
-                new HashSet<string>(InstanceExpressions[type].Select(x => NameTable[x]));
+            return InstanceExpressions.ContainsKey(type) ?
+                new HashSet<string>(InstanceExpressions[type].Select(x => NameTable[x])) :
+                new HashSet<string>();
         }
 
         private void AddChildren(IExpression parent, params IExpression[] exprs)
         {
+            Contract.Requires(parent != null);
+            Contract.Requires(exprs != null);
+
             var children = exprs.Where(x => NameTable.ContainsKey(x));
             if (children.Any())
             {
@@ -249,7 +256,9 @@ namespace Comparability
 
             if (definition is IParameterDefinition)
             {
-                TryAdd(outer, ((IParameterDefinition)definition).Name.Value);
+                var paramName = ((IParameterDefinition)definition).Name.Value;
+                Contract.Assume(!string.IsNullOrWhiteSpace(paramName));
+                TryAdd(outer, paramName);
             }
             else if (definition is IFieldReference)
             {
@@ -263,7 +272,6 @@ namespace Comparability
                         // The front-end uses reflection-style names for inner types, need to be consistent here
                         var name = string.Join(".", TypeHelper.GetTypeName(container, NameFormattingOptions.UseReflectionStyleForNestedTypeNames), def.ResolvedField.Name);
                         TryAdd(outer, name);
-                        // Console.WriteLine("Add static field " + name); 
                         AddInstanceExpr(container, outer);
                         StaticNames.Add(outer);
                     }
@@ -273,12 +281,11 @@ namespace Comparability
                         {
                             var name = NameTable[instance] + "." + def.ResolvedField.Name;
                             TryAdd(outer, name);
-                            // Console.WriteLine("Add field " + name); 
                             AddInstanceExpr(Type, outer);
                         }
                         else
                         {
-                            // Console.WriteLine("Skip field (instance not named): " + def.ResolvedField.Name);
+                            // NO OP (we aren't tracking the name of the instance)
                         }
                     }
                 }
@@ -298,7 +305,7 @@ namespace Comparability
                 }
                 else
                 {
-                    // Console.WriteLine("Skip array indexer (indexed object not named)");
+                    // NO OP (we aren't tracking the name of the instance)
                 }
             }
             else if (definition is ILocalDefinition)
@@ -308,8 +315,7 @@ namespace Comparability
             }
             else if (definition is IAddressDereference)
             {
-                var def = (IAddressDereference)definition;
-                
+                // NO OP
             }
             else
             {
@@ -343,7 +349,6 @@ namespace Comparability
                     // The front-end uses reflection-style names for inner types, need to be consistent here
                     var name = string.Join(".", TypeHelper.GetTypeName(targetType, NameFormattingOptions.UseReflectionStyleForNestedTypeNames), value.Name);
                     TryAdd(constantExpr, name);
-                    // Console.WriteLine("Add enum constant " + name);
                     AddInstanceExpr(targetType, constantExpr);
                     StaticNames.Add(constantExpr);
                 }
@@ -375,7 +380,7 @@ namespace Comparability
         public static bool IsGetter(IMethodDefinition method)
         {
             Contract.Requires(method != null);
-            Contract.Ensures(Contract.Result<bool>() == (method.IsSpecialName && method.Name.Value.StartsWith("get")));
+            Contract.Ensures(Contract.Result<bool>() == (method.IsSpecialName && method.Name.Value.StartsWith("get_")));
             return method.IsSpecialName && method.Name.Value.StartsWith("get_");
         }
 
@@ -383,19 +388,27 @@ namespace Comparability
         {
             var receiver = call.ThisArgument;
             var callee = call.MethodToCall.ResolvedMethod;
+            
+            if (callee is Dummy || callee.Name is Dummy)
+            {
+                return;
+            }
 
+            var calleeName = callee.Name.Value;
+            Contract.Assume(!string.IsNullOrWhiteSpace(calleeName));
+            
             string name = null;
             if (!call.IsStaticCall && NameTable.ContainsKey(receiver))
             {
                 if (callee.ParameterCount == 0)
                 {
                     name = NameTable[call.ThisArgument] + "." +
-                           (IsGetter(callee) ? callee.Name.Value.Substring("get_".Length) : callee.Name.Value + "()");
+                           (IsGetter(callee) ? calleeName.Substring("get_".Length) : calleeName + "()");
 
                 }
                 else if (IsSetter(callee))
                 {
-                    name = NameTable[call.ThisArgument] + "." + callee.Name.Value.Substring("set_".Length);
+                    name = NameTable[call.ThisArgument] + "." + calleeName.Substring("set_".Length);
                 }
 
                 Parent.Add(call, call.ThisArgument);
@@ -409,7 +422,7 @@ namespace Comparability
             if (name == null)
             {
                 // Assign a unique generated name (required for return value comparability)
-                name ="<method>" + call.MethodToCall.Name + "__" + methodCallCnt;
+                name = "<method>" + calleeName + "__" + methodCallCnt;
                 methodCallCnt++;
             }
 

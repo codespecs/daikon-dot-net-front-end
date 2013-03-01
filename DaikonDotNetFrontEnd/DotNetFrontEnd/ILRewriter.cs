@@ -229,8 +229,6 @@ namespace DotNetFrontEnd
     /// <returns>methodBody with instrumentation calls added</returns>
     public override IMethodBody Rewrite(IMethodBody methodBody)
     {
-      Contract.Requires(methodBody != null);
-
       var method = methodBody.MethodDefinition;
       var containingType = method.ContainingType;
 
@@ -1648,8 +1646,11 @@ namespace DotNetFrontEnd
     private List<ILocalDefinition> CreateNonceVariable(MethodBody methodBody)
     {
       Contract.Requires(methodBody != null);
-      Contract.Ensures(Contract.Result<List<ILocalDefinition>>().Count() > 1);
-
+      Contract.Ensures(Contract.Result<List<ILocalDefinition>>().Count() >= 1);
+      Contract.Ensures(methodBody.LocalVariables == null ||
+          Contract.ForAll(0, Contract.OldValue(methodBody.LocalVariables.Count), i =>
+              Contract.OldValue(methodBody.LocalVariables)[i] == methodBody.LocalVariables[i]));
+      
       List<ILocalDefinition> locals = (methodBody.LocalVariables == null) ?
           new List<ILocalDefinition>() 
           : methodBody.LocalVariables.ToList();

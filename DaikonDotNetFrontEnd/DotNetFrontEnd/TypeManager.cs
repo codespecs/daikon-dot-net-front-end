@@ -15,6 +15,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Diagnostics.Contracts;
+using System.Runtime.Serialization;
 
 
 namespace DotNetFrontEnd
@@ -34,8 +35,10 @@ namespace DotNetFrontEnd
     {
       Contract.Requires(type != null);
       Contract.Ensures(Contract.Result<FieldInfo[]>() != null);
-      Contract.Ensures(Contract.ForAll(0, Contract.Result<FieldInfo[]>().Length - 2,
-          i => Contract.Result<FieldInfo[]>()[i].Name.CompareTo(Contract.Result<FieldInfo[]>()[i + 1].Name) <= 0));
+      Contract.Ensures(
+          Contract.Result<FieldInfo[]>().Length == 0 ||
+          Contract.ForAll(0, Contract.Result<FieldInfo[]>().Length - 1,
+            i => Contract.Result<FieldInfo[]>()[i].Name.CompareTo(Contract.Result<FieldInfo[]>()[i + 1].Name) <= 0));
 
       FieldInfo[] fields = type.GetFields(bindingAttr);
       Array.Sort(fields, delegate(FieldInfo lhs, FieldInfo rhs)
@@ -79,12 +82,6 @@ namespace DotNetFrontEnd
     private static readonly Type uIntType = typeof(uint);
 
     /// <summary>
-    ///  Name of the interface all sets must implement. Use is similar to a type store, but getting
-    ///  any specific set type would require an element type.
-    /// </summary>
-    private static readonly string SetInterfaceName = "ISet";
-
-    /// <summary>
     ///  Name of the interface all maps must implement. Use is similar to a type store, but getting
     ///  any specific map type would require an element type.
     /// </summary>
@@ -113,7 +110,7 @@ namespace DotNetFrontEnd
     private AssemblyIdentity assemblyIdentity;
 
     [NonSerialized]
-    private HashSet<Type> markedSystemTypes;
+    private HashSet<Type> markedSystemTypes = new HashSet<Type>();
 
     #region Collection / Pure Method Memoization Caches
 
@@ -124,14 +121,14 @@ namespace DotNetFrontEnd
     /// and Unknown. IsList types has a value of true in the table, NotList types have a value of 
     /// false, and Unknown types are those not in the table.
     /// </summary>
-    private Dictionary<Type, bool> isListHashmap;
+    private readonly Dictionary<Type, bool> isListHashmap = new Dictionary<Type, bool>();
 
     /// <summary>
     /// Map from a type to whether it is an FSharpList. Memoizes the lookup.
     /// We use a bool-valued hashmap because there are essentially three states, IsLinkedList, 
     /// NotLinkedList and Unknown. 
     /// </summary>
-    private Dictionary<Type, bool> isFSharpListHashmap;
+    private readonly Dictionary<Type, bool> isFSharpListHashmap = new Dictionary<Type, bool>();
 
     /// <summary>    
     /// Map from types to whether or not they are linked-list implementors
@@ -139,53 +136,53 @@ namespace DotNetFrontEnd
     /// We use a bool-valued hashmap because there are essentially three states, IsLinkedList, 
     /// NotLinkedList and Unknown. 
     /// </summary>
-    private Dictionary<Type, bool> isLinkedListHashmap;
+    private readonly Dictionary<Type, bool> isLinkedListHashmap = new Dictionary<Type, bool>();
 
     /// <summary>
     /// Map from type to whether that type is a C# hashset.
     /// Memoizes the lookup
     /// We use a bool-valued hashmap because there are three states, true, false and unknown.
     /// </summary>
-    private Dictionary<Type, bool> isSetHashmap;
+    private readonly Dictionary<Type, bool> isSetHashmap = new Dictionary<Type, bool>();
 
     /// <summary>
     /// Map from type to whether that type is a C# Dictionary.
     /// Memoizes the lookup
     /// We use a bool-valued hashmap because there are three states, true, false and unknown.
     /// </summary>
-    private Dictionary<Type, bool> isDictionaryHashMap;
+    private readonly Dictionary<Type, bool> isDictionaryHashMap = new Dictionary<Type, bool>();
 
     /// <summary>
     /// Map from type to whether that type is a F# hashset.
     /// Memoizes the lookup
     /// We use a bool-valued hashmap because there are three states, true, false and unknown.
     /// </summary>
-    private Dictionary<Type, bool> isFSharpSetHashmap;
+    private readonly Dictionary<Type, bool> isFSharpSetHashmap = new Dictionary<Type, bool>();
 
     /// <summary>
     /// Map from type to whether that type is a F# map.
     /// Memoizes the lookup
     /// We use a bool-valued hashmap because there are three states, true, false and unknown.
     /// </summary>
-    private Dictionary<Type, bool> isFSharpMapHashmap;
+    private readonly Dictionary<Type, bool> isFSharpMapHashmap = new Dictionary<Type, bool>();
 
     /// <summary>
     /// A map from assembly qualified names to the Type they describe
     /// Used to memoize type references (passed as names) from the IL rewriter
     /// </summary>
-    private Dictionary<string, Type> nameTypeMap;
+    private readonly Dictionary<string, Type> nameTypeMap = new Dictionary<string, Type>();
 
     /// <summary>
     /// Map from type to set of pure methods
     /// </summary>
     /// <seealso cref="pureMethods"/>
-    private Dictionary<Type, ISet<MethodInfo>> pureMethodsForType;
+    private readonly Dictionary<Type, ISet<MethodInfo>> pureMethodsForType = new Dictionary<Type,ISet<MethodInfo>>();
 
     /// <summary>
     /// All pure methods
     /// </summary>
     /// <seealso cref="pureMethodsForType"/>
-    private ISet<MethodInfo> pureMethods;
+    private readonly ISet<MethodInfo> pureMethods = new HashSet<MethodInfo>();
 
     #endregion
 
@@ -193,19 +190,20 @@ namespace DotNetFrontEnd
     /// A collection of values to ignore, where each value is of the form 
     /// "AssemblyQualifiedTypeName;ValueName"
     /// </summary>
-    private ISet<string> ignoredValues;
+    private readonly ISet<string> ignoredValues = new HashSet<string>();
 
     /// <summary>
     /// needed to be able to map the contracts from a contract class proxy method to an abstract method
     /// </summary>
     [NonSerializedAttribute]
-    private readonly IMetadataHost host;
+    private IMetadataHost host;
 
     public IMetadataHost Host
     {
         get
         {
             Contract.Ensures(Contract.Result<IMetadataHost>() != null);
+            Contract.Ensures(Contract.Result<IMetadataHost>() == host);
             return host;
         }
     }
@@ -219,11 +217,24 @@ namespace DotNetFrontEnd
         }
     }
 
+    [OnDeserializedAttribute]
+    private void Rehydrate(StreamingContext context)
+    {
+        InitHost();
+        markedSystemTypes = new HashSet<Type>();
+    }
+
+    private void InitHost()
+    {
+        Contract.Ensures(this.host != null);
+        this.host = frontEndArgs.IsPortableDll ? (IMetadataHost)new PortableHost() : new PeReader.DefaultHost();
+    }
+
     [ContractInvariantMethod]
     private void ObjectInvariants()
     {
         Contract.Invariant(frontEndArgs != null);
-        Contract.Invariant(this.host != null);
+        Contract.Invariant(host != null);
     }
 
     /// <summary>
@@ -236,23 +247,9 @@ namespace DotNetFrontEnd
       Contract.Requires(args != null);
 
       this.frontEndArgs = args;
-      this.host = frontEndArgs.IsPortableDll ? (IMetadataHost)new PortableHost() : new PeReader.DefaultHost();
-
-      this.isListHashmap = new Dictionary<Type, bool>();
-      this.isFSharpListHashmap = new Dictionary<Type, bool>();
-      this.isLinkedListHashmap = new Dictionary<Type, bool>();
-      this.isSetHashmap = new Dictionary<Type, bool>();
-      this.isFSharpSetHashmap = new Dictionary<Type, bool>();
-      this.isDictionaryHashMap = new Dictionary<Type, bool>();
-      this.isFSharpMapHashmap = new Dictionary<Type, bool>();
-
-      this.nameTypeMap = new Dictionary<string, Type>();
-      this.pureMethodsForType = new Dictionary<Type, ISet<MethodInfo>>();
-      this.pureMethods = new HashSet<MethodInfo>();
-      this.markedSystemTypes = new HashSet<Type>();
-      this.ignoredValues = new HashSet<string>();
-      this.PopulateIgnoredValues();
-      this.ProcessPurityMethods();
+      InitHost();
+      PopulateIgnoredValues();
+      ProcessPurityMethods();
     }
 
     /// <summary>
@@ -700,8 +697,6 @@ namespace DotNetFrontEnd
     /// </returns>
     public List<MethodInfo> GetPureMethodsForType(Type type, Type originatingType)
     {
-      if (markedSystemTypes == null) markedSystemTypes = new HashSet<Type>();
-
       var result = new List<MethodInfo>();
       if (this.pureMethodsForType.ContainsKey(type))
       {
@@ -762,7 +757,7 @@ namespace DotNetFrontEnd
       "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadFrom")]
     public DNFETypeDeclaration ConvertAssemblyQualifiedNameToType(string assemblyQualifiedName)
     {
-      Contract.Requires(assemblyQualifiedName != null);
+      Contract.Requires(!string.IsNullOrWhiteSpace(assemblyQualifiedName));
       Contract.Ensures(Contract.Result<DNFETypeDeclaration>() != null);
 
       // TODO(#17): Passing around an assembly qualified name here may not be best because it is
@@ -778,8 +773,7 @@ namespace DotNetFrontEnd
         foreach (var singleConstraint in match.Value.Split(DecTypeMultipleConstraintSeparator))
         {
           string updatedConstraint = singleConstraint.Replace("{", "").Replace("}", "");
-          types.Add(this.ConvertAssemblyQualifiedNameToType(match.Result(updatedConstraint))
-              .GetSingleType);
+          types.Add(this.ConvertAssemblyQualifiedNameToType(match.Result(updatedConstraint)).GetSingleType);
         }
         return new DNFETypeDeclaration(types);
       }
@@ -1060,6 +1054,9 @@ namespace DotNetFrontEnd
     /// <returns>Assembly identity for the given type</returns>
     private AssemblyIdentity DetermineAssemblyIdentity(ITypeReference type)
     {
+      Contract.Requires(type != null);
+      Contract.Ensures(Contract.Result<AssemblyIdentity>() != null);
+
       AssemblyIdentity identity;
       if (type is Microsoft.Cci.MutableCodeModel.NamespaceTypeReference)
       {
@@ -1075,7 +1072,7 @@ namespace DotNetFrontEnd
       }
       else
       {
-        Contract.Assume(this.assemblyIdentity == null, "Assembly identity not set");
+        Contract.Assume(this.assemblyIdentity != null, "Assembly identity not set");
         identity = this.assemblyIdentity;
       }
       return identity;
