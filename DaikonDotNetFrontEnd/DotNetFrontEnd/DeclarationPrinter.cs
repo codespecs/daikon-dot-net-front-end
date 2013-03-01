@@ -13,6 +13,8 @@ using DotNetFrontEnd.Comparability;
 using Microsoft.Cci;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Diagnostics.Contracts;
+using DotNetFrontEnd.Contracts;
 
 namespace DotNetFrontEnd
 {
@@ -854,10 +856,7 @@ namespace DotNetFrontEnd
     /// <returns>Sanitized version with spaces and slashes escaped</returns>
     public static string SanitizeProgramPointName(string programPointName)
     {
-      if (programPointName == null)
-      {
-        throw new ArgumentNullException("programPointName");
-      }
+      Contract.Requires(!string.IsNullOrWhiteSpace(programPointName));
       string result = programPointName.Replace("\\", "\\\\");
       return result.Replace(" ", "\\_");
     }
@@ -911,8 +910,6 @@ namespace DotNetFrontEnd
         get
         {
             VariableFlags mask = 0;
-    
-           
             return ~mask;
         }
     }
@@ -1191,33 +1188,15 @@ namespace DotNetFrontEnd
     private bool PerformEarlyExitChecks(string name, Type type, VariableKind kind,
       string enclosingVar, int nestingDepth)
     {
-      if (name.Length == 0)
-      {
-        name = "UNNAMED_VARIABLE";
-        // TODO(#69): Investigate
-        /*
-        throw new NotSupportedException("An error occurred in the instrumentation process"
-            + " and a variable was encountered with no name.");
-         */
-      }
-      if (type == null)
-      {
-        throw new NotSupportedException("An error occurred in the instrumentation process"
-            + " and type was null for variable named: " + name);
-      }
-
-      if ((kind == VariableKind.field || kind == VariableKind.array) &&
-        enclosingVar.Length == 0)
-      {
-        throw new ArgumentException("Enclosing var required for staticField and array and none"
-            + " was present for variable named: " + name + " of kind: " + kind);
-      }
-
+      Contract.Requires(!string.IsNullOrWhiteSpace(name));
+      Contract.Requires((kind == VariableKind.field || kind == VariableKind.array).Implies(enclosingVar.Length > 0), 
+          "Enclosing field required for static fields and arrays");
+       
       if (nestingDepth > this.frontEndArgs.MaxNestingDepth ||
           !this.frontEndArgs.ShouldPrintVariable(name))
       {
         return true;
-      }
+      } 
 
       if (this.variablesForCurrentProgramPoint.Contains(name))
       {
@@ -1226,9 +1205,8 @@ namespace DotNetFrontEnd
       else
       {
         this.variablesForCurrentProgramPoint.Add(name);
+        return false;
       }
-
-      return false;
     }
 
     /// <summary>

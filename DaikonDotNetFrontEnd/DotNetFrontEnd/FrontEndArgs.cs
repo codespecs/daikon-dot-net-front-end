@@ -12,6 +12,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Contracts;
 
 namespace DotNetFrontEnd
 {
@@ -68,7 +69,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Lambdas expressions create objects with special characters in the name -- don't print these
     /// </summary>
-    private Regex PptAlwaysExclude;
+    private readonly Regex PptAlwaysExclude = new Regex(@"(^<.?>)|(\.<.*?>)");
 
     #endregion
 
@@ -88,9 +89,9 @@ namespace DotNetFrontEnd
       sample_start,
       // Variables options
       arrays_only,
-      is_readonly_flags,    // Flag in development
-      is_enum_flags,        // Flag in development
-      is_property_flags,    // Flag in development
+      is_readonly_flags,    
+      is_enum_flags,        
+      is_property_flags,    
       nesting_depth,
       omit_var,
       omit_dec_type,
@@ -128,7 +129,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// The representation of the arguments handed to the program
     /// </summary>
-    private Dictionary<PossibleArgument, string> programArguments;
+    private readonly Dictionary<PossibleArgument, string> programArguments = new Dictionary<PossibleArgument, string>();
 
     /// <summary>
     /// String holding the arguments that created the instance
@@ -148,14 +149,10 @@ namespace DotNetFrontEnd
     /// <param name="args">The command-line arguments, as seen by the program</param>
     public FrontEndArgs(string[] args)
     {
-      if (args == null)
-      {
-        throw new ArgumentNullException("args");
-      }
+      Contract.Requires(args != null);
+
       this.argsToWrite = String.Join(" ", args);
-      this.programArguments = new Dictionary<PossibleArgument, string>();
       this.ProgramArgIndex = 0;
-      this.PptAlwaysExclude = new Regex(@"(^<.?>)|(\.<.*?>)");
       this.PopulateDefaultArguments();
 
       // Used to allow enumeration of PossibleArgument
@@ -372,6 +369,8 @@ namespace DotNetFrontEnd
     /// <returns>True if the variable should be printed, false otherwise</returns>
     public bool ShouldPrintVariable(string varName)
     {
+      Contract.Requires(varName != null);
+     
       // value__ is an extra field added describing enum values.    
       if (varName.EndsWith("value__"))
       {
@@ -818,8 +817,8 @@ namespace DotNetFrontEnd
     {
       if (!this.PrintOutput)
       {
-        this.AddArgument(PossibleArgument.output_location, Path.ChangeExtension(this.OutputLocation,
-            DeclarationFileExtension));
+        this.AddArgument(PossibleArgument.output_location, 
+            Path.ChangeExtension(this.OutputLocation, DeclarationFileExtension));
       }
     }
 
@@ -830,8 +829,8 @@ namespace DotNetFrontEnd
     {
       if (!this.PrintOutput)
       {
-        this.AddArgument(PossibleArgument.output_location, Path.ChangeExtension(this.OutputLocation,
-            DatatraceExtension));
+        this.AddArgument(PossibleArgument.output_location, 
+            Path.ChangeExtension(this.OutputLocation, DatatraceExtension));
       }
     }
 
@@ -843,6 +842,7 @@ namespace DotNetFrontEnd
     {
       get
       {
+        Contract.Ensures(Contract.Result<string>() != null);
         return this.argsToWrite;
       }
     }

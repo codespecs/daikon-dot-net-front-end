@@ -14,6 +14,7 @@ using Microsoft.Cci.MutableCodeModel;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Diagnostics.Contracts;
 
 
 namespace DotNetFrontEnd
@@ -28,6 +29,7 @@ namespace DotNetFrontEnd
     /// <param name="bindingAttr">binding constraints</param>
     /// <seealso cref="Type.GetFields"/>
     /// <returns>the fields for the <code>System.Type</code> in alphabetical order by name. </returns>
+    [Pure]
     public static FieldInfo[] GetSortedFields(this Type type, BindingFlags bindingAttr)
     {
       FieldInfo[] fields = type.GetFields(bindingAttr);
@@ -192,14 +194,22 @@ namespace DotNetFrontEnd
     /// needed to be able to map the contracts from a contract class proxy method to an abstract method
     /// </summary>
     [NonSerializedAttribute]
-    private IMetadataHost host;
+    private readonly IMetadataHost host;
 
     public IMetadataHost Host
     {
         get
         {
+            Contract.Ensures(Contract.Result<IMetadataHost>() != null);
             return host;
         }
+    }
+
+    [ContractInvariantMethod]
+    private void ObjectInvariants()
+    {
+        Contract.Invariant(frontEndArgs != null);
+        Contract.Invariant(this.host != null);
     }
 
     /// <summary>
@@ -209,6 +219,8 @@ namespace DotNetFrontEnd
     /// <param name="args">The front-end args applicable to the types being managed here</param>
     public TypeManager(FrontEndArgs args)
     {
+      Contract.Requires(args != null);
+
       this.frontEndArgs = args;
       this.host = frontEndArgs.IsPortableDll ? (IMetadataHost)new PortableHost() : new PeReader.DefaultHost();
 
@@ -273,6 +285,11 @@ namespace DotNetFrontEnd
 
     public void AddPureMethod(Type type, MethodInfo method)
     {
+        Contract.Requires(type != null);
+        Contract.Requires(method != null);
+        Contract.Ensures(pureMethodsForType.ContainsKey(type) && pureMethodsForType[type].Contains(method));
+        Contract.Ensures(pureMethods.Contains(method));
+
         if (pureMethods.Contains(method))
         {
             return;
@@ -298,20 +315,18 @@ namespace DotNetFrontEnd
     /// no parens or type qualifier.</param>
     public void AddPureMethod(string typeName, string methodName)
     {
+      Contract.Requires(!string.IsNullOrWhiteSpace(typeName));
+      Contract.Requires(!string.IsNullOrWhiteSpace(methodName));
+
       // The user will declare a single type name
       Type type = ConvertAssemblyQualifiedNameToType(typeName).GetSingleType;
       // Pure methods have no parameters
       MethodInfo method = type.GetMethod(methodName,
-        BindingFlags.Public |
-        BindingFlags.NonPublic |
-        BindingFlags.Static |
-        BindingFlags.Instance
+        BindingFlags.Public | BindingFlags.NonPublic |
+        BindingFlags.Static | BindingFlags.Instance
       );
-      if (method == null)
-      {
-        throw new ArgumentException("No method of name: " + methodName + " on type:" + typeName
-            + " exists.");
-      }
+      Contract.Assume(type != null);
+      Contract.Assume(method != null, "No method of name " + methodName + " exists for type on type " + typeName);
       AddPureMethod(type, method);
     }
 
@@ -340,13 +355,11 @@ namespace DotNetFrontEnd
     /// <param name="entries">Set to test against</param>
     /// <param name="test">Test to perform if type is not in test</param>
     /// <returns>Whether type is an element of the set, or if it passed the test</returns>
-    private static bool IsElementOfCollectionType(Type type, Dictionary<Type, bool> entries,
-        IsElementTest test)
+    private static bool IsElementOfCollectionType(Type type, Dictionary<Type, bool> entries, IsElementTest test)
     {
-      if (type == null)
-      {
-        throw new ArgumentNullException("type");
-      }
+      Contract.Requires(type != null);
+      Contract.Requires(entries != null);
+      Contract.Ensures(entries.ContainsKey(type));
 
       // Check in result table
       bool lookupResult;
@@ -371,18 +384,10 @@ namespace DotNetFrontEnd
     /// call to this method is executed.</exception>
     public void SetAssemblyIdentity(AssemblyIdentity identity)
     {
-      if (identity == null)
-      {
-        throw new ArgumentNullException("identity");
-      }
-      if (this.assemblyIdentity == null)
-      {
-        this.assemblyIdentity = identity;
-      }
-      else
-      {
-        throw new InvalidOperationException("Attempt to re-set assembly identity");
-      }
+      Contract.Requires(identity != null);
+      Contract.Requires(this.assemblyIdentity == null,  "Cannot reset assembly identity");
+      Contract.Ensures(this.assemblyIdentity != identity);
+      this.assemblyIdentity = identity;
     }
 
     /// <summary>
@@ -457,9 +462,9 @@ namespace DotNetFrontEnd
     /// <returns>True if the field should be ignored, false otherwise</returns>
     public bool ShouldIgnoreField(Type parentType, FieldInfo field)
     {
-      Debug.Assert(parentType != null);
-      Debug.Assert(field != null);
-
+      Contract.Requires(parentType != null);
+      Contract.Requires(field != null);
+       
       if (frontEndArgs.OmitParentDecType != null && frontEndArgs.OmitParentDecType.IsMatch(parentType.FullName))
       {
         return true;
@@ -590,13 +595,15 @@ namespace DotNetFrontEnd
     /// <returns>True if type is a F# set, false otherwise.</returns>
     private bool IsFSharpSetTest(Type type)
     {
+      Contract.Requires(type != null);
+
       if (this.frontEndArgs.ElementInspectArraysOnly)
       {
         return type.IsArray;
       }
       else
       {
-        return type.Namespace == "Microsoft.FSharp.Collections" &&
+        return type.Namespace.Equals("Microsoft.FSharp.Collections") &&
           type.Name.StartsWith("FSharpSet");
       }
     }
@@ -608,6 +615,7 @@ namespace DotNetFrontEnd
     /// <returns>True if the type is an F# set, false otherwise</returns>
     public bool IsFSharpSet(Type type)
     {
+      Contract.Requires(type != null);
       return IsElementOfCollectionType(type, this.isFSharpSetHashmap, IsFSharpSetTest);
     }
 
@@ -618,13 +626,14 @@ namespace DotNetFrontEnd
     /// <returns>True if type is a F# map, false otherwise.</returns>
     private bool IsFSharpMapTest(Type type)
     {
+      Contract.Requires(type != null);
       if (this.frontEndArgs.ElementInspectArraysOnly)
       {
         return type.IsArray;
       }
       else
       {
-        return type.Namespace == "Microsoft.FSharp.Collections" &&
+        return type.Namespace.Equals("Microsoft.FSharp.Collections") &&
           type.Name.StartsWith("FSharpMap");
       }
     }
@@ -636,6 +645,7 @@ namespace DotNetFrontEnd
     /// <returns>True if the type is an F# map, false otherwise</returns>
     public bool IsFSharpMap(Type type)
     {
+      Contract.Requires(type != null);
       return IsElementOfCollectionType(type, this.isFSharpMapHashmap, IsFSharpMapTest);
     }
 
@@ -646,6 +656,7 @@ namespace DotNetFrontEnd
     /// <returns>True if the given type is a dictionary, otherwise false</returns>
     public bool IsDictionary(Type type)
     {
+      Contract.Requires(type != null);
       return IsElementOfCollectionType(type, this.isDictionaryHashMap, IsDictionaryTest);
     }
 
@@ -656,6 +667,7 @@ namespace DotNetFrontEnd
     /// <returns>True if type is a C# Dictionary, false otherwise.</returns>
     private bool IsDictionaryTest(Type type)
     {
+      Contract.Requires(type != null);
       return SearchForMatchingInterface(type, interfaceToTest =>
           interfaceToTest.Name.EndsWith(DictionaryInterfaceName));
     }
@@ -733,13 +745,18 @@ namespace DotNetFrontEnd
       "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadFrom")]
     public DNFETypeDeclaration ConvertAssemblyQualifiedNameToType(string assemblyQualifiedName)
     {
+      Contract.Requires(assemblyQualifiedName != null);
+      Contract.Ensures(Contract.Result<DNFETypeDeclaration>() != null);
+
       // TODO(#17): Passing around an assembly qualified name here may not be best because it is
       // difficult to build and parse. Consider creating a custom object to manage type identity
       // and use that as a parameter instead.
 
-      if (Regex.IsMatch(assemblyQualifiedName, "{[\\w\\W]*}"))
+      var regex = new Regex("{[\\w\\W]*}");
+
+      if (regex.IsMatch(assemblyQualifiedName))
       {
-        var match = Regex.Match(assemblyQualifiedName, "{[\\w\\W]*}");
+        var match = regex.Match(assemblyQualifiedName);
         Collection<Type> types = new Collection<Type>();
         foreach (var singleConstraint in match.Value.Split(DecTypeMultipleConstraintSeparator))
         {
@@ -771,11 +788,8 @@ namespace DotNetFrontEnd
                           Type.GetType(name, false, ignore) :
                               assem.GetType(name, false, ignore),
                       false);
-          if (result == null)
-          {
-            Console.Error.WriteLine("Couldn't convert type with assembly qualified name: " +
-                assemblyQualifiedName);
-          }
+
+          Contract.Assume(result != null, "Couldn't convert type with assembly qualified name: " + assemblyQualifiedName);
           this.nameTypeMap.Add(assemblyQualifiedName, result);
         }
         return new DNFETypeDeclaration(result);
@@ -1091,13 +1105,11 @@ namespace DotNetFrontEnd
     /// <returns>The field in type that is of Type type</returns>
     public static FieldInfo FindLinkedListField(Type type)
     {
-      if (type == null)
-      {
-        throw new ArgumentNullException("type");
-      }
-      FieldInfo[] fields = type.GetFields(System.Reflection.BindingFlags.Public
-                                             | System.Reflection.BindingFlags.NonPublic
-                                             | System.Reflection.BindingFlags.Instance);
+      Contract.Requires(type != null);
+
+      FieldInfo[] fields = type.GetFields(BindingFlags.Public |
+                                          BindingFlags.NonPublic |
+                                          BindingFlags.Instance);
       foreach (FieldInfo field in fields)
       {
         // We know there is only 1 field of appropriate type so just return it.
