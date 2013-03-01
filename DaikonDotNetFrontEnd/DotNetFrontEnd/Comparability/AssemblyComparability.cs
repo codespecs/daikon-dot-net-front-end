@@ -8,6 +8,7 @@ using EmilStefanov;
 using System.Reflection;
 using Microsoft.Cci.ILToCodeModel;
 using System.Diagnostics.Contracts;
+using DotNetFrontEnd.Contracts;
 
 namespace DotNetFrontEnd.Comparability
 {
@@ -27,7 +28,7 @@ namespace DotNetFrontEnd.Comparability
         {
             Contract.Requires(names != null);
             Contract.Requires(methods != null);
-            Contract.Ensures(ids.Keys.Equals(names.ThisNames()));
+            Contract.Ensures(ids.Keys.SetEquals(names.ThisNames()));
 
             // give a union-find id to each instance expression name
             foreach (var name in names.ThisNames())
@@ -63,22 +64,28 @@ namespace DotNetFrontEnd.Comparability
             }
         }
 
-        public int GetIndex(string name)
+        public int GetIndex(string arrayName)
         {
-            Contract.Requires(!string.IsNullOrWhiteSpace(name));
+            Contract.Requires(!string.IsNullOrWhiteSpace(arrayName));
 
-            if (!arrayIndexes.ContainsKey(name))
+            if (!ids.ContainsKey(arrayName))
             {
-                // create a dummy index
-                var synthetic = "<" + name + ">";
-                
+                ids.Add(arrayName, comparability.AddElement());
+            }
+           
+            if (!arrayIndexes.ContainsKey(arrayName))
+            {
+                // create a dummy name for an index variable (that won't be comparable with anything)
+                var synthetic = "<index>" + arrayName;
+
+                // pretend we've seen the index
                 ids.Add(synthetic, comparability.AddElement());
 
                 var cmp = new HashSet<string>();
                 cmp.Add(synthetic);
-                arrayIndexes.Add(name, cmp);
+                arrayIndexes.Add(arrayName, cmp);
             }
-            return Get(arrayIndexes[name].First());
+            return Get(arrayIndexes[arrayName].First());
         }
 
         public int Get(string name)

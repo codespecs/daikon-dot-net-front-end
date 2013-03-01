@@ -192,7 +192,7 @@ namespace DotNetFrontEnd
     /// sample-start. Must be set when each time a function in the source program is called,
     /// e.g. in WriteProgramPoint
     /// </summary>
-    private static bool shouldSuppressOutput = false;
+    public static bool SuppressOutput {get; set;}
 
     /// <summary>
     /// The current nonce counter
@@ -232,7 +232,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Writer lock acquire time-out
     /// </summary>
-    private const int MAX_LOCK_ACQUIRE_TIME_MILLIS = 10 * 1000;
+    private const int MAX_LOCK_ACQUIRE_TIME_MILLIS = 20 * 1000;
 
     #endregion
 
@@ -287,7 +287,6 @@ namespace DotNetFrontEnd
             Contract.Ensures(VariableVisitor.typeManager == value);
             VariableVisitor.typeManager = value;
         }
-
     }
 
     #region Methods to be called from program to be profiled
@@ -319,7 +318,8 @@ namespace DotNetFrontEnd
 
     private static void LoadTypeManagerFromDisk()
     {
-        Contract.Ensures(typeManager != null);
+        Contract.Requires(TypeManager == null);
+        Contract.Ensures(TypeManager != null);
          
         IFormatter formatter = new BinaryFormatter();
         Stream stream = new FileStream(
@@ -344,11 +344,6 @@ namespace DotNetFrontEnd
       using (var writer = InitializeWriter())
       {
         DNFETypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(typeName);
-        if (typeDecl == null)
-        {
-          throw new ArgumentException("VariableVistor received invalid type name for static" +
-            " instrumentation.", "typeName");
-        }
 
         foreach (Type type in typeDecl.GetAllTypes)
         {
@@ -439,17 +434,6 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Sets whether output should be suppressed
-    /// </summary>
-    /// <param name="shouldSuppress">True to not print any output during program execution,
-    /// false for normal behavior</param>
-    public static void SetOutputSuppression(bool shouldSuppress)
-    {
-      Contract.Ensures(shouldSuppressOutput == shouldSuppress);
-      shouldSuppressOutput = shouldSuppress;
-    }
-
-    /// <summary>
     /// Set the invocation nonce for this method by storing it in an appropriate local var
     /// </summary>
     /// <returns>The invocation nonce for the method</returns>
@@ -512,7 +496,7 @@ namespace DotNetFrontEnd
           // After we've seen the first SampleStart print 10%.
           // For each subsequent SampleStart decrease printing by a factor of 10.
           // TODO(#40): Optimize this computation.
-          shouldSuppressOutput = oldOccurrences % (int)Math.Pow(10, (oldOccurrences / frontEndArgs.SampleStart)) != 0;
+          SuppressOutput = oldOccurrences % (int)Math.Pow(10, (oldOccurrences / frontEndArgs.SampleStart)) != 0;
         }
         occurenceCounts[programPointName] = oldOccurrences + 1;
       }
@@ -568,11 +552,12 @@ namespace DotNetFrontEnd
     private static void DoVisit(object variable, string name, string typeName,
         VariableModifiers flags = VariableModifiers.none)
     {
-       Contract.Requires(variable != null);
+
+       Contract.Requires(flags.HasFlag(VariableModifiers.nonsensical).Implies(variable == null));
        Contract.Requires(!string.IsNullOrWhiteSpace(name));
        Contract.Requires(!string.IsNullOrWhiteSpace(typeName));
        Contract.Requires(NestingDepth() == 1, "Illegal PPT callback from thread in nested call");
-       Contract.Ensures(shouldSuppressOutput == false);
+       Contract.Ensures(SuppressOutput == false);
      
       // TODO(#15): Can we pull any fields from exceptions?
       // Exceptions shouldn't be recursed any further down than the 
@@ -607,10 +592,9 @@ namespace DotNetFrontEnd
     {
       Contract.Ensures(Contract.Result<TextWriter>() != null);
       Contract.Ensures(frontEndArgs.PrintOutput.Implies(Contract.Result<TextWriter>() == System.Console.Out));
-      Contract.Ensures(shouldSuppressOutput.Implies(Contract.Result<TextWriter>() == TextWriter.Null));
-      Contract.Ensures(!frontEndArgs.PrintOutput.Implies(Contract.Result<TextWriter>().NewLine.Equals("\n")));
-
-      if (shouldSuppressOutput)
+      Contract.Ensures(SuppressOutput.Implies(Contract.Result<TextWriter>() == TextWriter.Null));
+      
+      if (SuppressOutput)
       {
         return TextWriter.Null;
       }
@@ -642,12 +626,6 @@ namespace DotNetFrontEnd
 
     #region Reflective Visitor and helper methods
 
-    private static bool IsTypeOf<T>(object t)
-    {
-        Contract.Ensures(Contract.Result<bool>() == (t is T));
-      return (t is T);
-    }
-
     /// <summary>
     /// Print the 3 line (name, value, mod bit) triple for the given variable and all its 
     /// children.
@@ -662,6 +640,7 @@ namespace DotNetFrontEnd
         TextWriter writer, int depth, Type originatingType,
         VariableModifiers fieldFlags = VariableModifiers.none)
     {
+      Contract.Requires(fieldFlags.HasFlag(VariableModifiers.nonsensical).Implies(obj == null));
       Contract.Requires(type != null);
       Contract.Requires(writer != null);
       Contract.Requires(depth >= 0);
@@ -686,12 +665,8 @@ namespace DotNetFrontEnd
       }
       else if (typeManager.IsFSharpListImplementer(type))
       {
-        object[] result = null;
-        if (obj != null)
-        {
-          result = TypeManager.ConvertFSharpListToCSharpArray(obj);
-        }
-
+        object[] result = obj == null ? null : TypeManager.ConvertFSharpListToCSharpArray(obj);
+        
         ProcessVariableAsList(name, result, result == null ? null : result.GetType(), 
             writer, depth, originatingType);
       }
@@ -780,7 +755,7 @@ namespace DotNetFrontEnd
             fieldFlags | VariableModifiers.to_string);
       }
 
-      if (!shouldSuppressOutput)
+      if (!SuppressOutput)
       {
         foreach (var item in typeManager.GetPureMethodsForType(type, originatingType))
         {
@@ -1267,8 +1242,7 @@ namespace DotNetFrontEnd
     private static string GetVariableValue(object x, Type type, VariableModifiers flags)
     {
       Contract.Requires(type != null);
-      Contract.Ensures(shouldSuppressOutput == false);
-
+      
       if (flags.HasFlag(VariableModifiers.nonsensical))
       {
         return "nonsensical";
@@ -1287,11 +1261,11 @@ namespace DotNetFrontEnd
         {
             // Type is an enum, print out it's hash. Since were using a hashcode rep-type, we need to make sure the
             // hashcode is non-zero.
-            SetOutputSuppression(true);
+            SuppressOutput = true;
             int hash = type.GetHashCode() + x.GetHashCode();
             hash = hash == 0 ? hash + 1 : hash;
             string enumHash = hash.ToString(CultureInfo.InvariantCulture);
-            SetOutputSuppression(false);
+            SuppressOutput = false;
             return enumHash;
         }
       }
@@ -1317,9 +1291,9 @@ namespace DotNetFrontEnd
       }
 
       // Type is either an object or a user-defined struct, print out its hashcode.
-      SetOutputSuppression(true);
+      SuppressOutput = true;
       string hashcode = GetHashCode(x, type);
-      SetOutputSuppression(false);
+      SuppressOutput = false;
       return hashcode;
     }
 
@@ -1376,8 +1350,7 @@ namespace DotNetFrontEnd
     {
       Contract.Requires(method != null);
       Contract.Requires(!string.IsNullOrWhiteSpace(methodName));
-      Contract.Ensures(shouldSuppressOutput == false);
-
+      
       // TODO(#60): Duplicative with GetVariableValue?
       if (obj == null)
       {
@@ -1409,7 +1382,7 @@ namespace DotNetFrontEnd
           "Method " + methodName + " not found in type or supertypes");
 
       object val;
-      SetOutputSuppression(true);
+      SuppressOutput = true;
       try
       {
           val = runtimeMethod.Invoke(obj, null);
@@ -1421,7 +1394,7 @@ namespace DotNetFrontEnd
       }
       finally
       {
-          SetOutputSuppression(false);
+          SuppressOutput = false;
       }
       return val;
     }

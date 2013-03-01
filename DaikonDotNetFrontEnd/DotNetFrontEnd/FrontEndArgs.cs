@@ -432,7 +432,7 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="type">Type to inspect</param>
     /// <returns>Binding flag specifying visibility of fields to inspect</returns>
-    private System.Reflection.BindingFlags GetAccessOptionsForFieldInspection(Type type, Type originatingType)
+    private BindingFlags GetAccessOptionsForFieldInspection(Type type, Type originatingType)
     {
       Contract.Requires(type != null);
       Contract.Requires(originatingType != null);
@@ -460,6 +460,7 @@ namespace DotNetFrontEnd
     public BindingFlags GetInstanceAccessOptionsForFieldInspection(Type type, Type originatingType)
     {
       Contract.Requires(type != null);
+      Contract.Requires(originatingType != null);
       return BindingFlags.Instance | this.GetAccessOptionsForFieldInspection(type, originatingType);
     }
 

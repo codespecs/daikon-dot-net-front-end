@@ -96,7 +96,7 @@ namespace DotNetFrontEnd
       {
           if (frontEndArgs.StaticComparability)
           {
-              throw new Exception("Error loading PDB file for '" + module.Name.Value + "' (required for static comparability analysis)");
+              throw new IOException("Error loading PDB file for '" + module.Name.Value + "' (required for static comparability analysis)");
           }
           else
           {
@@ -116,7 +116,6 @@ namespace DotNetFrontEnd
           {
               Console.WriteLine("Generating Comparability Information");
               decompiled = Decompiler.GetCodeModelFromMetadataModel(typeManager.Host, mutable, pdbReader, DecompilerOptions.AnonymousDelegates | DecompilerOptions.Iterators);
-              //mutable = new CodeDeepCopier(host).Copy(mutable);
               comparabilityManager = new AssemblyComparability(decompiled, typeManager, pdbReader);
           }
     
@@ -167,8 +166,7 @@ namespace DotNetFrontEnd
         // constant) from the original assembly to the mutated one.
         using (var pdbWriter = new PdbWriter(pdbFile, pdbReader))
         {
-          PeWriter.WritePeToStream(module, host, resultStream, pdbReader, null,
-              pdbWriter);
+          PeWriter.WritePeToStream(module, host, resultStream, pdbReader, null, pdbWriter);
         }
       }
 

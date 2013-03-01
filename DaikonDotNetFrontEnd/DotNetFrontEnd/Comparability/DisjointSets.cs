@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics.Contracts;
+using DotNetFrontEnd.Contracts;
 
 namespace EmilStefanov
 {
@@ -13,6 +14,7 @@ namespace EmilStefanov
         private void ObjectInvariant()
         {
             Contract.Invariant(this.m_elementCount >= 0);
+            Contract.Invariant(this.m_nodes.Count == this.m_elementCount);
             Contract.Invariant(this.m_setCount >= 0 && this.m_setCount <= this.m_elementCount);
         }
 
@@ -40,14 +42,15 @@ namespace EmilStefanov
 
         /// <summary>
         /// Find the set identifier that an element currently belongs to.
-        /// Note: some internal data is modified for optimization even though this method is consant.
         /// </summary>
         /// <param name="element"></param>
+        /// <remarks>Some internal data is modified for optimization even though this method is consant.</remarks>
         /// <returns></returns>
+        [Pure]
         public int FindSet(int elementId)
         {
             Contract.Requires(elementId >= 0 && elementId <= this.ElementCount);
-            Contract.Ensures(Contract.Result<int>() >= 0 && Contract.Result<int>() <= this.SetCount);
+            Contract.Ensures(Contract.Result<int>() >= 0 && Contract.Result<int>() <= this.ElementCount);
         
             Node curNode;
 
@@ -79,6 +82,7 @@ namespace EmilStefanov
         {
             Contract.Requires(setId1 >= 0 && setId1 <= ElementCount);
             Contract.Requires(setId2 >= 0 && setId2 <= ElementCount);
+            Contract.Ensures(Contract.Result<bool>().Implies(SetCount == Contract.OldValue(SetCount) - 1));
 
             if (setId1 == setId2)
             {
@@ -151,7 +155,7 @@ namespace EmilStefanov
             get 
             {
                 Contract.Ensures(Contract.Result<int>() == m_elementCount);
-                Contract.Ensures(Contract.Result<int>() > 0);
+                Contract.Ensures(Contract.Result<int>() >= 0);
                 return m_elementCount; 
             }
         }
