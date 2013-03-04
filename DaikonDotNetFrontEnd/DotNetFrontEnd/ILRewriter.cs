@@ -299,7 +299,7 @@ namespace DotNetFrontEnd
 
       var pptEnterEnd = new ILGeneratorLabel();
       EmitIncrementDepth(pptEnterEnd);
-      
+
       // We need the writer lock to emit the values of method parameters.
       EmitAcquireWriterLock();
       EmitMethodSignature(MethodTransition.ENTER, immutableMethodBody);
@@ -1619,26 +1619,6 @@ namespace DotNetFrontEnd
             this.host.PlatformType.SystemBoolean, incrementName, 0);
         generator.Emit(OperationCode.Call, incrementReference);
         generator.Emit(OperationCode.Brfalse, writePptEnd);
-    }
-
-    /// <summary>
-    /// Insert call to set whether output should be suppressed.
-    /// </summary>
-    /// <param name="shouldSuppress">The desired state of output suppression</param>
-    /// Suppression safe because we control the string in the GetNameFor call
-    /// Performance warning suppressed because the calls to this method are inserted in the
-    /// source programs
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode"),
-     System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
-         "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void InsertShouldSuppressOutputCall(bool shouldSuppress)
-    {
-      // .NET opcode semantics for boolean values are: 0 => false, other => true
-      generator.Emit(OperationCode.Ldc_I4, shouldSuppress ? 1 : 0);
-      generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
-          this.host, this.variableVisitorType, CallingConvention.Default,
-          this.systemVoid, this.nameTable.GetNameFor(
-              VariableVisitor.ShouldSuppressOutputMethodName), 0, host.PlatformType.SystemBoolean));
     }
 
     /// <summary>
