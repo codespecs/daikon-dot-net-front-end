@@ -2,7 +2,8 @@
 // used to create the datatrace file. It is created by ProfilerLauncher using
 // the arguments gathered from there, and is handed to the Profiler, Declaration
 // Printer, and VariableVisitor. The implementation approach is a dictionary from daikon args
-// to value supplied on the command line.
+// to value supplied on the command line. Documentation for all front-end args can be found here:
+// http://daikon-dot-net-front-end.googlecode.com/hg/docs/DNFE_documentation.html
 
 using System;
 using System.Collections.Generic;
