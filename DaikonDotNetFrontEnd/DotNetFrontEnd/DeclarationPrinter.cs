@@ -11,8 +11,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using DotNetFrontEnd.Comparability;
 using Microsoft.Cci;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 
 namespace DotNetFrontEnd
 {
@@ -94,7 +92,7 @@ namespace DotNetFrontEnd
     /// The possible values for variable kind
     /// Violates enum naming convention for ease of printing.
     /// </summary>
-    public enum VariableKind
+    internal enum VariableKind
     {
       field,
       function,
@@ -918,13 +916,13 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// If <code>condition</code> is true, returns <code>flag</code>, otherwise returns
+    /// Concenince method, returning <code>flag </code> when <code>condition</code> is true.
     /// empty flags.
     /// </summary>
-    /// <param name="condition"></param>
-    /// <param name="flag"></param>
-    /// <returns></returns>
-    private VariableFlags MarkIf(bool condition, VariableFlags flag)
+    /// <param name="condition">Condition to test</param>
+    /// <param name="flag">Flags to return if condition is true</param>
+    /// <returns>Flags iff contition is true, otherwise none</returns>
+    private static VariableFlags MarkIf(bool condition, VariableFlags flag)
     {
         return condition ? flag : VariableFlags.none;
     }

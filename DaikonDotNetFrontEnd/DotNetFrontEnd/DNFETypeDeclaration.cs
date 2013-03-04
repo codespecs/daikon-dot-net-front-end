@@ -42,7 +42,7 @@ namespace DotNetFrontEnd
     {
       if (t == null)
       {
-         throw new ArgumentNullException("Null type argument provided for DNFETypeDeclaration");
+         throw new ArgumentNullException("t", "Null type argument provided for DNFETypeDeclaration");
       }
       this.type = t;
       this.declarationType = DeclarationType.SingleClass;
@@ -58,20 +58,7 @@ namespace DotNetFrontEnd
       this.list.AddRange(list);// list.ForEach(x => this.list.Add(x));
       this.declarationType = DeclarationType.ListOfClasses;
     }
-
-    /// <summary>
-    /// Get the format of this delcaration
-    /// </summary>
-    /// <returns>The declaration type enum value corresponding to the type of declaration this
-    /// declaration type was created with.</returns>
-    internal DeclarationType GetDeclartionType
-    {
-      get
-      {
-        return this.declarationType;
-      }
-    }
-    
+        
     /// <summary>
     /// Get the single type for this declaration.
     /// </summary>

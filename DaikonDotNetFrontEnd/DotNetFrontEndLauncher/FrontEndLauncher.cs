@@ -51,39 +51,41 @@ namespace DotNetFrontEndLauncher
       //  //  Can't proceed any further, so exit here.
       //  return;
       //}
-      
+
       if (frontEndArgs.SaveAndRun)
       {
-          // Do we need to serialize the type manager here?
-          ExecuteProgramFromDisk(args, frontEndArgs);
+        // Do we need to serialize the type manager here?
+        ExecuteProgramFromDisk(args, frontEndArgs);
       }
       else if (String.IsNullOrEmpty(frontEndArgs.SaveProgram))
       {
-          // Run the program from memory
-          Assembly rewrittenAssembly = Assembly.Load(resultStream.ToArray());
-          resultStream.Close();
-          ExecuteProgramFromMemory(args, frontEndArgs, rewrittenAssembly);
+        // Run the program from memory
+        Assembly rewrittenAssembly = Assembly.Load(resultStream.ToArray());
+        resultStream.Close();
+        ExecuteProgramFromMemory(args, frontEndArgs, rewrittenAssembly);
       }
       else
       {
-          // Don't execute the program if it should just be saved to disk
-          IFormatter formatter = new BinaryFormatter();
-          Stream stream = new FileStream(
-              ProgramRewriter.VisitorDll + VariableVisitor.TypeManagerFileExtension,
-              FileMode.Create, FileAccess.Write, FileShare.None);
+        // Don't execute the program if it should just be saved to disk
+        IFormatter formatter = new BinaryFormatter();
+        Stream stream = new FileStream(
+            ProgramRewriter.VisitorDll + VariableVisitor.TypeManagerFileExtension,
+            FileMode.Create, FileAccess.Write, FileShare.None);
 
-          using (stream)
-          {
-              formatter.Serialize(stream, typeManager);
-          }
+        using (stream)
+        {
+          formatter.Serialize(stream, typeManager);
+        }
       }
     }
-    
+
     /// <summary>
     /// Process the provided front-end arguments, creating FrontEndArgs and TypeManager objects
     /// </summary>
     /// <param name="args">Arguments provided to the front end, including program arguments</param>
     /// <returns>FrontEndArgs and TypeManager objects to use during visiting</returns>
+    /// <remarks>Dispose of the returned TypeManager yourself if that seems necessary.</remarks>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
     private static Tuple<FrontEndArgs, TypeManager> ProcessArguments(string[] args)
     {
       if (args == null || args.Length < 1)
@@ -158,8 +160,8 @@ namespace DotNetFrontEndLauncher
             + " Exiting now.");
           return;
         }
-        
-        rewrittenAssembly.EntryPoint.Invoke(null,  
+
+        rewrittenAssembly.EntryPoint.Invoke(null,
           ExtractProgramArguments(args, frontEndArgs, rewrittenAssembly.EntryPoint));
 
         if (frontEndArgs.VerboseMode)
@@ -211,7 +213,7 @@ namespace DotNetFrontEndLauncher
     /// <param name="frontEndArgs">FrontEndArgs object used during instrumentation, the
     /// name of the program to execute will be extracted from here</param>
     private static void ExecuteProgramFromDisk(string[] args, FrontEndArgs frontEndArgs)
-    {      
+    {
       ProcessStartInfo psi = new ProcessStartInfo();
       psi.FileName = frontEndArgs.SaveProgram;
       object[] programArguments = ExtractProgramArguments(args, frontEndArgs);
@@ -220,7 +222,7 @@ namespace DotNetFrontEndLauncher
         psi.Arguments = String.Join(" ", programArguments[0]);
       }
       Process p = Process.Start(psi);
-      p.WaitForExit();      
+      p.WaitForExit();
     }
 
     /// <summary>
@@ -237,7 +239,7 @@ namespace DotNetFrontEndLauncher
     /// </returns>
     /// <exception cref="Exception">If the arguments after extraction don't match the ones
     /// expected by the entry point of the assembly</exception>
-    private static object[] ExtractProgramArguments(string[] args, FrontEndArgs frontEndArgs, 
+    private static object[] ExtractProgramArguments(string[] args, FrontEndArgs frontEndArgs,
       MethodInfo entryPointInfo = null)
     {
       // First argument relevant to the program to be profiled
@@ -246,19 +248,19 @@ namespace DotNetFrontEndLauncher
       object[] programArguments = null;
 
       // Assume the single parameter is an array of strings -- the arguments
-      if (entryPointInfo == null || 
+      if (entryPointInfo == null ||
           (entryPointInfo.GetParameters().Length == 1 &&
            entryPointInfo.GetParameters()[0].ParameterType.Equals(typeof(string[]))))
       {
         // Pass on arguments to the program, all but the program name
         programArguments = new object[] { new string[args.Length - indexOfFirstArg] };
-        Array.Copy(args, indexOfFirstArg, (string[])programArguments[0], 0, args.Length - 
+        Array.Copy(args, indexOfFirstArg, (string[])programArguments[0], 0, args.Length -
           indexOfFirstArg);
       }
       else if (entryPointInfo.GetParameters().Length != 0)
       {
         throw new InvalidOperationException("Unable to execute the program with the given type"
-          + " of arguments.");        
+          + " of arguments.");
       }
       return programArguments;
     }

@@ -43,7 +43,7 @@ namespace DotNetFrontEnd
   /// Keeps canonical type references. Converts between CCIMetadata and .NET types.
   /// </summary>
   [Serializable]
-  public class TypeManager
+  public class TypeManager : IDisposable
   {
     #region static readonly Types
 
@@ -70,13 +70,7 @@ namespace DotNetFrontEnd
     private static readonly Type sByteType = typeof(sbyte);
     private static readonly Type uShortType = typeof(ushort);
     private static readonly Type uIntType = typeof(uint);
-
-    /// <summary>
-    ///  Name of the interface all sets must implement. Use is similar to a type store, but getting
-    ///  any specific set type would require an element type.
-    /// </summary>
-    private static readonly string SetInterfaceName = "ISet";
-
+    
     /// <summary>
     ///  Name of the interface all maps must implement. Use is similar to a type store, but getting
     ///  any specific map type would require an element type.
@@ -207,6 +201,9 @@ namespace DotNetFrontEnd
     /// without registering the assembly with the GAC.
     /// </summary>
     /// <param name="args">The front-end args applicable to the types being managed here</param>
+    /// <remarks><code>this.host</code> is a class member so can't be disposed here, anything that can be
+    /// assigned to it is disposed in <code>this.Dispose()</code></remarks>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
     public TypeManager(FrontEndArgs args)
     {
       this.frontEndArgs = args;
@@ -574,13 +571,24 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
+    /// Explicitly tests whether the given type is a C# Set.
+    /// </summary>
+    /// <param name="type">Type to test</param>
+    /// <returns>True if the given type is a generic C# set, false otherwise</returns>
+    private bool IsSetTest(Type type)
+    {
+      return type.GetInterfaces().Any(
+        x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ISet<>));
+    }
+
+    /// <summary>
     /// Returns <code>true</code> if <paramref name="type"/> implements <code>ISet</code>.
     /// </summary>
     /// <param name="type">the type</param>
     /// <returns><code>true</code> if <paramref name="type"/> implements <code>ISet</code></returns>
     public bool IsSet(Type type)
     {
-      return type.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ISet<>));
+      return IsElementOfCollectionType(type, isSetHashmap, IsSetTest);
     }
 
     /// <summary>
@@ -669,7 +677,7 @@ namespace DotNetFrontEnd
     /// this inspection</param>
     /// <returns>Map from key to method object of all the pure methods for the given type
     /// </returns>
-    public List<MethodInfo> GetPureMethodsForType(Type type, Type originatingType)
+    internal List<MethodInfo> GetPureMethodsForType(Type type, Type originatingType)
     {
       if (markedSystemTypes == null) markedSystemTypes = new HashSet<Type>();
 
@@ -979,6 +987,9 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="type">Type to check</param>
     /// <returns>Name of the type if it is simple, and null otherwise</returns>
+    /// <remarks>Warning suppressed because we don't want to do anything fancy if an exception
+    /// is thrown, that's what the rest of the calling method body is for.</remarks>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
     private static string CheckSimpleCases(ITypeReference type)
     {
       try
@@ -1114,7 +1125,7 @@ namespace DotNetFrontEnd
     /// Creates a type reference anchored in the given assembly reference and whose names are relative to the given host.
     /// When the type name has periods in it, a structured reference with nested namespaces is created.
     /// </summary>
-    public static INamespaceTypeReference CreateTypeReference(IMetadataHost host, IAssemblyReference assemblyReference, string typeName)
+    public static INamespaceTypeReference CreateTypeReference(IMetadataHost host, IUnitReference assemblyReference, string typeName)
     {
       IUnitNamespaceReference ns = new Microsoft.Cci.Immutable.RootUnitNamespaceReference(assemblyReference);
       string[] names = typeName.Split('.');
@@ -1123,17 +1134,24 @@ namespace DotNetFrontEnd
       return new Microsoft.Cci.Immutable.NamespaceTypeReference(host, ns, host.NameTable.GetNameFor(names[names.Length - 1]), 0, false, false, true, PrimitiveTypeCode.NotPrimitive);
     }
 
-    public bool IsCompilerGenerated(IDefinition def)
+    public bool IsCompilerGenerated(IReference def)
     {
-      var host = this.Host;
+      if (AttributeHelper.Contains(def.Attributes,
+          Host.PlatformType.SystemRuntimeCompilerServicesCompilerGeneratedAttribute))
+      {
+        return true;
+      }
       
-      if (AttributeHelper.Contains(def.Attributes, host.PlatformType.SystemRuntimeCompilerServicesCompilerGeneratedAttribute)) return true;  
-      
-      var systemDiagnosticsDebuggerNonUserCodeAttribute = CreateTypeReference(host, new Microsoft.Cci.Immutable.AssemblyReference(host, host.ContractAssemblySymbolicIdentity), "System.Diagnostics.DebuggerNonUserCodeAttribute");
-      if (AttributeHelper.Contains(def.Attributes, systemDiagnosticsDebuggerNonUserCodeAttribute)) return true;
+      var systemDiagnosticsDebuggerNonUserCodeAttribute = CreateTypeReference(Host, 
+        new Microsoft.Cci.Immutable.AssemblyReference(Host, Host.ContractAssemblySymbolicIdentity), 
+        "System.Diagnostics.DebuggerNonUserCodeAttribute");
+      if (AttributeHelper.Contains(def.Attributes, systemDiagnosticsDebuggerNonUserCodeAttribute))
+      {
+        return true;
+      }
 
       // Issue #72 (Convert to Type Reference Equality Check)
-      var compilerGeneratedAttributeName = host.PlatformType.SystemRuntimeCompilerServicesCompilerGeneratedAttribute.ResolvedType.ToString();
+      var compilerGeneratedAttributeName = Host.PlatformType.SystemRuntimeCompilerServicesCompilerGeneratedAttribute.ResolvedType.ToString();
       foreach (var a in def.Attributes)
       {
           if (a.Type.ToString().Equals(compilerGeneratedAttributeName))
@@ -1149,7 +1167,7 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="methodDef">The method definition</param>
     /// <returns><code>true</code> if <param name="methodDef"/> is compiler generated.</returns>
-    public bool IsMethodCompilerGenerated(IMethodDefinition methodDef)
+    public bool IsMethodCompilerGenerated(IReference methodDef)
     {
       return IsCompilerGenerated(methodDef);
     }
@@ -1243,5 +1261,31 @@ namespace DotNetFrontEnd
             return result;
         }
     }
+
+    #region IDisposable Members
+
+
+    public void Dispose()
+    {
+      this.Dispose(true);
+      GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposeManaged)
+    {
+      if (!disposeManaged) {
+        return;
+      }
+      if (frontEndArgs.IsPortableDll)
+      {
+        ((PortableHost)host).Dispose();
+      }
+      else
+      {
+        ((PeReader.DefaultHost)host).Dispose();
+      }
+    }
+
+    #endregion
   }
 }
