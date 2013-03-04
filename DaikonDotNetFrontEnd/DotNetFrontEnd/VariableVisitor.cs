@@ -18,7 +18,9 @@
 
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -28,9 +30,6 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
-using Microsoft.Cci;
-using System.Diagnostics;
-using System.Collections.Concurrent;
 
 namespace DotNetFrontEnd
 {
@@ -211,17 +210,7 @@ namespace DotNetFrontEnd
     /// Collection of variables that have been visited during the current program point
     /// </summary>
     private static HashSet<string> variablesVisitedForCurrentProgramPoint = new HashSet<string>();
-
-    /// <summary>
-    /// The path to the assembly being instrumented. Necessary when DNFE is run in offline-mode
-    /// </summary>
-    private static string offlineAssemblyPath = null;
-
-    /// <summary>
-    /// The name of the assembly being instrumented. Necessary when DNFE is run in offline-mode
-    /// </summary>
-    private static string offlineAssemblyName = null;
-
+    
     /// <summary>
     /// Depth of the thread in visit calls
     /// </summary>
@@ -301,17 +290,17 @@ namespace DotNetFrontEnd
 
     private static void LoadTypeManagerFromDisk()
     {
-        var path = Assembly.GetExecutingAssembly().Location + TypeManagerFileExtension;
+      var path = Assembly.GetExecutingAssembly().Location + TypeManagerFileExtension;
 
-        IFormatter formatter = new BinaryFormatter();
-        Stream stream = new FileStream(
-            path,
-            FileMode.Open, FileAccess.Read, FileShare.Read);
+      IFormatter formatter = new BinaryFormatter();
+      Stream stream = new FileStream(
+          path,
+          FileMode.Open, FileAccess.Read, FileShare.Read);
 
-        using (stream)
-        {
-             SetTypeManager((TypeManager)formatter.Deserialize(stream));
-        }
+      using (stream)
+      {
+        SetTypeManager((TypeManager)formatter.Deserialize(stream));
+      }
     }
 
     /// <summary>
@@ -340,15 +329,15 @@ namespace DotNetFrontEnd
             if (!typeManager.ShouldIgnoreField(type, staticField) &&
                 !staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
             {
-                staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
-                // TODO(#68):
-                // Static fields of generic types cause an exception, so don't visit them
-                object val = type.ContainsGenericParameters ? null : staticField.GetValue(null);
-                VariableModifiers flags = type.ContainsGenericParameters ? VariableModifiers.nonsensical : VariableModifiers.none;
-                ReflectiveVisit(staticFieldName, val,
-                      staticField.FieldType, writer, staticFieldName.Count(c => c == '.'),
-                      type,
-                      fieldFlags: flags);
+              staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
+              // TODO(#68):
+              // Static fields of generic types cause an exception, so don't visit them
+              object val = type.ContainsGenericParameters ? null : staticField.GetValue(null);
+              VariableModifiers flags = type.ContainsGenericParameters ? VariableModifiers.nonsensical : VariableModifiers.none;
+              ReflectiveVisit(staticFieldName, val,
+                    staticField.FieldType, writer, staticFieldName.Count(c => c == '.'),
+                    type,
+                    fieldFlags: flags);
             }
           }
         }
@@ -385,7 +374,7 @@ namespace DotNetFrontEnd
     /// <returns></returns>
     public static bool IncrementThreadDepth()
     {
-        return threadDepthMap.AddOrUpdate(Thread.CurrentThread, 1, (t, x) => x + 1) == 1;
+      return threadDepthMap.AddOrUpdate(Thread.CurrentThread, 1, (t, x) => x + 1) == 1;
     }
 
     /// <summary>
@@ -393,12 +382,12 @@ namespace DotNetFrontEnd
     /// </summary>
     public static void DecrementThreadDepth()
     {
-        if (threadDepthMap.AddOrUpdate(Thread.CurrentThread, 0, (t, x) => x - 1) == 0)
-        {
-            int value;
-            threadDepthMap.TryRemove(Thread.CurrentThread, out value);
-            Debug.Assert(value == 0, "Atomicity violation");
-        }
+      if (threadDepthMap.AddOrUpdate(Thread.CurrentThread, 0, (t, x) => x - 1) == 0)
+      {
+        int value;
+        threadDepthMap.TryRemove(Thread.CurrentThread, out value);
+        Debug.Assert(value == 0, "Atomicity violation");
+      }
     }
 
     /// <summary>
@@ -408,13 +397,14 @@ namespace DotNetFrontEnd
     {
       bool acquired = false;
       var timer = Stopwatch.StartNew();
-      do{
-          if (timer.ElapsedMilliseconds > MAX_LOCK_ACQUIRE_TIME_MILLIS)
-          {
-              Thread.CurrentThread.Abort("Could not acquire writer thread after " + MAX_LOCK_ACQUIRE_TIME_MILLIS + " ms");
-          }
-          Monitor.TryEnter(WriterLock, TimeSpan.FromSeconds(1), ref acquired);
-      }while(!acquired);
+      do
+      {
+        if (timer.ElapsedMilliseconds > MAX_LOCK_ACQUIRE_TIME_MILLIS)
+        {
+          Thread.CurrentThread.Abort("Could not acquire writer thread after " + MAX_LOCK_ACQUIRE_TIME_MILLIS + " ms");
+        }
+        Monitor.TryEnter(WriterLock, TimeSpan.FromSeconds(1), ref acquired);
+      } while (!acquired);
     }
 
     /// <summary>
@@ -422,7 +412,7 @@ namespace DotNetFrontEnd
     /// </summary>
     public static void ReleaseLock()
     {
-        Monitor.Exit(WriterLock);
+      Monitor.Exit(WriterLock);
     }
 
     /// <summary>
@@ -442,7 +432,7 @@ namespace DotNetFrontEnd
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "programPointName")]
     public static int SetInvocationNonce(string programPointName)
     {
-        return Interlocked.Increment(ref globalNonce);
+      return Interlocked.Increment(ref globalNonce);
     }
 
     /// <summary>
@@ -450,9 +440,9 @@ namespace DotNetFrontEnd
     /// </summary>
     private static void CheckDepth()
     {
-        int x;
-        threadDepthMap.TryGetValue(Thread.CurrentThread, out x);
-        Debug.Assert(x == 1, "Illegal PPT callback from thread in nested call");
+      int x;
+      threadDepthMap.TryGetValue(Thread.CurrentThread, out x);
+      Debug.Assert(x == 1, "Illegal PPT callback from thread in nested call");
     }
 
     /// <summary>
@@ -518,12 +508,10 @@ namespace DotNetFrontEnd
     /// <param name="assemblyName">Name of the assembly being profiled.</param>
     /// <param name="assemblyPath">Relative path to the rewritten assembly.</param>
     /// <remarks>Called from DNFE_ArgumentStroingMethod</remarks>
-    public static void InitializeFrontEndArgs(string assemblyName, string assemblyPath, string arguments)
+    public static void InitializeFrontEndArgs(string arguments)
     {
       if (frontEndArgs == null)
       {
-        offlineAssemblyName = assemblyName;
-        offlineAssemblyPath = assemblyPath;
         frontEndArgs = new FrontEndArgs(arguments.Split());
 
         LoadTypeManagerFromDisk();
@@ -618,11 +606,6 @@ namespace DotNetFrontEnd
 
     #region Reflective Visitor and helper methods
 
-    private static bool IsTypeOf<T>(object t)
-    {
-      return (t is T);
-    }
-
     /// <summary>
     /// Print the 3 line (name, value, mod bit) triple for the given variable and all its 
     /// children.
@@ -663,7 +646,7 @@ namespace DotNetFrontEnd
           result = TypeManager.ConvertFSharpListToCSharpArray(obj);
         }
 
-        ProcessVariableAsList(name, result, result == null ? null : result.GetType(), 
+        ProcessVariableAsList(name, result, result == null ? null : result.GetType(),
             writer, depth, originatingType);
       }
       else if (typeManager.IsSet(type) || typeManager.IsFSharpSet(type))
@@ -827,10 +810,10 @@ namespace DotNetFrontEnd
           //try
           //{
 
-            staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
-            ReflectiveVisit(staticFieldName, GetFieldValue(obj, staticField, staticField.Name),
-                  staticField.FieldType, writer, staticFieldName.Count(c => c == '.'),
-                  originatingType, fieldFlags | VariableModifiers.ignore_linked_list);
+          staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
+          ReflectiveVisit(staticFieldName, GetFieldValue(obj, staticField, staticField.Name),
+                staticField.FieldType, writer, staticFieldName.Count(c => c == '.'),
+                originatingType, fieldFlags | VariableModifiers.ignore_linked_list);
           //}
           //catch (ArgumentException)
           //{
@@ -966,7 +949,7 @@ namespace DotNetFrontEnd
       // We might not know the type, e.g. for non-generic ArrayList
       if (elementType == null)
       {
-         elementType = TypeManager.ObjectType;
+        elementType = TypeManager.ObjectType;
       }
 
       // Don't inspect fields on some calls.
@@ -1070,9 +1053,9 @@ namespace DotNetFrontEnd
         if (!typeManager.ShouldIgnoreField(elementType, staticElementField) &&
             !staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
         {
-            staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
-            ListReflectiveVisit(staticFieldName, null, staticElementField.FieldType, writer,
-                staticFieldName.Count(c => c == '.'), originatingType);   
+          staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
+          ListReflectiveVisit(staticFieldName, null, staticElementField.FieldType, writer,
+              staticFieldName.Count(c => c == '.'), originatingType);
         }
       }
 
@@ -1092,9 +1075,9 @@ namespace DotNetFrontEnd
 
       foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType, originatingType))
       {
-          string pureMethodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Name);
-          ListReflectiveVisit(name + "." + pureMethodName, null,
-            pureMethod.ReturnType, writer, depth + 1, originatingType);
+        string pureMethodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Name);
+        ListReflectiveVisit(name + "." + pureMethodName, null,
+          pureMethod.ReturnType, writer, depth + 1, originatingType);
       }
     }
 
@@ -1134,10 +1117,10 @@ namespace DotNetFrontEnd
         if (!typeManager.ShouldIgnoreField(elementType, elementField) &&
             !staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
         {
-            staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
-            ReflectiveVisit(staticFieldName, elementField.GetValue(null),
-                elementField.FieldType, writer, staticFieldName.Count(c => c == '.'),
-                originatingType);
+          staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
+          ReflectiveVisit(staticFieldName, elementField.GetValue(null),
+              elementField.FieldType, writer, staticFieldName.Count(c => c == '.'),
+              originatingType);
         }
       }
 
@@ -1146,7 +1129,7 @@ namespace DotNetFrontEnd
         Type[] typeArray = new Type[list.Count];
         for (int i = 0; i < list.Count; i++)
         {
-            typeArray[i] = nonsensicalElements[i] ? null : list[i].GetType();
+          typeArray[i] = nonsensicalElements[i] ? null : list[i].GetType();
         }
         ListReflectiveVisit(name + "." + DeclarationPrinter.GetTypeMethodCall, typeArray,
             TypeManager.TypeType, writer, depth + 1, originatingType, VariableModifiers.classname,
@@ -1169,7 +1152,7 @@ namespace DotNetFrontEnd
       {
         string pureMethodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Name);
         object[] pureMethodResults = new object[list.Count];
-        
+
         for (int i = 0; i < list.Count; i++)
         {
           pureMethodResults[i] = nonsensicalElements[i] ? null : GetMethodValue(list[i], pureMethod, pureMethod.Name);
@@ -1226,29 +1209,29 @@ namespace DotNetFrontEnd
     /// <returns></returns>
     private static string GetHashCode(object x, Type type)
     {
-        if (type.IsValueType)
+      if (type.IsValueType)
+      {
+        // Use a value-based hashcode for value types
+        Debug.Assert(x.GetType().IsValueType,
+            "Runtime value is not a value type. Runtime Type: " + x.GetType().ToString() + " Declared: " + type.Name);
+        return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
+      }
+      else
+      {
+        if (!x.GetType().IsValueType)
         {
-            // Use a value-based hashcode for value types
-            Debug.Assert(x.GetType().IsValueType, 
-                "Runtime value is not a value type. Runtime Type: " + x.GetType().ToString() + " Declared: " + type.Name);
-            return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
+          // Use a reference-based hashcode for reference types
+          return RuntimeHelpers.GetHashCode(x).ToString(CultureInfo.InvariantCulture);
         }
         else
         {
-             if (!x.GetType().IsValueType)
-             {
-                  // Use a reference-based hashcode for reference types
-                  return RuntimeHelpers.GetHashCode(x).ToString(CultureInfo.InvariantCulture);
-             }
-             else
-             {
-                 // Assume there's a type mismatch because we didn't have enough information.
-                 Debug.Assert(type.Equals(typeof(object)),
-                      "Runtime value is not a reference type. Runtime Type: " + x.GetType().ToString() + " Declared: " + type.Name);
-                 // Use the value's hashcode and hope it does something reasonable.
-                 return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
-             }
+          // Assume there's a type mismatch because we didn't have enough information.
+          Debug.Assert(type.Equals(typeof(object)),
+               "Runtime value is not a reference type. Runtime Type: " + x.GetType().ToString() + " Declared: " + type.Name);
+          // Use the value's hashcode and hope it does something reasonable.
+          return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
         }
+      }
     }
 
     /// <summary>
@@ -1276,14 +1259,14 @@ namespace DotNetFrontEnd
         }
         else
         {
-            // Type is an enum, print out it's hash. Since were using a hashcode rep-type, we need to make sure the
-            // hashcode is non-zero.
-            SetOutputSuppression(true);
-            int hash = type.GetHashCode() + x.GetHashCode();
-            hash = hash == 0 ? hash + 1 : hash;
-            string enumHash = hash.ToString(CultureInfo.InvariantCulture);
-            SetOutputSuppression(false);
-            return enumHash;
+          // Type is an enum, print out it's hash. Since were using a hashcode rep-type, we need to make sure the
+          // hashcode is non-zero.
+          SetOutputSuppression(true);
+          int hash = type.GetHashCode() + x.GetHashCode();
+          hash = hash == 0 ? hash + 1 : hash;
+          string enumHash = hash.ToString(CultureInfo.InvariantCulture);
+          SetOutputSuppression(false);
+          return enumHash;
         }
       }
       else if (flags.HasFlag(VariableModifiers.classname) ||
@@ -1293,25 +1276,25 @@ namespace DotNetFrontEnd
       }
       else if (type.IsValueType)
       {
-          if (type == TypeManager.BooleanType)
+        if (type == TypeManager.BooleanType)
+        {
+          if ((bool)x)
           {
-              if ((bool)x)
-              {
-                  return "true";
-              }
-              else
-              {
-                  return "false";
-              }
+            return "true";
           }
-          else if (type == TypeManager.CharType)
+          else
           {
-              return ((int)(char)x).ToString(CultureInfo.InvariantCulture);
+            return "false";
           }
-          else if (TypeManager.IsAnyNumericType(type))
-          {
-              return x.ToString();
-          } 
+        }
+        else if (type == TypeManager.CharType)
+        {
+          return ((int)(char)x).ToString(CultureInfo.InvariantCulture);
+        }
+        else if (TypeManager.IsAnyNumericType(type))
+        {
+          return x.ToString();
+        }
       }
 
       // Type is either an object or a user-defined struct, print out its hashcode.
@@ -1319,7 +1302,7 @@ namespace DotNetFrontEnd
       string hashcode = GetHashCode(x, type);
       SetOutputSuppression(false);
       return hashcode;
-      
+
     }
 
     /// <summary>
@@ -1372,6 +1355,9 @@ namespace DotNetFrontEnd
     /// <param name="method">Method to invoke</param>
     /// <param name="methodName">Name of the method to invoke</param>
     /// <returns>Result returned by the invoked function</returns>
+    /// Warning suppressed because we purposefully want to catch all exception types and continue
+    /// normally.
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
     private static object GetMethodValue(object obj, MethodInfo method, string methodName)
     {
       // TODO(#60): Duplicative with GetVariableValue?
@@ -1386,10 +1372,10 @@ namespace DotNetFrontEnd
       // Ensure we are at the declared type, and not possibly a subtype
       while ((currentType.Name != null) && (currentType.Name != method.DeclaringType.Name))
       {
-         currentType = currentType.BaseType;
+        currentType = currentType.BaseType;
       }
 
-      Debug.Assert(currentType != null, 
+      Debug.Assert(currentType != null,
           "Reached top when locating declaring type for method " + methodName + " (instance type: " + obj.GetType().Name + ")");
 
       // Climb the supertypes as necessary to get the desired field
@@ -1410,19 +1396,19 @@ namespace DotNetFrontEnd
       SetOutputSuppression(true);
       try
       {
-          val = runtimeMethod.Invoke(obj, null);
+        val = runtimeMethod.Invoke(obj, null);
       }
       catch
       {
-          Console.WriteLine("Error invoking " + runtimeMethod.Name + " on type " + obj.GetType().Name);
-          val = "nonsensical";
+        Console.WriteLine("Error invoking " + runtimeMethod.Name + " on type " + obj.GetType().Name);
+        val = "nonsensical";
       }
       finally
       {
-          SetOutputSuppression(false);
+        SetOutputSuppression(false);
       }
       return val;
-      
+
     }
 
     /// <summary>
