@@ -93,6 +93,10 @@ namespace DotNetFrontEnd
     /// </summary>
     public static readonly string DecrementDepthFunctionName = "DecrementThreadDepth";
 
+    /// <summary>
+    /// Name of the function to stop execution if an exception escaped reflective visiting
+    /// </summary>
+    public static readonly string KillFunctionName = "KillApplication";
 
     /// <summary>
     /// The name of the standard instrumentation method in VariableVisitor.cs, this is the method
@@ -289,7 +293,215 @@ namespace DotNetFrontEnd
         }
     }
 
-    #region Methods to be called from program to be profiled
+    #region Safe (cannot throw exception) methods called from subject program
+
+    /// <summary>
+    /// Kill the application with exception <code>ex</code>
+    /// </summary>
+    /// <param name="ex">the exception that occured during reflective visiting</param>
+    public static void KillApplication(Exception ex)
+    {
+        Trace.Fail(ex.Message ?? "<No Exception Message>", ex.StackTrace ?? "<No Exception Stack Trace>");
+        Environment.Exit(1);
+    }
+
+    /// <summary>
+    /// Acquire the lock on the PPT writer and increment the thread depth. Aborts thread if the lock
+    /// cannot be acquired within a certain time frame (which would indicate deadlock).
+    /// </summary>
+    public static void AcquireLock()
+    {
+        bool acquired = false;
+        var timer = Stopwatch.StartNew();
+        do
+        {
+            if (timer.ElapsedMilliseconds > MAX_LOCK_ACQUIRE_TIME_MILLIS)
+            {
+                KillApplication(new Exception("DEADLOCK?: Could not acquire writer lock after " + MAX_LOCK_ACQUIRE_TIME_MILLIS + " ms"));
+            }
+            Monitor.TryEnter(WriterLock, TimeSpan.FromSeconds(1), ref acquired);
+        } while (!acquired);
+    }
+
+    /// <summary>
+    /// Decrement the thread depth and release the lock on the PPT writer.
+    /// </summary>
+    public static void ReleaseLock()
+    {
+        Monitor.Exit(WriterLock);
+    }
+
+    /// <summary>
+    ///  Safe call to UnsafeValueFirstVisitVariable
+    /// </summary>
+    public static void ValueFirstVisitVariable(object variable, string name, string typeName)
+    {
+        try
+        {
+            UnsafeValueFirstVisitVariable(variable, name, typeName);
+        }
+        catch (Exception ex)
+        {
+            KillApplication(ex);
+        }
+    }
+
+    /// <summary>
+    /// Safe call to UnsafeVisitVariable
+    /// </summary>
+    public static void VisitVariable(string name, object variable, string typeName)
+    {
+        try
+        {
+            UnsafeVisitVariable(name, variable, typeName);
+        }
+        catch (Exception ex)
+        {
+            KillApplication(ex);
+        }
+    }
+
+    /// <summary>
+    /// Safe call to UnsafePerformStaticInstrumentation
+    /// </summary>
+    /// <param name="typeName"></param>
+    public static void PerformStaticInstrumentation(string typeName)
+    {
+        try
+        {
+            UnsafePerformStaticInstrumentation(typeName);
+        }
+        catch (Exception ex)
+        {
+            KillApplication(ex);
+        }
+    }
+
+    /// <summary>
+    /// Safe call to UnsafeVisitException
+    /// </summary>
+    public static void VisitException(object exception)
+    {
+        try
+        {
+            UnsafeVisitException(exception);
+        }
+        catch (Exception ex)
+        {
+            KillApplication(ex);
+        }
+    }
+
+    /// <summary>
+    /// Safe call to UnsafeIncrementThreadDepth
+    /// </summary>
+    /// <returns></returns>
+    public static bool IncrementThreadDepth()
+    {
+        try
+        {
+            return UnsafeIncrementThreadDepth();
+        }
+        catch (Exception ex)
+        {
+            KillApplication(ex);
+            return false; // dead code
+        }
+    }
+
+    /// <summary>
+    /// Safe call to UnsafeDecrementThreadDepth
+    /// </summary>
+    public static void DecrementThreadDepth()
+    {
+        try
+        {
+            UnsafeDecrementThreadDepth();
+        }
+        catch (Exception ex)
+        {
+            KillApplication(ex);
+        }
+    }
+
+    /// <summary>
+    /// Safe call to UnsafeSetInvocation nonce
+    /// </summary>
+    public static int SetInvocationNonce(string programPointName)
+    {
+        try
+        {
+            return UnsafeSetInvocationNonce(programPointName);
+        }
+        catch (Exception ex)
+        {
+            KillApplication(ex);
+            return -1; // dead code
+        }
+    }
+
+    /// <summary>
+    /// Safe call to UnsafeWriteInvocationNonce
+    /// </summary>
+    /// <param name="nonce"></param>
+    public static void WriteInvocationNonce(int nonce)
+    {
+        try
+        {
+            UnsafeWriteInvocationNonce(nonce);
+        }
+        catch (Exception ex)
+        {
+            KillApplication(ex);
+        }
+    }
+
+    /// <summary>
+    /// Safe call to UnsafeWriteProgramPoint
+    /// </summary>
+    public static void WriteProgramPoint(string programPointName, string label)
+    {
+        try
+        {
+            UnsafeWriteProgramPoint(programPointName, label);
+        }
+        catch (Exception ex)
+        {
+            KillApplication(ex);
+        }
+    }
+
+    /// <summary>
+    /// Safe call to UnsafeInitializeFrontEndArgs
+    /// </summary>
+    public static void InitializeFrontEndArgs(string assemblyName, string assemblyPath, string arguments)
+    {
+        try
+        {
+            UnsafeInitializeFrontEndArgs(assemblyName, assemblyPath, arguments);
+        }
+        catch (Exception ex)
+        {
+            KillApplication(ex);
+        }
+    }
+
+    #endregion
+
+    #region Unsafe (can throw an exception) implementations of methods called by subject program
+
+    /// <summary>
+    /// Returns the current PPT visiting nesting depth for the current thread.
+    /// </summary>
+    /// <returns>The current PPT visiting nesting depth for the current thread.</returns>
+    [Pure]
+    public static int NestingDepth()
+    {
+        Contract.Ensures(Contract.Result<int>() > 0);
+        int x;
+        threadDepthMap.TryGetValue(Thread.CurrentThread, out x);
+        return x;
+    }
 
     /// <summary>
     /// Special version of VisitVariable with different parameter ordering for convenient calling 
@@ -298,7 +510,7 @@ namespace DotNetFrontEnd
     /// <param name="variable">The object</param>
     /// <param name="name">The name of the variable</param>
     /// <param name="typeName">Description of the type</param>
-    public static void ValueFirstVisitVariable(object variable, string name, string typeName)
+    private static void UnsafeValueFirstVisitVariable(object variable, string name, string typeName)
     {
       // Make the traditional call, rearrange the variables.
       DoVisit(variable, name, typeName);
@@ -310,33 +522,17 @@ namespace DotNetFrontEnd
     /// <param name="name">The name of the variable</param>
     /// <param name="variable">The value of a variable</param>
     /// <param name="declaredType">The declared type of the variable</param>
-    public static void VisitVariable(string name, object variable, string typeName)
+    private static void UnsafeVisitVariable(string name, object variable, string typeName)
     {
       // Make the traditional call, nothing special
       DoVisit(variable, name, typeName);
-    }
-
-    private static void LoadTypeManagerFromDisk()
-    {
-        Contract.Requires(TypeManager == null);
-        Contract.Ensures(TypeManager != null);
-         
-        IFormatter formatter = new BinaryFormatter();
-        Stream stream = new FileStream(
-            Assembly.GetExecutingAssembly().Location + TypeManagerFileExtension,
-            FileMode.Open, FileAccess.Read, FileShare.Read);
-
-        using (stream)
-        {
-            TypeManager = (TypeManager)formatter.Deserialize(stream);
-        }
     }
 
     /// <summary>
     /// Visit all the static variables of the given type.
     /// </summary>
     /// <param name="typeName">Assembly-qualified name of the type to visit.</param>
-    public static void PerformStaticInstrumentation(string typeName)
+    private static void UnsafePerformStaticInstrumentation(string typeName)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(typeName));
       Contract.Requires(NestingDepth() == 1, "Illegal PPT callback from thread in nested call");
@@ -375,7 +571,7 @@ namespace DotNetFrontEnd
     /// Null exceptions should actually be treated as non-sensical.
     /// </summary>
     /// <param name="exception">An exception to reflectively visit</param>
-    public static void VisitException(object exception)
+    private static void UnsafeVisitException(object exception)
     {
       // If the exception is null we actually want to print it as non-sensical.
       VariableModifiers flags = exception == null ? VariableModifiers.nonsensical : VariableModifiers.none;
@@ -390,7 +586,7 @@ namespace DotNetFrontEnd
     /// should be visit, that is the depth count is 1.
     /// </summary>
     /// <returns></returns>
-    public static bool IncrementThreadDepth()
+    private static bool UnsafeIncrementThreadDepth()
     {
         return threadDepthMap.AddOrUpdate(Thread.CurrentThread, 1, (t, x) => x + 1) == 1;
     }
@@ -398,7 +594,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Decrement the depth count for the current thread.
     /// </summary>
-    public static void DecrementThreadDepth()
+    private static void UnsafeDecrementThreadDepth()
     {
         if (threadDepthMap.AddOrUpdate(Thread.CurrentThread, 0, (t, x) => x - 1) == 0)
         {
@@ -409,59 +605,21 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Acquire the lock on the PPT writer and increment the thread depth. Aborts thread if the lock
-    /// cannot be acquired within a certain time frame (which would indicate deadlock).
-    /// </summary>
-    public static void AcquireLock()
-    {
-      bool acquired = false;
-      var timer = Stopwatch.StartNew();
-      do{
-          if (timer.ElapsedMilliseconds > MAX_LOCK_ACQUIRE_TIME_MILLIS)
-          {
-              Thread.CurrentThread.Abort("Could not acquire writer thread after " + MAX_LOCK_ACQUIRE_TIME_MILLIS + " ms");
-          }
-          Monitor.TryEnter(WriterLock, TimeSpan.FromSeconds(1), ref acquired);
-      }while(!acquired);
-    }
-
-    /// <summary>
-    /// Decrement the thread depth and release the lock on the PPT writer.
-    /// </summary>
-    public static void ReleaseLock()
-    {
-        Monitor.Exit(WriterLock);
-    }
-
-    /// <summary>
     /// Set the invocation nonce for this method by storing it in an appropriate local var
     /// </summary>
     /// <returns>The invocation nonce for the method</returns>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "programPointName")]
-    public static int SetInvocationNonce(string programPointName)
+    private static int UnsafeSetInvocationNonce(string programPointName)
     {
         Contract.Requires(!string.IsNullOrWhiteSpace(programPointName));
         return Interlocked.Increment(ref globalNonce);
     }
 
     /// <summary>
-    /// Returns the current PPT visiting nesting depth for the current thread.
-    /// </summary>
-    /// <returns>The current PPT visiting nesting depth for the current thread.</returns>
-    [Pure]
-    public static int NestingDepth()
-    {
-        Contract.Ensures(Contract.Result<int>() > 0);
-        int x;
-        threadDepthMap.TryGetValue(Thread.CurrentThread, out x);
-        return x;
-    }
-
-    /// <summary>
     /// Write the invocation nonce for the current method
     /// </summary>
     /// <param name="nonce">Nonce-value to print</param>
-    public static void WriteInvocationNonce(int nonce)
+    private static void UnsafeWriteInvocationNonce(int nonce)
     {
       Contract.Requires(NestingDepth() == 1, "Illegal PPT callback from thread in nested call");
 
@@ -478,11 +636,11 @@ namespace DotNetFrontEnd
     /// <param name="programPointName">Name of program point to print</param>
     /// <param name="label">Label used to differentiate the specific program point from other with 
     /// the same name.</param>
-    public static void WriteProgramPoint(string programPointName, string label)
+    private static void UnsafeWriteProgramPoint(string programPointName, string label)
     {
       Contract.Requires(NestingDepth() == 1, "Illegal PPT callback from thread in nested call");
       Contract.Requires(!string.IsNullOrWhiteSpace(programPointName));
-   
+    
       staticFieldsVisitedForCurrentProgramPoint.Clear();
       variablesVisitedForCurrentProgramPoint.Clear();
 
@@ -519,7 +677,7 @@ namespace DotNetFrontEnd
     /// <param name="assemblyName">Name of the assembly being profiled.</param>
     /// <param name="assemblyPath">Relative path to the rewritten assembly.</param>
     /// <remarks>Called from DNFE_ArgumentStroingMethod</remarks>
-    public static void InitializeFrontEndArgs(string assemblyName, string assemblyPath, string arguments)
+    private static void UnsafeInitializeFrontEndArgs(string assemblyName, string assemblyPath, string arguments)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(assemblyName));
       Contract.Requires(!string.IsNullOrWhiteSpace(assemblyPath));
@@ -622,6 +780,22 @@ namespace DotNetFrontEnd
       }
 
       return writer;
+    }
+
+    private static void LoadTypeManagerFromDisk()
+    {
+        Contract.Requires(TypeManager == null);
+        Contract.Ensures(TypeManager != null);
+
+        IFormatter formatter = new BinaryFormatter();
+        Stream stream = new FileStream(
+            Assembly.GetExecutingAssembly().Location + TypeManagerFileExtension,
+            FileMode.Open, FileAccess.Read, FileShare.Read);
+
+        using (stream)
+        {
+            TypeManager = (TypeManager)formatter.Deserialize(stream);
+        }
     }
 
     #region Reflective Visitor and helper methods
