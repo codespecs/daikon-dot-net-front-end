@@ -171,7 +171,7 @@ namespace DotNetFrontEnd.Comparability
             }
         }
 
-        public int GetComparability(string name, INamedTypeDefinition type, DeclarationPrinter.VariableKind kind, IMethodDefinition method = null)
+        internal int GetComparability(string name, INamedTypeDefinition type, DeclarationPrinter.VariableKind kind, IMethodDefinition method = null)
         {
             if (method != null)
             {
