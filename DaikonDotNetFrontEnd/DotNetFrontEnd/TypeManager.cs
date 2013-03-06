@@ -176,7 +176,7 @@ namespace DotNetFrontEnd
     /// Map from type to set of pure methods
     /// </summary>
     /// <seealso cref="pureMethods"/>
-    private readonly Dictionary<Type, ISet<MethodInfo>> pureMethodsForType = new Dictionary<Type,ISet<MethodInfo>>();
+    private readonly Dictionary<Type, ISet<MethodInfo>> pureMethodsForType = new Dictionary<Type, ISet<MethodInfo>>();
 
     /// <summary>
     /// All pure methods
@@ -200,41 +200,41 @@ namespace DotNetFrontEnd
 
     public IMetadataHost Host
     {
-        get
-        {
-            Contract.Ensures(Contract.Result<IMetadataHost>() != null);
-            Contract.Ensures(Contract.Result<IMetadataHost>() == host);
-            return host;
-        }
+      get
+      {
+        Contract.Ensures(Contract.Result<IMetadataHost>() != null);
+        Contract.Ensures(Contract.Result<IMetadataHost>() == host);
+        return host;
+      }
     }
 
     public AssemblyIdentity AssemblyIdentity
     {
-        get
-        {
-            Contract.Ensures(Contract.Result<AssemblyIdentity>() == this.assemblyIdentity);
-            return this.assemblyIdentity;
-        }
+      get
+      {
+        Contract.Ensures(Contract.Result<AssemblyIdentity>() == this.assemblyIdentity);
+        return this.assemblyIdentity;
+      }
     }
 
     [OnDeserializedAttribute]
     private void Rehydrate(StreamingContext context)
     {
-        InitHost();
-        markedSystemTypes = new HashSet<Type>();
+      InitHost();
+      markedSystemTypes = new HashSet<Type>();
     }
 
     private void InitHost()
     {
-        Contract.Ensures(this.host != null);
-        this.host = frontEndArgs.IsPortableDll ? (IMetadataHost)new PortableHost() : new PeReader.DefaultHost();
+      Contract.Ensures(this.host != null);
+      this.host = frontEndArgs.IsPortableDll ? (IMetadataHost)new PortableHost() : new PeReader.DefaultHost();
     }
 
     [ContractInvariantMethod]
     private void ObjectInvariants()
     {
-        Contract.Invariant(frontEndArgs != null);
-        Contract.Invariant(host != null);
+      Contract.Invariant(frontEndArgs != null);
+      Contract.Invariant(host != null);
     }
 
     /// <summary>
@@ -296,23 +296,23 @@ namespace DotNetFrontEnd
 
     public void AddPureMethod(Type type, MethodInfo method)
     {
-        Contract.Requires(type != null);
-        Contract.Requires(method != null);
-        Contract.Ensures(pureMethodsForType.ContainsKey(type) && pureMethodsForType[type].Contains(method));
-        Contract.Ensures(pureMethods.Contains(method));
+      Contract.Requires(type != null);
+      Contract.Requires(method != null);
+      Contract.Ensures(pureMethodsForType.ContainsKey(type) && pureMethodsForType[type].Contains(method));
+      Contract.Ensures(pureMethods.Contains(method));
 
-        if (pureMethods.Contains(method))
-        {
-            return;
-        }
-        if (!this.pureMethodsForType.ContainsKey(type))
-        {
-            pureMethodsForType[type] = new HashSet<MethodInfo>();
-        }
-        pureMethodsForType[type].Add(method);
-        pureMethods.Add(method);
+      if (pureMethods.Contains(method))
+      {
+        return;
+      }
+      if (!this.pureMethodsForType.ContainsKey(type))
+      {
+        pureMethodsForType[type] = new HashSet<MethodInfo>();
+      }
+      pureMethodsForType[type].Add(method);
+      pureMethods.Add(method);
 
-        // Console.WriteLine("[Pure] " + method.Name + " (" + type.Name + ")");
+      // Console.WriteLine("[Pure] " + method.Name + " (" + type.Name + ")");
     }
 
     /// <summary>
@@ -396,7 +396,7 @@ namespace DotNetFrontEnd
     public void SetAssemblyIdentity(AssemblyIdentity identity)
     {
       Contract.Requires(identity != null);
-      Contract.Requires(this.AssemblyIdentity == null,  "Cannot reset assembly identity");
+      Contract.Requires(this.AssemblyIdentity == null, "Cannot reset assembly identity");
       Contract.Ensures(this.AssemblyIdentity == identity);
       this.assemblyIdentity = identity;
     }
@@ -415,7 +415,7 @@ namespace DotNetFrontEnd
       }
       else
       {
-        return type.Namespace != null && type.Namespace.Equals("Microsoft.FSharp.Collections") && 
+        return type.Namespace != null && type.Namespace.Equals("Microsoft.FSharp.Collections") &&
                type.Name.StartsWith("FSharpList");
       }
     }
@@ -477,7 +477,7 @@ namespace DotNetFrontEnd
     {
       Contract.Requires(parentType != null);
       Contract.Requires(field != null);
-       
+
       if (frontEndArgs.OmitParentDecType != null && frontEndArgs.OmitParentDecType.IsMatch(parentType.FullName))
       {
         return true;
@@ -547,7 +547,7 @@ namespace DotNetFrontEnd
     /// <returns>True if the type meets the linked-list qualification, otherwise false</returns>
     public bool IsLinkedListImplementer(Type type)
     {
-        Contract.Requires(type != null);
+      Contract.Requires(type != null);
       // The implementation appears to the test as a linked list.
       if (type.AssemblyQualifiedName != null && type.AssemblyQualifiedName.Contains("System"))
       {
@@ -703,42 +703,42 @@ namespace DotNetFrontEnd
       {
         foreach (var method in this.pureMethodsForType[type])
         {
-         
+
           // Ensure the pure method can be seen by the originating type if 
           // --std-visibility has been supplied.
           // TODO(#71): Add logic for more visibility types
-          if (frontEndArgs.StdVisibility && 
+          if (frontEndArgs.StdVisibility &&
               method.IsPrivate && !originatingType.FullName.Equals(type.FullName))
           {
             continue;
           }
           result.Add(method);
         }
-      } 
+      }
       else if (type.Namespace != null && type.Namespace.StartsWith("System") && !markedSystemTypes.Contains(type))
       {
-          if (!type.Name.Equals("RuntimeType") && 
-              !type.Name.Equals("RuntimeMethodInfo") && 
-              !type.Equals(typeof(Exception)) &&
-              !type.IsSubclassOf(typeof(Exception)) &&
-              !originatingType.Equals(typeof(Exception)))
+        if (!type.Name.Equals("RuntimeType") &&
+            !type.Name.Equals("RuntimeMethodInfo") &&
+            !type.Equals(typeof(Exception)) &&
+            !type.IsSubclassOf(typeof(Exception)) &&
+            !originatingType.Equals(typeof(Exception)))
+        {
+          foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
           {
-              foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
-              {
-                  if (method.Name.StartsWith(DeclarationPrinter.GetterPropertyPrefix) && method.GetParameters().Length == 0)
-                  {
-                      //AddPureMethod(type, method);
-                      //result.Add(method);
-                      //Console.WriteLine(type.AssemblyQualifiedName + ";" + method.Name);
-                  }
-              }
-              markedSystemTypes.Add(type);
+            if (method.Name.StartsWith(DeclarationPrinter.GetterPropertyPrefix) && method.GetParameters().Length == 0)
+            {
+              //AddPureMethod(type, method);
+              //result.Add(method);
+              //Console.WriteLine(type.AssemblyQualifiedName + ";" + method.Name);
+            }
           }
+          markedSystemTypes.Add(type);
+        }
       }
 
       result.Sort(delegate(MethodInfo lhs, MethodInfo rhs)
       {
-          return DeclarationPrinter.SanitizePropertyName(lhs.Name).CompareTo(DeclarationPrinter.SanitizePropertyName(rhs.Name));
+        return DeclarationPrinter.SanitizePropertyName(lhs.Name).CompareTo(DeclarationPrinter.SanitizePropertyName(rhs.Name));
       });
 
       return result;
@@ -841,7 +841,7 @@ namespace DotNetFrontEnd
     public string ConvertCCITypeToAssemblyQualifiedName(ITypeReference type, bool deeplyInspectGenericParameters)
     {
       Contract.Requires(type != null);
-  
+
       string simpleTypeName = CheckSimpleCases(type);
       if (simpleTypeName != null)
       {
@@ -1159,9 +1159,9 @@ namespace DotNetFrontEnd
       Contract.Requires(def != null);
 
       var host = this.Host;
-      
-      if (AttributeHelper.Contains(def.Attributes, host.PlatformType.SystemRuntimeCompilerServicesCompilerGeneratedAttribute)) return true;  
-      
+
+      if (AttributeHelper.Contains(def.Attributes, host.PlatformType.SystemRuntimeCompilerServicesCompilerGeneratedAttribute)) return true;
+
       var systemDiagnosticsDebuggerNonUserCodeAttribute = CreateTypeReference(host, new Microsoft.Cci.Immutable.AssemblyReference(host, host.ContractAssemblySymbolicIdentity), "System.Diagnostics.DebuggerNonUserCodeAttribute");
       if (AttributeHelper.Contains(def.Attributes, systemDiagnosticsDebuggerNonUserCodeAttribute)) return true;
 
@@ -1169,10 +1169,10 @@ namespace DotNetFrontEnd
       var compilerGeneratedAttributeName = host.PlatformType.SystemRuntimeCompilerServicesCompilerGeneratedAttribute.ResolvedType.ToString();
       foreach (var a in def.Attributes)
       {
-          if (a.Type.ToString().Equals(compilerGeneratedAttributeName))
-          {
-              return true;
-          }
+        if (a.Type.ToString().Equals(compilerGeneratedAttributeName))
+        {
+          return true;
+        }
       }
       return false;
     }
@@ -1259,26 +1259,26 @@ namespace DotNetFrontEnd
     /// to other immutable types</returns>
     public static bool IsImmutable(Type type)
     {
-        Contract.Requires(type != null);
-       
-        if (immutability.ContainsKey(type))
-        {
-            return immutability[type];
-        }
-        else if (type.IsPrimitive)
-        {
-            return true;
-        }
-        else
-        {
-            // don't recurse if a field references the containing type
-            var fieldsAreImmutable = type.GetFields().All(f => f.IsInitOnly && (f.FieldType == type || IsImmutable(f.FieldType)));
-            var propertiesAreReadOnly = type.GetProperties().All(p => !p.CanWrite);
-            var result = fieldsAreImmutable && propertiesAreReadOnly;
+      Contract.Requires(type != null);
 
-            immutability.Add(type, result);
-            return result;
-        }
+      if (immutability.ContainsKey(type))
+      {
+        return immutability[type];
+      }
+      else if (type.IsPrimitive)
+      {
+        return true;
+      }
+      else
+      {
+        // don't recurse if a field references the containing type
+        var fieldsAreImmutable = type.GetFields().All(f => f.IsInitOnly && (f.FieldType == type || IsImmutable(f.FieldType)));
+        var propertiesAreReadOnly = type.GetProperties().All(p => !p.CanWrite);
+        var result = fieldsAreImmutable && propertiesAreReadOnly;
+
+        immutability.Add(type, result);
+        return result;
+      }
     }
   }
 }

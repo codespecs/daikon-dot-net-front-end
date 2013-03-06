@@ -94,32 +94,32 @@ namespace DotNetFrontEnd
       }
       catch
       {
-          if (frontEndArgs.StaticComparability)
-          {
-              throw new IOException("Error loading PDB file for '" + module.Name.Value + "' (required for static comparability analysis)");
-          }
-          else
-          {
-              // TODO(#25): Figure out how what happens if we can't load the PDB file.
-              // It seems to be non-fatal, so print the error and continue.
-              Console.Error.WriteLine("WARNING: Could not load the PDB file for '" + module.Name.Value +"'");
-          }
+        if (frontEndArgs.StaticComparability)
+        {
+          throw new IOException("Error loading PDB file for '" + module.Name.Value + "' (required for static comparability analysis)");
+        }
+        else
+        {
+          // TODO(#25): Figure out how what happens if we can't load the PDB file.
+          // It seems to be non-fatal, so print the error and continue.
+          Console.Error.WriteLine("WARNING: Could not load the PDB file for '" + module.Name.Value + "'");
+        }
       }
 
       using (pdbReader)
       {
-          AssemblyComparability comparabilityManager = null;
+        AssemblyComparability comparabilityManager = null;
 
-          mutable = MetadataCopier.DeepCopy(host, assembly);
+        mutable = MetadataCopier.DeepCopy(host, assembly);
 
-          if (frontEndArgs.StaticComparability)
-          {
-              Console.WriteLine("Generating Comparability Information");
-              decompiled = Decompiler.GetCodeModelFromMetadataModel(typeManager.Host, mutable, pdbReader, DecompilerOptions.AnonymousDelegates | DecompilerOptions.Iterators);
-              comparabilityManager = new AssemblyComparability(decompiled, typeManager, pdbReader);
-          }
-    
-          ILRewriter mutator = new ILRewriter(host, pdbReader, frontEndArgs, typeManager, comparabilityManager);
+        if (frontEndArgs.StaticComparability)
+        {
+          Console.WriteLine("Generating Comparability Information");
+          decompiled = Decompiler.GetCodeModelFromMetadataModel(typeManager.Host, mutable, pdbReader, DecompilerOptions.AnonymousDelegates | DecompilerOptions.Iterators);
+          comparabilityManager = new AssemblyComparability(decompiled, typeManager, pdbReader);
+        }
+
+        ILRewriter mutator = new ILRewriter(host, pdbReader, frontEndArgs, typeManager, comparabilityManager);
 
         // Look for the path to the reflector, it's an environment variable, check the user space 
         // first.

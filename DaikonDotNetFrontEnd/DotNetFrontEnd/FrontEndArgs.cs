@@ -89,9 +89,9 @@ namespace DotNetFrontEnd
       sample_start,
       // Variables options
       arrays_only,
-      is_readonly_flags,    
-      is_enum_flags,        
-      is_property_flags,    
+      is_readonly_flags,
+      is_enum_flags,
+      is_property_flags,
       nesting_depth,
       omit_var,
       omit_dec_type,
@@ -110,7 +110,7 @@ namespace DotNetFrontEnd
       output_location,
       save_and_run,
       save_program,
-      portable_dll, 
+      portable_dll,
       verbose,
       wpf,
       // Not an option -- the location of the program to be profiled
@@ -145,9 +145,9 @@ namespace DotNetFrontEnd
     [ContractInvariantMethod]
     private void ObjectInvariant()
     {
-        Contract.Invariant(this.programArguments != null);
-        Contract.Invariant(this.argsToWrite != null);
-        Contract.Invariant(this.ProgramArgIndex >= 0);
+      Contract.Invariant(this.programArguments != null);
+      Contract.Invariant(this.argsToWrite != null);
+      Contract.Invariant(this.ProgramArgIndex >= 0);
     }
 
     /// <summary>
@@ -350,14 +350,14 @@ namespace DotNetFrontEnd
     /// </summary>
     private void LoadPurityFile()
     {
-        Contract.Requires(!string.IsNullOrWhiteSpace(this.PurityFile));
-        using (var f = File.OpenText(this.PurityFile))
+      Contract.Requires(!string.IsNullOrWhiteSpace(this.PurityFile));
+      using (var f = File.OpenText(this.PurityFile))
+      {
+        while (!f.EndOfStream)
         {
-            while (!f.EndOfStream)
-            {
-                this.PurityMethods.Add(f.ReadLine());
-            }
+          this.PurityMethods.Add(f.ReadLine());
         }
+      }
     }
 
     #endregion
@@ -376,7 +376,7 @@ namespace DotNetFrontEnd
     public bool ShouldPrintVariable(string varName)
     {
       Contract.Requires(varName != null);
-     
+
       // value__ is an extra field added describing enum values.    
       if (varName.EndsWith("value__"))
       {
@@ -438,17 +438,17 @@ namespace DotNetFrontEnd
       Contract.Requires(originatingType != null);
 
       var memberAccessOptionToUse = this.BaseMemberAccessOptions;
-      if (type.AssemblyQualifiedName != null && 
+      if (type.AssemblyQualifiedName != null &&
           type.AssemblyQualifiedName.Equals(originatingType.AssemblyQualifiedName))
       {
         memberAccessOptionToUse |= BindingFlags.NonPublic;
       }
-      
+
       // We don't want the internal fields of System objects
       // Assumes that the Assembly of StringType and the Assembly of HashSetType are the Assemblies
       // that we want to exclude.
-      return memberAccessOptionToUse & ((TypeManager.StringType.Assembly.Equals(type.Assembly) || TypeManager.HashSetType.Assembly.Equals(type.Assembly)) 
-          ? ~System.Reflection.BindingFlags.NonPublic 
+      return memberAccessOptionToUse & ((TypeManager.StringType.Assembly.Equals(type.Assembly) || TypeManager.HashSetType.Assembly.Equals(type.Assembly))
+          ? ~System.Reflection.BindingFlags.NonPublic
           : memberAccessOptionToUse);
     }
 
@@ -519,13 +519,13 @@ namespace DotNetFrontEnd
     /// </summary>
     public Regex OmitDecType
     {
-        // Optional arg
-        get
-        {
-            string val;
-            this.TryGetArgumentValue(PossibleArgument.omit_dec_type, out val);
-            return (val == null) ? null : new Regex(val); 
-        }
+      // Optional arg
+      get
+      {
+        string val;
+        this.TryGetArgumentValue(PossibleArgument.omit_dec_type, out val);
+        return (val == null) ? null : new Regex(val);
+      }
     }
 
     /// <summary>
@@ -533,13 +533,13 @@ namespace DotNetFrontEnd
     /// </summary>
     public Regex OmitParentDecType
     {
-        // Optional arg
-        get
-        {
-            string val;
-            this.TryGetArgumentValue(PossibleArgument.omit_parent_dec_type, out val);
-            return (val == null) ? null : new Regex(val);
-        }
+      // Optional arg
+      get
+      {
+        string val;
+        this.TryGetArgumentValue(PossibleArgument.omit_parent_dec_type, out val);
+        return (val == null) ? null : new Regex(val);
+      }
     }
 
     /// <summary>
@@ -657,7 +657,7 @@ namespace DotNetFrontEnd
     /// </summary>
     public bool StaticComparability
     {
-        get { return this.IsArgumentSpecified(PossibleArgument.comparability); }
+      get { return this.IsArgumentSpecified(PossibleArgument.comparability); }
     }
 
     /// <summary>
@@ -781,7 +781,7 @@ namespace DotNetFrontEnd
 
     public bool IsPortableDll
     {
-        get { return this.programArguments.ContainsKey(PossibleArgument.portable_dll); }
+      get { return this.programArguments.ContainsKey(PossibleArgument.portable_dll); }
     }
 
     /// <summary>
@@ -799,7 +799,7 @@ namespace DotNetFrontEnd
     /// </summary>
     public bool IsReadOnlyFlags
     {
-        get { return this.programArguments.ContainsKey(PossibleArgument.is_readonly_flags); }
+      get { return this.programArguments.ContainsKey(PossibleArgument.is_readonly_flags); }
     }
 
     /// <summary>
@@ -820,7 +820,7 @@ namespace DotNetFrontEnd
     {
       if (!this.PrintOutput)
       {
-        this.AddArgument(PossibleArgument.output_location, 
+        this.AddArgument(PossibleArgument.output_location,
             Path.ChangeExtension(this.OutputLocation, DeclarationFileExtension));
       }
     }
@@ -832,7 +832,7 @@ namespace DotNetFrontEnd
     {
       if (!this.PrintOutput)
       {
-        this.AddArgument(PossibleArgument.output_location, 
+        this.AddArgument(PossibleArgument.output_location,
             Path.ChangeExtension(this.OutputLocation, DatatraceExtension));
       }
     }
