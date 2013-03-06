@@ -27,22 +27,22 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>..\CombinedRuleSet.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
-    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
     <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
     <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
     <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
     <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
     <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
-    <CodeContractsNonNullObligations>False</CodeContractsNonNullObligations>
-    <CodeContractsBoundsObligations>False</CodeContractsBoundsObligations>
-    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
-    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
-    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsNonNullObligations>True</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>True</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>True</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>True</CodeContractsEnumObligations>
+    <CodeContractsRedundantAssumptions>True</CodeContractsRedundantAssumptions>
     <CodeContractsInferRequires>False</CodeContractsInferRequires>
     <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
     <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
     <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
-    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
+    <CodeContractsSuggestRequires>False</CodeContractsSuggestRequires>
     <CodeContractsSuggestEnsures>False</CodeContractsSuggestEnsures>
     <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
     <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
@@ -58,7 +58,7 @@
     <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>DoNotBuild</CodeContractsReferenceAssembly>
-    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <CodeContractsAnalysisWarningLevel>2</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -137,10 +137,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>CCI_DLLs\Microsoft.Cci.SourceModel.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Contracts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>CCI_DLLs\Microsoft.Contracts.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Numerics" />
@@ -151,7 +147,7 @@
     <Compile Include="Comparability\ComparabilityVisitor.cs" />
     <Compile Include="Comparability\DisjointSets.cs" />
     <Compile Include="Comparability\NameBuilder.cs" />
-    <Compile Include="Comparability\Program.cs" />
+    <Compile Include="Contracts\ContractExtensions.cs" />
     <Compile Include="DeclarationPrinter.cs" />
     <Compile Include="DNFETypeDeclaration.cs" />
     <Compile Include="GlobalSuppressions.cs" />
@@ -172,36 +168,20 @@
     <Folder Include="Utilities\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CCI_DLLs\Microsoft.Cci.ILGenerator.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="CCI_DLLs\Microsoft.Cci.MetadataHelper.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="CCI_DLLs\Microsoft.Cci.MetadataModel.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="CCI_DLLs\Microsoft.Cci.MutableMetadataModel.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="CCI_DLLs\Microsoft.Cci.PdbReader.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="CCI_DLLs\Microsoft.Cci.PdbWriter.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="CCI_DLLs\Microsoft.Cci.PeReader.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="CCI_DLLs\Microsoft.Cci.PeWriter.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="CCI_DLLs\Microsoft.Cci.SourceModel.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="CCI_DLLs\Microsoft.Contracts.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="CCI_DLLs\Microsoft.Cci.Analysis.ControlAndDataFlowGraph.dll" />
+    <Content Include="CCI_DLLs\Microsoft.Cci.CodeModel.dll" />
+    <Content Include="CCI_DLLs\Microsoft.Cci.CodeModelToIL.dll" />
+    <Content Include="CCI_DLLs\Microsoft.Cci.ILGenerator.dll" />
+    <Content Include="CCI_DLLs\Microsoft.Cci.MetadataHelper.dll" />
+    <Content Include="CCI_DLLs\Microsoft.Cci.MetadataModel.dll" />
+    <Content Include="CCI_DLLs\Microsoft.Cci.MutableCodeModel.dll" />
+    <Content Include="CCI_DLLs\Microsoft.Cci.MutableMetadataModel.dll" />
+    <Content Include="CCI_DLLs\Microsoft.Cci.NewILToCodeModel.dll" />
+    <Content Include="CCI_DLLs\Microsoft.Cci.PdbReader.dll" />
+    <Content Include="CCI_DLLs\Microsoft.Cci.PdbWriter.dll" />
+    <Content Include="CCI_DLLs\Microsoft.Cci.PeReader.dll" />
+    <Content Include="CCI_DLLs\Microsoft.Cci.PeWriter.dll" />
+    <Content Include="CCI_DLLs\Microsoft.Cci.SourceModel.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

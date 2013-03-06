@@ -11,6 +11,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using DotNetFrontEnd.Comparability;
 using Microsoft.Cci;
+using System.Diagnostics.Contracts;
+using DotNetFrontEnd.Contracts;
 
 namespace DotNetFrontEnd
 {
@@ -70,6 +72,8 @@ namespace DotNetFrontEnd
     private const string DaikonStringName = "java.lang.String";
     private const string DaikonBoolName = "boolean";
     private const string DaikonIntName = "int";
+    private const string DaikonHashCodeName = "hashcode";
+    private const string DaikonDoubleName = "double";
 
     /// <summary>
     /// The value to print when we make a GetType() call on a variable
@@ -99,14 +103,6 @@ namespace DotNetFrontEnd
       array,
       variable,
       Return, // Lowercase "R" in return is a keyword.
-    }
-
-    [Flags]
-    internal enum ImmutabilityFlags
-    {
-        None = 0,
-        ReadOnly = 1,
-        Immutable = ReadOnly << 1,
     }
 
     /// <summary>
@@ -204,6 +200,11 @@ namespace DotNetFrontEnd
         int nestingDepth = 0, 
         INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
+      Contract.Requires(!string.IsNullOrWhiteSpace(name));
+      Contract.Requires(type != null);
+      Contract.Requires(nestingDepth >= 0);
+      Contract.Requires(typeContext != null || methodContext != null);
+
       if (PerformEarlyExitChecks(name, type, kind, enclosingVar, nestingDepth))
       {
         return;
@@ -289,9 +290,13 @@ namespace DotNetFrontEnd
     /// <param name="nestingDepth">Nesting depth of the variable</param>
     private void DeclarationChildPrinting(string name, Type type, VariableKind kind, 
       VariableFlags flags, string parentName, int nestingDepth, Type originatingType,
-      ImmutabilityFlags variableImmutability = ImmutabilityFlags.None,  
       INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
+        Contract.Requires(!string.IsNullOrWhiteSpace(name));
+        Contract.Requires(type != null);
+        Contract.Requires(nestingDepth >= 0);
+        Contract.Requires(typeContext != null || methodContext != null);
+
         foreach (FieldInfo field in
           type.GetSortedFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
               type, originatingType)))
@@ -412,7 +417,9 @@ namespace DotNetFrontEnd
       VariableFlags flags, string enclosingVar, string relativeName, string parentName, 
       INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
-        
+      Contract.Requires(!string.IsNullOrWhiteSpace(name));
+      Contract.Requires(type != null);
+      Contract.Requires(typeContext != null || methodContext != null);
     
       this.WritePair("variable", name, 1);
 
@@ -481,11 +488,7 @@ namespace DotNetFrontEnd
         string relativeName = "", string parentName = "", int nestingDepth = 0,
         INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
-        
-      if (name.Length == 0)
-      {
-        throw new NotSupportedException("Reflection error resulted in list without name");
-      }
+      Contract.Requires(!string.IsNullOrWhiteSpace(name));
 
       if (nestingDepth > this.frontEndArgs.MaxNestingDepth ||
           !this.frontEndArgs.ShouldPrintVariable(name))
@@ -501,7 +504,7 @@ namespace DotNetFrontEnd
 
       if (elementType.IsEnum)
       {
-          flags = ExtendFlags(flags, VariableFlags.is_enum);
+        flags = ExtendFlags(flags, VariableFlags.is_enum);
       }
 
       this.WritePair("variable", name, IndentsForName);
@@ -686,20 +689,17 @@ namespace DotNetFrontEnd
     /// </param>
     public void PrintParentClassFields(string parentObjectType, IMethodDefinition method)
     {
+      Contract.Requires(!string.IsNullOrWhiteSpace(parentObjectType));
+      Contract.Requires(method != null);
+
       // TODO(#48): Parent type like we do for instance fields.
       DNFETypeDeclaration typeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(parentObjectType);
       foreach (Type type in typeDecl.GetAllTypes)
       {
-        if (type == null)
-        {
-          throw new ArgumentException("Unable to resolve parent object type to a type.",
-              "parentObjectType");
-        }
-
+        Contract.Assume(type != null,  "Unable to resolve parent object type to a type.");
         DeclareStaticFieldsForType(type, null, methodContext: method); // TWS what type to use for context?
       }
-
     }
 
     /// <summary>
@@ -708,7 +708,8 @@ namespace DotNetFrontEnd
     /// <param name="type">Type to print declarations of the static fields of</param>
     private void DeclareStaticFieldsForType(Type type, INamedTypeDefinition typeContext, IMethodDefinition methodContext = null)
     {
-        
+      Contract.Requires(type != null);
+      Contract.Requires(typeContext != null || methodContext != null);
 
       foreach (FieldInfo staticField in
         // type passed in as originating type so we get all the fields for it
@@ -733,6 +734,8 @@ namespace DotNetFrontEnd
     /// <param name="methodName">Name of the program point being entered</param>
     public void PrintCallEntrance(string methodName)
     {
+      Contract.Requires(!string.IsNullOrWhiteSpace(methodName));
+
       this.WriteLine();
       this.WritePair("ppt", SanitizeProgramPointName(methodName));
       this.WritePair("ppt-type", "enter");
@@ -746,6 +749,8 @@ namespace DotNetFrontEnd
     /// <param name="methodName">The name of the program point being exited</param>
     public void PrintCallExit(string methodName)
     {
+      Contract.Requires(!string.IsNullOrWhiteSpace(methodName));
+
       this.WriteLine();
       this.WritePair("ppt", SanitizeProgramPointName(methodName));
       this.WritePair("ppt-type", "subexit");
@@ -778,6 +783,9 @@ namespace DotNetFrontEnd
     /// <param name="returnType">Assembly qualified name of the return type</param>
     public void PrintReturn(string name, string returnType, IMethodDefinition methodDefinition)
     {
+      Contract.Requires(!string.IsNullOrWhiteSpace(name));
+      Contract.Requires(!string.IsNullOrWhiteSpace(returnType));
+
       DNFETypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(returnType);
       foreach (Type type in typeDecl.GetAllTypes)
       {
@@ -796,6 +804,10 @@ namespace DotNetFrontEnd
     /// used to fetch the Type</param>
     public void PrintObjectDefinition(string objectName, string objectAssemblyQualifiedName, INamedTypeDefinition type)
     {
+      Contract.Requires(!string.IsNullOrWhiteSpace(objectName));
+      Contract.Requires(!string.IsNullOrWhiteSpace(objectAssemblyQualifiedName));
+      Contract.Requires(type != null);
+
       DNFETypeDeclaration objectTypeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
       foreach (Type objectType in objectTypeDecl.GetAllTypes)
@@ -827,6 +839,9 @@ namespace DotNetFrontEnd
     /// static fields to print</param>
     public void PrintParentClassDefinition(string className, string objectAssemblyQualifiedName, INamedTypeDefinition typeContext)
     {
+      Contract.Requires(!string.IsNullOrWhiteSpace(className));
+      Contract.Requires(!string.IsNullOrWhiteSpace(objectAssemblyQualifiedName));
+      Contract.Requires(typeContext != null);
         
       DNFETypeDeclaration objectTypeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
@@ -852,10 +867,7 @@ namespace DotNetFrontEnd
     /// <returns>Sanitized version with spaces and slashes escaped</returns>
     public static string SanitizeProgramPointName(string programPointName)
     {
-      if (programPointName == null)
-      {
-        throw new ArgumentNullException("programPointName");
-      }
+      Contract.Requires(!string.IsNullOrWhiteSpace(programPointName));
       string result = programPointName.Replace("\\", "\\\\");
       return result.Replace(" ", "\\_");
     }
@@ -869,6 +881,7 @@ namespace DotNetFrontEnd
     /// <returns>Property name as the developer would recognize it</returns>
     public static string SanitizePropertyName(string propertyNameInIL)
     {
+      Contract.Requires(!string.IsNullOrWhiteSpace(propertyNameInIL));
       if (propertyNameInIL.StartsWith(GetterPropertyPrefix))
       {
         propertyNameInIL = propertyNameInIL.Replace(GetterPropertyPrefix, "");
@@ -885,6 +898,8 @@ namespace DotNetFrontEnd
     /// false if the reference is to a parent class program point</param>
     public void PrintParentName(Microsoft.Cci.ITypeReference type, bool isObjectProgramPoint)
     {
+      Contract.Requires(type != null);
+
       string parentName = type.ToString();
       if (ShouldPrintParentPptIfNecessary(parentName))
       {
@@ -909,8 +924,6 @@ namespace DotNetFrontEnd
         get
         {
             VariableFlags mask = 0;
-    
-           
             return ~mask;
         }
     }
@@ -934,6 +947,9 @@ namespace DotNetFrontEnd
     /// <returns>union of <code>flags</code>, respecting the front-end options</returns>
     private VariableFlags ExtendFlags(params VariableFlags[] flags)
     {
+        Contract.Requires(flags != null);
+        Contract.Ensures((flags.Length == 0).Implies(Contract.Result<VariableFlags>() == VariableFlags.none)); 
+
         var result = VariableFlags.none;
         foreach (var fs in flags)
         {
@@ -1035,6 +1051,8 @@ namespace DotNetFrontEnd
     /// the type name</returns>
     private string GetDecType(Type type)
     {
+      Contract.Requires(type != null);
+
       if (type.IsEquivalentTo(TypeManager.BooleanType))
       {
         return DaikonBoolName;
@@ -1104,6 +1122,8 @@ namespace DotNetFrontEnd
     /// <returns>A rep-type for the given type, from the list of valid rep-types</returns>
     private string GetRepType(Type type)
     {
+      Contract.Requires(type != null);
+      Contract.Ensures(Contract.Result<string>().OneOf(DaikonBoolName, DaikonIntName, DaikonStringName, DaikonHashCodeName, DaikonDoubleName));
       if (type.IsEquivalentTo(TypeManager.BooleanType))
       {
         return DaikonBoolName;
@@ -1111,7 +1131,7 @@ namespace DotNetFrontEnd
       else if (TypeManager.DoubleType == type || TypeManager.FloatType == type
             || TypeManager.DecimalType == type)
       {
-        return "double";
+          return DaikonDoubleName;
       }
       else if (type.IsValueType && (type == TypeManager.IntType
             || type == TypeManager.ByteType || type == TypeManager.CharType
@@ -1122,11 +1142,11 @@ namespace DotNetFrontEnd
       }
       else if (type.IsEnum && !frontEndArgs.EnumUnderlyingValues)
       {
-        return "hashcode";
+        return DaikonHashCodeName;
       }
       else
       {
-        return "hashcode";
+        return DaikonHashCodeName;
       }
     }
 
@@ -1138,6 +1158,7 @@ namespace DotNetFrontEnd
     /// call</param>
     private void PrintRepType(Type type, VariableFlags flags)
     {
+      Contract.Requires(type != null);
       string repType;
      
       if (flags.HasFlag(VariableFlags.to_string) || flags.HasFlag(VariableFlags.classname))
@@ -1189,33 +1210,15 @@ namespace DotNetFrontEnd
     private bool PerformEarlyExitChecks(string name, Type type, VariableKind kind,
       string enclosingVar, int nestingDepth)
     {
-      if (name.Length == 0)
-      {
-        name = "UNNAMED_VARIABLE";
-        // TODO(#69): Investigate
-        /*
-        throw new NotSupportedException("An error occurred in the instrumentation process"
-            + " and a variable was encountered with no name.");
-         */
-      }
-      if (type == null)
-      {
-        throw new NotSupportedException("An error occurred in the instrumentation process"
-            + " and type was null for variable named: " + name);
-      }
-
-      if ((kind == VariableKind.field || kind == VariableKind.array) &&
-        enclosingVar.Length == 0)
-      {
-        throw new ArgumentException("Enclosing var required for staticField and array and none"
-            + " was present for variable named: " + name + " of kind: " + kind);
-      }
-
+      Contract.Requires(!string.IsNullOrWhiteSpace(name));
+      Contract.Requires((kind == VariableKind.field || kind == VariableKind.array).Implies(!string.IsNullOrWhiteSpace(enclosingVar)), 
+          "Enclosing field required for static fields and arrays");
+       
       if (nestingDepth > this.frontEndArgs.MaxNestingDepth ||
           !this.frontEndArgs.ShouldPrintVariable(name))
       {
         return true;
-      }
+      } 
 
       if (this.variablesForCurrentProgramPoint.Contains(name))
       {
@@ -1224,9 +1227,8 @@ namespace DotNetFrontEnd
       else
       {
         this.variablesForCurrentProgramPoint.Add(name);
+        return false;
       }
-
-      return false;
     }
 
     /// <summary>
