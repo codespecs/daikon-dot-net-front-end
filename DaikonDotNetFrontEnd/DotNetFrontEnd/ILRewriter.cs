@@ -153,17 +153,17 @@ namespace DotNetFrontEnd
     [ContractInvariantMethod]
     private void ObjectInvariant()
     {
-        Contract.Invariant(host != null);
-        Contract.Invariant(frontEndArgs != null);
-        Contract.Invariant(typeManager != null);
-        Contract.Invariant(frontEndArgs.StaticComparability == (comparabilityManager != null));
+      Contract.Invariant(host != null);
+      Contract.Invariant(frontEndArgs != null);
+      Contract.Invariant(typeManager != null);
+      Contract.Invariant(frontEndArgs.StaticComparability == (comparabilityManager != null));
 
-        Contract.Invariant(nameTable == host.NameTable);
-        Contract.Invariant(nameTable != null);
-        
-        Contract.Invariant(systemString == host.PlatformType.SystemString);
-        Contract.Invariant(systemObject == host.PlatformType.SystemObject);
-        Contract.Invariant(systemVoid == host.PlatformType.SystemVoid);
+      Contract.Invariant(nameTable == host.NameTable);
+      Contract.Invariant(nameTable != null);
+
+      Contract.Invariant(systemString == host.PlatformType.SystemString);
+      Contract.Invariant(systemObject == host.PlatformType.SystemObject);
+      Contract.Invariant(systemVoid == host.PlatformType.SystemVoid);
     }
 
     public ILRewriter(IMetadataHost host, PdbReader pdbReader, DotNetFrontEnd.FrontEndArgs frontEndArgs,
@@ -184,7 +184,7 @@ namespace DotNetFrontEnd
       this.frontEndArgs = frontEndArgs;
       this.typeManager = typeManager;
       this.comparabilityManager = comparabilityManager;
-      
+
       this.nameTable = this.host.NameTable;
       this.systemString = host.PlatformType.SystemString;
       this.systemVoid = host.PlatformType.SystemVoid;
@@ -235,13 +235,13 @@ namespace DotNetFrontEnd
           typeManager.IsMethodCompilerGenerated(method) ||
           !frontEndArgs.ShouldPrintProgramPoint(FormatMethodName(methodBody.MethodDefinition)))
       {
-           return base.Rewrite(methodBody);
+        return base.Rewrite(methodBody);
       }
       else
       {
-          Contract.Assume(!method.Name.Value.StartsWith("<"), "Compiler generated method was not filtered: " + method.Name);
-          var rewritten = ProcessOperations(methodBody);
-          return rewritten;
+        Contract.Assume(!method.Name.Value.StartsWith("<"), "Compiler generated method was not filtered: " + method.Name);
+        var rewritten = ProcessOperations(methodBody);
+        return rewritten;
       }
     }
 
@@ -255,7 +255,7 @@ namespace DotNetFrontEnd
     {
       Contract.Requires(immutableMethodBody != null);
       Contract.Ensures(Contract.Result<IMethodBody>() != null);
-      
+
       // Alias operations for convenience
       List<IOperation> operations = ((immutableMethodBody.Operations == null)
         ? new List<IOperation>()
@@ -277,12 +277,12 @@ namespace DotNetFrontEnd
       }
 
       this.scopeEnumerator = this.pdbReader == null ?
-          null : 
+          null :
           this.pdbReader.GetLocalScopes(immutableMethodBody).GetEnumerator();
       this.scopeEnumeratorIsValid = this.scopeEnumerator != null && this.scopeEnumerator.MoveNext();
 
       // Need the method body to be mutable to add the nonce variable
-      MethodBody mutableMethodBody = (MethodBody) immutableMethodBody;
+      MethodBody mutableMethodBody = (MethodBody)immutableMethodBody;
 
       // Add a nonce-holding variable and set it.
       mutableMethodBody.LocalVariables = CreateNonceVariable(mutableMethodBody);
@@ -333,7 +333,7 @@ namespace DotNetFrontEnd
       // If the method is non-void, return in debug builds will contain a store before a jump to
       // the return point. Figure out what the store will be to detect these returns later.
       ISet<IOperation> synthesizedReturns = DetermineSynthesizedReturns(
-        immutableMethodBody, operations, 
+        immutableMethodBody, operations,
         operations[operationIndexForFirstReturnJumpTarget].Offset, commonExit);
 
       // We may need to mutate the method body during rewriting, so obtain a mutable version.
@@ -348,7 +348,7 @@ namespace DotNetFrontEnd
         IOperation op = operations[i];
 
         MarkLabels(immutableMethodBody, offsetsUsedInExceptionInformation, offset2Label, commonExit, op);
-        
+
         this.EmitDebugInformationFor(op);
         EmitOperation(op, i, ref mutableMethodBody, offset2Label,
             ref tryBodyStarted, exceptions, commonExit, operations.Last(), synthesizedReturns, ref currentPptEnd);
@@ -461,7 +461,7 @@ namespace DotNetFrontEnd
            next == OperationCode.Brtrue_S ||
            next == OperationCode.Brfalse_S) &&
           // ... and the branch location is to the old return offset.
-          (uint)operations[i+1].Value >= offsetForOldLastReturn)
+          (uint)operations[i + 1].Value >= offsetForOldLastReturn)
         {
           synthesizedReturns.Add(operations[i]);
           ((Operation)operations[i + 1]).Value = commonExit;
@@ -660,7 +660,7 @@ namespace DotNetFrontEnd
           }
           else
           {
-              throw new NotSupportedException("Unexpected operation of type " + prevOp.Value.GetType());
+            throw new NotSupportedException("Unexpected operation of type " + prevOp.Value.GetType());
           }
           // Convert from CCI Type to String Type
           // Exception name must be a single class
@@ -906,16 +906,16 @@ namespace DotNetFrontEnd
           break;
         default:
           if (op.Value == null ||
-              // CCI added values for the short instructions; they modified the Emit(..., object) function
-              // to not emit values for the short instructions, but below we would call the Emit(..., int) 
-              // function.
+            // CCI added values for the short instructions; they modified the Emit(..., object) function
+            // to not emit values for the short instructions, but below we would call the Emit(..., int) 
+            // function.
               op.OperationCode == OperationCode.Ldnull ||
               op.OperationCode == OperationCode.Ldc_I4_M1 ||
               (op.OperationCode >= OperationCode.Ldc_I4_0 && op.OperationCode <= OperationCode.Ldc_I4_8))
           {
             generator.Emit(op.OperationCode);
             break;
-          } 
+          }
           var typeCode = System.Convert.GetTypeCode(op.Value);
           switch (typeCode)
           {
@@ -1284,7 +1284,7 @@ namespace DotNetFrontEnd
       if (offset2Label.TryGetValue(op.Offset, out label)
           && label != commonExit)
       {
-          generator.MarkLabel(label);
+        generator.MarkLabel(label);
       }
 
       // Mark operation if it is pointed to by an exception handler
@@ -1501,7 +1501,7 @@ namespace DotNetFrontEnd
         {
           this.declPrinter.PrintReturn(
               "return",
-              this.typeManager.ConvertCCITypeToAssemblyQualifiedName(methodBody.MethodDefinition.Type), 
+              this.typeManager.ConvertCCITypeToAssemblyQualifiedName(methodBody.MethodDefinition.Type),
               methodBody.MethodDefinition);
         }
 
@@ -1600,11 +1600,11 @@ namespace DotNetFrontEnd
         "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
     private void EmitDecrementDepth()
     {
-        var decrementName = this.nameTable.GetNameFor(VariableVisitor.DecrementDepthFunctionName);
-        var decrementReference = new Microsoft.Cci.MethodReference(
-            this.host, this.variableVisitorType, CallingConvention.Default,
-            this.systemVoid, decrementName, 0);
-        generator.Emit(OperationCode.Call, decrementReference);
+      var decrementName = this.nameTable.GetNameFor(VariableVisitor.DecrementDepthFunctionName);
+      var decrementReference = new Microsoft.Cci.MethodReference(
+          this.host, this.variableVisitorType, CallingConvention.Default,
+          this.systemVoid, decrementName, 0);
+      generator.Emit(OperationCode.Call, decrementReference);
     }
 
     /// <summary>
@@ -1616,12 +1616,12 @@ namespace DotNetFrontEnd
         "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
     private void EmitIncrementDepth(ILGeneratorLabel writePptEnd)
     {
-        var incrementName = this.nameTable.GetNameFor(VariableVisitor.IncrementDepthFunctionName);
-        var incrementReference = new Microsoft.Cci.MethodReference(
-            this.host, this.variableVisitorType, CallingConvention.Default,
-            this.host.PlatformType.SystemBoolean, incrementName, 0);
-        generator.Emit(OperationCode.Call, incrementReference);
-        generator.Emit(OperationCode.Brfalse, writePptEnd);
+      var incrementName = this.nameTable.GetNameFor(VariableVisitor.IncrementDepthFunctionName);
+      var incrementReference = new Microsoft.Cci.MethodReference(
+          this.host, this.variableVisitorType, CallingConvention.Default,
+          this.host.PlatformType.SystemBoolean, incrementName, 0);
+      generator.Emit(OperationCode.Call, incrementReference);
+      generator.Emit(OperationCode.Brfalse, writePptEnd);
     }
 
     /// <summary>
@@ -1637,9 +1637,9 @@ namespace DotNetFrontEnd
       Contract.Ensures(methodBody.LocalVariables == null ||
           Contract.ForAll(0, Contract.OldValue(methodBody.LocalVariables.Count), i =>
               Contract.OldValue(methodBody.LocalVariables)[i] == methodBody.LocalVariables[i]));
-      
+
       List<ILocalDefinition> locals = (methodBody.LocalVariables == null) ?
-          new List<ILocalDefinition>() 
+          new List<ILocalDefinition>()
           : methodBody.LocalVariables.ToList();
 
       // Create a new integer local to hold the nonce
@@ -1678,7 +1678,7 @@ namespace DotNetFrontEnd
             NameFormattingOptions.ParameterName |
             NameFormattingOptions.SmartTypeName |
             NameFormattingOptions.Signature);
-     
+
       // Implicit overloads could produce unique program points with duplicate names.
       // This will cause problems in Daikon, so disambiguate them the return type
       // of the method.
@@ -1697,11 +1697,11 @@ namespace DotNetFrontEnd
     /// convention</returns>
     private string FormatExceptionProgramPoint(ITypeReference ex)
     {
-        Contract.Requires(ex != null);
-        
-        return ex == host.PlatformType.SystemObject ? 
-            RuntimeExceptionExitProgamPointSuffix 
-            : ExceptionExitSuffix + ex.ToString();
+      Contract.Requires(ex != null);
+
+      return ex == host.PlatformType.SystemObject ?
+          RuntimeExceptionExitProgamPointSuffix
+          : ExceptionExitSuffix + ex.ToString();
     }
 
     /// <summary>
@@ -1884,7 +1884,7 @@ namespace DotNetFrontEnd
       // and it's always downcast to System.Object
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
          this.host, this.variableVisitorType, CallingConvention.Default,
-         this.systemVoid, 
+         this.systemVoid,
          this.nameTable.GetNameFor(VariableVisitor.ExceptionInstrumentationMethodName),
          0, this.systemObject));
     }
@@ -1912,7 +1912,7 @@ namespace DotNetFrontEnd
       // Make special instrumentation call instead of regular, with parameters reordered
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
          this.host, this.variableVisitorType, CallingConvention.Default,
-         this.systemVoid, 
+         this.systemVoid,
          this.nameTable.GetNameFor(VariableVisitor.ValueFirstInstrumentationMethodName), 0,
          this.systemObject, this.systemString, this.systemString));
     }
@@ -1978,7 +1978,7 @@ namespace DotNetFrontEnd
       generator.Emit(OperationCode.Ldstr, paramTypeName);
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
          this.host, this.variableVisitorType, CallingConvention.Default,
-         this.systemVoid, 
+         this.systemVoid,
          this.nameTable.GetNameFor(VariableVisitor.InstrumentationMethodName), 0,
          this.systemString, this.systemObject, this.systemString));
     }
@@ -2130,15 +2130,15 @@ namespace DotNetFrontEnd
     {
       if (!File.Exists(pathToVisitor))
       {
-          throw new ArgumentException("DLL for Reflector does not exist at " + pathToVisitor);
+        throw new ArgumentException("DLL for Reflector does not exist at " + pathToVisitor);
       }
 
       this.assemblyIdentity = UnitHelper.GetAssemblyIdentity(mutableAssembly);
       this.typeManager.SetAssemblyIdentity(assemblyIdentity);
-     
+
       IAssembly variableVisitorAssembly = this.host.LoadUnitFrom(pathToVisitor) as IAssembly;
       Contract.Assume(variableVisitorAssembly != null, "Error loading reflector");
-     
+
       this.variableVisitorType = variableVisitorAssembly.GetAllTypes().First(
           t => t.Name.ToString().Equals(DotNetFrontEnd.VariableVisitor.VariableVisitorClassName));
       Contract.Assume(this.variableVisitorType != null, "Error locating variable visitor in assembly");
@@ -2165,18 +2165,18 @@ namespace DotNetFrontEnd
           // CCI components come up named <*>, and we want to exclude them.
           // Also exclude the name of the class storing arguments (for offline programs)
           string typeName = type.ToString();
-          if (!TypeManager.RegexForTypesToIgnoreForProgramPoint.IsMatch(typeName) && 
+          if (!TypeManager.RegexForTypesToIgnoreForProgramPoint.IsMatch(typeName) &&
               !typeName.Equals(ArgumentStoringClassName) &&
               !typeManager.IsCompilerGenerated(type))
           {
-              this.declPrinter.PrintObjectDefinition(typeName,
-                  this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type), type);
-              this.declPrinter.PrintParentClassDefinition(typeName,
-                  this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type), type);
+            this.declPrinter.PrintObjectDefinition(typeName,
+                this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type), type);
+            this.declPrinter.PrintParentClassDefinition(typeName,
+                this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type), type);
           }
           else
           {
-              // Console.WriteLine("Skipping CLASS and OBJECT declarations for type " + typeName);
+            // Console.WriteLine("Skipping CLASS and OBJECT declarations for type " + typeName);
           }
         }
       }
@@ -2200,7 +2200,7 @@ namespace DotNetFrontEnd
       {
         foreach (MethodDefinition method in type.Methods)
         {
-          if (typeManager.IsMethodCompilerGenerated(method) && 
+          if (typeManager.IsMethodCompilerGenerated(method) &&
               method.Name.ToString().StartsWith(DeclarationPrinter.GetterPropertyPrefix))
           {
             typeManager.AddPureMethod(typeManager.ConvertCCITypeToAssemblyQualifiedName(
