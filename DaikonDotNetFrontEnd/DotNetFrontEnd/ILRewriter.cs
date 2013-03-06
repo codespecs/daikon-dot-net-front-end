@@ -230,8 +230,8 @@ namespace DotNetFrontEnd
       var containingType = method.ContainingType;
 
       // If the method is compiler generated don't insert instrumentation code.
-      if (typeManager.IsTypeCompilerGenerated(containingType.ResolvedType) ||
-          typeManager.IsMethodCompilerGenerated(method) ||
+      if (typeManager.IsCompilerGenerated(containingType.ResolvedType) ||
+          typeManager.IsCompilerGenerated(method) ||
           !frontEndArgs.ShouldPrintProgramPoint(FormatMethodName(methodBody.MethodDefinition)))
       {
         return base.Rewrite(methodBody);
@@ -2199,7 +2199,7 @@ namespace DotNetFrontEnd
       {
         foreach (MethodDefinition method in type.Methods)
         {
-          if (typeManager.IsMethodCompilerGenerated(method) &&
+          if (typeManager.IsCompilerGenerated(method) &&
               method.Name.ToString().StartsWith(DeclarationPrinter.GetterPropertyPrefix))
           {
             typeManager.AddPureMethod(typeManager.ConvertCCITypeToAssemblyQualifiedName(

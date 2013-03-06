@@ -105,14 +105,6 @@ namespace DotNetFrontEnd
       Return, // Lowercase "R" in return is a keyword.
     }
 
-    [Flags]
-    internal enum ImmutabilityFlags
-    {
-        None = 0,
-        ReadOnly = 1,
-        Immutable = ReadOnly << 1,
-    }
-
     /// <summary>
     /// The possible flags we may specify for a a variable
     /// </summary>
@@ -298,7 +290,6 @@ namespace DotNetFrontEnd
     /// <param name="nestingDepth">Nesting depth of the variable</param>
     private void DeclarationChildPrinting(string name, Type type, VariableKind kind, 
       VariableFlags flags, string parentName, int nestingDepth, Type originatingType,
-      ImmutabilityFlags variableImmutability = ImmutabilityFlags.None,  
       INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
         Contract.Requires(!string.IsNullOrWhiteSpace(name));

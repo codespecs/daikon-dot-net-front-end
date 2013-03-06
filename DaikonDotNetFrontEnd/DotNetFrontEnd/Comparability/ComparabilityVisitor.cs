@@ -156,13 +156,12 @@ namespace Comparability
           var rebased = Filter(Rebase(opinion, argBindings), calleeSummary.ParameterNames);
           modified |= MergeOpinion(rebased);
 
-          // update this method's opinion about the referenced type (possibly itself)
-          foreach (var referencedType in ReferencedTypes.Values)
-          {
-            // TODO account for indirect comparability information via type references
-          }
+          // TODO: update this method's opinion about the referenced type (possibly itself),
+          // accounting for indirect comparability information via type references
+          //foreach (var referencedType in ReferencedTypes.Values)
+          //{
 
-          // TODO account for return value
+          //}
         }
         else if (calleeDefinition.ParameterCount > 0)
         {
@@ -249,7 +248,6 @@ namespace Comparability
       HashSet<HashSet<string>> result = new HashSet<HashSet<string>>();
       foreach (var group in names.Where(n => cmp.ContainsKey(n)).GroupBy(n => cmp[n]))
       {
-        var cmpId = group.Key;
         result.Add(new HashSet<string>(group.Intersect(names)));
       }
       return result;
@@ -266,7 +264,6 @@ namespace Comparability
         HashSet<HashSet<string>> result = new HashSet<HashSet<string>>();
         foreach (var group in ids.Keys.Where(n => cmp.ContainsKey(n)).GroupBy(n => cmp[n]))
         {
-          var cmpId = group.Key;
           result.Add(new HashSet<string>(group));
         }
         return result;
@@ -363,27 +360,6 @@ namespace Comparability
       else
       {
         return name;
-      }
-    }
-
-    [Pure]
-    private static string Rebase(string str, string baseName, string name)
-    {
-      Contract.Requires(!string.IsNullOrWhiteSpace(str));
-      Contract.Requires(!string.IsNullOrWhiteSpace(baseName));
-      Contract.Requires(!string.IsNullOrWhiteSpace(name));
-
-      if (str.Equals(baseName))
-      {
-        return name;
-      }
-      else if (str.StartsWith(baseName))
-      {
-        return name + str.Substring(baseName.Length);
-      }
-      else
-      {
-        return str;
       }
     }
 
@@ -547,11 +523,11 @@ namespace Comparability
       }
     }
 
-    private bool Mark(IEnumerable<int> ids)
+    private bool Mark(IEnumerable<int> idsToMark)
     {
       bool modified = false;
       int? last = null;
-      foreach (var id in ids)
+      foreach (var id in idsToMark)
       {
         if (last != null)
         {
@@ -572,7 +548,7 @@ namespace Comparability
       return Mark(exprs.Select(x => GetId(x)).Where(x => x.HasValue).Select(x => x.Value));
     }
 
-    private void HandleComposite(IExpression composite, object definition, IExpression instance)
+    private void HandleComposite(IExpression composite, IExpression instance)
     {
       if (instance != null)
       {
@@ -582,12 +558,12 @@ namespace Comparability
 
     public override void Visit(IBoundExpression bound)
     {
-      HandleComposite(bound, bound.Definition, bound.Instance);
+      HandleComposite(bound, bound.Instance);
     }
 
     public override void Visit(ITargetExpression target)
     {
-      HandleComposite(target, target.Definition, target.Instance);
+      HandleComposite(target, target.Instance);
     }
 
     public override void Visit(IMethodCall call)
