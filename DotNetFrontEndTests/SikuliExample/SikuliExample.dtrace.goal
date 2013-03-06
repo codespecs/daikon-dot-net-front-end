@@ -1,0 +1,1463 @@
+// Declarations for SikuliExample
+// Declarations written 11/13/2012 3:02:02 AM
+
+decl-version 2.0
+var-comparability none
+input-language C#.NET
+
+ppt SikuliExample.SikuliExample:::OBJECT
+ppt-type object
+parent parent SikuliExample.SikuliExample:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type SikuliExample.SikuliExample
+    rep-type hashcode
+    flags is_param
+    comparability 22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt SikuliExample.SikuliExample:::CLASS
+ppt-type class
+
+ppt SikuliExample.TootisePop:::OBJECT
+ppt-type object
+parent parent SikuliExample.TootisePop:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type SikuliExample.TootisePop
+    rep-type hashcode
+    flags is_param
+    comparability 22
+  variable this.numLicksToCenter
+    var-kind field numLicksToCenter
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+  variable this.numLicksSoFar
+    var-kind field numLicksSoFar
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt SikuliExample.TootisePop:::CLASS
+ppt-type class
+
+ppt SikuliExample.SikuliExample.Main():::ENTER
+ppt-type enter
+parent parent SikuliExample.SikuliExample:::CLASS 1
+
+ppt SikuliExample.SikuliExample.Main():::EXIT_EX_Runtime
+ppt-type subexit
+parent parent SikuliExample.SikuliExample:::CLASS 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt SikuliExample.SikuliExample.Main():::EXIT38
+ppt-type subexit
+parent parent SikuliExample.SikuliExample:::CLASS 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt SikuliExample.SikuliExample..ctor():::ENTER
+ppt-type enter
+parent parent SikuliExample.SikuliExample:::CLASS 1
+
+ppt SikuliExample.SikuliExample..ctor():::EXIT_EX_Runtime
+ppt-type subexit
+parent parent SikuliExample.SikuliExample:::OBJECT 1
+  variable this
+    var-kind variable
+    dec-type SikuliExample.SikuliExample
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent SikuliExample.SikuliExample:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent SikuliExample.SikuliExample:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt SikuliExample.SikuliExample..ctor():::EXIT2
+ppt-type subexit
+parent parent SikuliExample.SikuliExample:::OBJECT 1
+  variable this
+    var-kind variable
+    dec-type SikuliExample.SikuliExample
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent SikuliExample.SikuliExample:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent SikuliExample.SikuliExample:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt SikuliExample.TootisePop..ctor(System.Int32\_numLicksToCenter):::ENTER
+ppt-type enter
+parent parent SikuliExample.TootisePop:::CLASS 1
+  variable numLicksToCenter
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability 22
+
+ppt SikuliExample.TootisePop..ctor(System.Int32\_numLicksToCenter):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent SikuliExample.TootisePop:::OBJECT 1
+  variable this
+    var-kind variable
+    dec-type SikuliExample.TootisePop
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.numLicksToCenter
+    var-kind field numLicksToCenter
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.numLicksSoFar
+    var-kind field numLicksSoFar
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable numLicksToCenter
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt SikuliExample.TootisePop..ctor(System.Int32\_numLicksToCenter):::EXIT11
+ppt-type subexit
+parent parent SikuliExample.TootisePop:::OBJECT 1
+  variable this
+    var-kind variable
+    dec-type SikuliExample.TootisePop
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.numLicksToCenter
+    var-kind field numLicksToCenter
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.numLicksSoFar
+    var-kind field numLicksSoFar
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable numLicksToCenter
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt SikuliExample.TootisePop.Eaten.get():::ENTER
+ppt-type enter
+parent parent SikuliExample.TootisePop:::OBJECT 1
+  variable this
+    var-kind variable
+    dec-type SikuliExample.TootisePop
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.numLicksToCenter
+    var-kind field numLicksToCenter
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.numLicksSoFar
+    var-kind field numLicksSoFar
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+
+ppt SikuliExample.TootisePop.Eaten.get():::EXIT7
+ppt-type subexit
+parent parent SikuliExample.TootisePop:::OBJECT 1
+  variable this
+    var-kind variable
+    dec-type SikuliExample.TootisePop
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.numLicksToCenter
+    var-kind field numLicksToCenter
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.numLicksSoFar
+    var-kind field numLicksSoFar
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable return
+    var-kind return
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt SikuliExample.TootisePop.Eaten.get():::EXIT_EX_Runtime
+ppt-type subexit
+parent parent SikuliExample.TootisePop:::OBJECT 1
+  variable this
+    var-kind variable
+    dec-type SikuliExample.TootisePop
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.numLicksToCenter
+    var-kind field numLicksToCenter
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.numLicksSoFar
+    var-kind field numLicksSoFar
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable return
+    var-kind return
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt SikuliExample.TootisePop.Eaten.get():::EXIT9
+ppt-type subexit
+parent parent SikuliExample.TootisePop:::OBJECT 1
+  variable this
+    var-kind variable
+    dec-type SikuliExample.TootisePop
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.numLicksToCenter
+    var-kind field numLicksToCenter
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.numLicksSoFar
+    var-kind field numLicksSoFar
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable return
+    var-kind return
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt SikuliExample.TootisePop.Lick():::ENTER
+ppt-type enter
+parent parent SikuliExample.TootisePop:::OBJECT 1
+  variable this
+    var-kind variable
+    dec-type SikuliExample.TootisePop
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.numLicksToCenter
+    var-kind field numLicksToCenter
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.numLicksSoFar
+    var-kind field numLicksSoFar
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+
+ppt SikuliExample.TootisePop.Lick():::EXIT10
+ppt-type subexit
+parent parent SikuliExample.TootisePop:::OBJECT 1
+  variable this
+    var-kind variable
+    dec-type SikuliExample.TootisePop
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.numLicksToCenter
+    var-kind field numLicksToCenter
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.numLicksSoFar
+    var-kind field numLicksSoFar
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable return
+    var-kind return
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt SikuliExample.TootisePop.Lick():::EXIT_EX_Runtime
+ppt-type subexit
+parent parent SikuliExample.TootisePop:::OBJECT 1
+  variable this
+    var-kind variable
+    dec-type SikuliExample.TootisePop
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.numLicksToCenter
+    var-kind field numLicksToCenter
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.numLicksSoFar
+    var-kind field numLicksSoFar
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable return
+    var-kind return
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+ppt SikuliExample.TootisePop.Lick():::EXIT12
+ppt-type subexit
+parent parent SikuliExample.TootisePop:::OBJECT 1
+  variable this
+    var-kind variable
+    dec-type SikuliExample.TootisePop
+    rep-type hashcode
+    flags is_param
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.numLicksToCenter
+    var-kind field numLicksToCenter
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.numLicksSoFar
+    var-kind field numLicksSoFar
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+    parent SikuliExample.TootisePop:::OBJECT 1
+  variable return
+    var-kind return
+    dec-type boolean
+    rep-type boolean
+    comparability 22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability 22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability 22
+
+SikuliExample.SikuliExample.Main():::ENTER
+this_invocation_nonce
+0
+
+SikuliExample.TootisePop..ctor(System.Int32\_numLicksToCenter):::ENTER
+this_invocation_nonce
+1
+numLicksToCenter
+5
+1
+
+SikuliExample.TootisePop..ctor(System.Int32\_numLicksToCenter):::EXIT11
+this_invocation_nonce
+1
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+0
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+numLicksToCenter
+5
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+SikuliExample.TootisePop.Eaten.get():::ENTER
+this_invocation_nonce
+2
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+0
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+
+SikuliExample.TootisePop.Eaten.get():::EXIT7
+this_invocation_nonce
+2
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+0
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+return
+false
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+SikuliExample.TootisePop.Lick():::ENTER
+this_invocation_nonce
+3
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+0
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+
+SikuliExample.TootisePop.Eaten.get():::ENTER
+this_invocation_nonce
+4
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+1
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+
+SikuliExample.TootisePop.Eaten.get():::EXIT7
+this_invocation_nonce
+4
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+1
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+return
+false
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+SikuliExample.TootisePop.Lick():::EXIT10
+this_invocation_nonce
+3
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+1
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+return
+false
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+SikuliExample.TootisePop.Eaten.get():::ENTER
+this_invocation_nonce
+5
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+1
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+
+SikuliExample.TootisePop.Eaten.get():::EXIT7
+this_invocation_nonce
+5
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+1
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+return
+false
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+SikuliExample.TootisePop.Lick():::ENTER
+this_invocation_nonce
+6
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+1
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+
+SikuliExample.TootisePop.Eaten.get():::ENTER
+this_invocation_nonce
+7
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+2
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+
+SikuliExample.TootisePop.Eaten.get():::EXIT7
+this_invocation_nonce
+7
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+2
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+return
+false
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+SikuliExample.TootisePop.Lick():::EXIT10
+this_invocation_nonce
+6
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+2
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+return
+false
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+SikuliExample.TootisePop.Eaten.get():::ENTER
+this_invocation_nonce
+8
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+2
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+
+SikuliExample.TootisePop.Eaten.get():::EXIT7
+this_invocation_nonce
+8
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+2
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+return
+false
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+SikuliExample.TootisePop.Lick():::ENTER
+this_invocation_nonce
+9
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+2
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+
+SikuliExample.TootisePop.Eaten.get():::ENTER
+this_invocation_nonce
+10
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+3
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+
+SikuliExample.TootisePop.Eaten.get():::EXIT7
+this_invocation_nonce
+10
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+3
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+return
+false
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+SikuliExample.TootisePop.Lick():::EXIT10
+this_invocation_nonce
+9
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+3
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+return
+false
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+SikuliExample.TootisePop.Eaten.get():::ENTER
+this_invocation_nonce
+11
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+3
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+
+SikuliExample.TootisePop.Eaten.get():::EXIT7
+this_invocation_nonce
+11
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+3
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+return
+false
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+SikuliExample.TootisePop.Lick():::ENTER
+this_invocation_nonce
+12
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+3
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+
+SikuliExample.TootisePop.Eaten.get():::ENTER
+this_invocation_nonce
+13
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+4
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+
+SikuliExample.TootisePop.Eaten.get():::EXIT7
+this_invocation_nonce
+13
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+4
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+return
+false
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+SikuliExample.TootisePop.Lick():::EXIT10
+this_invocation_nonce
+12
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+4
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+return
+false
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+SikuliExample.TootisePop.Eaten.get():::ENTER
+this_invocation_nonce
+14
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+4
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+
+SikuliExample.TootisePop.Eaten.get():::EXIT7
+this_invocation_nonce
+14
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+4
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+return
+false
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+SikuliExample.TootisePop.Lick():::ENTER
+this_invocation_nonce
+15
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+4
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+
+SikuliExample.TootisePop.Eaten.get():::ENTER
+this_invocation_nonce
+16
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+5
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+
+SikuliExample.TootisePop.Eaten.get():::EXIT7
+this_invocation_nonce
+16
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+5
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+return
+false
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+SikuliExample.TootisePop.Lick():::EXIT10
+this_invocation_nonce
+15
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+5
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+return
+false
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+SikuliExample.TootisePop.Eaten.get():::ENTER
+this_invocation_nonce
+17
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+5
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+
+SikuliExample.TootisePop.Eaten.get():::EXIT7
+this_invocation_nonce
+17
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+5
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+return
+false
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+SikuliExample.TootisePop.Lick():::ENTER
+this_invocation_nonce
+18
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+5
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+
+SikuliExample.TootisePop.Eaten.get():::ENTER
+this_invocation_nonce
+19
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+6
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+
+SikuliExample.TootisePop.Eaten.get():::EXIT7
+this_invocation_nonce
+19
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+6
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+return
+true
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+SikuliExample.TootisePop.Lick():::EXIT10
+this_invocation_nonce
+18
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+6
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+return
+true
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+SikuliExample.TootisePop.Eaten.get():::ENTER
+this_invocation_nonce
+20
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+6
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+
+SikuliExample.TootisePop.Eaten.get():::EXIT7
+this_invocation_nonce
+20
+this
+461342
+1
+this.numLicksToCenter
+5
+1
+this.numLicksSoFar
+6
+1
+this.GetType()
+"SikuliExample.TootisePop"
+1
+return
+true
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+SikuliExample.SikuliExample.Main():::EXIT38
+this_invocation_nonce
+0
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
