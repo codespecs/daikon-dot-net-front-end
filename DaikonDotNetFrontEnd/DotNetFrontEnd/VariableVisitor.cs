@@ -21,6 +21,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -30,6 +31,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
+using DotNetFrontEnd.Contracts;
 
 namespace DotNetFrontEnd
 {
@@ -90,6 +92,10 @@ namespace DotNetFrontEnd
     /// </summary>
     public static readonly string DecrementDepthFunctionName = "DecrementThreadDepth";
 
+    /// <summary>
+    /// Name of the function to stop execution if an exception escaped reflective visiting
+    /// </summary>
+    public static readonly string KillFunctionName = "KillApplication";
 
     /// <summary>
     /// The name of the standard instrumentation method in VariableVisitor.cs, this is the method
@@ -189,7 +195,7 @@ namespace DotNetFrontEnd
     /// sample-start. Must be set when each time a function in the source program is called,
     /// e.g. in WriteProgramPoint
     /// </summary>
-    private static bool shouldSuppressOutput = false;
+    public static bool SuppressOutput { get; set; }
 
     /// <summary>
     /// The current nonce counter
@@ -199,22 +205,27 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Lock to ensure that no more than one thread is writing at a time
     /// </summary>
-    private static object WriterLock = new object();
+    private static readonly object WriterLock = new object();
 
     /// <summary>
     /// Collection of static fields that have been visited during this program point
     /// </summary>
-    private static HashSet<string> staticFieldsVisitedForCurrentProgramPoint = new HashSet<string>();
+    private static readonly HashSet<string> staticFieldsVisitedForCurrentProgramPoint = new HashSet<string>();
 
     /// <summary>
     /// Collection of variables that have been visited during the current program point
     /// </summary>
-    private static HashSet<string> variablesVisitedForCurrentProgramPoint = new HashSet<string>();
-    
+    private static readonly HashSet<string> variablesVisitedForCurrentProgramPoint = new HashSet<string>();
+
     /// <summary>
     /// Depth of the thread in visit calls
     /// </summary>
-    private static ConcurrentDictionary<Thread, int> threadDepthMap = new ConcurrentDictionary<Thread, int>();
+    private static readonly ConcurrentDictionary<Thread, int> threadDepthMap = new ConcurrentDictionary<Thread, int>();
+
+    /// <summary>
+    /// Writer lock acquire time-out
+    /// </summary>
+    private const int MAX_LOCK_ACQUIRE_TIME_MILLIS = 20 * 1000;
 
     #endregion
 
@@ -225,20 +236,25 @@ namespace DotNetFrontEnd
     /// <exception cref="NotSupportedException">Thrown during an attempt to set args after they 
     /// have already been set.</exception>
     /// <param name="reflectionArgs">The reflection args to set.</param>
-    public static void SetReflectionArgs(FrontEndArgs reflectionArgs)
+    public static FrontEndArgs ReflectionArgs
     {
-      if (frontEndArgs == null)
+      get
       {
-        frontEndArgs = reflectionArgs;
+        Contract.Ensures(Contract.Result<FrontEndArgs>() == VariableVisitor.frontEndArgs);
+        return VariableVisitor.frontEndArgs;
       }
-      else
+      set
       {
-        throw new NotSupportedException("Attempt to set arguments on the reflector twice.");
-      }
+        Contract.Requires(ReflectionArgs == null, "Attempt to set arguments on the reflector twice.");
+        Contract.Requires(value != null);
+        Contract.Ensures(ReflectionArgs == value);
+        Contract.Ensures(VariableVisitor.frontEndArgs == value);
 
-      if (frontEndArgs.SampleStart != FrontEndArgs.NoSampleStart)
-      {
-        occurenceCounts = new Dictionary<string, int>();
+        VariableVisitor.frontEndArgs = value;
+        if (frontEndArgs.SampleStart != FrontEndArgs.NoSampleStart)
+        {
+          occurenceCounts = new Dictionary<string, int>();
+        }
       }
     }
 
@@ -249,19 +265,240 @@ namespace DotNetFrontEnd
     /// <exception cref="NotSupportedException">Thrown during an attempt to set the type manager
     /// after it has already been set.</exception>
     /// <param name="typeManager">The TypeManager to use for reflective visiting.</param>
-    public static void SetTypeManager(TypeManager typeManager)
+    public static TypeManager TypeManager
     {
-      if (VariableVisitor.typeManager == null)
+      get
       {
-        VariableVisitor.typeManager = typeManager;
+        Contract.Ensures(Contract.Result<TypeManager>() == VariableVisitor.typeManager);
+        return VariableVisitor.typeManager;
       }
-      else
+      set
       {
-        throw new NotSupportedException("Attempt to set type manager on the reflector twice.");
+        Contract.Requires(VariableVisitor.TypeManager == null, "Attempt to set type manager on the reflector twice.");
+        Contract.Requires(value != null);
+        Contract.Ensures(VariableVisitor.TypeManager == value);
+        Contract.Ensures(VariableVisitor.typeManager == value);
+        VariableVisitor.typeManager = value;
       }
     }
 
-    #region Methods to be called from program to be profiled
+    #region Safe (cannot throw exception) methods called from subject program
+
+    /// <summary>
+    /// Kill the application with exception <code>ex</code>
+    /// </summary>
+    /// <param name="ex">the exception that occured during reflective visiting</param>
+    public static void KillApplication(Exception ex)
+    {
+      Trace.Fail(ex.Message ?? "<No Exception Message>", ex.StackTrace ?? "<No Exception Stack Trace>");
+      Environment.Exit(1);
+    }
+
+    /// <summary>
+    /// Acquire the lock on the PPT writer and increment the thread depth. Aborts thread if the lock
+    /// cannot be acquired within a certain time frame (which would indicate deadlock).
+    /// </summary>
+    public static void AcquireLock()
+    {
+      bool acquired = false;
+      var timer = Stopwatch.StartNew();
+      do
+      {
+        if (timer.ElapsedMilliseconds > MAX_LOCK_ACQUIRE_TIME_MILLIS)
+        {
+          KillApplication(new TimeoutException("DEADLOCK?: Could not acquire writer lock after " + MAX_LOCK_ACQUIRE_TIME_MILLIS + " ms"));
+        }
+        Monitor.TryEnter(WriterLock, TimeSpan.FromSeconds(1), ref acquired);
+      } while (!acquired);
+    }
+
+    /// <summary>
+    /// Decrement the thread depth and release the lock on the PPT writer.
+    /// </summary>
+    public static void ReleaseLock()
+    {
+      Monitor.Exit(WriterLock);
+    }
+
+    /// <summary>
+    ///  Safe call to UnsafeValueFirstVisitVariable
+    /// </summary>
+    public static void ValueFirstVisitVariable(object variable, string name, string typeName)
+    {
+      try
+      {
+        UnsafeValueFirstVisitVariable(variable, name, typeName);
+      }
+      catch (Exception ex)
+      {
+        KillApplication(ex);
+        throw; // (dead code)
+      }
+    }
+
+    /// <summary>
+    /// Safe call to UnsafeVisitVariable
+    /// </summary>
+    public static void VisitVariable(string name, object variable, string typeName)
+    {
+      try
+      {
+        UnsafeVisitVariable(name, variable, typeName);
+      }
+      catch (Exception ex)
+      {
+        KillApplication(ex);
+        throw; // (dead code)
+      }
+    }
+
+    /// <summary>
+    /// Safe call to UnsafePerformStaticInstrumentation
+    /// </summary>
+    /// <param name="typeName"></param>
+    public static void PerformStaticInstrumentation(string typeName)
+    {
+      try
+      {
+        UnsafePerformStaticInstrumentation(typeName);
+      }
+      catch (Exception ex)
+      {
+        KillApplication(ex);
+        throw; // (dead code)
+      }
+    }
+
+    /// <summary>
+    /// Safe call to UnsafeVisitException
+    /// </summary>
+    public static void VisitException(object exception)
+    {
+      try
+      {
+        UnsafeVisitException(exception);
+      }
+      catch (Exception ex)
+      {
+        KillApplication(ex);
+        throw; // (dead code)
+      }
+    }
+
+    /// <summary>
+    /// Safe call to UnsafeIncrementThreadDepth
+    /// </summary>
+    /// <returns></returns>
+    public static bool IncrementThreadDepth()
+    {
+      try
+      {
+        return UnsafeIncrementThreadDepth();
+      }
+      catch (Exception ex)
+      {
+        KillApplication(ex);
+        throw; // (dead code)
+      }
+    }
+
+    /// <summary>
+    /// Safe call to UnsafeDecrementThreadDepth
+    /// </summary>
+    public static void DecrementThreadDepth()
+    {
+      try
+      {
+        UnsafeDecrementThreadDepth();
+      }
+      catch (Exception ex)
+      {
+        KillApplication(ex);
+        throw; // (dead code)
+      }
+    }
+
+    /// <summary>
+    /// Safe call to UnsafeSetInvocation nonce
+    /// </summary>
+    public static int SetInvocationNonce(string programPointName)
+    {
+      try
+      {
+        return UnsafeSetInvocationNonce(programPointName);
+      }
+      catch (Exception ex)
+      {
+        KillApplication(ex);
+        throw; // (dead code)
+      }
+    }
+
+    /// <summary>
+    /// Safe call to UnsafeWriteInvocationNonce
+    /// </summary>
+    /// <param name="nonce"></param>
+    public static void WriteInvocationNonce(int nonce)
+    {
+      try
+      {
+        UnsafeWriteInvocationNonce(nonce);
+      }
+      catch (Exception ex)
+      {
+        KillApplication(ex);
+        throw; // (dead code)
+      }
+    }
+
+    /// <summary>
+    /// Safe call to UnsafeWriteProgramPoint
+    /// </summary>
+    public static void WriteProgramPoint(string programPointName, string label)
+    {
+      try
+      {
+        UnsafeWriteProgramPoint(programPointName, label);
+      }
+      catch (Exception ex)
+      {
+        KillApplication(ex);
+        throw; // (dead code)
+      }
+    }
+
+    /// <summary>
+    /// Safe call to UnsafeInitializeFrontEndArgs
+    /// </summary>
+    public static void InitializeFrontEndArgs(string assemblyName, string assemblyPath, string arguments)
+    {
+      try
+      {
+        UnsafeInitializeFrontEndArgs(assemblyName, assemblyPath, arguments);
+      }
+      catch (Exception ex)
+      {
+        KillApplication(ex);
+        throw; // (dead code)
+      }
+    }
+
+    #endregion
+
+    #region Unsafe (can throw an exception) implementations of methods called by subject program
+
+    /// <summary>
+    /// Returns the current PPT visiting nesting depth for the current thread.
+    /// </summary>
+    /// <returns>The current PPT visiting nesting depth for the current thread.</returns>
+    [Pure]
+    public static int NestingDepth()
+    {
+      Contract.Ensures(Contract.Result<int>() > 0);
+      int x;
+      threadDepthMap.TryGetValue(Thread.CurrentThread, out x);
+      return x;
+    }
 
     /// <summary>
     /// Special version of VisitVariable with different parameter ordering for convenient calling 
@@ -270,7 +507,7 @@ namespace DotNetFrontEnd
     /// <param name="variable">The object</param>
     /// <param name="name">The name of the variable</param>
     /// <param name="typeName">Description of the type</param>
-    public static void ValueFirstVisitVariable(object variable, string name, string typeName)
+    private static void UnsafeValueFirstVisitVariable(object variable, string name, string typeName)
     {
       // Make the traditional call, rearrange the variables.
       DoVisit(variable, name, typeName);
@@ -282,42 +519,24 @@ namespace DotNetFrontEnd
     /// <param name="name">The name of the variable</param>
     /// <param name="variable">The value of a variable</param>
     /// <param name="declaredType">The declared type of the variable</param>
-    public static void VisitVariable(string name, object variable, string typeName)
+    private static void UnsafeVisitVariable(string name, object variable, string typeName)
     {
       // Make the traditional call, nothing special
       DoVisit(variable, name, typeName);
-    }
-
-    private static void LoadTypeManagerFromDisk()
-    {
-      var path = Assembly.GetExecutingAssembly().Location + TypeManagerFileExtension;
-
-      IFormatter formatter = new BinaryFormatter();
-      Stream stream = new FileStream(
-          path,
-          FileMode.Open, FileAccess.Read, FileShare.Read);
-
-      using (stream)
-      {
-        SetTypeManager((TypeManager)formatter.Deserialize(stream));
-      }
     }
 
     /// <summary>
     /// Visit all the static variables of the given type.
     /// </summary>
     /// <param name="typeName">Assembly-qualified name of the type to visit.</param>
-    public static void PerformStaticInstrumentation(string typeName)
+    private static void UnsafePerformStaticInstrumentation(string typeName)
     {
-      TextWriter writer = InitializeWriter();
-      try
+      Contract.Requires(!string.IsNullOrWhiteSpace(typeName));
+      Contract.Requires(NestingDepth() == 1, "Illegal PPT callback from thread in nested call");
+
+      using (var writer = InitializeWriter())
       {
         DNFETypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(typeName);
-        if (typeDecl == null)
-        {
-          throw new ArgumentException("VariableVistor received invalid type name for static" +
-            " instrumentation.", "typeName");
-        }
 
         foreach (Type type in typeDecl.GetAllTypes)
         {
@@ -342,11 +561,6 @@ namespace DotNetFrontEnd
           }
         }
       }
-      finally
-      {
-        // Close the writer so it can be used elsewhere
-        writer.Close();
-      }
     }
 
     /// <summary>
@@ -354,25 +568,22 @@ namespace DotNetFrontEnd
     /// Null exceptions should actually be treated as non-sensical.
     /// </summary>
     /// <param name="exception">An exception to reflectively visit</param>
-    public static void VisitException(object exception)
+    private static void UnsafeVisitException(object exception)
     {
       // If the exception is null we actually want to print it as non-sensical.
-      VariableModifiers flags = (exception == null ? VariableModifiers.nonsensical :
-          VariableModifiers.none);
+      VariableModifiers flags = exception == null ? VariableModifiers.nonsensical : VariableModifiers.none;
       // Make the traditional call, possibly add the nonsensicalElements flag.
       // Also, downcast everything to System.Object so we call GetType().
       // TODO(#15): Allow more inspection of exceptions
       DoVisit(exception, ExceptionVariableName, ExceptionTypeName, flags);
     }
 
-    private const int MAX_LOCK_ACQUIRE_TIME_MILLIS = 10 * 1000;
-
     /// <summary>
     /// Increment the depth count for the current thread. Returns <code>true</code> if the ppt
     /// should be visit, that is the depth count is 1.
     /// </summary>
     /// <returns></returns>
-    public static bool IncrementThreadDepth()
+    private static bool UnsafeIncrementThreadDepth()
     {
       return threadDepthMap.AddOrUpdate(Thread.CurrentThread, 1, (t, x) => x + 1) == 1;
     }
@@ -380,49 +591,14 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Decrement the depth count for the current thread.
     /// </summary>
-    public static void DecrementThreadDepth()
+    private static void UnsafeDecrementThreadDepth()
     {
       if (threadDepthMap.AddOrUpdate(Thread.CurrentThread, 0, (t, x) => x - 1) == 0)
       {
         int value;
         threadDepthMap.TryRemove(Thread.CurrentThread, out value);
-        Debug.Assert(value == 0, "Atomicity violation");
+        Contract.Assume(value == 0, "Atomicity violation when decrementing thread depth.");
       }
-    }
-
-    /// <summary>
-    /// Acquire the lock on the PPT writer and increment the thread depth.
-    /// </summary>
-    public static void AcquireLock()
-    {
-      bool acquired = false;
-      var timer = Stopwatch.StartNew();
-      do
-      {
-        if (timer.ElapsedMilliseconds > MAX_LOCK_ACQUIRE_TIME_MILLIS)
-        {
-          Thread.CurrentThread.Abort("Could not acquire writer thread after " + MAX_LOCK_ACQUIRE_TIME_MILLIS + " ms");
-        }
-        Monitor.TryEnter(WriterLock, TimeSpan.FromSeconds(1), ref acquired);
-      } while (!acquired);
-    }
-
-    /// <summary>
-    /// Decrement the thread depth and release the lock on the PPT writer.
-    /// </summary>
-    public static void ReleaseLock()
-    {
-      Monitor.Exit(WriterLock);
-    }
-
-    /// <summary>
-    /// Sets whether output should be suppressed
-    /// </summary>
-    /// <param name="shouldSuppress">True to not print any output during program execution,
-    /// false for normal behavior</param>
-    public static void SetOutputSuppression(bool shouldSuppress)
-    {
-      shouldSuppressOutput = shouldSuppress;
     }
 
     /// <summary>
@@ -430,33 +606,25 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <returns>The invocation nonce for the method</returns>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "programPointName")]
-    public static int SetInvocationNonce(string programPointName)
+    private static int UnsafeSetInvocationNonce(string programPointName)
     {
+      Contract.Requires(!string.IsNullOrWhiteSpace(programPointName));
       return Interlocked.Increment(ref globalNonce);
-    }
-
-    /// <summary>
-    /// Asserts (in debug mode) that a thread is at a top-level PPT for writing.
-    /// </summary>
-    private static void CheckDepth()
-    {
-      int x;
-      threadDepthMap.TryGetValue(Thread.CurrentThread, out x);
-      Debug.Assert(x == 1, "Illegal PPT callback from thread in nested call");
     }
 
     /// <summary>
     /// Write the invocation nonce for the current method
     /// </summary>
     /// <param name="nonce">Nonce-value to print</param>
-    public static void WriteInvocationNonce(int nonce)
+    private static void UnsafeWriteInvocationNonce(int nonce)
     {
-      CheckDepth();
+      Contract.Requires(NestingDepth() == 1, "Illegal PPT callback from thread in nested call");
 
-      TextWriter writer = InitializeWriter();
-      writer.WriteLine("this_invocation_nonce");
-      writer.WriteLine(nonce);
-      writer.Close();
+      using (var writer = InitializeWriter())
+      {
+        writer.WriteLine("this_invocation_nonce");
+        writer.WriteLine(nonce);
+      }
     }
 
     /// <summary>
@@ -465,9 +633,10 @@ namespace DotNetFrontEnd
     /// <param name="programPointName">Name of program point to print</param>
     /// <param name="label">Label used to differentiate the specific program point from other with 
     /// the same name.</param>
-    public static void WriteProgramPoint(string programPointName, string label)
+    private static void UnsafeWriteProgramPoint(string programPointName, string label)
     {
-      CheckDepth();
+      Contract.Requires(NestingDepth() == 1, "Illegal PPT callback from thread in nested call");
+      Contract.Requires(!string.IsNullOrWhiteSpace(programPointName));
 
       staticFieldsVisitedForCurrentProgramPoint.Clear();
       variablesVisitedForCurrentProgramPoint.Clear();
@@ -482,21 +651,18 @@ namespace DotNetFrontEnd
           // After we've seen the first SampleStart print 10%.
           // For each subsequent SampleStart decrease printing by a factor of 10.
           // TODO(#40): Optimize this computation.
-          shouldSuppressOutput = oldOccurrences % (int)Math.Pow(10,
-            (oldOccurrences / frontEndArgs.SampleStart)) != 0;
+          SuppressOutput = oldOccurrences % (int)Math.Pow(10, (oldOccurrences / frontEndArgs.SampleStart)) != 0;
         }
         occurenceCounts[programPointName] = oldOccurrences + 1;
       }
-      TextWriter writer = InitializeWriter();
-      if (string.IsNullOrEmpty(programPointName))
+
+      using (var writer = InitializeWriter())
       {
-        throw new ArgumentNullException("programPointName");
+        writer.WriteLine();
+        programPointName =
+           DeclarationPrinter.SanitizeProgramPointName(programPointName) + (label ?? String.Empty);
+        writer.WriteLine(programPointName);
       }
-      writer.WriteLine();
-      programPointName = DeclarationPrinter.SanitizeProgramPointName(programPointName) +
-          (String.IsNullOrEmpty(label) ? String.Empty : label);
-      writer.WriteLine(programPointName);
-      writer.Close();
     }
 
     /// <summary>
@@ -508,8 +674,14 @@ namespace DotNetFrontEnd
     /// <param name="assemblyName">Name of the assembly being profiled.</param>
     /// <param name="assemblyPath">Relative path to the rewritten assembly.</param>
     /// <remarks>Called from DNFE_ArgumentStroingMethod</remarks>
-    public static void InitializeFrontEndArgs(string arguments)
+    private static void UnsafeInitializeFrontEndArgs(string assemblyName, string assemblyPath, string arguments)
     {
+      Contract.Requires(!string.IsNullOrWhiteSpace(assemblyName));
+      Contract.Requires(!string.IsNullOrWhiteSpace(assemblyPath));
+      Contract.Requires(!string.IsNullOrWhiteSpace(arguments));
+      Contract.Ensures(frontEndArgs != null);
+      Contract.Ensures(typeManager != null);
+
       if (frontEndArgs == null)
       {
         frontEndArgs = new FrontEndArgs(arguments.Split());
@@ -534,15 +706,19 @@ namespace DotNetFrontEnd
     private static void DoVisit(object variable, string name, string typeName,
         VariableModifiers flags = VariableModifiers.none)
     {
-      CheckDepth();
+
+      Contract.Requires(flags.HasFlag(VariableModifiers.nonsensical).Implies(variable == null));
+      Contract.Requires(!string.IsNullOrWhiteSpace(name));
+      Contract.Requires(!string.IsNullOrWhiteSpace(typeName));
+      Contract.Requires(NestingDepth() == 1, "Illegal PPT callback from thread in nested call");
+      Contract.Ensures(SuppressOutput == false);
 
       // TODO(#15): Can we pull any fields from exceptions?
       // Exceptions shouldn't be recursed any further down than the 
       // variable itself, because we only know that they are an exception.
-      TextWriter writer = InitializeWriter();
       DNFETypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(typeName);
 
-      try
+      using (var writer = InitializeWriter())
       {
         foreach (Type type in typeDecl.GetAllTypes)
         {
@@ -558,15 +734,6 @@ namespace DotNetFrontEnd
           ReflectiveVisit(name, variable, type, writer, depth, type, flags);
         }
       }
-      //catch (Exception ex)
-      //{
-      //  throw new VariableVisitorException(ex);
-      //}
-      finally
-      {
-        // Close the writer so it can be used elsewhere
-        writer.Close();
-      }
     }
 
     /// <summary>
@@ -577,7 +744,11 @@ namespace DotNetFrontEnd
         "CA2000:Dispose objects before losing scope")]
     private static TextWriter InitializeWriter()
     {
-      if (shouldSuppressOutput)
+      Contract.Ensures(Contract.Result<TextWriter>() != null);
+      Contract.Ensures(frontEndArgs.PrintOutput.Implies(Contract.Result<TextWriter>() == System.Console.Out));
+      Contract.Ensures(SuppressOutput.Implies(Contract.Result<TextWriter>() == TextWriter.Null));
+
+      if (SuppressOutput)
       {
         return TextWriter.Null;
       }
@@ -607,6 +778,21 @@ namespace DotNetFrontEnd
       return writer;
     }
 
+    private static void LoadTypeManagerFromDisk()
+    {
+      Contract.Requires(TypeManager == null);
+      Contract.Ensures(TypeManager != null);
+
+      IFormatter formatter = new BinaryFormatter();
+      Stream stream = new FileStream(
+          Assembly.GetExecutingAssembly().Location + TypeManagerFileExtension,
+          FileMode.Open, FileAccess.Read, FileShare.Read);
+
+      using (stream)
+      {
+        TypeManager = (TypeManager)formatter.Deserialize(stream);
+      }
+    }
     #region Reflective Visitor and helper methods
 
     /// <summary>
@@ -623,6 +809,11 @@ namespace DotNetFrontEnd
         TextWriter writer, int depth, Type originatingType,
         VariableModifiers fieldFlags = VariableModifiers.none)
     {
+      Contract.Requires(fieldFlags.HasFlag(VariableModifiers.nonsensical).Implies(obj == null));
+      Contract.Requires(type != null);
+      Contract.Requires(writer != null);
+      Contract.Requires(depth >= 0);
+
       if (PerformEarlyExitChecks(name, depth))
       {
         return;
@@ -643,11 +834,7 @@ namespace DotNetFrontEnd
       }
       else if (typeManager.IsFSharpListImplementer(type))
       {
-        object[] result = null;
-        if (obj != null)
-        {
-          result = TypeManager.ConvertFSharpListToCSharpArray(obj);
-        }
+        object[] result = obj == null ? null : TypeManager.ConvertFSharpListToCSharpArray(obj);
 
         ProcessVariableAsList(name, result, result == null ? null : result.GetType(),
             writer, depth, originatingType);
@@ -737,7 +924,7 @@ namespace DotNetFrontEnd
             fieldFlags | VariableModifiers.to_string);
       }
 
-      if (!shouldSuppressOutput)
+      if (!SuppressOutput)
       {
         foreach (var item in typeManager.GetPureMethodsForType(type, originatingType))
         {
@@ -778,27 +965,20 @@ namespace DotNetFrontEnd
     private static void PrintFieldValues(string name, object obj, Type type,
       TextWriter writer, int depth, VariableModifiers fieldFlags, Type originatingType)
     {
+      Contract.Requires(!string.IsNullOrWhiteSpace(name));
+      Contract.Requires(type != null);
+      Contract.Requires(writer != null);
+      Contract.Requires(depth >= 0);
+
       foreach (FieldInfo field in
           type.GetSortedFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
             type, originatingType)))
       {
-        try
+        if (!typeManager.ShouldIgnoreField(type, field))
         {
-          if (!typeManager.ShouldIgnoreField(type, field))
-          {
-            ReflectiveVisit(name + "." + field.Name, GetFieldValue(obj, field, field.Name),
-                field.FieldType, writer, depth + 1, originatingType,
-                fieldFlags | VariableModifiers.ignore_linked_list);
-          }
-        }
-        catch (ArgumentException)
-        {
-          Console.Error.WriteLine(" Name: " + name + " Type: " + type + " Field Name: "
-              + field.Name + " Field Type: " + field.FieldType);
-          // The field is declared in the decls so Daikon still needs a value. 
-          ReflectiveVisit(name + "." + field.Name, null,
+          ReflectiveVisit(name + "." + field.Name, GetFieldValue(obj, field, field.Name),
               field.FieldType, writer, depth + 1, originatingType,
-              fieldFlags | VariableModifiers.nonsensical);
+              fieldFlags | VariableModifiers.ignore_linked_list);
         }
       }
 
@@ -810,23 +990,10 @@ namespace DotNetFrontEnd
         if (!typeManager.ShouldIgnoreField(type, staticField) &&
             !staticFieldsVisitedForCurrentProgramPoint.Contains(staticFieldName))
         {
-          //try
-          //{
-
           staticFieldsVisitedForCurrentProgramPoint.Add(staticFieldName);
           ReflectiveVisit(staticFieldName, GetFieldValue(obj, staticField, staticField.Name),
                 staticField.FieldType, writer, staticFieldName.Count(c => c == '.'),
                 originatingType, fieldFlags | VariableModifiers.ignore_linked_list);
-          //}
-          //catch (ArgumentException)
-          //{
-          //  Console.Error.WriteLine(" Name: " + name + " Type: " + type + " Field Name: "
-          //      + staticField.Name + " Field Type: " + staticField.FieldType);
-          //  // The field is declared in the decls so Daikon still needs a value. 
-          //  ReflectiveVisit(staticFieldName, null,
-          //      staticField.FieldType, writer, depth + 1, originatingType,
-          //      fieldFlags | VariableModifiers.nonsensical);
-          //}
         }
       }
     }
@@ -843,6 +1010,10 @@ namespace DotNetFrontEnd
     private static void PrintSimpleVisitFields(string name, object obj, Type type,
       TextWriter writer, VariableModifiers fieldFlags)
     {
+      Contract.Requires(!string.IsNullOrWhiteSpace(name));
+      Contract.Requires(type != null);
+      Contract.Requires(writer != null);
+
       // Print variable's name.
       writer.WriteLine(name);
 
@@ -875,18 +1046,8 @@ namespace DotNetFrontEnd
       {
         return true;
       }
-      else
-      {
-        variablesVisitedForCurrentProgramPoint.Add(name);
-      }
-
-      if (depth > frontEndArgs.MaxNestingDepth ||
-          !frontEndArgs.ShouldPrintVariable(name))
-      {
-        return true;
-      }
-
-      return false;
+      variablesVisitedForCurrentProgramPoint.Add(name);
+      return depth > frontEndArgs.MaxNestingDepth || !frontEndArgs.ShouldPrintVariable(name);
     }
 
     /// <summary>
@@ -903,6 +1064,11 @@ namespace DotNetFrontEnd
         TextWriter writer, int depth, Type originatingType,
         VariableModifiers flags = VariableModifiers.none)
     {
+      Contract.Requires(!string.IsNullOrWhiteSpace(name));
+      Contract.Requires(type != null);
+      Contract.Requires(writer != null);
+      Contract.Requires(obj == null || obj is IList, "Can't list reflective visit something that isn't a list");
+
       // Call GetType() on the list if necessary.
       Type elementType = TypeManager.GetListElementType(type);
       if (!elementType.IsSealed)
@@ -914,16 +1080,9 @@ namespace DotNetFrontEnd
       // Now visit each element.
       // Element inspection is at the same depth as the list.
       // null lists won't cast but we don't want to throw an exception for that
-      if ((obj != null) && !(obj is IList))
-      {
-        throw new NotSupportedException("Can't list reflective visit something that isn't a"
-            + " list. This is a bug in the reflector implementation.");
-      }
-      else
-      {
-        ListReflectiveVisit(name + "[..]", (IList)obj, elementType, writer, depth,
-            originatingType, flags);
-      }
+      ListReflectiveVisit(name + "[..]", (IList)obj, elementType, writer,
+          depth, originatingType, flags);
+
     }
 
     /// <summary>
@@ -943,21 +1102,22 @@ namespace DotNetFrontEnd
         VariableModifiers flags = VariableModifiers.none,
         bool[] nonsensicalElements = null)
     {
-      if (depth > frontEndArgs.MaxNestingDepth ||
-          !frontEndArgs.ShouldPrintVariable(name))
+      Contract.Requires(!string.IsNullOrWhiteSpace(name));
+      Contract.Requires(writer != null);
+      Contract.Requires(depth >= 0); // TWS: why shouldn't this be >= 1?
+      Contract.Requires(nonsensicalElements == null || nonsensicalElements.Length == list.Count);
+
+      if (depth > frontEndArgs.MaxNestingDepth || !frontEndArgs.ShouldPrintVariable(name))
       {
         return;
       }
 
       // We might not know the type, e.g. for non-generic ArrayList
-      if (elementType == null)
-      {
-        elementType = TypeManager.ObjectType;
-      }
+      elementType = elementType ?? TypeManager.ObjectType;
 
       // Don't inspect fields on some calls.
-      bool simplePrint = flags.HasFlag(VariableModifiers.to_string)
-          || flags.HasFlag(VariableModifiers.classname);
+      bool simplePrint = flags.HasFlag(VariableModifiers.to_string) ||
+           flags.HasFlag(VariableModifiers.classname);
 
       // Write name of the list, which possibly is its path.
       writer.WriteLine(name);
@@ -1037,6 +1197,10 @@ namespace DotNetFrontEnd
     private static void VisitNullListChildren(string name, Type elementType,
         TextWriter writer, int depth, Type originatingType)
     {
+      Contract.Requires(!string.IsNullOrWhiteSpace(name));
+      Contract.Requires(writer != null);
+      Contract.Requires(depth >= 0); // TWS: why shouldn't this be >= 1?
+
       foreach (FieldInfo field in
           elementType.GetSortedFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
               elementType, originatingType)))
@@ -1097,8 +1261,10 @@ namespace DotNetFrontEnd
     private static void VisitListChildren(string name, IList list, Type elementType,
         TextWriter writer, int depth, bool[] nonsensicalElements, Type originatingType)
     {
-      Debug.Assert(list != null, "Cannot visit children of null list");
-      Debug.Assert(list.Count == nonsensicalElements.Length, "Length mismatch between list length and non-sensical array");
+      Contract.Requires(list != null, "Cannot visit children of null list");
+      Contract.Requires(list.Count == nonsensicalElements.Length, "Length mismatch between list length and non-sensical array");
+      Contract.Requires(depth >= 0);
+      Contract.Requires(writer != null);
 
       foreach (FieldInfo elementField in
           elementType.GetSortedFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
@@ -1180,22 +1346,17 @@ namespace DotNetFrontEnd
     private static void VisitListField(string name, IList list, Type elementType, TextWriter writer,
         int depth, bool[] nonsensicalElements, FieldInfo elementField, Type originatingType)
     {
+      Contract.Requires(list != null, "Cannot visit children of null list");
+      Contract.Requires(list.Count == nonsensicalElements.Length, "Length mismatch between list length and non-sensical array");
+      Contract.Requires(depth >= 0);
+      Contract.Requires(writer != null);
+
       // If we have a non-null list then build an array comprising the calls on each 
       // element. The array must be object type so it can take any children.
       Array childArray = Array.CreateInstance(TypeManager.ObjectType, list.Count);
       for (int i = 0; i < list.Count; i++)
       {
-        try
-        {
-          childArray.SetValue(GetFieldValue(list[i], elementField, elementField.Name), i);
-        }
-        catch (ArgumentException)
-        {
-          Console.Error.WriteLine(" Name: " + name + " Type: " +
-            elementType + " Field Name: " + elementField.Name +
-            " Field Type: " + elementField.FieldType);
-          childArray.SetValue(null, i);
-        }
+        childArray.SetValue(GetFieldValue(list[i], elementField, elementField.Name), i);
         nonsensicalElements[i] = (list[i] == null);
       }
       ListReflectiveVisit(name + "." + elementField.Name, childArray,
@@ -1212,10 +1373,13 @@ namespace DotNetFrontEnd
     /// <returns></returns>
     private static string GetHashCode(object x, Type type)
     {
+      Contract.Requires(type != null);
+      Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+
       if (type.IsValueType)
       {
         // Use a value-based hashcode for value types
-        Debug.Assert(x.GetType().IsValueType,
+        Contract.Assert(x.GetType().IsValueType,
             "Runtime value is not a value type. Runtime Type: " + x.GetType().ToString() + " Declared: " + type.Name);
         return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
       }
@@ -1246,6 +1410,8 @@ namespace DotNetFrontEnd
     /// <returns>String containing a daikon-valid representation of the variable's value</returns>
     private static string GetVariableValue(object x, Type type, VariableModifiers flags)
     {
+      Contract.Requires(type != null);
+
       if (flags.HasFlag(VariableModifiers.nonsensical))
       {
         return "nonsensical";
@@ -1264,11 +1430,11 @@ namespace DotNetFrontEnd
         {
           // Type is an enum, print out it's hash. Since were using a hashcode rep-type, we need to make sure the
           // hashcode is non-zero.
-          SetOutputSuppression(true);
+          SuppressOutput = true;
           int hash = type.GetHashCode() + x.GetHashCode();
           hash = hash == 0 ? hash + 1 : hash;
           string enumHash = hash.ToString(CultureInfo.InvariantCulture);
-          SetOutputSuppression(false);
+          SuppressOutput = false;
           return enumHash;
         }
       }
@@ -1281,14 +1447,7 @@ namespace DotNetFrontEnd
       {
         if (type == TypeManager.BooleanType)
         {
-          if ((bool)x)
-          {
-            return "true";
-          }
-          else
-          {
-            return "false";
-          }
+          return ((bool)x) ? "true" : "false";
         }
         else if (type == TypeManager.CharType)
         {
@@ -1301,9 +1460,9 @@ namespace DotNetFrontEnd
       }
 
       // Type is either an object or a user-defined struct, print out its hashcode.
-      SetOutputSuppression(true);
+      SuppressOutput = true;
       string hashcode = GetHashCode(x, type);
-      SetOutputSuppression(false);
+      SuppressOutput = false;
       return hashcode;
 
     }
@@ -1316,9 +1475,12 @@ namespace DotNetFrontEnd
     /// <param name="fieldName">Name of the field whose value to get</param>
     /// <returns>Value of the given field of obj, or null if obj was null
     /// </returns>
-    /// <exception cref="ArgumentException">If the field is not found in the object</exception>
     private static object GetFieldValue(object obj, FieldInfo field, string fieldName)
     {
+      Contract.Requires(field != null);
+      Contract.Requires(!string.IsNullOrWhiteSpace(fieldName));
+      Contract.Ensures((obj == null).Implies(Contract.Result<object>() == null));
+
       // TODO(#60): Duplicative with GetVariableValue code
       if (obj == null)
       {
@@ -1338,16 +1500,12 @@ namespace DotNetFrontEnd
       do
       {
         runtimeField = currentType.GetField(fieldName,
-            BindingFlags.Public | BindingFlags.NonPublic
-          | BindingFlags.Static | BindingFlags.Instance);
+            BindingFlags.Public | BindingFlags.NonPublic |
+            BindingFlags.Static | BindingFlags.Instance);
         currentType = currentType.BaseType;
       } while (runtimeField == null && currentType != null);
 
-      if (runtimeField == null)
-      {
-        throw new ArgumentException("Field " + fieldName + " not found in type or supertypes");
-      }
-
+      Contract.Assert(runtimeField != null, "Field " + fieldName + " not found in type or supertypes");
       return runtimeField.GetValue(obj);
     }
 
@@ -1363,6 +1521,9 @@ namespace DotNetFrontEnd
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
     private static object GetMethodValue(object obj, MethodInfo method, string methodName)
     {
+      Contract.Requires(method != null);
+      Contract.Requires(!string.IsNullOrWhiteSpace(methodName));
+
       // TODO(#60): Duplicative with GetVariableValue?
       if (obj == null)
       {
@@ -1378,7 +1539,7 @@ namespace DotNetFrontEnd
         currentType = currentType.BaseType;
       }
 
-      Debug.Assert(currentType != null,
+      Contract.Assume(currentType != null,
           "Reached top when locating declaring type for method " + methodName + " (instance type: " + obj.GetType().Name + ")");
 
       // Climb the supertypes as necessary to get the desired field
@@ -1390,13 +1551,11 @@ namespace DotNetFrontEnd
         currentType = currentType.BaseType;
       } while (runtimeMethod == null && currentType != null);
 
-      if (runtimeMethod == null)
-      {
-        throw new ArgumentException("Method " + methodName + " not found in type or supertypes");
-      }
+      Contract.Assume(runtimeMethod != null,
+          "Method " + methodName + " not found in type or supertypes");
 
       object val;
-      SetOutputSuppression(true);
+      SuppressOutput = true;
       try
       {
         val = runtimeMethod.Invoke(obj, null);
@@ -1408,19 +1567,22 @@ namespace DotNetFrontEnd
       }
       finally
       {
-        SetOutputSuppression(false);
+        SuppressOutput = false;
       }
       return val;
 
     }
 
     /// <summary>
-    /// Prepare the given string for printing to daikon format.
+    /// Prepare the given string for printing to Daikon format.
     /// </summary>
     /// <param name="programPointName">Value of the string to prepare</param>
     /// <returns>String that can be output to a daikon datatrace file</returns>
+    [Pure]
     private static string PrepareString(String str)
     {
+      Contract.Requires(str != null);
+
       // Escape internal quotes, backslashes, newlines, and carriage returns.
       str = str.Replace("\\", "\\\\");
       str = str.Replace("\"", "\\\"");
