@@ -1109,7 +1109,7 @@ namespace DotNetFrontEnd
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(name));
       Contract.Requires(writer != null);
-      Contract.Requires(depth >= 1);
+      Contract.Requires(depth >= 0); // TWS: why shouldn't this be >= 1?
       Contract.Requires(nonsensicalElements == null || nonsensicalElements.Length == list.Count);
 
       if (depth > frontEndArgs.MaxNestingDepth || !frontEndArgs.ShouldPrintVariable(name))
@@ -1204,7 +1204,7 @@ namespace DotNetFrontEnd
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(name));
       Contract.Requires(writer != null);
-      Contract.Requires(depth >= 1);
+      Contract.Requires(depth >= 0); // TWS: why shouldn't this be >= 1?
 
       foreach (FieldInfo field in
           elementType.GetSortedFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(

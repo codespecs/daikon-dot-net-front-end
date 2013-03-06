@@ -99,11 +99,11 @@ namespace DotNetFrontEnd
     private Comparability.AssemblyComparability comparabilityManager;
 
     // Variables used during rewriting
-    PdbReader/*?*/ pdbReader = null;
-    ILGenerator generator;
-    IEnumerator<ILocalScope>/*?*/ scopeEnumerator;
-    bool scopeEnumeratorIsValid;
-    Stack<ILocalScope> scopeStack = new Stack<ILocalScope>();
+    private readonly PdbReader pdbReader;
+    private ILGenerator generator;
+    private IEnumerator<ILocalScope> scopeEnumerator;
+    private bool scopeEnumeratorIsValid;
+    private Stack<ILocalScope> scopeStack = new Stack<ILocalScope>();
 
     /// <summary>
     /// Reference to the VariableVisitor method that loads assembly name and path
@@ -154,10 +154,9 @@ namespace DotNetFrontEnd
     private void ObjectInvariant()
     {
         Contract.Invariant(host != null);
-        Contract.Invariant(pdbReader != null);
         Contract.Invariant(frontEndArgs != null);
         Contract.Invariant(typeManager != null);
-        Contract.Invariant(comparabilityManager != null);
+        Contract.Invariant(frontEndArgs.StaticComparability == (comparabilityManager != null));
 
         Contract.Invariant(nameTable == host.NameTable);
         Contract.Invariant(nameTable != null);
@@ -172,7 +171,6 @@ namespace DotNetFrontEnd
       : base(host)
     {
       Contract.Requires(host != null);
-      Contract.Requires(pdbReader != null);
       Contract.Requires(frontEndArgs != null);
       Contract.Requires(typeManager != null);
 
@@ -601,6 +599,9 @@ namespace DotNetFrontEnd
     /// <returns>Exceptions sorted so that no exception appears after its superclass</returns>
     private List<ITypeReference> DetermineAndSortExceptions(List<IOperation> operations)
     {
+      Contract.Requires(operations != null);
+      Contract.Requires(Contract.ForAll(operations, o => o != null));
+
       // We need to convert the CCI Types to .NET types to sort them by
       // subclass hierarchy, but we need to return CCI Types for later
       // use in the instrumentation code. The dictionary will maintain the
@@ -617,18 +618,16 @@ namespace DotNetFrontEnd
         {
           ITypeReference exType;
           IOperation prevOp = operations[i - 1];
-          if (prevOp.Value is MethodDefinition)
+
+          if (prevOp.OperationCode == OperationCode.Ldnull)
+          {
+            exType = typeManager.Host.PlatformType.SystemException;
+          }
+          else if (prevOp.Value is MethodDefinition)
           {
             IMethodDefinition methDef = (MethodDefinition)prevOp.Value;
             // A new exception is being thrown
-            if (methDef.IsConstructor)
-            {
-              exType = methDef.ContainingTypeDefinition;
-            }
-            else
-            {
-              exType = methDef.Type;
-            }
+            exType = methDef.IsConstructor ? methDef.ContainingTypeDefinition : methDef.Type;
           }
           else if (prevOp.Value is LocalDefinition)
           {
@@ -651,13 +650,17 @@ namespace DotNetFrontEnd
           {
             exType = ((ParameterDefinition)prevOp.Value).Type;
           }
+          else if (prevOp.Value is FieldDefinition)
+          {
+            exType = ((FieldDefinition)prevOp.Value).Type;
+          }
           else if (prevOp.Value is FieldReference)
           {
             exType = ((FieldReference)op.Value).Type;
           }
           else
           {
-            throw new NotSupportedException("Unexpected operation of type " + prevOp.Value.GetType());
+              throw new NotSupportedException("Unexpected operation of type " + prevOp.Value.GetType());
           }
           // Convert from CCI Type to String Type
           // Exception name must be a single class
