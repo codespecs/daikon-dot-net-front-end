@@ -415,7 +415,8 @@ namespace DotNetFrontEnd
       }
       else
       {
-        return type.Namespace.Equals("Microsoft.FSharp.Collections") && type.Name.StartsWith("FSharpList");
+        return type.Namespace != null && type.Namespace.Equals("Microsoft.FSharp.Collections") && 
+               type.Name.StartsWith("FSharpList");
       }
     }
 
@@ -617,8 +618,8 @@ namespace DotNetFrontEnd
       }
       else
       {
-        return type.Namespace.Equals("Microsoft.FSharp.Collections") &&
-          type.Name.StartsWith("FSharpSet");
+        return type.Namespace != null && type.Namespace.Equals("Microsoft.FSharp.Collections") &&
+               type.Name.StartsWith("FSharpSet");
       }
     }
 
@@ -647,8 +648,8 @@ namespace DotNetFrontEnd
       }
       else
       {
-        return type.Namespace.Equals("Microsoft.FSharp.Collections") &&
-          type.Name.StartsWith("FSharpMap");
+        return type.Namespace != null && type.Namespace.Equals("Microsoft.FSharp.Collections") &&
+               type.Name.StartsWith("FSharpMap");
       }
     }
 
