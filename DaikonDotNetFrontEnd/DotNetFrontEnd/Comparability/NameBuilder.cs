@@ -319,7 +319,7 @@ namespace Comparability
       }
       else
       {
-        Console.WriteLine("WARNING: unexpected bundled type " + definition.GetType().Name);
+        throw new NotSupportedException("Comparability: Unexpected bundled type " + definition.GetType().Name);
       }
     }
 
@@ -354,7 +354,7 @@ namespace Comparability
         }
         else
         {
-          Console.WriteLine("WARNING: Could not find enum constant for assignment");
+          throw new KeyNotFoundException("Could not find enum constant for assignment");
         }
       }
     }

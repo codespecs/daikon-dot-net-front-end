@@ -224,6 +224,8 @@ namespace DotNetFrontEnd
       markedSystemTypes = new HashSet<Type>();
     }
 
+    // Disposed in this.Dispose()
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
     private void InitHost()
     {
       Contract.Ensures(this.host != null);
@@ -1199,28 +1201,6 @@ namespace DotNetFrontEnd
         }
       }
       return false;
-    }
-
-    /// <summary>
-    /// Returns <code>true</code> if <param name="methodDef"/> is compiler generated.
-    /// </summary>
-    /// <param name="methodDef">The method definition</param>
-    /// <returns><code>true</code> if <param name="methodDef"/> is compiler generated.</returns>
-    public bool IsMethodCompilerGenerated(IReference methodDef)
-    {
-      Contract.Requires(methodDef != null);
-      return IsCompilerGenerated(methodDef);
-    }
-
-    /// <summary>
-    /// Returns <code>true</code> if <param name="typeDef"/> is compiler generated.
-    /// </summary>
-    /// <param name="typeDef">The method definition</param>
-    /// <returns><code>true</code> if <param name="typeDef"/> is compiler generated.</returns>
-    public bool IsTypeCompilerGenerated(ITypeDefinition typeDef)
-    {
-      Contract.Requires(typeDef != null);
-      return IsCompilerGenerated(typeDef);
     }
 
     /// <summary>

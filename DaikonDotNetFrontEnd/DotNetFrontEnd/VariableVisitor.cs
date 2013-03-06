@@ -306,7 +306,7 @@ namespace DotNetFrontEnd
       {
         if (timer.ElapsedMilliseconds > MAX_LOCK_ACQUIRE_TIME_MILLIS)
         {
-          KillApplication(new Exception("DEADLOCK?: Could not acquire writer lock after " + MAX_LOCK_ACQUIRE_TIME_MILLIS + " ms"));
+          KillApplication(new TimeoutException("DEADLOCK?: Could not acquire writer lock after " + MAX_LOCK_ACQUIRE_TIME_MILLIS + " ms"));
         }
         Monitor.TryEnter(WriterLock, TimeSpan.FromSeconds(1), ref acquired);
       } while (!acquired);
@@ -332,6 +332,7 @@ namespace DotNetFrontEnd
       catch (Exception ex)
       {
         KillApplication(ex);
+        throw; // (dead code)
       }
     }
 
@@ -347,6 +348,7 @@ namespace DotNetFrontEnd
       catch (Exception ex)
       {
         KillApplication(ex);
+        throw; // (dead code)
       }
     }
 
@@ -363,6 +365,7 @@ namespace DotNetFrontEnd
       catch (Exception ex)
       {
         KillApplication(ex);
+        throw; // (dead code)
       }
     }
 
@@ -378,6 +381,7 @@ namespace DotNetFrontEnd
       catch (Exception ex)
       {
         KillApplication(ex);
+        throw; // (dead code)
       }
     }
 
@@ -394,7 +398,7 @@ namespace DotNetFrontEnd
       catch (Exception ex)
       {
         KillApplication(ex);
-        return false; // dead code
+        throw; // (dead code)
       }
     }
 
@@ -410,6 +414,7 @@ namespace DotNetFrontEnd
       catch (Exception ex)
       {
         KillApplication(ex);
+        throw; // (dead code)
       }
     }
 
@@ -425,7 +430,7 @@ namespace DotNetFrontEnd
       catch (Exception ex)
       {
         KillApplication(ex);
-        return -1; // dead code
+        throw; // (dead code)
       }
     }
 
@@ -442,6 +447,7 @@ namespace DotNetFrontEnd
       catch (Exception ex)
       {
         KillApplication(ex);
+        throw; // (dead code)
       }
     }
 
@@ -457,6 +463,7 @@ namespace DotNetFrontEnd
       catch (Exception ex)
       {
         KillApplication(ex);
+        throw; // (dead code)
       }
     }
 
@@ -472,6 +479,7 @@ namespace DotNetFrontEnd
       catch (Exception ex)
       {
         KillApplication(ex);
+        throw; // (dead code)
       }
     }
 

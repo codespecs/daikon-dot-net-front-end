@@ -8,7 +8,7 @@ using DotNetFrontEnd.Contracts;
 
 namespace EmilStefanov
 {
-  public class DisjointSets
+  public sealed class DisjointSets
   {
     [ContractInvariantMethod]
     private void ObjectInvariant()
