@@ -513,8 +513,11 @@ namespace DotNetFrontEnd
       if (frontEndArgs == null)
       {
         frontEndArgs = new FrontEndArgs(arguments.Split());
-
-        LoadTypeManagerFromDisk();
+        if (frontEndArgs.AutoDetectPure)
+        {
+          frontEndArgs.AddAutoDetectedPureMethods();
+        }
+        typeManager = new TypeManager(frontEndArgs);
       }
     }
 
