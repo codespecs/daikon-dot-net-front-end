@@ -18,6 +18,8 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Microsoft.Cci;
 using Microsoft.Cci.MutableCodeModel;
+using System.Diagnostics.Contracts;
+using DotNetFrontEnd.Contracts;
 
 // This file and ProgramRewriter.cs originally came from the CCIMetadata (http://ccimetadata.codeplex.com/)
 // sample programs. Specifically, it was Samples/ILMutator/ILMutator.cs. The original code inserted
@@ -83,10 +85,10 @@ namespace DotNetFrontEnd
     private AssemblyIdentity assemblyIdentity;
 
     // Convenience references
-    private INameTable nameTable;
-    private INamespaceTypeReference systemString;
-    private INamespaceTypeReference systemVoid;
-    private INamespaceTypeReference systemObject;
+    private readonly INameTable nameTable;
+    private readonly INamespaceTypeReference systemString;
+    private readonly INamespaceTypeReference systemVoid;
+    private readonly INamespaceTypeReference systemObject;
 
     // DNFE-specific variables
     private ITypeDefinition variableVisitorType;
@@ -96,11 +98,11 @@ namespace DotNetFrontEnd
     private Comparability.AssemblyComparability comparabilityManager;
 
     // Variables used during rewriting
-    PdbReader/*?*/ pdbReader = null;
-    ILGenerator generator;
-    IEnumerator<ILocalScope>/*?*/ scopeEnumerator;
-    bool scopeEnumeratorIsValid;
-    Stack<ILocalScope> scopeStack = new Stack<ILocalScope>();
+    private readonly PdbReader pdbReader;
+    private ILGenerator generator;
+    private IEnumerator<ILocalScope> scopeEnumerator;
+    private bool scopeEnumeratorIsValid;
+    private Stack<ILocalScope> scopeStack = new Stack<ILocalScope>();
 
     /// <summary>
     /// Reference to the VariableVisitor method that loads assembly name and path
@@ -130,7 +132,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Map from method to the nonce for that method
     /// </summary>
-    private Dictionary<IMethodDefinition, LocalDefinition> nonceVariableDictionary;
+    private readonly Dictionary<IMethodDefinition, LocalDefinition> nonceVariableDictionary = new Dictionary<IMethodDefinition, LocalDefinition>();
 
     /// <summary>
     /// The type holding the arguments needed when assembly is run in offline mode
@@ -147,25 +149,45 @@ namespace DotNetFrontEnd
 
     #region CCI Code
 
+    [ContractInvariantMethod]
+    private void ObjectInvariant()
+    {
+      Contract.Invariant(host != null);
+      Contract.Invariant(frontEndArgs != null);
+      Contract.Invariant(typeManager != null);
+      Contract.Invariant(frontEndArgs.StaticComparability == (comparabilityManager != null));
+
+      Contract.Invariant(nameTable == host.NameTable);
+      Contract.Invariant(nameTable != null);
+
+      Contract.Invariant(systemString == host.PlatformType.SystemString);
+      Contract.Invariant(systemObject == host.PlatformType.SystemObject);
+      Contract.Invariant(systemVoid == host.PlatformType.SystemVoid);
+    }
+
     public ILRewriter(IMetadataHost host, PdbReader pdbReader, DotNetFrontEnd.FrontEndArgs frontEndArgs,
         DotNetFrontEnd.TypeManager typeManager, Comparability.AssemblyComparability comparabilityManager)
       : base(host)
     {
+      Contract.Requires(host != null);
+      Contract.Requires(frontEndArgs != null);
+      Contract.Requires(typeManager != null);
+
+      Contract.Ensures(this.host == host);
+      Contract.Ensures(this.pdbReader == pdbReader);
+      Contract.Ensures(this.frontEndArgs == frontEndArgs);
+      Contract.Ensures(this.typeManager == typeManager);
+      Contract.Ensures(this.comparabilityManager == comparabilityManager);
+
       this.pdbReader = pdbReader;
-      if (host == null)
-      {
-        throw new ArgumentNullException("host");
-      }
       this.frontEndArgs = frontEndArgs;
       this.typeManager = typeManager;
       this.comparabilityManager = comparabilityManager;
-      this.nameTable = this.host.NameTable;
 
+      this.nameTable = this.host.NameTable;
       this.systemString = host.PlatformType.SystemString;
       this.systemVoid = host.PlatformType.SystemVoid;
       this.systemObject = host.PlatformType.SystemObject;
-
-      this.nonceVariableDictionary = new Dictionary<IMethodDefinition, LocalDefinition>();
     }
 
     /// <summary>
@@ -204,11 +226,6 @@ namespace DotNetFrontEnd
     /// <returns>methodBody with instrumentation calls added</returns>
     public override IMethodBody Rewrite(IMethodBody methodBody)
     {
-      if (methodBody == null)
-      {
-        throw new ArgumentNullException("methodBody");
-      }
-
       var method = methodBody.MethodDefinition;
       var containingType = method.ContainingType;
 
@@ -221,7 +238,7 @@ namespace DotNetFrontEnd
       }
       else
       {
-        Debug.Assert(!method.Name.Value.StartsWith("<"), "Compiler generated method was not filtered: " + method.Name);
+        Contract.Assume(!method.Name.Value.StartsWith("<"), "Compiler generated method was not filtered: " + method.Name);
         var rewritten = ProcessOperations(methodBody);
         return rewritten;
       }
@@ -235,6 +252,9 @@ namespace DotNetFrontEnd
     /// <param name="immutableMethodBody">Describes the method to instrument</param>
     private IMethodBody ProcessOperations(IMethodBody immutableMethodBody)
     {
+      Contract.Requires(immutableMethodBody != null);
+      Contract.Ensures(Contract.Result<IMethodBody>() != null);
+
       // Alias operations for convenience
       List<IOperation> operations = ((immutableMethodBody.Operations == null)
         ? new List<IOperation>()
@@ -256,7 +276,8 @@ namespace DotNetFrontEnd
       }
 
       this.scopeEnumerator = this.pdbReader == null ?
-          null : this.pdbReader.GetLocalScopes(immutableMethodBody).GetEnumerator();
+          null :
+          this.pdbReader.GetLocalScopes(immutableMethodBody).GetEnumerator();
       this.scopeEnumeratorIsValid = this.scopeEnumerator != null && this.scopeEnumerator.MoveNext();
 
       // Need the method body to be mutable to add the nonce variable
@@ -363,6 +384,9 @@ namespace DotNetFrontEnd
     private static ISet<IOperation> DetermineSynthesizedReturns(IMethodBody immutableMethodBody,
       List<IOperation> operations, uint originalReturnJumpOffset, ILGeneratorLabel commonExit)
     {
+      Contract.Requires(immutableMethodBody != null);
+      Contract.Requires(operations != null);
+
       if (immutableMethodBody.MethodDefinition.Type.TypeCode != PrimitiveTypeCode.Void)
       {
         OperationCode lastStoreOperation = GetLastStoreOperation(immutableMethodBody);
@@ -386,6 +410,9 @@ namespace DotNetFrontEnd
     /// <returns>The index of the last return jump target</returns>
     private static int GetIndexOfFirstReturnJumpTarget(List<IOperation> operations)
     {
+      Contract.Requires(operations != null);
+      Contract.Ensures(Contract.Result<int>() >= 0 && Contract.Result<int>() < operations.Count);
+
       int opCount = operations.Count;
       int operationIndexForFirstReturnJumpTarget = opCount - 2;
       if (opCount > 1)
@@ -420,17 +447,18 @@ namespace DotNetFrontEnd
       // hit the end of the operations.
       for (int i = 0; i < operations.Count - 1; i++)
       {
+        var next = operations[i + 1].OperationCode;
         // Look for cases where the current instruction is a store...
         if (operations[i].OperationCode == lastStoreOperation &&
           // ... and the next instruction is a branch ... 
-          (operations[i + 1].OperationCode == OperationCode.Br
-          || operations[i + 1].OperationCode == OperationCode.Leave
-          || operations[i + 1].OperationCode == OperationCode.Brtrue
-          || operations[i + 1].OperationCode == OperationCode.Brfalse
-          || operations[i + 1].OperationCode == OperationCode.Br_S
-          || operations[i + 1].OperationCode == OperationCode.Leave_S
-          || operations[i + 1].OperationCode == OperationCode.Brtrue_S
-          || operations[i + 1].OperationCode == OperationCode.Brfalse_S) &&
+          (next == OperationCode.Br ||
+           next == OperationCode.Leave ||
+           next == OperationCode.Brtrue ||
+           next == OperationCode.Brfalse ||
+           next == OperationCode.Br_S ||
+           next == OperationCode.Leave_S ||
+           next == OperationCode.Brtrue_S ||
+           next == OperationCode.Brfalse_S) &&
           // ... and the branch location is to the old return offset.
           (uint)operations[i + 1].Value >= offsetForOldLastReturn)
         {
@@ -447,8 +475,12 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="methodBody">Method for which to get the last store</param>
     /// <returns>The instruction called during the store, 0 for void methods</returns>
+    [Pure]
     private static OperationCode GetLastStoreOperation(IMethodBody methodBody)
     {
+      Contract.Requires(methodBody != null);
+      Contract.Ensures((methodBody.MethodDefinition.Type.TypeCode == PrimitiveTypeCode.Void).Implies(Contract.Result<OperationCode>() == 0));
+
       if (methodBody.MethodDefinition.Type.TypeCode == PrimitiveTypeCode.Void)
       {
         return 0;
@@ -495,6 +527,9 @@ namespace DotNetFrontEnd
     /// <param name="operation">Operation to emit debug information for</param>
     private void EmitDebugInformationFor(IOperation operation)
     {
+      Contract.Requires(operation != null);
+      Contract.Requires(this.generator != null);
+
       this.generator.MarkSequencePoint(operation.Location);
       if (this.scopeEnumerator == null) return;
       ILocalScope/*?*/ currentScope = null;
@@ -533,6 +568,7 @@ namespace DotNetFrontEnd
     /// <param name="methodDefinition">Method to store the nonce for</param>
     private void SetNonce(IMethodDefinition methodDefinition)
     {
+      Contract.Requires(methodDefinition != null);
       generator.Emit(OperationCode.Ldstr, FormatMethodName(methodDefinition));
       // Call the IncGlobalCounter function
       EmitInvocationNonceSetter();
@@ -548,9 +584,9 @@ namespace DotNetFrontEnd
     /// <returns>True if not a constructor or not object constructor call, false otherwise</returns>
     private static bool IsConstructorWithNoObjectConstructorCall(IMethodBody methodBody)
     {
-      return methodBody.MethodDefinition.IsConstructor
-        && !(methodBody.Operations.ToList()[0].OperationCode == OperationCode.Ldarg_0
-            && methodBody.Operations.ToList()[1].OperationCode == OperationCode.Call);
+      var ops = methodBody.Operations.ToList();
+      return methodBody.MethodDefinition.IsConstructor &&
+             !(ops[0].OperationCode == OperationCode.Ldarg_0 && ops[1].OperationCode == OperationCode.Call);
     }
 
     #region Process Operations Helper Methods
@@ -562,6 +598,9 @@ namespace DotNetFrontEnd
     /// <returns>Exceptions sorted so that no exception appears after its superclass</returns>
     private List<ITypeReference> DetermineAndSortExceptions(List<IOperation> operations)
     {
+      Contract.Requires(operations != null);
+      Contract.Requires(Contract.ForAll(operations, o => o != null));
+
       // We need to convert the CCI Types to .NET types to sort them by
       // subclass hierarchy, but we need to return CCI Types for later
       // use in the instrumentation code. The dictionary will maintain the
@@ -578,18 +617,16 @@ namespace DotNetFrontEnd
         {
           ITypeReference exType;
           IOperation prevOp = operations[i - 1];
-          if (prevOp.Value is MethodDefinition)
+
+          if (prevOp.OperationCode == OperationCode.Ldnull)
+          {
+            exType = typeManager.Host.PlatformType.SystemException;
+          }
+          else if (prevOp.Value is MethodDefinition)
           {
             IMethodDefinition methDef = (MethodDefinition)prevOp.Value;
             // A new exception is being thrown
-            if (methDef.IsConstructor)
-            {
-              exType = methDef.ContainingTypeDefinition;
-            }
-            else
-            {
-              exType = methDef.Type;
-            }
+            exType = methDef.IsConstructor ? methDef.ContainingTypeDefinition : methDef.Type;
           }
           else if (prevOp.Value is LocalDefinition)
           {
@@ -611,6 +648,10 @@ namespace DotNetFrontEnd
           else if (prevOp.Value is ParameterDefinition)
           {
             exType = ((ParameterDefinition)prevOp.Value).Type;
+          }
+          else if (prevOp.Value is FieldDefinition)
+          {
+            exType = ((FieldDefinition)prevOp.Value).Type;
           }
           else if (prevOp.Value is FieldReference)
           {
@@ -1089,6 +1130,8 @@ namespace DotNetFrontEnd
           MethodTransition.EXIT, methodBody.MethodDefinition), label);
       if (instrumentReturns)
       {
+        ILGeneratorLabel pptEnd = new ILGeneratorLabel();
+        EmitIncrementDepth(pptEnd);
         EmitAcquireWriterLock();
 
         // Add the i to the end of exit name to ensure uniqueness
@@ -1103,6 +1146,8 @@ namespace DotNetFrontEnd
         this.EmitExceptionInstrumentationCall(true);
 
         EmitReleaseWriterLock();
+        this.generator.MarkLabel(pptEnd);
+        EmitDecrementDepth();
       }
     }
 
@@ -1579,26 +1624,6 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Insert call to set whether output should be suppressed.
-    /// </summary>
-    /// <param name="shouldSuppress">The desired state of output suppression</param>
-    /// Suppression safe because we control the string in the GetNameFor call
-    /// Performance warning suppressed because the calls to this method are inserted in the
-    /// source programs
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode"),
-     System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
-         "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void InsertShouldSuppressOutputCall(bool shouldSuppress)
-    {
-      // .NET opcode semantics for boolean values are: 0 => false, other => true
-      generator.Emit(OperationCode.Ldc_I4, shouldSuppress ? 1 : 0);
-      generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
-          this.host, this.variableVisitorType, CallingConvention.Default,
-          this.systemVoid, this.nameTable.GetNameFor(
-              VariableVisitor.ShouldSuppressOutputMethodName), 0, host.PlatformType.SystemBoolean));
-    }
-
-    /// <summary>
     /// Create a new list of locals with a nonce variable added. Add the nonce to the
     /// method/nonce lookup dictionary.
     /// </summary>
@@ -1606,23 +1631,20 @@ namespace DotNetFrontEnd
     /// <returns>A new list of local variables for the given method</returns>
     private List<ILocalDefinition> CreateNonceVariable(MethodBody methodBody)
     {
-      List<ILocalDefinition> locals;
-      if (methodBody.LocalVariables == null)
-      {
-        locals = new List<ILocalDefinition>();
-      }
-      else
-      {
-        locals = methodBody.LocalVariables.ToList();
-      }
+      Contract.Requires(methodBody != null);
+      Contract.Ensures(Contract.Result<List<ILocalDefinition>>().Count() >= 1);
+      Contract.Ensures(methodBody.LocalVariables == null ||
+          Contract.ForAll(0, Contract.OldValue(methodBody.LocalVariables.Count), i =>
+              Contract.OldValue(methodBody.LocalVariables)[i] == methodBody.LocalVariables[i]));
+
+      List<ILocalDefinition> locals = (methodBody.LocalVariables == null) ?
+          new List<ILocalDefinition>()
+          : methodBody.LocalVariables.ToList();
+
       // Create a new integer local to hold the nonce
       LocalDefinition newVariable = new LocalDefinition();
       newVariable.Type = host.PlatformType.SystemInt32;
       newVariable.MethodDefinition = methodBody.MethodDefinition;
-      if (methodBody.LocalVariables == null)
-      {
-        locals = new List<ILocalDefinition>();
-      }
       locals.Add(newVariable);
 
       // Add the nonce to the lookup dictionary
@@ -1636,11 +1658,10 @@ namespace DotNetFrontEnd
     /// <param name="transition">The transition State of the method</param>
     /// <param name="methodDef">Definition of the method -- used to determine the name</param>
     /// <returns>The name of the method, suitable for printing to dtrace file</returns>
-    private static string FormatMethodName(MethodTransition transition,
-        IMethodDefinition methodDef)
+    private static string FormatMethodName(MethodTransition transition, IMethodDefinition methodDef)
     {
-      return FormatMethodName(methodDef)
-          + ":::" + transition.ToString().ToUpper(CultureInfo.InvariantCulture);
+      Contract.Requires(methodDef != null);
+      return string.Join(":::", FormatMethodName(methodDef), transition.ToString().ToUpper(CultureInfo.InvariantCulture));
     }
 
     /// <summary>
@@ -1650,10 +1671,13 @@ namespace DotNetFrontEnd
     /// <returns>Name of the method that an be output</returns>
     private static string FormatMethodName(IMethodDefinition methodDef)
     {
+      Contract.Requires(methodDef != null);
+
       string methodName = MemberHelper.GetMemberSignature(methodDef,
-            NameFormattingOptions.ParameterName
-          | NameFormattingOptions.SmartTypeName
-          | NameFormattingOptions.Signature);
+            NameFormattingOptions.ParameterName |
+            NameFormattingOptions.SmartTypeName |
+            NameFormattingOptions.Signature);
+
       // Implicit overloads could produce unique program points with duplicate names.
       // This will cause problems in Daikon, so disambiguate them the return type
       // of the method.
@@ -1672,8 +1696,11 @@ namespace DotNetFrontEnd
     /// convention</returns>
     private string FormatExceptionProgramPoint(ITypeReference ex)
     {
-      return (ex == host.PlatformType.SystemObject ?
-          RuntimeExceptionExitProgamPointSuffix : ExceptionExitSuffix + ex.ToString());
+      Contract.Requires(ex != null);
+
+      return ex == host.PlatformType.SystemObject ?
+          RuntimeExceptionExitProgamPointSuffix
+          : ExceptionExitSuffix + ex.ToString();
     }
 
     /// <summary>
@@ -1815,9 +1842,9 @@ namespace DotNetFrontEnd
     /// <param name="transition">The enter/exit status</param>
     /// <param name="methodName">Name of method in transition</param>
     /// <param name="label">Optional text that can be appended to end of exit call</param>
-    private void DeclareMethodTransition(MethodTransition transition, string methodName,
-        string label)
+    private void DeclareMethodTransition(MethodTransition transition, string methodName, string label)
     {
+      Contract.Requires(!string.IsNullOrWhiteSpace(methodName));
       switch (transition)
       {
         case MethodTransition.ENTER:
@@ -1856,8 +1883,8 @@ namespace DotNetFrontEnd
       // and it's always downcast to System.Object
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
          this.host, this.variableVisitorType, CallingConvention.Default,
-         this.systemVoid, this.nameTable.GetNameFor(
-            VariableVisitor.ExceptionInstrumentationMethodName),
+         this.systemVoid,
+         this.nameTable.GetNameFor(VariableVisitor.ExceptionInstrumentationMethodName),
          0, this.systemObject));
     }
 
@@ -1884,8 +1911,8 @@ namespace DotNetFrontEnd
       // Make special instrumentation call instead of regular, with parameters reordered
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
          this.host, this.variableVisitorType, CallingConvention.Default,
-         this.systemVoid, this.nameTable.GetNameFor(
-            VariableVisitor.ValueFirstInstrumentationMethodName), 0,
+         this.systemVoid,
+         this.nameTable.GetNameFor(VariableVisitor.ValueFirstInstrumentationMethodName), 0,
          this.systemObject, this.systemString, this.systemString));
     }
 
@@ -1950,8 +1977,8 @@ namespace DotNetFrontEnd
       generator.Emit(OperationCode.Ldstr, paramTypeName);
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
          this.host, this.variableVisitorType, CallingConvention.Default,
-         this.systemVoid, this.nameTable.GetNameFor(
-            VariableVisitor.InstrumentationMethodName), 0,
+         this.systemVoid,
+         this.nameTable.GetNameFor(VariableVisitor.InstrumentationMethodName), 0,
          this.systemString, this.systemObject, this.systemString));
     }
 
@@ -2100,28 +2127,20 @@ namespace DotNetFrontEnd
     /// <returns>Modified assembly with instrumentation code added</returns>
     public IModule Visit(Assembly mutableAssembly, string pathToVisitor)
     {
-      this.assemblyIdentity = UnitHelper.GetAssemblyIdentity(mutableAssembly);
-      this.typeManager.SetAssemblyIdentity(assemblyIdentity);
       if (!File.Exists(pathToVisitor))
       {
-        throw new FileNotFoundException("DLL for Reflector doesn't exist");
+        throw new ArgumentException("DLL for Reflector does not exist at " + pathToVisitor);
       }
+
+      this.assemblyIdentity = UnitHelper.GetAssemblyIdentity(mutableAssembly);
+      this.typeManager.SetAssemblyIdentity(assemblyIdentity);
 
       IAssembly variableVisitorAssembly = this.host.LoadUnitFrom(pathToVisitor) as IAssembly;
-      if (variableVisitorAssembly == null)
-      {
-        throw new ArgumentException("Reflector was null");
-      }
+      Contract.Assume(variableVisitorAssembly != null, "Error loading reflector");
 
-      foreach (INamedTypeDefinition type in variableVisitorAssembly.GetAllTypes())
-      {
-        // Get the VariableVisitor Type, mostly filtering out the system assemblies.
-        if (type.Name.ToString() == DotNetFrontEnd.VariableVisitor.VariableVisitorClassName)
-        {
-          this.variableVisitorType = type;
-          break;
-        }
-      }
+      this.variableVisitorType = variableVisitorAssembly.GetAllTypes().First(
+          t => t.Name.ToString().Equals(DotNetFrontEnd.VariableVisitor.VariableVisitorClassName));
+      Contract.Assume(this.variableVisitorType != null, "Error locating variable visitor in assembly");
 
       if (this.frontEndArgs.SaveProgram != null)
       {
