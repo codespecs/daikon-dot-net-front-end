@@ -470,11 +470,11 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Safe call to UnsafeInitializeFrontEndArgs
     /// </summary>
-    public static void InitializeFrontEndArgs(string assemblyName, string assemblyPath, string arguments)
+    public static void InitializeFrontEndArgs(string arguments)
     {
       try
       {
-        UnsafeInitializeFrontEndArgs(assemblyName, assemblyPath, arguments);
+        UnsafeInitializeFrontEndArgs(arguments);
       }
       catch (Exception ex)
       {
@@ -671,13 +671,9 @@ namespace DotNetFrontEnd
     /// being profiled. This is necessary so the .NET type resolve can locate and load the types in 
     /// the assembly being profiled.
     /// </summary>
-    /// <param name="assemblyName">Name of the assembly being profiled.</param>
-    /// <param name="assemblyPath">Relative path to the rewritten assembly.</param>
     /// <remarks>Called from DNFE_ArgumentStroingMethod</remarks>
-    private static void UnsafeInitializeFrontEndArgs(string assemblyName, string assemblyPath, string arguments)
+    private static void UnsafeInitializeFrontEndArgs(string arguments)
     {
-      Contract.Requires(!string.IsNullOrWhiteSpace(assemblyName));
-      Contract.Requires(!string.IsNullOrWhiteSpace(assemblyPath));
       Contract.Requires(!string.IsNullOrWhiteSpace(arguments));
       Contract.Ensures(frontEndArgs != null);
       Contract.Ensures(typeManager != null);
@@ -685,7 +681,6 @@ namespace DotNetFrontEnd
       if (frontEndArgs == null)
       {
         frontEndArgs = new FrontEndArgs(arguments.Split());
-
         LoadTypeManagerFromDisk();
       }
     }
