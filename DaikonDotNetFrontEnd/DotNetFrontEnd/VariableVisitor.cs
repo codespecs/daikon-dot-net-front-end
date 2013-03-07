@@ -921,8 +921,8 @@ namespace DotNetFrontEnd
         foreach (var item in typeManager.GetPureMethodsForType(type, originatingType))
         {
           ReflectiveVisit(name + '.' + DeclarationPrinter.SanitizePropertyName(item.Name),
-              GetMethodValue(obj, item, item.Name), item.ReturnType, writer,
-                  depth + 1, originatingType, fieldFlags: fieldFlags);
+              (obj == null ? null : GetMethodValue(obj, item, item.Name)), item.ReturnType, writer,
+              depth + 1, originatingType, fieldFlags: fieldFlags);
         }
       }
 
@@ -1288,39 +1288,46 @@ namespace DotNetFrontEnd
       if (!elementType.IsSealed)
       {
         Type[] typeArray = new Type[list.Count];
+        bool[] typeNonsensical = new bool[list.Count];
         for (int i = 0; i < list.Count; i++)
         {
-          typeArray[i] = nonsensicalElements[i] ? null : list[i].GetType();
+          typeNonsensical[i] = nonsensicalElements[i] || list[i] == null;
+          typeArray[i] = typeNonsensical[i] ? null : list[i].GetType();
         }
         ListReflectiveVisit(name + "." + DeclarationPrinter.GetTypeMethodCall, typeArray,
             TypeManager.TypeType, writer, depth + 1, originatingType, VariableModifiers.classname,
-            nonsensicalElements: nonsensicalElements);
+            nonsensicalElements: typeNonsensical);
       }
 
       if (elementType == TypeManager.StringType)
       {
         string[] stringArray = new string[list.Count];
+        bool[] stringNonsensical = new bool[list.Count];
         for (int i = 0; i < list.Count; i++)
         {
-          stringArray[i] = nonsensicalElements[i] ? null : list[i].ToString();
+          stringNonsensical[i] = nonsensicalElements[i] || list[i] == null;
+          stringArray[i] = stringNonsensical[i] ? null : list[i].ToString();
         }
         ListReflectiveVisit(name + "." + DeclarationPrinter.ToStringMethodCall, stringArray,
             TypeManager.StringType, writer, depth + 1, originatingType, VariableModifiers.to_string,
-            nonsensicalElements: nonsensicalElements);
+            nonsensicalElements: stringNonsensical);
       }
 
       foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType, originatingType))
       {
         string pureMethodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Name);
+
+        bool[] pureNonsensical = new bool[list.Count];
         object[] pureMethodResults = new object[list.Count];
 
         for (int i = 0; i < list.Count; i++)
         {
-          pureMethodResults[i] = nonsensicalElements[i] ? null : GetMethodValue(list[i], pureMethod, pureMethod.Name);
+          pureNonsensical[i] = nonsensicalElements[i] || list[i] == null;
+          pureMethodResults[i] = pureNonsensical[i] ? null : GetMethodValue(list[i], pureMethod, pureMethod.Name);
         }
         ListReflectiveVisit(name + "." + pureMethodName, pureMethodResults,
           pureMethod.ReturnType, writer, depth + 1, originatingType,
-          nonsensicalElements: nonsensicalElements);
+          nonsensicalElements: pureNonsensical);
       }
     }
 
@@ -1362,13 +1369,14 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="x">the value</param>
     /// <param name="type">the type to use when determining how to print</param>
-    /// <returns></returns>
+    /// <returns>the hashcode for the value</returns>
     private static string GetHashCode(object x, Type type)
     {
       Contract.Requires(type != null);
       Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
 
-      if (type.IsValueType)
+      if (type.IsValueType ||
+          (x.GetType().IsValueType && type.IsGenericParameter)) // assume that the generic parameter enforces a value type
       {
         // Use a value-based hashcode for value types
         Contract.Assert(x.GetType().IsValueType,
@@ -1385,7 +1393,7 @@ namespace DotNetFrontEnd
         else
         {
           // Assume there's a type mismatch because we didn't have enough information.
-          Debug.Assert(type.Equals(typeof(object)),
+          Contract.Assert(type.Equals(typeof(object)),
                "Runtime value is not a reference type. Runtime Type: " + x.GetType().ToString() + " Declared: " + type.Name);
           // Use the value's hashcode and hope it does something reasonable.
           return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
@@ -1513,14 +1521,9 @@ namespace DotNetFrontEnd
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
     private static object GetMethodValue(object obj, MethodInfo method, string methodName)
     {
+      Contract.Requires(obj != null);
       Contract.Requires(method != null);
       Contract.Requires(!string.IsNullOrWhiteSpace(methodName));
-
-      // TODO(#60): Duplicative with GetVariableValue?
-      if (obj == null)
-      {
-        return null;
-      }
 
       MethodInfo runtimeMethod;
       Type currentType = obj.GetType();
