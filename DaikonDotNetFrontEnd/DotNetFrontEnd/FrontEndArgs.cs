@@ -223,7 +223,7 @@ namespace DotNetFrontEnd
               }
             }
           }
-          // We processed a valid arg, so increment the index by one.a
+          // We processed a valid arg, so increment the index by one.
           this.ProgramArgIndex++;
         }
         else
