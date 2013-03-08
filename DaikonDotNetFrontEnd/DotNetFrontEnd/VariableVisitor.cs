@@ -67,6 +67,12 @@ namespace DotNetFrontEnd
     #region Constants
 
     /// <summary>
+    /// Name of the method called to nonsensically instrument a return value.
+    /// </summary>
+    public static readonly string NonsensicalReturnInstrumentationCall = 
+      "DoNonsensicalReturnInstrumentation";
+
+    /// <summary>
     /// Name of the variable visitor's class. The ILRewriter needs this as a string to determine
     /// which Type to use for the instrumentation calls.
     /// </summary>
@@ -477,6 +483,16 @@ namespace DotNetFrontEnd
         throw; // (dead code)
       }
     }
+
+    /// <summary>
+    /// Will fake instrument a variable of the provided type, printing non-sensical for all values.
+    /// Used to print return values during exceptional exits.
+    /// </summary>
+    /// <param name="typeName">Name of the type of the return value to instrument</param>
+    public static void DoNonsensicalReturnInstrumentation(string typeName)
+    {
+    }
+
 
     #endregion
 
