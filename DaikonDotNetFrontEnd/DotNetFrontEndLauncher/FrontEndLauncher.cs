@@ -66,16 +66,7 @@ namespace DotNetFrontEndLauncher
       }
       else
       {
-        // Don't execute the program if it should just be saved to disk
-        IFormatter formatter = new BinaryFormatter();
-        Stream stream = new FileStream(
-            ProgramRewriter.VisitorDll + VariableVisitor.TypeManagerFileExtension,
-            FileMode.Create, FileAccess.Write, FileShare.None);
-
-        using (stream)
-        {
-          formatter.Serialize(stream, typeManager);
-        }
+        // Don't execute the program if it should just be saved to disk.
       }
     }
 
