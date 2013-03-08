@@ -758,7 +758,19 @@ namespace DotNetFrontEnd
         {
           Directory.CreateDirectory(dirName);
         }
-        writer = new StreamWriter(frontEndArgs.OutputLocation, true);
+
+        if (AppDomain.CurrentDomain.IsDefaultAppDomain())
+        {
+          writer = new StreamWriter(frontEndArgs.OutputLocation, true);
+        }
+        else
+        {
+          // Insert the domain name: <basename>.<domain>.dtrace
+          var domain = AppDomain.CurrentDomain.FriendlyName ?? AppDomain.CurrentDomain.Id.ToString();
+          var file = string.Join(".", Path.GetFileNameWithoutExtension(frontEndArgs.OutputLocation), domain, "dtrace");
+          var path = Path.Combine(Path.GetDirectoryName(frontEndArgs.OutputLocation), file);
+          writer = new StreamWriter(path, true);
+        }
       }
 
       if (frontEndArgs.ForceUnixNewLine)
