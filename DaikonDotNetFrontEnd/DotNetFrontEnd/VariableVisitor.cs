@@ -102,12 +102,7 @@ namespace DotNetFrontEnd
     /// which will be called from the added instrumentation calls
     /// </summary>
     public static readonly string InstrumentationMethodName = "VisitVariable";
-
-    /// <summary>
-    /// The file extension for the serialized type manager
-    /// </summary>
-    public static readonly string TypeManagerFileExtension = ".tm";
-
+    
     /// <summary>
     /// The name of the static instrumentation method in VariableVisitor.cs. This is the method
     /// which will be called when only the static fields of a variable should be visited.
@@ -774,21 +769,6 @@ namespace DotNetFrontEnd
       return writer;
     }
 
-    private static void LoadTypeManagerFromDisk()
-    {
-      Contract.Requires(TypeManager == null);
-      Contract.Ensures(TypeManager != null);
-
-      IFormatter formatter = new BinaryFormatter();
-      Stream stream = new FileStream(
-          Assembly.GetExecutingAssembly().Location + TypeManagerFileExtension,
-          FileMode.Open, FileAccess.Read, FileShare.Read);
-
-      using (stream)
-      {
-        TypeManager = (TypeManager)formatter.Deserialize(stream);
-      }
-    }
     #region Reflective Visitor and helper methods
 
     /// <summary>
