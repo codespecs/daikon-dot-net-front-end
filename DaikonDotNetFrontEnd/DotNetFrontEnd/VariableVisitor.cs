@@ -491,6 +491,7 @@ namespace DotNetFrontEnd
     /// <param name="typeName">Name of the type of the return value to instrument</param>
     public static void DoNonsensicalReturnInstrumentation(string typeName)
     {
+      VariableVisitor.DoVisit(null, "return", typeName, VariableModifiers.nonsensical);
     }
 
 
