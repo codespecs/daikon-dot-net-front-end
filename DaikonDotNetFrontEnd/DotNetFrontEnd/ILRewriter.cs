@@ -1142,17 +1142,15 @@ namespace DotNetFrontEnd
         // is fixed add null as a parameter on the end here
         EmitMethodSignature(MethodTransition.EXIT, methodBody, label/*, ex*/);
 
-        // TODO(#15): Daikon seems to not like printing exceptions
-        // Instrument the exception exit
-        this.EmitExceptionInstrumentationCall(true);
-
-        // Still need to print return values, even if they are non=sensical.
         if (methodBody.MethodDefinition.Type != host.PlatformType.SystemVoid)
         {
           this.EmitNonsensicalReturnInstrumentaionCall(methodBody.MethodDefinition.Type);
         }
 
-
+        // TODO(#15): Daikon seems to not like printing exceptions
+        // Instrument the exception exit
+        this.EmitExceptionInstrumentationCall(true);
+        
         EmitReleaseWriterLock();
         this.generator.MarkLabel(pptEnd);
         EmitDecrementDepth();
