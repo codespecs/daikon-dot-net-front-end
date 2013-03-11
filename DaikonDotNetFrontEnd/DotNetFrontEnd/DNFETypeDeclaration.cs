@@ -68,7 +68,6 @@ namespace DotNetFrontEnd
       Contract.Requires(list != null);
       Contract.Requires(list.Count > 0);
       Contract.Requires(Contract.ForAll<Type>(list, t => t != null));
-      Contract.Ensures(this.list.Equals(list));
       Contract.Ensures(this.GetDeclarationType == DeclarationType.ListOfClasses);
 
       this.list = new List<Type>(list.Count);
