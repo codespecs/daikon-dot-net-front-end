@@ -1147,7 +1147,9 @@ namespace DotNetFrontEnd
         // is fixed add null as a parameter on the end here
         EmitMethodSignature(MethodTransition.EXIT, methodBody, label/*, ex*/);
 
-        if (methodBody.MethodDefinition.Type != host.PlatformType.SystemVoid)
+        if (!TypeHelper.TypesAreEquivalent(
+          methodBody.MethodDefinition.Type, 
+          host.PlatformType.SystemVoid))
         {
           this.EmitNonsensicalReturnInstrumentaionCall(methodBody.MethodDefinition.Type);
         }
