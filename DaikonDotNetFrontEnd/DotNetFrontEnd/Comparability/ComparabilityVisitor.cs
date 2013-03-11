@@ -42,6 +42,7 @@ namespace Comparability
       Contract.Invariant(ReferencedTypes != null);
       Contract.Invariant(Contract.ForAll(namedCalls, c => Names.NameTable.ContainsKey(c)));
       Contract.Invariant(Contract.ForAll(arrayIndexes.Keys, a => ids.ContainsKey(a)));
+      Contract.Invariant(Contract.ForAll(arrayIndexes.Values, i => i.Count > 0));
 
       // Not true b/c a name is added whenever comparability is queried by the front-end's IL visitors
       // Contract.Invariant(Contract.ForAll(ids.Keys, n => n.Equals("return") || Names.NameTable.ContainsValue(n)));
@@ -389,6 +390,7 @@ namespace Comparability
     /// </summary>
     /// <param name="baseName"></param>
     /// <returns></returns>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
     public Dictionary<string, HashSet<string>> ComparabilitySets(string baseName)
     {
       var result = new Dictionary<string, HashSet<string>>();
@@ -593,22 +595,28 @@ namespace Comparability
       {
         var arrayName = Names.NameTable[arrayIndexer.IndexedObject];
 
-        if (!arrayIndexes.ContainsKey(arrayName))
-        {
-          arrayIndexes.Add(arrayName, new HashSet<string>());
-        }
-
         // mark array indexes as compatible
         var index = arrayIndexer.Indices.First();
         if (Names.NameTable.ContainsKey(index))
         {
+          // The array reference may not have been used in a comparable way yet.
+          if (!ids.ContainsKey(arrayName))
+          {
+            ids.Add(arrayName, comparability.AddElement());
+          }
+
+          if (!arrayIndexes.ContainsKey(arrayName))
+          {
+            arrayIndexes.Add(arrayName, new HashSet<string>());
+          }
+
           if (arrayIndexes[arrayName].Add(Names.NameTable[index]))
           {
             // we haven't seen this index before, so re-mark indexes
             Mark(arrayIndexes[arrayName]);
           }
         }
-
+        
         PropogateTypeReference(arrayIndexer.IndexedObject, arrayIndexer);
       }
     }

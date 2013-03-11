@@ -260,26 +260,33 @@ namespace Comparability
         Contract.Assume(!string.IsNullOrWhiteSpace(paramName));
         TryAdd(outer, paramName);
       }
+      else if (definition is IPropertyDefinition)
+      {
+        var name = ((IPropertyDefinition)definition).Name.Value;
+        Contract.Assume(!string.IsNullOrWhiteSpace(name));
+        TryAdd(outer, name);
+      }
       else if (definition is IFieldReference)
       {
-        var def = ((IFieldReference)definition);
+        var def = ((IFieldReference)definition).ResolvedField;
 
-        if (!def.ResolvedField.Attributes.Any(a => TypeManager.IsCompilerGenerated(def.ResolvedField)))
+        if (!def.Attributes.Any(a => TypeManager.IsCompilerGenerated(def)))
         {
           if (def.IsStatic)
           {
             var container = def.ContainingType.ResolvedType;
             // The front-end uses reflection-style names for inner types, need to be consistent here
-            var name = string.Join(".", TypeHelper.GetTypeName(container, NameFormattingOptions.UseReflectionStyleForNestedTypeNames), def.ResolvedField.Name);
+            var name = string.Join(".", TypeHelper.GetTypeName(container, NameFormattingOptions.UseReflectionStyleForNestedTypeNames), def.Name.Value);
             TryAdd(outer, name);
             AddInstanceExpr(container, outer);
             StaticNames.Add(outer);
           }
           else
           {
+            Contract.Assume(instance != null, "Non-static field reference '" + def.Name + "' has no provided instance");
             if (NameTable.ContainsKey(instance))
             {
-              var name = NameTable[instance] + "." + def.ResolvedField.Name;
+              var name = NameTable[instance] + "." + def.Name;
               TryAdd(outer, name);
               AddInstanceExpr(Type, outer);
             }
@@ -325,6 +332,7 @@ namespace Comparability
 
     public override void Visit(IArrayIndexer arrayIndexer)
     {
+      
       if (arrayIndexer.Indices.Count() == 1 && NameTable.ContainsKey(arrayIndexer.IndexedObject))
       {
         var arrayName = NameTable[arrayIndexer.IndexedObject];
