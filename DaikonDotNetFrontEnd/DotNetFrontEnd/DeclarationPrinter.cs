@@ -1245,7 +1245,12 @@ namespace DotNetFrontEnd
         VariableFlags collectionFlags = VariableFlags.none,
         INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
-        
+
+      if (type.IsArray && type.GetArrayRank() > 1)
+      {
+        // Daikon can't handle multidimensional arrays, so we skip them.
+        return;
+      }        
 
       Type elementType = TypeManager.GetListElementType(type);
       // Print the type of the list if it's not primitive
