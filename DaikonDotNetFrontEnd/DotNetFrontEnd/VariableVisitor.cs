@@ -1118,6 +1118,12 @@ namespace DotNetFrontEnd
         return;
       }
 
+      if (list != null && list.GetType().IsArray && list.GetType().GetArrayRank() > 1)
+      {
+        // Daikon can't handle multidimensional arrays, so we skip them.
+        return;
+      }
+
       // We might not know the type, e.g. for non-generic ArrayList
       elementType = elementType ?? TypeManager.ObjectType;
 
