@@ -1388,12 +1388,17 @@ namespace DotNetFrontEnd
       Contract.Requires(type != null);
       Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
 
-      if (type.IsValueType ||
-          (x.GetType().IsValueType && type.IsGenericParameter)) // assume that the generic parameter enforces a value type
+      if (type.IsValueType)
       {
         // Use a value-based hashcode for value types
         Contract.Assert(x.GetType().IsValueType,
             "Runtime value is not a value type. Runtime Type: " + x.GetType().ToString() + " Declared: " + type.Name);
+        return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
+      }
+      else if (!type.IsValueType && x.GetType().IsValueType && (type.IsGenericParameter || type.IsInterface))
+      {
+        // C#'s type system will enforce reasonable comparability for generic parameters and interfaces?
+        // TODO: check to see if generic parameter extends value type
         return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
       }
       else
