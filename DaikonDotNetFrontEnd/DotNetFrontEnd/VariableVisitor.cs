@@ -32,6 +32,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
 using DotNetFrontEnd.Contracts;
+using System.Runtime.Remoting;
 
 namespace DotNetFrontEnd
 {
@@ -914,7 +915,7 @@ namespace DotNetFrontEnd
 
       if (!type.IsSealed)
       {
-        object xType = (obj == null ? null : obj.GetType());
+        object xType = (obj == null ? null : RuntimeType(obj));
         ReflectiveVisit(name + '.' + DeclarationPrinter.GetTypeMethodCall, xType,
             TypeManager.TypeType, writer, depth + 1, originatingType,
             (obj == null ? VariableModifiers.nonsensical : VariableModifiers.none)
@@ -1388,32 +1389,37 @@ namespace DotNetFrontEnd
       Contract.Requires(type != null);
       Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
 
+      var xType = RuntimeType(x);
+
       if (type.IsValueType)
       {
         // Use a value-based hashcode for value types
-        Contract.Assert(x.GetType().IsValueType,
-            "Runtime value is not a value type. Runtime Type: " + x.GetType().ToString() + " Declared: " + type.Name);
+        Contract.Assert(xType.IsValueType,
+            "Runtime value is not a value type. Runtime Type: " + xType.ToString() + " Declared: " + type.Name);
         return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
       }
-      else if (!type.IsValueType && x.GetType().IsValueType && (type.IsGenericParameter || type.IsInterface))
+      else if (xType.IsValueType && (type.IsGenericParameter || type.IsInterface))
       {
-        // C#'s type system will enforce reasonable comparability for generic parameters and interfaces?
-        // TODO: check to see if generic parameter extends value type
+        // C#'s type system will enforce reasonable comparability for generic parameters and interfaces
+        // TODO: explicitly check to see if generic parameter extends value type
         return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
       }
       else
       {
-        if (!x.GetType().IsValueType)
+        if (!xType.IsValueType)
         {
           // Use a reference-based hashcode for reference types
+          // TODO: does this work properly for proxies? i.e., do we want the reference hash of the 
+          // transparent proxy, or the reference it's proxying?
           return RuntimeHelpers.GetHashCode(x).ToString(CultureInfo.InvariantCulture);
         }
         else
         {
-          // Assume there's a type mismatch because we didn't have enough information.
-          Contract.Assert(type.Equals(typeof(object)),
+          // Assume there's a type mismatch because we didn't have any type information.
+          Contract.Assume(type.Equals(typeof(object)),
                "Runtime value is not a reference type. Runtime Type: " + x.GetType().ToString() + " Declared: " + type.Name);
-          // Use the value's hashcode and hope it does something reasonable.
+          // Use the value's hashcode and hope it does something reasonable; the type system + comparability 
+          // analysis should avoid spurious comparisons
           return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
         }
       }
@@ -1608,6 +1614,23 @@ namespace DotNetFrontEnd
       builder.Append(str);
       builder.Append("\"");
       return builder.ToString();
+    }
+
+    /// <summary>
+    /// Returns the runtime type of <code>obj</code>. If <code>obj</code> is a transparent proxy, 
+    /// returns the proxied type.
+    /// </summary>
+    /// <param name="obj">an object</param>
+    /// <returns>the runtime type of <code>obj</code></returns>
+    [Pure]
+    private static Type RuntimeType(object obj)
+    {
+      Contract.Requires(obj != null);
+      Contract.Ensures(Contract.Result<Type>() != null);
+
+      return RemotingServices.IsTransparentProxy(obj)
+                    ? RemotingServices.GetRealProxy(obj).GetProxiedType()
+                    : obj.GetType();
     }
 
     #endregion
