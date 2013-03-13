@@ -299,6 +299,12 @@ namespace DotNetFrontEnd
       }
     }
 
+    /// <summary>
+    /// Add the given pure type/method pair to the list of pure methods. No change is made if the
+    /// method was already in the pure method list.
+    /// </summary>
+    /// <param name="type">Type containing the method</param>
+    /// <param name="method">MethodInfo of the pure method</param>
     public void AddPureMethod(Type type, MethodInfo method)
     {
       Contract.Requires(type != null);
@@ -854,7 +860,8 @@ namespace DotNetFrontEnd
     /// <param name="deeplyInspectGenericParameters">Whether to investigate constraints on
     /// generic parameters</param>
     /// <returns>A reflection type</returns>
-    public string ConvertCCITypeToAssemblyQualifiedName(ITypeReference type, bool deeplyInspectGenericParameters)
+    public string ConvertCCITypeToAssemblyQualifiedName(ITypeReference type, 
+        bool deeplyInspectGenericParameters)
     {
       Contract.Requires(type != null);
 
@@ -916,9 +923,11 @@ namespace DotNetFrontEnd
       typeName = UpdateTypeNameForNestedTypeDefinitions(type, typeName);
 
       INamedTypeDefinition namedType = type as INamedTypeDefinition;
-      if (namedType != null && namedType.MangleName)
+      if (namedType != null)
       {
-        typeName = typeName + '`' + namedType.GenericParameterCount;
+        typeName = Microsoft.Cci.TypeHelper.GetTypeName(type,
+          NameFormattingOptions.UseReflectionStyleForNestedTypeNames
+        | NameFormattingOptions.UseGenericTypeNameSuffix);
       }
       else if (type is IGenericTypeInstanceReference)
       {
