@@ -1398,7 +1398,7 @@ namespace DotNetFrontEnd
 
       var xType = RuntimeType(x);
 
-      if (type.IsValueType)
+      if (type.IsValueType || type == typeof(ValueType))
       {
         // Use a value-based hashcode for value types
         Contract.Assert(xType.IsValueType,
