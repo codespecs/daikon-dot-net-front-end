@@ -1083,6 +1083,13 @@ namespace DotNetFrontEnd
             TypeManager.TypeType, writer, depth + 1, originatingType,
             VariableModifiers.classname);
       }
+
+      if (type.IsArray && type.GetArrayRank() > 1)
+      {
+        // Daikon can't handle multidimensional arrays, so we skip them.
+        return;
+      }
+
       // Now visit each element.
       // Element inspection is at the same depth as the list.
       // null lists won't cast but we don't want to throw an exception for that
@@ -1115,12 +1122,6 @@ namespace DotNetFrontEnd
 
       if (depth > frontEndArgs.MaxNestingDepth || !frontEndArgs.ShouldPrintVariable(name))
       {
-        return;
-      }
-
-      if (list != null && list.GetType().IsArray && list.GetType().GetArrayRank() > 1)
-      {
-        // Daikon can't handle multidimensional arrays, so we skip them.
         return;
       }
 

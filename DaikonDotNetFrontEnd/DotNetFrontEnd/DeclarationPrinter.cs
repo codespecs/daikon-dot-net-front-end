@@ -1245,13 +1245,6 @@ namespace DotNetFrontEnd
         VariableFlags collectionFlags = VariableFlags.none,
         INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
-
-      if (type.IsArray && type.GetArrayRank() > 1)
-      {
-        // Daikon can't handle multidimensional arrays, so we skip them.
-        return;
-      }        
-
       Type elementType = TypeManager.GetListElementType(type);
       // Print the type of the list if it's not primitive
       if (!elementType.IsSealed)
@@ -1263,6 +1256,13 @@ namespace DotNetFrontEnd
             nestingDepth: nestingDepth + 1, parentName: parentName,
             typeContext: typeContext, methodContext: methodContext);
       }
+
+      if (type.IsArray && type.GetArrayRank() > 1)
+      {
+        // Daikon can't handle multidimensional arrays, so we skip them.
+        return;
+      }
+     
       PrintList(name + "[..]", elementType, name, originatingType, VariableKind.array,
           nestingDepth: nestingDepth, parentName: parentName, flags: collectionFlags,
           typeContext: typeContext, methodContext: methodContext);
