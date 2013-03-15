@@ -120,6 +120,7 @@ namespace DotNetFrontEnd
       output_location,
       save_and_run,
       save_program,
+      emit_nullary_info,
       portable_dll,
       verbose,
       wpf,
@@ -337,6 +338,7 @@ namespace DotNetFrontEnd
       {
         argumentValue = FrontEndArgs.DefaultSaveProgramLocation;
       }
+      
       string oldVal = null;
       if (this.programArguments.ContainsKey(argumentKey))
       {
@@ -673,6 +675,14 @@ namespace DotNetFrontEnd
         this.programArguments.TryGetValue(PossibleArgument.save_program, out result);
         return result;
       }
+    }
+
+    /// <summary>
+    /// Emit nullary property and method information; do not run the instrumented assembly.
+    /// </summary>
+    public bool EmitNullaryInfo
+    {
+      get { return this.IsArgumentSpecified(PossibleArgument.emit_nullary_info); }
     }
 
     /// <summary>
