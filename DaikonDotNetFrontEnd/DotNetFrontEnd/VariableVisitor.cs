@@ -70,7 +70,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Name of the method called to nonsensically instrument a return value.
     /// </summary>
-    public static readonly string NonsensicalReturnInstrumentationCall = 
+    public static readonly string NonsensicalReturnInstrumentationCall =
       "DoNonsensicalReturnInstrumentation";
 
     /// <summary>
@@ -109,7 +109,7 @@ namespace DotNetFrontEnd
     /// which will be called from the added instrumentation calls
     /// </summary>
     public static readonly string InstrumentationMethodName = "VisitVariable";
-    
+
     /// <summary>
     /// The name of the static instrumentation method in VariableVisitor.cs. This is the method
     /// which will be called when only the static fields of a variable should be visited.
@@ -1580,16 +1580,28 @@ namespace DotNetFrontEnd
       Contract.Assume(runtimeMethod != null,
           "Method " + methodName + " not found in type or supertypes");
 
+      Contract.Assert(runtimeMethod.GetParameters().Length == 0
+                  || (runtimeMethod.IsStatic && runtimeMethod.GetParameters().Length == 1),
+                  "Invalid number of parameters for pure method");
+
+      // We allow pure static methods with 1 parameter
+      object[] param = runtimeMethod.GetParameters().Length == 1 
+            && runtimeMethod.GetParameters()[0].ParameterType == obj.GetType()
+        ? new object[] { obj }
+        : null;
+
       object val;
       SuppressOutput = true;
       try
       {
-        val = runtimeMethod.Invoke(obj, null);
+        val = runtimeMethod.Invoke(obj, param);
       }
-      catch
+      catch (Exception ex)
       {
         Console.WriteLine("Error invoking " + runtimeMethod.Name + " on type " + obj.GetType().Name);
         val = "nonsensical";
+        Console.WriteLine(ex.Message);
+        Console.WriteLine(ex.StackTrace);
       }
       finally
       {
