@@ -29,7 +29,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// The possible formats this declaration type could take on.
     /// </summary>
-    public enum DeclarationType { SingleClass, ListOfClasses }
+    internal enum DeclarationType { SingleClass, ListOfClasses }
 
     /// <summary>
     /// Internal record for what type of declaration this is
@@ -75,7 +75,7 @@ namespace DotNetFrontEnd
       this.declarationType = DeclarationType.ListOfClasses;
     }
 
-    public DeclarationType GetDeclarationType
+    internal DeclarationType GetDeclarationType
     {
       get
       {
@@ -89,7 +89,7 @@ namespace DotNetFrontEnd
     /// <returns>The single type this declaration describes</returns>
     /// <exception cref="InvalidOperationException">When this declaration was not created
     /// with a single class.</exception>
-    public Type GetSingleType
+    internal Type GetSingleType
     {
       get
       {
@@ -105,7 +105,7 @@ namespace DotNetFrontEnd
     /// <returns>The list of types this delcaration describes</returns>
     /// <exception cref="InvalidOperationException">Occurs when this declaration
     /// was not created with a list of classes.</exception>
-    public Collection<Type> GetListOfTypes
+    internal Collection<Type> GetListOfTypes
     {
       get
       {

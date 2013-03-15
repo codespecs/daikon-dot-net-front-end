@@ -277,7 +277,6 @@ namespace DotNetFrontEnd
       }
     }
 
-
     /// <summary>
     /// Prints the children fields of a variable, including static fields, pure methods,
     /// ToString(), GetType(), etc.
@@ -564,12 +563,8 @@ namespace DotNetFrontEnd
         return;
       }
 
-      if (this.typeManager.IsListImplementer(elementType))
-      {
-        // Daikon can't handle nested arrays. Silently skip.
-        return;
-      }
-      else if (this.typeManager.IsFSharpListImplementer(elementType))
+      if (this.typeManager.IsListImplementer(elementType) || 
+         (this.typeManager.IsFSharpListImplementer(elementType)))
       {
         // Daikon can't handle nested lists. Silently skip.
         return;
