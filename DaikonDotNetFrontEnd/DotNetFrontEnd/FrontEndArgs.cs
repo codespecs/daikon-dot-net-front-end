@@ -120,11 +120,21 @@ namespace DotNetFrontEnd
       output_location,
       save_and_run,
       save_program,
+      /// <summary>
+      /// Emit assembly qualified types and method names for nullary methods reachable from the assembly.
+      /// </summary>
       emit_nullary_info,
       portable_dll,
       verbose,
       wpf,
-      // Not an option -- the location of the program to be profiled
+      /// <summary>
+      /// Convenience Flag for the Visual Studio add-in. Sets <c>comparability</c>, <c>is_readonly_flags</c>, 
+      /// <c>std_visibility</c> and <c>is_property_flags</c>.
+      /// </summary>
+      vs_flags,
+      /// <summary>
+      /// Not a user-specified option: the location of the program to be profiled.
+      /// </summary>
       assembly_location,
     }
 
@@ -212,6 +222,14 @@ namespace DotNetFrontEnd
               if (this.programArguments.ContainsKey(enumKey))
               {
                 this.programArguments.Remove(enumKey);
+              }
+
+              if (enumKey == PossibleArgument.vs_flags)
+              {
+                this.AddArgument(PossibleArgument.comparability, null);
+                this.AddArgument(PossibleArgument.std_visibility, null);
+                this.AddArgument(PossibleArgument.is_property_flags, null);
+                this.AddArgument(PossibleArgument.is_readonly_flags, null);
               }
 
               if (pair.Length < 2)
