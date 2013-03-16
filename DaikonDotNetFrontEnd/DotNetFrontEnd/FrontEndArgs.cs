@@ -120,10 +120,25 @@ namespace DotNetFrontEnd
       output_location,
       save_and_run,
       save_program,
+      /// <summary>
+      /// Emit assembly qualified types and method names for nullary methods reachable from the assembly.
+      /// </summary>
+      emit_nullary_info,
+      /// <summary>
+      /// Prefixes to ignore when outputting nullary information
+      /// </summary>
+      purity_prefix_blacklist,
       portable_dll,
       verbose,
       wpf,
-      // Not an option -- the location of the program to be profiled
+      /// <summary>
+      /// Convenience Flag for the Visual Studio add-in. Sets <c>comparability</c>, <c>is_readonly_flags</c>, 
+      /// <c>std_visibility</c> and <c>is_property_flags</c>.
+      /// </summary>
+      vs_flags,
+      /// <summary>
+      /// Not a user-specified option: the location of the program to be profiled.
+      /// </summary>
       assembly_location,
     }
 
@@ -144,7 +159,10 @@ namespace DotNetFrontEnd
     /// The representation of the arguments handed to the program
     /// </summary>
     private readonly Dictionary<PossibleArgument, string> programArguments = new Dictionary<PossibleArgument, string>();
-    
+
+    [NonSerialized]
+    private ReadOnlyCollection<string> purityPrefixBlacklist;
+
     #endregion
 
     #region Public Properties
@@ -211,6 +229,14 @@ namespace DotNetFrontEnd
               if (this.programArguments.ContainsKey(enumKey))
               {
                 this.programArguments.Remove(enumKey);
+              }
+
+              if (enumKey == PossibleArgument.vs_flags)
+              {
+                this.AddArgument(PossibleArgument.comparability, null);
+                this.AddArgument(PossibleArgument.std_visibility, null);
+                this.AddArgument(PossibleArgument.is_property_flags, null);
+                this.AddArgument(PossibleArgument.is_readonly_flags, null);
               }
 
               if (pair.Length < 2)
@@ -337,6 +363,7 @@ namespace DotNetFrontEnd
       {
         argumentValue = FrontEndArgs.DefaultSaveProgramLocation;
       }
+      
       string oldVal = null;
       if (this.programArguments.ContainsKey(argumentKey))
       {
@@ -672,6 +699,51 @@ namespace DotNetFrontEnd
         string result;
         this.programArguments.TryGetValue(PossibleArgument.save_program, out result);
         return result;
+      }
+    }
+
+    /// <summary>
+    /// Prefixes to ignore when printing nullary information. See <see cref="EmitNullaryInfo"/>
+    /// </summary>
+    public ReadOnlyCollection<string> EmitNullaryPrefixBlacklist
+    {
+      get
+      {
+        Contract.Requires(EmitNullaryInfo);
+        Contract.Ensures(Contract.Result<ReadOnlyCollection<string>>() != null);
+        Contract.Ensures(Contract.Result<ReadOnlyCollection<string>>() == purityPrefixBlacklist);
+        Contract.Ensures(Contract.ForAll(Contract.Result<ReadOnlyCollection<string>>(), p => !string.IsNullOrWhiteSpace(p)));
+
+        if (purityPrefixBlacklist == null)
+        {
+          string file;
+          this.programArguments.TryGetValue(PossibleArgument.purity_prefix_blacklist, out file);
+
+          if (file == null)
+          {
+            purityPrefixBlacklist = new ReadOnlyCollection<string>(new List<string>());
+          }
+          else
+          {
+            var result = from lines in File.ReadLines(file)
+                         where !string.IsNullOrWhiteSpace(lines)
+                         select lines.Trim();
+
+            purityPrefixBlacklist = new ReadOnlyCollection<string>(result.ToList());
+          }
+        }
+        return purityPrefixBlacklist;
+      }
+    }
+
+    /// <summary>
+    /// Emit nullary property and method information; do not run the instrumented assembly.
+    /// </summary>
+    public bool EmitNullaryInfo
+    {
+      get
+      {
+        return this.IsArgumentSpecified(PossibleArgument.emit_nullary_info);
       }
     }
 

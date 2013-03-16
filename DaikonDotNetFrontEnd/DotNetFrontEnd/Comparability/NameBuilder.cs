@@ -352,6 +352,7 @@ namespace Comparability
         var constant = (ICompileTimeConstant)constantExpr;
 
         var value = targetType.Fields.FirstOrDefault(f => f.IsCompileTimeConstant && constant.Value.Equals(f.CompileTimeValue.Value));
+
         if (value != null)
         {
           // The front-end uses reflection-style names for inner types, need to be consistent here
@@ -362,7 +363,12 @@ namespace Comparability
         }
         else
         {
-          throw new KeyNotFoundException("Could not find enum constant for assignment");
+          // Enum is defined in another assembly
+          var enumType = TypeManager.ConvertAssemblyQualifiedNameToType(
+            TypeManager.ConvertCCITypeToAssemblyQualifiedName(targetType)).GetSingleType;
+          Contract.Assume(enumType.IsEnum, "CCI enum type resolved to non-enum type");
+          var name = string.Join(".", enumType.FullName, enumType.GetEnumName(constant.Value));
+          TryAdd(constantExpr, name);
         }
       }
     }
@@ -399,6 +405,12 @@ namespace Comparability
 
       if (callee is Dummy || callee.Name is Dummy)
       {
+        return;
+      }
+      else if (NameTable.ContainsKey(call))
+      {
+        // TODO ##: can call occur more than once / be referentially equal?
+        // Console.WriteLine("WARNING: Duplicate method call: " + NameTable[call]);
         return;
       }
 
