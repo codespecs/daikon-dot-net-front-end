@@ -1596,19 +1596,28 @@ namespace DotNetFrontEnd
       {
         val = runtimeMethod.Invoke(obj, param);
       }
-      catch (Exception ex)
+      catch (TargetInvocationException ex)
       {
-        Console.WriteLine("Error invoking " + runtimeMethod.Name + " on type " + obj.GetType().Name);
+        // If the _invoked method_ throws an exception, ignore it. 
+        // It's slightly wrong to use nonsensical here since Daikon will then generate invariants for
+        // cases when an exception isn't thrown
         val = "nonsensical";
-        Console.WriteLine(ex.Message);
-        Console.WriteLine(ex.StackTrace);
+        if (frontEndArgs.VerboseMode)
+        {
+          Console.WriteLine(
+            "Caught exception invoking " + runtimeMethod.Name + " on type " + obj.GetType().Name + ": " + ex.Message ?? "<no message>");
+          Console.WriteLine(ex.StackTrace);
+        }
+      }
+      catch (Exception)
+      {
+        throw;
       }
       finally
       {
         SuppressOutput = false;
       }
       return val;
-
     }
 
     /// <summary>

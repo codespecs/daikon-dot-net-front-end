@@ -2220,10 +2220,6 @@ namespace DotNetFrontEnd
             this.declPrinter.PrintParentClassDefinition(typeName,
                 this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type), type);
           }
-          else
-          {
-            // Console.WriteLine("Skipping CLASS and OBJECT declarations for type " + typeName);
-          }
         }
       }
 

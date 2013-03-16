@@ -159,10 +159,6 @@ namespace Comparability
 
           // TODO: update this method's opinion about the referenced type (possibly itself),
           // accounting for indirect comparability information via type references
-          //foreach (var referencedType in ReferencedTypes.Values)
-          //{
-
-          //}
         }
         else if (calleeDefinition.ParameterCount > 0)
         {
@@ -174,16 +170,8 @@ namespace Comparability
               new HashSet<string>(calleeDefinition.Parameters.Select(p => p.Name.Value)));
 
           modified |= MergeOpinion(rebased);
-
-          // TODO account for return value
         }
       }
-
-      if (modified)
-      {
-        // Console.WriteLine("Updated " + Method.Name);
-      }
-
       return modified;
     }
 
