@@ -410,7 +410,6 @@ namespace Comparability
       else if (NameTable.ContainsKey(call))
       {
         // TODO ##: can call occur more than once / be referentially equal?
-        // Console.WriteLine("WARNING: Duplicate method call: " + NameTable[call]);
         return;
       }
 

@@ -163,7 +163,7 @@ namespace DotNetFrontEndLauncher
 
         if (frontEndArgs.VerboseMode)
         {
-          Console.WriteLine("Program complete. Exiting DNFE.");
+          Console.WriteLine("Program complete. Exiting Celeriac.");
         }
       }
       catch (BadImageFormatException ex)

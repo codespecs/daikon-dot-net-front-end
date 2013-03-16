@@ -146,7 +146,7 @@ namespace DotNetFrontEnd
         if (daikonDir == null)
         {
           // We can't proceed without this
-          Console.WriteLine("Must define" + DaikonEnvVar + " environment variable");
+          Console.WriteLine("Must define " + DaikonEnvVar + " environment variable");
           Environment.Exit(1);
         }
         module = mutator.Visit(mutable, Path.Combine(daikonDir, VisitorDll));
