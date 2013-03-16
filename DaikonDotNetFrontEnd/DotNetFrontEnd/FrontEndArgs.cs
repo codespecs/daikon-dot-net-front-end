@@ -139,6 +139,19 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
+    /// Heuristics to use for --emit-nullary-info
+    /// </summary>
+    public enum PurityHeuristic
+    {
+      /// <summary>
+      /// Output all nullary methods and properties (except for those defined by Object)
+      /// </summary>
+      All,
+      Whitelist,
+      Blacklist
+    }
+
+    /// <summary>
     /// Whether or not overriding existing arguments is allowed when adding new ones
     /// </summary>
     private enum AllowOverride
@@ -355,6 +368,10 @@ namespace DotNetFrontEnd
       if (argumentKey == PossibleArgument.save_program && argumentValue == null)
       {
         argumentValue = FrontEndArgs.DefaultSaveProgramLocation;
+      }
+      else if (argumentKey == PossibleArgument.emit_nullary_info && argumentValue == null)
+      {
+        argumentValue = PurityHeuristic.All.ToString();
       }
       
       string oldVal = null;
@@ -696,11 +713,38 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
+    /// The heuristic to use when outputting nullary methods and properties
+    /// </summary>
+    public PurityHeuristic EmitNullaryInfoHeuristic
+    {
+      get
+      {
+        Contract.Requires(EmitNullaryInfo);
+        string heuristic;
+        this.programArguments.TryGetValue(PossibleArgument.emit_nullary_info, out heuristic);
+
+        PurityHeuristic result;
+        if (PurityHeuristic.TryParse(heuristic, true, out result))
+        {
+          return result;
+        }
+        else
+        {
+          throw new ArgumentException("Invalid purity heurstic");
+        }
+      }
+
+    }
+
+    /// <summary>
     /// Emit nullary property and method information; do not run the instrumented assembly.
     /// </summary>
     public bool EmitNullaryInfo
     {
-      get { return this.IsArgumentSpecified(PossibleArgument.emit_nullary_info); }
+      get
+      {
+        return this.IsArgumentSpecified(PossibleArgument.emit_nullary_info);
+      }
     }
 
     /// <summary>
