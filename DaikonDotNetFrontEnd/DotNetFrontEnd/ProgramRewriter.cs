@@ -112,12 +112,22 @@ namespace DotNetFrontEnd
         AssemblyComparability comparabilityManager = null;
 
         mutable = MetadataCopier.DeepCopy(host, assembly);
+        typeManager.SetAssemblyIdentity(UnitHelper.GetAssemblyIdentity(mutable));
 
         if (frontEndArgs.StaticComparability)
         {
-          Console.WriteLine("Generating Comparability Information");
+          if (frontEndArgs.VerboseMode)
+          {
+            Console.WriteLine("Generating Comparability Information");
+          }
+
           decompiled = Decompiler.GetCodeModelFromMetadataModel(typeManager.Host, mutable, pdbReader, DecompilerOptions.AnonymousDelegates | DecompilerOptions.Iterators);
           comparabilityManager = new AssemblyComparability(decompiled, typeManager, pdbReader);
+
+          if (frontEndArgs.VerboseMode)
+          {
+            Console.WriteLine("Finished Generating Comparability Information");
+          }
         }
 
         ILRewriter mutator = new ILRewriter(host, pdbReader, frontEndArgs, typeManager, comparabilityManager);

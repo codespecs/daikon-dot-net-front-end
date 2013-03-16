@@ -52,6 +52,11 @@ namespace DotNetFrontEndLauncher
       //  return;
       //}
 
+      if (frontEndArgs.EmitNullaryInfo)
+      {
+        // Don't run the program -- the user wants the generated auto_pure file
+        return;
+      }
       if (frontEndArgs.SaveAndRun)
       {
         // Do we need to serialize the type manager here?
@@ -67,6 +72,7 @@ namespace DotNetFrontEndLauncher
       else
       {
         // Don't execute the program if it should just be saved to disk.
+        return;
       }
     }
 
