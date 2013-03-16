@@ -95,8 +95,6 @@ namespace DotNetFrontEnd
 
     #region Private Members
 
-    private AssemblyIdentity assemblyIdentity;
-
     // Convenience references
     private readonly INameTable nameTable;
     private readonly INamespaceTypeReference systemString;
@@ -2176,9 +2174,6 @@ namespace DotNetFrontEnd
         throw new ArgumentException("DLL for Reflector does not exist at " + pathToVisitor);
       }
 
-      this.assemblyIdentity = UnitHelper.GetAssemblyIdentity(mutableAssembly);
-      // TODD this.typeManager.SetAssemblyIdentity(assemblyIdentity);
-
       IAssembly variableVisitorAssembly = this.host.LoadUnitFrom(pathToVisitor) as IAssembly;
       Contract.Assume(variableVisitorAssembly != null, "Error loading reflector");
 
@@ -2345,7 +2340,7 @@ namespace DotNetFrontEnd
     /// <param name="prefixList"></param>
     /// <param name="nameList"></param>
     /// <returns></returns>
-    private static bool OnList(string name, string[] prefixList)
+    private static bool OnList(string name, IEnumerable<string> prefixList)
     {
       Contract.Requires(name != null);
       Contract.Requires(prefixList != null);

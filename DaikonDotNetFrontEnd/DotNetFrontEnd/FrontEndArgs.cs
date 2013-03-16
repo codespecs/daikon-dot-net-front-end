@@ -161,7 +161,7 @@ namespace DotNetFrontEnd
     private readonly Dictionary<PossibleArgument, string> programArguments = new Dictionary<PossibleArgument, string>();
 
     [NonSerialized]
-    private string[] purityPrefixBlacklist;
+    private ReadOnlyCollection<string> purityPrefixBlacklist;
 
     #endregion
 
@@ -705,13 +705,14 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Prefixes to ignore when printing nullary information. See <see cref="EmitNullaryInfo"/>
     /// </summary>
-    public string[] EmitNullaryPrefixBlacklist
+    public ReadOnlyCollection<string> EmitNullaryPrefixBlacklist
     {
       get
       {
         Contract.Requires(EmitNullaryInfo);
-        Contract.Ensures(Contract.Result<string[]>() != null);
-        Contract.Ensures(Contract.ForAll(Contract.Result<string[]>(), p => !string.IsNullOrWhiteSpace(p)));
+        Contract.Ensures(Contract.Result<ReadOnlyCollection<string>>() != null);
+        Contract.Ensures(Contract.Result<ReadOnlyCollection<string>>() == purityPrefixBlacklist);
+        Contract.Ensures(Contract.ForAll(Contract.Result<ReadOnlyCollection<string>>(), p => !string.IsNullOrWhiteSpace(p)));
 
         if (purityPrefixBlacklist == null)
         {
@@ -720,7 +721,7 @@ namespace DotNetFrontEnd
 
           if (file == null)
           {
-            purityPrefixBlacklist = new string[] {};
+            purityPrefixBlacklist = new ReadOnlyCollection<string>(new List<string>());
           }
           else
           {
@@ -728,7 +729,7 @@ namespace DotNetFrontEnd
                          where !string.IsNullOrWhiteSpace(lines)
                          select lines.Trim();
 
-            purityPrefixBlacklist = result.ToArray(); 
+            purityPrefixBlacklist = new ReadOnlyCollection<string>(result.ToList());
           }
         }
         return purityPrefixBlacklist;
