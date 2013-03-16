@@ -2401,16 +2401,10 @@ namespace DotNetFrontEnd
 
           if (typeName != null && 
               !method.Attributes.HasFlag(MethodAttributes.Static) &&
-              !method.GetCustomAttributes(typeof(CompilerGeneratedAttribute), true).Any() &&
-              !IgnoredNullaryMethods.Contains(method.Name))
+              !IgnoredNullaryMethods.Contains(method.Name) &&
+              !OnList(nameOnly, frontEndArgs.EmitNullaryPrefixBlacklist))
           {
-            
-            var hasPure = method.GetCustomAttributes(typeof(PureAttribute), true).Any();
-
-            if (!OnList(nameOnly, frontEndArgs.EmitNullaryPrefixBlacklist))
-            {
               acc[typeName].Add(nameOnly);
-            }
           }
 
           // For ignored methods, only visit return type if the user's code explicitly references it
