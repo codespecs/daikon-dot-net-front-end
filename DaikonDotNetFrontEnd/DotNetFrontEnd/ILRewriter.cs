@@ -23,6 +23,7 @@ using System.Diagnostics.Contracts;
 using DotNetFrontEnd.Contracts;
 using Assembly = Microsoft.Cci.MutableCodeModel.Assembly;
 using MethodBody = Microsoft.Cci.MutableCodeModel.MethodBody;
+using System.Runtime.CompilerServices;
 
 // This file and ProgramRewriter.cs originally came from the CCIMetadata (http://ccimetadata.codeplex.com/)
 // sample programs. Specifically, it was Samples/ILMutator/ILMutator.cs. The original code inserted
@@ -87,7 +88,43 @@ namespace DotNetFrontEnd
     /// </summary>
     private static readonly string[] IgnoredNullaryMethods = 
       new string[] {
-        "GetType", "ToString", "GetHashCode", "Finalize", "MemberwiseClone", "Clone"
+        "GetType", "ToString", "GetHashCode", "Finalize", "MemberwiseClone", "Clone", "GetEnumerator"
+      };
+
+    /// <summary>
+    /// Method name prefixes that likely indicate a nullary method is pure
+    /// </summary>
+    private static readonly string[] PurityHeuristicMethodPrefixWhitelist =
+      new string[] {
+        "get_", "Get", "Is", "Has", 
+      };
+
+    /// <summary>
+    /// Method name prefixes that likely indicate a nullary method is impure
+    /// TODO: use NLP library to detect verbs or let user specify
+    /// </summary>
+    private static readonly string[] PurityHeuristicMethodPrefixBlacklist =
+      new string[] {
+        "To", "Set", "Move", "Clear", "Reset", "Initialize", "Find", 
+        "Invoke", "Dispose", "Pop", "Read", "Write", "Clone", "DeepClone",
+        "Add", "Remove", "Create", "Skip", "Push", "Open", "Close", "Flush",
+        "Parse", "Ensure", "Reduce", "Throw"
+      };
+
+    /// <summary>
+    /// Methods to include in emit-nullary-info
+    /// </summary>
+    private static readonly string[] PurityHeuristicMethodWhitelist =
+      new string[]{
+        "Peek", "Length", "Count" 
+      };
+
+    /// <summary>
+    /// Nullary methods to ban from emit-nullary-info
+    /// </summary>
+    private static readonly string[] PurityHeuristicMethodBlacklist =
+      new string[]{
+        "Clear", "Reset", "Count", "Sort", "GetEnumerator"
       };
 
     #endregion
@@ -2176,7 +2213,7 @@ namespace DotNetFrontEnd
       }
 
       this.assemblyIdentity = UnitHelper.GetAssemblyIdentity(mutableAssembly);
-      this.typeManager.SetAssemblyIdentity(assemblyIdentity);
+      // TODD this.typeManager.SetAssemblyIdentity(assemblyIdentity);
 
       IAssembly variableVisitorAssembly = this.host.LoadUnitFrom(pathToVisitor) as IAssembly;
       Contract.Assume(variableVisitorAssembly != null, "Error loading reflector");
@@ -2290,6 +2327,7 @@ namespace DotNetFrontEnd
     {
       var acc = new Dictionary<string, HashSet<string>>();
 
+      // delegate to add nullary methods reachable from a type
       System.Action<ITypeReference, int> add = (cciType, depth) => {
           var name = typeManager.ConvertCCITypeToAssemblyQualifiedName(cciType);
           foreach (var type in typeManager.ConvertAssemblyQualifiedNameToType(name).GetAllTypes)
@@ -2300,6 +2338,7 @@ namespace DotNetFrontEnd
 
       foreach (INamedTypeDefinition typeDef in mutableAssembly.AllTypes)
       {
+        // TODO: improve check for <Module> and other non-loadable names
         if (!typeManager.IsCompilerGenerated(typeDef) && !typeDef.Name.Value.Equals("<Module>")
             && (typeDef.Methods.Count() != 0 || typeDef.Fields.Count() != 0))
         {
@@ -2343,31 +2382,60 @@ namespace DotNetFrontEnd
     /// <param name="nestingDepth">current nesting depth</param>
     private void AllNullaryMethodsHelper(Type type,  Dictionary<string, HashSet<string>> acc, int maxNestingDepth, int nestingDepth)
     {
-      if (nestingDepth >= maxNestingDepth)
+      if (nestingDepth >= maxNestingDepth || type.GetCustomAttributes(typeof(CompilerGeneratedAttribute), true).Any())
       {
         return;
       }
 
-      var name = type.AssemblyQualifiedName;
+      var name = type.IsGenericType
+                   ? type.GetGenericTypeDefinition().AssemblyQualifiedName
+                   : type.AssemblyQualifiedName;
 
       if (name != null && !acc.ContainsKey(name))
       {
         acc.Add(name, new HashSet<string>());
       }
-  
-      foreach (var field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static))
+
+      var bindings = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
+
+      foreach (var field in type.GetFields(bindings))
       {
         AllNullaryMethodsHelper(field.FieldType, acc, maxNestingDepth, nestingDepth + 1);
       }
 
-      foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)
+      foreach (var method in type.GetMethods(bindings)
                                  .Where(m => !m.IsConstructor && !m.IsStatic && m.ReturnType != null))
       {
         if (method.GetParameters().Count() == 0)
         {
-          if (name != null && !method.Attributes.HasFlag(MethodAttributes.Static) && !IgnoredNullaryMethods.Contains(method.Name))
+          
+          if (name != null && 
+              !method.Attributes.HasFlag(MethodAttributes.Static) &&
+              !method.GetCustomAttributes(typeof(CompilerGeneratedAttribute), true).Any() &&
+              !IgnoredNullaryMethods.Contains(method.Name))
           {
-            acc[name].Add(method.Name);
+            // method name include the declaring class / interface
+            var clean = method.Name.Split('.').Last();
+            var hasPure = method.GetCustomAttributes(typeof(PureAttribute), true).Any();
+
+            if (frontEndArgs.EmitNullaryInfoHeuristic == FrontEndArgs.PurityHeuristic.Blacklist &&
+                !hasPure &&
+                  (PurityHeuristicMethodPrefixBlacklist.Any(p => clean.StartsWith(p) ||
+                   PurityHeuristicMethodBlacklist.Contains(clean))))
+            {
+              // using blacklist and blacklisted
+            }
+            else if (frontEndArgs.EmitNullaryInfoHeuristic == FrontEndArgs.PurityHeuristic.Whitelist &&
+                     !hasPure &&
+                       !(PurityHeuristicMethodPrefixWhitelist.Any(p => clean.StartsWith(p)) ||
+                         PurityHeuristicMethodWhitelist.Contains(clean)))
+            {
+              // using whitelist and not whitelisted
+            }
+            else
+            {
+              acc[name].Add(clean);
+            } 
           }
           AllNullaryMethodsHelper(method.ReturnType, acc, maxNestingDepth, nestingDepth + 1);
         }
