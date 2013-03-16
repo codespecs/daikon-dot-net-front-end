@@ -124,6 +124,10 @@ namespace DotNetFrontEnd
       /// Emit assembly qualified types and method names for nullary methods reachable from the assembly.
       /// </summary>
       emit_nullary_info,
+      /// <summary>
+      /// Prefixes to ignore when outputting nullary information
+      /// </summary>
+      purity_prefix_blacklist,
       portable_dll,
       verbose,
       wpf,
@@ -136,19 +140,6 @@ namespace DotNetFrontEnd
       /// Not a user-specified option: the location of the program to be profiled.
       /// </summary>
       assembly_location,
-    }
-
-    /// <summary>
-    /// Heuristics to use for --emit-nullary-info
-    /// </summary>
-    public enum PurityHeuristic
-    {
-      /// <summary>
-      /// Output all nullary methods and properties (except for those defined by Object)
-      /// </summary>
-      All,
-      Whitelist,
-      Blacklist
     }
 
     /// <summary>
@@ -168,7 +159,10 @@ namespace DotNetFrontEnd
     /// The representation of the arguments handed to the program
     /// </summary>
     private readonly Dictionary<PossibleArgument, string> programArguments = new Dictionary<PossibleArgument, string>();
-    
+
+    [NonSerialized]
+    private string[] purityPrefixBlacklist;
+
     #endregion
 
     #region Public Properties
@@ -368,10 +362,6 @@ namespace DotNetFrontEnd
       if (argumentKey == PossibleArgument.save_program && argumentValue == null)
       {
         argumentValue = FrontEndArgs.DefaultSaveProgramLocation;
-      }
-      else if (argumentKey == PossibleArgument.emit_nullary_info && argumentValue == null)
-      {
-        argumentValue = PurityHeuristic.All.ToString();
       }
       
       string oldVal = null;
@@ -713,27 +703,36 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// The heuristic to use when outputting nullary methods and properties
+    /// Prefixes to ignore when printing nullary information. See <see cref="EmitNullaryInfo"/>
     /// </summary>
-    public PurityHeuristic EmitNullaryInfoHeuristic
+    public string[] EmitNullaryPrefixBlacklist
     {
       get
       {
         Contract.Requires(EmitNullaryInfo);
-        string heuristic;
-        this.programArguments.TryGetValue(PossibleArgument.emit_nullary_info, out heuristic);
+        Contract.Ensures(Contract.Result<string[]>() != null);
+        Contract.Ensures(Contract.ForAll(Contract.Result<string[]>(), p => !string.IsNullOrWhiteSpace(p)));
 
-        PurityHeuristic result;
-        if (PurityHeuristic.TryParse(heuristic, true, out result))
+        if (purityPrefixBlacklist == null)
         {
-          return result;
+          string file;
+          this.programArguments.TryGetValue(PossibleArgument.purity_prefix_blacklist, out file);
+
+          if (file == null)
+          {
+            purityPrefixBlacklist = new string[] {};
+          }
+          else
+          {
+            var result = from lines in File.ReadLines(file)
+                         where !string.IsNullOrWhiteSpace(lines)
+                         select lines.Trim();
+
+            purityPrefixBlacklist = result.ToArray(); 
+          }
         }
-        else
-        {
-          throw new ArgumentException("Invalid purity heurstic");
-        }
+        return purityPrefixBlacklist;
       }
-
     }
 
     /// <summary>
