@@ -84,47 +84,11 @@ namespace DotNetFrontEnd
 
     /// <summary>
     /// Method names to ignore when computing reachable nullary methods. These methods are either
-    /// automatically computed by Celeriac, not pure (e.g., Finalize), or uninteresting (e.g., Memeberwise Clone)
+    /// automatically computed by Celeriac, not pure (e.g., Finalize), or uninteresting (e.g., MemeberwiseClone)
     /// </summary>
     private static readonly string[] IgnoredNullaryMethods = 
       new string[] {
         "GetType", "ToString", "GetHashCode", "Finalize", "MemberwiseClone", "Clone", "GetEnumerator"
-      };
-
-    /// <summary>
-    /// Method name prefixes that likely indicate a nullary method is pure
-    /// </summary>
-    private static readonly string[] PurityHeuristicMethodPrefixWhitelist =
-      new string[] {
-        "get_", "Get", "Is", "Has", 
-      };
-
-    /// <summary>
-    /// Method name prefixes that likely indicate a nullary method is impure
-    /// TODO: use NLP library to detect verbs or let user specify
-    /// </summary>
-    private static readonly string[] PurityHeuristicMethodPrefixBlacklist =
-      new string[] {
-        "To", "Set", "Move", "Clear", "Reset", "Initialize", "Find", 
-        "Invoke", "Dispose", "Pop", "Read", "Write", "Clone", "DeepClone",
-        "Add", "Remove", "Create", "Skip", "Push", "Open", "Close", "Flush",
-        "Parse", "Ensure", "Reduce", "Throw"
-      };
-
-    /// <summary>
-    /// Methods to include in emit-nullary-info
-    /// </summary>
-    private static readonly string[] PurityHeuristicMethodWhitelist =
-      new string[]{
-        "Peek", "Length", "Count" 
-      };
-
-    /// <summary>
-    /// Nullary methods to ban from emit-nullary-info
-    /// </summary>
-    private static readonly string[] PurityHeuristicMethodBlacklist =
-      new string[]{
-        "Clear", "Reset", "Count", "Sort", "GetEnumerator"
       };
 
     #endregion
@@ -2374,6 +2338,25 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
+    /// Returns <c>true</c>true if <c>prefixList</c> contains  <c>name</c>, <c>nameList</c> contains <c>name</c>,
+    /// or name starts with a prefix in <c>prefixList</c> followed by an uppercase character.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="prefixList"></param>
+    /// <param name="nameList"></param>
+    /// <returns></returns>
+    private static bool OnList(string name, string[] prefixList)
+    {
+      Contract.Requires(name != null);
+      Contract.Requires(prefixList != null);
+      Contract.ForAll(prefixList, p => !string.IsNullOrWhiteSpace(p) && p.Trim().Equals(p));
+      
+      return prefixList.Any(p => name.Equals(p)) ||
+             prefixList.Any(p => name.Length > p.Length && name.StartsWith(p) && char.IsUpper(name[p.Length]));
+      ;
+    }
+
+    /// <summary>
     /// Add nullary methods and property getters reachable from <c>type</c> to <c>acc</c>.
     /// </summary>
     /// <param name="type">the type to add method information for</param>
@@ -2382,18 +2365,23 @@ namespace DotNetFrontEnd
     /// <param name="nestingDepth">current nesting depth</param>
     private void AllNullaryMethodsHelper(Type type,  Dictionary<string, HashSet<string>> acc, int maxNestingDepth, int nestingDepth)
     {
+      Contract.Requires(type != null);
+      Contract.Requires(acc != null);
+      Contract.Requires(nestingDepth >= 0);
+      Contract.Requires(maxNestingDepth > 0);
+
       if (nestingDepth >= maxNestingDepth || type.GetCustomAttributes(typeof(CompilerGeneratedAttribute), true).Any())
       {
         return;
       }
 
-      var name = type.IsGenericType
+      var typeName = type.IsGenericType
                    ? type.GetGenericTypeDefinition().AssemblyQualifiedName
                    : type.AssemblyQualifiedName;
-
-      if (name != null && !acc.ContainsKey(name))
+      
+      if (typeName != null && !acc.ContainsKey(typeName))
       {
-        acc.Add(name, new HashSet<string>());
+        acc.Add(typeName, new HashSet<string>());
       }
 
       var bindings = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
@@ -2408,36 +2396,28 @@ namespace DotNetFrontEnd
       {
         if (method.GetParameters().Count() == 0)
         {
-          
-          if (name != null && 
+          // method name include the declaring class / interface
+          var nameOnly = method.Name.Split('.').Last();
+
+          if (typeName != null && 
               !method.Attributes.HasFlag(MethodAttributes.Static) &&
               !method.GetCustomAttributes(typeof(CompilerGeneratedAttribute), true).Any() &&
               !IgnoredNullaryMethods.Contains(method.Name))
           {
-            // method name include the declaring class / interface
-            var clean = method.Name.Split('.').Last();
+            
             var hasPure = method.GetCustomAttributes(typeof(PureAttribute), true).Any();
 
-            if (frontEndArgs.EmitNullaryInfoHeuristic == FrontEndArgs.PurityHeuristic.Blacklist &&
-                !hasPure &&
-                  (PurityHeuristicMethodPrefixBlacklist.Any(p => clean.StartsWith(p) ||
-                   PurityHeuristicMethodBlacklist.Contains(clean))))
+            if (!OnList(nameOnly, frontEndArgs.EmitNullaryPrefixBlacklist))
             {
-              // using blacklist and blacklisted
+              acc[typeName].Add(nameOnly);
             }
-            else if (frontEndArgs.EmitNullaryInfoHeuristic == FrontEndArgs.PurityHeuristic.Whitelist &&
-                     !hasPure &&
-                       !(PurityHeuristicMethodPrefixWhitelist.Any(p => clean.StartsWith(p)) ||
-                         PurityHeuristicMethodWhitelist.Contains(clean)))
-            {
-              // using whitelist and not whitelisted
-            }
-            else
-            {
-              acc[name].Add(clean);
-            } 
           }
-          AllNullaryMethodsHelper(method.ReturnType, acc, maxNestingDepth, nestingDepth + 1);
+
+          // For ignored methods, only visit return type if the user's code explicitly references it
+          if (!IgnoredNullaryMethods.Contains(nameOnly))
+          {
+            AllNullaryMethodsHelper(method.ReturnType, acc, maxNestingDepth, nestingDepth + 1);
+          }
         }
       }
 
@@ -2447,7 +2427,7 @@ namespace DotNetFrontEnd
         var method = property.GetGetMethod();
         if (method.GetParameters().Count() != 0)
         {
-          acc[name].Add(method.Name);
+          acc[typeName].Add(method.Name);
           AllNullaryMethodsHelper(method.ReturnType, acc, maxNestingDepth, nestingDepth + 1);
         }
       }
