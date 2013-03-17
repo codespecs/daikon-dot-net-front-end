@@ -100,26 +100,6 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Get the list of types for this declaration.
-    /// </summary>
-    /// <returns>The list of types this delcaration describes</returns>
-    /// <exception cref="InvalidOperationException">Occurs when this declaration
-    /// was not created with a list of classes.</exception>
-    internal Collection<Type> GetListOfTypes
-    {
-      get
-      {
-        Contract.Requires(GetDeclarationType == DeclarationType.ListOfClasses);
-        Contract.Ensures(Contract.Result<Collection<Type>>() != null);
-        Contract.Ensures(Contract.Result<Collection<Type>>().Equals(this.list));
-
-        List<Type> resultList = new List<Type>(this.list.Count);
-        list.ForEach(x => resultList.Add(x));
-        return new Collection<Type>(resultList);
-      }
-    }
-
-    /// <summary>
     /// Get a list of all types described by this declaration.
     /// </summary>
     /// <returns>A list containing the single type if this declaration was created with a single
