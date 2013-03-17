@@ -84,11 +84,11 @@ namespace DotNetFrontEnd
 
     /// <summary>
     /// Method names to ignore when computing reachable nullary methods. These methods are either
-    /// automatically computed by Celeriac, not pure (e.g., Finalize), or uninteresting (e.g., MemeberwiseClone)
+    /// automatically computed by Celeriac, not pure (e.g., Finalize), or uninteresting (e.g., Clone)
     /// </summary>
     private static readonly string[] IgnoredNullaryMethods = 
       new string[] {
-        "GetType", "ToString", "GetHashCode", "Finalize", "MemberwiseClone", "Clone", "GetEnumerator"
+        "GetType", "ToString", "GetHashCode", "Finalize", "MemberwiseClone", "Clone", "GetEnumerator", "Main"
       };
 
     #endregion
@@ -2283,11 +2283,12 @@ namespace DotNetFrontEnd
       var acc = new Dictionary<string, HashSet<string>>();
 
       // delegate to add nullary methods reachable from a type
-      System.Action<ITypeReference, int> add = (cciType, depth) => {
+      System.Action<ITypeReference, bool, int> add = (cciType, originating, depth) => {
           var name = typeManager.ConvertCCITypeToAssemblyQualifiedName(cciType);
           foreach (var type in typeManager.ConvertAssemblyQualifiedNameToType(name).GetAllTypes)
           {
-            AllNullaryMethodsHelper(type, acc, frontEndArgs.MaxNestingDepth, depth);
+            var originator = originating ? type : typeof (DummyOriginator);
+            AllNullaryMethodsHelper(type, originator, acc, frontEndArgs.MaxNestingDepth, depth);
           }
         };
 
@@ -2297,14 +2298,14 @@ namespace DotNetFrontEnd
         if (!typeManager.IsCompilerGenerated(typeDef) && !typeDef.Name.Value.Equals("<Module>")
             && (typeDef.Methods.Count() != 0 || typeDef.Fields.Count() != 0))
         {
-          add(typeDef, 0);
+          add(typeDef, true, 0);
           foreach (var method in typeDef.Methods)
           {
             foreach (var param in method.Parameters)
             {
-              add(param.Type, 1);
+              add(param.Type,  false, 1);
             }
-            add(method.Type, 1);
+            add(method.Type, false, 1);
           }
         }
       }
@@ -2347,14 +2348,16 @@ namespace DotNetFrontEnd
       ;
     }
 
+
     /// <summary>
     /// Add nullary methods and property getters reachable from <c>type</c> to <c>acc</c>.
     /// </summary>
     /// <param name="type">the type to add method information for</param>
+    /// <param name="originatingType">the originating type (to determine visibility)</param>
     /// <param name="acc">the accumulator</param>
     /// <param name="maxNestingDepth">the maximum nesting depth</param>
     /// <param name="nestingDepth">current nesting depth</param>
-    private void AllNullaryMethodsHelper(Type type,  Dictionary<string, HashSet<string>> acc, int maxNestingDepth, int nestingDepth)
+    private void AllNullaryMethodsHelper(Type type, Type originatingType, Dictionary<string, HashSet<string>> acc, int maxNestingDepth, int nestingDepth)
     {
       Contract.Requires(type != null);
       Contract.Requires(acc != null);
@@ -2366,54 +2369,49 @@ namespace DotNetFrontEnd
         return;
       }
 
-      var typeName = type.IsGenericType
-                   ? type.GetGenericTypeDefinition().AssemblyQualifiedName
-                   : type.AssemblyQualifiedName;
-      
+      Func<Type, string> qualifiedName =
+        t => (t.IsGenericType ? t.GetGenericTypeDefinition() : t).AssemblyQualifiedName;
+
+      var typeName = qualifiedName(type);
       if (typeName != null && !acc.ContainsKey(typeName))
       {
         acc.Add(typeName, new HashSet<string>());
       }
 
-      var bindings = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
-
-      foreach (var field in type.GetFields(bindings))
+      foreach (var field in type.GetFields(TypeManager.PureMethodBindings))
       {
-        AllNullaryMethodsHelper(field.FieldType, acc, maxNestingDepth, nestingDepth + 1);
+        AllNullaryMethodsHelper(field.FieldType, originatingType, acc, maxNestingDepth, nestingDepth + 1);
       }
 
-      foreach (var method in type.GetMethods(bindings)
-                                 .Where(m => !m.IsConstructor && !m.IsStatic && m.ReturnType != null))
+      foreach (var method in type.GetMethods(TypeManager.PureMethodBindings)
+                                 .Where(m => !m.IsConstructor && m.ReturnType != null))
       {
-        if (method.GetParameters().Count() == 0)
+        var paramList = method.GetParameters();
+
+        if ((!method.IsStatic && paramList.Length == 0) ||
+            (method.IsStatic && paramList.Length == 1))
         {
-          // method name include the declaring class / interface
+          // method name includes the declaring class / interface
           var nameOnly = method.Name.Split('.').Last();
 
-          if (typeName != null && 
-              !method.Attributes.HasFlag(MethodAttributes.Static) &&
-              !IgnoredNullaryMethods.Contains(method.Name) &&
-              !OnList(nameOnly, frontEndArgs.EmitNullaryPrefixBlacklist))
+          if (typeName != null &&
+              !IgnoredNullaryMethods.Contains(nameOnly) &&
+              !OnList(nameOnly, frontEndArgs.EmitNullaryPrefixBlacklist) &&
+              (method.IsPublic || type.FullName.Equals(originatingType.FullName)))
           {
-              acc[typeName].Add(nameOnly);
+            // TODO #80: for static methods, organize by the type of the parameter?s
+            acc[typeName].Add(nameOnly);
           }
 
-          // For ignored methods, only visit return type if the user's code explicitly references it
           if (!IgnoredNullaryMethods.Contains(nameOnly))
           {
-            AllNullaryMethodsHelper(method.ReturnType, acc, maxNestingDepth, nestingDepth + 1);
+            // For ignored methods, only visit parameter and return type if the user's code explicitly references it
+            AllNullaryMethodsHelper(method.ReturnType, originatingType, acc, maxNestingDepth, nestingDepth + 1);
           }
-        }
-      }
-
-      // TODO: is this needed, or are they found in the previous loop?
-      foreach (var property in type.GetProperties().Where(p => p.GetGetMethod() != null))
-      {
-        var method = property.GetGetMethod();
-        if (method.GetParameters().Count() != 0)
-        {
-          acc[typeName].Add(method.Name);
-          AllNullaryMethodsHelper(method.ReturnType, acc, maxNestingDepth, nestingDepth + 1);
+          if (method.IsStatic)
+          {
+            AllNullaryMethodsHelper(paramList.First().ParameterType, originatingType, acc, maxNestingDepth, nestingDepth + 1);
+          }
         }
       }
     }

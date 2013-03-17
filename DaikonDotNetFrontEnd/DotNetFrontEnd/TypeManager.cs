@@ -50,6 +50,19 @@ namespace DotNetFrontEnd
   }
 
   /// <summary>
+  /// Originating type to use when visiting variables other than 'this'. Ensures that visibility information
+  /// is calculated correctly.
+  /// </summary>
+  /// <remarks>This class is not meant to be instantiated.</remarks>
+  internal sealed class DummyOriginator
+  {
+    private DummyOriginator()
+    {
+      throw new NotSupportedException("Cannot instantiate Dummy Originator class");
+    }
+  }
+
+  /// <summary>
   /// Keeps canonical type references. Converts between CCIMetadata and .NET types.
   /// </summary>
   [Serializable]
@@ -100,6 +113,11 @@ namespace DotNetFrontEnd
     /// to separate each class. Needs to not exist otherwise in an assembly-qualified name.
     /// </summary>
     private readonly static char DecTypeMultipleConstraintSeparator = '|';
+
+    public static readonly BindingFlags PureMethodBindings =
+      BindingFlags.Public | BindingFlags.NonPublic |
+      BindingFlags.Instance |
+      BindingFlags.Static | BindingFlags.FlattenHierarchy;
 
     /// <summary>
     /// Front end args for the program this class is managing types for
@@ -336,12 +354,16 @@ namespace DotNetFrontEnd
 
       // The user will declare a single type name
       Type type = ConvertAssemblyQualifiedNameToType(typeName).GetSingleType;
-      // Pure methods have no parameters
-      MethodInfo method = type.GetMethod(methodName,
-        BindingFlags.Public | BindingFlags.NonPublic |
-        BindingFlags.Static | BindingFlags.Instance
-      );
       Contract.Assert(type != null);
+   
+      // Try no parameters first
+      MethodInfo method = type.GetMethod(methodName, PureMethodBindings, Type.DefaultBinder, Type.EmptyTypes, null);
+      if (method == null)
+      {
+        // TODO #80: right now we only support that methods with arguments in the same class
+        method = type.GetMethod(methodName, PureMethodBindings, null, new Type[] {type}, null);
+        Contract.Assume(method == null || method.IsStatic);
+      }
       Contract.Assume(method != null, "No method of name " + methodName + " exists for type on type " + typeName);
       AddPureMethod(type, method);
     }
@@ -724,7 +746,7 @@ namespace DotNetFrontEnd
           // --std-visibility has been supplied.
           // TODO(#71): Add logic for more visibility types
           if (frontEndArgs.StdVisibility &&
-              method.IsPrivate && !originatingType.FullName.Equals(type.FullName))
+              !method.IsPublic && !originatingType.FullName.Equals(type.FullName))
           {
             continue;
           }

@@ -366,17 +366,17 @@ namespace DotNetFrontEnd
             typeContext: typeContext, methodContext: methodContext);
       }
 
-      foreach (var pureMethod in typeManager.GetPureMethodsForType(type, originatingType))
+      foreach (var method in typeManager.GetPureMethodsForType(type, originatingType))
       {
-        string methodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Name);
+        string methodName = DeclarationPrinter.SanitizePropertyName(method.Name);
 
         var pureMethodFlags = ExtendFlags(
-            MarkIf(pureMethod.Name.StartsWith(GetterPropertyPrefix), VariableFlags.is_property),
-            MarkIf(flags.HasFlag(VariableFlags.is_reference_immutable) && pureMethod.ReturnType.IsValueType, VariableFlags.is_reference_immutable),
-            MarkIf(flags.HasFlag(VariableFlags.is_reference_immutable) && flags.HasFlag(VariableFlags.is_value_immutable) && TypeManager.IsImmutable(pureMethod.ReturnType), VariableFlags.is_value_immutable));
+            MarkIf(method.Name.StartsWith(GetterPropertyPrefix), VariableFlags.is_property),
+            MarkIf(flags.HasFlag(VariableFlags.is_reference_immutable) && method.ReturnType.IsValueType, VariableFlags.is_reference_immutable),
+            MarkIf(flags.HasFlag(VariableFlags.is_reference_immutable) && flags.HasFlag(VariableFlags.is_value_immutable) && TypeManager.IsImmutable(method.ReturnType), VariableFlags.is_value_immutable));
 
-        DeclareVariable(name + "." + methodName,
-          pureMethod.ReturnType,
+        DeclareVariable(SanitizedMethodExpression(method, name),
+          method.ReturnType,
           originatingType,
           enclosingVar: name,
           relativeName: methodName,
@@ -442,7 +442,6 @@ namespace DotNetFrontEnd
 
       this.PrintFlags(flags, type.IsValueType);
 
-      // TODO(#4): Implement real comparability.
       if (comparabilityManager != null)
       {
           if (type.IsArray)
@@ -539,7 +538,6 @@ namespace DotNetFrontEnd
 
       this.PrintFlags(flags, elementType.IsValueType);
 
-      // TODO(#4): Implement real comparability
       if (comparabilityManager != null)
       {
           this.WritePair(
@@ -619,15 +617,15 @@ namespace DotNetFrontEnd
             typeContext: typeContext, methodContext: methodContext);
       }
 
-      foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType, originatingType))
+      foreach (var method in typeManager.GetPureMethodsForType(elementType, originatingType))
       {
-        string methodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Name);
+        string methodName = DeclarationPrinter.SanitizePropertyName(method.Name);
 
         var pureMethodFlags = ExtendFlags(
-          pureMethod.Name.StartsWith(GetterPropertyPrefix) ? VariableFlags.is_property : VariableFlags.none);
+          method.Name.StartsWith(GetterPropertyPrefix) ? VariableFlags.is_property : VariableFlags.none);
 
-        PrintList(name + "." + methodName, 
-          pureMethod.ReturnType, name,
+        PrintList(SanitizedMethodExpression(method, name), 
+          method.ReturnType, name,
           originatingType,
           relativeName: methodName,
           kind: VariableKind.function,
@@ -693,7 +691,7 @@ namespace DotNetFrontEnd
       foreach (Type type in typeDecl.GetAllTypes)
       {
         Contract.Assume(type != null,  "Unable to resolve parent object type to a type.");
-        DeclareStaticFieldsForType(type, null, methodContext: method); // TWS what type to use for context?
+        DeclareStaticFieldsForType(type, type, null, methodContext: method); // TWS what type to use for context?
       }
     }
 
@@ -701,7 +699,7 @@ namespace DotNetFrontEnd
     /// Print the declarations for all fields of the given type.
     /// </summary>
     /// <param name="type">Type to print declarations of the static fields of</param>
-    private void DeclareStaticFieldsForType(Type type, INamedTypeDefinition typeContext, IMethodDefinition methodContext = null)
+    private void DeclareStaticFieldsForType(Type type, Type originatingType, INamedTypeDefinition typeContext, IMethodDefinition methodContext = null)
     {
       Contract.Requires(type != null);
       Contract.Requires(typeContext != null || methodContext != null);
@@ -716,7 +714,7 @@ namespace DotNetFrontEnd
             !this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
         {
             this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
-            DeclareVariable(staticFieldName, staticField.FieldType, type,
+            DeclareVariable(staticFieldName, staticField.FieldType, originatingType,
                 nestingDepth: staticFieldName.Count(c => c == '.'),
                 typeContext: typeContext, methodContext: methodContext);
         }
@@ -766,7 +764,8 @@ namespace DotNetFrontEnd
       {
         if (type != null)
         {
-            DeclareVariable(name, type, type, flags: VariableFlags.is_param, methodContext: methodDefinition);
+            // TODO: the defining method should be the originator
+            DeclareVariable(name, type, typeof(DummyOriginator), flags: VariableFlags.is_param, methodContext: methodDefinition);
         }
       }
     }
@@ -786,7 +785,8 @@ namespace DotNetFrontEnd
       {
         if (type != null)
         {
-            DeclareVariable(name, type, type, kind: VariableKind.Return, nestingDepth: 0, methodContext: methodDefinition);
+            // TODO: originator should be the type that defined the method
+            DeclareVariable(name, type, typeof(DummyOriginator), kind: VariableKind.Return, nestingDepth: 0, methodContext: methodDefinition);
         }
       }
     }
@@ -849,7 +849,7 @@ namespace DotNetFrontEnd
           this.WriteLine();
           this.WritePair("ppt", nameToPrint);
           this.WritePair("ppt-type", "class");
-          DeclareStaticFieldsForType(objectType, typeContext);
+          DeclareStaticFieldsForType(objectType, objectType, typeContext);
         }
        
       }
@@ -1264,6 +1264,35 @@ namespace DotNetFrontEnd
     }
 
     #endregion
+
+
+    /// <summary>
+    /// Returns a method expression string suitable for printing. If <c>method</c> is static,
+    /// 
+    /// </summary>
+    /// <param name="method">the method</param>
+    /// <param name="parentName">the parent expression</param>
+    /// <returns>a method expression string suitable for printing</returns>
+    [Pure]
+    public static string SanitizedMethodExpression(MethodInfo method, string parentName)
+    {
+      Contract.Requires(method != null);
+      Contract.Requires(parentName != null);
+      Contract.Ensures(Contract.Result<string>() != null);
+
+      var methodName = DeclarationPrinter.SanitizePropertyName(method.Name);
+
+      if (method.IsStatic)
+      {
+        Contract.Assume(method.GetParameters().Length == 1);
+        var declaringType = (method.DeclaringType == typeof (String)) ? "string" : method.DeclaringType.Name;
+        return string.Format("{0}.{1}({2})", declaringType, methodName, parentName);
+      }
+      else
+      {
+        return string.Join(".", parentName, methodName);
+      }
+    }
 
     public void Dispose()
     {
