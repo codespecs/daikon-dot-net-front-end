@@ -740,7 +740,9 @@ namespace DotNetFrontEnd
           }
 
           int depth = 0;
-          ReflectiveVisit(name, variable, type, writer, depth, type, flags);
+
+          var originatingType = name.Equals("this") ? type : typeof(DummyOriginator);
+          ReflectiveVisit(name, variable, type, writer, depth, originatingType, flags);
         }
       }
     }
@@ -934,8 +936,8 @@ namespace DotNetFrontEnd
       {
         foreach (var item in typeManager.GetPureMethodsForType(type, originatingType))
         {
-          ReflectiveVisit(name + '.' + DeclarationPrinter.SanitizePropertyName(item.Name),
-              (obj == null ? null : GetMethodValue(obj, item, item.Name)), item.ReturnType, writer,
+          ReflectiveVisit(DeclarationPrinter.SanitizedMethodExpression(item, name),
+              (obj == null ? null : GetMethodValue(obj, item)), item.ReturnType, writer,
               depth + 1, originatingType, fieldFlags: fieldFlags);
         }
       }
@@ -1253,11 +1255,10 @@ namespace DotNetFrontEnd
             VariableModifiers.to_string);
       }
 
-      foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType, originatingType))
+      foreach (var method in typeManager.GetPureMethodsForType(elementType, originatingType))
       {
-        string pureMethodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Name);
-        ListReflectiveVisit(name + "." + pureMethodName, null,
-          pureMethod.ReturnType, writer, depth + 1, originatingType);
+        ListReflectiveVisit(DeclarationPrinter.SanitizedMethodExpression(method, name), null,
+          method.ReturnType, writer, depth + 1, originatingType);
       }
     }
 
@@ -1334,20 +1335,18 @@ namespace DotNetFrontEnd
             nonsensicalElements: stringNonsensical);
       }
 
-      foreach (var pureMethod in typeManager.GetPureMethodsForType(elementType, originatingType))
+      foreach (var method in typeManager.GetPureMethodsForType(elementType, originatingType))
       {
-        string pureMethodName = DeclarationPrinter.SanitizePropertyName(pureMethod.Name);
-
         bool[] pureNonsensical = new bool[list.Count];
         object[] pureMethodResults = new object[list.Count];
 
         for (int i = 0; i < list.Count; i++)
         {
           pureNonsensical[i] = nonsensicalElements[i] || list[i] == null;
-          pureMethodResults[i] = pureNonsensical[i] ? null : GetMethodValue(list[i], pureMethod, pureMethod.Name);
+          pureMethodResults[i] = pureNonsensical[i] ? null : GetMethodValue(list[i], method);
         }
-        ListReflectiveVisit(name + "." + pureMethodName, pureMethodResults,
-          pureMethod.ReturnType, writer, depth + 1, originatingType,
+        ListReflectiveVisit(DeclarationPrinter.SanitizedMethodExpression(method, name), 
+          pureMethodResults, method.ReturnType, writer, depth + 1, originatingType,
           nonsensicalElements: pureNonsensical);
       }
     }
@@ -1540,6 +1539,7 @@ namespace DotNetFrontEnd
       return runtimeField.GetValue(obj);
     }
 
+
     /// <summary>
     /// Get the result returned by invoking the given method on the given object.
     /// </summary>
@@ -1547,54 +1547,41 @@ namespace DotNetFrontEnd
     /// <param name="method">Method to invoke</param>
     /// <param name="methodName">Name of the method to invoke</param>
     /// <returns>Result returned by the invoked function</returns>
-    /// Warning suppressed because we purposefully want to catch all exception types and continue
-    /// normally.
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-    private static object GetMethodValue(object obj, MethodInfo method, string methodName)
+    private static object GetMethodValue(object obj, MethodInfo methodInfo)
     {
       Contract.Requires(obj != null);
-      Contract.Requires(method != null);
-      Contract.Requires(!string.IsNullOrWhiteSpace(methodName));
+      Contract.Requires(methodInfo != null);
 
-      MethodInfo runtimeMethod;
-      Type currentType = obj.GetType();
+      Type objType = obj.GetType();
 
-      // Ensure we are at the declared type, and not possibly a subtype
-      while ((currentType.Name != null) && (currentType.Name != method.DeclaringType.Name))
+      // Ensure we are at the declared declaredType, and not possibly a subtype
+      Type declaringType = obj.GetType();
+      while ((declaringType.Name != null) && (declaringType.Name != methodInfo.DeclaringType.Name))
       {
-        currentType = currentType.BaseType;
+        declaringType = declaringType.BaseType;
       }
 
-      Contract.Assume(currentType != null,
-          "Reached top when locating declaring type for method " + methodName + " (instance type: " + obj.GetType().Name + ")");
+      Contract.Assume(declaringType != null,
+          "Cannot find declaring declaredType for method " + methodInfo.Name + " (instance declaredType: " + obj.GetType().Name + ")");
 
       // Climb the supertypes as necessary to get the desired field
-      do
-      {
-        runtimeMethod = currentType.GetMethod(methodName,
-            BindingFlags.Public | BindingFlags.NonPublic
-          | BindingFlags.Static | BindingFlags.Instance);
-        currentType = currentType.BaseType;
-      } while (runtimeMethod == null && currentType != null);
+      MethodInfo method = methodInfo.GetParameters().Length == 0
+                            ? declaringType.GetMethod(methodInfo.Name, Type.EmptyTypes)
+                            : declaringType.GetMethod(methodInfo.Name, new Type[] { objType });
 
-      Contract.Assume(runtimeMethod != null,
-          "Method " + methodName + " not found in type or supertypes");
+      Contract.Assume(method != null, "Could not find method " + methodInfo.Name);
 
-      Contract.Assert(runtimeMethod.GetParameters().Length == 0
-                  || (runtimeMethod.IsStatic && runtimeMethod.GetParameters().Length == 1),
-                  "Invalid number of parameters for pure method");
-
-      // We allow pure static methods with 1 parameter
-      object[] param = runtimeMethod.GetParameters().Length == 1 
-            && runtimeMethod.GetParameters()[0].ParameterType == obj.GetType()
-        ? new object[] { obj }
-        : null;
+      var paramList = method.GetParameters();
+      Contract.Assume((!method.IsStatic && paramList.Length == 0) || (method.IsStatic && paramList.Length <= 1),
+                       "Invalid number of parameters for method");
+      Contract.Assume(paramList.Length == 0 || paramList[0].ParameterType.IsAssignableFrom(objType),
+                      "Cannot pass argument of declaredType " + objType.Name + " to " + "static method " + method.Name);
 
       object val;
       SuppressOutput = true;
       try
       {
-        val = runtimeMethod.Invoke(obj, param);
+        val = method.Invoke(obj, paramList.Length == 1 ? new object[] { obj } : null);
       }
       catch (TargetInvocationException ex)
       {
@@ -1605,13 +1592,9 @@ namespace DotNetFrontEnd
         if (frontEndArgs.VerboseMode)
         {
           Console.WriteLine(
-            "Caught exception invoking " + runtimeMethod.Name + " on type " + obj.GetType().Name + ": " + ex.Message ?? "<no message>");
+            "Caught exception invoking " + method.Name + " on declaredType " + objType.Name + ": " + ex.Message ?? "<no message>");
           Console.WriteLine(ex.StackTrace);
         }
-      }
-      catch (Exception)
-      {
-        throw;
       }
       finally
       {
@@ -1619,6 +1602,7 @@ namespace DotNetFrontEnd
       }
       return val;
     }
+
 
     /// <summary>
     /// Prepare the given string for printing to Daikon format.
