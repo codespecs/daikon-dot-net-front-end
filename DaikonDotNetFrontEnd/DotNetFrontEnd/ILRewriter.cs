@@ -2212,8 +2212,10 @@ namespace DotNetFrontEnd
           // Also exclude the name of the class storing arguments (for offline programs)
           string typeName = type.ToString();
           if (!TypeManager.RegexForTypesToIgnoreForProgramPoint.IsMatch(typeName) &&
+              !TypeManager.CodeContractRuntimePpts.IsMatch(typeName) &&
               !typeName.Equals(ArgumentStoringClassName) &&
-              !typeManager.IsCompilerGenerated(type))
+              !typeManager.IsCompilerGenerated(type) &&
+              !typeManager.IsNotInstrumentable(type))
           {
             this.declPrinter.PrintObjectDefinition(typeName,
                 this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type), type);
