@@ -401,12 +401,10 @@ namespace DotNetFrontEnd
     private void LoadPurityFile()
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(this.PurityFile));
-      using (var f = File.OpenText(this.PurityFile))
+
+      foreach (var line in File.ReadLines(this.PurityFile).Where(l => !string.IsNullOrWhiteSpace(l)))
       {
-        while (!f.EndOfStream)
-        {
-          this.PurityMethods.Add(f.ReadLine());
-        }
+         this.PurityMethods.Add(line);
       }
     }
 
