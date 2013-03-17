@@ -730,18 +730,30 @@ namespace DotNetFrontEnd
     /// by method name (sanitized for properties)
     /// </summary>
     /// <param name="type">Type to get the pure methods for</param>
-    /// <param name="originatingType">The type of variable that originatiated 
-    /// this inspection</param>
-    /// <returns>Map from key to method object of all the pure methods for the given type
+    /// <param name="originatingType">
+    ///    The type that called into the visitor (used to calculate visibility)
+    /// </param>
+    /// <returns>
+    ///    Map from key to method object of all the pure methods for the given type.
     /// </returns>
     internal List<MethodInfo> GetPureMethodsForType(Type type, Type originatingType)
     {
+      Contract.Requires(type != null);
+      Contract.Requires(originatingType != null);
+      Contract.Ensures(Contract.Result<List<MethodInfo>>() != null);
+      
+      // If the user provided a specific instantiation of a generic type, use it. 
+      // Otherwise, use the generic type definition, e.g. List`1
+      if (type.IsGenericType && !pureMethodsForType.ContainsKey(type))
+      {
+        type = type.GetGenericTypeDefinition();
+      }
+
       var result = new List<MethodInfo>();
       if (this.pureMethodsForType.ContainsKey(type))
       {
         foreach (var method in this.pureMethodsForType[type])
         {
-
           // Ensure the pure method can be seen by the originating type if 
           // --std-visibility has been supplied.
           // TODO(#71): Add logic for more visibility types
