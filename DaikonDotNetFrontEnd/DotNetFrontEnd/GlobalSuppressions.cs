@@ -176,5 +176,17 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ppt", Scope = "member", Target = "DotNetFrontEnd.FrontEndArgs.#PptOmitPattern")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dtrace", Scope = "member", Target = "DotNetFrontEnd.FrontEndArgs.#DtraceAppend")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "param", Scope = "member", Target = "DotNetFrontEnd.DeclarationPrinter.#PrintParameter(System.String,System.String)")]
+
+// TODO: localize error messages.
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Console.WriteLine(System.String)", Scope = "member", Target = "DotNetFrontEnd.ProgramRewriter.#RewriteProgramIL(DotNetFrontEnd.FrontEndArgs,DotNetFrontEnd.TypeManager)")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Console.WriteLine(System.String)", Scope = "member", Target = "DotNetFrontEnd.VariableVisitor.#GetMethodValue(System.Object,System.Reflection.MethodInfo,System.String)")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Console.WriteLine(System.String)", Scope = "member", Target = "DotNetFrontEnd.VariableVisitor.#GetMethodValue(System.Object,System.Reflection.MethodInfo)")]
+
+// A collection of sets is a natural way to represent equality sets.
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Scope = "member", Target = "Comparability.MethodVisitor.#InstanceVariableOpinion")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Scope = "member", Target = "Comparability.MethodVisitor.#MergeOpinion(System.Collections.Generic.HashSet`1<System.Collections.Generic.HashSet`1<System.String>>)")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Scope = "member", Target = "Comparability.MethodVisitor.#Opinion")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Scope = "member", Target = "Comparability.MethodVisitor.#ParameterOpinion")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Scope = "member", Target = "Comparability.MethodVisitor.#ParameterTypeComparability(System.Collections.Generic.IEnumerable`1<Microsoft.Cci.IParameterDefinition>)")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Scope = "member", Target = "Comparability.NameBuilder.#InstanceExpressions")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Scope = "member", Target = "Comparability.NameBuilder.#NamedChildren")]
