@@ -471,8 +471,9 @@ namespace DotNetFrontEnd
         passSelectTest = this.PptSelectPattern.IsMatch(programPointName + label);
       }
 
-      return !this.PptAlwaysExclude.IsMatch(programPointName + label) &&
-          passOmitTest && passSelectTest;
+      return passOmitTest && passSelectTest &&
+             !this.PptAlwaysExclude.IsMatch(programPointName + label) &&
+             !TypeManager.CodeContractRuntimePpts.IsMatch(programPointName);
     }
 
     /// <summary>

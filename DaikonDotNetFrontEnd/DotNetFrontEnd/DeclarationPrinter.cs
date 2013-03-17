@@ -304,8 +304,8 @@ namespace DotNetFrontEnd
         {
             // Propogate the reference immutability chain; if the field holds an immutable value, introduce an immutability flag
             var fieldFlags = ExtendFlags(
-                MarkIf(flags.HasFlag(VariableFlags.is_reference_immutable) && field.IsInitOnly, VariableFlags.is_reference_immutable),
-                MarkIf(flags.HasFlag(VariableFlags.is_reference_immutable) && field.IsInitOnly && TypeManager.IsImmutable(field.FieldType), VariableFlags.is_value_immutable));
+                MarkIf(field.IsLiteral || (flags.HasFlag(VariableFlags.is_reference_immutable) && field.IsInitOnly), VariableFlags.is_reference_immutable),
+                MarkIf(field.IsLiteral || (flags.HasFlag(VariableFlags.is_reference_immutable) && field.IsInitOnly && TypeManager.IsImmutable(field.FieldType)), VariableFlags.is_value_immutable));
 
           DeclareVariable(name + "." + field.Name, field.FieldType, originatingType,
               VariableKind.field, enclosingVar: name, relativeName: field.Name,
@@ -327,7 +327,7 @@ namespace DotNetFrontEnd
 
             var fieldFlags =
                 ExtendFlags(
-                  MarkIf(staticField.IsInitOnly, VariableFlags.is_reference_immutable),
+                  MarkIf(staticField.IsLiteral || staticField.IsInitOnly, VariableFlags.is_reference_immutable),
                   MarkIf(staticField.IsLiteral || (staticField.IsInitOnly && TypeManager.IsImmutable(staticField.FieldType)), VariableFlags.is_value_immutable));
 
             DeclareVariable(staticFieldName, staticField.FieldType,
@@ -1199,7 +1199,8 @@ namespace DotNetFrontEnd
     private static bool ShouldPrintParentPptIfNecessary(String parentTypeName)
     {
       return !String.IsNullOrEmpty(parentTypeName) &&
-             !TypeManager.RegexForTypesToIgnoreForProgramPoint.IsMatch(parentTypeName);
+             !TypeManager.RegexForTypesToIgnoreForProgramPoint.IsMatch(parentTypeName) &&
+             !TypeManager.CodeContractRuntimePpts.IsMatch(parentTypeName);
     }
 
     private bool PerformEarlyExitChecks(string name, Type type, VariableKind kind,

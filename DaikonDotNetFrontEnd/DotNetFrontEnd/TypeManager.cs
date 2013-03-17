@@ -17,7 +17,6 @@ using System.Runtime.CompilerServices;
 using System.Diagnostics.Contracts;
 using System.Runtime.Serialization;
 
-
 namespace DotNetFrontEnd
 {
 
@@ -107,6 +106,11 @@ namespace DotNetFrontEnd
     /// this signature, they are system generated.
     /// </summary>
     public readonly static Regex RegexForTypesToIgnoreForProgramPoint = new Regex(@"(\.<.*?>)|(^<.*?>)");
+
+    /// <summary>
+    /// Don't print object definition program points or references to the Code Contracts runtime
+    /// </summary>
+    public readonly static Regex CodeContractRuntimePpts = new Regex(@"System\.Diagnostics\.Contracts\.__ContractsRuntime.*?"); 
 
     /// <summary>
     /// When dec-type of a generic variable with multiple constraints is being printed, use this
@@ -1177,11 +1181,12 @@ namespace DotNetFrontEnd
     /// Creates a type reference anchored in the given assembly reference and whose names are relative to the given host.
     /// When the type name has periods in it, a structured reference with nested namespaces is created.
     /// </summary>
-    public static INamespaceTypeReference CreateTypeReference(IMetadataHost host, IUnitReference assemblyReference, string typeName)
+    public INamespaceTypeReference CreateTypeReference(AssemblyIdentity assembly, string typeName)
     {
-      Contract.Requires(host != null);
-      Contract.Requires(assemblyReference != null);
       Contract.Requires(!string.IsNullOrWhiteSpace(typeName));
+
+      var assemblyReference =
+        new Microsoft.Cci.Immutable.AssemblyReference(Host, assembly);
 
       IUnitNamespaceReference ns = new Microsoft.Cci.Immutable.RootUnitNamespaceReference(assemblyReference);
       string[] names = typeName.Split('.');
@@ -1190,6 +1195,7 @@ namespace DotNetFrontEnd
       return new Microsoft.Cci.Immutable.NamespaceTypeReference(host, ns, host.NameTable.GetNameFor(names[names.Length - 1]), 0, false, false, true, PrimitiveTypeCode.NotPrimitive);
     }
 
+    [Pure]
     public bool IsCompilerGenerated(IReference def)
     {
       Contract.Requires(def != null);
@@ -1200,9 +1206,8 @@ namespace DotNetFrontEnd
         return true;
       }
 
-      var systemDiagnosticsDebuggerNonUserCodeAttribute = CreateTypeReference(Host,
-        new Microsoft.Cci.Immutable.AssemblyReference(Host, Host.ContractAssemblySymbolicIdentity),
-        "System.Diagnostics.DebuggerNonUserCodeAttribute");
+      var systemDiagnosticsDebuggerNonUserCodeAttribute = CreateTypeReference(
+        Host.ContractAssemblySymbolicIdentity, "System.Diagnostics.DebuggerNonUserCodeAttribute");
       if (AttributeHelper.Contains(def.Attributes, systemDiagnosticsDebuggerNonUserCodeAttribute))
       {
         return true;
@@ -1217,6 +1222,39 @@ namespace DotNetFrontEnd
           return true;
         }
       }
+      return false;
+    }
+
+    /// <summary>
+    /// Returns <c>true</c> if <c>def</c> is marked with an attribute that indicates that the method should
+    /// not be instrumented, e.g., the ContractInvariantMethod attribute.
+    /// </summary>
+    /// <param name="def"></param>
+    /// <returns>
+    ///   <c>true</c> if <c>def</c> is marked with an attribute that indicates that the method should
+    ///   not be instrumented
+    /// </returns>
+    [Pure]
+    public bool IsNotInstrumentable(IReference def)
+    {
+      Contract.Requires(def != null);
+
+      var contractAttributes = new string[] { 
+        "ContractInvariantMethodAttribute", "ContractClassForAttribute", 
+        "ContractArgumentValidatorAttribute", "ContractAbbreviatorAttribute"
+      };
+
+      foreach (var contractAttribute in contractAttributes)
+      {
+        var attributeRef = CreateTypeReference(Host.ContractAssemblySymbolicIdentity, 
+          string.Join(".", "System", "Diagnostics", "Contracts", contractAttribute));
+
+        if (AttributeHelper.Contains(def.Attributes, attributeRef))
+        {
+          return true;
+        }
+      }
+
       return false;
     }
 
@@ -1293,7 +1331,7 @@ namespace DotNetFrontEnd
       else
       {
         // don't recurse if a field references the containing type
-        var fieldsAreImmutable = type.GetFields().All(f => f.IsInitOnly && (f.FieldType == type || IsImmutable(f.FieldType)));
+        var fieldsAreImmutable = type.GetFields().All(f => f.IsLiteral || (f.IsInitOnly && (f.FieldType == type || IsImmutable(f.FieldType))));
         var propertiesAreReadOnly = type.GetProperties().All(p => !p.CanWrite);
         var result = fieldsAreImmutable && propertiesAreReadOnly;
 
