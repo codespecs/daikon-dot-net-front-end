@@ -619,6 +619,12 @@ namespace DotNetFrontEnd
 
       foreach (var method in typeManager.GetPureMethodsForType(elementType, originatingType))
       {
+        // TODO 83: don't skip static methods for lists
+        if (method.IsStatic)
+        {
+          continue;
+        }
+
         string methodName = DeclarationPrinter.SanitizePropertyName(method.Name);
 
         var pureMethodFlags = ExtendFlags(

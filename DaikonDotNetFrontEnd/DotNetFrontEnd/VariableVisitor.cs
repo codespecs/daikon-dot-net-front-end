@@ -1257,6 +1257,12 @@ namespace DotNetFrontEnd
 
       foreach (var method in typeManager.GetPureMethodsForType(elementType, originatingType))
       {
+        // TODO 83: don't skip static methods for lists
+        if (method.IsStatic)
+        {
+          continue;
+        }
+
         ListReflectiveVisit(DeclarationPrinter.SanitizedMethodExpression(method, name), null,
           method.ReturnType, writer, depth + 1, originatingType);
       }
@@ -1337,6 +1343,12 @@ namespace DotNetFrontEnd
 
       foreach (var method in typeManager.GetPureMethodsForType(elementType, originatingType))
       {
+        // TODO 83: don't skip static methods for lists
+        if (method.IsStatic)
+        {
+          continue;
+        }
+
         bool[] pureNonsensical = new bool[list.Count];
         object[] pureMethodResults = new object[list.Count];
 
@@ -1551,23 +1563,16 @@ namespace DotNetFrontEnd
     {
       Contract.Requires(obj != null);
       Contract.Requires(methodInfo != null);
+      Contract.Requires(methodInfo.DeclaringType != null, "Method has no declaring type");
+
+      Func<Type, string> normalize = t => t.IsGenericType ? t.GetGenericTypeDefinition().Name : t.Name;
 
       Type objType = obj.GetType();
 
-      // Ensure we are at the declared declaredType, and not possibly a subtype
-      Type declaringType = obj.GetType();
-      while ((declaringType.Name != null) && (declaringType.Name != methodInfo.DeclaringType.Name))
-      {
-        declaringType = declaringType.BaseType;
-      }
-
-      Contract.Assume(declaringType != null,
-          "Cannot find declaring declaredType for method " + methodInfo.Name + " (instance declaredType: " + obj.GetType().Name + ")");
-
       // Climb the supertypes as necessary to get the desired field
       MethodInfo method = methodInfo.GetParameters().Length == 0
-                            ? declaringType.GetMethod(methodInfo.Name, Type.EmptyTypes)
-                            : declaringType.GetMethod(methodInfo.Name, new Type[] { objType });
+                            ? objType.GetMethod(methodInfo.Name, TypeManager.PureMethodBindings, null, Type.EmptyTypes, null)
+                            : objType.GetMethod(methodInfo.Name, TypeManager.PureMethodBindings, null, new Type[] { objType }, null);
 
       Contract.Assume(method != null, "Could not find method " + methodInfo.Name);
 

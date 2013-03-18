@@ -2388,6 +2388,11 @@ namespace DotNetFrontEnd
       {
         return;
       }
+      else if (type.IsArray)
+      {
+        // arrays are automatically handled by Daikon
+        return;
+      }
 
       Func<Type, string> qualifiedName =
         t => (t.IsGenericType ? t.GetGenericTypeDefinition() : t).AssemblyQualifiedName;
@@ -2409,7 +2414,7 @@ namespace DotNetFrontEnd
         var paramList = method.GetParameters();
 
         if ((!method.IsStatic && paramList.Length == 0) ||
-            (method.IsStatic && paramList.Length == 1))
+            (method.IsStatic && paramList.Length == 1 && paramList[0].ParameterType == type))
         {
           // method name includes the declaring class / interface
           var nameOnly = method.Name.Split('.').Last();
