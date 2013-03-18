@@ -151,6 +151,11 @@ namespace DotNetFrontEnd
         }
         module = mutator.Visit(mutable, Path.Combine(daikonDir, VisitorDll));
 
+        if (frontEndArgs.EmitNullaryInfo)
+        {
+          return null;
+        }
+
         // Remove the old PDB file
         try
         {
