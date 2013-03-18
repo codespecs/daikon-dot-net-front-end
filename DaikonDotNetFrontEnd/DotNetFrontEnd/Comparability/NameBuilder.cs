@@ -363,12 +363,19 @@ namespace Comparability
         }
         else
         {
-          // Enum is defined in another assembly
-          var enumType = TypeManager.ConvertAssemblyQualifiedNameToType(
-            TypeManager.ConvertCCITypeToAssemblyQualifiedName(targetType)).GetSingleType;
-          Contract.Assume(enumType.IsEnum, "CCI enum type resolved to non-enum type");
-          var name = string.Join(".", enumType.FullName, enumType.GetEnumName(constant.Value));
-          TryAdd(constantExpr, name);
+          try
+          {
+            // Enum is defined in another assembly
+            var enumType = TypeManager.ConvertAssemblyQualifiedNameToType(
+              TypeManager.ConvertCCITypeToAssemblyQualifiedName(targetType)).GetSingleType;
+            Contract.Assume(enumType.IsEnum, "CCI enum type resolved to non-enum type");
+            var name = string.Join(".", enumType.FullName, enumType.GetEnumName(constant.Value));
+            TryAdd(constantExpr, name);
+          }
+          catch
+          {
+            // Issue #84: debug errors locating enums in other assemblies
+          }
         }
       }
     }
