@@ -31,7 +31,11 @@ namespace DotNetFrontEndLauncher
       //try
       //{
       resultStream = ProgramRewriter.RewriteProgramIL(frontEndArgs, typeManager);
-      if (frontEndArgs.VerboseMode)
+      if (frontEndArgs.EmitNullaryInfo)
+      {
+        return;
+      } 
+      else if (frontEndArgs.VerboseMode)
       {
         Console.WriteLine("Rewriting complete");
       }
@@ -52,11 +56,6 @@ namespace DotNetFrontEndLauncher
       //  return;
       //}
 
-      if (frontEndArgs.EmitNullaryInfo)
-      {
-        // Don't run the program -- the user wants the generated auto_pure file
-        return;
-      }
       if (frontEndArgs.SaveAndRun)
       {
         // Do we need to serialize the type manager here?
