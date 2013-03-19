@@ -2264,7 +2264,8 @@ namespace DotNetFrontEnd
         foreach (MethodDefinition method in type.Methods)
         {
           if (typeManager.IsCompilerGenerated(method) &&
-              method.Name.ToString().StartsWith(DeclarationPrinter.GetterPropertyPrefix))
+              method.Name.ToString().StartsWith(DeclarationPrinter.GetterPropertyPrefix) && 
+              !method.ToString().Any<char>(c => TypeManager.SuspectCharacterRegex.IsMatch(c.ToString())))
           {
             Tuple<string, string> pureMethod = new Tuple<string, string>(
               typeManager.ConvertCCITypeToAssemblyQualifiedName(
