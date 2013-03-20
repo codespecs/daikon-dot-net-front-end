@@ -936,9 +936,10 @@ namespace DotNetFrontEnd
       {
         foreach (var item in typeManager.GetPureMethodsForType(type, originatingType))
         {
-          ReflectiveVisit(DeclarationPrinter.SanitizedMethodExpression(item, name),
-              (obj == null ? null : GetMethodValue(obj, item)), item.ReturnType, writer,
-              depth + 1, originatingType, fieldFlags: fieldFlags);
+          var exprName = DeclarationPrinter.SanitizedMethodExpression(item, name);
+          ReflectiveVisit(exprName, (obj == null ? null : GetMethodValue(obj, item, exprName)),
+            item.ReturnType, writer,
+            depth + 1, originatingType, fieldFlags: fieldFlags);
         }
       }
 
@@ -1026,7 +1027,7 @@ namespace DotNetFrontEnd
       writer.WriteLine(name);
 
       // Print variable's value.
-      writer.WriteLine(GetVariableValue(obj, type, fieldFlags));
+      writer.WriteLine(GetVariableValue(obj, type, fieldFlags, name));
 
       // Print variable's modified bit.
       // Stub implementation, always print safe value.
@@ -1142,7 +1143,7 @@ namespace DotNetFrontEnd
       {
         flags |= VariableModifiers.nonsensical;
         // Write nonsensical
-        writer.WriteLine(GetVariableValue(list, elementType, flags));
+        writer.WriteLine(GetVariableValue(list, elementType, flags, name));
         // Write the mod bit
         writer.WriteLine(NonsensicalModifiedBit);
       }
@@ -1159,7 +1160,7 @@ namespace DotNetFrontEnd
           {
             elementFlags = VariableModifiers.nonsensical;
           }
-          builder.Append(GetVariableValue(list[i], elementType, flags | elementFlags) + " ");
+          builder.Append(GetVariableValue(list[i], elementType, flags | elementFlags, name) + " ");
         }
 
         // Strip off the trailing space before adding the ], only if we ever added a space
@@ -1349,16 +1350,18 @@ namespace DotNetFrontEnd
           continue;
         }
 
+        var exprName = DeclarationPrinter.SanitizedMethodExpression(method, name);
+
         bool[] pureNonsensical = new bool[list.Count];
         object[] pureMethodResults = new object[list.Count];
 
         for (int i = 0; i < list.Count; i++)
         {
           pureNonsensical[i] = nonsensicalElements[i] || list[i] == null;
-          pureMethodResults[i] = pureNonsensical[i] ? null : GetMethodValue(list[i], method);
+          pureMethodResults[i] = pureNonsensical[i] ? null : GetMethodValue(list[i], method, exprName);
         }
-        ListReflectiveVisit(DeclarationPrinter.SanitizedMethodExpression(method, name), 
-          pureMethodResults, method.ReturnType, writer, depth + 1, originatingType,
+        ListReflectiveVisit(exprName, pureMethodResults, 
+          method.ReturnType, writer, depth + 1, originatingType,
           nonsensicalElements: pureNonsensical);
       }
     }
@@ -1402,10 +1405,15 @@ namespace DotNetFrontEnd
     /// <param name="x">the value</param>
     /// <param name="type">the type to use when determining how to print</param>
     /// <returns>the hashcode for the value</returns>
-    private static string GetHashCode(object x, Type type)
+    private static string GetHashCode(object x, Type type, string name)
     {
       Contract.Requires(type != null);
+      Contract.Requires(x != null);
+      Contract.Requires(!string.IsNullOrEmpty(name));
       Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+
+      Contract.Assume(type != typeof(void), 
+        "GetHashCode: declared type is void; expression: " + name + " runtime type: " + x.GetType().FullName);
 
       var xType = RuntimeType(x);
 
@@ -1413,7 +1421,7 @@ namespace DotNetFrontEnd
       {
         // Use a value-based hashcode for value types
         Contract.Assert(xType.IsValueType,
-            "Runtime value is not a value type. Runtime Type: " + xType.ToString() + " Declared: " + type.Name);
+          "Runtime value is not a value type. Expression: " + name + "Runtime Type: " + xType.ToString() + " Declared: " + type.Name);
         return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
       }
       else if (xType.IsValueType && (type.IsGenericParameter || type.IsInterface))
@@ -1450,9 +1458,13 @@ namespace DotNetFrontEnd
     /// <param name="type">The type to be used when determining how to print</param>
     /// <param name="flags">Any flags for the variable</param>
     /// <returns>String containing a daikon-valid representation of the variable's value</returns>
-    private static string GetVariableValue(object x, Type type, VariableModifiers flags)
+    private static string GetVariableValue(object x, Type type, VariableModifiers flags, string name)
     {
       Contract.Requires(type != null);
+      Contract.Requires(!string.IsNullOrEmpty(name));
+
+      Contract.Assume(type != typeof(void), 
+        "Declared type of expression is void; expression: " + name + " runtime type: " + (x == null ? "<null>" : x.GetType().FullName));
 
       if (flags.HasFlag(VariableModifiers.nonsensical))
       {
@@ -1487,23 +1499,30 @@ namespace DotNetFrontEnd
       }
       else if (type.IsValueType)
       {
-        if (type == TypeManager.BooleanType)
+        try
         {
-          return ((bool)x) ? "true" : "false";
+            if (type == TypeManager.BooleanType)
+            {
+                return ((bool)x) ? "true" : "false";
+            }
+            else if (type == TypeManager.CharType)
+            {
+                return ((int)(char)x).ToString(CultureInfo.InvariantCulture);
+            }
+            else if (TypeManager.IsAnyNumericType(type))
+            {
+                return x.ToString();
+            }
         }
-        else if (type == TypeManager.CharType)
+        catch
         {
-          return ((int)(char)x).ToString(CultureInfo.InvariantCulture);
-        }
-        else if (TypeManager.IsAnyNumericType(type))
-        {
-          return x.ToString();
+            Contract.Assume(false, "Error getting value " + name + "; expected: " + type.FullName + " actual: " +x.GetType().FullName);
         }
       }
 
       // Type is either an object or a user-defined struct, print out its hashcode.
       SuppressOutput = true;
-      string hashcode = GetHashCode(x, type);
+      string hashcode = GetHashCode(x, type, name);
       SuppressOutput = false;
       return hashcode;
 
@@ -1558,35 +1577,65 @@ namespace DotNetFrontEnd
     /// <param name="obj">Object to invoke the method on</param>
     /// <param name="method">Method to invoke</param>
     /// <param name="methodName">Name of the method to invoke</param>
+    /// <param name="name">Expression name for debugging purpose</param>
     /// <returns>Result returned by the invoked function</returns>
-    private static object GetMethodValue(object obj, MethodInfo methodInfo)
+    private static object GetMethodValue(object obj, MethodInfo methodInfo, string name)
     {
       Contract.Requires(obj != null);
       Contract.Requires(methodInfo != null);
-      Contract.Requires(methodInfo.DeclaringType != null, "Method has no declaring type");
-
-      Func<Type, string> normalize = t => t.IsGenericType ? t.GetGenericTypeDefinition().Name : t.Name;
+      Contract.Requires(name != null);
 
       Type objType = obj.GetType();
 
-      // Climb the supertypes as necessary to get the desired field
-      MethodInfo method = methodInfo.GetParameters().Length == 0
-                            ? objType.GetMethod(methodInfo.Name, TypeManager.PureMethodBindings, null, Type.EmptyTypes, null)
-                            : objType.GetMethod(methodInfo.Name, TypeManager.PureMethodBindings, null, new Type[] { objType }, null);
+      Contract.Assume(methodInfo.DeclaringType != null, 
+        "Method " + methodInfo.Name + " has no declaring type; expression type: " + objType.FullName);
 
-      Contract.Assume(method != null, "Could not find method " + methodInfo.Name);
+      Func<string> callInfo = () =>
+        "[Expession " + name + " Object Type: " + objType.FullName + " Method Name: " + methodInfo.Name + 
+        " Declaring Type: " + methodInfo.DeclaringType + " Static?: " + methodInfo.IsStatic + 
+        " Public?: " + methodInfo.IsPublic + "]";
+
+      var paramCnt = methodInfo.GetParameters().Length;
+
+      MethodInfo method = null;
+
+      if (methodInfo.DeclaringType.IsInterface && !string.IsNullOrEmpty(methodInfo.DeclaringType.FullName))
+      {
+        // attempt to resolve an explicit interface method first
+        method = objType.GetMethod(string.Join(".", methodInfo.DeclaringType.FullName, methodInfo.Name),
+           TypeManager.PureMethodBindings, null,
+           (paramCnt == 0 ? Type.EmptyTypes : new Type[] { objType }),
+           null);
+      }
+     
+      if (method == null)
+      {
+          method = objType.GetMethod(methodInfo.Name,
+             TypeManager.PureMethodBindings, null,
+             (paramCnt == 0 ? Type.EmptyTypes : new Type[] {objType}),
+             null);
+      }
+
+      Contract.Assume(method != null, "Could not locate method " + methodInfo.Name + "; " + callInfo());
 
       var paramList = method.GetParameters();
+      Contract.Assume(paramCnt == paramList.Length,
+        "Parameter count mismatch. Expected: " + paramCnt +
+        " Actual: " + paramList.Length + "; " + callInfo());
+
       Contract.Assume((!method.IsStatic && paramList.Length == 0) || (method.IsStatic && paramList.Length <= 1),
-                       "Invalid number of parameters for method");
+                       "Invalid number of parameters for method; " + callInfo());
+
       Contract.Assume(paramList.Length == 0 || paramList[0].ParameterType.IsAssignableFrom(objType),
-                      "Cannot pass argument of declaredType " + objType.Name + " to " + "static method " + method.Name);
+                      "Cannot supply argument with runtime type " + objType.Name + " to method " + method.Name +
+                      " with parameter type " + (paramList.Length > 0 ? paramList[0].ParameterType.FullName : "void") + "; " +
+                      callInfo());
 
       object val;
       SuppressOutput = true;
       try
       {
-        val = method.Invoke(obj, paramList.Length == 1 ? new object[] { obj } : null);
+        val = method.Invoke(obj, paramList.Length == 1 ? new object[] {obj} : null);
       }
       catch (TargetInvocationException ex)
       {
@@ -1597,9 +1646,15 @@ namespace DotNetFrontEnd
         if (frontEndArgs.VerboseMode)
         {
           Console.WriteLine(
-            "Caught exception invoking " + method.Name + " on declaredType " + objType.Name + ": " + ex.Message ?? "<no message>");
+            "Caught exception invoking " + method.Name + " on declaredType " + objType.Name + ": " + ex.Message ??
+            "<no message>");
           Console.WriteLine(ex.StackTrace);
         }
+      }
+      catch (Exception ex)
+      {
+        Contract.Assume(false, "Unable to invoke " + method.Name + ": " + (ex.Message ?? "<no message>") + "; " + callInfo());
+        throw;
       }
       finally
       {

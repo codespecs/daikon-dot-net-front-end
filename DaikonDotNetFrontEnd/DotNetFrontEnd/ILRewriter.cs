@@ -2409,26 +2409,26 @@ namespace DotNetFrontEnd
       }
 
       foreach (var method in type.GetMethods(TypeManager.PureMethodBindings)
-                                 .Where(m => !m.IsConstructor && m.ReturnType != null))
+                                 .Where(m => !m.IsConstructor && m.ReturnType != null && m.ReturnType != typeof(void)))
       {
         var paramList = method.GetParameters();
 
-        if ((!method.IsStatic && paramList.Length == 0) ||
-            (method.IsStatic && paramList.Length == 1 && paramList[0].ParameterType == type))
+        if ((method.Name.Split('.').Length == 1) && // method does not explicitly implements an interface
+            ((!method.IsStatic && paramList.Length == 0) ||
+               (method.IsStatic && paramList.Length == 1 && paramList[0].ParameterType == type))) 
         {
-          // method name includes the declaring class / interface
-          var nameOnly = method.Name.Split('.').Last();
+          var name = method.Name;
 
           if (typeName != null &&
-              !IgnoredNullaryMethods.Contains(nameOnly) &&
-              !OnList(nameOnly, frontEndArgs.EmitNullaryPrefixBlacklist) &&
+              !IgnoredNullaryMethods.Contains(name) &&
+              !OnList(name, frontEndArgs.EmitNullaryPrefixBlacklist) &&
               (method.IsPublic || (type.FullName != null && type.FullName.Equals(originatingType.FullName))))
           {
             // TODO #80: for static methods, organize by the type of the parameter?s
-            acc[typeName].Add(nameOnly);
+            acc[typeName].Add(name);
           }
 
-          if (!IgnoredNullaryMethods.Contains(nameOnly))
+          if (!IgnoredNullaryMethods.Contains(name))
           {
             // For ignored methods, only visit parameter and return type if the user's code explicitly references it
             AllNullaryMethodsHelper(method.ReturnType, originatingType, acc, maxNestingDepth, nestingDepth + 1);

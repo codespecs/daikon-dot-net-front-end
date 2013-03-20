@@ -766,6 +766,8 @@ namespace DotNetFrontEnd
           {
             continue;
           }
+          Contract.Assume(method.ReturnType != null && method.ReturnType != typeof(void),
+            "Pure method " + method.Name + " has no return value; declaring type: " + method.DeclaringType.FullName);
           result.Add(method);
         }
       }
