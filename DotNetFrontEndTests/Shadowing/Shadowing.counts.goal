@@ -1,0 +1,5 @@
+MyTestProject.A..ctor() ENTER/3: 2 EXIT9/21: 2
+MyTestProject.B..ctor() ENTER/3: 1 EXIT9/21: 1
+MyTestProject.Shadowing.Main(System.String[]\_args) ENTER/12: 1 EXIT14/18: 1
+MyTestProject.Shadowing.fooA(MyTestProject.A\_a) ENTER/15: 2 EXIT1/21: 2
+MyTestProject.Shadowing.fooB(MyTestProject.B\_b) ENTER/15: 1 EXIT5/21: 1

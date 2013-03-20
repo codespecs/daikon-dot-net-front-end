@@ -1,0 +1,12 @@
+===========================================================================
+HelloWorld.Main(System.String[] args):::ENTER
+args has only one value
+args[] == []
+args[].ToString() == []
+===========================================================================
+HelloWorld.Main(System.String[] args):::EXIT4
+===========================================================================
+HelloWorld.Main(System.String[] args):::EXIT
+args[] == orig(args[])
+args[] == []
+args[].ToString() == []

@@ -1,0 +1,43 @@
+===========================================================================
+ExceptionTest.CubingClass:::OBJECT
+this has only one value
+this.GetType() == ExceptionTest.CubingClass.class
+this.val == 5
+===========================================================================
+ExceptionTest.CubingClass..ctor(System.Int32 val):::ENTER
+val == 5
+===========================================================================
+ExceptionTest.CubingClass..ctor(System.Int32 val):::EXIT8
+===========================================================================
+ExceptionTest.CubingClass..ctor(System.Int32 val):::EXIT
+this.val == orig(val)
+===========================================================================
+ExceptionTest.CubingClass.DoCube():::ENTER
+===========================================================================
+ExceptionTest.CubingClass.DoCube():::EXIT10
+===========================================================================
+ExceptionTest.CubingClass.DoCube():::EXIT
+this.val == orig(this.val)
+return == 125
+===========================================================================
+ExceptionTest.ExceptionTest.Main(System.String[] args):::ENTER
+args has only one value
+args[] == []
+args[].ToString() == []
+===========================================================================
+ExceptionTest.ExceptionTest.Main(System.String[] args):::EXIT77
+===========================================================================
+ExceptionTest.ExceptionTest.Main(System.String[] args):::EXIT
+args[] == orig(args[])
+args[] == []
+args[].ToString() == []
+===========================================================================
+ExceptionTest.ExceptionTest.Square(System.Boolean square, System.Int32 n):::ENTER
+n == 4
+square == false
+===========================================================================
+ExceptionTest.ExceptionTest.Square(System.Boolean square, System.Int32 n):::EXIT16
+===========================================================================
+ExceptionTest.ExceptionTest.Square(System.Boolean square, System.Int32 n):::EXIT
+return == orig(n)
+return == 4

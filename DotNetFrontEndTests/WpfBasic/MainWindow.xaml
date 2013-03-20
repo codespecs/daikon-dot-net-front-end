@@ -1,0 +1,12 @@
+﻿<Window x:Class="WpfBasic.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Label Content="Counter Value:
+               " Height="28" HorizontalAlignment="Left" Margin="90,73,0,0" Name="incLabel" VerticalAlignment="Top" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="184,75,0,0" Name="incText" VerticalAlignment="Top" Width="120" IsReadOnly="True" />
+        <Button Content="Increment" Height="23" HorizontalAlignment="Left" Margin="103,121,0,0" Name="incBtn" VerticalAlignment="Top" Width="75" Click="incBtn_Click" />
+        <Button Content="Reset" Height="23" HorizontalAlignment="Right" Margin="0,121,199,0" Name="resetBtn" VerticalAlignment="Top" Width="75" Click="resetBtn_Click" />
+    </Grid>
+</Window>
