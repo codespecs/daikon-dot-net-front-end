@@ -1688,8 +1688,9 @@ namespace DotNetFrontEnd
       }
       catch (Exception ex)
       {
-        Contract.Assume(false, 
-          string.Format("Unable to invoke {0}: {1}; {2}", method.Name, (ex.Message ?? "<no message>"), callInfo()));
+        Contract.Assume(false, string.Format("Unable to invoke {0}: {1}; {2}", 
+          method.Name, (ex.Message ?? "<no message>"), callInfo()));
+        
         throw;
       }
       finally
