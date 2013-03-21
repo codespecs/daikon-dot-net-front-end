@@ -130,6 +130,10 @@ namespace DotNetFrontEnd
       purity_prefix_blacklist,
       portable_dll,
       verbose,
+      /// <summary>
+      /// Output 'nonsensical' instead of crashing when reflection errors occur
+      /// </summary>
+      robust_mode, 
       wpf,
       /// <summary>
       /// Convenience Flag for the Visual Studio add-in. Sets <c>comparability</c>, <c>is_readonly_flags</c>, 
@@ -768,6 +772,15 @@ namespace DotNetFrontEnd
     public bool EnumUnderlyingValues
     {
       get { return this.IsArgumentSpecified(PossibleArgument.enum_underlying_values); }
+    }
+
+    /// <summary>
+    /// Print 'nonsensical' instead of crashing when a reflection lookup error occurs (e.g., a
+    /// method cannot be found).
+    /// </summary>
+    public bool RobustMode
+    {
+      get { return this.IsArgumentSpecified(PossibleArgument.robust_mode); }
     }
 
     /// <summary>
