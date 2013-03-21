@@ -937,9 +937,30 @@ namespace DotNetFrontEnd
         foreach (var item in typeManager.GetPureMethodsForType(type, originatingType))
         {
           var exprName = DeclarationPrinter.SanitizedMethodExpression(item, name);
-          ReflectiveVisit(exprName, (obj == null ? null : GetMethodValue(obj, item, exprName)),
-            item.ReturnType, writer,
-            depth + 1, originatingType, fieldFlags: fieldFlags);
+          object value = null;
+          var valueFlags = fieldFlags;
+          
+          try
+          {
+            if (obj == null || !TryGetMethodValue(obj, item, exprName, out value))
+            {
+              valueFlags |= VariableModifiers.nonsensical;
+            }
+          }
+          catch
+          {
+            if (frontEndArgs.RobustMode)
+            {
+              valueFlags |= VariableModifiers.nonsensical;
+            }
+            else
+            {
+              throw;
+            }
+          }
+
+          ReflectiveVisit(exprName, value, item.ReturnType, 
+            writer, depth + 1, originatingType, fieldFlags: fieldFlags);
         }
       }
 
@@ -1358,11 +1379,29 @@ namespace DotNetFrontEnd
         for (int i = 0; i < list.Count; i++)
         {
           pureNonsensical[i] = nonsensicalElements[i] || list[i] == null;
-          pureMethodResults[i] = pureNonsensical[i] ? null : GetMethodValue(list[i], method, exprName);
+          pureMethodResults[i] = null;
+
+          try
+          {
+            if (pureNonsensical[i] || !TryGetMethodValue(list[i], method, exprName, out pureMethodResults[i]))
+            {
+              pureNonsensical[i] = true;
+            }
+          }
+          catch
+          {
+            if (frontEndArgs.RobustMode)
+            {
+              pureNonsensical[i] = true;
+            }
+            else
+            {
+              throw;
+            }
+          }
         }
-        ListReflectiveVisit(exprName, pureMethodResults, 
-          method.ReturnType, writer, depth + 1, originatingType,
-          nonsensicalElements: pureNonsensical);
+        ListReflectiveVisit(exprName, pureMethodResults, method.ReturnType, 
+          writer, depth + 1, originatingType, nonsensicalElements: pureNonsensical);
       }
     }
 
@@ -1570,7 +1609,6 @@ namespace DotNetFrontEnd
       return runtimeField.GetValue(obj);
     }
 
-
     /// <summary>
     /// Get the result returned by invoking the given method on the given object.
     /// </summary>
@@ -1578,15 +1616,15 @@ namespace DotNetFrontEnd
     /// <param name="method">Method to invoke</param>
     /// <param name="methodName">Name of the method to invoke</param>
     /// <param name="name">Expression name for debugging purpose</param>
-    /// <returns>Result returned by the invoked function</returns>
-    private static object GetMethodValue(object obj, MethodInfo methodInfo, string name)
+    /// <returns><c>true</c> if the result is sensical</returns>
+    private static bool TryGetMethodValue(object obj, MethodInfo methodInfo, string name, out object result)
     {
       Contract.Requires(obj != null);
       Contract.Requires(methodInfo != null);
       Contract.Requires(name != null);
 
       Type objType = obj.GetType();
-
+      
       Contract.Assume(methodInfo.DeclaringType != null, 
         "Method " + methodInfo.Name + " has no declaring type; expression type: " + objType.FullName);
 
@@ -1631,36 +1669,34 @@ namespace DotNetFrontEnd
                       " with parameter type " + (paramList.Length > 0 ? paramList[0].ParameterType.FullName : "void") + "; " +
                       callInfo());
 
-      object val;
+      result = null;
       SuppressOutput = true;
       try
       {
-        val = method.Invoke(obj, paramList.Length == 1 ? new object[] {obj} : null);
+        result = method.Invoke(obj, paramList.Length == 1 ? new object[] {obj} : null);
       }
       catch (TargetInvocationException ex)
       {
         // If the _invoked method_ throws an exception, ignore it. 
-        // It's slightly wrong to use nonsensical here since Daikon will then generate invariants for
-        // cases when an exception isn't thrown
-        val = "nonsensical";
         if (frontEndArgs.VerboseMode)
         {
           Console.WriteLine(
-            "Caught exception invoking " + method.Name + " on declaredType " + objType.Name + ": " + ex.Message ??
-            "<no message>");
-          Console.WriteLine(ex.StackTrace);
+            string.Format("INFO: caught exception invoking {0} on declared type {1}: {2}",
+            method.Name, objType.FullName, (ex.Message ?? "<no message>")));
         }
+        return false;
       }
       catch (Exception ex)
       {
-        Contract.Assume(false, "Unable to invoke " + method.Name + ": " + (ex.Message ?? "<no message>") + "; " + callInfo());
+        Contract.Assume(false, 
+          string.Format("Unable to invoke {0}: {1}; {2}", method.Name, (ex.Message ?? "<no message>"), callInfo()));
         throw;
       }
       finally
       {
         SuppressOutput = false;
       }
-      return val;
+      return true;
     }
 
 
