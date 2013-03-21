@@ -356,20 +356,35 @@ namespace DotNetFrontEnd
       Contract.Requires(!string.IsNullOrWhiteSpace(typeName));
       Contract.Requires(!string.IsNullOrWhiteSpace(methodName));
 
-      // The user will declare a single type name
-      Type type = ConvertAssemblyQualifiedNameToType(typeName).GetSingleType;
-      Contract.Assert(type != null);
-   
-      // Try no parameters first
-      MethodInfo method = type.GetMethod(methodName, PureMethodBindings, Type.DefaultBinder, Type.EmptyTypes, null);
-      if (method == null)
+      try
       {
-        // TODO #80: right now we only support that methods with arguments in the same class
-        method = type.GetMethod(methodName, PureMethodBindings, null, new Type[] {type}, null);
-        Contract.Assume(method == null || method.IsStatic);
+        // The user will declare a single type name
+        Type type = ConvertAssemblyQualifiedNameToType(typeName).GetSingleType;
+        Contract.Assert(type != null);
+
+        // Try no parameters first
+        MethodInfo method = type.GetMethod(methodName, PureMethodBindings, null, Type.EmptyTypes, null);
+        if (method == null)
+        {
+          // TODO #80: right now we only support that methods with arguments in the same class
+          method = type.GetMethod(methodName, PureMethodBindings, null, new Type[] {type}, null);
+          Contract.Assume(method == null || method.IsStatic);
+        }
+        Contract.Assume(method != null, "No method of name " + methodName + " exists for type on type " + typeName);
+        AddPureMethod(type, method);
       }
-      Contract.Assume(method != null, "No method of name " + methodName + " exists for type on type " + typeName);
-      AddPureMethod(type, method);
+      catch (Exception ex)
+      {
+        if (frontEndArgs.RobustMode)
+        {
+          Console.WriteLine(string.Format("INFO: could not resolve method {0} for type {1}: {2}",
+            methodName, typeName, (ex.Message ?? "<no message>")));
+        }
+        else
+        {
+          throw;
+        }
+      }
     }
 
     /// <summary>
