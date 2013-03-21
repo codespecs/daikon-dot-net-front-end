@@ -21,7 +21,7 @@ Param(
 $MONO_TEST_DIR = 'C:\Projects\mono-tests-debug'
 $CSC_EXE = { C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe /nologo /warn:0 /unsafe /debug /out:$testexe $f }
 $CSC_EXE_DRIVER = { C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe /nologo /warn:0 /unsafe /debug /r:TestDriver.dll /out:$testexe $f }
-$DNFE_EXE = { .\DotNetFrontEndLauncher.exe --save-program=instrumented.exe $testexe }
+$DNFE_EXE = { .\DotNetFrontEndLauncher.exe --comparability --vs-flags --save-program=instrumented.exe $testexe }
 $PEVERIFY_EXE = { C:\Program Files\Microsoft SDKs\Windows\v8.0A\bin\NETFX 4.0 Tools\PEVerify.exe instrumented.exe }
 
 cd $MONO_TEST_DIR
