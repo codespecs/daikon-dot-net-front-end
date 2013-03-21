@@ -108,6 +108,11 @@ namespace DotNetFrontEnd
     public readonly static Regex RegexForTypesToIgnoreForProgramPoint = new Regex(@"(\.<.*?>)|(^<.*?>)");
 
     /// <summary>
+    /// Characters thar appear in some compiler generated F# methods which cause issues.
+    /// </summary>
+    public readonly static Regex SuspectCharacterRegex = new Regex("@");
+
+    /// <summary>
     /// Don't print object definition program points or references to the Code Contracts runtime
     /// </summary>
     public readonly static Regex CodeContractRuntimePpts = new Regex(@"System\.Diagnostics\.Contracts\.__ContractsRuntime.*?"); 
@@ -1239,6 +1244,12 @@ namespace DotNetFrontEnd
           return true;
         }
       }
+
+      if (def.ToString().Any<char>(c => SuspectCharacterRegex.IsMatch(c.ToString())))
+      {
+        return true;
+      }
+
       return false;
     }
 
