@@ -765,6 +765,10 @@ namespace DotNetFrontEnd
     /// <param name="paramType">The assembly-qualified name of the program to print</param>
     public void PrintParameter(string name, string paramType, IMethodDefinition methodDefinition)
     {
+      Contract.Requires(!string.IsNullOrWhiteSpace(name));
+      Contract.Requires(!string.IsNullOrWhiteSpace(name));
+      Contract.Requires(methodDefinition != null);
+
       DNFETypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(paramType);
       foreach (Type type in typeDecl.GetAllTypes)
       {
@@ -1274,8 +1278,7 @@ namespace DotNetFrontEnd
 
 
     /// <summary>
-    /// Returns a method expression string suitable for printing. If <c>method</c> is static,
-    /// 
+    /// Returns a method expression string suitable for printing. 
     /// </summary>
     /// <param name="method">the method</param>
     /// <param name="parentName">the parent expression</param>
@@ -1291,9 +1294,19 @@ namespace DotNetFrontEnd
 
       if (method.IsStatic)
       {
-        Contract.Assume(method.GetParameters().Length == 1);
-        var declaringType = (method.DeclaringType == typeof (String)) ? "string" : method.DeclaringType.Name;
-        return string.Format("{0}.{1}({2})", declaringType, methodName, parentName);
+        Contract.Assume(method.GetParameters().Length <= 1);
+
+        // TODO XXX: need to simplify the other standard types
+        var declaringType = (method.DeclaringType == typeof(String)) ? "string" : method.DeclaringType.Name;
+          
+        if (method.GetParameters().Length == 0)
+        {
+          return string.Join(".", declaringType, methodName);
+        }
+        else
+        {
+          return string.Format("{0}.{1}({2})", declaringType, methodName, parentName);
+        }
       }
       else
       {
