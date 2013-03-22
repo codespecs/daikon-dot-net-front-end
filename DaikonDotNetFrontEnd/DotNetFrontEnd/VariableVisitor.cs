@@ -934,15 +934,21 @@ namespace DotNetFrontEnd
 
       if (!SuppressOutput)
       {
-        foreach (var item in typeManager.GetPureMethodsForType(type, originatingType))
+        foreach (var method in typeManager.GetPureMethodsForType(type, originatingType))
         {
-          var exprName = DeclarationPrinter.SanitizedMethodExpression(item, name);
+          var exprName = DeclarationPrinter.SanitizedMethodExpression(method, name);
+          
+          if (method.IsStatic && staticFieldsVisitedForCurrentProgramPoint.Contains(exprName))
+          {
+            continue;
+          }
+
           object value = null;
           var valueFlags = fieldFlags;
           
           try
           {
-            if (obj == null || !TryGetMethodValue(obj, item, exprName, out value))
+            if (obj == null || !TryGetMethodValue(obj, method, exprName, out value))
             {
               valueFlags |= VariableModifiers.nonsensical;
             }
@@ -959,7 +965,7 @@ namespace DotNetFrontEnd
             }
           }
 
-          ReflectiveVisit(exprName, value, item.ReturnType, 
+          ReflectiveVisit(exprName, value, method.ReturnType, 
             writer, depth + 1, originatingType, fieldFlags: fieldFlags);
         }
       }
