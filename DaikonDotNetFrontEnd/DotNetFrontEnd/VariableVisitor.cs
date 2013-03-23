@@ -33,6 +33,7 @@ using System.Text;
 using System.Threading;
 using DotNetFrontEnd.Contracts;
 using System.Runtime.Remoting;
+using System.Text.RegularExpressions;
 
 namespace DotNetFrontEnd
 {
@@ -748,6 +749,27 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
+    /// Replaces illegal file name characters into underscores.
+    /// </summary>
+    /// <param name="str">file name string</param>
+    /// <returns><c>str</c> with illegal file name characters replaced with underscores</returns>
+    private static string CleanFileName(string str) 
+    {
+      Contract.Requires(str != null);
+      Contract.Ensures(Contract.Result<string>() != null);
+      Contract.Ensures(Contract.ForAll(Contract.Result<string>(), c => !Path.GetInvalidFileNameChars().Contains(c)));
+
+      var invalid = new HashSet<char>(Path.GetInvalidFileNameChars());
+
+      StringBuilder sb = new StringBuilder();
+      foreach (char c in str)
+      {
+        sb.Append(invalid.Contains(c) ? '_' : c);
+      }
+      return sb.ToString();
+    }
+
+    /// <summary>
     /// Get a datatrace writer. Caller is responsible for closing if necessary.
     /// Warning suppressed because caller takes responsibility for disposing.
     /// </summary>
@@ -778,17 +800,27 @@ namespace DotNetFrontEnd
           Directory.CreateDirectory(dirName);
         }
 
+        string tracePath;
+
         if (AppDomain.CurrentDomain.IsDefaultAppDomain())
         {
-          writer = new StreamWriter(frontEndArgs.OutputLocation, true);
+          tracePath = frontEndArgs.OutputLocation;
         }
         else
         {
           // Insert the domain name: <basename>.<domain>.dtrace
           var domain = AppDomain.CurrentDomain.FriendlyName ?? AppDomain.CurrentDomain.Id.ToString();
-          var file = string.Join(".", Path.GetFileNameWithoutExtension(frontEndArgs.OutputLocation), domain, "dtrace");
-          var path = Path.Combine(Path.GetDirectoryName(frontEndArgs.OutputLocation), file);
-          writer = new StreamWriter(path, true);
+          var file = string.Join(".", Path.GetFileNameWithoutExtension(frontEndArgs.OutputLocation), CleanFileName(domain), "dtrace");
+          tracePath = Path.Combine(Path.GetDirectoryName(frontEndArgs.OutputLocation), file);
+        }
+
+        try
+        {
+          writer = new StreamWriter(tracePath, true);
+        }
+        catch
+        {
+          throw new IOException("Error opening trace file. Path: " + tracePath);
         }
       }
 
