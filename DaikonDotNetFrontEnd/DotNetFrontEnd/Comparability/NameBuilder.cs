@@ -37,6 +37,8 @@ namespace Comparability
 
     private int methodCallCnt = 0;
 
+    private IMethodDefinition context = null;
+
     [ContractInvariantMethod]
     private void ObjectInvariants()
     {
@@ -256,37 +258,44 @@ namespace Comparability
 
       if (definition is IParameterDefinition)
       {
-        var paramName = ((IParameterDefinition)definition).Name.Value;
-        Contract.Assume(!string.IsNullOrWhiteSpace(paramName));
-        TryAdd(outer, paramName);
+        var name = ((IParameterDefinition) definition).Name.Value;
+        
+        if (!string.IsNullOrEmpty(name))
+        {
+          TryAdd(outer, name);
+        }
+        else
+        {
+          // NO OP: implicit this of superclass is not named (e.g., for default ctor of subclass)
+        }
       }
       else if (definition is IPropertyDefinition)
       {
         var name = ((IPropertyDefinition)definition).Name.Value;
-        Contract.Assume(!string.IsNullOrWhiteSpace(name));
+        Contract.Assume(!string.IsNullOrWhiteSpace(name), Context());
         TryAdd(outer, name);
       }
       else if (definition is IFieldReference)
       {
-        var def = ((IFieldReference)definition).ResolvedField;
-
-        if (!def.Attributes.Any(a => TypeManager.IsCompilerGenerated(def)))
+        var field = ((IFieldReference) definition).ResolvedField;
+       
+        if (!(field is Dummy) && !field.Attributes.Any(a => TypeManager.IsCompilerGenerated(field)))
         {
-          if (def.IsStatic)
+          if (field.IsStatic)
           {
-            var container = def.ContainingType.ResolvedType;
+            var container = field.ContainingType.ResolvedType;
             // The front-end uses reflection-style names for inner types, need to be consistent here
-            var name = string.Join(".", TypeHelper.GetTypeName(container, NameFormattingOptions.UseReflectionStyleForNestedTypeNames), def.Name.Value);
+            var name = string.Join(".", TypeHelper.GetTypeName(container, NameFormattingOptions.UseReflectionStyleForNestedTypeNames), field.Name.Value);
             TryAdd(outer, name);
             AddInstanceExpr(container, outer);
             StaticNames.Add(outer);
           }
           else
           {
-            Contract.Assume(instance != null, "Non-static field reference '" + def.Name + "' has no provided instance");
-            if (NameTable.ContainsKey(instance))
+            Contract.Assume(instance != null, "Non-static field reference '" + field.Name + "' has no provided instance; " + Context());
+            if (instance != null && NameTable.ContainsKey(instance))
             {
-              var name = NameTable[instance] + "." + def.Name;
+              var name = NameTable[instance] + "." + field.Name;
               TryAdd(outer, name);
               AddInstanceExpr(Type, outer);
             }
@@ -483,6 +492,17 @@ namespace Comparability
       {
         AnonymousDelegateReturns.Add((IReturnStatement)r);
       }
+    }
+
+    public override void Visit(IMethodDefinition method)
+    {
+      context = method;
+    }
+
+    private string Context()
+    {
+      return string.Format("Type: {0} Method: {0}", Type.Name.Value,
+                           (context != null) ? context.Name.Value : "<no method>");
     }
   }
 }
