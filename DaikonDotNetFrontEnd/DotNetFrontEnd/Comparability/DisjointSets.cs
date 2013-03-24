@@ -8,6 +8,7 @@ using DotNetFrontEnd.Contracts;
 
 namespace EmilStefanov
 {
+  [Serializable]
   public sealed class DisjointSets
   {
     [ContractInvariantMethod]
@@ -176,6 +177,7 @@ namespace EmilStefanov
     /// <summary>
     /// Internal Node data structure used for representing an element.
     /// </summary>
+    [Serializable]
     private class Node
     {
       /// <summary>

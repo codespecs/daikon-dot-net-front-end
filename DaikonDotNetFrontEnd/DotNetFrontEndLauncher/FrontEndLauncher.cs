@@ -31,7 +31,7 @@ namespace DotNetFrontEndLauncher
       //try
       //{
       resultStream = ProgramRewriter.RewriteProgramIL(frontEndArgs, typeManager);
-      if (frontEndArgs.EmitNullaryInfo)
+      if (frontEndArgs.EmitNullaryInfo || frontEndArgs.GenerateComparability)
       {
         return;
       } 

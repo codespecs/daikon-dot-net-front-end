@@ -32,7 +32,7 @@ namespace DotNetFrontEnd
     /// </summary>
     private TypeManager typeManager;
 
-    private AssemblyComparability comparabilityManager;
+    private AssemblySummary comparabilityManager;
 
     /// <summary>
     /// Collection of static fields that have been visited at this program point.
@@ -140,7 +140,7 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="args">Arguments to use while printing the declaration file</param>
     /// <param name="typeManager">Type manager to use while printing the declaration file</param>
-    public DeclarationPrinter(FrontEndArgs args, TypeManager typeManager, AssemblyComparability comparabilityManager)
+    public DeclarationPrinter(FrontEndArgs args, TypeManager typeManager, AssemblySummary comparabilityManager)
     {
       if (args == null)
       {
@@ -447,12 +447,12 @@ namespace DotNetFrontEnd
           if (type.IsArray)
           {
               this.WritePair("comparability", 
-                  comparabilityManager.GetComparability(name, typeContext, kind, methodContext) + "[" + comparabilityManager.GetElementComparability(name, typeContext, methodContext) + "]", 
+                  comparabilityManager.GetComparability(name, typeManager, typeContext, kind, methodContext) + "[" + comparabilityManager.GetElementComparability(name, typeManager, typeContext, methodContext) + "]", 
                   2);
           }
           else
           {
-              this.WritePair("comparability", comparabilityManager.GetComparability(name, typeContext, kind, methodContext), 2);
+              this.WritePair("comparability", comparabilityManager.GetComparability(name, typeManager, typeContext, kind, methodContext), 2);
           }
       }
       else
@@ -542,7 +542,7 @@ namespace DotNetFrontEnd
       {
           this.WritePair(
               "comparability",
-              comparabilityManager.GetElementComparability(enclosingVar, typeContext, methodContext),
+              comparabilityManager.GetElementComparability(enclosingVar, typeManager, typeContext, methodContext),
               IndentsForEntry);
       }
       else

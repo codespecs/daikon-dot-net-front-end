@@ -26,6 +26,7 @@ using Microsoft.Cci.ILToCodeModel;
 using Microsoft.Cci.MutableCodeModel;
 using DotNetFrontEnd.Comparability;
 using System.Diagnostics;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace DotNetFrontEnd
 {
@@ -109,24 +110,44 @@ namespace DotNetFrontEnd
 
       using (pdbReader)
       {
-        AssemblyComparability comparabilityManager = null;
+        AssemblySummary comparabilityManager = null;
 
         mutable = MetadataCopier.DeepCopy(host, assembly);
         typeManager.SetAssemblyIdentity(UnitHelper.GetAssemblyIdentity(mutable));
 
-        if (frontEndArgs.StaticComparability)
+        if (frontEndArgs.StaticComparability || frontEndArgs.GenerateComparability)
         {
-          if (frontEndArgs.VerboseMode)
+          if (frontEndArgs.ComparabilityFile != null)
           {
-            Console.WriteLine("Generating Comparability Information");
+            using (var cmp = File.Open(frontEndArgs.ComparabilityFile, FileMode.Open))
+            {
+              comparabilityManager = (AssemblySummary) new BinaryFormatter().Deserialize(cmp);
+            }
           }
-
-          decompiled = Decompiler.GetCodeModelFromMetadataModel(typeManager.Host, mutable, pdbReader, DecompilerOptions.AnonymousDelegates | DecompilerOptions.Iterators);
-          comparabilityManager = new AssemblyComparability(decompiled, typeManager, pdbReader);
-
-          if (frontEndArgs.VerboseMode)
+          else
           {
-            Console.WriteLine("Finished Generating Comparability Information");
+            if (frontEndArgs.VerboseMode)
+            {
+              Console.WriteLine("Generating Comparability Information");
+            }
+
+            decompiled = Decompiler.GetCodeModelFromMetadataModel(typeManager.Host, mutable, pdbReader, DecompilerOptions.AnonymousDelegates | DecompilerOptions.Iterators);
+            comparabilityManager = AssemblySummary.MakeSummary(decompiled, typeManager, pdbReader);
+
+            if (frontEndArgs.VerboseMode)
+            {
+              Console.WriteLine("Finished Generating Comparability Information");
+            }
+
+            using (var cmp = File.Open(frontEndArgs.AssemblyPath + FrontEndArgs.ComparabilityFileExtension, FileMode.Create))
+            {
+              new BinaryFormatter().Serialize(cmp, comparabilityManager);
+            }
+
+            if (frontEndArgs.GenerateComparability)
+            {
+              return null;
+            }
           }
         }
 
@@ -151,7 +172,7 @@ namespace DotNetFrontEnd
         }
         module = mutator.Visit(mutable, Path.Combine(daikonDir, VisitorDll));
 
-        if (frontEndArgs.EmitNullaryInfo)
+        if (frontEndArgs.EmitNullaryInfo || frontEndArgs.GenerateComparability)
         {
           return null;
         }
