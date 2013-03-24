@@ -106,7 +106,7 @@ namespace DotNetFrontEnd
     private DotNetFrontEnd.DeclarationPrinter declPrinter;
     private DotNetFrontEnd.FrontEndArgs frontEndArgs;
     private DotNetFrontEnd.TypeManager typeManager;
-    private Comparability.AssemblyComparability comparabilityManager;
+    private Comparability.AssemblySummary comparabilityManager;
 
     // Variables used during rewriting
     private readonly PdbReader pdbReader;
@@ -177,7 +177,7 @@ namespace DotNetFrontEnd
     }
 
     public ILRewriter(IMetadataHost host, PdbReader pdbReader, DotNetFrontEnd.FrontEndArgs frontEndArgs,
-        DotNetFrontEnd.TypeManager typeManager, Comparability.AssemblyComparability comparabilityManager)
+        DotNetFrontEnd.TypeManager typeManager, Comparability.AssemblySummary comparabilityManager)
       : base(host)
     {
       Contract.Requires(host != null);

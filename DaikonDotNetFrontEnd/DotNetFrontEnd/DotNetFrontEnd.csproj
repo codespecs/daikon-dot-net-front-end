@@ -144,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Comparability\AssemblyComparability.cs" />
+    <Compile Include="Comparability\ComparabilitySummary.cs" />
     <Compile Include="Comparability\ComparabilityVisitor.cs" />
     <Compile Include="Comparability\DisjointSets.cs" />
     <Compile Include="Comparability\NameBuilder.cs" />

@@ -7,6 +7,8 @@ using Microsoft.Cci;
 using EmilStefanov;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
+using DotNetFrontEnd.Comparability;
+using DotNetFrontEnd;
 
 namespace Comparability
 {
@@ -668,6 +670,17 @@ namespace Comparability
     {
       var expanded = Expand(new[] { binary.LeftOperand, binary.RightOperand });
       Mark(expanded);
+    }
+
+    public static MethodSummary MakeSummary(TypeManager typeManager, MethodVisitor method)
+    {
+      return new MethodSummary(
+        typeManager.ConvertCCITypeToAssemblyQualifiedName(method.Method.ContainingTypeDefinition),
+        method.Method.Name.Value,
+        method.Method.Parameters.Select(p => typeManager.ConvertCCITypeToAssemblyQualifiedName(p.Type)).ToArray(),
+        method.ids,
+        method.comparability,
+        method.arrayIndexes);
     }
 
   }
