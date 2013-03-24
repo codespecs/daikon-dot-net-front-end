@@ -1492,39 +1492,53 @@ namespace DotNetFrontEnd
       Contract.Assume(type != typeof(void), 
         "GetHashCode: declared type is void; expression: " + name + " runtime type: " + x.GetType().FullName);
 
-      var xType = RuntimeType(x);
+      try
+      {
+        var xType = RuntimeType(x);
 
-      if (type.IsValueType || type == typeof(ValueType))
-      {
-        // Use a value-based hashcode for value types
-        Contract.Assert(xType.IsValueType,
-          "Runtime value is not a value type. Expression: " + name + "Runtime Type: " + xType.ToString() + " Declared: " + type.Name);
-        return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
-      }
-      else if (xType.IsValueType && (type.IsGenericParameter || type.IsInterface))
-      {
-        // C#'s type system will enforce reasonable comparability for generic parameters and interfaces
-        // TODO: explicitly check to see if generic parameter extends value type
-        return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
-      }
-      else
-      {
-        if (!xType.IsValueType)
+        if (type.IsValueType || type == typeof(ValueType))
         {
-          // Use a reference-based hashcode for reference types
-          // TODO: does this work properly for proxies? i.e., do we want the reference hash of the 
-          // transparent proxy, or the reference it's proxying?
-          return RuntimeHelpers.GetHashCode(x).ToString(CultureInfo.InvariantCulture);
+           // Use a value-based hashcode for value types
+           Contract.Assert(xType.IsValueType,
+             "Runtime value is not a value type. Expression: " + name + "Runtime Type: " + xType.ToString() + " Declared: " + type.Name);
+           return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
+        }
+        else if (xType.IsValueType && (type.IsGenericParameter || type.IsInterface))
+        {
+          // C#'s type system will enforce reasonable comparability for generic parameters and interfaces
+          // TODO: explicitly check to see if generic parameter extends value type
+          return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
         }
         else
         {
-          // Assume there's a type mismatch because we didn't have any type information.
-          Contract.Assume(type.Equals(typeof(object)),
-               "Runtime value is not a reference type. Runtime Type: " + x.GetType().ToString() + " Declared: " + type.Name);
-          // Use the value's hashcode and hope it does something reasonable; the type system + comparability 
-          // analysis should avoid spurious comparisons
+          if (!xType.IsValueType)
+          {
+            // Use a reference-based hashcode for reference types
+            // TODO: does this work properly for proxies? i.e., do we want the reference hash of the 
+            // transparent proxy, or the reference it's proxying?
+            return RuntimeHelpers.GetHashCode(x).ToString(CultureInfo.InvariantCulture);
+          }
+          else
+          {
+            // Assume there's a type mismatch because we didn't have any type information.
+            Contract.Assume(type.Equals(typeof(object)),
+                 "Runtime value is not a reference type. Runtime Type: " + x.GetType().ToString() + " Declared: " + type.Name);
+            // Use the value's hashcode and hope it does something reasonable; the type system + comparability 
+            // analysis should avoid spurious comparisons
+            return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
+          }
+        }
+      }
+      catch
+      {
+        if (frontEndArgs.RobustMode)
+        {
           return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
         }
+        else
+        {
+          throw;
+        } 
       }
     }
 
