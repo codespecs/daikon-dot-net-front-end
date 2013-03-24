@@ -150,11 +150,6 @@ namespace DotNetFrontEnd
     public static readonly string WriteInvocationNonceMethodName = "WriteInvocationNonce";
 
     /// <summary>
-    /// Name of the method to suppress any output
-    /// </summary>
-    public static readonly string ShouldSuppressOutputMethodName = "SetOutputSuppression";
-
-    /// <summary>
     /// The name of the exception variable added at the end of every method
     /// </summary>
     private static readonly string ExceptionVariableName = "exception";
@@ -174,6 +169,11 @@ namespace DotNetFrontEnd
     /// </summary>
     private static readonly int SafeModifiedBit = 1;
 
+    /// <summary>
+    /// Regex for getting name and transition for a program point
+    /// </summary>
+    private static readonly Regex PptRegex = new Regex(@"(.*?):::(.*?)");
+
     #endregion
 
     #region Private Fields
@@ -189,9 +189,10 @@ namespace DotNetFrontEnd
     private static TypeManager typeManager = null;
 
     /// <summary>
-    /// Map from program point name to number of times that program point has occurred.
+    /// Map from program point name (without label) to number of times that program point has occurred.
+    /// Occurence count is updated when setting the nonce.
     /// </summary>
-    private static Dictionary<String, int> occurenceCounts = null;
+    private readonly static ConcurrentDictionary<String, int> occurenceCounts = new ConcurrentDictionary<string, int>();
 
     /// <summary>
     /// Whether output for the program point currently being visited should be suppressed. Used in 
@@ -254,10 +255,6 @@ namespace DotNetFrontEnd
         Contract.Ensures(VariableVisitor.frontEndArgs == value);
 
         VariableVisitor.frontEndArgs = value;
-        if (frontEndArgs.SampleStart != FrontEndArgs.NoSampleStart)
-        {
-          occurenceCounts = new Dictionary<string, int>();
-        }
       }
     }
 
@@ -391,12 +388,13 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Safe call to UnsafeIncrementThreadDepth
     /// </summary>
+    /// <param name="ppt">the program point name (without label)</param>
     /// <returns></returns>
-    public static bool IncrementThreadDepth()
+    public static bool IncrementThreadDepth(string ppt)
     {
       try
       {
-        return UnsafeIncrementThreadDepth();
+        return UnsafeIncrementThreadDepth(ppt);
       }
       catch (Exception ex)
       {
@@ -515,6 +513,49 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
+    /// Returns <c>true</c> if sampling is not enabled, or the program point should be sampled.
+    /// </summary>
+    /// <param name="ppt">program point</param>
+    /// <returns><c>true</c> if sampling is not enabled, or the program point should be sampled</returns>
+    private static bool SampleMethod(string ppt)
+    {
+      Contract.Requires(!string.IsNullOrEmpty(ppt));
+
+      if (frontEndArgs.SampleStart == FrontEndArgs.NoSampleStart)
+      {
+        return true;
+      }
+      else
+      {
+        int occurenceCount;
+        if (!occurenceCounts.TryGetValue(ppt, out occurenceCount))
+        {
+          throw new KeyNotFoundException("No occurence count entry for PPT: " + ppt);
+        }
+
+        // For example: if sample start is 5, print occurences we should print occurences
+        // 1..5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 100, 150, 200, ...
+
+        if (occurenceCount < frontEndArgs.SampleStart)
+        {
+          return true;
+        }
+        else
+        {
+          // For each subsequent SampleStart decrease printing by a factor of 10.
+          // SampleStart == 5:  5..9 => 1, 45..49 => 9, 50..54 => 10
+          int x = occurenceCount / frontEndArgs.SampleStart;
+
+          // SampleStart == 5:  5..9 => 0, 45..49: 0, 50..54: 1
+          // TODO(#40): Optimize this computation. (The ops don't undo each other b/c of rounding)
+          int factor = (int)Math.Log10((double)x);
+          int pow = (int)Math.Pow(10, factor);
+          return occurenceCount % (frontEndArgs.SampleStart * pow) == 0;
+        }
+      }
+    }
+
+    /// <summary>
     /// Special version of VisitVariable with different parameter ordering for convenient calling 
     /// convention compatibility.
     /// </summary>
@@ -594,12 +635,15 @@ namespace DotNetFrontEnd
 
     /// <summary>
     /// Increment the depth count for the current thread. Returns <code>true</code> if the ppt
-    /// should be visit, that is the depth count is 1.
+    /// should be visited: (1) the depth count is 1, and (2) sampling is not enabled or the method 
+    /// is being sampled.
     /// </summary>
+    /// <param name="ppt">the program point (without label)</param>
     /// <returns></returns>
-    private static bool UnsafeIncrementThreadDepth()
+    private static bool UnsafeIncrementThreadDepth(string ppt)
     {
-      return threadDepthMap.AddOrUpdate(Thread.CurrentThread, 1, (t, x) => x + 1) == 1;
+      int depth = threadDepthMap.AddOrUpdate(Thread.CurrentThread, 1, (t, x) => x + 1);
+      return depth == 1 && SampleMethod(ppt);
     }
 
     /// <summary>
@@ -616,13 +660,20 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Set the invocation nonce for this method by storing it in an appropriate local var
+    /// Update the occurence count for the PPT and get a domain-unique nonce for the method call.
     /// </summary>
     /// <returns>The invocation nonce for the method</returns>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "programPointName")]
     private static int UnsafeSetInvocationNonce(string programPointName)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(programPointName));
+      Contract.Ensures(occurenceCounts.ContainsKey(programPointName));
+
+      if (NestingDepth() < 1)
+      {
+        occurenceCounts.AddOrUpdate(programPointName, 0, (ppt, cnt) => cnt + 1);  
+      }
+
       return Interlocked.Increment(ref globalNonce);
     }
 
@@ -654,21 +705,6 @@ namespace DotNetFrontEnd
 
       staticFieldsVisitedForCurrentProgramPoint.Clear();
       variablesVisitedForCurrentProgramPoint.Clear();
-
-      if (frontEndArgs.SampleStart != FrontEndArgs.NoSampleStart)
-      {
-        int oldOccurrences;
-        occurenceCounts.TryGetValue(programPointName, out oldOccurrences);
-        if (oldOccurrences > 0)
-        {
-          // If we've seen less than SampleStart print all.
-          // After we've seen the first SampleStart print 10%.
-          // For each subsequent SampleStart decrease printing by a factor of 10.
-          // TODO(#40): Optimize this computation.
-          SuppressOutput = oldOccurrences % (int)Math.Pow(10, (oldOccurrences / frontEndArgs.SampleStart)) != 0;
-        }
-        occurenceCounts[programPointName] = oldOccurrences + 1;
-      }
 
       using (var writer = InitializeWriter())
       {
@@ -1752,7 +1788,16 @@ namespace DotNetFrontEnd
       return true;
     }
 
+    [Pure]
+    private static string PptMethod(String ppt)
+    {
+      Contract.Requires(ppt != null);
+      Contract.Requires(PptRegex.IsMatch(ppt));
+      Contract.Ensures(Contract.Result<string>() != null);
 
+      return PptRegex.Match(ppt).Groups[1].Value;
+    }
+    
     /// <summary>
     /// Prepare the given string for printing to Daikon format.
     /// </summary>

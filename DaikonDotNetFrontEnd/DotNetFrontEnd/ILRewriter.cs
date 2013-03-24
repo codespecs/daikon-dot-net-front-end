@@ -306,7 +306,7 @@ namespace DotNetFrontEnd
       immutableMethodBody = (IMethodBody)mutableMethodBody;
 
       var pptEnterEnd = new ILGeneratorLabel();
-      EmitIncrementDepth(pptEnterEnd);
+      EmitIncrementDepth(immutableMethodBody.MethodDefinition, pptEnterEnd);
 
       // We need the writer lock to emit the values of method parameters.
       EmitAcquireWriterLock();
@@ -1035,7 +1035,7 @@ namespace DotNetFrontEnd
         return false;
       }
 
-      EmitIncrementDepth(pptEnd);
+      EmitIncrementDepth(methodBody.MethodDefinition, pptEnd);
       EmitAcquireWriterLock();
 
       // Add the i to the end of exit to ensure uniqueness
@@ -1148,7 +1148,7 @@ namespace DotNetFrontEnd
       if (instrumentReturns)
       {
         ILGeneratorLabel pptEnd = new ILGeneratorLabel();
-        EmitIncrementDepth(pptEnd);
+        EmitIncrementDepth(methodBody.MethodDefinition, pptEnd);
         EmitAcquireWriterLock();
 
         // Add the i to the end of exit name to ensure uniqueness
@@ -1639,12 +1639,13 @@ namespace DotNetFrontEnd
     /// Suppression safe because we control the string in the GetNameFor call
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
         "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void EmitIncrementDepth(ILGeneratorLabel writePptEnd)
+    private void EmitIncrementDepth(IMethodDefinition method, ILGeneratorLabel writePptEnd)
     {
+      generator.Emit(OperationCode.Ldstr, FormatMethodName(method));
       var incrementName = this.nameTable.GetNameFor(VariableVisitor.IncrementDepthFunctionName);
       var incrementReference = new Microsoft.Cci.MethodReference(
           this.host, this.variableVisitorType, CallingConvention.Default,
-          this.host.PlatformType.SystemBoolean, incrementName, 0);
+          this.host.PlatformType.SystemBoolean, incrementName, 0, systemString);
       generator.Emit(OperationCode.Call, incrementReference);
       generator.Emit(OperationCode.Brfalse, writePptEnd);
     }
