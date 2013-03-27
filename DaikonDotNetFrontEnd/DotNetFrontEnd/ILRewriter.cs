@@ -1746,13 +1746,23 @@ namespace DotNetFrontEnd
           i++;
         }
 
-        // Load the name of the parameter onto the stack, print the parameter
-        // to the decls file if necessary.
-        generator.Emit(OperationCode.Ldstr, param.Name.ToString());
-        if (this.printDeclarations)
+        // there can be implicit arguments (e.g., an enclosing this?)
+        if (param.Name is Dummy)
         {
-          this.declPrinter.PrintParameter(param.Name.ToString(),
-              this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param.Type), methodBody.MethodDefinition);
+            i++;
+            continue;
+        }
+        else
+        {
+            // Load the name of the parameter onto the stack, print the parameter
+            // to the decls file if necessary.
+            generator.Emit(OperationCode.Ldstr, param.Name.ToString());
+            if (this.printDeclarations)
+            {
+                this.declPrinter.PrintParameter(param.Name.ToString(),
+                    this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param.Type), methodBody.MethodDefinition);
+            }
+           
         }
 
         // In the i-th iteration, load the i-th parameter onto the stack.
