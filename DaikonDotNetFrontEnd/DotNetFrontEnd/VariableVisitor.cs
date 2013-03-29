@@ -83,22 +83,12 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Name of the function to be inserted into the IL to acquire a lock on the writer.
     /// </summary>
-    public static readonly string AcquireWriterLockFunctionName = "AcquireLock";
+    public static readonly string AcquireWriterLockFunctionName = "AcquireLockIfNecessary";
 
     /// <summary>
     /// Name of the function to be inserted into the IL to release the lock on the writer.
     /// </summary>
     public static readonly string ReleaseWriterLockFunctionName = "ReleaseLock";
-
-    /// <summary>
-    /// Name of the function to be inserted into the IL to increment the call nesting depth.
-    /// </summary>
-    public static readonly string IncrementDepthFunctionName = "IncrementThreadDepth";
-
-    /// <summary>
-    /// Name of the function to be inserted into the IL to decrement the call nesting depth.
-    /// </summary>
-    public static readonly string DecrementDepthFunctionName = "DecrementThreadDepth";
 
     /// <summary>
     /// Name of the function to stop execution if an exception escaped reflective visiting
@@ -189,12 +179,6 @@ namespace DotNetFrontEnd
     private static TypeManager typeManager = null;
 
     /// <summary>
-    /// Map from program point name (without label) to number of times that program point has occurred.
-    /// Occurence count is updated when setting the nonce.
-    /// </summary>
-    private readonly static ConcurrentDictionary<String, int> occurenceCounts = new ConcurrentDictionary<string, int>();
-
-    /// <summary>
     /// Whether output for the program point currently being visited should be suppressed. Used in 
     /// sample-start. Must be set when each time a function in the source program is called,
     /// e.g. in WriteProgramPoint
@@ -202,9 +186,10 @@ namespace DotNetFrontEnd
     public static bool SuppressOutput { get; set; }
 
     /// <summary>
-    /// The current nonce counter
+    /// The current nonce counter; starts at <c>1</c> since <c>0</c> indicates an invocation should
+    /// not be instrumented
     /// </summary>
-    private static int globalNonce = 0;
+    private static int globalNonce = 1;
 
     /// <summary>
     /// Lock to ensure that no more than one thread is writing at a time
@@ -225,6 +210,13 @@ namespace DotNetFrontEnd
     /// Depth of the thread in visit calls
     /// </summary>
     private static readonly ConcurrentDictionary<Thread, int> threadDepthMap = new ConcurrentDictionary<Thread, int>();
+
+    /// <summary>
+    /// For each thread, a map from program point name (without labels) to the numer of times that program point
+    /// has been called. Occurence count is updated when setting the nonce.
+    /// </summary>
+    private static readonly ConcurrentDictionary<Thread, ConcurrentDictionary<string, int>> occurenceCounts =
+       new ConcurrentDictionary<Thread, ConcurrentDictionary<string, int>>(); 
 
     /// <summary>
     /// Writer lock acquire time-out
@@ -295,21 +287,43 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Acquire the lock on the PPT writer and increment the thread depth. Aborts thread if the lock
-    /// cannot be acquired within a certain time frame (which would indicate deadlock).
+    /// If at a top-level call, acquires the lock on the PPT writer and increments the thread depth; otherwise do nothing.
     /// </summary>
+    /// <returns><c>true</c> iff the lock was acquired</returns>
+    public static bool AcquireLockIfNecessary()
+    {
+      if (NestingDepth() > 0)
+      {
+        return false;
+      }
+      else
+      {
+        AcquireLock();
+        threadDepthMap.AddOrUpdate(Thread.CurrentThread, 1, (t, x) => x + 1);
+        return true;
+      }
+    }
+
+    /// <summary>
+    /// Acquire the PPT writer lock
+    /// </summary>
+    /// <remarks>
+    /// Aborts thread if the lock cannot be acquired within a certain time frame (which would indicate deadlock).
+    /// </remarks>
     public static void AcquireLock()
     {
-      bool acquired = false;
-      var timer = Stopwatch.StartNew();
-      do
-      {
-        if (timer.ElapsedMilliseconds > MAX_LOCK_ACQUIRE_TIME_MILLIS)
+        bool acquired = false;
+        var timer = Stopwatch.StartNew();
+        do
         {
-          KillApplication(new TimeoutException("DEADLOCK?: Could not acquire writer lock after " + MAX_LOCK_ACQUIRE_TIME_MILLIS + " ms"));
-        }
-        Monitor.TryEnter(WriterLock, TimeSpan.FromSeconds(1), ref acquired);
-      } while (!acquired);
+          if (timer.ElapsedMilliseconds > MAX_LOCK_ACQUIRE_TIME_MILLIS)
+          {
+            KillApplication(
+              new TimeoutException(
+                "DEADLOCK?: Could not acquire writer lock after " + MAX_LOCK_ACQUIRE_TIME_MILLIS + " ms"));
+          }
+          Monitor.TryEnter(WriterLock, TimeSpan.FromSeconds(1), ref acquired);
+        } while (!acquired);
     }
 
     /// <summary>
@@ -318,6 +332,13 @@ namespace DotNetFrontEnd
     public static void ReleaseLock()
     {
       Monitor.Exit(WriterLock);
+
+      if (threadDepthMap.AddOrUpdate(Thread.CurrentThread, 0, (t, x) => x - 1) == 0)
+      {
+        int value;
+        threadDepthMap.TryRemove(Thread.CurrentThread, out value);
+        Contract.Assume(value == 0, "Atomicity violation when decrementing thread depth.");
+      }
     }
 
     /// <summary>
@@ -377,40 +398,6 @@ namespace DotNetFrontEnd
       try
       {
         UnsafeVisitException(exception);
-      }
-      catch (Exception ex)
-      {
-        KillApplication(ex);
-        throw; // (dead code)
-      }
-    }
-
-    /// <summary>
-    /// Safe call to UnsafeIncrementThreadDepth
-    /// </summary>
-    /// <param name="ppt">the program point name (without label)</param>
-    /// <returns></returns>
-    public static bool IncrementThreadDepth(string ppt)
-    {
-      try
-      {
-        return UnsafeIncrementThreadDepth(ppt);
-      }
-      catch (Exception ex)
-      {
-        KillApplication(ex);
-        throw; // (dead code)
-      }
-    }
-
-    /// <summary>
-    /// Safe call to UnsafeDecrementThreadDepth
-    /// </summary>
-    public static void DecrementThreadDepth()
-    {
-      try
-      {
-        UnsafeDecrementThreadDepth();
       }
       catch (Exception ex)
       {
@@ -520,15 +507,32 @@ namespace DotNetFrontEnd
     private static bool SampleMethod(string ppt)
     {
       Contract.Requires(!string.IsNullOrEmpty(ppt));
+      Contract.Requires(occurenceCounts != null, "Occurence counts have not been initialized");
 
-      if (frontEndArgs.SampleStart == FrontEndArgs.NoSampleStart)
+      if (frontEndArgs == null)
+      {
+        // first method call in the program
+        return true;
+      }
+      else if (frontEndArgs.SampleStart == FrontEndArgs.NoSampleStart)
       {
         return true;
       }
       else
       {
+        ConcurrentDictionary<string, int> occurrences;
         int occurenceCount;
-        if (!occurenceCounts.TryGetValue(ppt, out occurenceCount))
+
+        if (!occurenceCounts.TryGetValue(Thread.CurrentThread, out occurrences))
+        {
+          throw new KeyNotFoundException("No occurence count entries for thread:" +
+                                         Thread.CurrentThread.ManagedThreadId.ToString());
+        }
+
+        Contract.Assume(occurrences == null, "null occurence count entry found for thread" +
+          Thread.CurrentThread.ManagedThreadId.ToString());
+        
+        if (!occurrences.TryGetValue(ppt, out occurenceCount))
         {
           throw new KeyNotFoundException("No occurence count entry for PPT: " + ppt);
         }
@@ -634,47 +638,41 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Increment the depth count for the current thread. Returns <code>true</code> if the ppt
-    /// should be visited: (1) the depth count is 1, and (2) sampling is not enabled or the method 
-    /// is being sampled.
+    /// For top-level (non-nested) calls, update the occurence count for the method. If the method
+    /// should be sampled (or if sampling is disabled), acquires the writer lock and increments the nesting
+    /// depth.
     /// </summary>
-    /// <param name="ppt">the program point (without label)</param>
-    /// <returns></returns>
-    private static bool UnsafeIncrementThreadDepth(string ppt)
-    {
-      int depth = threadDepthMap.AddOrUpdate(Thread.CurrentThread, 1, (t, x) => x + 1);
-      return depth == 1 && SampleMethod(ppt);
-    }
-
-    /// <summary>
-    /// Decrement the depth count for the current thread.
-    /// </summary>
-    private static void UnsafeDecrementThreadDepth()
-    {
-      if (threadDepthMap.AddOrUpdate(Thread.CurrentThread, 0, (t, x) => x - 1) == 0)
-      {
-        int value;
-        threadDepthMap.TryRemove(Thread.CurrentThread, out value);
-        Contract.Assume(value == 0, "Atomicity violation when decrementing thread depth.");
-      }
-    }
-
-    /// <summary>
-    /// Update the occurence count for the PPT and get a domain-unique nonce for the method call.
-    /// </summary>
-    /// <returns>The invocation nonce for the method</returns>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "programPointName")]
+    /// <returns>The invocation nonce for the method, or <c>0</c> if the ppt should be skipped</returns>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters",
+      MessageId = "programPointName")]
     private static int UnsafeSetInvocationNonce(string programPointName)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(programPointName));
-      Contract.Ensures(occurenceCounts.ContainsKey(programPointName));
+      Contract.Ensures(occurenceCounts.ContainsKey(Thread.CurrentThread));
 
-      if (NestingDepth() < 1)
+      int depth = NestingDepth();
+      var occurences = occurenceCounts.GetOrAdd(Thread.CurrentThread, new ConcurrentDictionary<string, int>());
+        
+      if (depth == 0)
       {
-        occurenceCounts.AddOrUpdate(programPointName, 0, (ppt, cnt) => cnt + 1);  
+        // update the occurence counts for non-nested calls
+        occurences.AddOrUpdate(programPointName, 0, (ppt, cnt) => cnt + 1);
+      }
+      else
+      {
+        occurences.GetOrAdd(programPointName, 0);  
       }
 
-      return Interlocked.Increment(ref globalNonce);
+      if (SampleMethod(programPointName))
+      {
+        AcquireLock();
+        threadDepthMap.AddOrUpdate(Thread.CurrentThread, 1, (t, x) => x + 1);
+        return Interlocked.Increment(ref globalNonce); 
+      }
+      else
+      {
+        return 0;
+      }
     }
 
     /// <summary>
