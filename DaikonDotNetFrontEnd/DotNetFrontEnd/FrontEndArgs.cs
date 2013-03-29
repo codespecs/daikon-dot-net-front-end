@@ -229,6 +229,9 @@ namespace DotNetFrontEnd
             throw new ArgumentException("Cannot process argument: " + currentArg
                 + ", it has too many = characters.");
           }
+          
+          // Whether the current argument was matched to any known possible argument
+          bool matched = false;
           // If the user specifies an argument twice accept the second version.
           foreach (var enumVal in Enum.GetValues(typeof(PossibleArgument)))
           {
@@ -237,6 +240,7 @@ namespace DotNetFrontEnd
             string keyStr = ChangeArgKeyToEnumType(pair[0].Substring(2));
             if (keyStr == enumVal.ToString())
             {
+              matched = true;
               PossibleArgument enumKey;
               if (!Enum.TryParse<PossibleArgument>(keyStr, out enumKey))
               {
@@ -266,6 +270,10 @@ namespace DotNetFrontEnd
               }
             }
           }
+          if (!matched)
+          {
+            throw new ArgumentException("Unknown command line argument: " + currentArg + " provided.");
+          }
           // We processed a valid arg, so increment the index by one.
           this.ProgramArgIndex++;
         }
@@ -275,6 +283,10 @@ namespace DotNetFrontEnd
           // program to be profiled.
           break;
         }
+      }
+      if (this.ProgramArgIndex >= args.Length)
+      {
+        throw new ArgumentException("Program to instrument not provided as command line argument.");
       }
       string programPath = args[this.ProgramArgIndex];
       this.AddArgument(PossibleArgument.assembly_location, programPath);

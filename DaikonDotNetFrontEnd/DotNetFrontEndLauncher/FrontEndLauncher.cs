@@ -94,7 +94,16 @@ namespace DotNetFrontEndLauncher
         Environment.Exit(1);// return;
       }
 
-      FrontEndArgs frontEndArgs = new FrontEndArgs(args);
+      FrontEndArgs frontEndArgs = null;
+      try
+      {
+        frontEndArgs = new FrontEndArgs(args);
+      }
+      catch (ArgumentException ex)
+      {
+        Console.WriteLine(ex.Message);
+        Environment.Exit(1);
+      }
       TypeManager typeManager = new TypeManager(frontEndArgs);
 
       if (!File.Exists(frontEndArgs.AssemblyPath))
