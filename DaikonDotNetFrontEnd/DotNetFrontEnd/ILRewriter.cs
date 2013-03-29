@@ -295,8 +295,9 @@ namespace DotNetFrontEnd
       MethodBody mutableMethodBody = (MethodBody)immutableMethodBody;
 
       // Add a nonce-holding variable and set it.
+      var pptEnterEnd = new ILGeneratorLabel();
       mutableMethodBody.LocalVariables = CreateNonceVariable(mutableMethodBody);
-      SetNonce(immutableMethodBody.MethodDefinition);
+      SetNonce(immutableMethodBody.MethodDefinition, pptEnterEnd);
       mutableMethodBody.LocalsAreZeroed = true;
 
       // We will need to add at least 2, and possibly 6 items onto
@@ -305,17 +306,12 @@ namespace DotNetFrontEnd
 
       immutableMethodBody = (IMethodBody)mutableMethodBody;
 
-      var pptEnterEnd = new ILGeneratorLabel();
-      EmitIncrementDepth(pptEnterEnd);
-
       // We need the writer lock to emit the values of method parameters.
-      EmitAcquireWriterLock();
       EmitMethodSignature(MethodTransition.ENTER, immutableMethodBody);
       EmitReleaseWriterLock();
 
-      // Mark the end of the PPT writing section (jumped to if increment depth returns false)
+      // Mark the end of the PPT writing section (jumped to if SetNonce returns 0)
       generator.MarkLabel(pptEnterEnd);
-      EmitDecrementDepth();
 
       // The label that early returns should jump to, exists inside the try block that
       // contains the whole method
@@ -579,17 +575,39 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Emit the code to store the nonce as a local variable
+    /// Emit the code to store the nonce as a local variable, and branch to <c>pptEnterEnd</c>
+    /// if the returned nonce is zero.
     /// </summary>
-    /// <param name="methodDefinition">Method to store the nonce for</param>
-    private void SetNonce(IMethodDefinition methodDefinition)
+    /// <param name="methodDefinition">method that returns the nonce</param>
+    /// <param name="pptEnterEnd">end of vistor IL to jump to if nonce is <c>0</c></param>
+    private void SetNonce(IMethodDefinition methodDefinition, ILGeneratorLabel pptEnterEnd)
     {
       Contract.Requires(methodDefinition != null);
+      Contract.Requires(pptEnterEnd != null);
+
       generator.Emit(OperationCode.Ldstr, FormatMethodName(methodDefinition));
       // Call the IncGlobalCounter function
+      
+      // grab the nonce, skip over the ppt writing if 0 was returned, otherwise go ahead and 
+      // acquire the lock
       EmitInvocationNonceSetter();
-      // Store the result in the nonce variable
+      generator.Emit(OperationCode.Dup);
       generator.Emit(OperationCode.Stloc, this.nonceVariableDictionary[methodDefinition]);
+      generator.Emit(OperationCode.Brfalse, pptEnterEnd);
+    }
+
+    /// <summary>
+    /// Emit IL that jumps to <c>jumpTarget</c> if the nonce variable is <c>0</c>
+    /// </summary>
+    /// <param name="body">the method</param>
+    /// <param name="jumpTarget">label to jump to</param>
+    private void EmitNonceCheck(IMethodDefinition method, ILGeneratorLabel jumpTarget)
+    {
+      Contract.Requires(method != null);
+      Contract.Requires(jumpTarget != null);
+
+      generator.Emit(OperationCode.Ldloc, this.nonceVariableDictionary[method]);
+      generator.Emit(OperationCode.Brfalse, jumpTarget);
     }
 
     /// <summary>
@@ -1035,8 +1053,8 @@ namespace DotNetFrontEnd
         return false;
       }
 
-      EmitIncrementDepth(pptEnd);
-      EmitAcquireWriterLock();
+      EmitNonceCheck(methodBody.MethodDefinition, pptEnd);
+      EmitAcquireWriterLock(pptEnd);
 
       // Add the i to the end of exit to ensure uniqueness
       // A ret command is added even at the end of functions without
@@ -1074,7 +1092,6 @@ namespace DotNetFrontEnd
       generator.MarkLabel(pptEnd);
       // Reset for the next PPT writing section
       pptEnd = new ILGeneratorLabel();
-      EmitDecrementDepth();
     }
 
     /// <summary>
@@ -1148,8 +1165,8 @@ namespace DotNetFrontEnd
       if (instrumentReturns)
       {
         ILGeneratorLabel pptEnd = new ILGeneratorLabel();
-        EmitIncrementDepth(pptEnd);
-        EmitAcquireWriterLock();
+        EmitNonceCheck(methodBody.MethodDefinition, pptEnd);
+        EmitAcquireWriterLock(pptEnd);
 
         // Add the i to the end of exit name to ensure uniqueness
         // A ret command is added even at the end of functions without
@@ -1171,7 +1188,6 @@ namespace DotNetFrontEnd
         
         EmitReleaseWriterLock();
         this.generator.MarkLabel(pptEnd);
-        EmitDecrementDepth();
       }
     }
 
@@ -1603,50 +1619,21 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Insert IL call to the method to acquire the lock on the writer
-    /// </summary>s
+    /// Insert IL call to the method to acquire the lock on the writer. If the method returns <c>false</c>,
+    /// jump to <c>pptEnd</c>.
+    /// </summary>
+    /// <param name="pptEnd">the end of the ppt block to jump to if the lock should not be acquired</param>
     /// Suppression safe because we control the string in the GetNameFor call
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
         "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void EmitAcquireWriterLock()
+    private void EmitAcquireWriterLock(ILGeneratorLabel pptEnd)
     {
       var acquireName = this.nameTable.GetNameFor(VariableVisitor.AcquireWriterLockFunctionName);
       var acquireReference = new Microsoft.Cci.MethodReference(
           this.host, this.variableVisitorType, CallingConvention.Default,
-          this.systemVoid, acquireName, 0);
+          this.host.PlatformType.SystemBoolean, acquireName, 0);
       generator.Emit(OperationCode.Call, acquireReference);
-    }
-
-    /// <summary>
-    /// Decrement the visiting depth
-    /// </summary>s
-    /// Suppression safe because we control the string in the GetNameFor call
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
-        "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void EmitDecrementDepth()
-    {
-      var decrementName = this.nameTable.GetNameFor(VariableVisitor.DecrementDepthFunctionName);
-      var decrementReference = new Microsoft.Cci.MethodReference(
-          this.host, this.variableVisitorType, CallingConvention.Default,
-          this.systemVoid, decrementName, 0);
-      generator.Emit(OperationCode.Call, decrementReference);
-    }
-
-    /// <summary>
-    /// Increment the visiting depth, and jump to the end of the PPT writing block
-    /// if the thread is not at the based depth.
-    /// </summary>
-    /// Suppression safe because we control the string in the GetNameFor call
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
-        "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-    private void EmitIncrementDepth(ILGeneratorLabel writePptEnd)
-    {
-      var incrementName = this.nameTable.GetNameFor(VariableVisitor.IncrementDepthFunctionName);
-      var incrementReference = new Microsoft.Cci.MethodReference(
-          this.host, this.variableVisitorType, CallingConvention.Default,
-          this.host.PlatformType.SystemBoolean, incrementName, 0);
-      generator.Emit(OperationCode.Call, incrementReference);
-      generator.Emit(OperationCode.Brfalse, writePptEnd);
+      generator.Emit(OperationCode.Brfalse, pptEnd);
     }
 
     /// <summary>
