@@ -20,6 +20,7 @@
 // method. This is mostly done in the ProcessOperations() method, with many support methods added.
 
 using System;
+using System.Linq;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using DotNetFrontEnd.Comparability;
@@ -54,9 +55,13 @@ namespace DotNetFrontEnd
     /// program was saved to a file.
     /// Caller must be sure to dispose returned MemoryStream.
     /// </summary>
+    /// <param name="typeManager">The type maanager to use while visiting the program</param>
     /// <param name="frontEndArgs">The args to use in profiling the program</param>
     /// <returns>MemoryStream containing the program to be profiled, with the instrumentation
-    /// code added, or null if the saveProgram argument is active.</returns>
+    /// code added, or null if the saveProgram argument is active, or the program was already
+    /// rewritten.</returns>
+    /// <exception cref="InvalidOperationException">If the program has already been rewritten with 
+    /// Celeriac.</exception>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage",
        "CA2202:Do not dispose objects multiple times"),
      System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability",
@@ -78,6 +83,12 @@ namespace DotNetFrontEnd
           + " assembly, or an error occurred when loading it.", frontEndArgs.AssemblyPath);
       }
 
+      if (module.GetAllTypes().Any(
+          type => type.Name.ToString().Equals(ILRewriter.ArgumentStoringClassName)))
+      {
+        throw new InvalidOperationException("Program has already been instrumented.");
+      }
+
       PdbReader pdbReader;
       string pdbFile;
       LoadPdbReaderAndFile(frontEndArgs, typeManager, module, out pdbReader, out pdbFile);
@@ -86,7 +97,7 @@ namespace DotNetFrontEnd
 
       using (pdbReader)
       {
-        AssemblySummary comparabilityManager = GenerateComparability(frontEndArgs, typeManager, 
+        AssemblySummary comparabilityManager = GenerateComparability(frontEndArgs, typeManager,
           host, module, pdbReader, ref mutable);
 
         if (frontEndArgs.GenerateComparability && frontEndArgs.ComparabilityFile == null)
@@ -175,7 +186,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Generate the comparability information for the given assembly.
     /// </summary>
-    private static AssemblySummary GenerateComparability(FrontEndArgs frontEndArgs, TypeManager typeManager, 
+    private static AssemblySummary GenerateComparability(FrontEndArgs frontEndArgs, TypeManager typeManager,
       IMetadataHost host, IModule module, PdbReader pdbReader, ref Assembly mutable)
     {
       AssemblySummary comparabilityManager = null;
