@@ -21,12 +21,11 @@
 
 using System;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using DotNetFrontEnd.Comparability;
 using Microsoft.Cci;
 using Microsoft.Cci.ILToCodeModel;
 using Microsoft.Cci.MutableCodeModel;
-using DotNetFrontEnd.Comparability;
-using System.Diagnostics;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace DotNetFrontEnd
 {
@@ -79,98 +78,25 @@ namespace DotNetFrontEnd
           + " assembly, or an error occurred when loading it.", frontEndArgs.AssemblyPath);
       }
 
-      IAssembly assembly = module as IAssembly;
+      PdbReader pdbReader;
+      string pdbFile;
+      LoadPdbReaderAndFile(frontEndArgs, typeManager, module, out pdbReader, out pdbFile);
 
       Assembly mutable = null;
-      Assembly decompiled = null;
-
-      PdbReader/*?*/ pdbReader = null;
-      string pdbFile = Path.ChangeExtension(module.Location, "pdb");
-      try
-      {
-        using (var pdbStream = File.OpenRead(pdbFile))
-        {
-          pdbReader = new PdbReader(pdbStream, typeManager.Host);
-        }
-      }
-      catch (System.IO.IOException)
-      {
-        if (frontEndArgs.StaticComparability)
-        {
-          throw new InvalidOperationException("Error loading PDB file for '" +
-            module.Name.Value + "' (required for static comparability analysis)");
-        }
-        else
-        {
-          // TODO(#25): Figure out how what happens if we can't load the PDB file.
-          // It seems to be non-fatal, so print the error and continue.
-          Console.Error.WriteLine("WARNING: Could not load the PDB file for '" + module.Name.Value + "'");
-        }
-      }
 
       using (pdbReader)
       {
-        AssemblySummary comparabilityManager = null;
+        AssemblySummary comparabilityManager = GenerateComparability(frontEndArgs, typeManager, 
+          host, module, pdbReader, ref mutable);
 
-        mutable = MetadataCopier.DeepCopy(host, assembly);
-        typeManager.SetAssemblyIdentity(UnitHelper.GetAssemblyIdentity(mutable));
-
-        if (frontEndArgs.StaticComparability || frontEndArgs.GenerateComparability)
+        if (frontEndArgs.GenerateComparability && frontEndArgs.ComparabilityFile == null)
         {
-          if (frontEndArgs.ComparabilityFile != null)
-          {
-            using (var cmp = File.Open(frontEndArgs.ComparabilityFile, FileMode.Open))
-            {
-              comparabilityManager = (AssemblySummary) new BinaryFormatter().Deserialize(cmp);
-            }
-          }
-          else
-          {
-            if (frontEndArgs.VerboseMode)
-            {
-              Console.WriteLine("Generating Comparability Information");
-            }
-
-            decompiled = Decompiler.GetCodeModelFromMetadataModel(typeManager.Host, mutable, pdbReader, DecompilerOptions.AnonymousDelegates | DecompilerOptions.Iterators);
-            comparabilityManager = AssemblySummary.MakeSummary(decompiled, typeManager, pdbReader);
-
-            if (frontEndArgs.VerboseMode)
-            {
-              Console.WriteLine("Finished Generating Comparability Information");
-            }
-
-            using (var cmp = File.Open(frontEndArgs.AssemblyPath + FrontEndArgs.ComparabilityFileExtension, FileMode.Create))
-            {
-              new BinaryFormatter().Serialize(cmp, comparabilityManager);
-            }
-
-            if (frontEndArgs.GenerateComparability)
-            {
-              return null;
-            }
-          }
+          return null;
         }
 
         ILRewriter mutator = new ILRewriter(host, pdbReader, frontEndArgs, typeManager, comparabilityManager);
 
-        // Look for the path to the reflector, it's an environment variable, check the user space 
-        // first.
-        string daikonDir = Environment.GetEnvironmentVariable(DaikonEnvVar,
-            EnvironmentVariableTarget.User);
-        if (daikonDir == null)
-        {
-          // If that didn't work check the machine space
-          daikonDir = Environment.GetEnvironmentVariable(DaikonEnvVar,
-              EnvironmentVariableTarget.Machine);
-        }
-
-        if (daikonDir == null)
-        {
-          // We can't proceed without this
-          Console.WriteLine("Must define " + DaikonEnvVar + " environment variable");
-          Environment.Exit(1);
-        }
-        module = mutator.Visit(mutable, Path.Combine(daikonDir, VisitorDll));
+        module = mutator.Visit(mutable, Path.Combine(FindVisitorDir(), VisitorDll));
 
         if (frontEndArgs.EmitNullaryInfo || frontEndArgs.GenerateComparability)
         {
@@ -207,7 +133,6 @@ namespace DotNetFrontEnd
         }
       }
 
-
       if (frontEndArgs.SaveProgram != null)
       {
         // We aren't going to run the program, so no need to return anything,
@@ -218,6 +143,108 @@ namespace DotNetFrontEnd
       else
       {
         return (MemoryStream)resultStream; // success
+      }
+    }
+
+    /// <summary>
+    /// Find the directory the Celeriac DLL is located in, based on envrionmental variables.
+    /// </summary>
+    /// <returns>Absolute path to the celeriac directory.</returns>
+    private static string FindVisitorDir()
+    {
+      // Look for the path to the reflector, it's an environment variable, check the user space 
+      // first.
+      string daikonDir = Environment.GetEnvironmentVariable(DaikonEnvVar,
+          EnvironmentVariableTarget.User);
+      if (daikonDir == null)
+      {
+        // If that didn't work check the machine space
+        daikonDir = Environment.GetEnvironmentVariable(DaikonEnvVar,
+            EnvironmentVariableTarget.Machine);
+      }
+
+      if (daikonDir == null)
+      {
+        // We can't proceed without this
+        Console.WriteLine("Must define " + DaikonEnvVar + " environment variable");
+        Environment.Exit(1);
+      }
+      return daikonDir;
+    }
+
+    /// <summary>
+    /// Generate the comparability information for the given assembly.
+    /// </summary>
+    private static AssemblySummary GenerateComparability(FrontEndArgs frontEndArgs, TypeManager typeManager, 
+      IMetadataHost host, IModule module, PdbReader pdbReader, ref Assembly mutable)
+    {
+      AssemblySummary comparabilityManager = null;
+      IAssembly assembly = module as IAssembly;
+      mutable = MetadataCopier.DeepCopy(host, assembly);
+      typeManager.SetAssemblyIdentity(UnitHelper.GetAssemblyIdentity(mutable));
+
+      if (frontEndArgs.StaticComparability || frontEndArgs.GenerateComparability)
+      {
+        if (frontEndArgs.ComparabilityFile != null)
+        {
+          using (var cmp = File.Open(frontEndArgs.ComparabilityFile, FileMode.Open))
+          {
+            comparabilityManager = (AssemblySummary)new BinaryFormatter().Deserialize(cmp);
+          }
+        }
+        else
+        {
+          if (frontEndArgs.VerboseMode)
+          {
+            Console.WriteLine("Generating Comparability Information");
+          }
+
+          Assembly decompiled = Decompiler.GetCodeModelFromMetadataModel(typeManager.Host, mutable,
+            pdbReader, DecompilerOptions.AnonymousDelegates | DecompilerOptions.Iterators);
+          comparabilityManager = AssemblySummary.MakeSummary(decompiled, typeManager, pdbReader);
+
+          if (frontEndArgs.VerboseMode)
+          {
+            Console.WriteLine("Finished Generating Comparability Information");
+          }
+
+          using (var cmp = File.Open(frontEndArgs.AssemblyPath + FrontEndArgs.ComparabilityFileExtension, FileMode.Create))
+          {
+            new BinaryFormatter().Serialize(cmp, comparabilityManager);
+          }
+        }
+      }
+      return comparabilityManager;
+    }
+
+    /// <summary>
+    /// Load the PDB reader and pdb file for the source program.
+    /// </summary>
+    private static void LoadPdbReaderAndFile(FrontEndArgs frontEndArgs, TypeManager typeManager,
+      IModule module, out PdbReader pdbReader, out string pdbFile)
+    {
+      pdbReader = null;
+      pdbFile = Path.ChangeExtension(module.Location, "pdb");
+      try
+      {
+        using (var pdbStream = File.OpenRead(pdbFile))
+        {
+          pdbReader = new PdbReader(pdbStream, typeManager.Host);
+        }
+      }
+      catch (System.IO.IOException)
+      {
+        if (frontEndArgs.StaticComparability)
+        {
+          throw new InvalidOperationException("Error loading PDB file for '" +
+            module.Name.Value + "' (required for static comparability analysis)");
+        }
+        else
+        {
+          // TODO(#25): Figure out how what happens if we can't load the PDB file.
+          // It seems to be non-fatal, so print the error and continue.
+          Console.Error.WriteLine("WARNING: Could not load the PDB file for '" + module.Name.Value + "'");
+        }
       }
     }
   }
