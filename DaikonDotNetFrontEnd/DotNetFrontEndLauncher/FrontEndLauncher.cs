@@ -28,18 +28,22 @@ namespace DotNetFrontEndLauncher
       // Hold the IL for the program to be profiled in memory if we are running the modified 
       // program directly.
       MemoryStream resultStream = null;
-      //try
-      //{
-      resultStream = ProgramRewriter.RewriteProgramIL(frontEndArgs, typeManager);
-      if (frontEndArgs.EmitNullaryInfo || frontEndArgs.GenerateComparability)
+      try
       {
-        return;
-      } 
-      else if (frontEndArgs.VerboseMode)
-      {
-        Console.WriteLine("Rewriting complete");
+        resultStream = ProgramRewriter.RewriteProgramIL(frontEndArgs, typeManager);
+        if (frontEndArgs.EmitNullaryInfo || frontEndArgs.GenerateComparability)
+        {
+          return;
+        }
+        else if (frontEndArgs.VerboseMode)
+        {
+          Console.WriteLine("Rewriting complete");
+        }
       }
-      //}
+      catch (InvalidOperationException ex)
+      {
+        Console.WriteLine(ex.Message);
+      }
       //catch (Exception ex)
       //{
       //  if (frontEndArgs.DontCatchExceptions)
