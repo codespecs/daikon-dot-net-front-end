@@ -251,6 +251,7 @@ namespace DotNetFrontEnd
               {
                 this.AddArgument(PossibleArgument.comparability, null);
                 this.AddArgument(PossibleArgument.std_visibility, null);
+                this.AddArgument(PossibleArgument.is_enum_flags, null);
                 this.AddArgument(PossibleArgument.is_property_flags, null);
                 this.AddArgument(PossibleArgument.is_readonly_flags, null);
               }
