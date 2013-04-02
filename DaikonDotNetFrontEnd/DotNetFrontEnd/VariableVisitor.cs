@@ -27,8 +27,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
 using DotNetFrontEnd.Contracts;
@@ -493,7 +491,7 @@ namespace DotNetFrontEnd
     [Pure]
     public static int NestingDepth()
     {
-      Contract.Ensures(Contract.Result<int>() > 0);
+      Contract.Ensures(Contract.Result<int>() >= 0);
       int x;
       threadDepthMap.TryGetValue(Thread.CurrentThread, out x);
       return x;
@@ -656,21 +654,23 @@ namespace DotNetFrontEnd
       if (depth == 0)
       {
         // update the occurence counts for non-nested calls
-        occurences.AddOrUpdate(programPointName, 0, (ppt, cnt) => cnt + 1);
-      }
-      else
-      {
-        occurences.GetOrAdd(programPointName, 0);  
-      }
+        int occurence = occurences.AddOrUpdate(programPointName, 0, (ppt, cnt) => cnt + 1);
 
-      if (SampleMethod(programPointName))
-      {
-        AcquireLock();
-        threadDepthMap.AddOrUpdate(Thread.CurrentThread, 1, (t, x) => x + 1);
-        return Interlocked.Increment(ref globalNonce); 
+        if (SampleMethod(programPointName))
+        {
+          AcquireLock();
+          threadDepthMap.AddOrUpdate(Thread.CurrentThread, 1, (t, x) => x + 1);
+          int nonce = Interlocked.Increment(ref globalNonce);
+          return nonce;
+        }
+        else
+        {
+          return 0;
+        }
       }
       else
       {
+        occurences.GetOrAdd(programPointName, 0);
         return 0;
       }
     }
