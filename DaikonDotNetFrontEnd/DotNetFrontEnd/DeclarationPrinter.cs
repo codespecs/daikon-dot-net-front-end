@@ -194,10 +194,10 @@ namespace DotNetFrontEnd
     /// <param name="nestingDepth">The nesting depth of the current variable. If not given 
     /// assumed to be the root value of 0.</param>
     private void DeclareVariable(string name, Type type,
-        Type originatingType, VariableKind kind = VariableKind.variable, 
+        Type originatingType, VariableKind kind = VariableKind.variable,
         VariableFlags flags = VariableFlags.none,
         string enclosingVar = "", string relativeName = "", string parentName = "",
-        int nestingDepth = 0, 
+        int nestingDepth = 0,
         INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(name));
@@ -205,14 +205,14 @@ namespace DotNetFrontEnd
       Contract.Requires(nestingDepth >= 0);
       Contract.Requires(typeContext != null || methodContext != null);
 
-      if (PerformEarlyExitChecks(name, type, kind, enclosingVar, nestingDepth))
+      if (PerformEarlyExitChecks(name, kind, enclosingVar, nestingDepth))
       {
         return;
       }
 
       if (type.IsEnum)
       {
-          flags = ExtendFlags(flags, VariableFlags.is_enum);
+        flags = ExtendFlags(flags, VariableFlags.is_enum);
       }
       PrintSimpleDescriptors(name, type, kind, flags, enclosingVar, relativeName, parentName, typeContext, methodContext);
 
@@ -234,7 +234,7 @@ namespace DotNetFrontEnd
         // We don't get information about generics, so all we know for sure is that the elements
         // are objects.
         // FSharpLists get converted into object[].
-          DeclareVariableAsList(name, typeof(object[]), parentName, nestingDepth, originatingType, typeContext: typeContext, methodContext: methodContext);
+        DeclareVariableAsList(name, typeof(object[]), parentName, nestingDepth, originatingType, typeContext: typeContext, methodContext: methodContext);
       }
       else if (this.typeManager.IsSet(type))
       {
@@ -253,7 +253,7 @@ namespace DotNetFrontEnd
         // It's not an array it's a set. Investigate element type.
         // Will resolve with TODO(#52).
         DeclareVariableAsList(name, Array.CreateInstance(elementType, 0).GetType(),
-            parentName, nestingDepth, originatingType, 
+            parentName, nestingDepth, originatingType,
             VariableFlags.no_dups | VariableFlags.not_ordered,
             typeContext: typeContext, methodContext: methodContext);
       }
@@ -266,13 +266,13 @@ namespace DotNetFrontEnd
       }
       else if (this.typeManager.IsFSharpMap(type))
       {
-        DeclareVariableAsList(name, typeof(List<DictionaryEntry>), parentName, nestingDepth, 
+        DeclareVariableAsList(name, typeof(List<DictionaryEntry>), parentName, nestingDepth,
             originatingType, VariableFlags.no_dups | VariableFlags.not_ordered,
             typeContext: typeContext, methodContext: methodContext);
       }
       else
       {
-        DeclarationChildPrinting(name, type, kind, flags, parentName, nestingDepth, 
+        DeclarationChildPrinting(name, type, kind, flags, parentName, nestingDepth,
             originatingType, typeContext: typeContext, methodContext: methodContext);
       }
     }
@@ -287,25 +287,25 @@ namespace DotNetFrontEnd
     /// <param name="flags">Variable flags</param>
     /// <param name="parentName">Name of the parent of the variable if any</param>
     /// <param name="nestingDepth">Nesting depth of the variable</param>
-    private void DeclarationChildPrinting(string name, Type type, VariableKind kind, 
+    private void DeclarationChildPrinting(string name, Type type, VariableKind kind,
       VariableFlags flags, string parentName, int nestingDepth, Type originatingType,
       INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
-        Contract.Requires(!string.IsNullOrWhiteSpace(name));
-        Contract.Requires(type != null);
-        Contract.Requires(nestingDepth >= 0);
-        Contract.Requires(typeContext != null || methodContext != null);
+      Contract.Requires(!string.IsNullOrWhiteSpace(name));
+      Contract.Requires(type != null);
+      Contract.Requires(nestingDepth >= 0);
+      Contract.Requires(typeContext != null || methodContext != null);
 
-        foreach (FieldInfo field in
-          type.GetSortedFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
-              type, originatingType)))
+      foreach (FieldInfo field in
+        type.GetSortedFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
+            type, originatingType)))
       {
         if (!this.typeManager.ShouldIgnoreField(type, field))
         {
-            // Propogate the reference immutability chain; if the field holds an immutable value, introduce an immutability flag
-            var fieldFlags = ExtendFlags(
-                MarkIf(field.IsLiteral || (flags.HasFlag(VariableFlags.is_reference_immutable) && field.IsInitOnly), VariableFlags.is_reference_immutable),
-                MarkIf(field.IsLiteral || (flags.HasFlag(VariableFlags.is_reference_immutable) && field.IsInitOnly && TypeManager.IsImmutable(field.FieldType)), VariableFlags.is_value_immutable));
+          // Propogate the reference immutability chain; if the field holds an immutable value, introduce an immutability flag
+          var fieldFlags = ExtendFlags(
+              MarkIf(field.IsLiteral || (flags.HasFlag(VariableFlags.is_reference_immutable) && field.IsInitOnly), VariableFlags.is_reference_immutable),
+              MarkIf(field.IsLiteral || (flags.HasFlag(VariableFlags.is_reference_immutable) && field.IsInitOnly && TypeManager.IsImmutable(field.FieldType)), VariableFlags.is_value_immutable));
 
           DeclareVariable(name + "." + field.Name, field.FieldType, originatingType,
               VariableKind.field, enclosingVar: name, relativeName: field.Name,
@@ -315,37 +315,16 @@ namespace DotNetFrontEnd
         }
       }
 
-      foreach (FieldInfo staticField in
-          type.GetSortedFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(
-              type, originatingType)))
-      {
-        string staticFieldName = type.FullName + "." + staticField.Name;  
-        if (!this.typeManager.ShouldIgnoreField(type, staticField) &&
-            !this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
-        {
-            this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
-
-            var fieldFlags =
-                ExtendFlags(
-                  MarkIf(staticField.IsLiteral || staticField.IsInitOnly, VariableFlags.is_reference_immutable),
-                  MarkIf(staticField.IsLiteral || (staticField.IsInitOnly && TypeManager.IsImmutable(staticField.FieldType)), VariableFlags.is_value_immutable));
-
-            DeclareVariable(staticFieldName, staticField.FieldType,
-              nestingDepth: staticFieldName.Count(c => c == '.'),
-              originatingType: originatingType,
-              flags: fieldFlags,
-              typeContext: typeContext, methodContext: methodContext); 
-        }
-      }
+      PrintStaticFields(type, originatingType, typeContext, methodContext);
 
       if (!type.IsSealed)
       {
-        var immutability =  MarkIf(flags.HasFlag(VariableFlags.is_reference_immutable), VariableFlags.is_reference_immutable | VariableFlags.is_value_immutable);
+        var immutability = MarkIf(flags.HasFlag(VariableFlags.is_reference_immutable), VariableFlags.is_reference_immutable | VariableFlags.is_value_immutable);
 
-        DeclareVariable(name + "." + GetTypeMethodCall, TypeManager.TypeType, originatingType, 
+        DeclareVariable(name + "." + GetTypeMethodCall, TypeManager.TypeType, originatingType,
             VariableKind.function,
-            // Parent must be reference immutable to for ToType() to remain constant
-            ExtendFlags(VariableFlags.classname, VariableFlags.synthetic, immutability), 
+          // Parent must be reference immutable to for ToType() to remain constant
+            ExtendFlags(VariableFlags.classname, VariableFlags.synthetic, immutability),
             enclosingVar: name, relativeName: GetTypeMethodCall,
             nestingDepth: nestingDepth + 1, parentName: parentName,
             typeContext: typeContext, methodContext: methodContext);
@@ -353,16 +332,16 @@ namespace DotNetFrontEnd
 
       if (type == TypeManager.StringType)
       {
-        var immutability =  MarkIf(
+        var immutability = MarkIf(
             flags.HasFlag(VariableFlags.is_reference_immutable) && flags.HasFlag(VariableFlags.is_value_immutable), VariableFlags.is_value_immutable);
 
         DeclareVariable(name + "." + ToStringMethodCall, TypeManager.StringType,
             originatingType,
-            VariableKind.function, 
-            // Parent must be value-immutable for ToString() value to remain constant (assuming it doesn't access outside state)
+            VariableKind.function,
+          // Parent must be value-immutable for ToString() value to remain constant (assuming it doesn't access outside state)
             ExtendFlags(VariableFlags.to_string, VariableFlags.synthetic, immutability),
             enclosingVar: name, relativeName: ToStringMethodCall,
-            nestingDepth: nestingDepth + 1, parentName: parentName, 
+            nestingDepth: nestingDepth + 1, parentName: parentName,
             typeContext: typeContext, methodContext: methodContext);
       }
 
@@ -395,9 +374,35 @@ namespace DotNetFrontEnd
           && this.typeManager.IsLinkedListImplementer(type))
       {
         FieldInfo linkedListField = TypeManager.FindLinkedListField(type);
-        PrintList(name + "[..]", linkedListField.FieldType, name, originatingType, 
+        PrintList(name + "[..]", linkedListField.FieldType, name, originatingType,
             VariableKind.array,
             nestingDepth: nestingDepth, parentName: parentName, flags: flags);
+      }
+    }
+
+    private void PrintStaticFields(Type type, Type originatingType, INamedTypeDefinition typeContext, IMethodDefinition methodContext)
+    {
+      foreach (FieldInfo staticField in
+          type.GetSortedFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(
+              type, originatingType)))
+      {
+        string staticFieldName = type.FullName + "." + staticField.Name;
+        if (!this.typeManager.ShouldIgnoreField(type, staticField) &&
+            !this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
+        {
+          this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
+
+          var fieldFlags =
+              ExtendFlags(
+                MarkIf(staticField.IsLiteral || staticField.IsInitOnly, VariableFlags.is_reference_immutable),
+                MarkIf(staticField.IsLiteral || (staticField.IsInitOnly && TypeManager.IsImmutable(staticField.FieldType)), VariableFlags.is_value_immutable));
+
+          DeclareVariable(staticFieldName, staticField.FieldType,
+            nestingDepth: staticFieldName.Count(c => c == '.'),
+            originatingType: originatingType,
+            flags: fieldFlags,
+            typeContext: typeContext, methodContext: methodContext);
+        }
       }
     }
 
@@ -412,14 +417,14 @@ namespace DotNetFrontEnd
     /// <param name="enclosingVar">Variable enclosing the one to be declared</param>
     /// <param name="relativeName">Relative name of the variable to be declared</param>
     /// <param name="parentName">Parent name of the variable to be declared</param>
-    private void PrintSimpleDescriptors(string name, Type type, VariableKind kind, 
-      VariableFlags flags, string enclosingVar, string relativeName, string parentName, 
+    private void PrintSimpleDescriptors(string name, Type type, VariableKind kind,
+      VariableFlags flags, string enclosingVar, string relativeName, string parentName,
       INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(name));
       Contract.Requires(type != null);
       Contract.Requires(typeContext != null || methodContext != null);
-    
+
       this.WritePair("variable", name, 1);
 
       PrintVarKind(kind, relativeName);
@@ -444,28 +449,28 @@ namespace DotNetFrontEnd
 
       if (comparabilityManager != null)
       {
-          if (type.IsArray)
-          {
-              this.WritePair("comparability", 
-                  comparabilityManager.GetComparability(name, typeManager, typeContext, kind, methodContext) + "[" + comparabilityManager.GetElementComparability(name, typeManager, typeContext, methodContext) + "]", 
-                  2);
-          }
-          else
-          {
-              this.WritePair("comparability", comparabilityManager.GetComparability(name, typeManager, typeContext, kind, methodContext), 2);
-          }
+        if (type.IsArray)
+        {
+          this.WritePair("comparability",
+              comparabilityManager.GetComparability(name, typeManager, typeContext, methodContext) + "[" + comparabilityManager.GetElementComparability(name, typeManager, typeContext, methodContext) + "]",
+              2);
+        }
+        else
+        {
+          this.WritePair("comparability", comparabilityManager.GetComparability(name, typeManager, typeContext, methodContext), 2);
+        }
       }
       else
       {
-          this.WritePair("comparability", ComparabilityConstant, 2);
+        this.WritePair("comparability", ComparabilityConstant, 2);
       }
 
-      
+
       if (ShouldPrintParentPptIfNecessary(parentName))
       {
         this.WritePair("parent", parentName, 2);
       }
-    
+
     }
 
     /// <summary>
@@ -481,7 +486,7 @@ namespace DotNetFrontEnd
     /// <param name="nestingDepth">The nesting depth of the current variable. If not given 
     /// assumed to be the root value of 0.</param>
     private void PrintList(string name, Type elementType, string enclosingVar,
-        Type originatingType, VariableKind kind = VariableKind.array, 
+        Type originatingType, VariableKind kind = VariableKind.array,
         VariableFlags flags = VariableFlags.none,
         string relativeName = "", string parentName = "", int nestingDepth = 0,
         INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
@@ -540,14 +545,14 @@ namespace DotNetFrontEnd
 
       if (comparabilityManager != null)
       {
-          this.WritePair(
-              "comparability",
-              comparabilityManager.GetElementComparability(enclosingVar, typeManager, typeContext, methodContext),
-              IndentsForEntry);
+        this.WritePair(
+            "comparability",
+            comparabilityManager.GetElementComparability(enclosingVar, typeManager, typeContext, methodContext),
+            IndentsForEntry);
       }
       else
       {
-          this.WritePair("comparability", ComparabilityConstant, IndentsForEntry);
+        this.WritePair("comparability", ComparabilityConstant, IndentsForEntry);
       }
 
       if (ShouldPrintParentPptIfNecessary(parentName))
@@ -561,7 +566,7 @@ namespace DotNetFrontEnd
         return;
       }
 
-      if (this.typeManager.IsListImplementer(elementType) || 
+      if (this.typeManager.IsListImplementer(elementType) ||
          (this.typeManager.IsFSharpListImplementer(elementType)))
       {
         // Daikon can't handle nested lists. Silently skip.
@@ -589,18 +594,18 @@ namespace DotNetFrontEnd
         if (!this.typeManager.ShouldIgnoreField(elementType, staticField) &&
             !this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
         {
-            this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
-            DeclareVariable(staticFieldName, staticField.FieldType,
-                originatingType: originatingType,
-                nestingDepth: staticFieldName.Count(c => c == '.'),
-                typeContext: typeContext, methodContext: methodContext);
+          this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
+          DeclareVariable(staticFieldName, staticField.FieldType,
+              originatingType: originatingType,
+              nestingDepth: staticFieldName.Count(c => c == '.'),
+              typeContext: typeContext, methodContext: methodContext);
         }
       }
 
       if (!elementType.IsSealed)
       {
         PrintList(name + "." + GetTypeMethodCall, TypeManager.TypeType, name,
-            originatingType, VariableKind.function, 
+            originatingType, VariableKind.function,
             ExtendFlags(VariableFlags.classname, VariableFlags.synthetic),
             relativeName: GetTypeMethodCall,
             nestingDepth: nestingDepth + 1, parentName: parentName,
@@ -610,7 +615,7 @@ namespace DotNetFrontEnd
       if (elementType == TypeManager.StringType)
       {
         PrintList(name + "." + ToStringMethodCall, TypeManager.StringType, name,
-            originatingType, VariableKind.function, 
+            originatingType, VariableKind.function,
             ExtendFlags(VariableFlags.to_string, VariableFlags.synthetic),
             relativeName: ToStringMethodCall,
             nestingDepth: nestingDepth + 1, parentName: parentName,
@@ -630,7 +635,7 @@ namespace DotNetFrontEnd
         var pureMethodFlags = ExtendFlags(
           method.Name.StartsWith(GetterPropertyPrefix) ? VariableFlags.is_property : VariableFlags.none);
 
-        PrintList(SanitizedMethodExpression(method, name), 
+        PrintList(SanitizedMethodExpression(method, name),
           method.ReturnType, name,
           originatingType,
           relativeName: methodName,
@@ -696,7 +701,7 @@ namespace DotNetFrontEnd
           typeManager.ConvertAssemblyQualifiedNameToType(parentObjectType);
       foreach (Type type in typeDecl.GetAllTypes)
       {
-        Contract.Assume(type != null,  "Unable to resolve parent object type to a type.");
+        Contract.Assume(type != null, "Unable to resolve parent object type to a type.");
         DeclareStaticFieldsForType(type, type, null, methodContext: method); // TWS what type to use for context?
       }
     }
@@ -719,10 +724,10 @@ namespace DotNetFrontEnd
         if (!this.typeManager.ShouldIgnoreField(type, staticField) &&
             !this.staticFieldsForCurrentProgramPoint.Contains(staticFieldName))
         {
-            this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
-            DeclareVariable(staticFieldName, staticField.FieldType, originatingType,
-                nestingDepth: staticFieldName.Count(c => c == '.'),
-                typeContext: typeContext, methodContext: methodContext);
+          this.staticFieldsForCurrentProgramPoint.Add(staticFieldName);
+          DeclareVariable(staticFieldName, staticField.FieldType, originatingType,
+              nestingDepth: staticFieldName.Count(c => c == '.'),
+              typeContext: typeContext, methodContext: methodContext);
         }
       }
     }
@@ -774,8 +779,8 @@ namespace DotNetFrontEnd
       {
         if (type != null)
         {
-            // TODO: the defining method should be the originator
-            DeclareVariable(name, type, typeof(DummyOriginator), flags: VariableFlags.is_param, methodContext: methodDefinition);
+          // TODO: the defining method should be the originator
+          DeclareVariable(name, type, typeof(DummyOriginator), flags: VariableFlags.is_param, methodContext: methodDefinition);
         }
       }
     }
@@ -795,8 +800,8 @@ namespace DotNetFrontEnd
       {
         if (type != null)
         {
-            // TODO: originator should be the type that defined the method
-            DeclareVariable(name, type, typeof(DummyOriginator), kind: VariableKind.Return, nestingDepth: 0, methodContext: methodDefinition);
+          // TODO: originator should be the type that defined the method
+          DeclareVariable(name, type, typeof(DummyOriginator), kind: VariableKind.Return, nestingDepth: 0, methodContext: methodDefinition);
         }
       }
     }
@@ -829,7 +834,7 @@ namespace DotNetFrontEnd
             this.WritePair("parent", "parent " + nameToPrint.Replace(":::OBJECT", ":::CLASS 1"));
             // Pass objectType in as originating type so we get all its private fields.
             this.DeclareVariable("this", objectType, objectType, VariableKind.variable,
-                flags: ExtendFlags(VariableFlags.is_param, VariableFlags.is_reference_immutable, MarkIf(TypeManager.IsImmutable(objectType), VariableFlags.is_reference_immutable)), 
+                flags: ExtendFlags(VariableFlags.is_param, VariableFlags.is_reference_immutable, MarkIf(TypeManager.IsImmutable(objectType), VariableFlags.is_reference_immutable)),
                 typeContext: type);
           }
         }
@@ -847,7 +852,7 @@ namespace DotNetFrontEnd
       Contract.Requires(!string.IsNullOrWhiteSpace(className));
       Contract.Requires(!string.IsNullOrWhiteSpace(objectAssemblyQualifiedName));
       Contract.Requires(typeContext != null);
-        
+
       DNFETypeDeclaration objectTypeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
       foreach (Type objectType in objectTypeDecl.GetAllTypes)
@@ -861,7 +866,7 @@ namespace DotNetFrontEnd
           this.WritePair("ppt-type", "class");
           DeclareStaticFieldsForType(objectType, objectType, typeContext);
         }
-       
+
       }
     }
 
@@ -926,11 +931,11 @@ namespace DotNetFrontEnd
     /// </summary>
     private static VariableFlags FlagMask
     {
-        get
-        {
-            VariableFlags mask = 0;
-            return ~mask;
-        }
+      get
+      {
+        VariableFlags mask = 0;
+        return ~mask;
+      }
     }
 
     /// <summary>
@@ -942,7 +947,7 @@ namespace DotNetFrontEnd
     /// <returns>Flags iff contition is true, otherwise none</returns>
     private static VariableFlags MarkIf(bool condition, VariableFlags flag)
     {
-        return condition ? flag : VariableFlags.none;
+      return condition ? flag : VariableFlags.none;
     }
 
     /// <summary>
@@ -952,29 +957,29 @@ namespace DotNetFrontEnd
     /// <returns>union of <code>flags</code>, respecting the front-end options</returns>
     private VariableFlags ExtendFlags(params VariableFlags[] flags)
     {
-        Contract.Requires(flags != null);
-        Contract.Ensures((flags.Length == 0).Implies(Contract.Result<VariableFlags>() == VariableFlags.none)); 
+      Contract.Requires(flags != null);
+      Contract.Ensures((flags.Length == 0).Implies(Contract.Result<VariableFlags>() == VariableFlags.none));
 
-        var result = VariableFlags.none;
-        foreach (var fs in flags)
-        {
-            result |= fs;
-        }
-        if (!frontEndArgs.IsPropertyFlags)
-        {
-            result &= (result | VariableFlags.is_property) ^ VariableFlags.is_property;
-        }
-        if (!frontEndArgs.IsEnumFlags)
-        {
-            result &= (result | VariableFlags.is_enum) ^ VariableFlags.is_enum;
-        }
-        if (!frontEndArgs.IsReadOnlyFlags)
-        {
-            result &= (result | VariableFlags.is_value_immutable) ^ VariableFlags.is_value_immutable;
-            result &= (result | VariableFlags.is_reference_immutable) ^ VariableFlags.is_reference_immutable;
-        }
+      var result = VariableFlags.none;
+      foreach (var fs in flags)
+      {
+        result |= fs;
+      }
+      if (!frontEndArgs.IsPropertyFlags)
+      {
+        result &= (result | VariableFlags.is_property) ^ VariableFlags.is_property;
+      }
+      if (!frontEndArgs.IsEnumFlags)
+      {
+        result &= (result | VariableFlags.is_enum) ^ VariableFlags.is_enum;
+      }
+      if (!frontEndArgs.IsReadOnlyFlags)
+      {
+        result &= (result | VariableFlags.is_value_immutable) ^ VariableFlags.is_value_immutable;
+        result &= (result | VariableFlags.is_reference_immutable) ^ VariableFlags.is_reference_immutable;
+      }
 
-        return result & FlagMask;
+      return result & FlagMask;
     }
 
     /// <summary>
@@ -1025,21 +1030,21 @@ namespace DotNetFrontEnd
 
       foreach (VariableFlags f in Enum.GetValues(typeof(VariableFlags)))
       {
-          if (variableFlags.HasFlag(f) && f != VariableFlags.none)
+        if (variableFlags.HasFlag(f) && f != VariableFlags.none)
+        {
+          var toPrint = f.ToString();
+          if ((f == VariableFlags.is_reference_immutable && !isValueType) ||
+              (f == VariableFlags.is_value_immutable && isValueType))
           {
-              var toPrint = f.ToString();
-              if ((f == VariableFlags.is_reference_immutable && !isValueType) ||
-                  (f == VariableFlags.is_value_immutable && isValueType))
-              {
-                  toPrint = "is_readonly";
-              }
-              else if (f == VariableFlags.is_reference_immutable || f == VariableFlags.is_value_immutable)
-              {
-                  continue;
-              }
-
-              flagsToPrint.Append(toPrint).Append(" ");
+            toPrint = "is_readonly";
           }
+          else if (f == VariableFlags.is_reference_immutable || f == VariableFlags.is_value_immutable)
+          {
+            continue;
+          }
+
+          flagsToPrint.Append(toPrint).Append(" ");
+        }
       }
 
       if (flagsToPrint.Length > 0)
@@ -1136,7 +1141,7 @@ namespace DotNetFrontEnd
       else if (TypeManager.DoubleType == type || TypeManager.FloatType == type
             || TypeManager.DecimalType == type)
       {
-          return DaikonDoubleName;
+        return DaikonDoubleName;
       }
       else if (type.IsValueType && (type == TypeManager.IntType
             || type == TypeManager.ByteType || type == TypeManager.CharType
@@ -1165,7 +1170,7 @@ namespace DotNetFrontEnd
     {
       Contract.Requires(type != null);
       string repType;
-     
+
       if (flags.HasFlag(VariableFlags.to_string) || flags.HasFlag(VariableFlags.classname))
       {
         repType = DaikonStringName;
@@ -1213,18 +1218,28 @@ namespace DotNetFrontEnd
              !TypeManager.CodeContractRuntimePpts.IsMatch(parentTypeName);
     }
 
-    private bool PerformEarlyExitChecks(string name, Type type, VariableKind kind,
-      string enclosingVar, int nestingDepth)
+    /// <summary>
+    /// Checks whether the declartion printing can be exited early, e.g. because a static variable
+    /// has already been decalred for this program point, nesting depth is too great, etc.
+    /// </summary>
+    /// <param name="name">Name of the variable to potentially be declared</param>
+    /// <param name="kind">Daikon kind of the variable to potentially be declared</param>
+    /// <param name="enclosingVar">Encolsing var, if any of the variable to potentially be,
+    /// declared, null or empty otherwise</param>
+    /// <param name="nestingDepth">Nesting depth of the variable to potentially be declared</param>
+    /// <returns>True if the variable should be skipped, otherwise false</returns>
+    private bool PerformEarlyExitChecks(string name, VariableKind kind, string enclosingVar,
+      int nestingDepth)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(name));
-      Contract.Requires((kind == VariableKind.field || kind == VariableKind.array).Implies(!string.IsNullOrWhiteSpace(enclosingVar)), 
+      Contract.Requires((kind == VariableKind.field || kind == VariableKind.array).Implies(!string.IsNullOrWhiteSpace(enclosingVar)),
           "Enclosing field required for static fields and arrays");
-       
+
       if (nestingDepth > this.frontEndArgs.MaxNestingDepth ||
           !this.frontEndArgs.ShouldPrintVariable(name))
       {
         return true;
-      } 
+      }
 
       if (this.variablesForCurrentProgramPoint.Contains(name))
       {
@@ -1246,7 +1261,7 @@ namespace DotNetFrontEnd
     /// <param name="parentName">Name of the parent</param>
     /// <param name="nestingDepth">Nesting depth for the list variable</param>
     /// <param name="collectionFlags">Flags to describe the collection, e.g. no_dups, if any</param>
-    private void DeclareVariableAsList(string name, Type type, string parentName, 
+    private void DeclareVariableAsList(string name, Type type, string parentName,
         int nestingDepth, Type originatingType,
         VariableFlags collectionFlags = VariableFlags.none,
         INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
@@ -1268,7 +1283,7 @@ namespace DotNetFrontEnd
         // Daikon can't handle multidimensional arrays, so we skip them.
         return;
       }
-     
+
       PrintList(name + "[..]", elementType, name, originatingType, VariableKind.array,
           nestingDepth: nestingDepth, parentName: parentName, flags: collectionFlags,
           typeContext: typeContext, methodContext: methodContext);
@@ -1298,7 +1313,7 @@ namespace DotNetFrontEnd
 
         // TODO XXX: need to simplify the other standard types
         var declaringType = (method.DeclaringType == typeof(String)) ? "string" : method.DeclaringType.Name;
-          
+
         if (method.GetParameters().Length == 0)
         {
           return string.Join(".", declaringType, methodName);

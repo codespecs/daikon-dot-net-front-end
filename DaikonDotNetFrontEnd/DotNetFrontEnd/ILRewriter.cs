@@ -2281,6 +2281,9 @@ namespace DotNetFrontEnd
     /// Generate the set of nullary methods and property getters reachable from the assembly up to <c>maxNestingDepth</c>.
     /// </summary>
     /// <param name="mutableAssembly">the assembly</param>
+    /// General exeception catching is used to allow front-end to continue, with knowledge that
+    /// some type are unaccessible, and that is okay.
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
     private List<Tuple<string, string>> AllNullaryMethods(Assembly mutableAssembly)
     {
       var acc = new Dictionary<string, HashSet<string>>();
@@ -2408,12 +2411,20 @@ namespace DotNetFrontEnd
         AllNullaryMethodsHelper(field.FieldType, originatingType, acc, maxNestingDepth, nestingDepth + 1);
       }
 
+      PureMethodNullaryHelper(type, originatingType, acc, maxNestingDepth, nestingDepth, typeName);
+    }
+
+    private void PureMethodNullaryHelper(Type type, Type originatingType,
+      Dictionary<string, HashSet<string>> acc, int maxNestingDepth, int nestingDepth,
+      string typeName)
+    {
       foreach (var method in type.GetMethods(TypeManager.PureMethodBindings)
-                                 .Where(m => !m.IsConstructor && m.ReturnType != null && m.ReturnType != typeof(void)))
+                                 .Where(m => !m.IsConstructor && m.ReturnType != null
+                                        && m.ReturnType != typeof(void)))
       {
         var paramList = method.GetParameters();
 
-        if ((method.Name.Split('.').Length == 1) && // method does not explicitly implements an interface
+        if ((method.Name.Split('.').Length == 1) && // method does not explicitly implement an interface
             ((!method.IsStatic && paramList.Length == 0) ||
                (method.IsStatic && paramList.Length == 1 && paramList[0].ParameterType == type)))
         {
@@ -2422,20 +2433,24 @@ namespace DotNetFrontEnd
           if (typeName != null &&
               !IgnoredNullaryMethods.Contains(name) &&
               !OnList(name, frontEndArgs.EmitNullaryPrefixBlacklist) &&
-              (method.IsPublic || (type.FullName != null && type.FullName.Equals(originatingType.FullName))))
+              (method.IsPublic || (type.FullName != null
+                  && type.FullName.Equals(originatingType.FullName))))
           {
-            // TODO #80: for static methods, organize by the type of the parameter?s
+            // TODO #80: for static methods, organize by the type of the parameters
             acc[typeName].Add(name);
           }
 
           if (!IgnoredNullaryMethods.Contains(name))
           {
-            // For ignored methods, only visit parameter and return type if the user's code explicitly references it
-            AllNullaryMethodsHelper(method.ReturnType, originatingType, acc, maxNestingDepth, nestingDepth + 1);
+            // For ignored methods, only visit parameter and return type if the 
+            // user's code explicitly references it
+            AllNullaryMethodsHelper(method.ReturnType, originatingType, acc, maxNestingDepth,
+                nestingDepth + 1);
           }
           if (method.IsStatic)
           {
-            AllNullaryMethodsHelper(paramList.First().ParameterType, originatingType, acc, maxNestingDepth, nestingDepth + 1);
+            AllNullaryMethodsHelper(paramList.First().ParameterType, originatingType, acc,
+                maxNestingDepth, nestingDepth + 1);
           }
         }
       }

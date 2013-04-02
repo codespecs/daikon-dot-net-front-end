@@ -123,6 +123,9 @@ namespace DotNetFrontEnd
     /// </summary>
     private readonly static char DecTypeMultipleConstraintSeparator = '|';
 
+    /// <summary>
+    /// Binding flags to use when checking for pure methods
+    /// </summary>
     public static readonly BindingFlags PureMethodBindings =
       BindingFlags.Public | BindingFlags.NonPublic |
       BindingFlags.Instance |

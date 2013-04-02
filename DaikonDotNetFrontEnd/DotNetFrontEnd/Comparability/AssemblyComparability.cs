@@ -73,7 +73,7 @@ namespace DotNetFrontEnd.Comparability
       }
     }
 
-    public int GetElementComparability(string name, TypeManager typeManager, INamedTypeDefinition type, IMethodDefinition method)
+    public int GetElementComparability(string name, TypeManager typeManager, ITypeReference type, IMethodDefinition method)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(name));
       Contract.Requires(typeManager != null);
@@ -91,7 +91,7 @@ namespace DotNetFrontEnd.Comparability
       }
     }
 
-    internal int GetComparability(string name, TypeManager typeManager, INamedTypeDefinition type, DeclarationPrinter.VariableKind kind, IMethodDefinition method = null)
+    internal int GetComparability(string name, TypeManager typeManager, INamedTypeDefinition type, IMethodDefinition method = null)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(name));
       Contract.Requires(type != null || method != null);
@@ -109,7 +109,7 @@ namespace DotNetFrontEnd.Comparability
     }
 
 
-    public static AssemblySummary MakeSummary(Microsoft.Cci.MutableCodeModel.Assembly decompiled, TypeManager typeManager,
+    public static AssemblySummary MakeSummary(Microsoft.Cci.MutableCodeModel.Module decompiled, TypeManager typeManager,
                                    PdbReader reader)
     {
       Contract.Requires(decompiled != null);
