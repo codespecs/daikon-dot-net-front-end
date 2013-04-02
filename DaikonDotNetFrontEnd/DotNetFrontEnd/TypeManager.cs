@@ -288,19 +288,18 @@ namespace DotNetFrontEnd
     /// </summary>
     private void PopulateIgnoredValues()
     {
-      // TODO(#57): Should be not .NET 4.0 specific
-      this.ignoredValues.Add("System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Empty");
-      this.ignoredValues.Add("System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;MaxValue");
-      this.ignoredValues.Add("System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;MinValue");
-      this.ignoredValues.Add("System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;FalseString");
-      this.ignoredValues.Add("System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;TrueString");
-      this.ignoredValues.Add("System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;MinValue");
-      this.ignoredValues.Add("System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;MaxValue");
-      this.ignoredValues.Add("System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Epsilon");
-      this.ignoredValues.Add("System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;NaN");
-      this.ignoredValues.Add("System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;NegativeInfinity");
-      this.ignoredValues.Add("System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;PositiveInfinity");
-      this.ignoredValues.Add("System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Zero");
+      this.ignoredValues.Add(typeof(string).AssemblyQualifiedName + ";Empty");
+      this.ignoredValues.Add(typeof(Int32).AssemblyQualifiedName + ";MaxValue");
+      this.ignoredValues.Add(typeof(Int32).AssemblyQualifiedName + ";MinValue");
+      this.ignoredValues.Add(typeof(bool).AssemblyQualifiedName + ";FalseString");
+      this.ignoredValues.Add(typeof(bool).AssemblyQualifiedName + ";TrueString");
+      this.ignoredValues.Add(typeof(double).AssemblyQualifiedName + ";MinValue");
+      this.ignoredValues.Add(typeof(double).AssemblyQualifiedName + ";MaxValue");
+      this.ignoredValues.Add(typeof(double).AssemblyQualifiedName + ";Epsilon");
+      this.ignoredValues.Add(typeof(double).AssemblyQualifiedName + ";NaN");
+      this.ignoredValues.Add(typeof(double).AssemblyQualifiedName + ";NegativeInfinity");
+      this.ignoredValues.Add(typeof(double).AssemblyQualifiedName + ";PositiveInfinity");
+      this.ignoredValues.Add(typeof(IntPtr).AssemblyQualifiedName + ";Zero");
     }
 
     /// <summary>
@@ -400,8 +399,10 @@ namespace DotNetFrontEnd
     /// </summary>
     private void AddStandardPurityMethods()
     {
-      this.frontEndArgs.PurityMethods.Add("System.Collections.DictionaryEntry, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;get_Key");
-      this.frontEndArgs.PurityMethods.Add("System.Collections.DictionaryEntry, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;get_Value");
+      this.frontEndArgs.PurityMethods.Add(
+        typeof(DictionaryEntry).AssemblyQualifiedName + ";get_Key");
+      this.frontEndArgs.PurityMethods.Add(
+        typeof(DictionaryEntry).AssemblyQualifiedName + ";get_Value");
     }
 
     /// <summary>
