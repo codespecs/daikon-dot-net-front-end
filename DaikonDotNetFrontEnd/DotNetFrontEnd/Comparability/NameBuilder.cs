@@ -258,8 +258,8 @@ namespace Comparability
 
       if (definition is IParameterDefinition)
       {
-        var name = ((IParameterDefinition) definition).Name.Value;
-        
+        var name = ((IParameterDefinition)definition).Name.Value;
+
         if (!string.IsNullOrEmpty(name))
         {
           TryAdd(outer, name);
@@ -277,8 +277,8 @@ namespace Comparability
       }
       else if (definition is IFieldReference)
       {
-        var field = ((IFieldReference) definition).ResolvedField;
-       
+        var field = ((IFieldReference)definition).ResolvedField;
+
         if (!(field is Dummy) && !field.Attributes.Any(a => TypeManager.IsCompilerGenerated(field)))
         {
           if (field.IsStatic)
@@ -341,7 +341,7 @@ namespace Comparability
 
     public override void Visit(IArrayIndexer arrayIndexer)
     {
-      
+
       if (arrayIndexer.Indices.Count() == 1 && NameTable.ContainsKey(arrayIndexer.IndexedObject))
       {
         var arrayName = NameTable[arrayIndexer.IndexedObject];
@@ -381,7 +381,7 @@ namespace Comparability
             var name = string.Join(".", enumType.FullName, enumType.GetEnumName(constant.Value));
             TryAdd(constantExpr, name);
           }
-          catch
+          catch (Exception)
           {
             // Issue #84: debug errors locating enums in other assemblies
           }
@@ -391,8 +391,8 @@ namespace Comparability
     /// <summary>
     /// Returns true if <code>method</code> is a setter
     /// </summary>
-    /// <param name="method"></param>
-    /// <returns></returns>
+    /// <param name="method">Method to test</param>
+    /// <returns>True if the given method is an auto-generated setter, otherwise false</returns>
     /// <remarks>MemberHelper.IsSetter requires that the method be public</remarks>
     public static bool IsSetter(IMethodDefinition method)
     {
@@ -501,7 +501,7 @@ namespace Comparability
 
     private string Context()
     {
-      return string.Format("Type: {0} Method: {0}", Type.Name.Value,
+      return string.Format("Type: {0} Method: {1}", Type.Name.Value,
                            (context != null) ? context.Name.Value : "<no method>");
     }
   }

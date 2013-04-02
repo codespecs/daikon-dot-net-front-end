@@ -159,11 +159,6 @@ namespace DotNetFrontEnd
     /// </summary>
     private static readonly int SafeModifiedBit = 1;
 
-    /// <summary>
-    /// Regex for getting name and transition for a program point
-    /// </summary>
-    private static readonly Regex PptRegex = new Regex(@"(.*?):::(.*?)");
-
     #endregion
 
     #region Private Fields
@@ -1386,8 +1381,7 @@ namespace DotNetFrontEnd
       {
         if (!typeManager.ShouldIgnoreField(elementType, elementField))
         {
-          VisitListField(name, list, elementType, writer, depth, nonsensicalElements, elementField,
-              originatingType);
+          VisitListField(name, list, writer, depth, nonsensicalElements, elementField, originatingType);
         }
       }
 
@@ -1488,8 +1482,8 @@ namespace DotNetFrontEnd
     /// <param name="nonsensicalElements">An array indicating corresponding 
     /// locations in the list containing non-sensical elements</param>
     /// <param name="elementField">The field to be inspected</param>
-    private static void VisitListField(string name, IList list, Type elementType, TextWriter writer,
-        int depth, bool[] nonsensicalElements, FieldInfo elementField, Type originatingType)
+    private static void VisitListField(string name, IList list, TextWriter writer, int depth,
+      bool[] nonsensicalElements, FieldInfo elementField, Type originatingType)
     {
       Contract.Requires(list != null, "Cannot visit children of null list");
       Contract.Requires(list.Count == nonsensicalElements.Length, "Length mismatch between list length and non-sensical array");
@@ -1583,6 +1577,9 @@ namespace DotNetFrontEnd
     /// <param name="type">The type to be used when determining how to print</param>
     /// <param name="flags">Any flags for the variable</param>
     /// <returns>String containing a daikon-valid representation of the variable's value</returns>
+    /// We catch general exceptions because we want to catch any possible error and print a safe
+    /// bad value.
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
     private static string GetVariableValue(object x, Type type, VariableModifiers flags, string name)
     {
       Contract.Requires(type != null);
@@ -1641,7 +1638,9 @@ namespace DotNetFrontEnd
         }
         catch
         {
-          Contract.Assume(false, "Error getting value " + name + "; expected: " + type.FullName + " actual: " + x.GetType().FullName);
+          Contract.Assume(false, "Error getting value " + name + "; expected: " + type.FullName +
+            " actual: " + x.GetType().FullName);
+          return "nonsensical";
         }
       }
 
@@ -1784,16 +1783,6 @@ namespace DotNetFrontEnd
         SuppressOutput = false;
       }
       return true;
-    }
-
-    [Pure]
-    private static string PptMethod(String ppt)
-    {
-      Contract.Requires(ppt != null);
-      Contract.Requires(PptRegex.IsMatch(ppt));
-      Contract.Ensures(Contract.Result<string>() != null);
-
-      return PptRegex.Match(ppt).Groups[1].Value;
     }
 
     /// <summary>

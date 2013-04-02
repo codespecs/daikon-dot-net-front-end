@@ -113,14 +113,23 @@ namespace DotNetFrontEnd.Comparability
     /// <summary>
     /// Assembly qualified names of parameter types
     /// </summary>
-    public string[] ParameterTypes { get; private set; }
+    public IEnumerable<string> ParameterTypes { get; private set; }
 
     public string DeclaringTypeName { get; private set; }
-    
+
     private readonly Dictionary<string, int> ids = new Dictionary<string, int>();
     private readonly DisjointSets comparability = new DisjointSets();
     private readonly Dictionary<string, HashSet<string>> arrayIndexes = new Dictionary<string, HashSet<string>>();
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="declaringTypeName"></param>
+    /// <param name="name"></param>
+    /// <param name="parameterTypes"></param>
+    /// <param name="ids"></param>
+    /// <param name="comparability"></param>
+    /// <param name="arrayIndexes"></param>
     public MethodSummary(string declaringTypeName, string name, string[] parameterTypes, 
       Dictionary<string, int> ids, DisjointSets comparability, Dictionary<string, HashSet<string>> arrayIndexes)
     {
