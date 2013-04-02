@@ -216,7 +216,7 @@ namespace DotNetFrontEnd
     /// has been called. Occurence count is updated when setting the nonce.
     /// </summary>
     private static readonly ConcurrentDictionary<Thread, ConcurrentDictionary<string, int>> occurenceCounts =
-       new ConcurrentDictionary<Thread, ConcurrentDictionary<string, int>>(); 
+       new ConcurrentDictionary<Thread, ConcurrentDictionary<string, int>>();
 
     /// <summary>
     /// Writer lock acquire time-out
@@ -312,18 +312,18 @@ namespace DotNetFrontEnd
     /// </remarks>
     public static void AcquireLock()
     {
-        bool acquired = false;
-        var timer = Stopwatch.StartNew();
-        do
+      bool acquired = false;
+      var timer = Stopwatch.StartNew();
+      do
+      {
+        if (timer.ElapsedMilliseconds > MAX_LOCK_ACQUIRE_TIME_MILLIS)
         {
-          if (timer.ElapsedMilliseconds > MAX_LOCK_ACQUIRE_TIME_MILLIS)
-          {
-            KillApplication(
-              new TimeoutException(
-                "DEADLOCK?: Could not acquire writer lock after " + MAX_LOCK_ACQUIRE_TIME_MILLIS + " ms"));
-          }
-          Monitor.TryEnter(WriterLock, TimeSpan.FromSeconds(1), ref acquired);
-        } while (!acquired);
+          KillApplication(
+            new TimeoutException(
+              "DEADLOCK?: Could not acquire writer lock after " + MAX_LOCK_ACQUIRE_TIME_MILLIS + " ms"));
+        }
+        Monitor.TryEnter(WriterLock, TimeSpan.FromSeconds(1), ref acquired);
+      } while (!acquired);
     }
 
     /// <summary>
@@ -531,7 +531,7 @@ namespace DotNetFrontEnd
 
         Contract.Assume(occurrences == null, "null occurence count entry found for thread" +
           Thread.CurrentThread.ManagedThreadId.ToString());
-        
+
         if (!occurrences.TryGetValue(ppt, out occurenceCount))
         {
           throw new KeyNotFoundException("No occurence count entry for PPT: " + ppt);
@@ -652,7 +652,7 @@ namespace DotNetFrontEnd
 
       int depth = NestingDepth();
       var occurences = occurenceCounts.GetOrAdd(Thread.CurrentThread, new ConcurrentDictionary<string, int>());
-        
+
       if (depth == 0)
       {
         // update the occurence counts for non-nested calls
@@ -660,14 +660,14 @@ namespace DotNetFrontEnd
       }
       else
       {
-        occurences.GetOrAdd(programPointName, 0);  
+        occurences.GetOrAdd(programPointName, 0);
       }
 
       if (SampleMethod(programPointName))
       {
         AcquireLock();
         threadDepthMap.AddOrUpdate(Thread.CurrentThread, 1, (t, x) => x + 1);
-        return Interlocked.Increment(ref globalNonce); 
+        return Interlocked.Increment(ref globalNonce);
       }
       else
       {
@@ -787,7 +787,7 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="str">file name string</param>
     /// <returns><c>str</c> with illegal file name characters replaced with underscores</returns>
-    private static string CleanFileName(string str) 
+    private static string CleanFileName(string str)
     {
       Contract.Requires(str != null);
       Contract.Ensures(Contract.Result<string>() != null);
@@ -1003,7 +1003,7 @@ namespace DotNetFrontEnd
         foreach (var method in typeManager.GetPureMethodsForType(type, originatingType))
         {
           var exprName = DeclarationPrinter.SanitizedMethodExpression(method, name);
-          
+
           if (method.IsStatic && staticFieldsVisitedForCurrentProgramPoint.Contains(exprName))
           {
             continue;
@@ -1011,7 +1011,7 @@ namespace DotNetFrontEnd
 
           object value = null;
           var valueFlags = fieldFlags;
-          
+
           try
           {
             if (obj == null || !TryGetMethodValue(obj, method, exprName, out value))
@@ -1031,7 +1031,7 @@ namespace DotNetFrontEnd
             }
           }
 
-          ReflectiveVisit(exprName, value, method.ReturnType, 
+          ReflectiveVisit(exprName, value, method.ReturnType,
             writer, depth + 1, originatingType, fieldFlags: fieldFlags);
         }
       }
@@ -1472,7 +1472,7 @@ namespace DotNetFrontEnd
             }
           }
         }
-        ListReflectiveVisit(exprName, pureMethodResults, method.ReturnType, 
+        ListReflectiveVisit(exprName, pureMethodResults, method.ReturnType,
           writer, depth + 1, originatingType, nonsensicalElements: pureNonsensical);
       }
     }
@@ -1523,7 +1523,7 @@ namespace DotNetFrontEnd
       Contract.Requires(!string.IsNullOrEmpty(name));
       Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
 
-      Contract.Assume(type != typeof(void), 
+      Contract.Assume(type != typeof(void),
         "GetHashCode: declared type is void; expression: " + name + " runtime type: " + x.GetType().FullName);
 
       try
@@ -1532,10 +1532,10 @@ namespace DotNetFrontEnd
 
         if (type.IsValueType || type == typeof(ValueType))
         {
-           // Use a value-based hashcode for value types
-           Contract.Assert(xType.IsValueType,
-             "Runtime value is not a value type. Expression: " + name + "Runtime Type: " + xType.ToString() + " Declared: " + type.Name);
-           return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
+          // Use a value-based hashcode for value types
+          Contract.Assert(xType.IsValueType,
+            "Runtime value is not a value type. Expression: " + name + "Runtime Type: " + xType.ToString() + " Declared: " + type.Name);
+          return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
         }
         else if (xType.IsValueType && (type.IsGenericParameter || type.IsInterface))
         {
@@ -1572,7 +1572,7 @@ namespace DotNetFrontEnd
         else
         {
           throw;
-        } 
+        }
       }
     }
 
@@ -1588,7 +1588,7 @@ namespace DotNetFrontEnd
       Contract.Requires(type != null);
       Contract.Requires(!string.IsNullOrEmpty(name));
 
-      Contract.Assume(type != typeof(void), 
+      Contract.Assume(type != typeof(void),
         "Declared type of expression is void; expression: " + name + " runtime type: " + (x == null ? "<null>" : x.GetType().FullName));
 
       if (flags.HasFlag(VariableModifiers.nonsensical))
@@ -1626,22 +1626,22 @@ namespace DotNetFrontEnd
       {
         try
         {
-            if (type == TypeManager.BooleanType)
-            {
-                return ((bool)x) ? "true" : "false";
-            }
-            else if (type == TypeManager.CharType)
-            {
-                return ((int)(char)x).ToString(CultureInfo.InvariantCulture);
-            }
-            else if (TypeManager.IsAnyNumericType(type))
-            {
-                return x.ToString();
-            }
+          if (type == TypeManager.BooleanType)
+          {
+            return ((bool)x) ? "true" : "false";
+          }
+          else if (type == TypeManager.CharType)
+          {
+            return ((int)(char)x).ToString(CultureInfo.InvariantCulture);
+          }
+          else if (TypeManager.IsAnyNumericType(type))
+          {
+            return x.ToString();
+          }
         }
         catch
         {
-            Contract.Assume(false, "Error getting value " + name + "; expected: " + type.FullName + " actual: " +x.GetType().FullName);
+          Contract.Assume(false, "Error getting value " + name + "; expected: " + type.FullName + " actual: " + x.GetType().FullName);
         }
       }
 
@@ -1710,13 +1710,13 @@ namespace DotNetFrontEnd
       Contract.Requires(name != null);
 
       Type objType = obj.GetType();
-      
-      Contract.Assume(methodInfo.DeclaringType != null, 
+
+      Contract.Assume(methodInfo.DeclaringType != null,
         "Method " + methodInfo.Name + " has no declaring type; expression type: " + objType.FullName);
 
       Func<string> callInfo = () =>
-        "[Expession " + name + " Object Type: " + objType.FullName + " Method Name: " + methodInfo.Name + 
-        " Declaring Type: " + methodInfo.DeclaringType + " Static?: " + methodInfo.IsStatic + 
+        "[Expession " + name + " Object Type: " + objType.FullName + " Method Name: " + methodInfo.Name +
+        " Declaring Type: " + methodInfo.DeclaringType + " Static?: " + methodInfo.IsStatic +
         " Public?: " + methodInfo.IsPublic + "]";
 
       var paramCnt = methodInfo.GetParameters().Length;
@@ -1731,13 +1731,13 @@ namespace DotNetFrontEnd
            (paramCnt == 0 ? Type.EmptyTypes : new Type[] { objType }),
            null);
       }
-     
+
       if (method == null)
       {
-          method = objType.GetMethod(methodInfo.Name,
-             TypeManager.PureMethodBindings, null,
-             (paramCnt == 0 ? Type.EmptyTypes : new Type[] {objType}),
-             null);
+        method = objType.GetMethod(methodInfo.Name,
+           TypeManager.PureMethodBindings, null,
+           (paramCnt == 0 ? Type.EmptyTypes : new Type[] { objType }),
+           null);
       }
 
       Contract.Assume(method != null, "Could not locate method " + methodInfo.Name + "; " + callInfo());
@@ -1759,7 +1759,7 @@ namespace DotNetFrontEnd
       SuppressOutput = true;
       try
       {
-        result = method.Invoke(obj, paramList.Length == 1 ? new object[] {obj} : null);
+        result = method.Invoke(obj, paramList.Length == 1 ? new object[] { obj } : null);
       }
       catch (TargetInvocationException ex)
       {
@@ -1774,9 +1774,9 @@ namespace DotNetFrontEnd
       }
       catch (Exception ex)
       {
-        Contract.Assume(false, string.Format("Unable to invoke {0}: {1}; {2}", 
+        Contract.Assume(false, string.Format("Unable to invoke {0}: {1}; {2}",
           method.Name, (ex.Message ?? "<no message>"), callInfo()));
-        
+
         throw;
       }
       finally
@@ -1795,7 +1795,7 @@ namespace DotNetFrontEnd
 
       return PptRegex.Match(ppt).Groups[1].Value;
     }
-    
+
     /// <summary>
     /// Prepare the given string for printing to Daikon format.
     /// </summary>

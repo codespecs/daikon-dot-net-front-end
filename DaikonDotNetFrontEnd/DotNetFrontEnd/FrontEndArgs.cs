@@ -145,7 +145,7 @@ namespace DotNetFrontEnd
       /// <summary>
       /// Output 'nonsensical' instead of crashing when reflection errors occur
       /// </summary>
-      robust_mode, 
+      robust_mode,
       wpf,
       /// <summary>
       /// Convenience Flag for the Visual Studio add-in. Sets <c>comparability</c>, <c>is_readonly_flags</c>, 
@@ -229,7 +229,7 @@ namespace DotNetFrontEnd
             throw new ArgumentException("Cannot process argument: " + currentArg
                 + ", it has too many = characters.");
           }
-          
+
           // Whether the current argument was matched to any known possible argument
           bool matched = false;
           // If the user specifies an argument twice accept the second version.
@@ -385,14 +385,14 @@ namespace DotNetFrontEnd
     private string AddArgument(PossibleArgument argumentKey, string argumentValue)
     {
       Contract.Ensures(this.programArguments.ContainsKey(argumentKey));
-      
+
       // Special case -- there is a default value for save-location but should only
       // be set if and only if the option is supplied with no value.
       if (argumentKey == PossibleArgument.save_program && argumentValue == null)
       {
         argumentValue = FrontEndArgs.DefaultSaveProgramLocation;
       }
-      
+
       string oldVal = null;
       if (this.programArguments.ContainsKey(argumentKey))
       {
@@ -433,7 +433,7 @@ namespace DotNetFrontEnd
 
       foreach (var line in File.ReadLines(this.PurityFile).Where(l => !string.IsNullOrWhiteSpace(l)))
       {
-         this.PurityMethods.Add(line);
+        this.PurityMethods.Add(line);
       }
     }
 

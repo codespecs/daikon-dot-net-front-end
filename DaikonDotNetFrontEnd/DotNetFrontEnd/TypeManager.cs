@@ -115,7 +115,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Don't print object definition program points or references to the Code Contracts runtime
     /// </summary>
-    public readonly static Regex CodeContractRuntimePpts = new Regex(@"System\.Diagnostics\.Contracts\.__ContractsRuntime.*?"); 
+    public readonly static Regex CodeContractRuntimePpts = new Regex(@"System\.Diagnostics\.Contracts\.__ContractsRuntime.*?");
 
     /// <summary>
     /// When dec-type of a generic variable with multiple constraints is being printed, use this
@@ -372,7 +372,7 @@ namespace DotNetFrontEnd
         if (method == null)
         {
           // TODO #80: right now we only support that methods with arguments in the same class
-          method = type.GetMethod(methodName, PureMethodBindings, null, new Type[] {type}, null);
+          method = type.GetMethod(methodName, PureMethodBindings, null, new Type[] { type }, null);
           Contract.Assume(method == null || method.IsStatic);
         }
         Contract.Assume(method != null, "No method of name " + methodName + " exists for type on type " + typeName);
@@ -765,7 +765,7 @@ namespace DotNetFrontEnd
       Contract.Requires(type != null);
       Contract.Requires(originatingType != null);
       Contract.Ensures(Contract.Result<List<MethodInfo>>() != null);
-      
+
       // If the user provided a specific instantiation of a generic type, use it. 
       // Otherwise, use the generic type definition, e.g. List`1
       if (type.IsGenericType && !pureMethodsForType.ContainsKey(type))
@@ -791,7 +791,7 @@ namespace DotNetFrontEnd
           result.Add(method);
         }
       }
-   
+
       result.Sort(delegate(MethodInfo lhs, MethodInfo rhs)
       {
         return DeclarationPrinter.SanitizePropertyName(lhs.Name).CompareTo(DeclarationPrinter.SanitizePropertyName(rhs.Name));
@@ -894,7 +894,7 @@ namespace DotNetFrontEnd
     /// <param name="deeplyInspectGenericParameters">Whether to investigate constraints on
     /// generic parameters</param>
     /// <returns>A reflection type</returns>
-    public string ConvertCCITypeToAssemblyQualifiedName(ITypeReference type, 
+    public string ConvertCCITypeToAssemblyQualifiedName(ITypeReference type,
         bool deeplyInspectGenericParameters)
     {
       Contract.Requires(type != null);
@@ -1274,7 +1274,7 @@ namespace DotNetFrontEnd
 
       foreach (var contractAttribute in contractAttributes)
       {
-        var attributeRef = CreateTypeReference(Host.ContractAssemblySymbolicIdentity, 
+        var attributeRef = CreateTypeReference(Host.ContractAssemblySymbolicIdentity,
           string.Join(".", "System", "Diagnostics", "Contracts", contractAttribute));
 
         if (AttributeHelper.Contains(def.Attributes, attributeRef))
