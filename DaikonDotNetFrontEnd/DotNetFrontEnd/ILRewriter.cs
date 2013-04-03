@@ -20,7 +20,7 @@ using System.Runtime.Serialization;
 using Microsoft.Cci;
 using Microsoft.Cci.MutableCodeModel;
 using System.Diagnostics.Contracts;
-using DotNetFrontEnd.Contracts;
+using Celeriac.Contracts;
 using Assembly = Microsoft.Cci.MutableCodeModel.Assembly;
 using MethodBody = Microsoft.Cci.MutableCodeModel.MethodBody;
 using System.Runtime.CompilerServices;
@@ -31,7 +31,7 @@ using System.Runtime.CompilerServices;
 // modified to insert the call to the instrumentation function at the beginning and exit of every
 // method. This is mostly done in the ProcessOperations() method, with many support methods added.
 
-namespace DotNetFrontEnd
+namespace Celeriac
 {
   /// <summary>
   /// A mutator that modifies method bodies at the IL level.
@@ -43,14 +43,14 @@ namespace DotNetFrontEnd
     #region Public Constants
 
     /// <summary>
-    /// The name of the class storing the DNFE arguments when the program is run in offline mode.
+    /// The name of the class storing the Celeriac arguments when the program is run in offline mode.
     /// </summary>
-    public static readonly string ArgumentStoringClassName = "DNFE_ArgumentStoringClass";
+    public static readonly string ArgumentStoringClassName = "Celeriac_ArgumentStoringClass";
 
     /// <summary>
-    /// The name of the method storing the DNFE arguments when the program is run in offline mode.
+    /// The name of the method storing the Celeriac arguments when the program is run in offline mode.
     /// </summary>
-    public static readonly string ArgumentStoringMethodName = "DNFE_ArgumentStroingMethod";
+    public static readonly string ArgumentStoringMethodName = "Celeriac_ArgumentStoringMethod";
 
     #endregion
 
@@ -101,11 +101,11 @@ namespace DotNetFrontEnd
     private readonly INamespaceTypeReference systemVoid;
     private readonly INamespaceTypeReference systemObject;
 
-    // DNFE-specific variables
+    // Celeriac-specific variables
     private ITypeDefinition variableVisitorType;
-    private DotNetFrontEnd.DeclarationPrinter declPrinter;
-    private DotNetFrontEnd.FrontEndArgs frontEndArgs;
-    private DotNetFrontEnd.TypeManager typeManager;
+    private DeclarationPrinter declPrinter;
+    private CeleriacArgs celeriacArgs;
+    private TypeManager typeManager;
     private Comparability.AssemblySummary comparabilityManager;
 
     // Variables used during rewriting
@@ -164,9 +164,9 @@ namespace DotNetFrontEnd
     private void ObjectInvariant()
     {
       Contract.Invariant(host != null);
-      Contract.Invariant(frontEndArgs != null);
+      Contract.Invariant(celeriacArgs != null);
       Contract.Invariant(typeManager != null);
-      Contract.Invariant(frontEndArgs.StaticComparability == (comparabilityManager != null));
+      Contract.Invariant(celeriacArgs.StaticComparability == (comparabilityManager != null));
 
       Contract.Invariant(nameTable == host.NameTable);
       Contract.Invariant(nameTable != null);
@@ -176,22 +176,22 @@ namespace DotNetFrontEnd
       Contract.Invariant(systemVoid == host.PlatformType.SystemVoid);
     }
 
-    public ILRewriter(IMetadataHost host, PdbReader pdbReader, DotNetFrontEnd.FrontEndArgs frontEndArgs,
-        DotNetFrontEnd.TypeManager typeManager, Comparability.AssemblySummary comparabilityManager)
+    public ILRewriter(IMetadataHost host, PdbReader pdbReader, CeleriacArgs celeriacArgs,
+        TypeManager typeManager, Comparability.AssemblySummary comparabilityManager)
       : base(host)
     {
       Contract.Requires(host != null);
-      Contract.Requires(frontEndArgs != null);
+      Contract.Requires(celeriacArgs != null);
       Contract.Requires(typeManager != null);
 
       Contract.Ensures(this.host == host);
       Contract.Ensures(this.pdbReader == pdbReader);
-      Contract.Ensures(this.frontEndArgs == frontEndArgs);
+      Contract.Ensures(this.celeriacArgs == celeriacArgs);
       Contract.Ensures(this.typeManager == typeManager);
       Contract.Ensures(this.comparabilityManager == comparabilityManager);
 
       this.pdbReader = pdbReader;
-      this.frontEndArgs = frontEndArgs;
+      this.celeriacArgs = celeriacArgs;
       this.typeManager = typeManager;
       this.comparabilityManager = comparabilityManager;
 
@@ -243,7 +243,7 @@ namespace DotNetFrontEnd
       // If the method is compiler generated don't insert instrumentation code.
       if (typeManager.IsCompilerGenerated(containingType.ResolvedType) ||
           typeManager.IsCompilerGenerated(method) ||
-          !frontEndArgs.ShouldPrintProgramPoint(FormatMethodName(methodBody.MethodDefinition)))
+          !celeriacArgs.ShouldPrintProgramPoint(FormatMethodName(methodBody.MethodDefinition)))
       {
         return base.Rewrite(methodBody);
       }
@@ -1045,7 +1045,7 @@ namespace DotNetFrontEnd
     private bool DeclareReturnProgramPoint(IMethodBody methodBody, int i, ILGeneratorLabel pptEnd)
     {
       // If we don't want to instrument returns then don't do anything special here
-      bool instrumentReturns = frontEndArgs.ShouldPrintProgramPoint(
+      bool instrumentReturns = celeriacArgs.ShouldPrintProgramPoint(
           FormatMethodName(MethodTransition.EXIT, methodBody.MethodDefinition),
           i.ToString(CultureInfo.InvariantCulture));
       if (!instrumentReturns)
@@ -1161,7 +1161,7 @@ namespace DotNetFrontEnd
       string exitPptName = FormatMethodName(
           MethodTransition.EXIT, methodBody.MethodDefinition);
       // If we don't want to instrument returns don't do anything special here
-      bool instrumentReturns = frontEndArgs.ShouldPrintProgramPoint(exitPptName, label);
+      bool instrumentReturns = celeriacArgs.ShouldPrintProgramPoint(exitPptName, label);
       if (instrumentReturns)
       {
         ILGeneratorLabel pptEnd = new ILGeneratorLabel();
@@ -1279,7 +1279,7 @@ namespace DotNetFrontEnd
         // Pop the comparison, jump to next conditional if no match
         generator.Emit(ILGenerator.LongVersionOf(OperationCode.Brtrue_S), jumpPoint);
         // Otherwise make the instrumentation call
-        if (this.frontEndArgs.ShouldPrintProgramPoint(
+        if (this.celeriacArgs.ShouldPrintProgramPoint(
             FormatMethodName(
                 MethodTransition.EXIT, methodBody.MethodDefinition),
                 FormatExceptionProgramPoint(ex)))
@@ -1295,7 +1295,7 @@ namespace DotNetFrontEnd
       }
 
       // Now that expected exception has been caught, instrument the catch-all exception handler.
-      if (this.frontEndArgs.ShouldPrintProgramPoint(
+      if (this.celeriacArgs.ShouldPrintProgramPoint(
               FormatMethodName(
                   MethodTransition.EXIT, methodBody.MethodDefinition),
                   FormatExceptionProgramPoint(host.PlatformType.SystemObject)))
@@ -1492,7 +1492,7 @@ namespace DotNetFrontEnd
     {
       string methodName = FormatMethodName(transition, methodBody.MethodDefinition);
 
-      if (!frontEndArgs.ShouldPrintProgramPoint(methodName, label))
+      if (!celeriacArgs.ShouldPrintProgramPoint(methodName, label))
       {
         return false;
       }
@@ -1507,7 +1507,7 @@ namespace DotNetFrontEnd
       // so they can be loaded by the variable visitor before it beings instrumentation.
       // Could be necessary anytime we enter a method because some programs, e.g. libraries
       // have no entry point.
-      if (this.frontEndArgs.SaveProgram != null && transition == MethodTransition.ENTER)
+      if (this.celeriacArgs.SaveProgram != null && transition == MethodTransition.ENTER)
       {
         this.EmitFrontEndArgInitializationCall();
       }
@@ -2175,10 +2175,10 @@ namespace DotNetFrontEnd
       Contract.Assume(variableVisitorAssembly != null, "Error loading reflector");
 
       this.variableVisitorType = variableVisitorAssembly.GetAllTypes().First(
-          t => t.Name.ToString().Equals(DotNetFrontEnd.VariableVisitor.VariableVisitorClassName));
+          t => t.Name.ToString().Equals(VariableVisitor.VariableVisitorClassName));
       Contract.Assume(this.variableVisitorType != null, "Error locating variable visitor in assembly");
 
-      if (this.frontEndArgs.SaveProgram != null)
+      if (this.celeriacArgs.SaveProgram != null)
       {
         WriteClassStoringArguments(mutableAssembly, host);
       }
@@ -2187,15 +2187,15 @@ namespace DotNetFrontEnd
       mutableAssembly.AssemblyReferences.Add(variableVisitorAssembly);
 
       // If appending onto an existing dtrace or just emitting nullary method then don't reprint the declarations.
-      this.printDeclarations = !(this.frontEndArgs.DtraceAppend || frontEndArgs.EmitNullaryInfo);
-      if (frontEndArgs.EmitNullaryInfo)
+      this.printDeclarations = !(this.celeriacArgs.DtraceAppend || celeriacArgs.EmitNullaryInfo);
+      if (celeriacArgs.EmitNullaryInfo)
       {
         var pureProperties = this.AllNullaryMethods(mutableAssembly);
         this.WriteAutoGeneratedPurityFile(pureProperties);
         // return without rewriting
         return null;
       }
-      else if (frontEndArgs.AutoDetectPure)
+      else if (celeriacArgs.AutoDetectPure)
       {
         var pureProperties = this.AddAutoGeneratedPropertiesAsPure(mutableAssembly);
         this.WriteAutoGeneratedPurityFile(pureProperties);
@@ -2203,7 +2203,7 @@ namespace DotNetFrontEnd
 
       if (this.printDeclarations)
       {
-        this.declPrinter = new DotNetFrontEnd.DeclarationPrinter(this.frontEndArgs, this.typeManager, this.comparabilityManager);
+        this.declPrinter = new DeclarationPrinter(this.celeriacArgs, this.typeManager, this.comparabilityManager);
 
         foreach (INamedTypeDefinition type in mutableAssembly.AllTypes)
         {
@@ -2239,8 +2239,8 @@ namespace DotNetFrontEnd
     /// <param name="pureMethods">Pure methods to output to the file</param>
     private void WriteAutoGeneratedPurityFile(List<Tuple<string, string>> pureMethods)
     {
-      using (var writer = new StreamWriter(frontEndArgs.AssemblyName
-        + FrontEndArgs.AutoGeneratedPurityFileSuffix))
+      using (var writer = new StreamWriter(celeriacArgs.AssemblyName
+        + CeleriacArgs.AutoGeneratedPurityFileSuffix))
       {
         foreach (var method in pureMethods)
         {
@@ -2281,7 +2281,7 @@ namespace DotNetFrontEnd
     /// Generate the set of nullary methods and property getters reachable from the assembly up to <c>maxNestingDepth</c>.
     /// </summary>
     /// <param name="mutableAssembly">the assembly</param>
-    /// General exeception catching is used to allow front-end to continue, with knowledge that
+    /// General exeception catching is used to allow Celeriac to continue, with knowledge that
     /// some type are unaccessible, and that is okay.
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
     private List<Tuple<string, string>> AllNullaryMethods(Assembly mutableAssembly)
@@ -2293,7 +2293,7 @@ namespace DotNetFrontEnd
       {
         var name = typeManager.ConvertCCITypeToAssemblyQualifiedName(cciType);
 
-        DNFETypeDeclaration typeDec;
+        CeleriacTypeDeclaration typeDec;
         try
         {
           typeDec = typeManager.ConvertAssemblyQualifiedNameToType(name);
@@ -2301,7 +2301,7 @@ namespace DotNetFrontEnd
         catch
         {
           // some types, e.g., __TransparentProxy are not accessible.
-          if (frontEndArgs.VerboseMode)
+          if (celeriacArgs.VerboseMode)
           {
             Console.WriteLine("INFO: cannot access runtime type for " + name);
           }
@@ -2311,7 +2311,7 @@ namespace DotNetFrontEnd
         foreach (var type in typeDec.GetAllTypes)
         {
           var originator = originating ? type : typeof(DummyOriginator);
-          AllNullaryMethodsHelper(type, originator, acc, frontEndArgs.MaxNestingDepth, depth);
+          AllNullaryMethodsHelper(type, originator, acc, celeriacArgs.MaxNestingDepth, depth);
         }
       };
 
@@ -2432,7 +2432,7 @@ namespace DotNetFrontEnd
 
           if (typeName != null &&
               !IgnoredNullaryMethods.Contains(name) &&
-              !OnList(name, frontEndArgs.EmitNullaryPrefixBlacklist) &&
+              !OnList(name, celeriacArgs.EmitNullaryPrefixBlacklist) &&
               (method.IsPublic || (type.FullName != null
                   && type.FullName.Equals(originatingType.FullName))))
           {
@@ -2457,8 +2457,8 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Creates and emits a new class, which contains a single method returning the front end
-    /// arguments used during instrumentation. Necessary for running the front-end in offline
+    /// Creates and emits a new class, which contains a single method returning the Celeriac
+    /// arguments used during instrumentation. Necessary for running Celeriac in offline
     /// mode since these would otherwise not be available.
     /// </summary>
     /// <param name="mutableAssembly">Assembly to emit the class into</param>
@@ -2501,7 +2501,7 @@ namespace DotNetFrontEnd
 
       ILGenerator ilGenerator = new ILGenerator(host, getArgumentsMethod);
 
-      ilGenerator.Emit(OperationCode.Ldstr, this.frontEndArgs.ArgsToWrite);
+      ilGenerator.Emit(OperationCode.Ldstr, this.celeriacArgs.ArgsToWrite);
 
       var variableVisitorMethodReference = new Microsoft.Cci.MethodReference(
        this.host, this.variableVisitorType, CallingConvention.Default,

@@ -1,9 +1,5 @@
-﻿// This file defines the driver for the front-end. It parses all command-line
-// arguments, then calls the profiler to rewrite the program IL with the
-// instrumentation calls. Finally, it executes the rewritten IL.
-
-using System;
-using DotNetFrontEnd;
+﻿using System;
+using Celeriac;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -11,18 +7,18 @@ using System.Runtime.Serialization;
 using System.Diagnostics;
 using Microsoft.Cci;
 
-namespace DotNetFrontEndLauncher
+namespace CeleriacLauncher
 {
   /// <summary>
-  /// Driver program for daikon .NET front-end, parses command-line args, adds instrumentation
-  /// calls to program's IO, then launches program, which generates datatrace file.
+  /// Driver program for the Celeriac .NET front-end for Daikon. Parses command-line args, adds 
+  /// instrumentation calls to the program's IL, and then launches program which generates a trace.
   /// </summary>
-  class FrontEndLauncher
+  class CeleriacLauncher
   {
     static void Main(string[] args)
     {
       var arguments = ProcessArguments(args);
-      FrontEndArgs frontEndArgs = arguments.Item1;
+      CeleriacArgs celeriacArgs = arguments.Item1;
       TypeManager typeManager = arguments.Item2;
 
       // Hold the IL for the program to be profiled in memory if we are running the modified 
@@ -30,12 +26,12 @@ namespace DotNetFrontEndLauncher
       MemoryStream resultStream = null;
       try
       {
-        resultStream = ProgramRewriter.RewriteProgramIL(frontEndArgs, typeManager);
-        if (frontEndArgs.EmitNullaryInfo || frontEndArgs.GenerateComparability)
+        resultStream = ProgramRewriter.RewriteProgramIL(celeriacArgs, typeManager);
+        if (celeriacArgs.EmitNullaryInfo || celeriacArgs.GenerateComparability)
         {
           return;
         }
-        else if (frontEndArgs.VerboseMode)
+        else if (celeriacArgs.VerboseMode)
         {
           Console.WriteLine("Rewriting complete");
         }
@@ -60,17 +56,17 @@ namespace DotNetFrontEndLauncher
       //  return;
       //}
 
-      if (frontEndArgs.SaveAndRun)
+      if (celeriacArgs.SaveAndRun)
       {
         // Do we need to serialize the type manager here?
-        ExecuteProgramFromDisk(args, frontEndArgs);
+        ExecuteProgramFromDisk(args, celeriacArgs);
       }
-      else if (String.IsNullOrEmpty(frontEndArgs.SaveProgram))
+      else if (String.IsNullOrEmpty(celeriacArgs.SaveProgram))
       {
         // Run the program from memory
         Assembly rewrittenAssembly = Assembly.Load(resultStream.ToArray());
         resultStream.Close();
-        ExecuteProgramFromMemory(args, frontEndArgs, rewrittenAssembly);
+        ExecuteProgramFromMemory(args, celeriacArgs, rewrittenAssembly);
       }
       else
       {
@@ -80,13 +76,13 @@ namespace DotNetFrontEndLauncher
     }
 
     /// <summary>
-    /// Process the provided front-end arguments, creating FrontEndArgs and TypeManager objects
+    /// Process the provided Celeriac arguments, creating CeleriacArgs and TypeManager objects
     /// </summary>
-    /// <param name="args">Arguments provided to the front end, including program arguments</param>
+    /// <param name="args">Arguments provided to the Celeriac, including program arguments</param>
     /// <returns>FrontEndArgs and TypeManager objects to use during visiting</returns>
     /// <remarks>Dispose of the returned TypeManager yourself if that seems necessary.</remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-    private static Tuple<FrontEndArgs, TypeManager> ProcessArguments(string[] args)
+    private static Tuple<CeleriacArgs, TypeManager> ProcessArguments(string[] args)
     {
       if (args == null || args.Length < 1)
       {
@@ -94,34 +90,34 @@ namespace DotNetFrontEndLauncher
         Environment.Exit(1);// return;
       }
 
-      FrontEndArgs frontEndArgs = null;
+      CeleriacArgs celeriacArgs = null;
       try
       {
-        frontEndArgs = new FrontEndArgs(args);
+        celeriacArgs = new CeleriacArgs(args);
       }
       catch (ArgumentException ex)
       {
         Console.WriteLine(ex.Message);
         Environment.Exit(1);
       }
-      TypeManager typeManager = new TypeManager(frontEndArgs);
+      TypeManager typeManager = new TypeManager(celeriacArgs);
 
-      if (!File.Exists(frontEndArgs.AssemblyPath))
+      if (!File.Exists(celeriacArgs.AssemblyPath))
       {
-        throw new FileNotFoundException("Program " + frontEndArgs.AssemblyPath +
+        throw new FileNotFoundException("Program " + celeriacArgs.AssemblyPath +
             " does not exist.");
       }
 
       // The user may just want to get the profiled program, not have it run.
-      if (frontEndArgs.SaveProgram != null)
+      if (celeriacArgs.SaveProgram != null)
       {
         // Print all the decls in one file
-        frontEndArgs.SetDeclExtension();
-        return new Tuple<FrontEndArgs, TypeManager>(frontEndArgs, typeManager);
+        celeriacArgs.SetDeclExtension();
+        return new Tuple<CeleriacArgs, TypeManager>(celeriacArgs, typeManager);
       }
 
       // Whether to print datatrace file to stdout
-      string outputLocation = frontEndArgs.OutputLocation;
+      string outputLocation = celeriacArgs.OutputLocation;
 
       // Delete the existing output file if we aren't appending to the datatrace file.
       // Create directory to the output location if necessary
@@ -132,33 +128,33 @@ namespace DotNetFrontEndLauncher
         Directory.CreateDirectory(dirPart);
       }
 
-      if (!frontEndArgs.DtraceAppend)
+      if (!celeriacArgs.DtraceAppend)
       {
         File.Delete(outputLocation);
       }
 
       // Statically set the arguments for the reflector. 
-      DotNetFrontEnd.VariableVisitor.ReflectionArgs = frontEndArgs;
-      DotNetFrontEnd.VariableVisitor.TypeManager = typeManager;
-      if (frontEndArgs.VerboseMode)
+      Celeriac.VariableVisitor.ReflectionArgs = celeriacArgs;
+      Celeriac.VariableVisitor.TypeManager = typeManager;
+      if (celeriacArgs.VerboseMode)
       {
         Console.WriteLine("Argument processing complete");
       }
-      return new Tuple<FrontEndArgs, TypeManager>(frontEndArgs, typeManager);
+      return new Tuple<CeleriacArgs, TypeManager>(celeriacArgs, typeManager);
     }
 
     /// <summary>
     /// Load and execute the rewritten program.
     /// </summary>
     /// <param name="args">Arguments for the program</param>
-    /// <param name="frontEndArgs">Arguments for the front end</param>
+    /// <param name="celeriacArgs">Arguments for Celeriac</param>
     /// <param name="resultStream">Memory stream of the program to be executed</param>
-    private static void ExecuteProgramFromMemory(string[] args, FrontEndArgs frontEndArgs,
+    private static void ExecuteProgramFromMemory(string[] args, CeleriacArgs celeriacArgs,
       Assembly rewrittenAssembly)
     {
       try
       {
-        if (frontEndArgs.VerboseMode)
+        if (celeriacArgs.VerboseMode)
         {
           Console.WriteLine("Loading complete. Starting program.");
         }
@@ -171,28 +167,28 @@ namespace DotNetFrontEndLauncher
         }
 
         rewrittenAssembly.EntryPoint.Invoke(null,
-          ExtractProgramArguments(args, frontEndArgs, rewrittenAssembly.EntryPoint));
+          ExtractProgramArguments(args, celeriacArgs, rewrittenAssembly.EntryPoint));
 
-        if (frontEndArgs.VerboseMode)
+        if (celeriacArgs.VerboseMode)
         {
           Console.WriteLine("Program complete. Exiting Celeriac.");
         }
       }
       catch (BadImageFormatException ex)
       {
-        if (frontEndArgs.DontCatchExceptions)
+        if (celeriacArgs.DontCatchExceptions)
         {
           throw;
         }
         Console.Error.WriteLine("Raw assembly is invalid or of too late a .NET version");
-        if (frontEndArgs.VerboseMode)
+        if (celeriacArgs.VerboseMode)
         {
           Console.Error.WriteLine(ex.StackTrace);
         }
       }
       catch (TargetInvocationException ex)
       {
-        if (frontEndArgs.DontCatchExceptions)
+        if (celeriacArgs.DontCatchExceptions)
         {
           throw;
         }
@@ -201,12 +197,12 @@ namespace DotNetFrontEndLauncher
       }
       catch (VariableVisitorException ex)
       {
-        if (frontEndArgs.DontCatchExceptions)
+        if (celeriacArgs.DontCatchExceptions)
         {
           throw;
         }
         Console.Error.WriteLine(ex.Message);
-        if (frontEndArgs.VerboseMode)
+        if (celeriacArgs.VerboseMode)
         {
           Console.Error.WriteLine(ex.InnerException.Message);
           Console.Error.WriteLine(ex.InnerException.StackTrace);
@@ -217,15 +213,15 @@ namespace DotNetFrontEndLauncher
     /// <summary>
     /// Execute the program that has been saved to disk.
     /// </summary>
-    /// <param name="args">Args DNFELauncher was called with, the arguments for the program will 
+    /// <param name="args">Args CeleriacLauncher was called with, the arguments for the program will 
     /// be extracted from here</param>
-    /// <param name="frontEndArgs">FrontEndArgs object used during instrumentation, the
+    /// <param name="celeriacArgs">FrontEndArgs object used during instrumentation, the
     /// name of the program to execute will be extracted from here</param>
-    private static void ExecuteProgramFromDisk(string[] args, FrontEndArgs frontEndArgs)
+    private static void ExecuteProgramFromDisk(string[] args, CeleriacArgs celeriacArgs)
     {
       ProcessStartInfo psi = new ProcessStartInfo();
-      psi.FileName = frontEndArgs.SaveProgram;
-      object[] programArguments = ExtractProgramArguments(args, frontEndArgs);
+      psi.FileName = celeriacArgs.SaveProgram;
+      object[] programArguments = ExtractProgramArguments(args, celeriacArgs);
       if (programArguments != null)
       {
         psi.Arguments = String.Join(" ", programArguments[0]);
@@ -240,19 +236,19 @@ namespace DotNetFrontEndLauncher
     /// to the types expected by the written assembly. Returns null if no parameters are necessary
     /// for the entry assembly, e.g. if it is a library.
     /// </summary>
-    /// <param name="args">The arguments given to the front-end launcher</param>
-    /// <param name="frontEndArgs">Args object used to rewrite assembly</param>
+    /// <param name="args">The arguments given to the Celeriac launcher</param>
+    /// <param name="celeriacArgs">Args object used to rewrite assembly</param>
     /// <param name="entryPointInfo">Optional method info for the entry point of the assembly,
     /// if null verification of entry point is skipped and arguments are always copied.</param>
     /// <returns>Array containing a string[] of arguments to be used by the rewritten program
     /// </returns>
     /// <exception cref="Exception">If the arguments after extraction don't match the ones
     /// expected by the entry point of the assembly</exception>
-    private static object[] ExtractProgramArguments(string[] args, FrontEndArgs frontEndArgs,
+    private static object[] ExtractProgramArguments(string[] args, CeleriacArgs celeriacArgs,
       MethodInfo entryPointInfo = null)
     {
       // First argument relevant to the program to be profiled
-      int indexOfFirstArg = frontEndArgs.ProgramArgIndex + 1;
+      int indexOfFirstArg = celeriacArgs.ProgramArgIndex + 1;
 
       object[] programArguments = null;
 
