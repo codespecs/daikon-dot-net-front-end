@@ -649,7 +649,7 @@ namespace Celeriac
       if (depth == 0)
       {
         // update the occurence counts for non-nested calls
-        int occurence = occurences.AddOrUpdate(programPointName, 0, (ppt, cnt) => cnt + 1);
+        occurences.AddOrUpdate(programPointName, 0, (ppt, cnt) => cnt + 1);
 
         if (SampleMethod(programPointName))
         {
