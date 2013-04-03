@@ -3,7 +3,7 @@
 // way we can differentiate between an exception that occur's in our code from one that occur's in 
 // the program.
 
-namespace DotNetFrontEnd
+namespace Celeriac
 {
   using System;
 

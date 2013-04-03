@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld", "HelloWorld\HelloWorld.csproj", "{DDB42811-BE1D-4DCF-8EFD-8D4F0CFF9957}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetFrontEndLauncher", "DotNetFrontEndLauncher\DotNetFrontEndLauncher.csproj", "{16A7F601-58B3-458E-AA50-9C366ECB9C47}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CeleriacLauncher", "DotNetFrontEndLauncher\CeleriacLauncher.csproj", "{16A7F601-58B3-458E-AA50-9C366ECB9C47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetFrontEnd", "DotNetFrontEnd\DotNetFrontEnd.csproj", "{B96235CE-7153-4E22-94D6-44580BB4AC48}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Celeriac", "DotNetFrontEnd\Celeriac.csproj", "{B96235CE-7153-4E22-94D6-44580BB4AC48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

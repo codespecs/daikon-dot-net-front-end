@@ -8,8 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
-using DotNetFrontEnd;
-using DotNetFrontEnd.Contracts;
+using Celeriac;
+using Celeriac.Contracts;
 
 namespace Comparability
 {
@@ -284,7 +284,7 @@ namespace Comparability
           if (field.IsStatic)
           {
             var container = field.ContainingType.ResolvedType;
-            // The front-end uses reflection-style names for inner types, need to be consistent here
+            // Celeriac uses reflection-style names for inner types, need to be consistent here
             var name = string.Join(".", TypeHelper.GetTypeName(container, NameFormattingOptions.UseReflectionStyleForNestedTypeNames), field.Name.Value);
             TryAdd(outer, name);
             AddInstanceExpr(container, outer);
@@ -364,7 +364,7 @@ namespace Comparability
 
         if (value != null)
         {
-          // The front-end uses reflection-style names for inner types, need to be consistent here
+          // Celeriac uses reflection-style names for inner types, need to be consistent here
           var name = string.Join(".", TypeHelper.GetTypeName(targetType, NameFormattingOptions.UseReflectionStyleForNestedTypeNames), value.Name);
           TryAdd(constantExpr, name);
           AddInstanceExpr(targetType, constantExpr);

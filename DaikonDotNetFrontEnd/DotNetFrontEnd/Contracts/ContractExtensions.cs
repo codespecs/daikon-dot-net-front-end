@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics.Contracts;
 
-namespace DotNetFrontEnd.Contracts
+namespace Celeriac.Contracts
 {
   public static class ContractExtensions
   {
