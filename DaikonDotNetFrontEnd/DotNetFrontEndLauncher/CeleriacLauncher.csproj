@@ -8,8 +8,8 @@
     <ProjectGuid>{16A7F601-58B3-458E-AA50-9C366ECB9C47}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DotNetFrontEndLauncher</RootNamespace>
-    <AssemblyName>DotNetFrontEndLauncher</AssemblyName>
+    <RootNamespace>CeleriacLauncher</RootNamespace>
+    <AssemblyName>CeleriacLauncher</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -81,7 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="FrontEndLauncher.cs" />
+    <Compile Include="CeleriacLauncher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -113,9 +113,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DotNetFrontEnd\DotNetFrontEnd.csproj">
+    <ProjectReference Include="..\DotNetFrontEnd\Celeriac.csproj">
       <Project>{B96235CE-7153-4E22-94D6-44580BB4AC48}</Project>
-      <Name>DotNetFrontEnd</Name>
+      <Name>Celeriac</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -23,12 +23,12 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using DotNetFrontEnd.Comparability;
+using Celeriac.Comparability;
 using Microsoft.Cci;
 using Microsoft.Cci.ILToCodeModel;
 using Microsoft.Cci.MutableCodeModel;
 
-namespace DotNetFrontEnd
+namespace Celeriac
 {
   /// <summary>
   /// Performs insertion of instrumentation calls at entrance and exit of every function in a
@@ -39,14 +39,14 @@ namespace DotNetFrontEnd
     #region Constants
 
     /// <summary>
-    /// The environment variable defining where front-end output will go
+    /// The environment variable defining where Celeriac output will go
     /// </summary>
-    private static readonly string DaikonEnvVar = "DNFE_OUT";
+    private static readonly string DaikonEnvVar = "CELERIAC_HOME";
 
     /// <summary>
     /// The name of the DLL containing the visitor to insert calls to
     /// </summary>
-    public static readonly string VisitorDll = "DotNetFrontEnd.dll";
+    public static readonly string VisitorDll = "Celeriac.dll";
 
     #endregion
 
@@ -56,7 +56,7 @@ namespace DotNetFrontEnd
     /// Caller must be sure to dispose returned MemoryStream.
     /// </summary>
     /// <param name="typeManager">The type maanager to use while visiting the program</param>
-    /// <param name="frontEndArgs">The args to use in profiling the program</param>
+    /// <param name="celeriacArgs">The args to use in profiling the program</param>
     /// <returns>MemoryStream containing the program to be profiled, with the instrumentation
     /// code added, or null if the saveProgram argument is active, or the program was already
     /// rewritten.</returns>
@@ -66,9 +66,9 @@ namespace DotNetFrontEnd
        "CA2202:Do not dispose objects multiple times"),
      System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability",
        "CA2000:Dispose objects before losing scope")]
-    public static MemoryStream RewriteProgramIL(FrontEndArgs frontEndArgs, TypeManager typeManager)
+    public static MemoryStream RewriteProgramIL(CeleriacArgs celeriacArgs, TypeManager typeManager)
     {
-      if (String.IsNullOrWhiteSpace(frontEndArgs.AssemblyPath))
+      if (String.IsNullOrWhiteSpace(celeriacArgs.AssemblyPath))
       {
         throw new FileNotFoundException("Path to program to be profiled not provided");
       }
@@ -76,11 +76,11 @@ namespace DotNetFrontEnd
       Stream resultStream;
       var host = typeManager.Host;
 
-      IModule/*?*/ module = host.LoadUnitFrom(frontEndArgs.AssemblyPath) as IModule;
+      IModule/*?*/ module = host.LoadUnitFrom(celeriacArgs.AssemblyPath) as IModule;
       if (module == null || module == Dummy.Module || module == Dummy.Assembly)
       {
         throw new FileNotFoundException("Given path is not a PE file containing a CLR"
-          + " assembly, or an error occurred when loading it.", frontEndArgs.AssemblyPath);
+          + " assembly, or an error occurred when loading it.", celeriacArgs.AssemblyPath);
       }
 
       if (module.GetAllTypes().Any(
@@ -91,25 +91,25 @@ namespace DotNetFrontEnd
 
       PdbReader pdbReader;
       string pdbFile;
-      LoadPdbReaderAndFile(frontEndArgs, typeManager, module, out pdbReader, out pdbFile);
+      LoadPdbReaderAndFile(celeriacArgs, typeManager, module, out pdbReader, out pdbFile);
 
       Assembly mutable = null;
 
       using (pdbReader)
       {
-        AssemblySummary comparabilityManager = GenerateComparability(frontEndArgs, typeManager,
+        AssemblySummary comparabilityManager = GenerateComparability(celeriacArgs, typeManager,
           host, module, pdbReader, ref mutable);
 
-        if (frontEndArgs.GenerateComparability && frontEndArgs.ComparabilityFile == null)
+        if (celeriacArgs.GenerateComparability && celeriacArgs.ComparabilityFile == null)
         {
           return null;
         }
 
-        ILRewriter mutator = new ILRewriter(host, pdbReader, frontEndArgs, typeManager, comparabilityManager);
+        ILRewriter mutator = new ILRewriter(host, pdbReader, celeriacArgs, typeManager, comparabilityManager);
 
         module = mutator.Visit(mutable, Path.Combine(FindVisitorDir(), VisitorDll));
 
-        if (frontEndArgs.EmitNullaryInfo || frontEndArgs.GenerateComparability)
+        if (celeriacArgs.EmitNullaryInfo || celeriacArgs.GenerateComparability)
         {
           return null;
         }
@@ -126,9 +126,9 @@ namespace DotNetFrontEnd
           pdbFile = module.Location + ".pdb";
         }
 
-        if (frontEndArgs.SaveProgram != null)
+        if (celeriacArgs.SaveProgram != null)
         {
-          resultStream = new FileStream(frontEndArgs.SaveProgram, FileMode.Create);
+          resultStream = new FileStream(celeriacArgs.SaveProgram, FileMode.Create);
         }
         else
         {
@@ -144,7 +144,7 @@ namespace DotNetFrontEnd
         }
       }
 
-      if (frontEndArgs.SaveProgram != null)
+      if (celeriacArgs.SaveProgram != null)
       {
         // We aren't going to run the program, so no need to return anything,
         // but close the file stream.
@@ -186,7 +186,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Generate the comparability information for the given assembly.
     /// </summary>
-    private static AssemblySummary GenerateComparability(FrontEndArgs frontEndArgs, TypeManager typeManager,
+    private static AssemblySummary GenerateComparability(CeleriacArgs celeriacArgs, TypeManager typeManager,
       IMetadataHost host, IModule module, PdbReader pdbReader, ref Assembly mutable)
     {
       AssemblySummary comparabilityManager = null;
@@ -194,18 +194,18 @@ namespace DotNetFrontEnd
       mutable = MetadataCopier.DeepCopy(host, assembly);
       typeManager.SetAssemblyIdentity(UnitHelper.GetAssemblyIdentity(mutable));
 
-      if (frontEndArgs.StaticComparability || frontEndArgs.GenerateComparability)
+      if (celeriacArgs.StaticComparability || celeriacArgs.GenerateComparability)
       {
-        if (frontEndArgs.ComparabilityFile != null)
+        if (celeriacArgs.ComparabilityFile != null)
         {
-          using (var cmp = File.Open(frontEndArgs.ComparabilityFile, FileMode.Open))
+          using (var cmp = File.Open(celeriacArgs.ComparabilityFile, FileMode.Open))
           {
             comparabilityManager = (AssemblySummary)new BinaryFormatter().Deserialize(cmp);
           }
         }
         else
         {
-          if (frontEndArgs.VerboseMode)
+          if (celeriacArgs.VerboseMode)
           {
             Console.WriteLine("Generating Comparability Information");
           }
@@ -214,12 +214,12 @@ namespace DotNetFrontEnd
             pdbReader, DecompilerOptions.AnonymousDelegates | DecompilerOptions.Iterators);
           comparabilityManager = AssemblySummary.MakeSummary(decompiled, typeManager, pdbReader);
 
-          if (frontEndArgs.VerboseMode)
+          if (celeriacArgs.VerboseMode)
           {
             Console.WriteLine("Finished Generating Comparability Information");
           }
 
-          using (var cmp = File.Open(frontEndArgs.AssemblyPath + FrontEndArgs.ComparabilityFileExtension, FileMode.Create))
+          using (var cmp = File.Open(celeriacArgs.AssemblyPath + CeleriacArgs.ComparabilityFileExtension, FileMode.Create))
           {
             new BinaryFormatter().Serialize(cmp, comparabilityManager);
           }
@@ -231,7 +231,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// Load the PDB reader and pdb file for the source program.
     /// </summary>
-    private static void LoadPdbReaderAndFile(FrontEndArgs frontEndArgs, TypeManager typeManager,
+    private static void LoadPdbReaderAndFile(CeleriacArgs celeriacArgs, TypeManager typeManager,
       IModule module, out PdbReader pdbReader, out string pdbFile)
     {
       pdbReader = null;
@@ -245,7 +245,7 @@ namespace DotNetFrontEnd
       }
       catch (System.IO.IOException)
       {
-        if (frontEndArgs.StaticComparability)
+        if (celeriacArgs.StaticComparability)
         {
           throw new InvalidOperationException("Error loading PDB file for '" +
             module.Name.Value + "' (required for static comparability analysis)");

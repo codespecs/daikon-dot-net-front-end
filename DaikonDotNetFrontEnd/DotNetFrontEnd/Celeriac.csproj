@@ -8,8 +8,8 @@
     <ProjectGuid>{B96235CE-7153-4E22-94D6-44580BB4AC48}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DotNetFrontEnd</RootNamespace>
-    <AssemblyName>DotNetFrontEnd</AssemblyName>
+    <RootNamespace>Celeriac</RootNamespace>
+    <AssemblyName>Celeriac</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -111,7 +111,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>DotNetFrontEndKeyFile.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>CeleriacKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -182,9 +182,9 @@
     <Compile Include="Comparability\NameBuilder.cs" />
     <Compile Include="Contracts\ContractExtensions.cs" />
     <Compile Include="DeclarationPrinter.cs" />
-    <Compile Include="DNFETypeDeclaration.cs" />
+    <Compile Include="CeleriacTypeDeclaration.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="FrontEndArgs.cs" />
+    <Compile Include="CeleriacArgs.cs" />
     <Compile Include="ILRewriter.cs" />
     <Compile Include="PortableHost.cs" />
     <Compile Include="ProgramRewriter.cs" />
@@ -195,7 +195,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="DotNetFrontEndKeyFile.snk" />
+    <None Include="CeleriacKey.snk" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Utilities\" />

@@ -17,7 +17,7 @@ using System.Runtime.CompilerServices;
 using System.Diagnostics.Contracts;
 using System.Runtime.Serialization;
 
-namespace DotNetFrontEnd
+namespace Celeriac
 {
 
   public static class TypeManagerExtensions
@@ -132,9 +132,9 @@ namespace DotNetFrontEnd
       BindingFlags.Static | BindingFlags.FlattenHierarchy;
 
     /// <summary>
-    /// Front end args for the program this class is managing types for
+    /// Celeriac args for the program this class is managing types for
     /// </summary>
-    private FrontEndArgs frontEndArgs;
+    private CeleriacArgs celeriacArgs;
 
     [NonSerialized]
     private AssemblyIdentity assemblyIdentity;
@@ -222,7 +222,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// needed to be able to map the contracts from a contract class proxy method to an abstract method
     /// </summary>
-    [NonSerializedAttribute]
+    [NonSerialized]
     private IMetadataHost host;
 
     public IMetadataHost Host
@@ -244,7 +244,7 @@ namespace DotNetFrontEnd
       }
     }
 
-    [OnDeserializedAttribute]
+    [OnDeserialized]
     private void Rehydrate(StreamingContext context)
     {
       InitHost();
@@ -255,13 +255,13 @@ namespace DotNetFrontEnd
     private void InitHost()
     {
       Contract.Ensures(this.host != null);
-      this.host = frontEndArgs.IsPortableDll ? (IMetadataHost)new PortableHost() : new PeReader.DefaultHost();
+      this.host = celeriacArgs.IsPortableDll ? (IMetadataHost)new PortableHost() : new PeReader.DefaultHost();
     }
 
     [ContractInvariantMethod]
     private void ObjectInvariants()
     {
-      Contract.Invariant(frontEndArgs != null);
+      Contract.Invariant(celeriacArgs != null);
       Contract.Invariant(host != null);
     }
 
@@ -269,15 +269,15 @@ namespace DotNetFrontEnd
     /// Create a new TypeManager instance, will be able to resolve types of the given assembly 
     /// without registering the assembly with the GAC.
     /// </summary>
-    /// <param name="args">The front-end args applicable to the types being managed here</param>
+    /// <param name="args">The Celeriac args applicable to the types being managed here</param>
     /// <remarks><code>this.host</code> is a class member so can't be disposed here, anything that can be
     /// assigned to it is disposed in <code>this.Dispose()</code></remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-    public TypeManager(FrontEndArgs args)
+    public TypeManager(CeleriacArgs args)
     {
       Contract.Requires(args != null);
 
-      this.frontEndArgs = args;
+      this.celeriacArgs = args;
       InitHost();
       PopulateIgnoredValues();
       ProcessPurityMethods();
@@ -308,7 +308,7 @@ namespace DotNetFrontEnd
     private void ProcessPurityMethods()
     {
       this.AddStandardPurityMethods();
-      foreach (String str in this.frontEndArgs.PurityMethods)
+      foreach (String str in this.celeriacArgs.PurityMethods)
       {
         if (str.StartsWith("//")) { continue; }
         string[] methodDescriptions = str.Split(';');
@@ -382,7 +382,7 @@ namespace DotNetFrontEnd
       }
       catch (Exception ex)
       {
-        if (frontEndArgs.RobustMode)
+        if (celeriacArgs.RobustMode)
         {
           Console.WriteLine(string.Format("INFO: could not resolve method {0} for type {1}: {2}",
             methodName, typeName, (ex.Message ?? "<no message>")));
@@ -399,9 +399,9 @@ namespace DotNetFrontEnd
     /// </summary>
     private void AddStandardPurityMethods()
     {
-      this.frontEndArgs.PurityMethods.Add(
+      this.celeriacArgs.PurityMethods.Add(
         typeof(DictionaryEntry).AssemblyQualifiedName + ";get_Key");
-      this.frontEndArgs.PurityMethods.Add(
+      this.celeriacArgs.PurityMethods.Add(
         typeof(DictionaryEntry).AssemblyQualifiedName + ";get_Value");
     }
 
@@ -464,7 +464,7 @@ namespace DotNetFrontEnd
     private bool IsFSharpListTest(Type type)
     {
       Contract.Requires(type != null);
-      if (this.frontEndArgs.ElementInspectArraysOnly)
+      if (this.celeriacArgs.ElementInspectArraysOnly)
       {
         return type.IsArray;
       }
@@ -533,16 +533,16 @@ namespace DotNetFrontEnd
       Contract.Requires(parentType != null);
       Contract.Requires(field != null);
 
-      if (frontEndArgs.OmitParentDecType != null && frontEndArgs.OmitParentDecType.IsMatch(parentType.FullName))
+      if (celeriacArgs.OmitParentDecType != null && celeriacArgs.OmitParentDecType.IsMatch(parentType.FullName))
       {
         return true;
       }
-      else if (frontEndArgs.OmitDecType != null &&
+      else if (celeriacArgs.OmitDecType != null &&
                field.FieldType.FullName != null && // is null if the current instance represents a generic type parameter, 
         // an array type, pointer type, or byref type based on a type parameter, 
         // or a generic type that is not a generic type definition but contains 
         // unresolved type parameters.
-               frontEndArgs.OmitDecType.IsMatch(field.FieldType.FullName))
+               celeriacArgs.OmitDecType.IsMatch(field.FieldType.FullName))
       {
         return true;
       }
@@ -629,7 +629,7 @@ namespace DotNetFrontEnd
     private bool SearchForMatchingInterface(Type type, InterfaceMatchTest matchTest)
     {
       // If we are only element inspecting arrays return that result.
-      if (this.frontEndArgs.ElementInspectArraysOnly)
+      if (this.celeriacArgs.ElementInspectArraysOnly)
       {
         return type.IsArray;
       }
@@ -678,7 +678,7 @@ namespace DotNetFrontEnd
     {
       Contract.Requires(type != null);
 
-      if (this.frontEndArgs.ElementInspectArraysOnly)
+      if (this.celeriacArgs.ElementInspectArraysOnly)
       {
         return type.IsArray;
       }
@@ -708,7 +708,7 @@ namespace DotNetFrontEnd
     private bool IsFSharpMapTest(Type type)
     {
       Contract.Requires(type != null);
-      if (this.frontEndArgs.ElementInspectArraysOnly)
+      if (this.celeriacArgs.ElementInspectArraysOnly)
       {
         return type.IsArray;
       }
@@ -785,7 +785,7 @@ namespace DotNetFrontEnd
           // Ensure the pure method can be seen by the originating type if 
           // --std-visibility has been supplied.
           // TODO(#71): Add logic for more visibility types
-          if (frontEndArgs.StdVisibility &&
+          if (celeriacArgs.StdVisibility &&
               !method.IsPublic && !originatingType.FullName.Equals(type.FullName))
           {
             continue;
@@ -816,10 +816,10 @@ namespace DotNetFrontEnd
     /// Warning suppressed because there is no way to avoid this call.
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability",
       "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadFrom")]
-    public DNFETypeDeclaration ConvertAssemblyQualifiedNameToType(string assemblyQualifiedName)
+    public CeleriacTypeDeclaration ConvertAssemblyQualifiedNameToType(string assemblyQualifiedName)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(assemblyQualifiedName));
-      Contract.Ensures(Contract.Result<DNFETypeDeclaration>() != null);
+      Contract.Ensures(Contract.Result<CeleriacTypeDeclaration>() != null);
 
       // TODO(#17): Passing around an assembly qualified name here may not be best because it is
       // difficult to build and parse. Consider creating a custom object to manage type identity
@@ -836,7 +836,7 @@ namespace DotNetFrontEnd
           string updatedConstraint = singleConstraint.Replace("{", "").Replace("}", "");
           types.Add(this.ConvertAssemblyQualifiedNameToType(match.Result(updatedConstraint)).GetSingleType);
         }
-        return new DNFETypeDeclaration(types);
+        return new CeleriacTypeDeclaration(types);
       }
 
       // Memoized; if we've seen this string before return the type from before.
@@ -851,8 +851,8 @@ namespace DotNetFrontEnd
           result = Type.GetType(
                       assemblyQualifiedName,
             // Assembly resolver -- load from self if necessary.
-                      (aName) => aName.Name == this.frontEndArgs.AssemblyName ?
-                          System.Reflection.Assembly.LoadFrom(this.frontEndArgs.AssemblyPath) :
+                      (aName) => aName.Name == this.celeriacArgs.AssemblyName ?
+                          System.Reflection.Assembly.LoadFrom(this.celeriacArgs.AssemblyPath) :
                           System.Reflection.Assembly.Load(aName),
             // Type resolver -- load the type from the assembly if we have one
             // Otherwise let .NET resolve it
@@ -864,7 +864,7 @@ namespace DotNetFrontEnd
           Contract.Assume(result != null, "Couldn't convert type with assembly qualified name: " + assemblyQualifiedName);
           this.nameTypeMap.Add(assemblyQualifiedName, result);
         }
-        return new DNFETypeDeclaration(result);
+        return new CeleriacTypeDeclaration(result);
       }
       catch (Exception ex)
       {
@@ -1334,7 +1334,7 @@ namespace DotNetFrontEnd
       return elementType;
     }
 
-    [NonSerializedAttribute]
+    [NonSerialized]
     private static Dictionary<Type, bool> immutability = new Dictionary<Type, bool>()
     {
         { typeof(object), true },
@@ -1387,7 +1387,7 @@ namespace DotNetFrontEnd
       {
         return;
       }
-      if (frontEndArgs.IsPortableDll)
+      if (celeriacArgs.IsPortableDll)
       {
         ((PortableHost)host).Dispose();
       }

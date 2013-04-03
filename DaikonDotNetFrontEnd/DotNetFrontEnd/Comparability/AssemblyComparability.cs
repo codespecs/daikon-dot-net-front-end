@@ -8,9 +8,9 @@ using EmilStefanov;
 using System.Reflection;
 using Microsoft.Cci.ILToCodeModel;
 using System.Diagnostics.Contracts;
-using DotNetFrontEnd.Contracts;
+using Celeriac.Contracts;
 
-namespace DotNetFrontEnd.Comparability
+namespace Celeriac.Comparability
 {
   [Serializable]
   public class AssemblySummary
