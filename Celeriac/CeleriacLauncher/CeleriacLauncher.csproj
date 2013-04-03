@@ -113,7 +113,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DotNetFrontEnd\Celeriac.csproj">
+    <ProjectReference Include="..\Celeriac\Celeriac.csproj">
       <Project>{B96235CE-7153-4E22-94D6-44580BB4AC48}</Project>
       <Name>Celeriac</Name>
     </ProjectReference>

@@ -1,6 +1,4 @@
-﻿// FrontEndArgs describes a class that 
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -972,7 +970,7 @@ namespace Celeriac
 
     #endregion
 
-    #region Public methods for mutating FrontEndArgs state
+    #region Public methods for mutating CeleriacArgs state
 
     /// <summary>
     /// Set the extension on the output location to be the one for a declaration file

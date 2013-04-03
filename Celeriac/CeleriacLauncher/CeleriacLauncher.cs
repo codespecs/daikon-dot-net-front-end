@@ -79,14 +79,14 @@ namespace CeleriacLauncher
     /// Process the provided Celeriac arguments, creating CeleriacArgs and TypeManager objects
     /// </summary>
     /// <param name="args">Arguments provided to the Celeriac, including program arguments</param>
-    /// <returns>FrontEndArgs and TypeManager objects to use during visiting</returns>
+    /// <returns>CeleriacArgs and TypeManager objects to use during visiting</returns>
     /// <remarks>Dispose of the returned TypeManager yourself if that seems necessary.</remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
     private static Tuple<CeleriacArgs, TypeManager> ProcessArguments(string[] args)
     {
       if (args == null || args.Length < 1)
       {
-        Console.WriteLine("FrontEndLauncher.exe [arguments] ProgramToBeProfiled");
+        Console.WriteLine("CeleriacLauncher.exe [arguments] ProgramToBeProfiled");
         Environment.Exit(1);// return;
       }
 
@@ -215,7 +215,7 @@ namespace CeleriacLauncher
     /// </summary>
     /// <param name="args">Args CeleriacLauncher was called with, the arguments for the program will 
     /// be extracted from here</param>
-    /// <param name="celeriacArgs">FrontEndArgs object used during instrumentation, the
+    /// <param name="celeriacArgs">CeleriacArgs object used during instrumentation, the
     /// name of the program to execute will be extracted from here</param>
     private static void ExecuteProgramFromDisk(string[] args, CeleriacArgs celeriacArgs)
     {
@@ -232,7 +232,7 @@ namespace CeleriacLauncher
 
     /// <summary>
     /// Create an array of arguments to be used by the rewritten assembly, given the arguments
-    /// passed to the FrontEndLauncher. Checks that the number of arguments given is a match
+    /// passed to the CeleriacLauncher. Checks that the number of arguments given is a match
     /// to the types expected by the written assembly. Returns null if no parameters are necessary
     /// for the entry assembly, e.g. if it is a library.
     /// </summary>
