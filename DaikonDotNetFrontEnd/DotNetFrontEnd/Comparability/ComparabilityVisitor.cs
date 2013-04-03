@@ -7,8 +7,8 @@ using Microsoft.Cci;
 using EmilStefanov;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
-using DotNetFrontEnd.Comparability;
-using DotNetFrontEnd;
+using Celeriac.Comparability;
+using Celeriac;
 
 namespace Comparability
 {
@@ -46,7 +46,7 @@ namespace Comparability
       Contract.Invariant(Contract.ForAll(arrayIndexes.Keys, a => ids.ContainsKey(a)));
       Contract.Invariant(Contract.ForAll(arrayIndexes.Values, i => i.Count > 0));
 
-      // Not true b/c a name is added whenever comparability is queried by the front-end's IL visitors
+      // Not true b/c a name is added whenever comparability is queried by Celeriacs's IL visitors
       // Contract.Invariant(Contract.ForAll(ids.Keys, n => n.Equals("return") || Names.NameTable.ContainsValue(n)));
     }
 

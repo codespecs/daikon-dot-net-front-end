@@ -6,7 +6,7 @@ using Microsoft.Cci;
 using System.IO;
 using System.Diagnostics.Contracts;
 
-namespace DotNetFrontEnd
+namespace Celeriac
 {
   public class PortableHost : MetadataReaderHost
   {

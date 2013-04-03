@@ -29,11 +29,11 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
-using DotNetFrontEnd.Contracts;
+using Celeriac.Contracts;
 using System.Runtime.Remoting;
 using System.Text.RegularExpressions;
 
-namespace DotNetFrontEnd
+namespace Celeriac
 {
   /// <summary>
   /// The possible flags we may want to specify for a variable
@@ -60,7 +60,7 @@ namespace DotNetFrontEnd
   /// The variable visitor, calls to VariableVisitor's VisitVariable() are inserted into the 
   /// program's IL. Each object is visited, its fields and/or elements are printed to the datatrace 
   /// file. This class is never instantiated, it is called statically by the program to be profiled 
-  /// as it runs. Its arguments are set by the ProfilerLauncher driving the front-end.
+  /// as it runs. Its arguments are set by the ProfilerLauncher driving the Celeriac.
   /// </summary>
   public static class VariableVisitor
   {
@@ -164,7 +164,7 @@ namespace DotNetFrontEnd
     /// <summary>
     /// The args for the reflective visitor. Used statically by decl printer and reflector.
     /// </summary>
-    private static FrontEndArgs frontEndArgs = null;
+    private static CeleriacArgs celeriacArgs = null;
 
     /// <summary>
     /// TypeManager used to convert between assembly qualified and .NET types and during reflection
@@ -225,21 +225,21 @@ namespace DotNetFrontEnd
     /// <exception cref="NotSupportedException">Thrown during an attempt to set args after they 
     /// have already been set.</exception>
     /// <param name="reflectionArgs">The reflection args to set.</param>
-    public static FrontEndArgs ReflectionArgs
+    public static CeleriacArgs ReflectionArgs
     {
       get
       {
-        Contract.Ensures(Contract.Result<FrontEndArgs>() == VariableVisitor.frontEndArgs);
-        return VariableVisitor.frontEndArgs;
+        Contract.Ensures(Contract.Result<CeleriacArgs>() == VariableVisitor.celeriacArgs);
+        return VariableVisitor.celeriacArgs;
       }
       set
       {
         Contract.Requires(ReflectionArgs == null, "Attempt to set arguments on the reflector twice.");
         Contract.Requires(value != null);
         Contract.Ensures(ReflectionArgs == value);
-        Contract.Ensures(VariableVisitor.frontEndArgs == value);
+        Contract.Ensures(VariableVisitor.celeriacArgs == value);
 
-        VariableVisitor.frontEndArgs = value;
+        VariableVisitor.celeriacArgs = value;
       }
     }
 
@@ -502,12 +502,12 @@ namespace DotNetFrontEnd
       Contract.Requires(!string.IsNullOrEmpty(ppt));
       Contract.Requires(occurenceCounts != null, "Occurence counts have not been initialized");
 
-      if (frontEndArgs == null)
+      if (celeriacArgs == null)
       {
         // first method call in the program
         return true;
       }
-      else if (frontEndArgs.SampleStart == FrontEndArgs.NoSampleStart)
+      else if (celeriacArgs.SampleStart == CeleriacArgs.NoSampleStart)
       {
         return true;
       }
@@ -533,7 +533,7 @@ namespace DotNetFrontEnd
         // For example: if sample start is 5, print occurences we should print occurences
         // 1..5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 100, 150, 200, ...
 
-        if (occurenceCount < frontEndArgs.SampleStart)
+        if (occurenceCount < celeriacArgs.SampleStart)
         {
           return true;
         }
@@ -541,13 +541,13 @@ namespace DotNetFrontEnd
         {
           // For each subsequent SampleStart decrease printing by a factor of 10.
           // SampleStart == 5:  5..9 => 1, 45..49 => 9, 50..54 => 10
-          int x = occurenceCount / frontEndArgs.SampleStart;
+          int x = occurenceCount / celeriacArgs.SampleStart;
 
           // SampleStart == 5:  5..9 => 0, 45..49: 0, 50..54: 1
           // TODO(#40): Optimize this computation. (The ops don't undo each other b/c of rounding)
           int factor = (int)Math.Log10((double)x);
           int pow = (int)Math.Pow(10, factor);
-          return occurenceCount % (frontEndArgs.SampleStart * pow) == 0;
+          return occurenceCount % (celeriacArgs.SampleStart * pow) == 0;
         }
       }
     }
@@ -588,13 +588,13 @@ namespace DotNetFrontEnd
 
       using (var writer = InitializeWriter())
       {
-        DNFETypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(typeName);
+        CeleriacTypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(typeName);
 
         foreach (Type type in typeDecl.GetAllTypes)
         {
           foreach (FieldInfo staticField in
             // Pass type in as originating type so we get all the fields.
-            type.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(type, type)))
+            type.GetSortedFields(celeriacArgs.GetStaticAccessOptionsForFieldInspection(type, type)))
           {
             string staticFieldName = type.FullName + "." + staticField.Name;
             if (!typeManager.ShouldIgnoreField(type, staticField) &&
@@ -656,7 +656,6 @@ namespace DotNetFrontEnd
           AcquireLock();
           threadDepthMap.AddOrUpdate(Thread.CurrentThread, 1, (t, x) => x + 1);
           return Interlocked.Increment(ref globalNonce);
-          return nonce;
         }
         else
         {
@@ -714,21 +713,21 @@ namespace DotNetFrontEnd
     /// being profiled. This is necessary so the .NET type resolve can locate and load the types in 
     /// the assembly being profiled.
     /// </summary>
-    /// <remarks>Called from DNFE_ArgumentStroingMethod</remarks>
+    /// <remarks>Called from Celeriac_ArgumentStoringMethod</remarks>
     private static void UnsafeInitializeFrontEndArgs(string arguments)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(arguments));
-      Contract.Ensures(frontEndArgs != null);
+      Contract.Ensures(celeriacArgs != null);
       Contract.Ensures(typeManager != null);
 
-      if (frontEndArgs == null)
+      if (celeriacArgs == null)
       {
-        frontEndArgs = new FrontEndArgs(arguments.Split());
-        if (frontEndArgs.AutoDetectPure)
+        celeriacArgs = new CeleriacArgs(arguments.Split());
+        if (celeriacArgs.AutoDetectPure)
         {
-          frontEndArgs.AddAutoDetectedPureMethods();
+          celeriacArgs.AddAutoDetectedPureMethods();
         }
-        typeManager = new TypeManager(frontEndArgs);
+        typeManager = new TypeManager(celeriacArgs);
       }
     }
 
@@ -755,7 +754,7 @@ namespace DotNetFrontEnd
       // TODO(#15): Can we pull any fields from exceptions?
       // Exceptions shouldn't be recursed any further down than the 
       // variable itself, because we only know that they are an exception.
-      DNFETypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(typeName);
+      CeleriacTypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(typeName);
 
       using (var writer = InitializeWriter())
       {
@@ -807,7 +806,7 @@ namespace DotNetFrontEnd
     private static TextWriter InitializeWriter()
     {
       Contract.Ensures(Contract.Result<TextWriter>() != null);
-      Contract.Ensures(frontEndArgs.PrintOutput.Implies(Contract.Result<TextWriter>() == System.Console.Out));
+      Contract.Ensures(celeriacArgs.PrintOutput.Implies(Contract.Result<TextWriter>() == System.Console.Out));
       Contract.Ensures(SuppressOutput.Implies(Contract.Result<TextWriter>() == TextWriter.Null));
 
       if (SuppressOutput)
@@ -817,13 +816,13 @@ namespace DotNetFrontEnd
 
       TextWriter writer;
       // Append to the file since we are writing one object at a time
-      if (frontEndArgs.PrintOutput)
+      if (celeriacArgs.PrintOutput)
       {
         writer = System.Console.Out;
       }
       else
       {
-        string dirName = Path.GetDirectoryName(Path.GetFullPath(frontEndArgs.OutputLocation));
+        string dirName = Path.GetDirectoryName(Path.GetFullPath(celeriacArgs.OutputLocation));
         if (!Directory.Exists(dirName))
         {
           Directory.CreateDirectory(dirName);
@@ -833,14 +832,14 @@ namespace DotNetFrontEnd
 
         if (AppDomain.CurrentDomain.IsDefaultAppDomain())
         {
-          tracePath = frontEndArgs.OutputLocation;
+          tracePath = celeriacArgs.OutputLocation;
         }
         else
         {
           // Insert the domain name: <basename>.<domain>.dtrace
           var domain = AppDomain.CurrentDomain.FriendlyName ?? AppDomain.CurrentDomain.Id.ToString();
-          var file = string.Join(".", Path.GetFileNameWithoutExtension(frontEndArgs.OutputLocation), CleanFileName(domain), "dtrace");
-          tracePath = Path.Combine(Path.GetDirectoryName(frontEndArgs.OutputLocation), file);
+          var file = string.Join(".", Path.GetFileNameWithoutExtension(celeriacArgs.OutputLocation), CleanFileName(domain), "dtrace");
+          tracePath = Path.Combine(Path.GetDirectoryName(celeriacArgs.OutputLocation), file);
         }
 
         try
@@ -853,7 +852,7 @@ namespace DotNetFrontEnd
         }
       }
 
-      if (frontEndArgs.ForceUnixNewLine)
+      if (celeriacArgs.ForceUnixNewLine)
       {
         // Force UNIX new-line convention
         writer.NewLine = "\n";
@@ -1016,7 +1015,7 @@ namespace DotNetFrontEnd
           }
           catch
           {
-            if (frontEndArgs.RobustMode)
+            if (celeriacArgs.RobustMode)
             {
               valueFlags |= VariableModifiers.nonsensical;
             }
@@ -1034,7 +1033,7 @@ namespace DotNetFrontEnd
       // Don't look at linked-lists of synthetic variables to prevent children from also printing
       // linked-lists, when they are really just deeper levels of the current linked list.
       if ((fieldFlags & VariableModifiers.ignore_linked_list) == 0 &&
-          frontEndArgs.LinkedLists && typeManager.IsLinkedListImplementer(type))
+          celeriacArgs.LinkedLists && typeManager.IsLinkedListImplementer(type))
       {
         FieldInfo linkedListField = TypeManager.FindLinkedListField(type);
         // Synthetic list of the sequence of linked list values
@@ -1068,7 +1067,7 @@ namespace DotNetFrontEnd
       Contract.Requires(depth >= 0);
 
       foreach (FieldInfo field in
-          type.GetSortedFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
+          type.GetSortedFields(celeriacArgs.GetInstanceAccessOptionsForFieldInspection(
             type, originatingType)))
       {
         if (!typeManager.ShouldIgnoreField(type, field))
@@ -1080,7 +1079,7 @@ namespace DotNetFrontEnd
       }
 
       foreach (FieldInfo staticField in
-          type.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(
+          type.GetSortedFields(celeriacArgs.GetStaticAccessOptionsForFieldInspection(
               type, originatingType)))
       {
         string staticFieldName = type.FullName + "." + staticField.Name;
@@ -1130,7 +1129,7 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Checks whether the front end should exit early due to already visiting the variable,
+    /// Checks whether the Celeriac should exit early due to already visiting the variable,
     /// for exceeding depth, or for user-suppressed variables. Updates the list of variables
     /// visited for this program point to include this one.
     /// </summary>
@@ -1144,7 +1143,7 @@ namespace DotNetFrontEnd
         return true;
       }
       variablesVisitedForCurrentProgramPoint.Add(name);
-      return depth > frontEndArgs.MaxNestingDepth || !frontEndArgs.ShouldPrintVariable(name);
+      return depth > celeriacArgs.MaxNestingDepth || !celeriacArgs.ShouldPrintVariable(name);
     }
 
     /// <summary>
@@ -1211,7 +1210,7 @@ namespace DotNetFrontEnd
       Contract.Requires(depth >= 0); // TWS: why shouldn't this be >= 1?
       Contract.Requires(nonsensicalElements == null || nonsensicalElements.Length == list.Count);
 
-      if (depth > frontEndArgs.MaxNestingDepth || !frontEndArgs.ShouldPrintVariable(name))
+      if (depth > celeriacArgs.MaxNestingDepth || !celeriacArgs.ShouldPrintVariable(name))
       {
         return;
       }
@@ -1306,7 +1305,7 @@ namespace DotNetFrontEnd
       Contract.Requires(depth >= 0); // TWS: why shouldn't this be >= 1?
 
       foreach (FieldInfo field in
-          elementType.GetSortedFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
+          elementType.GetSortedFields(celeriacArgs.GetInstanceAccessOptionsForFieldInspection(
               elementType, originatingType)))
       {
         if (!typeManager.ShouldIgnoreField(elementType, field))
@@ -1317,7 +1316,7 @@ namespace DotNetFrontEnd
       }
 
       foreach (FieldInfo staticElementField in
-          elementType.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(
+          elementType.GetSortedFields(celeriacArgs.GetStaticAccessOptionsForFieldInspection(
               elementType, originatingType)))
       {
         string staticFieldName = elementType.FullName + "." + staticElementField.Name;
@@ -1376,7 +1375,7 @@ namespace DotNetFrontEnd
       Contract.Requires(writer != null);
 
       foreach (FieldInfo elementField in
-          elementType.GetSortedFields(frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
+          elementType.GetSortedFields(celeriacArgs.GetInstanceAccessOptionsForFieldInspection(
               elementType, originatingType)))
       {
         if (!typeManager.ShouldIgnoreField(elementType, elementField))
@@ -1387,7 +1386,7 @@ namespace DotNetFrontEnd
 
       // Static fields will have the same value for every element so just visit them once
       foreach (FieldInfo elementField in
-          elementType.GetSortedFields(frontEndArgs.GetStaticAccessOptionsForFieldInspection(
+          elementType.GetSortedFields(celeriacArgs.GetStaticAccessOptionsForFieldInspection(
               elementType, originatingType)))
       {
         string staticFieldName = elementType.FullName + "." + elementField.Name;
@@ -1456,7 +1455,7 @@ namespace DotNetFrontEnd
           }
           catch
           {
-            if (frontEndArgs.RobustMode)
+            if (celeriacArgs.RobustMode)
             {
               pureNonsensical[i] = true;
             }
@@ -1559,7 +1558,7 @@ namespace DotNetFrontEnd
       }
       catch
       {
-        if (frontEndArgs.RobustMode)
+        if (celeriacArgs.RobustMode)
         {
           return x.GetHashCode().ToString(CultureInfo.InvariantCulture);
         }
@@ -1598,7 +1597,7 @@ namespace DotNetFrontEnd
       }
       else if (type.IsEnum)
       {
-        if (frontEndArgs.EnumUnderlyingValues)
+        if (celeriacArgs.EnumUnderlyingValues)
         {
           return Convert.ChangeType(x, Enum.GetUnderlyingType(type), CultureInfo.InvariantCulture).ToString();
         }
@@ -1763,7 +1762,7 @@ namespace DotNetFrontEnd
       catch (TargetInvocationException ex)
       {
         // If the _invoked method_ throws an exception, ignore it. 
-        if (frontEndArgs.VerboseMode)
+        if (celeriacArgs.VerboseMode)
         {
           Console.WriteLine(
             string.Format("INFO: caught exception invoking {0} on declared type {1}: {2}",

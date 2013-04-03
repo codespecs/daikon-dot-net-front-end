@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics.Contracts;
-using DotNetFrontEnd.Contracts;
+using Celeriac.Contracts;
 
 namespace EmilStefanov
 {

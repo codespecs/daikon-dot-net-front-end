@@ -5,10 +5,10 @@ using System.Text;
 using EmilStefanov;
 using System.Diagnostics.Contracts;
 using Comparability;
-using DotNetFrontEnd.Contracts;
+using Celeriac.Contracts;
 using Microsoft.Cci;
 
-namespace DotNetFrontEnd.Comparability
+namespace Celeriac.Comparability
 {
   [Serializable]
   public class TypeSummary

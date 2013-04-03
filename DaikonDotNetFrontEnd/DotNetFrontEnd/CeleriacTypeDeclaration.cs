@@ -1,9 +1,5 @@
-﻿// Describes the possible ways a single type could be declared. Operates as a union type over
-// either a single type (the standard case), or a list of types. The list of types is appropriate 
-// for when the type is generic and has multiple constraints, then each element in the list will
-// be one of the contraints.
-
-namespace DotNetFrontEnd
+﻿
+namespace Celeriac
 {
   using System;
   using System.Collections.Generic;
@@ -12,9 +8,15 @@ namespace DotNetFrontEnd
   using System.Collections.ObjectModel;
   using System.Diagnostics;
   using System.Diagnostics.Contracts;
-  using DotNetFrontEnd.Contracts;
+  using Celeriac.Contracts;
 
-  public class DNFETypeDeclaration
+  /// <summary>
+  /// Describes the possible ways a single type could be declared. Operates as a union type over
+  /// either a single type (the standard case), or a list of types. The list of types is appropriate 
+  /// for when the type is generic and has multiple constraints, then each element in the list will
+  /// be one of the contraints
+  /// </summary>
+  public class CeleriacTypeDeclaration
   {
     /// <summary>
     /// Single type of the declaration
@@ -50,7 +52,7 @@ namespace DotNetFrontEnd
     /// Create a new type delcaration holding a single type
     /// </summary>
     /// <param name="t">The single type to declare</param>
-    public DNFETypeDeclaration(Type type)
+    public CeleriacTypeDeclaration(Type type)
     {
       Contract.Requires(type != null);
       Contract.Ensures(this.type == type);
@@ -63,7 +65,7 @@ namespace DotNetFrontEnd
     /// Create a new type declaration for a given list of types
     /// </summary>
     /// <param name="list">The list of types for the type declaration</param>
-    public DNFETypeDeclaration(Collection<Type> list)
+    public CeleriacTypeDeclaration(Collection<Type> list)
     {
       Contract.Requires(list != null);
       Contract.Requires(list.Count > 0);

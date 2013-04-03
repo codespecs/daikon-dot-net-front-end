@@ -9,12 +9,12 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using DotNetFrontEnd.Comparability;
+using Celeriac.Comparability;
 using Microsoft.Cci;
 using System.Diagnostics.Contracts;
-using DotNetFrontEnd.Contracts;
+using Celeriac.Contracts;
 
-namespace DotNetFrontEnd
+namespace Celeriac
 {
   /// <summary>
   /// Prints the declaration portion of a datatrace
@@ -22,7 +22,7 @@ namespace DotNetFrontEnd
   public class DeclarationPrinter : IDisposable
   {
     // The arguments to be used in printing declarations
-    private FrontEndArgs frontEndArgs;
+    private CeleriacArgs celeriacArgs;
 
     // Device used to write the declarations
     private TextWriter fileWriter;
@@ -140,13 +140,13 @@ namespace DotNetFrontEnd
     /// </summary>
     /// <param name="args">Arguments to use while printing the declaration file</param>
     /// <param name="typeManager">Type manager to use while printing the declaration file</param>
-    public DeclarationPrinter(FrontEndArgs args, TypeManager typeManager, AssemblySummary comparabilityManager)
+    public DeclarationPrinter(CeleriacArgs args, TypeManager typeManager, AssemblySummary comparabilityManager)
     {
       if (args == null)
       {
         throw new ArgumentNullException("args");
       }
-      this.frontEndArgs = args;
+      this.celeriacArgs = args;
 
       if (typeManager == null)
       {
@@ -162,14 +162,14 @@ namespace DotNetFrontEnd
       }
       else
       {
-        if (!Directory.Exists(frontEndArgs.OutputLocation))
+        if (!Directory.Exists(celeriacArgs.OutputLocation))
         {
-          Directory.CreateDirectory(Path.GetDirectoryName(frontEndArgs.OutputLocation));
+          Directory.CreateDirectory(Path.GetDirectoryName(celeriacArgs.OutputLocation));
         }
-        this.fileWriter = new StreamWriter(this.frontEndArgs.OutputLocation);
+        this.fileWriter = new StreamWriter(this.celeriacArgs.OutputLocation);
       }
 
-      if (this.frontEndArgs.ForceUnixNewLine)
+      if (this.celeriacArgs.ForceUnixNewLine)
       {
         this.fileWriter.NewLine = "\n";
       }
@@ -297,7 +297,7 @@ namespace DotNetFrontEnd
       Contract.Requires(typeContext != null || methodContext != null);
 
       foreach (FieldInfo field in
-        type.GetSortedFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
+        type.GetSortedFields(this.celeriacArgs.GetInstanceAccessOptionsForFieldInspection(
             type, originatingType)))
       {
         if (!this.typeManager.ShouldIgnoreField(type, field))
@@ -370,7 +370,7 @@ namespace DotNetFrontEnd
       // also printing linked-lists, when they are really just deeper levels of the current 
       // linked list.
       if (((flags & VariableFlags.synthetic) == 0) && kind != VariableKind.field
-          && frontEndArgs.LinkedLists
+          && celeriacArgs.LinkedLists
           && this.typeManager.IsLinkedListImplementer(type))
       {
         FieldInfo linkedListField = TypeManager.FindLinkedListField(type);
@@ -383,7 +383,7 @@ namespace DotNetFrontEnd
     private void PrintStaticFields(Type type, Type originatingType, INamedTypeDefinition typeContext, IMethodDefinition methodContext)
     {
       foreach (FieldInfo staticField in
-          type.GetSortedFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(
+          type.GetSortedFields(this.celeriacArgs.GetStaticAccessOptionsForFieldInspection(
               type, originatingType)))
       {
         string staticFieldName = type.FullName + "." + staticField.Name;
@@ -493,8 +493,8 @@ namespace DotNetFrontEnd
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(name));
 
-      if (nestingDepth > this.frontEndArgs.MaxNestingDepth ||
-          !this.frontEndArgs.ShouldPrintVariable(name))
+      if (nestingDepth > this.celeriacArgs.MaxNestingDepth ||
+          !this.celeriacArgs.ShouldPrintVariable(name))
       {
         return;
       }
@@ -574,7 +574,7 @@ namespace DotNetFrontEnd
       }
 
       foreach (FieldInfo field in
-          elementType.GetSortedFields(this.frontEndArgs.GetInstanceAccessOptionsForFieldInspection(
+          elementType.GetSortedFields(this.celeriacArgs.GetInstanceAccessOptionsForFieldInspection(
               elementType, originatingType)))
       {
         if (!this.typeManager.ShouldIgnoreField(elementType, field))
@@ -587,7 +587,7 @@ namespace DotNetFrontEnd
       }
 
       foreach (FieldInfo staticField in
-          elementType.GetSortedFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(
+          elementType.GetSortedFields(this.celeriacArgs.GetStaticAccessOptionsForFieldInspection(
               elementType, originatingType)))
       {
         string staticFieldName = elementType.FullName + "." + staticField.Name;
@@ -665,7 +665,7 @@ namespace DotNetFrontEnd
     {
       parentName = parentName + ":::OBJECT 1";
 
-      DNFETypeDeclaration typeDecl =
+      CeleriacTypeDeclaration typeDecl =
           this.typeManager.ConvertAssemblyQualifiedNameToType(assemblyQualifiedName);
 
       foreach (Type type in typeDecl.GetAllTypes)
@@ -697,7 +697,7 @@ namespace DotNetFrontEnd
       Contract.Requires(method != null);
 
       // TODO(#48): Parent type like we do for instance fields.
-      DNFETypeDeclaration typeDecl =
+      CeleriacTypeDeclaration typeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(parentObjectType);
       foreach (Type type in typeDecl.GetAllTypes)
       {
@@ -717,7 +717,7 @@ namespace DotNetFrontEnd
 
       foreach (FieldInfo staticField in
         // type passed in as originating type so we get all the fields for it
-        type.GetSortedFields(this.frontEndArgs.GetStaticAccessOptionsForFieldInspection(
+        type.GetSortedFields(this.celeriacArgs.GetStaticAccessOptionsForFieldInspection(
             type, type)))
       {
         string staticFieldName = type.FullName + "." + staticField.Name;
@@ -774,7 +774,7 @@ namespace DotNetFrontEnd
       Contract.Requires(!string.IsNullOrWhiteSpace(name));
       Contract.Requires(methodDefinition != null);
 
-      DNFETypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(paramType);
+      CeleriacTypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(paramType);
       foreach (Type type in typeDecl.GetAllTypes)
       {
         if (type != null)
@@ -795,7 +795,7 @@ namespace DotNetFrontEnd
       Contract.Requires(!string.IsNullOrWhiteSpace(name));
       Contract.Requires(!string.IsNullOrWhiteSpace(returnType));
 
-      DNFETypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(returnType);
+      CeleriacTypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(returnType);
       foreach (Type type in typeDecl.GetAllTypes)
       {
         if (type != null)
@@ -818,7 +818,7 @@ namespace DotNetFrontEnd
       Contract.Requires(!string.IsNullOrWhiteSpace(objectAssemblyQualifiedName));
       Contract.Requires(type != null);
 
-      DNFETypeDeclaration objectTypeDecl =
+      CeleriacTypeDeclaration objectTypeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
       foreach (Type objectType in objectTypeDecl.GetAllTypes)
       {
@@ -826,7 +826,7 @@ namespace DotNetFrontEnd
         if (objectType != null)
         {
           string nameToPrint = SanitizeProgramPointName(objectName + ":::OBJECT");
-          if (frontEndArgs.ShouldPrintProgramPoint(nameToPrint))
+          if (celeriacArgs.ShouldPrintProgramPoint(nameToPrint))
           {
             this.WriteLine();
             this.WritePair("ppt", nameToPrint);
@@ -853,13 +853,13 @@ namespace DotNetFrontEnd
       Contract.Requires(!string.IsNullOrWhiteSpace(objectAssemblyQualifiedName));
       Contract.Requires(typeContext != null);
 
-      DNFETypeDeclaration objectTypeDecl =
+      CeleriacTypeDeclaration objectTypeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
       foreach (Type objectType in objectTypeDecl.GetAllTypes)
       {
         this.variablesForCurrentProgramPoint.Clear();
         string nameToPrint = SanitizeProgramPointName(className + ":::CLASS");
-        if (frontEndArgs.ShouldPrintProgramPoint(nameToPrint))
+        if (celeriacArgs.ShouldPrintProgramPoint(nameToPrint))
         {
           this.WriteLine();
           this.WritePair("ppt", nameToPrint);
@@ -951,10 +951,10 @@ namespace DotNetFrontEnd
     }
 
     /// <summary>
-    /// Returns union of <code>flags</code>, respecting the front-end options
+    /// Returns union of <code>flags</code>, respecting the Celeriac command line options
     /// </summary>
     /// <param name="flags"></param>
-    /// <returns>union of <code>flags</code>, respecting the front-end options</returns>
+    /// <returns>union of <code>flags</code>, respecting the Celeriac command line options</returns>
     private VariableFlags ExtendFlags(params VariableFlags[] flags)
     {
       Contract.Requires(flags != null);
@@ -965,15 +965,15 @@ namespace DotNetFrontEnd
       {
         result |= fs;
       }
-      if (!frontEndArgs.IsPropertyFlags)
+      if (!celeriacArgs.IsPropertyFlags)
       {
         result &= (result | VariableFlags.is_property) ^ VariableFlags.is_property;
       }
-      if (!frontEndArgs.IsEnumFlags)
+      if (!celeriacArgs.IsEnumFlags)
       {
         result &= (result | VariableFlags.is_enum) ^ VariableFlags.is_enum;
       }
-      if (!frontEndArgs.IsReadOnlyFlags)
+      if (!celeriacArgs.IsReadOnlyFlags)
       {
         result &= (result | VariableFlags.is_value_immutable) ^ VariableFlags.is_value_immutable;
         result &= (result | VariableFlags.is_reference_immutable) ^ VariableFlags.is_reference_immutable;
@@ -1012,11 +1012,11 @@ namespace DotNetFrontEnd
     /// </summary>
     private void PrintPreliminaries()
     {
-      this.WritePair("// Declarations for", this.frontEndArgs.AssemblyName);
+      this.WritePair("// Declarations for", this.celeriacArgs.AssemblyName);
       this.WritePair("// Declarations written", DateTime.Now);
       this.fileWriter.WriteLine();
       this.WritePair("decl-version", "2.0");
-      this.WritePair("var-comparability", frontEndArgs.StaticComparability ? "implicit" : "none");
+      this.WritePair("var-comparability", celeriacArgs.StaticComparability ? "implicit" : "none");
       this.WritePair("input-language", "C#.NET");
     }
 
@@ -1112,7 +1112,7 @@ namespace DotNetFrontEnd
       else
       {
         string typeStr = type.ToString();
-        if (this.frontEndArgs.FriendlyDecTypes)
+        if (this.celeriacArgs.FriendlyDecTypes)
         {
           typeStr = Regex.Replace(typeStr, @"`\d", "");
           typeStr = Regex.Replace(typeStr, @"\[", "<");
@@ -1150,7 +1150,7 @@ namespace DotNetFrontEnd
       {
         return DaikonIntName;
       }
-      else if (type.IsEnum && !frontEndArgs.EnumUnderlyingValues)
+      else if (type.IsEnum && !celeriacArgs.EnumUnderlyingValues)
       {
         return DaikonHashCodeName;
       }
@@ -1235,8 +1235,8 @@ namespace DotNetFrontEnd
       Contract.Requires((kind == VariableKind.field || kind == VariableKind.array).Implies(!string.IsNullOrWhiteSpace(enclosingVar)),
           "Enclosing field required for static fields and arrays");
 
-      if (nestingDepth > this.frontEndArgs.MaxNestingDepth ||
-          !this.frontEndArgs.ShouldPrintVariable(name))
+      if (nestingDepth > this.celeriacArgs.MaxNestingDepth ||
+          !this.celeriacArgs.ShouldPrintVariable(name))
       {
         return true;
       }
