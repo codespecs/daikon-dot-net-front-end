@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System.Diagnostics;
-using Microsoft.Cci;
 
 namespace CeleriacLauncher
 {
