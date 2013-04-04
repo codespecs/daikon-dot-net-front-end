@@ -54,9 +54,8 @@ namespace Celeriac
 
     /// <summary>
     /// Whether to enter verbose mode if the user doesn't specify true or false
-    /// TODO(#28): Change before release
     /// </summary>
-    private const bool DefaultVerboseMode = true;
+    private const bool DefaultVerboseMode = false;
 
     /// <summary>
     /// The location a user should specify to print to standard out.
@@ -327,7 +326,6 @@ namespace Celeriac
       this.programArguments.Add(PossibleArgument.nesting_depth,
           DefaultNestingDepth.ToString(CultureInfo.InvariantCulture));
 
-      // TODO(#28): Remove before release.
       this.programArguments.Add(PossibleArgument.verbose, DefaultVerboseMode.ToString());
 
       // TODO(#30): This is true for chicory, so should be true for us as well.
