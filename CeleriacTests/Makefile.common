@@ -3,7 +3,7 @@
 CS_EXT = cs
 FS_EXT = fs
 VB_EXT = vb
-DNFE_OPTIONS := $(DNFE_OPTIONS) --force-unix-newline --omit_var=Empty
+DNFE_OPTIONS := $(DNFE_OPTIONS) --verbose=true --force-unix-newline --omit_var=Empty
 CLEAN_OUTPUT := ../clean-output.pl
 RUN_MANY := ../run-many.pl
 DTRACE_COUNT ?= $(DAIKONDIR)/scripts/dtrace-count.pl
