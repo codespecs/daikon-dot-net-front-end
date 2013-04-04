@@ -13,20 +13,20 @@ parent parent HelloWorld:::OBJECT 1
     var-kind return
     dec-type System.Exception
     rep-type hashcode
-    comparability 22
+    comparability -22
   variable exception.GetType()
     var-kind function GetType()
     enclosing-var exception
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
   variable this
     var-kind variable
     dec-type HelloWorld
     rep-type hashcode
     flags is_param
-    comparability 22
+    comparability -22
     parent HelloWorld:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
@@ -34,38 +34,7 @@ parent parent HelloWorld:::OBJECT 1
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent HelloWorld:::OBJECT 1
-
-ppt HelloWorld..ctor():::EXIT_EX_Runtime
-ppt-type subexit
-parent parent HelloWorld:::OBJECT 1
-  variable exception
-    var-kind return
-    dec-type System.Exception
-    rep-type hashcode
-    comparability 22
-  variable exception.GetType()
-    var-kind function GetType()
-    enclosing-var exception
-    dec-type java.lang.Class
-    rep-type java.lang.String
-    flags synthetic classname
-    comparability 22
-  variable this
-    var-kind variable
-    dec-type HelloWorld
-    rep-type hashcode
-    flags is_param
-    comparability 22
-    parent HelloWorld:::OBJECT 1
-  variable this.GetType()
-    var-kind function GetType()
-    enclosing-var this
-    dec-type java.lang.Class
-    rep-type java.lang.String
-    flags synthetic classname
-    comparability 22
+    comparability -22
     parent HelloWorld:::OBJECT 1
 
 ppt HelloWorld.Main(System.String[]\_args):::ENTER
@@ -76,14 +45,14 @@ parent parent HelloWorld:::CLASS 1
     dec-type java.lang.String[]
     rep-type hashcode
     flags is_param
-    comparability 22
+    comparability -22
   variable args[..]
     var-kind array
     enclosing-var args
     array 1
     dec-type java.lang.String[]
     rep-type hashcode[]
-    comparability 22
+    comparability -22
   variable args[..].ToString()
     var-kind function ToString()
     enclosing-var args[..]
@@ -91,7 +60,7 @@ parent parent HelloWorld:::CLASS 1
     dec-type java.lang.String[]
     rep-type java.lang.String[]
     flags synthetic to_string
-    comparability 22
+    comparability -22
 
 ppt HelloWorld.Main(System.String[]\_args):::EXIT4
 ppt-type subexit
@@ -101,14 +70,14 @@ parent parent HelloWorld:::CLASS 1
     dec-type java.lang.String[]
     rep-type hashcode
     flags is_param
-    comparability 22
+    comparability -22
   variable args[..]
     var-kind array
     enclosing-var args
     array 1
     dec-type java.lang.String[]
     rep-type hashcode[]
-    comparability 22
+    comparability -22
   variable args[..].ToString()
     var-kind function ToString()
     enclosing-var args[..]
@@ -116,19 +85,19 @@ parent parent HelloWorld:::CLASS 1
     dec-type java.lang.String[]
     rep-type java.lang.String[]
     flags synthetic to_string
-    comparability 22
+    comparability -22
   variable exception
     var-kind return
     dec-type System.Exception
     rep-type hashcode
-    comparability 22
+    comparability -22
   variable exception.GetType()
     var-kind function GetType()
     enclosing-var exception
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
 
 ppt HelloWorld.Main(System.String[]\_args):::EXIT_EX_Runtime
 ppt-type subexit
@@ -138,14 +107,14 @@ parent parent HelloWorld:::CLASS 1
     dec-type java.lang.String[]
     rep-type hashcode
     flags is_param
-    comparability 22
+    comparability -22
   variable args[..]
     var-kind array
     enclosing-var args
     array 1
     dec-type java.lang.String[]
     rep-type hashcode[]
-    comparability 22
+    comparability -22
   variable args[..].ToString()
     var-kind function ToString()
     enclosing-var args[..]
@@ -153,19 +122,19 @@ parent parent HelloWorld:::CLASS 1
     dec-type java.lang.String[]
     rep-type java.lang.String[]
     flags synthetic to_string
-    comparability 22
+    comparability -22
   variable exception
     var-kind return
     dec-type System.Exception
     rep-type hashcode
-    comparability 22
+    comparability -22
   variable exception.GetType()
     var-kind function GetType()
     enclosing-var exception
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
 
 ppt HelloWorld:::CLASS
 ppt-type class
@@ -178,20 +147,20 @@ parent parent HelloWorld:::CLASS 1
     dec-type HelloWorld
     rep-type hashcode
     flags is_param
-    comparability 22
+    comparability -22
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
 
 HelloWorld.Main(System.String[]\_args):::ENTER
 this_invocation_nonce
-0
+2
 args
-51810644
+12905972
 1
 args[..]
 []
@@ -202,9 +171,9 @@ args[..].ToString()
 
 HelloWorld.Main(System.String[]\_args):::EXIT4
 this_invocation_nonce
-0
+2
 args
-51810644
+12905972
 1
 args[..]
 []
