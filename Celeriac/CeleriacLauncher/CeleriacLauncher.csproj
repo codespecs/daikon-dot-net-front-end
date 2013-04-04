@@ -57,7 +57,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.Cci.ILGenerator, Version=1.0.7.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Celeriac\CCI_DLLs\Microsoft.Cci.ILGenerator.dll</HintPath>
+      <HintPath>..\DotNetFrontEnd\CCI_DLLs\Microsoft.Cci.ILGenerator.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Cci.MetadataHelper, Version=1.0.7.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -69,7 +69,7 @@
     </Reference>
     <Reference Include="Microsoft.Cci.MutableMetadataModel, Version=1.0.7.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Celeriac\CCI_DLLs\Microsoft.Cci.MutableMetadataModel.dll</HintPath>
+      <HintPath>..\DotNetFrontEnd\CCI_DLLs\Microsoft.Cci.MutableMetadataModel.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Cci.PeReader, Version=1.0.7.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -120,8 +120,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /Y $(TargetPath) "%25CELERIAC_HOME%25"
-copy /Y $(TargetDir)$(TargetName).pdb  "%25CELERIAC_HOME%25"</PostBuildEvent>
+    <PostBuildEvent>copy /Y $(TargetPath) "%25DNFE_OUT%25"
+copy /Y $(TargetDir)$(TargetName).pdb  "%25DNFE_OUT%25"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
