@@ -328,8 +328,7 @@ namespace Celeriac
 
       this.programArguments.Add(PossibleArgument.verbose, DefaultVerboseMode.ToString());
 
-      // TODO(#30): This is true for chicory, so should be true for us as well.
-      // this.programArguments.Add(PossibleArgument.linked_lists, false.ToString());
+      this.programArguments.Add(PossibleArgument.linked_lists, true.ToString());
 
       // TODO(#43): Change this back to true.
       this.programArguments.Add(PossibleArgument.arrays_only, false.ToString());
