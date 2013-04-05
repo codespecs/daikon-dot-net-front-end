@@ -3,16 +3,13 @@ Generics.DelegateTestClass..ctor() ENTER/3: 1 EXIT2/15: 1
 Generics.DelegateTestStack..ctor() ENTER/3: 1 EXIT2/30: 1
 Generics.DelegateTestStack.add_stackEvent(Generics.StackEventHandler<Generics.DelegateTestStack<T>,\_Generics.DelegateTestStack<T>.StackEventArgs>\_value) ENTER/45: 1 EXIT24/51: 1
 Generics.GenericList..ctor() ENTER/3: 5 EXIT8/27: 5
-Generics.GenericList.<GetEnumerator>d__0.MoveNext() ENTER/36: 11 EXIT30/45: 10 EXIT52/45: 1
-Generics.GenericList.<GetEnumerator>d__0.System.Collections.Generic.IEnumerator<T>.get_Current() ENTER/36: 10 EXIT3/48: 10
-Generics.GenericList.<GetEnumerator>d__0.System.IDisposable.Dispose() ENTER/36: 1 EXIT1/42: 1
 Generics.GenericList.AddHead(T\_t) ENTER/27: 10 EXIT12/33: 10
-Generics.GenericList.GetEnumerator() ENTER/21: 1 EXIT8/33: 1
-Generics.GenericList.GetLast() ENTER/21: 2 EXIT25/33: 2
-Generics.GenericList.Node..ctor(T\_t) ENTER/9: 10 EXIT11/39: 10
-Generics.GenericList.Node.Data.get() ENTER/27: 10 EXIT4/39: 10
-Generics.GenericList.Node.Next.get() ENTER/27: 10 EXIT4/57: 10
-Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value) ENTER/51: 10 EXIT4/57: 10
+Generics.GenericList.GetEnumerator() ENTER/21: 1 EXIT10/33: 1
+Generics.GenericList.GetLast() ENTER/21: 2 EXIT27/33: 2
+Generics.GenericList.Node..ctor(T\_t) ENTER/9: 10 EXIT11/63: 10
+Generics.GenericList.Node.Data.get() ENTER/51: 10 EXIT6/63: 10
+Generics.GenericList.Node.Next.get() ENTER/51: 10 EXIT6/105: 10
+Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node\_value) ENTER/99: 10 EXIT4/105: 10
 Generics.GenericsTest.AddToList1(System.Collections.Generic.List<System.Int32>\_intList1) ENTER/9: 1 EXIT13/15: 1
 Generics.GenericsTest.DefaultTest() ENTER/3: 1 EXIT17/9: 1
 Generics.GenericsTest.DelegateTest() ENTER/3: 1 EXIT11/9: 1
