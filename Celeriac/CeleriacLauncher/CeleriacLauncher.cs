@@ -1,10 +1,8 @@
 ﻿using System;
-using Celeriac;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization;
-using System.Diagnostics;
+using Celeriac;
 
 namespace CeleriacLauncher
 {
