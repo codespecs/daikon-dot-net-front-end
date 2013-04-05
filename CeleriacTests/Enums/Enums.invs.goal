@@ -1,98 +1,86 @@
 ===========================================================================
 Enums.Enums.PrintColors(Enums.Enums.Colors myColors):::ENTER
-Colors.Blue == "Blue"
-Colors.Blue.value__ == 4
-Colors.Green == "Green"
-Colors.Green.value__ == 2
-Colors.Red == "Red"
-Colors.Red.value__ == 1
-Colors.Yellow == "Yellow"
-Colors.Yellow.value__ == 8
-myColors == "Red, Blue, Yellow"
-myColors.value__ == 13
+
+Enums.Enums+Colors.Blue has only one value
+Enums.Enums+Colors.Green has only one value
+Enums.Enums+Colors.Red has only one value
+Enums.Enums+Colors.Yellow has only one value
+myColors has only one value
 ===========================================================================
 Enums.Enums.PrintColors(Enums.Enums.Colors myColors):::EXIT6
+
 ===========================================================================
 Enums.Enums.PrintColors(Enums.Enums.Colors myColors):::EXIT
-Colors.Blue.value__ == orig(Colors.Blue.value__)
-Colors.Green.value__ == orig(Colors.Green.value__)
-Colors.Red.value__ == orig(Colors.Red.value__)
-Colors.Yellow.value__ == orig(Colors.Yellow.value__)
-myColors.value__ == orig(myColors.value__)
-Colors.Blue == "Blue"
-Colors.Blue.value__ == 4
-Colors.Green == "Green"
-Colors.Green.value__ == 2
-Colors.Red == "Red"
-Colors.Red.value__ == 1
-Colors.Yellow == "Yellow"
-Colors.Yellow.value__ == 8
-myColors.value__ == 13
-Colors.Blue == orig(Colors.Blue)
-Colors.Green == orig(Colors.Green)
-Colors.Red == orig(Colors.Red)
-Colors.Yellow == orig(Colors.Yellow)
+
+Enums.Enums+Colors.Blue == orig(Enums.Enums+Colors.Blue)
+Enums.Enums+Colors.Green == orig(Enums.Enums+Colors.Green)
+Enums.Enums+Colors.Red == orig(Enums.Enums+Colors.Red)
+Enums.Enums+Colors.Yellow == orig(Enums.Enums+Colors.Yellow)
+Enums.Enums+Colors.Blue has only one value
+Enums.Enums+Colors.Green has only one value
+Enums.Enums+Colors.Red has only one value
+Enums.Enums+Colors.Yellow has only one value
 ===========================================================================
 Enums.Enums.PrintEnumType(System.Type weekdays):::ENTER
-Type.FilterAttribute == Type.FilterName
-Type.FilterAttribute == Type.FilterNameIgnoreCase
-Char.MaxValue == 65535
-Char.MinValue == 0
-Type.Delimiter == 46
-Type.FilterAttribute has only one value
-Type.Missing has only one value
-Type.Missing.GetType() == System.Reflection.Missing.class
+
+System.Char.MaxValue == 65535
+System.Char.MinValue == 0
+System.Type.Delimiter == 46
+System.Type.FilterAttribute has only one value
+System.Type.FilterName has only one value
+System.Type.FilterNameIgnoreCase has only one value
+System.Type.Missing has only one value
 weekdays.GetType() == System.RuntimeType.class
 ===========================================================================
 Enums.Enums.PrintEnumType(System.Type weekdays):::EXIT35
+
 ===========================================================================
 Enums.Enums.PrintEnumType(System.Type weekdays):::EXIT
-Char.MaxValue == orig(Char.MaxValue)
-Char.MinValue == orig(Char.MinValue)
-Type.Delimiter == orig(Type.Delimiter)
-Type.FilterAttribute == Type.FilterName
-Type.FilterAttribute == Type.FilterNameIgnoreCase
-Type.FilterAttribute == orig(Type.FilterAttribute)
-Type.FilterAttribute == orig(Type.FilterName)
-Type.FilterAttribute == orig(Type.FilterNameIgnoreCase)
-Type.Missing == orig(Type.Missing)
-Char.MaxValue == 65535
-Char.MinValue == 0
-Type.Delimiter == 46
-Type.FilterAttribute has only one value
-Type.Missing has only one value
-Type.Missing.GetType() == System.Reflection.Missing.class
-Type.Missing.GetType() == orig(Type.Missing.GetType())
+
+System.Char.MaxValue == orig(System.Char.MaxValue)
+System.Char.MinValue == orig(System.Char.MinValue)
+System.Type.Delimiter == orig(System.Type.Delimiter)
+System.Type.FilterAttribute == orig(System.Type.FilterAttribute)
+System.Type.FilterName == orig(System.Type.FilterName)
+System.Type.FilterNameIgnoreCase == orig(System.Type.FilterNameIgnoreCase)
+System.Type.Missing == orig(System.Type.Missing)
+System.Char.MaxValue == 65535
+System.Char.MinValue == 0
+System.Type.Delimiter == 46
+System.Type.FilterAttribute has only one value
+System.Type.FilterName has only one value
+System.Type.FilterNameIgnoreCase has only one value
+System.Type.Missing has only one value
 ===========================================================================
 Enums.Enums.formatEnum(System.String s, System.Type enumType):::ENTER
-Type.FilterAttribute == Type.FilterName
-Type.FilterAttribute == Type.FilterNameIgnoreCase
-Char.MaxValue == 65535
-Char.MinValue == 0
-Type.Delimiter == 46
-Type.FilterAttribute has only one value
-Type.Missing has only one value
-Type.Missing.GetType() == System.Reflection.Missing.class
+
+System.Char.MaxValue == 65535
+System.Char.MinValue == 0
+System.Type.Delimiter == 46
+System.Type.FilterAttribute has only one value
+System.Type.FilterName has only one value
+System.Type.FilterNameIgnoreCase has only one value
+System.Type.Missing has only one value
 enumType.GetType() == System.RuntimeType.class
 ===========================================================================
-Enums.Enums.formatEnum(System.String s, System.Type enumType):::EXIT8
+Enums.Enums.formatEnum(System.String s, System.Type enumType):::EXIT10
+
 ===========================================================================
 Enums.Enums.formatEnum(System.String s, System.Type enumType):::EXIT
-Char.MaxValue == orig(Char.MaxValue)
-Char.MinValue == orig(Char.MinValue)
-Type.Delimiter == orig(Type.Delimiter)
-Type.FilterAttribute == Type.FilterName
-Type.FilterAttribute == Type.FilterNameIgnoreCase
-Type.FilterAttribute == orig(Type.FilterAttribute)
-Type.FilterAttribute == orig(Type.FilterName)
-Type.FilterAttribute == orig(Type.FilterNameIgnoreCase)
-Type.Missing == orig(Type.Missing)
-Char.MaxValue == 65535
-Char.MinValue == 0
-Type.Delimiter == 46
-Type.FilterAttribute has only one value
-Type.Missing has only one value
-Type.Missing.GetType() == System.Reflection.Missing.class
-Type.Missing.GetType() == orig(Type.Missing.GetType())
+
+System.Char.MaxValue == orig(System.Char.MaxValue)
+System.Char.MinValue == orig(System.Char.MinValue)
+System.Type.Delimiter == orig(System.Type.Delimiter)
+System.Type.FilterAttribute == orig(System.Type.FilterAttribute)
+System.Type.FilterName == orig(System.Type.FilterName)
+System.Type.FilterNameIgnoreCase == orig(System.Type.FilterNameIgnoreCase)
+System.Type.Missing == orig(System.Type.Missing)
+System.Char.MaxValue == 65535
+System.Char.MinValue == 0
+System.Type.Delimiter == 46
+System.Type.FilterAttribute has only one value
+System.Type.FilterName has only one value
+System.Type.FilterNameIgnoreCase has only one value
+System.Type.Missing has only one value
 return.ToString() < s.ToString()
 s.ToString() == orig(s.ToString())
