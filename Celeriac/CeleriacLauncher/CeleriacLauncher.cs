@@ -39,21 +39,6 @@ namespace CeleriacLauncher
       {
         Console.WriteLine(ex.Message);
       }
-      //catch (Exception ex)
-      //{
-      //  if (frontEndArgs.DontCatchExceptions)
-      //  {
-      //    throw;
-      //  }
-      //  Console.Error.WriteLine("Exception occurred during IL Rewriting.");
-      //  if (frontEndArgs.VerboseMode)
-      //  {
-      //    Console.Error.WriteLine(ex.Message);
-      //    Console.Error.WriteLine(ex.StackTrace);
-      //  }
-      //  //  Can't proceed any further, so exit here.
-      //  return;
-      //}
 
       if (celeriacArgs.SaveAndRun)
       {
@@ -175,10 +160,6 @@ namespace CeleriacLauncher
       }
       catch (BadImageFormatException ex)
       {
-        if (celeriacArgs.DontCatchExceptions)
-        {
-          throw;
-        }
         Console.Error.WriteLine("Raw assembly is invalid or of too late a .NET version");
         if (celeriacArgs.VerboseMode)
         {
@@ -187,19 +168,11 @@ namespace CeleriacLauncher
       }
       catch (TargetInvocationException ex)
       {
-        if (celeriacArgs.DontCatchExceptions)
-        {
-          throw;
-        }
         Console.Error.WriteLine("Program being profiled threw an exception");
         Console.Error.WriteLine(ex.GetBaseException());
       }
       catch (VariableVisitorException ex)
       {
-        if (celeriacArgs.DontCatchExceptions)
-        {
-          throw;
-        }
         Console.Error.WriteLine(ex.Message);
         if (celeriacArgs.VerboseMode)
         {

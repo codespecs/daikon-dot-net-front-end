@@ -118,7 +118,6 @@ namespace Celeriac
       /// </summary>
       comparability,
       assembly_name,
-      dont_catch_exceptions,
       dtrace_append,
       enum_underlying_values,
       force_unix_newline,
@@ -330,13 +329,9 @@ namespace Celeriac
 
       this.programArguments.Add(PossibleArgument.linked_lists, true.ToString());
 
-      // TODO(#43): Change this back to true.
-      this.programArguments.Add(PossibleArgument.arrays_only, false.ToString());
+      this.programArguments.Add(PossibleArgument.arrays_only, true.ToString());
 
-      // TODO(#41): Set to false before release.
-      this.programArguments.Add(PossibleArgument.dont_catch_exceptions, true.ToString());
-
-      this.programArguments.Add(PossibleArgument.friendly_dec_types, "false");
+      this.programArguments.Add(PossibleArgument.friendly_dec_types, false.ToString());
     }
 
     /// <summary>
@@ -879,20 +874,7 @@ namespace Celeriac
         return result;
       }
     }
-
-    /// <summary>
-    /// If no custom exception handling should occur -- allows use of debugger but gives less 
-    /// friendly error messages.
-    /// </summary>
-    public bool DontCatchExceptions
-    {
-      get
-      {
-        return (this.programArguments.ContainsKey(PossibleArgument.dont_catch_exceptions) ?
-           bool.Parse(this.programArguments[PossibleArgument.dont_catch_exceptions]) : false);
-      }
-    }
-
+    
     /// <summary>
     /// List of which methods should be considered Pure and called at program points
     /// </summary>
