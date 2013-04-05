@@ -108,9 +108,10 @@ namespace Celeriac
     public readonly static Regex RegexForTypesToIgnoreForProgramPoint = new Regex(@"(\.<.*?>)|(^<.*?>)");
 
     /// <summary>
-    /// Characters thar appear in some compiler generated F# methods which cause issues.
+    /// Characters that appear in some compiler generated F# methods which cause issues.
     /// </summary>
-    public readonly static Regex SuspectCharacterRegex = new Regex("@");
+    /// <remarks>TWS: are there no attributes for these?</remarks>
+    public readonly static Regex FSharpCompilerGeneratedNameRegex = new Regex("@");
 
     /// <summary>
     /// Don't print object definition program points or references to the Code Contracts runtime
@@ -1207,7 +1208,8 @@ namespace Celeriac
     /// Creates a type reference anchored in the given assembly reference and whose names are relative to the given host.
     /// When the type name has periods in it, a structured reference with nested namespaces is created.
     /// </summary>
-    public INamespaceTypeReference CreateTypeReference(AssemblyIdentity assembly, string typeName)
+    /// <remarks>Adapted from Cci.TypeHelper.CreateTypeReference</remarks>
+    private INamespaceTypeReference CreateTypeReference(AssemblyIdentity assembly, string typeName)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(typeName));
 
@@ -1221,39 +1223,59 @@ namespace Celeriac
       return new Microsoft.Cci.Immutable.NamespaceTypeReference(host, ns, host.NameTable.GetNameFor(names[names.Length - 1]), 0, false, false, true, PrimitiveTypeCode.NotPrimitive);
     }
 
+    /// <summary>
+    /// Returns <c>true</c> if <c>def</c> is marked with a compiler generated attribute, or its name contains
+    /// a character suggesting that is is compiler generated.
+    /// </summary>
+    /// <param name="def">the type</param>
+    /// <returns><c>true</c> if <c>def is compiler generate</c></returns>
     [Pure]
-    public bool IsCompilerGenerated(IReference def)
+    public bool IsCompilerGenerated(ITypeDefinition def)
     {
       Contract.Requires(def != null);
+      return TypeHelper.IsCompilerGenerated(def) ||
+             (def is INamedTypeDefinition && FSharpCompilerGeneratedNameRegex.IsMatch(((INamedTypeDefinition) def).Name.Value));
+    }
 
-      if (AttributeHelper.Contains(def.Attributes,
-          Host.PlatformType.SystemRuntimeCompilerServicesCompilerGeneratedAttribute))
+    /// <summary>
+    /// Returns <c>true</c> if <c>def</c> is marked with a compiler generated attribute, or its name contains
+    /// a character suggesting that it is compiler generated.
+    /// </summary>
+    /// <param name="def">the member</param>
+    /// <returns><c>true</c> if <c>def</c> is compiler generated</returns>
+    [Pure]
+    public bool IsCompilerGenerated(ITypeDefinitionMember def)
+    {
+      Contract.Requires(def != null);
+      if (HasAttribute(def.Attributes, def.ContainingType.PlatformType.SystemRuntimeCompilerServicesCompilerGeneratedAttribute))
       {
         return true;
       }
 
       var systemDiagnosticsDebuggerNonUserCodeAttribute = CreateTypeReference(
         Host.ContractAssemblySymbolicIdentity, "System.Diagnostics.DebuggerNonUserCodeAttribute");
-      if (AttributeHelper.Contains(def.Attributes, systemDiagnosticsDebuggerNonUserCodeAttribute))
+      if (HasAttribute(def.Attributes, systemDiagnosticsDebuggerNonUserCodeAttribute))
       {
         return true;
       }
 
-      // Issue #72 (Convert to Type Reference Equality Check)
-      var compilerGeneratedAttributeName = Host.PlatformType.SystemRuntimeCompilerServicesCompilerGeneratedAttribute.ResolvedType.ToString();
-      foreach (var a in def.Attributes)
-      {
-        if (a.Type.ToString().Equals(compilerGeneratedAttributeName))
-        {
-          return true;
-        }
-      }
+      return FSharpCompilerGeneratedNameRegex.IsMatch(def.Name.Value);
+    }
 
-      if (def.ToString().Any<char>(c => SuspectCharacterRegex.IsMatch(c.ToString())))
-      {
-        return true;
-      }
+    /// <summary>
+    /// Returns true if the given collection of attributes contains an attribute of the given type.
+    /// </summary>
+    /// <remarks>Same as Cci.AttributeHelper.Contains, except resolves types</remarks>
+    private static bool HasAttribute(IEnumerable<ICustomAttribute> attributes, ITypeReference attributeType)
+    {
+      Contract.Requires(attributes != null);
+      Contract.Requires(attributeType != null);
 
+      foreach (ICustomAttribute attribute in attributes)
+      {
+        if (attribute == null) continue;
+        if (TypeHelper.TypesAreEquivalent(attribute.Type, attributeType, resolveTypes: true)) return true;
+      }
       return false;
     }
 
