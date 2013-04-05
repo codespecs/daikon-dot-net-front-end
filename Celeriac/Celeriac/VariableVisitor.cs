@@ -27,11 +27,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.Remoting;
 using System.Text;
 using System.Threading;
 using Celeriac.Contracts;
-using System.Runtime.Remoting;
-using System.Text.RegularExpressions;
 
 namespace Celeriac
 {
@@ -744,7 +743,6 @@ namespace Celeriac
     private static void DoVisit(object variable, string name, string typeName,
         VariableModifiers flags = VariableModifiers.none)
     {
-
       Contract.Requires(flags.HasFlag(VariableModifiers.nonsensical).Implies(variable == null));
       Contract.Requires(!string.IsNullOrWhiteSpace(name));
       Contract.Requires(!string.IsNullOrWhiteSpace(typeName));

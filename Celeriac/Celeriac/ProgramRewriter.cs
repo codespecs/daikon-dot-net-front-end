@@ -20,8 +20,8 @@
 // method. This is mostly done in the ProcessOperations() method, with many support methods added.
 
 using System;
-using System.Linq;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using Celeriac.Comparability;
 using Microsoft.Cci;
@@ -89,9 +89,8 @@ namespace Celeriac
         throw new InvalidOperationException("Program has already been instrumented.");
       }
 
-      PdbReader pdbReader;
-      string pdbFile;
-      LoadPdbReaderAndFile(celeriacArgs, typeManager, module, out pdbReader, out pdbFile);
+      string pdbFile = Path.ChangeExtension(module.Location, "pdb");
+      PdbReader pdbReader = LoadPdbReaderAndFile(celeriacArgs, typeManager, module, pdbFile);
 
       Assembly mutable = null;
 
@@ -231,17 +230,17 @@ namespace Celeriac
     /// <summary>
     /// Load the PDB reader and pdb file for the source program.
     /// </summary>
-    private static void LoadPdbReaderAndFile(CeleriacArgs celeriacArgs, TypeManager typeManager,
-      IModule module, out PdbReader pdbReader, out string pdbFile)
+    private static PdbReader LoadPdbReaderAndFile(CeleriacArgs celeriacArgs, TypeManager typeManager,
+      IModule module, string pdbFile)
     {
-      pdbReader = null;
-      pdbFile = Path.ChangeExtension(module.Location, "pdb");
+      PdbReader pdbReader = null;
       try
       {
         using (var pdbStream = File.OpenRead(pdbFile))
         {
           pdbReader = new PdbReader(pdbStream, typeManager.Host);
         }
+        return pdbReader;
       }
       catch (System.IO.IOException)
       {
@@ -252,10 +251,11 @@ namespace Celeriac
         }
         else
         {
-          // TODO(#25): Figure out how what happens if we can't load the PDB file.
           // It seems to be non-fatal, so print the error and continue.
           Console.Error.WriteLine("WARNING: Could not load the PDB file for '" + module.Name.Value + "'");
+          Console.Error.WriteLine("Celeriac will attempt to continue, but might fail.");
         }
+        return null;
       }
     }
   }
