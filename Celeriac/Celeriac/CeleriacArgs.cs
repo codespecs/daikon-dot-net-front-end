@@ -99,13 +99,13 @@ namespace Celeriac
       // Variables options
       arrays_only,
       auto_detect_pure,       // Undocumented
-      is_readonly_flags,      // Flag in development
-      is_enum_flags,          // Flag in development
-      is_property_flags,      // Flag in development
+      is_readonly_flags,      // Requires new Daikon
+      is_enum_flags,          // Requires new Daikon
+      is_property_flags,      // Requires new Daikon
       nesting_depth,
-      omit_var,
       omit_dec_type,
       omit_parent_dec_type,
+      omit_var,
       purity_file,
       std_visibility,
       // Misc. options
@@ -581,7 +581,7 @@ namespace Celeriac
     }
 
     /// <summary>
-    /// Regex describing variables to omit.
+    /// Don't print any variables whose dec-type matches this regex
     /// </summary>
     public Regex OmitDecType
     {
@@ -595,7 +595,7 @@ namespace Celeriac
     }
 
     /// <summary>
-    /// Regex describing variables to omit.
+    /// Don't print any variables whose parent's dec-type matches this regex
     /// </summary>
     public Regex OmitParentDecType
     {
