@@ -98,11 +98,11 @@
         then begin sampling.  Sampling starts at 10% and decreases by a factor
         of 10 each time another <var>sample-cnt</var> samples have been recorded.  If
         <var>sample-cnt</var> is 0, then all calls will be recorded.</p>
-      </dd>		
+      </dd>
 
     </dl>
     <hr/>
-    <!-- Variable options -->		
+    <!-- Variable options -->
     <h5 class="subsection">Variables in Celeriac output</h5>
     <a name="Variables-in-Celeriac-output"></a>
     <p>This section lists options that affect which variables appear
@@ -116,18 +116,38 @@
         inspected, e.g. a[0], ..., a[n]. False by default.
         </p>
       </dd>
-      <dt><samp><span class="option">--is-property-flags</span></samp></dt>
+
+      <dt><samp><span class="option">--is-enum-flags</span></samp></dt>
       <dd>
-        <p>When specified will add the flag is_property to the list of flags that
-        are printed for Pure methods variables that are getter
-        properties. This requires still that the properties be specified in a
-        purity file found with the --purity-file argument.
-        Be aware that this will not work with old versions of Daikon because they
-        did not use the is_property flag.
+        <p>When specified will add the flag <code>is_enum</code> to the list of flags that
+        are printed for all variables whose type is an enum.
+        Be aware that this will not work with old versions of Daikon, which are
+        not aware of the <code>is_enum</code> flag.
         </p>
       </dd>
+
+      <dt><samp><span class="option">--is-readonly-flags</span></samp></dt>
+      <dd>
+        <p>When specified will add the flag <code>is_readonly</code> to the list of flags that
+        are printed for all <code>readonly</code> variables.
+        Be aware that this will not work with old versions of Daikon, which are
+        not aware of the <code>is_readonly</code> flag.
+        </p>
+      </dd>
+
+      <dt><samp><span class="option">--is-property-flags</span></samp></dt>
+      <dd>
+        <p>When specified will add the flag <code>is_property</code> to the list of flags that
+        are printed for Pure methods variables that are getter
+        properties. This requires still that the properties be specified in a
+        purity file found with the <var>--purity-file</var> argument.
+        Be aware that this will not work with old versions of Daikon, which are
+        not aware of the <code>is_property</code> flag.
+        </p>
+      </dd>
+
       <dt><samp><span class="option">--nesting-depth=<var>n</var></span></samp></dt>
-      <dd>				
+      <dd>
         <p>Depth to which to examine structure components (default 2).
          This parameter determines which variables the front end causes
          to be output at runtime. For instance, suppose that a program
@@ -169,6 +189,25 @@
             value is marked as nonsensical.<br/>
         </p>
       </dd>
+
+      <dt><samp><span class="option">--omit-dec-type=<var>regex</var></span></samp></dt>
+      <dd>
+        <p>
+        Do not include variables whose dec-type matches the regular
+         expression. Variables will be omitted from each program
+         point in which they appear.
+        </p>
+      </dd>
+
+      <dt><samp><span class="option">--omit-parent-dec-type=<var>regex</var></span></samp></dt>
+      <dd>
+        <p>
+        Do not include variables whose parent's dec-type matches the regular
+         expression. Variables will be omitted from each program
+         point in which they appear.
+        </p>
+      </dd>
+
       <dt><samp><span class="option">--omit-var=<var>regex</var></span></samp></dt>
       <dd>
         <p>
@@ -178,12 +217,12 @@
         </p>
       </dd>
 
-
       <dt><samp><span class="option">--purity-file=<var>pure-methods-file</var></span></samp></dt>
       <dd>
         <p>
           File <var>pure-methods-file</var> lists the pure methods (sometimes called observer
-          methods) in a .NET program. Pure methods have no externally-visible side effects, such as setting  variables or producing output. For example, most implementations of the
+          methods) in a .NET program. Pure methods have no externally-visible side effects, such as 
+          setting  variables or producing output. For example, most implementations of the
           <code>GetHashCode()</code>,
           <code>ToString()</code>, and <code>EqualsTo()</code> methods are pure, as are
           automatically generated getters.
@@ -224,10 +263,10 @@
           PureMethods.A, PureMethods, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;PureMethod1
         </pre>
         <p>
-        Pure methods must either take no parameters, or be static and take a single parameter of the 
-        same type as the containing class. Suppose 
-        for example the <code>String.IsNullOrEmpty(str)</code> method is marked as pure. Then, for all 
-        <code>String</code> objects the <code>IsNullOrEmpty</code> function will be called, with the 
+        Pure methods must either take no parameters, or be static and take a single parameter of the
+        same type as the containing class. Suppose
+        for example the <code>String.IsNullOrEmpty(str)</code> method is marked as pure. Then, for all
+        <code>String</code> objects the <code>IsNullOrEmpty</code> function will be called, with the
         <code>String</code> obejct as the parameter.</p>
         <p>
         By convention, pure-methods-file has the suffix .pure.
@@ -249,8 +288,8 @@
       </dd>
     </dl>
 
-    <hr/>				
-    <!-- Misc. options -->		
+    <hr/>
+    <!-- Misc. options -->
     <h5 class="subsection">Celeriac miscellaneous options</h5>
     <a name="Celeriac-miscellaneous-options"></a>
 
