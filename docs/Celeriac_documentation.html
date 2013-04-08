@@ -189,7 +189,7 @@
           automatically generated getters.
         </p><p>
           For each variable, Celeriac adds to the trace
-          new “fields” that represent invoking each pure method on the variable.
+          new &ldquo;fields&rdquo; that represent invoking each pure method on the variable.
 
           (Obviously this mechanism is only useful for methods that return a value: a pure
           method that returns no value does nothing!)
@@ -204,7 +204,7 @@
             }
         </pre>
         <p>
-        If <code>radiusSquared()</code> has been specified as pure, then for each point <var>p</var>,
+        If <code>RadiusSquared()</code> has been specified as pure, then for each point <var>p</var>,
         Celeriac will output
         the variables <var>p</var>.<code>x</code>, <var>p</var>.<code>y</code>, and
         <var>p</var><code>.RadiusSquared()</code>. Use of pure methods can improve the Daikon
@@ -217,17 +217,22 @@
         </p><p>
         The purity file lists a set of methods, one per line. The format of each method is given as follows: </p>
         <pre>
-        [AssemblyQualifiedName];[MethodName]
+          [AssemblyQualifiedName];[MethodName]
         </pre>
         For example:
         <pre>
           PureMethods.A, PureMethods, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;PureMethod1
         </pre>
         <p>
+        Pure methods must either take no parameters, or be static and take a single parameter of the 
+        same type as the containing class. Suppose 
+        for example the <code>String.IsNullOrEmpty(str)</code> method is marked as pure. Then, for all 
+        <code>String</code> objects the <code>IsNullOrEmpty</code> function will be called, with the 
+        <code>String</code> obejct as the parameter.</p>
+        <p>
         By convention, pure-methods-file has the suffix .pure.
         </p>
       </dd>
-
 
       <dt><samp><span class="option">--std-visibility</span></samp></dt>
       <dd>
@@ -304,7 +309,8 @@
 
       <dt><samp><span class="option">--linked-lists</span></samp></dt>
       <dd><p>This boolean option (default: true) causes user-defined linked lists to
-        be output as sequences, much like Java ‘<samp><span class="samp">List</span></samp>’s and arrays are.
+        be output as sequences, much like Java ‘<samp><span class="samp">List</span></samp>’s and
+        arrays are.
         A user-defined data structure is considered to be a linked list if it
         has one instance field that is of its own type.
         </p>
