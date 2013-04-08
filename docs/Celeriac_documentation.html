@@ -2,20 +2,21 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title>DNFE Documentation</title>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+		<title>Celeriac Documentation</title>
 	</head>
 	<body>
 		<!-- Introduction -->
-		<h3 class="section">C# Front-End DNFE</h3>
-		<p>The C# front end for Daikon, code-named DNFE, creates datatrace (.dtrace)
-		 files by examining C# programs, modifying them in-memory, and running them.
+		<h3 class="section">.NET Front-End Celeriac</h3>
+		<p>The .NET front end for Daikon, named Celeriac, creates datatrace (.dtrace)
+		 files by examining .NET programs, modifying them in-memory, and running them.
 		</p>
-		<p> Before DNFE can be run you must first set the path to the reflective 
-		 visitor as an environmental variable, DNFE_OUT. DNFE expects the reflector
-		 to be saved to DNFE_OUT/Reflector.dll
+		<p> Before Celeriac can be run you must first set the path to the Celeriac DLL 
+		 as an environmental variable, CELERIAC_HOME. Celeriac expects the reflector
+		 to be saved to CELERIAC_HOME/Celeriac.dll.
 		</p>
-		<p>To use DNFE, call the launcher, FrontEndLauncher.exe then any DNFE-arguments, 
-		then the path to your  program, followed by any argument for your program. 
+		<p>To use Celeriac, call the launcher, CeleriacLauncher.exe then any Celeriac-arguments, 
+		then the path to your program, followed by any arguments for your program. 
 		If you would normally run
 		</p>
 		<pre class="example">
@@ -24,38 +25,38 @@
 		<p class="noindent">then instead you would run
 		</p>
 		<pre class="example">
-			DotNetProfilerCustomLauncher.exe MyProgram.exe arg1 arg2 arg3
+			CeleriacLauncher.exe MyProgram.exe arg1 arg2 arg3
 		</pre>
 		<p class="noindent">This runs your program and creates MyProgram.dtrace 
 		 in a sub-directory daikon-output/ from the current directory
 		</p>
-		<p>That's all there is to it! DNFE instruments your program's IL
-		 when the CLR is loaded, so you do not need to perform separate instrumentation
+		<p>That's all there is to it! Celeriac instruments your program's IL
+		 when the CLR is loaded, so you do not normally need to perform separate instrumentation
 		 and recompilation steps.
 		</p>
 		<hr/>
 		
 		<!-- Options Intro -->
-		<h4 class="subsection">DNFE Options</h4>
-		<p>The section lists the optional command-line arguments to DNFE, which appear 
+		<h4 class="subsection">Celeriac Options</h4>
+		<p>The section lists the optional command-line arguments to Celeriac, which appear 
 		 before the path of the program to be executed.
 		</p>
 		<ul class="menu">
-			<li><a href="#Program-points-in-DNFE-output">Program points in 
-			 DNFE output</a></li>
-			<li><a href="#Variables-in-DNFE-output">Variables in DNFE output
+			<li><a href="#Program-points-in-Celeriac-output">Program points in 
+			 Celeriac output</a></li>
+			<li><a href="#Variables-in-Celeriac-output">Variables in Celeriac output
 			</a></li>
-			<li><a href="#DNFE-miscellaneous-options">DNFE miscellaneous
+			<li><a href="#Celeriac-miscellaneous-options">Celeriac miscellaneous
 			 options</a></li>
 		</ul>
 
 		<hr/>
 		
 		<!-- Program point options -->		
-		<h5 class="subsection">Program points in DNFE output</h5>
-		<a name="Program-points-in-DNFE-output"></a>
+		<h5 class="subsection">Program points in Celeriac output</h5>
+		<a name="Program-points-in-Celeriac-output"></a>
 		<p>This section lists options that affect which program points appear
-		 in DNFE Output.
+		 in Celeriac Output.
 		</p>
 		<dl>		
 			<dt><samp><span class="option">--ppt-omit-pattern=<var>regexp</var></span></samp></dt>
@@ -78,7 +79,7 @@
 				supplied multiple times, and may be used in conjunction with
 				<samp><span class="option">--ppt-omit-pattern</span></samp></p>
 				<p>When this switch is supplied, filtering occurs in the following
-				 way: for each program point, DNFE checks the fully qualified 
+				 way: for each program point, Celeriac checks the fully qualified 
 				 class name, the method name, and the program point name
 				 against each <var>regexp</var> that was supplied. If any of these match,
 				 then the program point is included in the instrumentation.
@@ -94,14 +95,14 @@
       <dd>
         <p>
           File <var>pure-methods-file</var> lists the pure methods (sometimes called observer 
-          methods) in a C# program. Pure methods have no externally side effects, such as setting 
-          variables or producing output. For example, most implementations of the 
-          <code>hashCode()</code>, 
-          <code>toString()</code>, and <code>equals()</code> methods are pure. 
+          methods) in a .NET program. Pure methods have no externally-visible side effects, such as setting  variables or producing output. For example, most implementations of the 
+          <code>GetHashCode()</code>, 
+          <code>ToString()</code>, and <code>EqualsTo()</code> methods are pure, as are 
+					automatically generated getters. 
         </p><p>
-          For each variable, DNFE adds to the trace 
+          For each variable, Celeriac adds to the trace 
           new “fields” that represent invoking each pure method on the variable. 
-          (Currently, DNFE does so only for pure methods that take no parameters, and obviously 
+          (Currently, Celeriac does so only for pure methods that take no parameters, and obviously 
           this mechanism is only useful for methods that return a value: a pure method that 
           returns no value does nothing!)
         </p>
@@ -116,7 +117,7 @@
         </pre>
         <p>
         If <code>radiusSquared()</code> has been specified as pure, then for each point <var>p</var>, 
-        DNFE will output 
+        Celeriac will output 
         the variables <var>p</var>.<code>x</code>, <var>p</var>.<code>y</code>, and 
         <var>p</var><code>.radiusSquared()</code>. Use of pure methods can improve the Daikon 
         output, since they represent information that the programmer considered important but that 
@@ -124,9 +125,9 @@
         </p><p>
         Invoking a pure method at any time in an application should not change the application's 
         behavior. If a non-pure method is listed in a purity file, then application behavior can change. 
-        DNFE does not verify the purity of methods listed in the purity file.
+        Celeriac does not verify the purity of methods listed in the purity file.
         </p><p>
-        The purity file lists a set of methods, one per line. The format of each method is given as follows:        
+        The purity file lists a set of methods, one per line. The format of each method is given as follows: </p>       
         <pre>
         [AssemblyQualifiedName];[MethodName]
         </pre>        
@@ -134,15 +135,15 @@
         <pre>        
           PureMethods.A, PureMethods, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;PureMethod1
         </pre>
-        </p><p>
+        <p>
         By convention, pure-methods-file has the suffix .pure.
         </p>
       </dd>
 			
 			<dt><samp><span class="option">--sample-start=<var>sample-cnt</var></span></samp></dt>
 			<dd>
-				<p>When this option is chosen, DNFE will record each program point until
-				that program point has been executed <var>sample-cnt</var> times.  DNFE will
+				<p>When this option is chosen, Celeriac will record each program point until
+				that program point has been executed <var>sample-cnt</var> times.  Celeriac will
 				then begin sampling.  Sampling starts at 10% and decreases by a factor
 				of 10 each time another <var>sample-cnt</var> samples have been recorded.  If
 				<var>sample-cnt</var> is 0, then all calls will be recorded.</p>
@@ -151,10 +152,10 @@
 		</dl>
 		<hr/>
 		<!-- Variable options -->		
-		<h5 class="subsection">Variables in DNFE output</h5>
-		<a name="Variables-in-DNFE-output"></a>
+		<h5 class="subsection">Variables in Celeriac output</h5>
+		<a name="Variables-in-Celeriac-output"></a>
 		<p>This section lists options that affect which variables appear
-		 in DNFE Output
+		 in Celeriac Output
 		</p>
 		<dl>
 			<dt><samp><span class="option">--arrays-only=<var>true|false</var></span></samp></dt>
@@ -227,11 +228,11 @@
 			</dd>
 			<dt><samp><span class="option">--std-visibility</span></samp></dt>
 			<dd>
-				<p>When this switch is on, DNFE will traverse exactly 
+				<p>When this switch is on, Celeriac will traverse exactly 
 				 those fields that are visible from a given program point. 
 				 For instance, only the public fields of class pack1.B will 
 				 be included at a program point for class pack2.A whether 
-				 or not pack1.B is instrumented. By default, DNFE outputs 
+				 or not pack1.B is instrumented. By default, Celeriac outputs 
 				 all fields in instrumented classes (even those that would 
 				 not be accessible in Java code at the given program point) 
 				 and outputs no fields from uninstrumented classes (even 
@@ -242,18 +243,18 @@
 				
 		<hr/>				
 		<!-- Misc. options -->		
-		<h5 class="subsection">DNFE miscellaneous options</h5>
-		<a name="DNFE-miscellaneous-options"></a>
+		<h5 class="subsection">Celeriac miscellaneous options</h5>
+		<a name="Celeriac-miscellaneous-options"></a>
 		
-		<p>This section lists all other DNFE options - that is, all options
-		that do not control which program points and variables appear in DNFE's
+		<p>This section lists all other Celeriac options - that is, all options
+		that do not control which program points and variables appear in Celeriac's
 		output.
 		</p>
 		<dl>
 			<dt><samp><span class="option">--assembly-name=<var>assembly</var></span></samp></dt>
 			<dd>				
 				<p>Specify the name of the assembly to be profiled. If not specified, the assembly
-				name will be inferred as the name of the executeable.
+				name will be inferred as the name of the executable, preceding any extension.
 				</p>
 			</dd>
 			
