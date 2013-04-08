@@ -91,14 +91,15 @@ namespace Celeriac
     internal enum PossibleArgument
     {
       // Comments indicate section argument is defined under in documentation
-      /* */
+      /* Please keep each section in alphabetical order. */
+
       // Program Point Options
       ppt_omit_pattern,
       ppt_select_pattern,
       sample_start,
+
       // Variables options
       arrays_only,
-      auto_detect_pure,       // Undocumented
       is_readonly_flags,      // Requires new Daikon
       is_enum_flags,          // Requires new Daikon
       is_property_flags,      // Requires new Daikon
@@ -108,44 +109,51 @@ namespace Celeriac
       omit_var,
       purity_file,
       std_visibility,
+
       // Misc. options
-      /// <summary>
-      /// Only generate comparability information
-      /// </summary>
-      generate_comparability,
+      assembly_name,
       /// <summary>
       /// Use the user-supplied comparability file, or generate comparability information
       /// </summary>
       comparability,
-      assembly_name,
       dtrace_append,
       enum_underlying_values,
       force_unix_newline,
       friendly_dec_types,
       linked_lists,
       output_location,
+      portable_dll,
+      /// <summary>
+      /// Output 'nonsensical' instead of crashing when reflection errors occur
+      /// </summary>
+      robust_mode,
       save_and_run,
       save_program,
+      verbose,
+      /// <summary>
+      /// Convenience Flag for the Visual Studio add-in. Sets <c>comparability</c>, 
+      /// <c>is_readonly_flags</c>, <c>is_enum_flags</c>
+      /// <c>std_visibility</c> and <c>is_property_flags</c>.
+      /// </summary>
+      vs_flags,
+      wpf,
+
+      // Program analysis options
+      auto_detect_pure,
       /// <summary>
       /// Emit assembly qualified types and method names for nullary methods reachable from the assembly.
       /// </summary>
       emit_nullary_info,
       /// <summary>
+      /// Only generate comparability information
+      /// </summary>
+      generate_comparability,
+      /// <summary>
       /// Prefixes to ignore when outputting nullary information
       /// </summary>
       purity_prefix_blacklist,
-      portable_dll,
-      verbose,
-      /// <summary>
-      /// Output 'nonsensical' instead of crashing when reflection errors occur
-      /// </summary>
-      robust_mode,
-      wpf,
-      /// <summary>
-      /// Convenience Flag for the Visual Studio add-in. Sets <c>comparability</c>, <c>is_readonly_flags</c>, 
-      /// <c>std_visibility</c> and <c>is_property_flags</c>.
-      /// </summary>
-      vs_flags,
+
+
       /// <summary>
       /// Not a user-specified option: the location of the program to be profiled.
       /// </summary>
@@ -874,7 +882,7 @@ namespace Celeriac
         return result;
       }
     }
-    
+
     /// <summary>
     /// List of which methods should be considered Pure and called at program points
     /// </summary>
@@ -902,11 +910,17 @@ namespace Celeriac
       get { return this.programArguments.ContainsKey(PossibleArgument.save_and_run); }
     }
 
+    /// <summary>
+    /// Whether the program should be saved at the same location it was loaded from
+    /// </summary>
     public bool WPF
     {
       get { return this.programArguments.ContainsKey(PossibleArgument.wpf); }
     }
 
+    /// <summary>
+    /// Whether to use a portable metadata host instead of the default one
+    /// </summary>
     public bool IsPortableDll
     {
       get { return this.programArguments.ContainsKey(PossibleArgument.portable_dll); }
