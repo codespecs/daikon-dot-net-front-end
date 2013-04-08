@@ -241,7 +241,7 @@ namespace Celeriac
       var containingType = method.ContainingType;
 
       // If the method is compiler generated don't insert instrumentation code.
-      if (typeManager.IsCompilerGenerated(containingType.ResolvedType) ||
+      if (TypeManager.IsCompilerGenerated(containingType.ResolvedType) ||
           typeManager.IsCompilerGenerated(method) ||
           !celeriacArgs.ShouldPrintProgramPoint(FormatMethodName(methodBody.MethodDefinition)))
       {
@@ -2213,7 +2213,7 @@ namespace Celeriac
           if (!TypeManager.RegexForTypesToIgnoreForProgramPoint.IsMatch(typeName) &&
               !TypeManager.CodeContractRuntimePpts.IsMatch(typeName) &&
               !typeName.Equals(ArgumentStoringClassName) &&
-              !typeManager.IsCompilerGenerated(type) &&
+              !TypeManager.IsCompilerGenerated(type) &&
               !typeManager.IsNotInstrumentable(type))
           {
             this.declPrinter.PrintObjectDefinition(typeName,
@@ -2318,7 +2318,7 @@ namespace Celeriac
       foreach (INamedTypeDefinition typeDef in mutableAssembly.AllTypes)
       {
         // TODO: improve check for <Module> and other non-loadable names
-        if (!typeManager.IsCompilerGenerated(typeDef) && !typeDef.Name.Value.Equals("<Module>")
+        if (!TypeManager.IsCompilerGenerated(typeDef) && !typeDef.Name.Value.Equals("<Module>")
             && (typeDef.Methods.Count() != 0 || typeDef.Fields.Count() != 0))
         {
           add(typeDef, true, 0);

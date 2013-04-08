@@ -1230,7 +1230,7 @@ namespace Celeriac
     /// <param name="def">the type</param>
     /// <returns><c>true</c> if <c>def is compiler generate</c></returns>
     [Pure]
-    public bool IsCompilerGenerated(ITypeDefinition def)
+    public static bool IsCompilerGenerated(ITypeDefinition def)
     {
       Contract.Requires(def != null);
       return TypeHelper.IsCompilerGenerated(def) ||

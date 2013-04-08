@@ -48,17 +48,18 @@
       </a></li>
       <li><a href="#Celeriac-miscellaneous-options">Celeriac miscellaneous
        options</a></li>
+       <li><a href="#Celeriac-program-analysis-options">Program analysis options</a></li>
     </ul>
 
     <hr/>
 
-    <!-- Program point options -->		
+    <!-- Program point options -->
     <h5 class="subsection">Program points in Celeriac output</h5>
     <a name="Program-points-in-Celeriac-output"></a>
     <p>This section lists options that affect which program points appear
      in Celeriac Output.
     </p>
-    <dl>		
+    <dl>
       <dt><samp><span class="option">--ppt-omit-pattern=<var>regexp</var></span></samp></dt>
       <dd>
         <p>Do not produce data trace output for
@@ -70,7 +71,7 @@
          except that matching program points are excluded, not
          included.</p>
          <p>Omit takes precedence over select.</p>
-      </dd>		
+      </dd>
 
       <dt><samp><span class="option">--ppt-select-pattern=<var>regexp</var></span></samp></dt>
       <dd>
@@ -221,7 +222,7 @@
       <dd>
         <p>
           File <var>pure-methods-file</var> lists the pure methods (sometimes called observer
-          methods) in a .NET program. Pure methods have no externally-visible side effects, such as 
+          methods) in a .NET program. Pure methods have no externally-visible side effects, such as
           setting  variables or producing output. For example, most implementations of the
           <code>GetHashCode()</code>,
           <code>ToString()</code>, and <code>EqualsTo()</code> methods are pure, as are
@@ -299,36 +300,17 @@
     </p>
     <dl>
       <dt><samp><span class="option">--assembly-name=<var>assembly</var></span></samp></dt>
-      <dd>				
+      <dd>
         <p>Specify the name of the assembly to be profiled. If not specified, the assembly
         name will be inferred as the name of the executable, preceding any extension.
         </p>
       </dd>
-
-      <dt><samp><span class="option">--output-location=<var>filename</var></span></samp></dt>
-      <dd>				
-        <p>Specifies the for the trace output (.dtrace)
-         file. If this is not specified, then the default value of
-         daikon-output/PROGRAMNAME.dtrace is used
-        </p>
-      </dd>
-
-      <dt><samp><span class="option">--save-program=<var>filename</var></span></samp></dt>
+      
+      <dt><samp><span class="option">--comparability</span></samp></dt>
       <dd>
-        <p>Instead of executing the program, save it as
-         <var>filename</var>, or InstrumentedProgram.exe if filename
-         is no supplied. This new program can then be executed, and will
-         write its output as normal. This is useful for debugging purposes,
-         to examine the program with all instrumentation calls inserted, or
-         to verify the bytecode.
-        </p>
-      </dd>
-
-      <dt><samp><span class="option">--force-unix-newline</span></samp></dt>
-      <dd>
-        <p>Always use the UNIX newline character. If not specified the
-         OS default newline character will be used. This is necessary
-         for passing the unit tests.
+        <p>
+        When specified Celeriac will write or use a comparability file to determine variable
+        comparability during declaration printing.
         </p>
       </dd>
 
@@ -346,20 +328,11 @@
         </p>
       </dd>
 
-      <dt><samp><span class="option">--linked-lists</span></samp></dt>
-      <dd><p>This boolean option (default: true) causes user-defined linked lists to
-        be output as sequences, much like Java ‘<samp><span class="samp">List</span></samp>’s and
-        arrays are.
-        A user-defined data structure is considered to be a linked list if it
-        has one instance field that is of its own type.
-        </p>
-      </dd>	
-
-      <dt><samp><span class="option">--verbose=<var>true|false</var></span></samp></dt>
+      <dt><samp><span class="option">--force-unix-newline</span></samp></dt>
       <dd>
-        <p>
-        Whether to include debugging and progress information in the STDOUT output, false
-        by default.
+        <p>Always use the UNIX newline character. If not specified the
+         OS default newline character will be used. This is necessary
+         for passing the unit tests.
         </p>
       </dd>
 
@@ -371,9 +344,116 @@
         If true they are printed in the style of Foo&lt;Int&gt;
         </p>
       </dd>
+
+      <dt><samp><span class="option">--linked-lists</span></samp></dt>
+      <dd><p>This boolean option (default: true) causes user-defined linked lists to
+        be output as sequences, much like C#&rsquo;s <samp><span class="samp">List</span></samp>&rsquo;s and
+        arrays are.
+        A user-defined data structure is considered to be a linked list if it
+        has one instance field that is of its own type.
+        </p>
+      </dd>
+
+      <dt><samp><span class="option">--output-location=<var>filename</var></span></samp></dt>
+      <dd>
+        <p>Specifies the for the trace output (.dtrace)
+         file. If this is not specified, then the default value of
+         daikon-output/PROGRAMNAME.dtrace is used
+        </p>
+      </dd>
+
+      <dt><samp><span class="option">--portable-dll</span></samp></dt>
+      <dd>
+        <p>
+        When supplied, specifies the use of a custom metadata host instead of the default one.
+        </p>
+      </dd>
+
+      <dt><samp><span class="option">--robust-mode</span></samp></dt>
+      <dd>
+        <p>
+          During program execution output <code>nonsensical</code> as the variable value instead of
+          crashing if there's and exception during variable visiting. May limit the usefulness of
+          resulting Daikon output.
+        </p>
+      </dd>
+
+      <dt><samp><span class="option">--save-and-run</span></samp></dt>
+      <dd>
+        <p>
+        When supplied with <var>--save-program</var> or <var>--wpf</var>, will execute
+        the program immediately after rewriting, with the user provided arguments. This
+        done just as it would be in online-mode. This option has no effect if
+        <var>--save-program</var> or <var>--wpf</var> are not provided.
+        </p>
+      </dd>
+
+      <dt><samp><span class="option">--save-program=<var>filename</var></span></samp></dt>
+      <dd>
+        <p>Instead of executing the program, save it as
+         <var>filename</var>, or InstrumentedProgram.exe if filename
+         is not supplied. This new program can then be executed, and will
+         write its output as normal. This is useful for debugging purposes,
+         to examine the program with all instrumentation calls inserted, or
+         to verify the bytecode.
+        </p>
+      </dd>
+
+      <dt><samp><span class="option">--verbose=<var>true|false</var></span></samp></dt>
+      <dd>
+        <p>
+        Determines whether to include debugging and progress information in the STDOUT output, false
+        by default.
+        </p>
+      </dd>
+
+      <dt><samp><span class="option">--vs-flags</span></samp></dt>
+      <dd>
+        <p>
+        For convenience when using the the Visual Studio add-in. Sets <var>comparability</var>,
+        <var>is_readonly_flags</var>, <var>is_enum_flags</var>,
+        <var>std_visibility</var>, and <var>is_property_flags</var>.
+        </p>
+      </dd>
+
+      <dt><samp><span class="option">--wpf</span></samp></dt>
+      <dd>
+        <p>
+        Similar to the <var>--save-program</var> argument, except the output program is saved
+        over the input program. This is useful for WPF programs, and any others that requires
+        assembly resources to have specific names. The existing input program will be saved
+        to a new location in the same folder with .bak added at the end of its filename.
+        </p>
+      </dd>
     </dl>
 
-    <!-- Validation Badge -->	
+    <hr/>
+
+    <!-- Program analysis options -->
+    <h5 class="subsection">Celeriac program-analysis options</h5>
+    <a name="Celeriac-program-analysis-options"></a>
+    <p>This section lists all other the options for Celeriac program analysis. All these
+    options switch Celeriac to offline mode. They all produce typically produce a file
+    that can be used in the normal running of celeriac.
+    </p>
+    <dl>
+      <dt><samp><span class="option">--auto-detect-pure</span></samp></dt>
+      <dd>
+        <p>
+        When specified Celeriac will run in offline mode. During rewriting it will detect
+        properties that are pure and construct a purity file containing all such properites.
+        The resulting file will be named <var>ProgramName</var>_auto.pure.
+        </p>
+      </dd>
+      <dt><samp><span class="option">--generate-comparability</span></samp></dt>
+      <dd>
+        <p>
+        When specified Celeriac will run in offline mode. It will also output a file
+        containing comparability information.
+        </p>
+      </dd>
+    </dl>
+    <!-- Validation Badge -->
     <p>
       <a href="http://validator.w3.org/check?uri=referer"><img
       src="http://www.w3.org/Icons/valid-xhtml10"
