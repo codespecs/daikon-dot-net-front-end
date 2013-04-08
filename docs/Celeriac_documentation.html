@@ -423,6 +423,7 @@
         over the input program. This is useful for WPF programs, and any others that requires
         assembly resources to have specific names. The existing input program will be saved
         to a new location in the same folder with .bak added at the end of its filename.
+        Will override <var>--save-program</var> if both are supplied.
         </p>
       </dd>
     </dl>
@@ -445,14 +446,34 @@
         The resulting file will be named <var>ProgramName</var>_auto.pure.
         </p>
       </dd>
+
+      <dt><samp><span class="option">--emit-nullary-info</span></samp></dt>
+      <dd>
+        <p>
+        When specified Celeriac will write to STDOUT the qualified types and method names for
+        nullary (0-argument) methods reachable from the assembly. This can be useful for 
+        builing a purity file.
+        </p>
+      </dd>
+
       <dt><samp><span class="option">--generate-comparability</span></samp></dt>
       <dd>
         <p>
-        When specified Celeriac will run in offline mode. It will also output a file
+        When specified Celeriac will run in offline mode and output a file
         containing comparability information.
         </p>
       </dd>
+
+      <dt><samp><span class="option">--purity-prefix-blacklist=<var>file</var></span></samp></dt>
+      <dd>
+        <p>
+        Must be used with the <var>emit-nullary-info</var> option. Celeriac loads the file at <var>
+        file</var> and processes each line in the file, treating it as a prefic to ignore when
+        computing the list of nullary methods.
+        </p>
+      </dd>
     </dl>
+    
     <!-- Validation Badge -->
     <p>
       <a href="http://validator.w3.org/check?uri=referer"><img
