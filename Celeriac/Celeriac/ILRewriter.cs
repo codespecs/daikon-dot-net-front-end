@@ -1175,9 +1175,10 @@ namespace Celeriac
         // is fixed add null as a parameter on the end here
         EmitMethodSignature(MethodTransition.EXIT, methodBody, label/*, ex*/);
 
+        // We still need to print a return value for Daikon even if we exit via exception, except
+        // of course for void functions.
         if (!TypeHelper.TypesAreEquivalent(
-          methodBody.MethodDefinition.Type,
-          host.PlatformType.SystemVoid))
+          methodBody.MethodDefinition.Type, host.PlatformType.SystemVoid))
         {
           this.EmitNonsensicalReturnInstrumentaionCall(methodBody.MethodDefinition.Type);
         }
@@ -1301,11 +1302,28 @@ namespace Celeriac
                   FormatExceptionProgramPoint(host.PlatformType.SystemObject)))
       {
         generator.Emit(OperationCode.Dup);
+        PerformThreadAbortTest();
         InstrumentExceptionExit(methodBody, host.PlatformType.SystemObject,
             FormatExceptionProgramPoint(host.PlatformType.SystemObject));
       }
 
       generator.Emit(OperationCode.Rethrow);
+    }
+
+    /// <summary>
+    /// Make the call to perform a test that will check if the exception on the stack should be
+    /// skipped. This is the case if it's a thread abort exception, because keeping it could
+    /// lead to doubly-exiting a method. If the exception should be visited it will be returned
+    /// by the function, leading to no stack change. If it shouldn't be visited the exception
+    /// will be thrown, it would be thrown later, but this short circuits the visit.
+    /// </summary>
+    private void PerformThreadAbortTest()
+    {
+      generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
+         this.host, this.variableVisitorType, CallingConvention.Default,
+         this.host.PlatformType.SystemException,
+         this.nameTable.GetNameFor("DoThreadAbortTest"), 0,
+         this.host.PlatformType.SystemException));
     }
 
     /// <summary>
