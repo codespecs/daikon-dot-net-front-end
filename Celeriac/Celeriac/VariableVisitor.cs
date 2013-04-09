@@ -473,6 +473,25 @@ namespace Celeriac
       VariableVisitor.DoVisit(null, "return", typeName, VariableModifiers.nonsensical);
     }
 
+    /// <summary>
+    /// Check if the given exception should be skipped because it is an executed ThreadAbort
+    /// exception. Although this function is in the Safe region it can still thtown an exception,
+    /// it's here because there's no safe equivalent and this doesn't throw an exception
+    /// where one wouldn't already be thrown .
+    /// </summary>
+    /// <param name="ex">Exception to test</param>
+    /// <exception>Rethrown if the exception should not be instrumented. The exception would be
+    /// rethrown by the front-end anyways. Throwing it early provided a convenient way to skip
+    /// the instrumetnation taht would otherwise be performed.</exception>
+    /// <returns>The exception given</returns>
+    public static Exception DoThreadAbortTest(Exception ex)
+    {
+      if (ex is ThreadAbortException)
+      {
+        throw ex;
+      }
+      return ex;
+    }
 
     #endregion
 
