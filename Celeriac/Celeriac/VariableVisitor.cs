@@ -484,11 +484,11 @@ namespace Celeriac
     /// rethrown by the front-end anyways. Throwing it early provided a convenient way to skip
     /// the instrumetnation taht would otherwise be performed.</exception>
     /// <returns>The exception given</returns>
-    public static Exception DoThreadAbortTest(Exception ex)
+    public static object DoThreadAbortTest(object ex)
     {
       if (ex is ThreadAbortException)
       {
-        throw ex;
+        throw (ThreadAbortException)ex;
       }
       return ex;
     }

@@ -1321,9 +1321,9 @@ namespace Celeriac
     {
       generator.Emit(OperationCode.Call, new Microsoft.Cci.MethodReference(
          this.host, this.variableVisitorType, CallingConvention.Default,
-         this.host.PlatformType.SystemException,
+         systemObject,
          this.nameTable.GetNameFor("DoThreadAbortTest"), 0,
-         this.host.PlatformType.SystemException));
+         systemObject));
     }
 
     /// <summary>
