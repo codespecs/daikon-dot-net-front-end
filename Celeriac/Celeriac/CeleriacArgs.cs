@@ -335,8 +335,6 @@ namespace Celeriac
 
       this.programArguments.Add(PossibleArgument.verbose, DefaultVerboseMode.ToString());
 
-      this.programArguments.Add(PossibleArgument.linked_lists, true.ToString());
-
       this.programArguments.Add(PossibleArgument.arrays_only, true.ToString());
 
       this.programArguments.Add(PossibleArgument.friendly_dec_types, false.ToString());
