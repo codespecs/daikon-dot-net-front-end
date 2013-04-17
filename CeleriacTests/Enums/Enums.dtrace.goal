@@ -1,0 +1,1704 @@
+decl-version 2.0
+var-comparability none
+input-language C#.NET
+
+ppt Enums.Enums..ctor():::ENTER
+ppt-type enter
+parent parent Enums.Enums:::CLASS 1
+
+ppt Enums.Enums..ctor():::EXIT2
+ppt-type subexit
+parent parent Enums.Enums:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type Enums.Enums
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent Enums.Enums:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent Enums.Enums:::OBJECT 1
+
+ppt Enums.Enums.BoilingPoints:::CLASS
+ppt-type class
+
+ppt Enums.Enums.BoilingPoints:::OBJECT
+ppt-type object
+parent parent Enums.Enums.BoilingPoints:::CLASS 1
+  variable Enums.Enums+BoilingPoints.Celsius
+    var-kind variable
+    dec-type Enums.Enums+BoilingPoints
+    rep-type hashcode
+    comparability -22
+  variable Enums.Enums+BoilingPoints.Fahrenheit
+    var-kind variable
+    dec-type Enums.Enums+BoilingPoints
+    rep-type hashcode
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type Enums.Enums+BoilingPoints
+    rep-type hashcode
+    flags is_param
+    comparability -22
+
+ppt Enums.Enums.Colors:::CLASS
+ppt-type class
+
+ppt Enums.Enums.Colors:::OBJECT
+ppt-type object
+parent parent Enums.Enums.Colors:::CLASS 1
+  variable Enums.Enums+Colors.Blue
+    var-kind variable
+    dec-type Enums.Enums+Colors
+    rep-type hashcode
+    comparability -22
+  variable Enums.Enums+Colors.Green
+    var-kind variable
+    dec-type Enums.Enums+Colors
+    rep-type hashcode
+    comparability -22
+  variable Enums.Enums+Colors.Red
+    var-kind variable
+    dec-type Enums.Enums+Colors
+    rep-type hashcode
+    comparability -22
+  variable Enums.Enums+Colors.Yellow
+    var-kind variable
+    dec-type Enums.Enums+Colors
+    rep-type hashcode
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type Enums.Enums+Colors
+    rep-type hashcode
+    flags is_param
+    comparability -22
+
+ppt Enums.Enums.Days:::CLASS
+ppt-type class
+
+ppt Enums.Enums.Days:::OBJECT
+ppt-type object
+parent parent Enums.Enums.Days:::CLASS 1
+  variable Enums.Enums+Days.Friday
+    var-kind variable
+    dec-type Enums.Enums+Days
+    rep-type hashcode
+    comparability -22
+  variable Enums.Enums+Days.Monday
+    var-kind variable
+    dec-type Enums.Enums+Days
+    rep-type hashcode
+    comparability -22
+  variable Enums.Enums+Days.Saturday
+    var-kind variable
+    dec-type Enums.Enums+Days
+    rep-type hashcode
+    comparability -22
+  variable Enums.Enums+Days.Sunday
+    var-kind variable
+    dec-type Enums.Enums+Days
+    rep-type hashcode
+    comparability -22
+  variable Enums.Enums+Days.Thursday
+    var-kind variable
+    dec-type Enums.Enums+Days
+    rep-type hashcode
+    comparability -22
+  variable Enums.Enums+Days.Tuesday
+    var-kind variable
+    dec-type Enums.Enums+Days
+    rep-type hashcode
+    comparability -22
+  variable Enums.Enums+Days.Wednesday
+    var-kind variable
+    dec-type Enums.Enums+Days
+    rep-type hashcode
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type Enums.Enums+Days
+    rep-type hashcode
+    flags is_param
+    comparability -22
+
+ppt Enums.Enums.Main():::ENTER
+ppt-type enter
+parent parent Enums.Enums:::CLASS 1
+
+ppt Enums.Enums.Main():::EXIT27
+ppt-type subexit
+parent parent Enums.Enums:::CLASS 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt Enums.Enums.Main():::EXIT_EX_Runtime
+ppt-type subexit
+parent parent Enums.Enums:::CLASS 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt Enums.Enums.PrintColors(Enums.Enums.Colors\_myColors):::ENTER
+ppt-type enter
+parent parent Enums.Enums:::CLASS 1
+  variable Enums.Enums+Colors.Blue
+    var-kind variable
+    dec-type Enums.Enums+Colors
+    rep-type hashcode
+    comparability -22
+  variable Enums.Enums+Colors.Green
+    var-kind variable
+    dec-type Enums.Enums+Colors
+    rep-type hashcode
+    comparability -22
+  variable Enums.Enums+Colors.Red
+    var-kind variable
+    dec-type Enums.Enums+Colors
+    rep-type hashcode
+    comparability -22
+  variable Enums.Enums+Colors.Yellow
+    var-kind variable
+    dec-type Enums.Enums+Colors
+    rep-type hashcode
+    comparability -22
+  variable myColors
+    var-kind variable
+    dec-type Enums.Enums+Colors
+    rep-type hashcode
+    flags is_param
+    comparability -22
+
+ppt Enums.Enums.PrintColors(Enums.Enums.Colors\_myColors):::EXIT6
+ppt-type subexit
+parent parent Enums.Enums:::CLASS 1
+  variable Enums.Enums+Colors.Blue
+    var-kind variable
+    dec-type Enums.Enums+Colors
+    rep-type hashcode
+    comparability -22
+  variable Enums.Enums+Colors.Green
+    var-kind variable
+    dec-type Enums.Enums+Colors
+    rep-type hashcode
+    comparability -22
+  variable Enums.Enums+Colors.Red
+    var-kind variable
+    dec-type Enums.Enums+Colors
+    rep-type hashcode
+    comparability -22
+  variable Enums.Enums+Colors.Yellow
+    var-kind variable
+    dec-type Enums.Enums+Colors
+    rep-type hashcode
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable myColors
+    var-kind variable
+    dec-type Enums.Enums+Colors
+    rep-type hashcode
+    flags is_param
+    comparability -22
+
+ppt Enums.Enums.PrintColors(Enums.Enums.Colors\_myColors):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent Enums.Enums:::CLASS 1
+  variable Enums.Enums+Colors.Blue
+    var-kind variable
+    dec-type Enums.Enums+Colors
+    rep-type hashcode
+    comparability -22
+  variable Enums.Enums+Colors.Green
+    var-kind variable
+    dec-type Enums.Enums+Colors
+    rep-type hashcode
+    comparability -22
+  variable Enums.Enums+Colors.Red
+    var-kind variable
+    dec-type Enums.Enums+Colors
+    rep-type hashcode
+    comparability -22
+  variable Enums.Enums+Colors.Yellow
+    var-kind variable
+    dec-type Enums.Enums+Colors
+    rep-type hashcode
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable myColors
+    var-kind variable
+    dec-type Enums.Enums+Colors
+    rep-type hashcode
+    flags is_param
+    comparability -22
+
+ppt Enums.Enums.PrintEnumType(System.Type\_weekdays):::ENTER
+ppt-type enter
+parent parent Enums.Enums:::CLASS 1
+  variable System.Char.MaxValue
+    var-kind variable
+    dec-type char
+    rep-type int
+    comparability -22
+  variable System.Char.MinValue
+    var-kind variable
+    dec-type char
+    rep-type int
+    comparability -22
+  variable System.Type.Delimiter
+    var-kind variable
+    dec-type char
+    rep-type int
+    comparability -22
+  variable System.Type.FilterAttribute
+    var-kind variable
+    dec-type System.Reflection.MemberFilter
+    rep-type hashcode
+    comparability -22
+  variable System.Type.FilterName
+    var-kind variable
+    dec-type System.Reflection.MemberFilter
+    rep-type hashcode
+    comparability -22
+  variable System.Type.FilterNameIgnoreCase
+    var-kind variable
+    dec-type System.Reflection.MemberFilter
+    rep-type hashcode
+    comparability -22
+  variable System.Type.Missing
+    var-kind variable
+    dec-type java.lang.Object
+    rep-type hashcode
+    comparability -22
+  variable weekdays
+    var-kind variable
+    dec-type java.lang.Class
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable weekdays.GetType()
+    var-kind function GetType()
+    enclosing-var weekdays
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt Enums.Enums.PrintEnumType(System.Type\_weekdays):::EXIT35
+ppt-type subexit
+parent parent Enums.Enums:::CLASS 1
+  variable System.Char.MaxValue
+    var-kind variable
+    dec-type char
+    rep-type int
+    comparability -22
+  variable System.Char.MinValue
+    var-kind variable
+    dec-type char
+    rep-type int
+    comparability -22
+  variable System.Type.Delimiter
+    var-kind variable
+    dec-type char
+    rep-type int
+    comparability -22
+  variable System.Type.FilterAttribute
+    var-kind variable
+    dec-type System.Reflection.MemberFilter
+    rep-type hashcode
+    comparability -22
+  variable System.Type.FilterName
+    var-kind variable
+    dec-type System.Reflection.MemberFilter
+    rep-type hashcode
+    comparability -22
+  variable System.Type.FilterNameIgnoreCase
+    var-kind variable
+    dec-type System.Reflection.MemberFilter
+    rep-type hashcode
+    comparability -22
+  variable System.Type.Missing
+    var-kind variable
+    dec-type java.lang.Object
+    rep-type hashcode
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable weekdays
+    var-kind variable
+    dec-type java.lang.Class
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable weekdays.GetType()
+    var-kind function GetType()
+    enclosing-var weekdays
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt Enums.Enums.PrintEnumType(System.Type\_weekdays):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent Enums.Enums:::CLASS 1
+  variable System.Char.MaxValue
+    var-kind variable
+    dec-type char
+    rep-type int
+    comparability -22
+  variable System.Char.MinValue
+    var-kind variable
+    dec-type char
+    rep-type int
+    comparability -22
+  variable System.Type.Delimiter
+    var-kind variable
+    dec-type char
+    rep-type int
+    comparability -22
+  variable System.Type.FilterAttribute
+    var-kind variable
+    dec-type System.Reflection.MemberFilter
+    rep-type hashcode
+    comparability -22
+  variable System.Type.FilterName
+    var-kind variable
+    dec-type System.Reflection.MemberFilter
+    rep-type hashcode
+    comparability -22
+  variable System.Type.FilterNameIgnoreCase
+    var-kind variable
+    dec-type System.Reflection.MemberFilter
+    rep-type hashcode
+    comparability -22
+  variable System.Type.Missing
+    var-kind variable
+    dec-type java.lang.Object
+    rep-type hashcode
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable weekdays
+    var-kind variable
+    dec-type java.lang.Class
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable weekdays.GetType()
+    var-kind function GetType()
+    enclosing-var weekdays
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt Enums.Enums.formatEnum(System.String\_s,\_System.Type\_enumType):::ENTER
+ppt-type enter
+parent parent Enums.Enums:::CLASS 1
+  variable System.Char.MaxValue
+    var-kind variable
+    dec-type char
+    rep-type int
+    comparability -22
+  variable System.Char.MinValue
+    var-kind variable
+    dec-type char
+    rep-type int
+    comparability -22
+  variable System.Type.Delimiter
+    var-kind variable
+    dec-type char
+    rep-type int
+    comparability -22
+  variable System.Type.FilterAttribute
+    var-kind variable
+    dec-type System.Reflection.MemberFilter
+    rep-type hashcode
+    comparability -22
+  variable System.Type.FilterName
+    var-kind variable
+    dec-type System.Reflection.MemberFilter
+    rep-type hashcode
+    comparability -22
+  variable System.Type.FilterNameIgnoreCase
+    var-kind variable
+    dec-type System.Reflection.MemberFilter
+    rep-type hashcode
+    comparability -22
+  variable System.Type.Missing
+    var-kind variable
+    dec-type java.lang.Object
+    rep-type hashcode
+    comparability -22
+  variable enumType
+    var-kind variable
+    dec-type java.lang.Class
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable enumType.GetType()
+    var-kind function GetType()
+    enclosing-var enumType
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable s
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable s.ToString()
+    var-kind function ToString()
+    enclosing-var s
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability -22
+
+ppt Enums.Enums.formatEnum(System.String\_s,\_System.Type\_enumType):::EXIT10
+ppt-type subexit
+parent parent Enums.Enums:::CLASS 1
+  variable System.Char.MaxValue
+    var-kind variable
+    dec-type char
+    rep-type int
+    comparability -22
+  variable System.Char.MinValue
+    var-kind variable
+    dec-type char
+    rep-type int
+    comparability -22
+  variable System.Type.Delimiter
+    var-kind variable
+    dec-type char
+    rep-type int
+    comparability -22
+  variable System.Type.FilterAttribute
+    var-kind variable
+    dec-type System.Reflection.MemberFilter
+    rep-type hashcode
+    comparability -22
+  variable System.Type.FilterName
+    var-kind variable
+    dec-type System.Reflection.MemberFilter
+    rep-type hashcode
+    comparability -22
+  variable System.Type.FilterNameIgnoreCase
+    var-kind variable
+    dec-type System.Reflection.MemberFilter
+    rep-type hashcode
+    comparability -22
+  variable System.Type.Missing
+    var-kind variable
+    dec-type java.lang.Object
+    rep-type hashcode
+    comparability -22
+  variable enumType
+    var-kind variable
+    dec-type java.lang.Class
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable enumType.GetType()
+    var-kind function GetType()
+    enclosing-var enumType
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability -22
+  variable return.ToString()
+    var-kind function ToString()
+    enclosing-var return
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability -22
+  variable s
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable s.ToString()
+    var-kind function ToString()
+    enclosing-var s
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability -22
+
+ppt Enums.Enums.formatEnum(System.String\_s,\_System.Type\_enumType):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent Enums.Enums:::CLASS 1
+  variable System.Char.MaxValue
+    var-kind variable
+    dec-type char
+    rep-type int
+    comparability -22
+  variable System.Char.MinValue
+    var-kind variable
+    dec-type char
+    rep-type int
+    comparability -22
+  variable System.Type.Delimiter
+    var-kind variable
+    dec-type char
+    rep-type int
+    comparability -22
+  variable System.Type.FilterAttribute
+    var-kind variable
+    dec-type System.Reflection.MemberFilter
+    rep-type hashcode
+    comparability -22
+  variable System.Type.FilterName
+    var-kind variable
+    dec-type System.Reflection.MemberFilter
+    rep-type hashcode
+    comparability -22
+  variable System.Type.FilterNameIgnoreCase
+    var-kind variable
+    dec-type System.Reflection.MemberFilter
+    rep-type hashcode
+    comparability -22
+  variable System.Type.Missing
+    var-kind variable
+    dec-type java.lang.Object
+    rep-type hashcode
+    comparability -22
+  variable enumType
+    var-kind variable
+    dec-type java.lang.Class
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable enumType.GetType()
+    var-kind function GetType()
+    enclosing-var enumType
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability -22
+  variable return.ToString()
+    var-kind function ToString()
+    enclosing-var return
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability -22
+  variable s
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable s.ToString()
+    var-kind function ToString()
+    enclosing-var s
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability -22
+
+ppt Enums.Enums:::CLASS
+ppt-type class
+
+ppt Enums.Enums:::OBJECT
+ppt-type object
+parent parent Enums.Enums:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type Enums.Enums
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+Enums.Enums.Main():::ENTER
+this_invocation_nonce
+2
+
+Enums.Enums.PrintEnumType(System.Type\_weekdays):::ENTER
+this_invocation_nonce
+3
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.Delimiter
+46
+1
+System.Type.FilterAttribute
+3957675
+1
+System.Type.FilterName
+35619075
+1
+System.Type.FilterNameIgnoreCase
+52136226
+1
+System.Type.Missing
+66572856
+1
+weekdays
+30265903
+1
+weekdays.GetType()
+"System.RuntimeType"
+1
+
+Enums.Enums.formatEnum(System.String\_s,\_System.Type\_enumType):::ENTER
+this_invocation_nonce
+4
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.Delimiter
+46
+1
+System.Type.FilterAttribute
+3957675
+1
+System.Type.FilterName
+35619075
+1
+System.Type.FilterNameIgnoreCase
+52136226
+1
+System.Type.Missing
+66572856
+1
+enumType
+30265903
+1
+enumType.GetType()
+"System.RuntimeType"
+1
+s
+62284798
+1
+s.ToString()
+"Saturday"
+1
+
+Enums.Enums.formatEnum(System.String\_s,\_System.Type\_enumType):::EXIT10
+this_invocation_nonce
+4
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.Delimiter
+46
+1
+System.Type.FilterAttribute
+3957675
+1
+System.Type.FilterName
+35619075
+1
+System.Type.FilterNameIgnoreCase
+52136226
+1
+System.Type.Missing
+66572856
+1
+enumType
+30265903
+1
+enumType.GetType()
+"System.RuntimeType"
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+23692278
+1
+return.ToString()
+"0"
+1
+s
+62284798
+1
+s.ToString()
+"Saturday"
+1
+
+Enums.Enums.formatEnum(System.String\_s,\_System.Type\_enumType):::ENTER
+this_invocation_nonce
+5
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.Delimiter
+46
+1
+System.Type.FilterAttribute
+3957675
+1
+System.Type.FilterName
+35619075
+1
+System.Type.FilterNameIgnoreCase
+52136226
+1
+System.Type.Missing
+66572856
+1
+enumType
+30265903
+1
+enumType.GetType()
+"System.RuntimeType"
+1
+s
+11903911
+1
+s.ToString()
+"Sunday"
+1
+
+Enums.Enums.formatEnum(System.String\_s,\_System.Type\_enumType):::EXIT10
+this_invocation_nonce
+5
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.Delimiter
+46
+1
+System.Type.FilterAttribute
+3957675
+1
+System.Type.FilterName
+35619075
+1
+System.Type.FilterNameIgnoreCase
+52136226
+1
+System.Type.Missing
+66572856
+1
+enumType
+30265903
+1
+enumType.GetType()
+"System.RuntimeType"
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+40026340
+1
+return.ToString()
+"1"
+1
+s
+11903911
+1
+s.ToString()
+"Sunday"
+1
+
+Enums.Enums.formatEnum(System.String\_s,\_System.Type\_enumType):::ENTER
+this_invocation_nonce
+6
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.Delimiter
+46
+1
+System.Type.FilterAttribute
+3957675
+1
+System.Type.FilterName
+35619075
+1
+System.Type.FilterNameIgnoreCase
+52136226
+1
+System.Type.Missing
+66572856
+1
+enumType
+30265903
+1
+enumType.GetType()
+"System.RuntimeType"
+1
+s
+24692740
+1
+s.ToString()
+"Monday"
+1
+
+Enums.Enums.formatEnum(System.String\_s,\_System.Type\_enumType):::EXIT10
+this_invocation_nonce
+6
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.Delimiter
+46
+1
+System.Type.FilterAttribute
+3957675
+1
+System.Type.FilterName
+35619075
+1
+System.Type.FilterNameIgnoreCase
+52136226
+1
+System.Type.Missing
+66572856
+1
+enumType
+30265903
+1
+enumType.GetType()
+"System.RuntimeType"
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+20908074
+1
+return.ToString()
+"2"
+1
+s
+24692740
+1
+s.ToString()
+"Monday"
+1
+
+Enums.Enums.formatEnum(System.String\_s,\_System.Type\_enumType):::ENTER
+this_invocation_nonce
+7
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.Delimiter
+46
+1
+System.Type.FilterAttribute
+3957675
+1
+System.Type.FilterName
+35619075
+1
+System.Type.FilterNameIgnoreCase
+52136226
+1
+System.Type.Missing
+66572856
+1
+enumType
+30265903
+1
+enumType.GetType()
+"System.RuntimeType"
+1
+s
+53954942
+1
+s.ToString()
+"Tuesday"
+1
+
+Enums.Enums.formatEnum(System.String\_s,\_System.Type\_enumType):::EXIT10
+this_invocation_nonce
+7
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.Delimiter
+46
+1
+System.Type.FilterAttribute
+3957675
+1
+System.Type.FilterName
+35619075
+1
+System.Type.FilterNameIgnoreCase
+52136226
+1
+System.Type.Missing
+66572856
+1
+enumType
+30265903
+1
+enumType.GetType()
+"System.RuntimeType"
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+15832433
+1
+return.ToString()
+"3"
+1
+s
+53954942
+1
+s.ToString()
+"Tuesday"
+1
+
+Enums.Enums.formatEnum(System.String\_s,\_System.Type\_enumType):::ENTER
+this_invocation_nonce
+8
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.Delimiter
+46
+1
+System.Type.FilterAttribute
+3957675
+1
+System.Type.FilterName
+35619075
+1
+System.Type.FilterNameIgnoreCase
+52136226
+1
+System.Type.Missing
+66572856
+1
+enumType
+30265903
+1
+enumType.GetType()
+"System.RuntimeType"
+1
+s
+8274172
+1
+s.ToString()
+"Wednesday"
+1
+
+Enums.Enums.formatEnum(System.String\_s,\_System.Type\_enumType):::EXIT10
+this_invocation_nonce
+8
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.Delimiter
+46
+1
+System.Type.FilterAttribute
+3957675
+1
+System.Type.FilterName
+35619075
+1
+System.Type.FilterNameIgnoreCase
+52136226
+1
+System.Type.Missing
+66572856
+1
+enumType
+30265903
+1
+enumType.GetType()
+"System.RuntimeType"
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+7358688
+1
+return.ToString()
+"4"
+1
+s
+8274172
+1
+s.ToString()
+"Wednesday"
+1
+
+Enums.Enums.formatEnum(System.String\_s,\_System.Type\_enumType):::ENTER
+this_invocation_nonce
+9
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.Delimiter
+46
+1
+System.Type.FilterAttribute
+3957675
+1
+System.Type.FilterName
+35619075
+1
+System.Type.FilterNameIgnoreCase
+52136226
+1
+System.Type.Missing
+66572856
+1
+enumType
+30265903
+1
+enumType.GetType()
+"System.RuntimeType"
+1
+s
+66228199
+1
+s.ToString()
+"Thursday"
+1
+
+Enums.Enums.formatEnum(System.String\_s,\_System.Type\_enumType):::EXIT10
+this_invocation_nonce
+9
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.Delimiter
+46
+1
+System.Type.FilterAttribute
+3957675
+1
+System.Type.FilterName
+35619075
+1
+System.Type.FilterNameIgnoreCase
+52136226
+1
+System.Type.Missing
+66572856
+1
+enumType
+30265903
+1
+enumType.GetType()
+"System.RuntimeType"
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+59182880
+1
+return.ToString()
+"5"
+1
+s
+66228199
+1
+s.ToString()
+"Thursday"
+1
+
+Enums.Enums.formatEnum(System.String\_s,\_System.Type\_enumType):::ENTER
+this_invocation_nonce
+10
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.Delimiter
+46
+1
+System.Type.FilterAttribute
+3957675
+1
+System.Type.FilterName
+35619075
+1
+System.Type.FilterNameIgnoreCase
+52136226
+1
+System.Type.Missing
+66572856
+1
+enumType
+30265903
+1
+enumType.GetType()
+"System.RuntimeType"
+1
+s
+62883878
+1
+s.ToString()
+"Friday"
+1
+
+Enums.Enums.formatEnum(System.String\_s,\_System.Type\_enumType):::EXIT10
+this_invocation_nonce
+10
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.Delimiter
+46
+1
+System.Type.FilterAttribute
+3957675
+1
+System.Type.FilterName
+35619075
+1
+System.Type.FilterNameIgnoreCase
+52136226
+1
+System.Type.Missing
+66572856
+1
+enumType
+30265903
+1
+enumType.GetType()
+"System.RuntimeType"
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+29083993
+1
+return.ToString()
+"6"
+1
+s
+62883878
+1
+s.ToString()
+"Friday"
+1
+
+Enums.Enums.PrintEnumType(System.Type\_weekdays):::EXIT35
+this_invocation_nonce
+3
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.Delimiter
+46
+1
+System.Type.FilterAttribute
+3957675
+1
+System.Type.FilterName
+35619075
+1
+System.Type.FilterNameIgnoreCase
+52136226
+1
+System.Type.Missing
+66572856
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+weekdays
+30265903
+1
+weekdays.GetType()
+"System.RuntimeType"
+1
+
+Enums.Enums.PrintEnumType(System.Type\_weekdays):::ENTER
+this_invocation_nonce
+11
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.Delimiter
+46
+1
+System.Type.FilterAttribute
+3957675
+1
+System.Type.FilterName
+35619075
+1
+System.Type.FilterNameIgnoreCase
+52136226
+1
+System.Type.Missing
+66572856
+1
+weekdays
+60429346
+1
+weekdays.GetType()
+"System.RuntimeType"
+1
+
+Enums.Enums.formatEnum(System.String\_s,\_System.Type\_enumType):::ENTER
+this_invocation_nonce
+12
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.Delimiter
+46
+1
+System.Type.FilterAttribute
+3957675
+1
+System.Type.FilterName
+35619075
+1
+System.Type.FilterNameIgnoreCase
+52136226
+1
+System.Type.Missing
+66572856
+1
+enumType
+60429346
+1
+enumType.GetType()
+"System.RuntimeType"
+1
+s
+6993202
+1
+s.ToString()
+"Celsius"
+1
+
+Enums.Enums.formatEnum(System.String\_s,\_System.Type\_enumType):::EXIT10
+this_invocation_nonce
+12
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.Delimiter
+46
+1
+System.Type.FilterAttribute
+3957675
+1
+System.Type.FilterName
+35619075
+1
+System.Type.FilterNameIgnoreCase
+52136226
+1
+System.Type.Missing
+66572856
+1
+enumType
+60429346
+1
+enumType.GetType()
+"System.RuntimeType"
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+62938818
+1
+return.ToString()
+"100"
+1
+s
+6993202
+1
+s.ToString()
+"Celsius"
+1
+
+Enums.Enums.formatEnum(System.String\_s,\_System.Type\_enumType):::ENTER
+this_invocation_nonce
+13
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.Delimiter
+46
+1
+System.Type.FilterAttribute
+3957675
+1
+System.Type.FilterName
+35619075
+1
+System.Type.FilterNameIgnoreCase
+52136226
+1
+System.Type.Missing
+66572856
+1
+enumType
+60429346
+1
+enumType.GetType()
+"System.RuntimeType"
+1
+s
+29578451
+1
+s.ToString()
+"Fahrenheit"
+1
+
+Enums.Enums.formatEnum(System.String\_s,\_System.Type\_enumType):::EXIT10
+this_invocation_nonce
+13
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.Delimiter
+46
+1
+System.Type.FilterAttribute
+3957675
+1
+System.Type.FilterName
+35619075
+1
+System.Type.FilterNameIgnoreCase
+52136226
+1
+System.Type.Missing
+66572856
+1
+enumType
+60429346
+1
+enumType.GetType()
+"System.RuntimeType"
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+64879470
+1
+return.ToString()
+"212"
+1
+s
+29578451
+1
+s.ToString()
+"Fahrenheit"
+1
+
+Enums.Enums.PrintEnumType(System.Type\_weekdays):::EXIT35
+this_invocation_nonce
+11
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.Delimiter
+46
+1
+System.Type.FilterAttribute
+3957675
+1
+System.Type.FilterName
+35619075
+1
+System.Type.FilterNameIgnoreCase
+52136226
+1
+System.Type.Missing
+66572856
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+weekdays
+60429346
+1
+weekdays.GetType()
+"System.RuntimeType"
+1
+
+Enums.Enums.PrintColors(Enums.Enums.Colors\_myColors):::ENTER
+this_invocation_nonce
+14
+Enums.Enums+Colors.Blue
+1795333
+1
+Enums.Enums+Colors.Green
+1795331
+1
+Enums.Enums+Colors.Red
+1795330
+1
+Enums.Enums+Colors.Yellow
+1795337
+1
+myColors
+1795342
+1
+
+Enums.Enums.PrintColors(Enums.Enums.Colors\_myColors):::EXIT6
+this_invocation_nonce
+14
+Enums.Enums+Colors.Blue
+1795333
+1
+Enums.Enums+Colors.Green
+1795331
+1
+Enums.Enums+Colors.Red
+1795330
+1
+Enums.Enums+Colors.Yellow
+1795337
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+myColors
+1795342
+1
+
+Enums.Enums.Main():::EXIT27
+this_invocation_nonce
+2
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
