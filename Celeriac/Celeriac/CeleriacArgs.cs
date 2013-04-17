@@ -293,6 +293,23 @@ namespace Celeriac
       string programPath = args[this.ProgramArgIndex];
       this.AddArgument(PossibleArgument.assembly_location, programPath);
 
+      // This needs to occur after assembly path has been set.
+      if (args.Contains("--wpf"))
+      {
+        try
+        {
+          string tempPath = this.AssemblyPath + ".tmp";
+          programPath = tempPath;
+          File.Copy(this.AssemblyPath, tempPath, true);
+          this.AddArgument(PossibleArgument.save_program, this.AssemblyPath);
+          this.AddArgument(PossibleArgument.assembly_location, tempPath);
+          this.AddArgument(PossibleArgument.save_and_run, true.ToString());
+        }
+        catch (System.IO.IOException)
+        {
+        }
+      }
+
       string assemblyName = ExtractAssemblyNameFromProgramPath(programPath);
 
       this.AddArgument(PossibleArgument.assembly_name, assemblyName);
@@ -308,15 +325,6 @@ namespace Celeriac
       if (IsArgumentSpecified(PossibleArgument.purity_file))
       {
         this.LoadPurityFile();
-      }
-
-      // This needs to occur after assembly path has been set.
-      if (args.Contains("--wpf"))
-      {
-        File.Copy(this.AssemblyPath, this.AssemblyPath + ".tmp", true);
-        this.AddArgument(PossibleArgument.save_program, this.AssemblyPath);
-        this.AddArgument(PossibleArgument.assembly_location, this.AssemblyPath + ".tmp");
-        this.AddArgument(PossibleArgument.save_and_run, true.ToString());
       }
 
       this.PrintOutput = (this.OutputLocation == PrintOutputFileLocation);
