@@ -7,14 +7,12 @@ this.val == 5
 ExceptionTest.CubingClass..ctor(System.Int32 val):::ENTER
 val == 5
 ===========================================================================
-ExceptionTest.CubingClass..ctor(System.Int32 val):::EXIT8
-===========================================================================
 ExceptionTest.CubingClass..ctor(System.Int32 val):::EXIT
 this.val == orig(val)
 ===========================================================================
 ExceptionTest.CubingClass.DoCube():::ENTER
 ===========================================================================
-ExceptionTest.CubingClass.DoCube():::EXIT10
+ExceptionTest.CubingClass.DoCube():::EXIT12
 ===========================================================================
 ExceptionTest.CubingClass.DoCube():::EXIT
 this.val == orig(this.val)
@@ -36,7 +34,7 @@ ExceptionTest.ExceptionTest.Square(System.Boolean square, System.Int32 n):::ENTE
 n == 4
 square == false
 ===========================================================================
-ExceptionTest.ExceptionTest.Square(System.Boolean square, System.Int32 n):::EXIT16
+ExceptionTest.ExceptionTest.Square(System.Boolean square, System.Int32 n):::EXIT22
 ===========================================================================
 ExceptionTest.ExceptionTest.Square(System.Boolean square, System.Int32 n):::EXIT
 return == orig(n)

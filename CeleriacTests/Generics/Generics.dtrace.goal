@@ -13232,7 +13232,7 @@ value._methodBase.GetType()
 nonsensical
 2
 value._methodPtr
-103387712
+92181056
 1
 value._methodPtrAux
 0
@@ -13266,7 +13266,7 @@ this.stackEvent._methodBase
 null
 1
 this.stackEvent._methodPtr
-103387712
+92181056
 1
 this.stackEvent._methodPtrAux
 0
@@ -13284,7 +13284,7 @@ value._methodBase.GetType()
 nonsensical
 2
 value._methodPtr
-103387712
+92181056
 1
 value._methodPtrAux
 0
