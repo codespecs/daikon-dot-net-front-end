@@ -4,7 +4,7 @@ set has only one value
 set[].ToString() elements one of { "duck", "goose" }
 stringToAdd.ToString() one of { "duck", "geese", "goose" }
 ===========================================================================
-AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String> set, System.String stringToAdd):::EXIT7
+AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String> set, System.String stringToAdd):::EXIT9
 ===========================================================================
 AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String> set, System.String stringToAdd):::EXIT
 return == orig(set)
