@@ -1393,6 +1393,42 @@ namespace Celeriac
         return result;
       }
     }
+    
+    /// <summary>
+    /// Returns the method definition which defines the contract for the specified method. For methods implementing
+    /// an interface, this is the interface method. For methods overriding a method, this is the overridden method.
+    /// If both cases are true, the interface is given preference.
+    /// </summary>
+    /// <param name="method"></param>
+    /// <returns>the method definition which defines the contract for the specified method</returns>
+    public static List<IMethodDefinition> GetContractMethods(IMethodDefinition method)
+    {
+      var impl = from m in MemberHelper.GetImplicitlyImplementedInterfaceMethods(method)
+                 where !(m.ContainingTypeDefinition is Dummy)
+                 select m;
+
+      if (impl.Count() > 0)
+      {
+        return impl.ToList();
+      }
+
+      var expl = from m in MemberHelper.GetExplicitlyOverriddenMethods(method)
+                 where !(m.ResolvedMethod is Dummy) && !(m.ResolvedMethod.ContainingTypeDefinition is Dummy)
+                 select m.ResolvedMethod;
+
+      if (expl.Count() > 0)
+      {
+        return expl.ToList();
+      }
+
+      var baseMethod = MemberHelper.GetImplicitlyOverriddenBaseClassMethod(method);
+      if (baseMethod != null && !(baseMethod.ContainingTypeDefinition is Dummy))
+      {
+        return new[] { baseMethod }.ToList();
+      }
+
+      return new List<IMethodDefinition>();
+    }
 
     #region IDisposable Members
 

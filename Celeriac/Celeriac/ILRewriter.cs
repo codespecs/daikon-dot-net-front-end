@@ -24,6 +24,7 @@ using Celeriac.Contracts;
 using Assembly = Microsoft.Cci.MutableCodeModel.Assembly;
 using MethodBody = Microsoft.Cci.MutableCodeModel.MethodBody;
 using System.Runtime.CompilerServices;
+using System.Collections.Concurrent;
 
 // This file and ProgramRewriter.cs originally came from the CCIMetadata (http://ccimetadata.codeplex.com/)
 // sample programs. Specifically, it was Samples/ILMutator/ILMutator.cs. The original code inserted
@@ -114,6 +115,12 @@ namespace Celeriac
     private IEnumerator<ILocalScope> scopeEnumerator;
     private bool scopeEnumeratorIsValid;
     private Stack<ILocalScope> scopeStack = new Stack<ILocalScope>();
+
+    /// <summary>
+    /// Relationship IDs for program points; cleared for each method. Keys are method signatures formatted
+    /// with FormatMethodName, and include the transistion.
+    /// </summary>
+    private readonly Dictionary<string, int> pptRelId = new Dictionary<string, int>();
 
     /// <summary>
     /// Reference to the VariableVisitor method that loads assembly name and path
@@ -228,6 +235,62 @@ namespace Celeriac
       /// </summary>
       protected ILMutatorException(SerializationInfo info, StreamingContext context) :
         base(info, context) { }
+    }
+
+    /// <summary>
+    /// Print declarations as needed for a method definition with no body (i.e., interface or abstract method)
+    /// </summary>
+    /// <param name="method">the method definition</param>
+    /// <returns>the unmodified method definition</returns>
+    /// <remarks>this is cloned from emit code</remarks>
+    public override IMethodDefinition Rewrite(IMethodDefinition method)
+    {
+      Console.WriteLine(method.ToString());
+      if (printDeclarations &&
+          (method.ContainingTypeDefinition.IsInterface || method.IsAbstract))
+      {
+        // TODO: how should we handle exceptional exits
+        foreach (var t in new[] { MethodTransition.ENTER, MethodTransition.EXIT })
+        {
+          // Print either the enter or exit statement
+          this.DeclareMethodTransition(t, FormatMethodName(t, method), string.Empty);
+
+          int i = 0;
+          foreach (var param in method.Parameters)
+          {
+            // Constructor or instance calls have 'this' as a 0th parameter.
+            // We already handled it, so move on to the next index parameter
+            if (i == 0 && !method.IsStatic)
+            {
+              i++;
+            }
+
+            // there can be implicit arguments (e.g., an enclosing this?)
+            if (param.Name is Dummy)
+            {
+              i++;
+              continue;
+            }
+            else
+            {
+              // Load the name of the parameter onto the stack, print the parameter
+              // to the decls file if necessary.
+              this.declPrinter.PrintParameter(param.Name.ToString(),
+                  this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param.Type), 
+                  method, new VariableParent[0]);
+            }
+          }
+
+          if (t == MethodTransition.EXIT &&
+              method.Type.TypeCode != host.PlatformType.SystemVoid.TypeCode)
+          {
+            this.declPrinter.PrintReturn("return",
+                this.typeManager.ConvertCCITypeToAssemblyQualifiedName(method.Type),
+                method, new VariableParent[0]);
+          }
+        }
+      }
+      return base.Rewrite(method);
     }
 
     /// <summary>
@@ -1509,6 +1572,7 @@ namespace Celeriac
         string label = "", ITypeReference exceptionType = null)
     {
       string methodName = FormatMethodName(transition, methodBody.MethodDefinition);
+      pptRelId.Clear();
 
       if (!celeriacArgs.ShouldPrintProgramPoint(methodName, label))
       {
@@ -1548,7 +1612,7 @@ namespace Celeriac
       // will check this.
       EmitParentObject(transition, methodBody);
 
-      EmitParameters(methodBody);
+      EmitParameters(transition, methodBody.MethodDefinition);
 
       // If we are at a method exit we may need to print the declaration
       // for the method's return value
@@ -1558,10 +1622,16 @@ namespace Celeriac
         if ((methodBody.MethodDefinition.Type.TypeCode !=
             host.PlatformType.SystemVoid.TypeCode))
         {
+          var parents = from m in TypeManager.GetContractMethods(methodBody.MethodDefinition)
+                        select new VariableParent(
+                          DeclarationPrinter.SanitizeProgramPointName(FormatMethodName(transition, m)),
+                          pptRelId[FormatMethodName(transition, m)]);
+
           this.declPrinter.PrintReturn(
               "return",
               this.typeManager.ConvertCCITypeToAssemblyQualifiedName(methodBody.MethodDefinition.Type),
-              methodBody.MethodDefinition);
+              methodBody.MethodDefinition,
+              parents);
         }
 
         // Declare the exception, always present for an exceptional exit
@@ -1570,11 +1640,11 @@ namespace Celeriac
           this.declPrinter.PrintReturn(
               ExceptionVariableName,
               this.typeManager.ConvertCCITypeToAssemblyQualifiedName(exceptionType),
-              methodBody.MethodDefinition);
+              methodBody.MethodDefinition, new VariableParent[0]);
         }
         else
         {
-          this.declPrinter.PrintReturn(ExceptionVariableName, "System.Exception", methodBody.MethodDefinition);
+          this.declPrinter.PrintReturn(ExceptionVariableName, "System.Exception", methodBody.MethodDefinition, new VariableParent[0]);
         }
       }
 
@@ -1582,25 +1652,25 @@ namespace Celeriac
     }
 
     /// <summary>
-    /// Print the declaration of the reference to the parent program point for the given method,
-    /// if necessary.
+    /// Print the declaration of the reference to the parent class / object, and parent method program points for the 
+    /// given method, if necessary.
     /// </summary>
     /// <param name="transition">Transition of the current program point</param>
     /// <param name="methodBody">Method body of the current program point</param>
-    private void PrintParentNameDeclarationIfNecessary(MethodTransition transition,
-        IMethodBody methodBody)
+    private void PrintParentNameDeclarationIfNecessary(MethodTransition transition, IMethodBody methodBody)
     {
-      if (!this.printDeclarations)
+      if (this.printDeclarations)
       {
-        return;
-      }
-      if (IsThisValid(transition, methodBody.MethodDefinition))
-      {
-        this.declPrinter.PrintParentName(methodBody.MethodDefinition.ContainingType, true);
-      }
-      else
-      {
-        this.declPrinter.PrintParentName(methodBody.MethodDefinition.ContainingType, false);
+        this.declPrinter.PrintParentName(methodBody.MethodDefinition.ContainingType,
+          IsThisValid(transition, methodBody.MethodDefinition) ? PptKind.Object : PptKind.Class);
+
+        int relId = VariableParent.ObjectRelId + 1;
+        foreach (var parent in TypeManager.GetContractMethods(methodBody.MethodDefinition))
+        {
+          var f = FormatMethodName(transition, parent);
+          this.declPrinter.PrintParentName(DeclarationPrinter.SanitizeProgramPointName(f), relId);
+          pptRelId[f] = relId++;
+        }
       }
     }
 
@@ -1738,15 +1808,16 @@ namespace Celeriac
     /// Insert the instrumentation calls, and possibly the definitions for the actual method
     /// parameters.
     /// </summary>
-    /// <param name="methodBody">Method body being instrumented</param>
-    private void EmitParameters(IMethodBody methodBody)
+    /// <param name="transition">The type of method program point</param>
+    /// <param name="method">Method being instrumented</param>
+    private void EmitParameters(MethodTransition transition, IMethodDefinition method)
     {
       int i = 0;
-      foreach (var param in methodBody.MethodDefinition.Parameters)
+      foreach (var param in method.Parameters)
       {
         // Constructor or instance calls have 'this' as a 0th parameter.
         // We already handled it, so move on to the next index parameter
-        if (i == 0 && !methodBody.MethodDefinition.IsStatic)
+        if (i == 0 && !method.IsStatic)
         {
           i++;
         }
@@ -1764,10 +1835,15 @@ namespace Celeriac
           generator.Emit(OperationCode.Ldstr, param.Name.ToString());
           if (this.printDeclarations)
           {
-            this.declPrinter.PrintParameter(param.Name.ToString(),
-                this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param.Type), methodBody.MethodDefinition);
-          }
+            var parents = from m in TypeManager.GetContractMethods(method)
+                          select new VariableParent(  
+                             DeclarationPrinter.SanitizeProgramPointName(FormatMethodName(transition, m)),
+                             pptRelId[FormatMethodName(transition, m)]);
 
+            this.declPrinter.PrintParameter(param.Name.ToString(),
+              this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param.Type), 
+              method, parents);
+          }
         }
 
         // In the i-th iteration, load the i-th parameter onto the stack.
@@ -1858,9 +1934,10 @@ namespace Celeriac
       }
       if (this.printDeclarations)
       {
-        this.declPrinter.PrintParentObjectFields(methodBody.MethodDefinition.ContainingType
-            .ToString(), this.typeManager.ConvertCCITypeToAssemblyQualifiedName(parentType),
-            parentType as INamedTypeDefinition, methodBody.MethodDefinition);
+        this.declPrinter.PrintParentObjectFields(
+          new VariableParent(methodBody.MethodDefinition.ContainingType.ToString() + ":::OBJECT", VariableParent.ObjectRelId),
+          this.typeManager.ConvertCCITypeToAssemblyQualifiedName(parentType),
+          parentType as INamedTypeDefinition, methodBody.MethodDefinition);
       }
     }
 

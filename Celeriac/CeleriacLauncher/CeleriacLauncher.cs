@@ -35,7 +35,8 @@ namespace CeleriacLauncher
       }
       catch (InvalidOperationException ex)
       {
-        Console.WriteLine(ex.Message);
+        Console.Error.WriteLine(ex.Message);
+        return;
       }
 
       if (celeriacArgs.SaveAndRun)
