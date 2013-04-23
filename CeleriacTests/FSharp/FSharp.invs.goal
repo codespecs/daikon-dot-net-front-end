@@ -1,19 +1,4 @@
 ===========================================================================
-<StartupCode$FSharp>.$FSharp.main@():::ENTER
-$FSharp.init@ == 0
-$FSharp.set@4 == null
-$FSharp.set@4.contents@[] == []
-===========================================================================
-<StartupCode$FSharp>.$FSharp.main@():::EXIT41
-===========================================================================
-<StartupCode$FSharp>.$FSharp.main@():::EXIT
-$FSharp.init@ == orig($FSharp.init@)
-$FSharp.set@4 == orig($FSharp.set@4)
-$FSharp.set@4.contents@[] == orig($FSharp.set@4.contents@[])
-$FSharp.init@ == 0
-$FSharp.set@4 == null
-$FSharp.set@4.contents@[] == []
-===========================================================================
 FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32> set):::ENTER
 set[] elements >= 0
 set[i] == i
@@ -43,7 +28,8 @@ msg.ToString() == orig(msg.ToString())
 FSharp.set.get():::EXIT1
 ===========================================================================
 FSharp.set.get():::EXIT
-return != null
+return has only one value
+return.contents@ != null
 return.contents@[] elements >= 0
 return.contents@[] sorted by <
 return.contents@[i] == i
