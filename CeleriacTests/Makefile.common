@@ -115,7 +115,11 @@ ran-dnfe: $(NAME) $(DNFE_EXE) $(CLEAN_OUTPUT)
 	$(SIKULI_PATH) -r $(NAME).skl
 	./$(NAME).exe
 	cat /dev/null $(EXTRA_OUTPUTS) >>$(NAME).out
+	# Put the files in the right spot
+	cat daikon-output/$(NAME).dtrace >> daikon-output/$(NAME).decls
+	mv daikon-output/$(NAME).decls daikon-output/$(NAME).dtrace
 	perl -i $(CLEAN_OUTPUT) $(NAME).out
+  
 	touch $@
 else
 ifdef TESTS_SCRIPT
