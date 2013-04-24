@@ -82,6 +82,49 @@ parent parent ExceptionTest.CubingClass:::OBJECT 1
     comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
 
+ppt ExceptionTest.CubingClass.DoCube():::EXIT10
+ppt-type subexit
+parent parent ExceptionTest.CubingClass:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type ExceptionTest.CubingClass
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent ExceptionTest.CubingClass:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent ExceptionTest.CubingClass:::OBJECT 1
+  variable this.val
+    var-kind field val
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent ExceptionTest.CubingClass:::OBJECT 1
+
 ppt ExceptionTest.CubingClass.DoCube():::EXIT12
 ppt-type subexit
 parent parent ExceptionTest.CubingClass:::OBJECT 1
@@ -171,6 +214,49 @@ parent parent ExceptionTest.CubingClass:::OBJECT 1
 ppt ExceptionTest.CubingClass.DoNotCube():::ENTER
 ppt-type enter
 parent parent ExceptionTest.CubingClass:::OBJECT 1
+  variable this
+    var-kind variable
+    dec-type ExceptionTest.CubingClass
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent ExceptionTest.CubingClass:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent ExceptionTest.CubingClass:::OBJECT 1
+  variable this.val
+    var-kind field val
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent ExceptionTest.CubingClass:::OBJECT 1
+
+ppt ExceptionTest.CubingClass.DoNotCube():::EXIT4
+ppt-type subexit
+parent parent ExceptionTest.CubingClass:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
   variable this
     var-kind variable
     dec-type ExceptionTest.CubingClass
@@ -620,7 +706,7 @@ ExceptionTest.ExceptionTest.Main(System.String[]\_args):::ENTER
 this_invocation_nonce
 2
 args
-63993496
+33189039
 1
 args[..]
 []
@@ -675,7 +761,7 @@ exception.GetType()
 nonsensical
 2
 this
-39070558
+30265903
 1
 this.GetType()
 "ExceptionTest.CubingClass"
@@ -691,7 +777,7 @@ ExceptionTest.CubingClass.DoCube():::ENTER
 this_invocation_nonce
 5
 this
-39070558
+30265903
 1
 this.GetType()
 "ExceptionTest.CubingClass"
@@ -700,7 +786,7 @@ this.val
 5
 1
 
-ExceptionTest.CubingClass.DoCube():::EXIT12
+ExceptionTest.CubingClass.DoCube():::EXIT10
 this_invocation_nonce
 5
 exception
@@ -713,7 +799,7 @@ return
 125
 1
 this
-39070558
+30265903
 1
 this.GetType()
 "ExceptionTest.CubingClass"
@@ -726,7 +812,7 @@ ExceptionTest.ExceptionTest.Main(System.String[]\_args):::EXIT77
 this_invocation_nonce
 2
 args
-63993496
+33189039
 1
 args[..]
 []
