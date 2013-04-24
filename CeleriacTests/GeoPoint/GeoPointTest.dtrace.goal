@@ -460,6 +460,68 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
     comparability -22
     parent GeoPoint.GeoPoint:::OBJECT 1
 
+ppt GeoPoint.GeoPoint.ToString():::EXIT37
+ppt-type subexit
+parent parent GeoPoint.GeoPoint:::OBJECT 1
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
+    var-kind variable
+    dec-type double
+    rep-type double
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type java.lang.String
+    rep-type hashcode
+    comparability -22
+  variable return.ToString()
+    var-kind function ToString()
+    enclosing-var return
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GeoPoint.GeoPoint
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+  variable this.latitude
+    var-kind field latitude
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+  variable this.longitude
+    var-kind field longitude
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+
 ppt GeoPoint.GeoPoint.ToString():::EXIT39
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::OBJECT 1
@@ -616,6 +678,86 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
     enclosing-var gp
     dec-type int
     rep-type int
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GeoPoint.GeoPoint
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+  variable this.latitude
+    var-kind field latitude
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+  variable this.longitude
+    var-kind field longitude
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+
+ppt GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::EXIT35
+ppt-type subexit
+parent parent GeoPoint.GeoPoint:::OBJECT 1
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
+    var-kind variable
+    dec-type double
+    rep-type double
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable gp
+    var-kind variable
+    dec-type GeoPoint.GeoPoint
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable gp.GetType()
+    var-kind function GetType()
+    enclosing-var gp
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable gp.latitude
+    var-kind field latitude
+    enclosing-var gp
+    dec-type int
+    rep-type int
+    comparability -22
+  variable gp.longitude
+    var-kind field longitude
+    enclosing-var gp
+    dec-type int
+    rep-type int
+    comparability -22
+  variable return
+    var-kind return
+    dec-type double
+    rep-type double
     comparability -22
   variable this
     var-kind variable
@@ -858,6 +1000,142 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
     comparability -22
     parent GeoPoint.GeoPoint:::OBJECT 1
 
+ppt GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT10
+ppt-type subexit
+parent parent GeoPoint.GeoPoint:::OBJECT 1
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
+    var-kind variable
+    dec-type double
+    rep-type double
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable o
+    var-kind variable
+    dec-type java.lang.Object
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable o.GetType()
+    var-kind function GetType()
+    enclosing-var o
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type boolean
+    rep-type boolean
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GeoPoint.GeoPoint
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+  variable this.latitude
+    var-kind field latitude
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+  variable this.longitude
+    var-kind field longitude
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+
+ppt GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT28
+ppt-type subexit
+parent parent GeoPoint.GeoPoint:::OBJECT 1
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
+    var-kind variable
+    dec-type double
+    rep-type double
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable o
+    var-kind variable
+    dec-type java.lang.Object
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable o.GetType()
+    var-kind function GetType()
+    enclosing-var o
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type boolean
+    rep-type boolean
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GeoPoint.GeoPoint
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+  variable this.latitude
+    var-kind field latitude
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+  variable this.longitude
+    var-kind field longitude
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+
 ppt GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT30
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::OBJECT 1
@@ -1032,6 +1310,61 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
     comparability -22
     parent GeoPoint.GeoPoint:::OBJECT 1
 
+ppt GeoPoint.GeoPoint.hashCode():::EXIT11
+ppt-type subexit
+parent parent GeoPoint.GeoPoint:::OBJECT 1
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
+    var-kind variable
+    dec-type double
+    rep-type double
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GeoPoint.GeoPoint
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+  variable this.latitude
+    var-kind field latitude
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+  variable this.longitude
+    var-kind field longitude
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+
 ppt GeoPoint.GeoPoint.hashCode():::EXIT13
 ppt-type subexit
 parent parent GeoPoint.GeoPoint:::OBJECT 1
@@ -1174,6 +1507,86 @@ parent parent GeoPoint.GeoPoint:::OBJECT 1
     enclosing-var gp
     dec-type int
     rep-type int
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GeoPoint.GeoPoint
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+  variable this.latitude
+    var-kind field latitude
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+  variable this.longitude
+    var-kind field longitude
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GeoPoint.GeoPoint:::OBJECT 1
+
+ppt GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT57
+ppt-type subexit
+parent parent GeoPoint.GeoPoint:::OBJECT 1
+  variable GeoPoint.GeoPoint.REP_SCALE_FACTOR
+    var-kind variable
+    dec-type double
+    rep-type double
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable gp
+    var-kind variable
+    dec-type GeoPoint.GeoPoint
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable gp.GetType()
+    var-kind function GetType()
+    enclosing-var gp
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable gp.latitude
+    var-kind field latitude
+    enclosing-var gp
+    dec-type int
+    rep-type int
+    comparability -22
+  variable gp.longitude
+    var-kind field longitude
+    enclosing-var gp
+    dec-type int
+    rep-type int
+    comparability -22
+  variable return
+    var-kind return
+    dec-type double
+    rep-type double
     comparability -22
   variable this
     var-kind variable
@@ -10242,7 +10655,7 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 args
-5425146
+32102252
 1
 args[..]
 []
@@ -10258,7 +10671,7 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 name
-48826322
+20484818
 1
 name.ToString()
 "test"
@@ -10280,13 +10693,13 @@ exception.GetType()
 nonsensical
 2
 name
-48826322
+20484818
 1
 name.ToString()
 "test"
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
@@ -10386,7 +10799,7 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
@@ -10568,7 +10981,7 @@ longitude
 -71060278
 1
 this
-62618006
+48657561
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -10652,7 +11065,7 @@ longitude
 -71079857
 1
 this
-26691149
+35264868
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -10736,7 +11149,7 @@ longitude
 -71040699
 1
 this
-38893755
+48948360
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -10820,7 +11233,7 @@ longitude
 -71060278
 1
 this
-14499481
+37882063
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -10904,7 +11317,7 @@ longitude
 -71040699
 1
 this
-63386473
+5394248
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -10988,7 +11401,7 @@ longitude
 -71060278
 1
 this
-33607346
+48548238
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -11016,13 +11429,13 @@ exception.GetType()
 nonsensical
 2
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-62618006
+48657561
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -11034,7 +11447,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-38893755
+48948360
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -11058,7 +11471,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-14499481
+37882063
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -11070,7 +11483,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-33607346
+48548238
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -11082,7 +11495,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-63386473
+5394248
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -11094,7 +11507,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-26691149
+35264868
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -11116,13 +11529,13 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-62618006
+48657561
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -11134,7 +11547,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-38893755
+48948360
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -11158,7 +11571,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-14499481
+37882063
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -11170,7 +11583,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-33607346
+48548238
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -11182,7 +11595,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-63386473
+5394248
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -11194,7 +11607,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-26691149
+35264868
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -11278,7 +11691,7 @@ longitude
 -71060278
 1
 this
-34030663
+34280961
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -11362,7 +11775,7 @@ longitude
 -71060278
 1
 this
-37840511
+40093194
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -11381,7 +11794,7 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
-37840511
+40093194
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -11393,7 +11806,7 @@ gp.longitude
 -71060278
 1
 this
-34030663
+34280961
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -11409,7 +11822,7 @@ GeoPoint.Assert.assertNotNull(System.Object\_obj):::ENTER
 this_invocation_nonce
 33
 obj
-37840511
+40093194
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -11425,13 +11838,13 @@ exception.GetType()
 nonsensical
 2
 obj
-37840511
+40093194
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
 1
 
-GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::EXIT37
+GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::EXIT35
 this_invocation_nonce
 32
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -11444,7 +11857,7 @@ exception.GetType()
 nonsensical
 2
 gp
-37840511
+40093194
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -11459,7 +11872,7 @@ return
 1.000005224
 1
 this
-34030663
+34280961
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -11478,13 +11891,13 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
-62618006
+48657561
 1
 o.GetType()
 "GeoPoint.GeoPoint"
 1
 this
-34030663
+34280961
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -11496,7 +11909,7 @@ this.longitude
 -71060278
 1
 
-GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT30
+GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT28
 this_invocation_nonce
 34
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -11509,7 +11922,7 @@ exception.GetType()
 nonsensical
 2
 o
-62618006
+48657561
 1
 o.GetType()
 "GeoPoint.GeoPoint"
@@ -11518,7 +11931,7 @@ return
 true
 1
 this
-34030663
+34280961
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -11540,7 +11953,7 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
-5020285
+25294426
 1
 message.ToString()
 "distanceTo mutates receiver."
@@ -11549,13 +11962,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-62618006
+48657561
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -11567,7 +11980,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-38893755
+48948360
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -11591,7 +12004,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-14499481
+37882063
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -11603,7 +12016,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-33607346
+48548238
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -11615,7 +12028,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-63386473
+5394248
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -11627,7 +12040,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-26691149
+35264868
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -11655,7 +12068,7 @@ exception.GetType()
 nonsensical
 2
 message
-5020285
+25294426
 1
 message.ToString()
 "distanceTo mutates receiver."
@@ -11664,13 +12077,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-62618006
+48657561
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -11682,7 +12095,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-38893755
+48948360
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -11706,7 +12119,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-14499481
+37882063
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -11718,7 +12131,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-33607346
+48548238
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -11730,7 +12143,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-63386473
+5394248
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -11742,7 +12155,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-26691149
+35264868
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -11761,13 +12174,13 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
-33607346
+48548238
 1
 o.GetType()
 "GeoPoint.GeoPoint"
 1
 this
-37840511
+40093194
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -11779,7 +12192,7 @@ this.longitude
 -71060278
 1
 
-GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT30
+GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT28
 this_invocation_nonce
 36
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -11792,7 +12205,7 @@ exception.GetType()
 nonsensical
 2
 o
-33607346
+48548238
 1
 o.GetType()
 "GeoPoint.GeoPoint"
@@ -11801,7 +12214,7 @@ return
 true
 1
 this
-37840511
+40093194
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -11823,7 +12236,7 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
-45182569
+26323242
 1
 message.ToString()
 "distanceTo mutates argument."
@@ -11832,13 +12245,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-62618006
+48657561
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -11850,7 +12263,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-38893755
+48948360
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -11874,7 +12287,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-14499481
+37882063
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -11886,7 +12299,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-33607346
+48548238
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -11898,7 +12311,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-63386473
+5394248
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -11910,7 +12323,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-26691149
+35264868
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -11938,7 +12351,7 @@ exception.GetType()
 nonsensical
 2
 message
-45182569
+26323242
 1
 message.ToString()
 "distanceTo mutates argument."
@@ -11947,13 +12360,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-62618006
+48657561
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -11965,7 +12378,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-38893755
+48948360
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -11989,7 +12402,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-14499481
+37882063
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -12001,7 +12414,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-33607346
+48548238
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -12013,7 +12426,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-63386473
+5394248
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -12025,7 +12438,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-26691149
+35264868
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -12044,7 +12457,7 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 this
-34030663
+34280961
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -12056,7 +12469,7 @@ this.longitude
 -71060278
 1
 
-GeoPoint.GeoPoint.hashCode():::EXIT13
+GeoPoint.GeoPoint.hashCode():::EXIT11
 this_invocation_nonce
 38
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -12072,7 +12485,7 @@ return
 1678004229
 1
 this
-34030663
+34280961
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -12091,13 +12504,13 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
-62618006
+48657561
 1
 o.GetType()
 "GeoPoint.GeoPoint"
 1
 this
-34030663
+34280961
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -12109,7 +12522,7 @@ this.longitude
 -71060278
 1
 
-GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT30
+GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT28
 this_invocation_nonce
 39
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -12122,7 +12535,7 @@ exception.GetType()
 nonsensical
 2
 o
-62618006
+48657561
 1
 o.GetType()
 "GeoPoint.GeoPoint"
@@ -12131,7 +12544,7 @@ return
 true
 1
 this
-34030663
+34280961
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -12153,7 +12566,7 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
-5020285
+25294426
 1
 message.ToString()
 "distanceTo mutates receiver."
@@ -12162,13 +12575,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-62618006
+48657561
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -12180,7 +12593,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-38893755
+48948360
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -12204,7 +12617,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-14499481
+37882063
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -12216,7 +12629,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-33607346
+48548238
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -12228,7 +12641,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-63386473
+5394248
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -12240,7 +12653,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-26691149
+35264868
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -12268,7 +12681,7 @@ exception.GetType()
 nonsensical
 2
 message
-5020285
+25294426
 1
 message.ToString()
 "distanceTo mutates receiver."
@@ -12277,13 +12690,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-62618006
+48657561
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -12295,7 +12708,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-38893755
+48948360
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -12319,7 +12732,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-14499481
+37882063
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -12331,7 +12744,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-33607346
+48548238
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -12343,7 +12756,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-63386473
+5394248
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -12355,7 +12768,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-26691149
+35264868
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -12374,7 +12787,7 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
-37840511
+40093194
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -12386,7 +12799,7 @@ gp.longitude
 -71060278
 1
 this
-34030663
+34280961
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -12402,7 +12815,7 @@ GeoPoint.Assert.assertNotNull(System.Object\_obj):::ENTER
 this_invocation_nonce
 42
 obj
-37840511
+40093194
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -12418,7 +12831,7 @@ exception.GetType()
 nonsensical
 2
 obj
-37840511
+40093194
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -12431,13 +12844,13 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
-37840511
+40093194
 1
 o.GetType()
 "GeoPoint.GeoPoint"
 1
 this
-34030663
+34280961
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -12449,7 +12862,7 @@ this.longitude
 -71060278
 1
 
-GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT30
+GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT28
 this_invocation_nonce
 43
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -12462,7 +12875,7 @@ exception.GetType()
 nonsensical
 2
 o
-37840511
+40093194
 1
 o.GetType()
 "GeoPoint.GeoPoint"
@@ -12471,7 +12884,7 @@ return
 false
 1
 this
-34030663
+34280961
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -12503,7 +12916,7 @@ test
 true
 1
 
-GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT59
+GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT57
 this_invocation_nonce
 41
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -12516,7 +12929,7 @@ exception.GetType()
 nonsensical
 2
 gp
-37840511
+40093194
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -12531,7 +12944,7 @@ return
 180
 1
 this
-34030663
+34280961
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -12550,13 +12963,13 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
-62618006
+48657561
 1
 o.GetType()
 "GeoPoint.GeoPoint"
 1
 this
-34030663
+34280961
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -12568,7 +12981,7 @@ this.longitude
 -71060278
 1
 
-GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT30
+GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT28
 this_invocation_nonce
 45
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -12581,7 +12994,7 @@ exception.GetType()
 nonsensical
 2
 o
-62618006
+48657561
 1
 o.GetType()
 "GeoPoint.GeoPoint"
@@ -12590,7 +13003,7 @@ return
 true
 1
 this
-34030663
+34280961
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -12612,7 +13025,7 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
-3989940
+35582587
 1
 message.ToString()
 "headingTo mutates receiver."
@@ -12621,13 +13034,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-62618006
+48657561
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -12639,7 +13052,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-38893755
+48948360
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -12663,7 +13076,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-14499481
+37882063
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -12675,7 +13088,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-33607346
+48548238
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -12687,7 +13100,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-63386473
+5394248
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -12699,7 +13112,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-26691149
+35264868
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -12727,7 +13140,7 @@ exception.GetType()
 nonsensical
 2
 message
-3989940
+35582587
 1
 message.ToString()
 "headingTo mutates receiver."
@@ -12736,13 +13149,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-62618006
+48657561
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -12754,7 +13167,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-38893755
+48948360
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -12778,7 +13191,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-14499481
+37882063
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -12790,7 +13203,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-33607346
+48548238
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -12802,7 +13215,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-63386473
+5394248
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -12814,7 +13227,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-26691149
+35264868
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -12833,13 +13246,13 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
-33607346
+48548238
 1
 o.GetType()
 "GeoPoint.GeoPoint"
 1
 this
-37840511
+40093194
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -12851,7 +13264,7 @@ this.longitude
 -71060278
 1
 
-GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT30
+GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT28
 this_invocation_nonce
 47
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -12864,7 +13277,7 @@ exception.GetType()
 nonsensical
 2
 o
-33607346
+48548238
 1
 o.GetType()
 "GeoPoint.GeoPoint"
@@ -12873,7 +13286,7 @@ return
 true
 1
 this
-37840511
+40093194
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -12895,7 +13308,7 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
-35909463
+51807830
 1
 message.ToString()
 "headingTo mutates argument."
@@ -12904,13 +13317,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-62618006
+48657561
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -12922,7 +13335,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-38893755
+48948360
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -12946,7 +13359,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-14499481
+37882063
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -12958,7 +13371,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-33607346
+48548238
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -12970,7 +13383,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-63386473
+5394248
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -12982,7 +13395,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-26691149
+35264868
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -13010,7 +13423,7 @@ exception.GetType()
 nonsensical
 2
 message
-35909463
+51807830
 1
 message.ToString()
 "headingTo mutates argument."
@@ -13019,13 +13432,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-62618006
+48657561
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -13037,7 +13450,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-38893755
+48948360
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -13061,7 +13474,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-14499481
+37882063
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -13073,7 +13486,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-33607346
+48548238
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -13085,7 +13498,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-63386473
+5394248
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -13097,7 +13510,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-26691149
+35264868
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -13116,7 +13529,7 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 this
-34030663
+34280961
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -13128,7 +13541,7 @@ this.longitude
 -71060278
 1
 
-GeoPoint.GeoPoint.ToString():::EXIT39
+GeoPoint.GeoPoint.ToString():::EXIT37
 this_invocation_nonce
 49
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -13141,13 +13554,13 @@ exception.GetType()
 nonsensical
 2
 return
-54749715
+63617293
 1
 return.ToString()
 "Pt{42.358333,-71.060278}"
 1
 this
-34030663
+34280961
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -13166,13 +13579,13 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
-62618006
+48657561
 1
 o.GetType()
 "GeoPoint.GeoPoint"
 1
 this
-34030663
+34280961
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -13184,7 +13597,7 @@ this.longitude
 -71060278
 1
 
-GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT30
+GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT28
 this_invocation_nonce
 50
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -13197,7 +13610,7 @@ exception.GetType()
 nonsensical
 2
 o
-62618006
+48657561
 1
 o.GetType()
 "GeoPoint.GeoPoint"
@@ -13206,7 +13619,7 @@ return
 true
 1
 this
-34030663
+34280961
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -13228,7 +13641,7 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
-22985394
+35684727
 1
 message.ToString()
 "ToString mutates receiver."
@@ -13237,13 +13650,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-62618006
+48657561
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -13255,7 +13668,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-38893755
+48948360
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -13279,7 +13692,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-14499481
+37882063
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -13291,7 +13704,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-33607346
+48548238
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -13303,7 +13716,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-63386473
+5394248
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -13315,7 +13728,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-26691149
+35264868
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -13343,7 +13756,7 @@ exception.GetType()
 nonsensical
 2
 message
-22985394
+35684727
 1
 message.ToString()
 "ToString mutates receiver."
@@ -13352,13 +13765,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-62618006
+48657561
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -13370,7 +13783,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-38893755
+48948360
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -13394,7 +13807,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-14499481
+37882063
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -13406,7 +13819,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-33607346
+48548238
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -13418,7 +13831,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-63386473
+5394248
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -13430,7 +13843,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-26691149
+35264868
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -13458,13 +13871,13 @@ exception.GetType()
 nonsensical
 2
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-62618006
+48657561
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -13476,7 +13889,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-38893755
+48948360
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -13500,7 +13913,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-14499481
+37882063
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -13512,7 +13925,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-33607346
+48548238
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -13524,7 +13937,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-63386473
+5394248
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -13536,7 +13949,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-26691149
+35264868
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -13558,13 +13971,13 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-62618006
+48657561
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -13576,7 +13989,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-38893755
+48948360
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -13600,7 +14013,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-14499481
+37882063
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -13612,7 +14025,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-33607346
+48548238
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -13624,7 +14037,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-63386473
+5394248
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -13636,7 +14049,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-26691149
+35264868
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -13720,7 +14133,7 @@ longitude
 -71060278
 1
 this
-5541955
+52727095
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -13804,7 +14217,7 @@ longitude
 -71079857
 1
 this
-49877601
+4781813
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -13888,7 +14301,7 @@ longitude
 -71040699
 1
 this
-46245228
+43036322
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -13972,7 +14385,7 @@ longitude
 -71060278
 1
 this
-13553869
+51782583
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -14056,7 +14469,7 @@ longitude
 -71040699
 1
 this
-54875957
+63390070
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -14140,7 +14553,7 @@ longitude
 -71060278
 1
 this
-24121565
+33639718
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -14168,13 +14581,13 @@ exception.GetType()
 nonsensical
 2
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-5541955
+52727095
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -14186,7 +14599,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-46245228
+43036322
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -14210,7 +14623,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-13553869
+51782583
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -14222,7 +14635,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-24121565
+33639718
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -14234,7 +14647,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-54875957
+63390070
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -14246,7 +14659,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-49877601
+4781813
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -14268,13 +14681,13 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-5541955
+52727095
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -14286,7 +14699,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-46245228
+43036322
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -14310,7 +14723,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-13553869
+51782583
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -14322,7 +14735,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-24121565
+33639718
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -14334,7 +14747,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-54875957
+63390070
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -14346,7 +14759,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-49877601
+4781813
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -14365,13 +14778,13 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
-13553869
+51782583
 1
 o.GetType()
 "GeoPoint.GeoPoint"
 1
 this
-13553869
+51782583
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -14383,7 +14796,7 @@ this.longitude
 -71060278
 1
 
-GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT30
+GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT28
 this_invocation_nonce
 72
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -14396,7 +14809,7 @@ exception.GetType()
 nonsensical
 2
 o
-13553869
+51782583
 1
 o.GetType()
 "GeoPoint.GeoPoint"
@@ -14405,7 +14818,7 @@ return
 true
 1
 this
-13553869
+51782583
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -14427,7 +14840,7 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
-15767494
+34322009
 1
 message.ToString()
 "instance not equal to itself."
@@ -14436,13 +14849,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-5541955
+52727095
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -14454,7 +14867,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-46245228
+43036322
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -14478,7 +14891,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-13553869
+51782583
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -14490,7 +14903,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-24121565
+33639718
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -14502,7 +14915,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-54875957
+63390070
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -14514,7 +14927,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-49877601
+4781813
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -14542,7 +14955,7 @@ exception.GetType()
 nonsensical
 2
 message
-15767494
+34322009
 1
 message.ToString()
 "instance not equal to itself."
@@ -14551,13 +14964,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-5541955
+52727095
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -14569,7 +14982,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-46245228
+43036322
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -14593,7 +15006,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-13553869
+51782583
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -14605,7 +15018,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-24121565
+33639718
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -14617,7 +15030,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-54875957
+63390070
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -14629,7 +15042,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-49877601
+4781813
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -14713,7 +15126,7 @@ longitude
 -71060278
 1
 this
-7689721
+40462633
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -14732,13 +15145,13 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
-7689721
+40462633
 1
 o.GetType()
 "GeoPoint.GeoPoint"
 1
 this
-13553869
+51782583
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -14750,7 +15163,7 @@ this.longitude
 -71060278
 1
 
-GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT30
+GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT28
 this_invocation_nonce
 77
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -14763,7 +15176,7 @@ exception.GetType()
 nonsensical
 2
 o
-7689721
+40462633
 1
 o.GetType()
 "GeoPoint.GeoPoint"
@@ -14772,7 +15185,7 @@ return
 true
 1
 this
-13553869
+51782583
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -14794,7 +15207,7 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
-2098632
+28619382
 1
 message.ToString()
 "instance not equal to copy."
@@ -14803,13 +15216,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-5541955
+52727095
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -14821,7 +15234,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-46245228
+43036322
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -14845,7 +15258,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-13553869
+51782583
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -14857,7 +15270,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-24121565
+33639718
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -14869,7 +15282,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-54875957
+63390070
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -14881,7 +15294,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-49877601
+4781813
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -14909,7 +15322,7 @@ exception.GetType()
 nonsensical
 2
 message
-2098632
+28619382
 1
 message.ToString()
 "instance not equal to copy."
@@ -14918,13 +15331,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-5541955
+52727095
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -14936,7 +15349,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-46245228
+43036322
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -14960,7 +15373,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-13553869
+51782583
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -14972,7 +15385,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-24121565
+33639718
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -14984,7 +15397,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-54875957
+63390070
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -14996,7 +15409,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-49877601
+4781813
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -15015,13 +15428,13 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
-46245228
+43036322
 1
 o.GetType()
 "GeoPoint.GeoPoint"
 1
 this
-13553869
+51782583
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -15033,7 +15446,7 @@ this.longitude
 -71060278
 1
 
-GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT30
+GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT28
 this_invocation_nonce
 79
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -15046,7 +15459,7 @@ exception.GetType()
 nonsensical
 2
 o
-46245228
+43036322
 1
 o.GetType()
 "GeoPoint.GeoPoint"
@@ -15055,7 +15468,7 @@ return
 false
 1
 this
-13553869
+51782583
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -15077,7 +15490,7 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
-18887690
+56247849
 1
 message.ToString()
 "totally different objects are equal."
@@ -15086,13 +15499,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-5541955
+52727095
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -15104,7 +15517,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-46245228
+43036322
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -15128,7 +15541,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-13553869
+51782583
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -15140,7 +15553,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-24121565
+33639718
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -15152,7 +15565,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-54875957
+63390070
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -15164,7 +15577,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-49877601
+4781813
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -15192,7 +15605,7 @@ exception.GetType()
 nonsensical
 2
 message
-18887690
+56247849
 1
 message.ToString()
 "totally different objects are equal."
@@ -15201,13 +15614,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-5541955
+52727095
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -15219,7 +15632,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-46245228
+43036322
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -15243,7 +15656,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-13553869
+51782583
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -15255,7 +15668,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-24121565
+33639718
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -15267,7 +15680,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-54875957
+63390070
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -15279,7 +15692,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-49877601
+4781813
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -15307,13 +15720,13 @@ exception.GetType()
 nonsensical
 2
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-5541955
+52727095
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -15325,7 +15738,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-46245228
+43036322
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -15349,7 +15762,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-13553869
+51782583
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -15361,7 +15774,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-24121565
+33639718
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -15373,7 +15786,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-54875957
+63390070
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -15385,7 +15798,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-49877601
+4781813
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -15407,13 +15820,13 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-5541955
+52727095
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -15425,7 +15838,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-46245228
+43036322
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -15449,7 +15862,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-13553869
+51782583
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -15461,7 +15874,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-24121565
+33639718
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -15473,7 +15886,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-54875957
+63390070
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -15485,7 +15898,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-49877601
+4781813
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -15569,7 +15982,7 @@ longitude
 -71060278
 1
 this
-35771490
+36468595
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -15653,7 +16066,7 @@ longitude
 -71079857
 1
 this
-53507960
+59781901
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -15737,7 +16150,7 @@ longitude
 -71040699
 1
 this
-11809597
+1166200
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -15821,7 +16234,7 @@ longitude
 -71060278
 1
 this
-39177514
+10495806
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -15905,7 +16318,7 @@ longitude
 -71040699
 1
 this
-17053313
+27353390
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -15989,7 +16402,7 @@ longitude
 -71060278
 1
 this
-19262089
+44853923
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -16017,13 +16430,13 @@ exception.GetType()
 nonsensical
 2
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-35771490
+36468595
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -16035,7 +16448,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-11809597
+1166200
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -16059,7 +16472,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-39177514
+10495806
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -16071,7 +16484,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-19262089
+44853923
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -16083,7 +16496,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-17053313
+27353390
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -16095,7 +16508,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-53507960
+59781901
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -16117,13 +16530,13 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-35771490
+36468595
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -16135,7 +16548,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-11809597
+1166200
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -16159,7 +16572,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-39177514
+10495806
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -16171,7 +16584,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-19262089
+44853923
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -16183,7 +16596,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-17053313
+27353390
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -16195,7 +16608,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-53507960
+59781901
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -16220,7 +16633,7 @@ o.GetType()
 nonsensical
 2
 this
-39177514
+10495806
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -16232,7 +16645,7 @@ this.longitude
 -71060278
 1
 
-GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT30
+GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT10
 this_invocation_nonce
 101
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -16254,7 +16667,7 @@ return
 false
 1
 this
-39177514
+10495806
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -16276,7 +16689,7 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
-39141076
+1032124
 1
 message.ToString()
 "equals returns true for null."
@@ -16285,13 +16698,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-35771490
+36468595
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -16303,7 +16716,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-11809597
+1166200
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -16327,7 +16740,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-39177514
+10495806
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -16339,7 +16752,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-19262089
+44853923
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -16351,7 +16764,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-17053313
+27353390
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -16363,7 +16776,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-53507960
+59781901
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -16391,7 +16804,7 @@ exception.GetType()
 nonsensical
 2
 message
-39141076
+1032124
 1
 message.ToString()
 "equals returns true for null."
@@ -16400,13 +16813,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-35771490
+36468595
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -16418,7 +16831,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-11809597
+1166200
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -16442,7 +16855,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-39177514
+10495806
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -16454,7 +16867,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-19262089
+44853923
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -16466,7 +16879,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-17053313
+27353390
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -16478,7 +16891,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-53507960
+59781901
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -16497,13 +16910,13 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
-16725372
+9289124
 1
 o.GetType()
 "System.String"
 1
 this
-39177514
+10495806
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -16515,7 +16928,7 @@ this.longitude
 -71060278
 1
 
-GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT30
+GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT10
 this_invocation_nonce
 103
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -16528,7 +16941,7 @@ exception.GetType()
 nonsensical
 2
 o
-16725372
+9289124
 1
 o.GetType()
 "System.String"
@@ -16537,7 +16950,7 @@ return
 false
 1
 this
-39177514
+10495806
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -16559,7 +16972,7 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
-16310625
+16493259
 1
 message.ToString()
 "equals returns true for a string."
@@ -16568,13 +16981,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-35771490
+36468595
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -16586,7 +16999,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-11809597
+1166200
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -16610,7 +17023,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-39177514
+10495806
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -16622,7 +17035,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-19262089
+44853923
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -16634,7 +17047,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-17053313
+27353390
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -16646,7 +17059,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-53507960
+59781901
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -16674,7 +17087,7 @@ exception.GetType()
 nonsensical
 2
 message
-16310625
+16493259
 1
 message.ToString()
 "equals returns true for a string."
@@ -16683,13 +17096,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-35771490
+36468595
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -16701,7 +17114,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-11809597
+1166200
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -16725,7 +17138,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-39177514
+10495806
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -16737,7 +17150,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-19262089
+44853923
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -16749,7 +17162,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-17053313
+27353390
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -16761,7 +17174,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-53507960
+59781901
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -16789,13 +17202,13 @@ exception.GetType()
 nonsensical
 2
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-35771490
+36468595
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -16807,7 +17220,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-11809597
+1166200
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -16831,7 +17244,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-39177514
+10495806
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -16843,7 +17256,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-19262089
+44853923
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -16855,7 +17268,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-17053313
+27353390
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -16867,7 +17280,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-53507960
+59781901
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -16889,13 +17302,13 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-35771490
+36468595
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -16907,7 +17320,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-11809597
+1166200
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -16931,7 +17344,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-39177514
+10495806
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -16943,7 +17356,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-19262089
+44853923
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -16955,7 +17368,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-17053313
+27353390
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -16967,7 +17380,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-53507960
+59781901
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -17051,7 +17464,7 @@ longitude
 -71060278
 1
 this
-12577900
+14221611
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -17135,7 +17548,7 @@ longitude
 -71079857
 1
 this
-46092238
+60885635
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -17219,7 +17632,7 @@ longitude
 -71040699
 1
 this
-12176960
+11099805
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -17303,7 +17716,7 @@ longitude
 -71060278
 1
 this
-42483779
+32789387
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -17387,7 +17800,7 @@ longitude
 -71040699
 1
 this
-46809697
+26669028
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -17471,7 +17884,7 @@ longitude
 -71060278
 1
 this
-18634089
+38694667
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -17499,13 +17912,13 @@ exception.GetType()
 nonsensical
 2
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-12577900
+14221611
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -17517,7 +17930,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-12176960
+11099805
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -17541,7 +17954,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-42483779
+32789387
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -17553,7 +17966,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-18634089
+38694667
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -17565,7 +17978,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-46809697
+26669028
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -17577,7 +17990,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-46092238
+60885635
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -17599,13 +18012,13 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-12577900
+14221611
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -17617,7 +18030,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-12176960
+11099805
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -17641,7 +18054,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-42483779
+32789387
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -17653,7 +18066,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-18634089
+38694667
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -17665,7 +18078,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-46809697
+26669028
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -17677,7 +18090,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-46092238
+60885635
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -17696,7 +18109,7 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
-12577900
+14221611
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -17708,7 +18121,7 @@ gp.longitude
 -71060278
 1
 this
-42483779
+32789387
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -17724,7 +18137,7 @@ GeoPoint.Assert.assertNotNull(System.Object\_obj):::ENTER
 this_invocation_nonce
 126
 obj
-12577900
+14221611
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -17740,13 +18153,13 @@ exception.GetType()
 nonsensical
 2
 obj
-12577900
+14221611
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
 1
 
-GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::EXIT37
+GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::EXIT35
 this_invocation_nonce
 125
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -17759,7 +18172,7 @@ exception.GetType()
 nonsensical
 2
 gp
-12577900
+14221611
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -17774,7 +18187,7 @@ return
 1.000005224
 1
 this
-42483779
+32789387
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -17802,19 +18215,19 @@ b
 1.000005224
 1
 msg
-33489078
+12707688
 1
 msg.ToString()
 "From North to Downtown 1 mile"
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-12577900
+14221611
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -17826,7 +18239,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-12176960
+11099805
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -17850,7 +18263,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-42483779
+32789387
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -17862,7 +18275,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-18634089
+38694667
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -17874,7 +18287,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-46809697
+26669028
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -17886,7 +18299,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-46092238
+60885635
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -17923,19 +18336,19 @@ exception.GetType()
 nonsensical
 2
 msg
-33489078
+12707688
 1
 msg.ToString()
 "From North to Downtown 1 mile"
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-12577900
+14221611
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -17947,7 +18360,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-12176960
+11099805
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -17971,7 +18384,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-42483779
+32789387
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -17983,7 +18396,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-18634089
+38694667
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -17995,7 +18408,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-46809697
+26669028
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -18007,7 +18420,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-46092238
+60885635
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -18029,7 +18442,7 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
-42483779
+32789387
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -18041,7 +18454,7 @@ gp.longitude
 -71060278
 1
 this
-12577900
+14221611
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -18057,7 +18470,7 @@ GeoPoint.Assert.assertNotNull(System.Object\_obj):::ENTER
 this_invocation_nonce
 129
 obj
-42483779
+32789387
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -18073,13 +18486,13 @@ exception.GetType()
 nonsensical
 2
 obj
-42483779
+32789387
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
 1
 
-GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::EXIT37
+GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::EXIT35
 this_invocation_nonce
 128
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -18092,7 +18505,7 @@ exception.GetType()
 nonsensical
 2
 gp
-42483779
+32789387
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -18107,7 +18520,7 @@ return
 1.000005224
 1
 this
-12577900
+14221611
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -18126,7 +18539,7 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
-12577900
+14221611
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -18138,7 +18551,7 @@ gp.longitude
 -71060278
 1
 this
-42483779
+32789387
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -18154,7 +18567,7 @@ GeoPoint.Assert.assertNotNull(System.Object\_obj):::ENTER
 this_invocation_nonce
 131
 obj
-12577900
+14221611
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -18170,13 +18583,13 @@ exception.GetType()
 nonsensical
 2
 obj
-12577900
+14221611
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
 1
 
-GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::EXIT37
+GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::EXIT35
 this_invocation_nonce
 130
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -18189,7 +18602,7 @@ exception.GetType()
 nonsensical
 2
 gp
-12577900
+14221611
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -18204,7 +18617,7 @@ return
 1.000005224
 1
 this
-42483779
+32789387
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -18232,19 +18645,19 @@ b
 1.000005224
 1
 msg
-32966247
+47260332
 1
 msg.ToString()
 "From North to Downtown equal to Downtown to North"
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-12577900
+14221611
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -18256,7 +18669,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-12176960
+11099805
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -18280,7 +18693,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-42483779
+32789387
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -18292,7 +18705,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-18634089
+38694667
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -18304,7 +18717,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-46809697
+26669028
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -18316,7 +18729,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-46092238
+60885635
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -18353,19 +18766,19 @@ exception.GetType()
 nonsensical
 2
 msg
-32966247
+47260332
 1
 msg.ToString()
 "From North to Downtown equal to Downtown to North"
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-12577900
+14221611
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -18377,7 +18790,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-12176960
+11099805
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -18401,7 +18814,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-42483779
+32789387
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -18413,7 +18826,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-18634089
+38694667
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -18425,7 +18838,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-46809697
+26669028
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -18437,7 +18850,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-46092238
+60885635
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -18459,7 +18872,7 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
-42483779
+32789387
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -18471,7 +18884,7 @@ gp.longitude
 -71060278
 1
 this
-42483779
+32789387
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -18487,7 +18900,7 @@ GeoPoint.Assert.assertNotNull(System.Object\_obj):::ENTER
 this_invocation_nonce
 134
 obj
-42483779
+32789387
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -18503,13 +18916,13 @@ exception.GetType()
 nonsensical
 2
 obj
-42483779
+32789387
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
 1
 
-GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::EXIT37
+GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint\_gp):::EXIT35
 this_invocation_nonce
 133
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -18522,7 +18935,7 @@ exception.GetType()
 nonsensical
 2
 gp
-42483779
+32789387
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -18537,7 +18950,7 @@ return
 0
 1
 this
-42483779
+32789387
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -18565,19 +18978,19 @@ b
 0
 1
 msg
-28260775
+22689808
 1
 msg.ToString()
 "From North to North 0 miles"
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-12577900
+14221611
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -18589,7 +19002,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-12176960
+11099805
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -18613,7 +19026,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-42483779
+32789387
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -18625,7 +19038,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-18634089
+38694667
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -18637,7 +19050,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-46809697
+26669028
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -18649,7 +19062,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-46092238
+60885635
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -18686,19 +19099,19 @@ exception.GetType()
 nonsensical
 2
 msg
-28260775
+22689808
 1
 msg.ToString()
 "From North to North 0 miles"
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-12577900
+14221611
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -18710,7 +19123,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-12176960
+11099805
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -18734,7 +19147,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-42483779
+32789387
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -18746,7 +19159,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-18634089
+38694667
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -18758,7 +19171,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-46809697
+26669028
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -18770,7 +19183,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-46092238
+60885635
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -18801,13 +19214,13 @@ exception.GetType()
 nonsensical
 2
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-12577900
+14221611
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -18819,7 +19232,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-12176960
+11099805
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -18843,7 +19256,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-42483779
+32789387
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -18855,7 +19268,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-18634089
+38694667
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -18867,7 +19280,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-46809697
+26669028
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -18879,7 +19292,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-46092238
+60885635
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -18901,13 +19314,13 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-12577900
+14221611
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -18919,7 +19332,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-12176960
+11099805
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -18943,7 +19356,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-42483779
+32789387
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -18955,7 +19368,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-18634089
+38694667
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -18967,7 +19380,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-46809697
+26669028
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -18979,7 +19392,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-46092238
+60885635
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -19063,7 +19476,7 @@ longitude
 -71060278
 1
 this
-53020390
+2881685
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -19147,7 +19560,7 @@ longitude
 -71079857
 1
 this
-7421470
+25935173
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -19231,7 +19644,7 @@ longitude
 -71040699
 1
 this
-66793230
+32089967
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -19315,7 +19728,7 @@ longitude
 -71060278
 1
 this
-64268160
+20374254
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -19399,7 +19812,7 @@ longitude
 -71040699
 1
 this
-41542534
+49150562
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -19483,7 +19896,7 @@ longitude
 -71060278
 1
 this
-38338487
+39701876
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -19511,13 +19924,13 @@ exception.GetType()
 nonsensical
 2
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-53020390
+2881685
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -19529,7 +19942,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-66793230
+32089967
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -19553,7 +19966,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-64268160
+20374254
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -19565,7 +19978,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-38338487
+39701876
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -19577,7 +19990,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-41542534
+49150562
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -19589,7 +20002,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-7421470
+25935173
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -19611,13 +20024,13 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-53020390
+2881685
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -19629,7 +20042,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-66793230
+32089967
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -19653,7 +20066,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-64268160
+20374254
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -19665,7 +20078,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-38338487
+39701876
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -19677,7 +20090,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-41542534
+49150562
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -19689,7 +20102,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-7421470
+25935173
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -19708,7 +20121,7 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
-66793230
+32089967
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -19720,7 +20133,7 @@ gp.longitude
 -71040699
 1
 this
-53020390
+2881685
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -19736,7 +20149,7 @@ GeoPoint.Assert.assertNotNull(System.Object\_obj):::ENTER
 this_invocation_nonce
 157
 obj
-66793230
+32089967
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -19752,7 +20165,7 @@ exception.GetType()
 nonsensical
 2
 obj
-66793230
+32089967
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -19765,13 +20178,13 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
-66793230
+32089967
 1
 o.GetType()
 "GeoPoint.GeoPoint"
 1
 this
-53020390
+2881685
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -19783,7 +20196,7 @@ this.longitude
 -71060278
 1
 
-GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT30
+GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT28
 this_invocation_nonce
 158
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -19796,7 +20209,7 @@ exception.GetType()
 nonsensical
 2
 o
-66793230
+32089967
 1
 o.GetType()
 "GeoPoint.GeoPoint"
@@ -19805,7 +20218,7 @@ return
 false
 1
 this
-53020390
+2881685
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -19837,7 +20250,7 @@ test
 true
 1
 
-GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT59
+GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT57
 this_invocation_nonce
 156
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -19850,7 +20263,7 @@ exception.GetType()
 nonsensical
 2
 gp
-66793230
+32089967
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -19865,7 +20278,7 @@ return
 90
 1
 this
-53020390
+2881685
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -19893,19 +20306,19 @@ b
 90
 1
 msg
-9502070
+21772565
 1
 msg.ToString()
 "Downtown headingTo East should be 90"
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-53020390
+2881685
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -19917,7 +20330,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-66793230
+32089967
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -19941,7 +20354,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-64268160
+20374254
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -19953,7 +20366,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-38338487
+39701876
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -19965,7 +20378,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-41542534
+49150562
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -19977,7 +20390,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-7421470
+25935173
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -20014,19 +20427,19 @@ exception.GetType()
 nonsensical
 2
 msg
-9502070
+21772565
 1
 msg.ToString()
 "Downtown headingTo East should be 90"
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-53020390
+2881685
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -20038,7 +20451,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-66793230
+32089967
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -20062,7 +20475,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-64268160
+20374254
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -20074,7 +20487,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-38338487
+39701876
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -20086,7 +20499,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-41542534
+49150562
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -20098,7 +20511,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-7421470
+25935173
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -20120,7 +20533,7 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
-7421470
+25935173
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -20132,7 +20545,7 @@ gp.longitude
 -71079857
 1
 this
-53020390
+2881685
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -20148,7 +20561,7 @@ GeoPoint.Assert.assertNotNull(System.Object\_obj):::ENTER
 this_invocation_nonce
 162
 obj
-7421470
+25935173
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -20164,7 +20577,7 @@ exception.GetType()
 nonsensical
 2
 obj
-7421470
+25935173
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -20177,13 +20590,13 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
-7421470
+25935173
 1
 o.GetType()
 "GeoPoint.GeoPoint"
 1
 this
-53020390
+2881685
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -20195,7 +20608,7 @@ this.longitude
 -71060278
 1
 
-GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT30
+GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT28
 this_invocation_nonce
 163
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -20208,7 +20621,7 @@ exception.GetType()
 nonsensical
 2
 o
-7421470
+25935173
 1
 o.GetType()
 "GeoPoint.GeoPoint"
@@ -20217,7 +20630,7 @@ return
 false
 1
 this
-53020390
+2881685
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -20249,7 +20662,7 @@ test
 true
 1
 
-GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT59
+GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT57
 this_invocation_nonce
 161
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -20262,7 +20675,7 @@ exception.GetType()
 nonsensical
 2
 gp
-7421470
+25935173
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -20277,7 +20690,7 @@ return
 270
 1
 this
-53020390
+2881685
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -20305,19 +20718,19 @@ b
 270
 1
 msg
-18409771
+61735358
 1
 msg.ToString()
 "Downtown headingTo West should be 270"
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-53020390
+2881685
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -20329,7 +20742,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-66793230
+32089967
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -20353,7 +20766,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-64268160
+20374254
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -20365,7 +20778,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-38338487
+39701876
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -20377,7 +20790,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-41542534
+49150562
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -20389,7 +20802,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-7421470
+25935173
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -20426,19 +20839,19 @@ exception.GetType()
 nonsensical
 2
 msg
-18409771
+61735358
 1
 msg.ToString()
 "Downtown headingTo West should be 270"
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-53020390
+2881685
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -20450,7 +20863,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-66793230
+32089967
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -20474,7 +20887,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-64268160
+20374254
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -20486,7 +20899,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-38338487
+39701876
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -20498,7 +20911,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-41542534
+49150562
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -20510,7 +20923,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-7421470
+25935173
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -20532,7 +20945,7 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
-64268160
+20374254
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -20544,7 +20957,7 @@ gp.longitude
 -71060278
 1
 this
-53020390
+2881685
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -20560,7 +20973,7 @@ GeoPoint.Assert.assertNotNull(System.Object\_obj):::ENTER
 this_invocation_nonce
 167
 obj
-64268160
+20374254
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -20576,7 +20989,7 @@ exception.GetType()
 nonsensical
 2
 obj
-64268160
+20374254
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -20589,13 +21002,13 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
-64268160
+20374254
 1
 o.GetType()
 "GeoPoint.GeoPoint"
 1
 this
-53020390
+2881685
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -20607,7 +21020,7 @@ this.longitude
 -71060278
 1
 
-GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT30
+GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT28
 this_invocation_nonce
 168
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -20620,7 +21033,7 @@ exception.GetType()
 nonsensical
 2
 o
-64268160
+20374254
 1
 o.GetType()
 "GeoPoint.GeoPoint"
@@ -20629,7 +21042,7 @@ return
 false
 1
 this
-53020390
+2881685
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -20661,7 +21074,7 @@ test
 true
 1
 
-GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT59
+GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT57
 this_invocation_nonce
 166
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -20674,7 +21087,7 @@ exception.GetType()
 nonsensical
 2
 gp
-64268160
+20374254
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -20689,7 +21102,7 @@ return
 0
 1
 this
-53020390
+2881685
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -20711,7 +21124,7 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
-31470215
+18747312
 1
 message.ToString()
 "Downtown headingTo North should be 0"
@@ -20720,13 +21133,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-53020390
+2881685
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -20738,7 +21151,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-66793230
+32089967
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -20762,7 +21175,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-64268160
+20374254
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -20774,7 +21187,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-38338487
+39701876
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -20786,7 +21199,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-41542534
+49150562
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -20798,7 +21211,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-7421470
+25935173
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -20826,7 +21239,7 @@ exception.GetType()
 nonsensical
 2
 message
-31470215
+18747312
 1
 message.ToString()
 "Downtown headingTo North should be 0"
@@ -20835,13 +21248,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-53020390
+2881685
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -20853,7 +21266,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-66793230
+32089967
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -20877,7 +21290,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-64268160
+20374254
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -20889,7 +21302,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-38338487
+39701876
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -20901,7 +21314,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-41542534
+49150562
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -20913,7 +21326,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-7421470
+25935173
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -20932,7 +21345,7 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
-38338487
+39701876
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -20944,7 +21357,7 @@ gp.longitude
 -71060278
 1
 this
-53020390
+2881685
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -20960,7 +21373,7 @@ GeoPoint.Assert.assertNotNull(System.Object\_obj):::ENTER
 this_invocation_nonce
 172
 obj
-38338487
+39701876
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -20976,7 +21389,7 @@ exception.GetType()
 nonsensical
 2
 obj
-38338487
+39701876
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -20989,13 +21402,13 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
-38338487
+39701876
 1
 o.GetType()
 "GeoPoint.GeoPoint"
 1
 this
-53020390
+2881685
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -21007,7 +21420,7 @@ this.longitude
 -71060278
 1
 
-GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT30
+GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT28
 this_invocation_nonce
 173
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -21020,7 +21433,7 @@ exception.GetType()
 nonsensical
 2
 o
-38338487
+39701876
 1
 o.GetType()
 "GeoPoint.GeoPoint"
@@ -21029,7 +21442,7 @@ return
 false
 1
 this
-53020390
+2881685
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -21061,7 +21474,7 @@ test
 true
 1
 
-GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT59
+GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT57
 this_invocation_nonce
 171
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -21074,7 +21487,7 @@ exception.GetType()
 nonsensical
 2
 gp
-38338487
+39701876
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -21089,7 +21502,7 @@ return
 180
 1
 this
-53020390
+2881685
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -21117,19 +21530,19 @@ b
 180
 1
 msg
-14796483
+34508084
 1
 msg.ToString()
 "Downtown headingTo South should be 180"
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-53020390
+2881685
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -21141,7 +21554,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-66793230
+32089967
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -21165,7 +21578,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-64268160
+20374254
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -21177,7 +21590,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-38338487
+39701876
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -21189,7 +21602,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-41542534
+49150562
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -21201,7 +21614,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-7421470
+25935173
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -21238,19 +21651,19 @@ exception.GetType()
 nonsensical
 2
 msg
-14796483
+34508084
 1
 msg.ToString()
 "Downtown headingTo South should be 180"
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-53020390
+2881685
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -21262,7 +21675,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-66793230
+32089967
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -21286,7 +21699,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-64268160
+20374254
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -21298,7 +21711,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-38338487
+39701876
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -21310,7 +21723,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-41542534
+49150562
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -21322,7 +21735,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-7421470
+25935173
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -21344,7 +21757,7 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
-64268160
+20374254
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -21356,7 +21769,7 @@ gp.longitude
 -71060278
 1
 this
-7421470
+25935173
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -21372,7 +21785,7 @@ GeoPoint.Assert.assertNotNull(System.Object\_obj):::ENTER
 this_invocation_nonce
 177
 obj
-64268160
+20374254
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -21388,7 +21801,7 @@ exception.GetType()
 nonsensical
 2
 obj
-64268160
+20374254
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -21401,13 +21814,13 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
-64268160
+20374254
 1
 o.GetType()
 "GeoPoint.GeoPoint"
 1
 this
-7421470
+25935173
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -21419,7 +21832,7 @@ this.longitude
 -71079857
 1
 
-GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT30
+GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT28
 this_invocation_nonce
 178
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -21432,7 +21845,7 @@ exception.GetType()
 nonsensical
 2
 o
-64268160
+20374254
 1
 o.GetType()
 "GeoPoint.GeoPoint"
@@ -21441,7 +21854,7 @@ return
 false
 1
 this
-7421470
+25935173
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -21473,7 +21886,7 @@ test
 true
 1
 
-GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT59
+GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT57
 this_invocation_nonce
 176
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -21486,7 +21899,7 @@ exception.GetType()
 nonsensical
 2
 gp
-64268160
+20374254
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -21501,7 +21914,7 @@ return
 44.9997765754037
 1
 this
-7421470
+25935173
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -21529,19 +21942,19 @@ b
 44.9997765754037
 1
 msg
-66059488
+42137308
 1
 msg.ToString()
 "West headingTo North should be 45"
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-53020390
+2881685
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -21553,7 +21966,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-66793230
+32089967
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -21577,7 +21990,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-64268160
+20374254
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -21589,7 +22002,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-38338487
+39701876
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -21601,7 +22014,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-41542534
+49150562
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -21613,7 +22026,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-7421470
+25935173
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -21650,19 +22063,19 @@ exception.GetType()
 nonsensical
 2
 msg
-66059488
+42137308
 1
 msg.ToString()
 "West headingTo North should be 45"
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-53020390
+2881685
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -21674,7 +22087,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-66793230
+32089967
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -21698,7 +22111,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-64268160
+20374254
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -21710,7 +22123,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-38338487
+39701876
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -21722,7 +22135,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-41542534
+49150562
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -21734,7 +22147,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-7421470
+25935173
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -21756,7 +22169,7 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
-38338487
+39701876
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -21768,7 +22181,7 @@ gp.longitude
 -71060278
 1
 this
-7421470
+25935173
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -21784,7 +22197,7 @@ GeoPoint.Assert.assertNotNull(System.Object\_obj):::ENTER
 this_invocation_nonce
 182
 obj
-38338487
+39701876
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -21800,7 +22213,7 @@ exception.GetType()
 nonsensical
 2
 obj
-38338487
+39701876
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -21813,13 +22226,13 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
-38338487
+39701876
 1
 o.GetType()
 "GeoPoint.GeoPoint"
 1
 this
-7421470
+25935173
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -21831,7 +22244,7 @@ this.longitude
 -71079857
 1
 
-GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT30
+GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT28
 this_invocation_nonce
 183
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -21844,7 +22257,7 @@ exception.GetType()
 nonsensical
 2
 o
-38338487
+39701876
 1
 o.GetType()
 "GeoPoint.GeoPoint"
@@ -21853,7 +22266,7 @@ return
 false
 1
 this
-7421470
+25935173
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -21885,7 +22298,7 @@ test
 true
 1
 
-GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT59
+GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT57
 this_invocation_nonce
 181
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -21898,7 +22311,7 @@ exception.GetType()
 nonsensical
 2
 gp
-38338487
+39701876
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -21913,7 +22326,7 @@ return
 135.000223424596
 1
 this
-7421470
+25935173
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -21941,19 +22354,19 @@ b
 135.000223424596
 1
 msg
-57664488
+43691456
 1
 msg.ToString()
 "West headingTo South should be 135"
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-53020390
+2881685
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -21965,7 +22378,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-66793230
+32089967
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -21989,7 +22402,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-64268160
+20374254
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -22001,7 +22414,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-38338487
+39701876
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -22013,7 +22426,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-41542534
+49150562
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -22025,7 +22438,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-7421470
+25935173
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -22062,19 +22475,19 @@ exception.GetType()
 nonsensical
 2
 msg
-57664488
+43691456
 1
 msg.ToString()
 "West headingTo South should be 135"
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-53020390
+2881685
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -22086,7 +22499,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-66793230
+32089967
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -22110,7 +22523,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-64268160
+20374254
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -22122,7 +22535,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-38338487
+39701876
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -22134,7 +22547,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-41542534
+49150562
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -22146,7 +22559,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-7421470
+25935173
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -22168,7 +22581,7 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
-64268160
+20374254
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -22180,7 +22593,7 @@ gp.longitude
 -71060278
 1
 this
-66793230
+32089967
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -22196,7 +22609,7 @@ GeoPoint.Assert.assertNotNull(System.Object\_obj):::ENTER
 this_invocation_nonce
 187
 obj
-64268160
+20374254
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -22212,7 +22625,7 @@ exception.GetType()
 nonsensical
 2
 obj
-64268160
+20374254
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -22225,13 +22638,13 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
-64268160
+20374254
 1
 o.GetType()
 "GeoPoint.GeoPoint"
 1
 this
-66793230
+32089967
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -22243,7 +22656,7 @@ this.longitude
 -71040699
 1
 
-GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT30
+GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT28
 this_invocation_nonce
 188
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -22256,7 +22669,7 @@ exception.GetType()
 nonsensical
 2
 o
-64268160
+20374254
 1
 o.GetType()
 "GeoPoint.GeoPoint"
@@ -22265,7 +22678,7 @@ return
 false
 1
 this
-66793230
+32089967
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -22297,7 +22710,7 @@ test
 true
 1
 
-GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT59
+GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT57
 this_invocation_nonce
 186
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -22310,7 +22723,7 @@ exception.GetType()
 nonsensical
 2
 gp
-64268160
+20374254
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -22325,7 +22738,7 @@ return
 315.000223424596
 1
 this
-66793230
+32089967
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -22353,19 +22766,19 @@ b
 315.000223424596
 1
 msg
-49218346
+57678784
 1
 msg.ToString()
 "East headingTo North should be 315"
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-53020390
+2881685
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -22377,7 +22790,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-66793230
+32089967
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -22401,7 +22814,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-64268160
+20374254
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -22413,7 +22826,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-38338487
+39701876
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -22425,7 +22838,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-41542534
+49150562
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -22437,7 +22850,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-7421470
+25935173
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -22474,19 +22887,19 @@ exception.GetType()
 nonsensical
 2
 msg
-49218346
+57678784
 1
 msg.ToString()
 "East headingTo North should be 315"
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-53020390
+2881685
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -22498,7 +22911,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-66793230
+32089967
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -22522,7 +22935,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-64268160
+20374254
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -22534,7 +22947,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-38338487
+39701876
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -22546,7 +22959,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-41542534
+49150562
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -22558,7 +22971,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-7421470
+25935173
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -22580,7 +22993,7 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 gp
-38338487
+39701876
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -22592,7 +23005,7 @@ gp.longitude
 -71060278
 1
 this
-66793230
+32089967
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -22608,7 +23021,7 @@ GeoPoint.Assert.assertNotNull(System.Object\_obj):::ENTER
 this_invocation_nonce
 192
 obj
-38338487
+39701876
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -22624,7 +23037,7 @@ exception.GetType()
 nonsensical
 2
 obj
-38338487
+39701876
 1
 obj.GetType()
 "GeoPoint.GeoPoint"
@@ -22637,13 +23050,13 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 o
-38338487
+39701876
 1
 o.GetType()
 "GeoPoint.GeoPoint"
 1
 this
-66793230
+32089967
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -22655,7 +23068,7 @@ this.longitude
 -71040699
 1
 
-GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT30
+GeoPoint.GeoPoint.equals(System.Object\_o):::EXIT28
 this_invocation_nonce
 193
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -22668,7 +23081,7 @@ exception.GetType()
 nonsensical
 2
 o
-38338487
+39701876
 1
 o.GetType()
 "GeoPoint.GeoPoint"
@@ -22677,7 +23090,7 @@ return
 false
 1
 this
-66793230
+32089967
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -22709,7 +23122,7 @@ test
 true
 1
 
-GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT59
+GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint\_gp):::EXIT57
 this_invocation_nonce
 191
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -22722,7 +23135,7 @@ exception.GetType()
 nonsensical
 2
 gp
-38338487
+39701876
 1
 gp.GetType()
 "GeoPoint.GeoPoint"
@@ -22737,7 +23150,7 @@ return
 224.999776575404
 1
 this
-66793230
+32089967
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -22765,19 +23178,19 @@ b
 224.999776575404
 1
 msg
-40311937
+49347015
 1
 msg.ToString()
 "East headingTo South should be 225"
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-53020390
+2881685
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -22789,7 +23202,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-66793230
+32089967
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -22813,7 +23226,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-64268160
+20374254
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -22825,7 +23238,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-38338487
+39701876
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -22837,7 +23250,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-41542534
+49150562
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -22849,7 +23262,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-7421470
+25935173
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -22886,19 +23299,19 @@ exception.GetType()
 nonsensical
 2
 msg
-40311937
+49347015
 1
 msg.ToString()
 "East headingTo South should be 225"
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-53020390
+2881685
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -22910,7 +23323,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-66793230
+32089967
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -22934,7 +23347,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-64268160
+20374254
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -22946,7 +23359,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-38338487
+39701876
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -22958,7 +23371,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-41542534
+49150562
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -22970,7 +23383,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-7421470
+25935173
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -23001,13 +23414,13 @@ exception.GetType()
 nonsensical
 2
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-53020390
+2881685
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -23019,7 +23432,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-66793230
+32089967
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -23043,7 +23456,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-64268160
+20374254
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -23055,7 +23468,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-38338487
+39701876
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -23067,7 +23480,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-41542534
+49150562
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -23079,7 +23492,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-7421470
+25935173
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -23101,13 +23514,13 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-53020390
+2881685
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -23119,7 +23532,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-66793230
+32089967
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -23143,7 +23556,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-64268160
+20374254
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -23155,7 +23568,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-38338487
+39701876
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -23167,7 +23580,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-41542534
+49150562
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -23179,7 +23592,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-7421470
+25935173
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -23263,7 +23676,7 @@ longitude
 -71060278
 1
 this
-27263117
+41469957
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -23347,7 +23760,7 @@ longitude
 -71079857
 1
 this
-44041463
+37685299
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -23431,7 +23844,7 @@ longitude
 -71040699
 1
 this
-60828848
+3623379
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -23515,7 +23928,7 @@ longitude
 -71060278
 1
 this
-10588721
+32610412
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -23599,7 +24012,7 @@ longitude
 -71040699
 1
 this
-28189627
+25058257
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -23683,7 +24096,7 @@ longitude
 -71060278
 1
 this
-52380055
+24197721
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -23711,13 +24124,13 @@ exception.GetType()
 nonsensical
 2
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-27263117
+41469957
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -23729,7 +24142,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-60828848
+3623379
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -23753,7 +24166,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-10588721
+32610412
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -23765,7 +24178,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-52380055
+24197721
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -23777,7 +24190,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-28189627
+25058257
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -23789,7 +24202,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-44041463
+37685299
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -23811,13 +24224,13 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-27263117
+41469957
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -23829,7 +24242,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-60828848
+3623379
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -23853,7 +24266,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-10588721
+32610412
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -23865,7 +24278,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-52380055
+24197721
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -23877,7 +24290,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-28189627
+25058257
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -23889,7 +24302,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-44041463
+37685299
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -23973,7 +24386,7 @@ longitude
 -71060278
 1
 this
-1658455
+16452903
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -23992,7 +24405,7 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 this
-27263117
+41469957
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -24004,7 +24417,7 @@ this.longitude
 -71060278
 1
 
-GeoPoint.GeoPoint.hashCode():::EXIT13
+GeoPoint.GeoPoint.hashCode():::EXIT11
 this_invocation_nonce
 219
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -24020,7 +24433,7 @@ return
 1678004229
 1
 this
-27263117
+41469957
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -24039,7 +24452,7 @@ GeoPoint.GeoPoint.REP_SCALE_FACTOR
 1000000
 1
 this
-1658455
+16452903
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -24051,7 +24464,7 @@ this.longitude
 -71060278
 1
 
-GeoPoint.GeoPoint.hashCode():::EXIT13
+GeoPoint.GeoPoint.hashCode():::EXIT11
 this_invocation_nonce
 220
 GeoPoint.GeoPoint.REP_SCALE_FACTOR
@@ -24067,7 +24480,7 @@ return
 1678004229
 1
 this
-1658455
+16452903
 1
 this.GetType()
 "GeoPoint.GeoPoint"
@@ -24089,7 +24502,7 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 message
-14926099
+13858403
 1
 message.ToString()
 ".equals() objects must have the same .hashCode()"
@@ -24098,13 +24511,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-27263117
+41469957
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -24116,7 +24529,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-60828848
+3623379
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -24140,7 +24553,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-10588721
+32610412
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -24152,7 +24565,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-52380055
+24197721
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -24164,7 +24577,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-28189627
+25058257
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -24176,7 +24589,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-44041463
+37685299
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -24204,7 +24617,7 @@ exception.GetType()
 nonsensical
 2
 message
-14926099
+13858403
 1
 message.ToString()
 ".equals() objects must have the same .hashCode()"
@@ -24213,13 +24626,13 @@ test
 true
 1
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-27263117
+41469957
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -24231,7 +24644,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-60828848
+3623379
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -24255,7 +24668,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-10588721
+32610412
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -24267,7 +24680,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-52380055
+24197721
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -24279,7 +24692,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-28189627
+25058257
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -24291,7 +24704,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-44041463
+37685299
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -24319,13 +24732,13 @@ exception.GetType()
 nonsensical
 2
 this
-36783718
+50145638
 1
 this.GetType()
 "GeoPoint.GeoPointTest"
 1
 this.gpDowntown
-27263117
+41469957
 1
 this.gpDowntown.GetType()
 "GeoPoint.GeoPoint"
@@ -24337,7 +24750,7 @@ this.gpDowntown.longitude
 -71060278
 1
 this.gpEast
-60828848
+3623379
 1
 this.gpEast.GetType()
 "GeoPoint.GeoPoint"
@@ -24361,7 +24774,7 @@ this.gpMit.longitude
 nonsensical
 2
 this.gpNorth
-10588721
+32610412
 1
 this.gpNorth.GetType()
 "GeoPoint.GeoPoint"
@@ -24373,7 +24786,7 @@ this.gpNorth.longitude
 -71060278
 1
 this.gpSouth
-52380055
+24197721
 1
 this.gpSouth.GetType()
 "GeoPoint.GeoPoint"
@@ -24385,7 +24798,7 @@ this.gpSouth.longitude
 -71060278
 1
 this.gpSouthEast
-28189627
+25058257
 1
 this.gpSouthEast.GetType()
 "GeoPoint.GeoPoint"
@@ -24397,7 +24810,7 @@ this.gpSouthEast.longitude
 -71040699
 1
 this.gpWest
-44041463
+37685299
 1
 this.gpWest.GetType()
 "GeoPoint.GeoPoint"
@@ -24416,7 +24829,7 @@ GeoPoint.GeoPointTest.tolerance
 0.01
 1
 args
-5425146
+32102252
 1
 args[..]
 []
