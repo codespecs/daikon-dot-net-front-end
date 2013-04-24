@@ -12,7 +12,7 @@ this.val == orig(val)
 ===========================================================================
 ExceptionTest.CubingClass.DoCube():::ENTER
 ===========================================================================
-ExceptionTest.CubingClass.DoCube():::EXIT12
+ExceptionTest.CubingClass.DoCube():::EXIT10
 ===========================================================================
 ExceptionTest.CubingClass.DoCube():::EXIT
 this.val == orig(this.val)

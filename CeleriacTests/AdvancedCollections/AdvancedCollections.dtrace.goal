@@ -76,6 +76,78 @@ parent parent AdvancedCollections.AdvancedCollections:::CLASS 1
     flags synthetic to_string
     comparability -22
 
+ppt AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd):::EXIT7
+ppt-type subexit
+parent parent AdvancedCollections.AdvancedCollections:::CLASS 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type System.Collections.Generic.HashSet`1[System.String]
+    rep-type hashcode
+    comparability -22
+  variable return[..]
+    var-kind array
+    enclosing-var return
+    array 1
+    dec-type java.lang.String[]
+    rep-type hashcode[]
+    flags no_dups not_ordered
+    comparability -22
+  variable return[..].ToString()
+    var-kind function ToString()
+    enclosing-var return[..]
+    array 1
+    dec-type java.lang.String[]
+    rep-type java.lang.String[]
+    flags synthetic to_string
+    comparability -22
+  variable set
+    var-kind variable
+    dec-type System.Collections.Generic.HashSet`1[System.String]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable set[..]
+    var-kind array
+    enclosing-var set
+    array 1
+    dec-type java.lang.String[]
+    rep-type hashcode[]
+    flags no_dups not_ordered
+    comparability -22
+  variable set[..].ToString()
+    var-kind function ToString()
+    enclosing-var set[..]
+    array 1
+    dec-type java.lang.String[]
+    rep-type java.lang.String[]
+    flags synthetic to_string
+    comparability -22
+  variable stringToAdd
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable stringToAdd.ToString()
+    var-kind function ToString()
+    enclosing-var stringToAdd
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability -22
+
 ppt AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd):::EXIT9
 ppt-type subexit
 parent parent AdvancedCollections.AdvancedCollections:::CLASS 1
@@ -481,7 +553,7 @@ AdvancedCollections.AdvancedCollections.Main(System.String[]\_args):::ENTER
 this_invocation_nonce
 2
 args
-20908074
+29578451
 1
 args[..]
 []
@@ -498,7 +570,7 @@ AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.Hash
 this_invocation_nonce
 4
 set
-53954942
+64879470
 1
 set[..]
 []
@@ -507,13 +579,13 @@ set[..].ToString()
 []
 1
 stringToAdd
-15832433
+47044325
 1
 stringToAdd.ToString()
 "duck"
 1
 
-AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd):::EXIT9
+AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd):::EXIT7
 this_invocation_nonce
 4
 exception
@@ -523,25 +595,25 @@ exception.GetType()
 nonsensical
 2
 return
-53954942
+64879470
 1
 return[..]
-[15832433]
+[47044325]
 1
 return[..].ToString()
 ["duck"]
 1
 set
-53954942
+64879470
 1
 set[..]
-[15832433]
+[47044325]
 1
 set[..].ToString()
 ["duck"]
 1
 stringToAdd
-15832433
+47044325
 1
 stringToAdd.ToString()
 "duck"
@@ -551,22 +623,22 @@ AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.Hash
 this_invocation_nonce
 5
 set
-53954942
+64879470
 1
 set[..]
-[15832433]
+[47044325]
 1
 set[..].ToString()
 ["duck"]
 1
 stringToAdd
-15832433
+47044325
 1
 stringToAdd.ToString()
 "duck"
 1
 
-AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd):::EXIT9
+AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd):::EXIT7
 this_invocation_nonce
 5
 exception
@@ -576,25 +648,25 @@ exception.GetType()
 nonsensical
 2
 return
-53954942
+64879470
 1
 return[..]
-[15832433]
+[47044325]
 1
 return[..].ToString()
 ["duck"]
 1
 set
-53954942
+64879470
 1
 set[..]
-[15832433]
+[47044325]
 1
 set[..].ToString()
 ["duck"]
 1
 stringToAdd
-15832433
+47044325
 1
 stringToAdd.ToString()
 "duck"
@@ -604,22 +676,22 @@ AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.Hash
 this_invocation_nonce
 6
 set
-53954942
+64879470
 1
 set[..]
-[15832433]
+[47044325]
 1
 set[..].ToString()
 ["duck"]
 1
 stringToAdd
-8274172
+20745743
 1
 stringToAdd.ToString()
 "goose"
 1
 
-AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd):::EXIT9
+AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd):::EXIT7
 this_invocation_nonce
 6
 exception
@@ -629,25 +701,25 @@ exception.GetType()
 nonsensical
 2
 return
-53954942
+64879470
 1
 return[..]
-[15832433 8274172]
+[47044325 20745743]
 1
 return[..].ToString()
 ["duck" "goose"]
 1
 set
-53954942
+64879470
 1
 set[..]
-[15832433 8274172]
+[47044325 20745743]
 1
 set[..].ToString()
 ["duck" "goose"]
 1
 stringToAdd
-8274172
+20745743
 1
 stringToAdd.ToString()
 "goose"
@@ -657,22 +729,22 @@ AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.Hash
 this_invocation_nonce
 7
 set
-53954942
+64879470
 1
 set[..]
-[15832433 8274172]
+[47044325 20745743]
 1
 set[..].ToString()
 ["duck" "goose"]
 1
 stringToAdd
-7358688
+52493967
 1
 stringToAdd.ToString()
 "geese"
 1
 
-AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd):::EXIT9
+AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd):::EXIT7
 this_invocation_nonce
 7
 exception
@@ -682,25 +754,25 @@ exception.GetType()
 nonsensical
 2
 return
-53954942
+64879470
 1
 return[..]
-[15832433 8274172 7358688]
+[47044325 20745743 52493967]
 1
 return[..].ToString()
 ["duck" "goose" "geese"]
 1
 set
-53954942
+64879470
 1
 set[..]
-[15832433 8274172 7358688]
+[47044325 20745743 52493967]
 1
 set[..].ToString()
 ["duck" "goose" "geese"]
 1
 stringToAdd
-7358688
+52493967
 1
 stringToAdd.ToString()
 "geese"
@@ -710,10 +782,10 @@ AdvancedCollections.AdvancedCollections.DescribeSet(System.Collections.Generic.H
 this_invocation_nonce
 8
 set
-53954942
+64879470
 1
 set[..]
-[15832433 8274172 7358688]
+[47044325 20745743 52493967]
 1
 set[..].ToString()
 ["duck" "goose" "geese"]
@@ -729,10 +801,10 @@ exception.GetType()
 nonsensical
 2
 set
-53954942
+64879470
 1
 set[..]
-[15832433 8274172 7358688]
+[47044325 20745743 52493967]
 1
 set[..].ToString()
 ["duck" "goose" "geese"]
@@ -752,7 +824,7 @@ AdvancedCollections.AdvancedCollections.Main(System.String[]\_args):::EXIT3
 this_invocation_nonce
 2
 args
-20908074
+29578451
 1
 args[..]
 []
