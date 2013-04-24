@@ -46,7 +46,5 @@ this[].val elements == this.val
 ===========================================================================
 LinkedLists.Node..ctor(System.Int32 n):::ENTER
 ===========================================================================
-LinkedLists.Node..ctor(System.Int32 n):::EXIT8
-===========================================================================
 LinkedLists.Node..ctor(System.Int32 n):::EXIT
 this.val == orig(n)

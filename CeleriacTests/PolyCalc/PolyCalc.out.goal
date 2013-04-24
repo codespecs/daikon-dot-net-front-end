@@ -38,4 +38,4 @@ testCompareToNaNs
 testIsPosAndIsNeg
 testIsNaN
 testToString
-Program complete. Exiting DNFE.
+Program complete. Exiting Celeriac.
