@@ -4,8 +4,6 @@ this.GetType() == RatNum.class
 ===========================================================================
 RatNum..ctor(System.Int32 n):::ENTER
 ===========================================================================
-RatNum..ctor(System.Int32 n):::EXIT11
-===========================================================================
 RatNum..ctor(System.Int32 n):::EXIT
 this.numer == orig(n)
 this.denom == 1
@@ -43,7 +41,7 @@ rn != null
 rn.GetType() == RatNum.class
 rn.GetType() == this.GetType()
 ===========================================================================
-RatNum.CompareTo(RatNum rn):::EXIT16
+RatNum.CompareTo(RatNum rn):::EXIT17
 return == rn.denom
 return == this.denom
 return == orig(rn.denom)
@@ -52,7 +50,7 @@ return == 0
 return != rn.numer
 return != this.numer
 ===========================================================================
-RatNum.CompareTo(RatNum rn):::EXIT27
+RatNum.CompareTo(RatNum rn):::EXIT28
 return == 1
 rn.denom >= 1
 rn.numer >= -1
@@ -62,7 +60,7 @@ rn.denom > this.denom
 this.denom != this.numer
 return == (plume.MathMDE.gcd(rn.denom, rn.numer))
 ===========================================================================
-RatNum.CompareTo(RatNum rn):::EXIT38
+RatNum.CompareTo(RatNum rn):::EXIT39
 return == -1
 rn.denom == 0
 this.denom >= 1
@@ -72,7 +70,7 @@ return <= this.numer
 rn.denom != rn.numer
 rn.denom < this.denom
 ===========================================================================
-RatNum.CompareTo(RatNum rn):::EXIT47
+RatNum.CompareTo(RatNum rn):::EXIT48
 rn.denom >= 1
 rn.numer >= -1
 this.denom >= 1
@@ -89,19 +87,19 @@ obj != null
 obj.GetType() == RatNum.class
 obj.GetType() == this.GetType()
 ===========================================================================
-RatNum.Equals(System.Object obj):::EXIT29
+RatNum.Equals(System.Object obj):::EXIT30
 return == true
 this.denom == 0
 this.denom != this.numer
 ===========================================================================
-RatNum.Equals(System.Object obj):::EXIT29;condition="return == true"
+RatNum.Equals(System.Object obj):::EXIT30;condition="return == true"
 ===========================================================================
-RatNum.Equals(System.Object obj):::EXIT44
+RatNum.Equals(System.Object obj):::EXIT46
 this.numer >= -1
 ===========================================================================
-RatNum.Equals(System.Object obj):::EXIT44;condition="return == true"
+RatNum.Equals(System.Object obj):::EXIT46;condition="return == true"
 ===========================================================================
-RatNum.Equals(System.Object obj):::EXIT44;condition="not(return == true)"
+RatNum.Equals(System.Object obj):::EXIT46;condition="not(return == true)"
 ===========================================================================
 RatNum.Equals(System.Object obj):::EXIT
 this.denom == orig(this.denom)
@@ -231,13 +229,13 @@ this.denom >= 1
 RatNum.isNegative():::ENTER
 this.denom >= 0
 ===========================================================================
-RatNum.isNegative():::EXIT11
+RatNum.isNegative():::EXIT12
 (return == true)  ==>  (this.denom one of { 1, 2 })
 (return == true)  ==>  (this.numer == -1)
 ===========================================================================
-RatNum.isNegative():::EXIT11;condition="return == true"
+RatNum.isNegative():::EXIT12;condition="return == true"
 ===========================================================================
-RatNum.isNegative():::EXIT11;condition="not(return == true)"
+RatNum.isNegative():::EXIT12;condition="not(return == true)"
 ===========================================================================
 RatNum.isNegative():::EXIT
 this.denom == orig(this.denom)
@@ -258,13 +256,13 @@ RatNum.isPositive():::ENTER
 this.denom >= 0
 this.numer >= -1
 ===========================================================================
-RatNum.isPositive():::EXIT11
+RatNum.isPositive():::EXIT12
 (return == false)  ==>  (this.denom one of { 1, 2 })
 (return == false)  ==>  (this.numer one of { -1, 0 })
 ===========================================================================
-RatNum.isPositive():::EXIT11;condition="return == true"
+RatNum.isPositive():::EXIT12;condition="return == true"
 ===========================================================================
-RatNum.isPositive():::EXIT11;condition="not(return == true)"
+RatNum.isPositive():::EXIT12;condition="not(return == true)"
 ===========================================================================
 RatNum.isPositive():::EXIT
 this.denom == orig(this.denom)
@@ -511,8 +509,6 @@ RatNumTest..ctor(System.String name):::ENTER
 name has only one value
 name.ToString() == "test"
 ===========================================================================
-RatNumTest..ctor(System.String name):::EXIT263
-===========================================================================
 RatNumTest..ctor(System.String name):::EXIT
 name.ToString() == "test"
 name.ToString() == orig(name.ToString())
@@ -636,9 +632,9 @@ this.ratnanans.GetType() == orig(this.ratnans.GetType())
 this.ratnanans.GetType() == orig(this.ratnums.GetType())
 ===========================================================================
 RatNumTest.assertEquals(System.Object a, System.Object b):::ENTER
-a == b
 a != null
 a.GetType() == System.String.class
+b != null
 a.GetType() == b.GetType()
 ===========================================================================
 RatNumTest.assertEquals(System.Object a, System.Object b):::EXIT7
