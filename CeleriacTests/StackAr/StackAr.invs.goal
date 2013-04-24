@@ -24,15 +24,15 @@ StackAr.isEmpty():::ENTER
 this.theArray != null
 this.theArray[].GetType() == [MyInteger, MyInteger, System.Object, MyInteger]
 ===========================================================================
-StackAr.isEmpty():::EXIT8
+StackAr.isEmpty():::EXIT6
 (return == false)  <==>  (this.topOfStack >= 0)
 (return == false)  ==>  (this.theArray[].GetType() == [MyInteger, MyInteger, System.Object, MyInteger])
 (return == true)  <==>  (this.topOfStack == -1)
 (return == true)  ==>  (this.theArray[] contains only nulls and has only one value, of length 4)
 ===========================================================================
-StackAr.isEmpty():::EXIT8;condition="return == true"
+StackAr.isEmpty():::EXIT6;condition="return == true"
 ===========================================================================
-StackAr.isEmpty():::EXIT8;condition="not(return == true)"
+StackAr.isEmpty():::EXIT6;condition="not(return == true)"
 ===========================================================================
 StackAr.isEmpty():::EXIT
 this.theArray == orig(this.theArray)
@@ -58,7 +58,7 @@ this.topOfStack >= 0
 StackAr.isFull():::ENTER
 this.theArray[].GetType() == [MyInteger, MyInteger, System.Object, MyInteger]
 ===========================================================================
-StackAr.isFull():::EXIT13
+StackAr.isFull():::EXIT11
 (return == false)  <==>  (this.topOfStack <= 2)
 (return == false)  ==>  (this.theArray != null)
 (return == false)  ==>  (this.topOfStack >= -1)
@@ -68,9 +68,9 @@ StackAr.isFull():::EXIT13
 (return == true)  ==>  (this.theArray[] contains no nulls and has only one value, of length 4)
 (return == true)  ==>  (this.theArray[].GetType() == [MyInteger, MyInteger, System.Object, MyInteger])
 ===========================================================================
-StackAr.isFull():::EXIT13;condition="return == true"
+StackAr.isFull():::EXIT11;condition="return == true"
 ===========================================================================
-StackAr.isFull():::EXIT13;condition="not(return == true)"
+StackAr.isFull():::EXIT11;condition="not(return == true)"
 ===========================================================================
 StackAr.isFull():::EXIT
 this.theArray == orig(this.theArray)
@@ -129,9 +129,14 @@ this.topOfStack - orig(this.topOfStack) - 1 == 0
 StackAr.top():::ENTER
 this.theArray != null
 this.theArray[].GetType() == [MyInteger, MyInteger, System.Object, MyInteger]
-this.topOfStack >= -1
 ===========================================================================
-StackAr.top():::EXIT19
+StackAr.top():::EXIT10
+return == null
+this.theArray[] contains only nulls and has only one value, of length 4
+this.topOfStack == -1
+===========================================================================
+StackAr.top():::EXIT17
+return in this.theArray[]
 ===========================================================================
 StackAr.top():::EXIT
 this.theArray == orig(this.theArray)
@@ -139,8 +144,6 @@ this.theArray[] == orig(this.theArray[])
 this.topOfStack == orig(this.topOfStack)
 this.theArray != null
 this.theArray[].GetType() == [MyInteger, MyInteger, System.Object, MyInteger]
-this.topOfStack >= -1
-return in this.theArray[]
 return.GetType() != this.theArray.GetType()
 return.GetType() in this.theArray[].GetType()
 this.theArray.GetType() == orig(this.theArray.GetType())
@@ -149,7 +152,7 @@ StackAr.topAndPop():::ENTER
 this.theArray[] contains only nulls and has only one value, of length 4
 this.topOfStack == -1
 ===========================================================================
-StackAr.topAndPop():::EXIT31
+StackAr.topAndPop():::EXIT10
 ===========================================================================
 StackAr.topAndPop():::EXIT
 this.theArray == orig(this.theArray)

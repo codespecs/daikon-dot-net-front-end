@@ -1,11 +1,11 @@
 MyInteger..ctor(System.Int32\_x) ENTER/6: 3 EXIT8/18: 3
 StackAr..ctor(System.Int32\_capacity) ENTER/6: 3 EXIT12/30: 3
-StackAr.isEmpty() ENTER/21: 29 EXIT8/30: 29
-StackAr.isFull() ENTER/21: 19 EXIT13/30: 19
+StackAr.isEmpty() ENTER/21: 29 EXIT6/30: 29
+StackAr.isFull() ENTER/21: 19 EXIT11/30: 19
 StackAr.makeEmpty() ENTER/21: 5 EXIT27/27: 5
 StackAr.push(System.Object\_x) ENTER/27: 7 EXIT23/33: 7
-StackAr.top() ENTER/21: 12 EXIT19/33: 12
-StackAr.topAndPop() ENTER/21: 2 EXIT31/33: 2
+StackAr.top() ENTER/21: 12 EXIT10/33: 5 EXIT17/33: 7
+StackAr.topAndPop() ENTER/21: 2 EXIT10/33: 2
 StackArTester..cctor() ENTER/21: 1 EXIT6/27: 1
 StackArTester.Main(System.String[]\_args) ENTER/30: 1 EXIT4/36: 1
 StackArTester.doNew(System.Int32\_size) ENTER/24: 2 EXIT11/30: 2
