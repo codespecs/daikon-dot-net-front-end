@@ -111,6 +111,11 @@ namespace Comparability
       }
     }
 
+    /// <summary>
+    /// Returns a mapping from parameter names to argument expressions.
+    /// </summary>
+    /// <param name="callsite">the callsite</param>
+    /// <returns>a mapping from parameter names to argument expressions</returns>
     private Dictionary<string, string> ZipArguments(IMethodCall callsite)
     {
       Contract.Requires(callsite != null);
@@ -129,6 +134,14 @@ namespace Comparability
       return paramsToArgs;
     }
 
+    /// <summary>
+    /// Applies comparability information from the given methods to this method. The analysis 
+    /// both calls to the methods and inheritance relationships. Comparability information is 
+    /// propogated up the override / implementation hierarchy.
+    /// </summary>
+    /// <param name="methodData">method summaries</param>
+    /// <remarks>TWS: is the method return value being dropped from the comparability update?</remarks>
+    /// <returns><c>true</c> if the comparability information changed</returns>
     public bool ApplyMethodSummaries(Dictionary<IMethodDefinition, MethodVisitor> methodData)
     {
       Contract.Requires(methodData != null);
@@ -164,6 +177,8 @@ namespace Comparability
         }
         else if (calleeDefinition.ParameterCount > 0)
         {
+          // For methods with no comparability summary, use the types of the parameters as a basis
+          // for comparability
           HashSet<IParameterDefinition> fix = new HashSet<IParameterDefinition>(calleeDefinition.Parameters);
 
           var opinion = ParameterTypeComparability(fix);
@@ -174,9 +189,43 @@ namespace Comparability
           modified |= MergeOpinion(rebased);
         }
       }
+
+      var overriding = methodData.Where(m => TypeManager.GetContractMethods(m.Key).Contains(Method));
+      foreach (var o in overriding)
+      {
+        var bindings = new Dictionary<string,string>();
+        for (int i = 0; i < Method.ParameterCount; i++)
+        {
+          // as above, generate a mapping from this parameters to the names in the summary to apply
+          bindings.Add(o.Key.Parameters.ElementAt(i).Name.Value, Method.Parameters.ElementAt(i).Name.Value);
+        }
+
+        bool sameClass = o.Key.ContainingType.ResolvedType == Names.Type;
+
+        // Incorporate parameter opinion
+        // 1. Generate opinion for parameter comparability
+        // 2. Rebase using argument bindings and remove unused parameters
+        // 3. Merge the comparability sets
+        var names = Union(
+            o.Value.ParameterNames, o.Value.StaticNames,
+            (sameClass ? Names.ThisNames() : new HashSet<string>()));
+
+        var opinion = o.Value.ForNames(names);
+        var rebased = Filter(Rebase(opinion, bindings), o.Value.ParameterNames);
+     
+        modified |= MergeOpinion(rebased);
+      }
+
       return modified;
     }
 
+    /// <summary>
+    /// Compute comparability for a method's parameters based on the types of the parameters. Two parameters
+    /// are considered comparable if one can be assigned to the other.
+    /// </summary>
+    /// <param name="parameters">the parameters</param>
+    /// <seealso cref="TypeHelper.TypesAreAssignmentCompatible"/>
+    /// <returns>comparability sets for the parameters</returns>
     public static HashSet<HashSet<string>> ParameterTypeComparability(IEnumerable<IParameterDefinition> parameters)
     {
       Contract.Requires(parameters != null);
