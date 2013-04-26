@@ -1401,7 +1401,7 @@ namespace Celeriac
     /// </summary>
     /// <param name="method"></param>
     /// <returns>the method definition which defines the contract for the specified method</returns>
-    public static List<IMethodDefinition> GetContractMethods(IMethodDefinition method)
+    public static ReadOnlyCollection<IMethodDefinition> GetContractMethods(IMethodDefinition method)
     {
       var impl = from m in MemberHelper.GetImplicitlyImplementedInterfaceMethods(method)
                  where !(m.ContainingTypeDefinition is Dummy)
@@ -1409,7 +1409,7 @@ namespace Celeriac
 
       if (impl.Count() > 0)
       {
-        return impl.ToList();
+        return impl.ToList().AsReadOnly();
       }
 
       var expl = from m in MemberHelper.GetExplicitlyOverriddenMethods(method)
@@ -1418,16 +1418,16 @@ namespace Celeriac
 
       if (expl.Count() > 0)
       {
-        return expl.ToList();
+        return expl.ToList().AsReadOnly();
       }
 
       var baseMethod = MemberHelper.GetImplicitlyOverriddenBaseClassMethod(method);
       if (baseMethod != null && !(baseMethod.ContainingTypeDefinition is Dummy))
       {
-        return new[] { baseMethod }.ToList();
+        return new[] { baseMethod }.ToList().AsReadOnly();
       }
 
-      return new List<IMethodDefinition>();
+      return new List<IMethodDefinition>().AsReadOnly();
     }
 
     #region IDisposable Members

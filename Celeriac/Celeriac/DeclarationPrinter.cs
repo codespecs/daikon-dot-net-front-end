@@ -34,24 +34,29 @@ namespace Celeriac
   /// The parent variable of this variable in the program point/variable hierarchy
   /// </summary>
   /// <remarks>See Section A.3.3 Variable declarations of the developer's manual</remarks>
-  public struct VariableParent
+  public class VariableParent
   {
-    public readonly string parentPpt;
-    public readonly int relId;
-    public readonly string parentVariable;
+    public string ParentPpt { get; private set; }
+    public int RelId { get; private set; }
+    public string ParentVariable { get; private set; }
 
     public const int ObjectRelId = 1;
-   
-    public VariableParent(string parentPpt, int relId, string parentVariable = null)
+
+    public VariableParent(string parentPpt, int relId)
+      : this(parentPpt, relId, null)
+    { 
+    }
+
+    public VariableParent(string parentPpt, int relId, string parentVariable)
     {
-      this.parentPpt = parentPpt;
-      this.relId = relId;
-      this.parentVariable = parentVariable;
+      this.ParentPpt = parentPpt;
+      this.RelId = relId;
+      this.ParentVariable = parentVariable;
     }
 
     public VariableParent WithName(Func<string, string> modifier)
     {
-      return new VariableParent(parentPpt, relId, parentVariable != null ? modifier(parentVariable) : null);
+      return new VariableParent(ParentPpt, RelId, ParentVariable != null ? modifier(ParentVariable) : null);
     }
   }
 
@@ -520,9 +525,9 @@ namespace Celeriac
         this.WritePair("comparability", ComparabilityConstant, 2);
       }
 
-      foreach (var parent in parents.Where(p => ShouldPrintParentPptIfNecessary(p.parentPpt)))
+      foreach (var parent in parents.Where(p => ShouldPrintParentPptIfNecessary(p.ParentPpt)))
       {
-        var s = parent.parentPpt + " " + parent.relId + (parent.parentVariable != null ? (" " + parent.parentVariable) : string.Empty);
+        var s = parent.ParentPpt + " " + parent.RelId + (parent.ParentVariable != null ? (" " + parent.ParentVariable) : string.Empty);
         this.WritePair("parent", s, 2);
       }
     }
@@ -611,9 +616,9 @@ namespace Celeriac
         this.WritePair("comparability", ComparabilityConstant, IndentsForEntry);
       }
 
-      foreach (var parent in parents.Where(p => ShouldPrintParentPptIfNecessary(p.parentPpt)))
+      foreach (var parent in parents.Where(p => ShouldPrintParentPptIfNecessary(p.ParentPpt)))
       {
-        var s = parent.parentPpt + " " + parent.relId + (parent.parentVariable != null ? (" " + parent.parentVariable) : string.Empty);
+        var s = parent.ParentPpt + " " + parent.RelId + (parent.ParentVariable != null ? (" " + parent.ParentVariable) : string.Empty);
         this.WritePair("parent", s, IndentsForEntry);
       }
 
