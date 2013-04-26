@@ -48,6 +48,11 @@ namespace Celeriac
       this.relId = relId;
       this.parentVariable = parentVariable;
     }
+
+    public VariableParent WithName(Func<string, string> modifier)
+    {
+      return new VariableParent(parentPpt, relId, parentVariable != null ? modifier(parentVariable) : null);
+    }
   }
 
   /// <summary>
@@ -214,6 +219,11 @@ namespace Celeriac
       this.PrintPreliminaries();
     }
 
+    public static Func<string, string> FormInstanceName(string fieldOrMethod)
+    {
+      return n => string.Join(".", n, fieldOrMethod);
+    }
+
     /// <summary>
     /// Print the declaration for the given variable, and all its children
     /// </summary>
@@ -343,11 +353,12 @@ namespace Celeriac
               MarkIf(field.IsLiteral || (flags.HasFlag(VariableFlags.is_reference_immutable) && field.IsInitOnly), VariableFlags.is_reference_immutable),
               MarkIf(field.IsLiteral || (flags.HasFlag(VariableFlags.is_reference_immutable) && field.IsInitOnly && TypeManager.IsImmutable(field.FieldType)), VariableFlags.is_value_immutable));
 
-          DeclareVariable(name + "." + field.Name, field.FieldType, originatingType,
+          DeclareVariable(FormInstanceName(field.Name)(name), field.FieldType, originatingType,
               VariableKind.field, enclosingVar: name, relativeName: field.Name,
               nestingDepth: nestingDepth + 1,
               flags: fieldFlags,
-              parents: parents, typeContext: typeContext, methodContext: methodContext);
+              parents: parents.Select(p => p.WithName(FormInstanceName(field.Name))), 
+              typeContext: typeContext, methodContext: methodContext);
         }
       }
 
@@ -357,12 +368,13 @@ namespace Celeriac
       {
         var immutability = MarkIf(flags.HasFlag(VariableFlags.is_reference_immutable), VariableFlags.is_reference_immutable | VariableFlags.is_value_immutable);
 
-        DeclareVariable(name + "." + GetTypeMethodCall, TypeManager.TypeType, originatingType,
+        DeclareVariable(FormInstanceName(GetTypeMethodCall)(name), TypeManager.TypeType, originatingType,
             VariableKind.function,
           // Parent must be reference immutable to for ToType() to remain constant
             ExtendFlags(VariableFlags.classname, VariableFlags.synthetic, immutability),
             enclosingVar: name, relativeName: GetTypeMethodCall,
-            nestingDepth: nestingDepth + 1, parents: parents,
+            nestingDepth: nestingDepth + 1, 
+            parents: parents.Select(p => p.WithName(FormInstanceName(GetTypeMethodCall))),
             typeContext: typeContext, methodContext: methodContext);
       }
 
@@ -371,13 +383,14 @@ namespace Celeriac
         var immutability = MarkIf(
             flags.HasFlag(VariableFlags.is_reference_immutable) && flags.HasFlag(VariableFlags.is_value_immutable), VariableFlags.is_value_immutable);
 
-        DeclareVariable(name + "." + ToStringMethodCall, TypeManager.StringType,
+        DeclareVariable(FormInstanceName(ToStringMethodCall)(name), TypeManager.StringType,
             originatingType,
             VariableKind.function,
-          // Parent must be value-immutable for ToString() value to remain constant (assuming it doesn't access outside state)
+            // Parent must be value-immutable for ToString() value to remain constant (assuming it doesn't access outside state)
             ExtendFlags(VariableFlags.to_string, VariableFlags.synthetic, immutability),
             enclosingVar: name, relativeName: ToStringMethodCall,
-            nestingDepth: nestingDepth + 1, parents: parents,
+            nestingDepth: nestingDepth + 1, 
+            parents: parents.Select(p => p.WithName(FormInstanceName(ToStringMethodCall))),
             typeContext: typeContext, methodContext: methodContext);
       }
 
@@ -390,7 +403,9 @@ namespace Celeriac
             MarkIf(flags.HasFlag(VariableFlags.is_reference_immutable) && method.ReturnType.IsValueType, VariableFlags.is_reference_immutable),
             MarkIf(flags.HasFlag(VariableFlags.is_reference_immutable) && flags.HasFlag(VariableFlags.is_value_immutable) && TypeManager.IsImmutable(method.ReturnType), VariableFlags.is_value_immutable));
 
-        DeclareVariable(SanitizedMethodExpression(method, name),
+        Func<string, string> formName = n => SanitizedMethodExpression(method, n);
+
+        DeclareVariable(formName(name),
           method.ReturnType,
           originatingType,
           enclosingVar: name,
@@ -398,7 +413,7 @@ namespace Celeriac
           kind: VariableKind.function,
           flags: pureMethodFlags,
           nestingDepth: nestingDepth + 1,
-          parents: parents,
+          parents: parents.Select(p => p.WithName(formName)),
           typeContext: typeContext, methodContext: methodContext);
       }
 
@@ -409,10 +424,14 @@ namespace Celeriac
           && celeriacArgs.LinkedLists
           && this.typeManager.IsLinkedListImplementer(type))
       {
+        Func<string, string> formName = n => n + "[..]";
+
         FieldInfo linkedListField = TypeManager.FindLinkedListField(type);
-        PrintList(name + "[..]", linkedListField.FieldType, name, originatingType,
+        PrintList(formName(name), linkedListField.FieldType, name, originatingType,
             VariableKind.array,
-            nestingDepth: nestingDepth, parents: parents, flags: flags);
+            nestingDepth: nestingDepth, 
+            parents: parents.Select(p => p.WithName(formName)),
+            flags: flags);
       }
     }
 
@@ -617,9 +636,11 @@ namespace Celeriac
       {
         if (!this.typeManager.ShouldIgnoreField(elementType, field))
         {
-          PrintList(name + "." + field.Name, field.FieldType, name,
+         
+          PrintList(FormInstanceName(field.Name)(name), field.FieldType, name,
               originatingType, VariableKind.field, relativeName: field.Name,
-              nestingDepth: nestingDepth + 1, parents: parents,
+              nestingDepth: nestingDepth + 1, 
+              parents: parents.Select(p => p.WithName(FormInstanceName(field.Name))),
               typeContext: typeContext, methodContext: methodContext);
         }
       }
@@ -642,21 +663,23 @@ namespace Celeriac
 
       if (!elementType.IsSealed)
       {
-        PrintList(name + "." + GetTypeMethodCall, TypeManager.TypeType, name,
+        PrintList(FormInstanceName(GetTypeMethodCall)(name), TypeManager.TypeType, name,
             originatingType, VariableKind.function,
             ExtendFlags(VariableFlags.classname, VariableFlags.synthetic),
             relativeName: GetTypeMethodCall,
-            nestingDepth: nestingDepth + 1, parents: parents,
+            nestingDepth: nestingDepth + 1,
+            parents: parents.Select(p => p.WithName(FormInstanceName(GetTypeMethodCall))),
             typeContext: typeContext, methodContext: methodContext);
       }
 
       if (elementType == TypeManager.StringType)
       {
-        PrintList(name + "." + ToStringMethodCall, TypeManager.StringType, name,
+        PrintList(FormInstanceName(ToStringMethodCall)(name), TypeManager.StringType, name,
             originatingType, VariableKind.function,
             ExtendFlags(VariableFlags.to_string, VariableFlags.synthetic),
             relativeName: ToStringMethodCall,
-            nestingDepth: nestingDepth + 1, parents: parents,
+            nestingDepth: nestingDepth + 1, 
+            parents: parents.Select(p => p.WithName(FormInstanceName(ToStringMethodCall))),
             typeContext: typeContext, methodContext: methodContext);
       }
 
@@ -673,13 +696,16 @@ namespace Celeriac
         var pureMethodFlags = ExtendFlags(
           method.Name.StartsWith(GetterPropertyPrefix) ? VariableFlags.is_property : VariableFlags.none);
 
-        PrintList(SanitizedMethodExpression(method, name),
+        Func<string, string> newName = n => SanitizedMethodExpression(method, n);
+
+        PrintList(newName(name),
           method.ReturnType, name,
           originatingType,
           relativeName: methodName,
           kind: VariableKind.function,
           flags: pureMethodFlags,
-          nestingDepth: nestingDepth + 1, parents: parents,
+          nestingDepth: nestingDepth + 1, 
+          parents: parents.Select(p => p.WithName(newName)),
           typeContext: typeContext, methodContext: methodContext);
       }
     }
@@ -1330,11 +1356,12 @@ namespace Celeriac
       // Print the type of the list if it's not primitive
       if (!elementType.IsSealed)
       {
-        DeclareVariable(name + "." + GetTypeMethodCall, TypeManager.TypeType,
+        DeclareVariable(FormInstanceName(GetTypeMethodCall)(name), TypeManager.TypeType,
             originatingType,
             VariableKind.function, VariableFlags.classname | VariableFlags.synthetic,
             enclosingVar: name, relativeName: GetTypeMethodCall,
-            nestingDepth: nestingDepth + 1, parents: parents,
+            nestingDepth: nestingDepth + 1, 
+            parents: parents.Select(p => p.WithName((FormInstanceName(GetTypeMethodCall)))),
             typeContext: typeContext, methodContext: methodContext);
       }
 
@@ -1344,8 +1371,12 @@ namespace Celeriac
         return;
       }
 
-      PrintList(name + "[..]", elementType, name, originatingType, VariableKind.array,
-          nestingDepth: nestingDepth, parents: parents, flags: collectionFlags,
+      Func<string, string> newName = n => n + "[..]";
+
+      PrintList(newName(name), elementType, name, originatingType, VariableKind.array,
+          nestingDepth: nestingDepth, 
+          parents: parents.Select(p => p.WithName(newName)), 
+          flags: collectionFlags,
           typeContext: typeContext, methodContext: methodContext);
     }
 
