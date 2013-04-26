@@ -1832,13 +1832,20 @@ namespace Celeriac
         {
           // Load the name of the parameter onto the stack, print the parameter
           // to the decls file if necessary.
-          generator.Emit(OperationCode.Ldstr, param.Name.ToString());
+          generator.Emit(OperationCode.Ldstr, param.Name.Value);
           if (this.printDeclarations)
           {
-            var parents = from m in TypeManager.GetContractMethods(method)
-                          select new VariableParent(  
+            Func<string, string> nullIfSame = x => x.Equals(param.Name.Value) ? null : x;
+
+            var parents = new List<VariableParent>();
+            foreach (var m in TypeManager.GetContractMethods(method))
+            {
+              Contract.Assume(m.ParameterCount == method.ParameterCount);
+              parents.Add(new VariableParent(  
                              DeclarationPrinter.SanitizeProgramPointName(FormatMethodName(transition, m)),
-                             pptRelId[FormatMethodName(transition, m)]);
+                             pptRelId[FormatMethodName(transition, m)],
+                             nullIfSame(m.Parameters.ElementAt(i - 1).Name.Value)));
+            }
 
             this.declPrinter.PrintParameter(param.Name.ToString(),
               this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param.Type), 
