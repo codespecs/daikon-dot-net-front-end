@@ -1,0 +1,440 @@
+===========================================================================
+Generics.BaseNodeMultiple:::OBJECT
+
+===========================================================================
+Generics.BaseNodeMultiple..ctor(T t, U u):::ENTER
+
+===========================================================================
+Generics.BaseNodeMultiple..ctor(T t, U u):::EXIT
+
+this.t == orig(t)
+this.u == orig(u)
+this.t.GetType() == orig(t.GetType())
+this.u.GetType() == orig(u.GetType())
+===========================================================================
+Generics.DelegateTestClass:::OBJECT
+
+this has only one value
+this.GetType() == Generics.DelegateTestClass.class
+===========================================================================
+Generics.DelegateTestClass..ctor():::EXIT
+
+===========================================================================
+Generics.DelegateTestStack:::OBJECT
+
+this has only one value
+this.GetType() == Generics.DelegateTestStack`1[System.Double].class
+this.stackEvent._methodBase == null
+this.stackEvent._methodPtr has only one value
+this.stackEvent._methodPtrAux == null
+this.stackEvent._target has only one value
+===========================================================================
+Generics.DelegateTestStack..ctor():::EXIT
+
+this.stackEvent == null
+===========================================================================
+Generics.DelegateTestStack.add_stackEvent(Generics.StackEventHandler<Generics.DelegateTestStack<T>, Generics.DelegateTestStack<T>.StackEventArgs> value):::ENTER
+
+this.stackEvent == null
+value has only one value
+value._methodBase == null
+value._methodPtr has only one value
+value._methodPtrAux == null
+value._target has only one value
+value._target.GetType() == Generics.DelegateTestClass.class
+===========================================================================
+Generics.DelegateTestStack.add_stackEvent(Generics.StackEventHandler<Generics.DelegateTestStack<T>, Generics.DelegateTestStack<T>.StackEventArgs> value):::EXIT24
+
+===========================================================================
+Generics.DelegateTestStack.add_stackEvent(Generics.StackEventHandler<Generics.DelegateTestStack<T>, Generics.DelegateTestStack<T>.StackEventArgs> value):::EXIT
+
+this.stackEvent._methodBase == value._methodBase
+this.stackEvent._methodPtr == value._methodPtr
+this.stackEvent._methodPtrAux == value._methodPtrAux
+this.stackEvent._target == value._target
+value._methodBase == orig(value._methodBase)
+value._methodPtr == orig(value._methodPtr)
+value._methodPtrAux == orig(value._methodPtrAux)
+value._target == orig(value._target)
+this.stackEvent has only one value
+value._methodBase == null
+value._methodPtr has only one value
+value._methodPtrAux == null
+value._target has only one value
+value._target.GetType() == Generics.DelegateTestClass.class
+===========================================================================
+Generics.GenericList:::OBJECT
+
+this.head.GetType() == Generics.GenericList`1+Node[System.Int32].class
+===========================================================================
+Generics.GenericList..ctor():::EXIT
+
+this.head == null
+===========================================================================
+Generics.GenericList.AddHead(T t):::ENTER
+
+t.GetType() == System.Int32.class
+this has only one value
+this.GetType() == Generics.GenericList`1[System.Int32].class
+t.GetType() != this.head.GetType()
+this.GetType() != this.head.GetType()
+===========================================================================
+Generics.GenericList.AddHead(T t):::EXIT12
+
+===========================================================================
+Generics.GenericList.AddHead(T t):::EXIT
+
+this.head.data == orig(t)
+this.head.next == orig(this.head)
+this.head.GetType() == orig(this.head.GetType())
+===========================================================================
+Generics.GenericList.GetEnumerator():::ENTER
+
+this has only one value
+this.GetType() == Generics.GenericList`1[System.Int32].class
+this.head has only one value
+this.head.data has only one value
+this.head.next has only one value
+===========================================================================
+Generics.GenericList.GetEnumerator():::EXIT10
+
+===========================================================================
+Generics.GenericList.GetEnumerator():::EXIT
+
+this.head == orig(this.head)
+this.head.data == orig(this.head.data)
+this.head.next == orig(this.head.next)
+return has only one value
+return.GetType() == Generics.GenericList`1+<GetEnumerator>d__0[System.Int32].class
+this.head has only one value
+this.head.data has only one value
+this.head.next has only one value
+===========================================================================
+Generics.GenericList.GetLast():::ENTER
+
+this.head == null
+===========================================================================
+Generics.GenericList.GetLast():::EXIT27
+
+===========================================================================
+Generics.GenericList.GetLast():::EXIT
+
+this.head == orig(this.head)
+return == null
+return.GetType() == System.Int32.class
+this.head == null
+===========================================================================
+Generics.GenericList.Node:::OBJECT
+
+this.GetType() == Generics.GenericList`1+Node[System.Int32].class
+this.data.GetType() == System.Int32.class
+this.next.GetType() == Generics.GenericList`1+Node[System.Int32].class
+this[] contains no duplicates
+this[] elements != null
+this[].data contains no duplicates
+this in this[]
+this.GetType() == this.next.GetType()
+this.data in this[].data
+this.data.GetType() != this.next.GetType()
+this.next.data in this[].data
+this.next.next in this[].next
+===========================================================================
+Generics.GenericList.Node..ctor(T t):::ENTER
+
+t.GetType() == System.Int32.class
+===========================================================================
+Generics.GenericList.Node..ctor(T t):::EXIT
+
+this.data == orig(t)
+this.next == null
+this.data.GetType() == orig(t.GetType())
+===========================================================================
+Generics.GenericList.Node.Data.get():::ENTER
+
+this[].data.GetType() elements == System.Int32.class
+this.data.GetType() in this[].data.GetType()
+this.next in this[].next
+===========================================================================
+Generics.GenericList.Node.Data.get():::EXIT6
+
+===========================================================================
+Generics.GenericList.Node.Data.get():::EXIT
+
+return == this.data
+this.data == orig(this.data)
+this.next == orig(this.next)
+this.next.data == orig(this.next.data)
+this.next.next == orig(this.next.next)
+this[].data == orig(this[].data)
+this[].next == orig(this[].next)
+return.GetType() == System.Int32.class
+this[].data.GetType() elements == System.Int32.class
+return in this[].data
+return.GetType() == this.data.GetType()
+return.GetType() != this.next.GetType()
+return.GetType() in this[].data.GetType()
+return.GetType() == orig(this.data.GetType())
+this.next in this[].next
+this.next.GetType() == orig(this.GetType())
+this.next.GetType() == orig(this.next.GetType())
+===========================================================================
+Generics.GenericList.Node.Next.get():::ENTER
+
+this[].data.GetType() elements == System.Int32.class
+this.data.GetType() in this[].data.GetType()
+this.next in this[].next
+===========================================================================
+Generics.GenericList.Node.Next.get():::EXIT6
+
+===========================================================================
+Generics.GenericList.Node.Next.get():::EXIT
+
+return == this.next
+return == orig(this.next)
+return.data == this.next.data
+return.data == orig(this.next.data)
+return.next == this.next.next
+return.next == orig(this.next.next)
+return[] == return[].next.next
+return[].GetType() == return[].data.GetType()
+return[].data == return[].next.data
+return[].next == return[].next.next
+this.data == orig(this.data)
+this[].data == orig(this[].data)
+this[].next == orig(this[].next)
+return.GetType() == Generics.GenericList`1+Node[System.Int32].class
+return.data.GetType() == System.Int32.class
+return.next.GetType() == Generics.GenericList`1+Node[System.Int32].class
+return[].GetType() == []
+return[].data.GetType() elements == System.Int32.class
+return[].next.data == []
+return[].next.next == []
+this[].data.GetType() elements == System.Int32.class
+return in this[].next
+return.GetType() != return.data.GetType()
+return.GetType() == return.next.GetType()
+return.GetType() in return[].GetType()
+return.GetType() != this.data.GetType()
+return.GetType() == this.next.GetType()
+return.GetType() == orig(this.GetType())
+return.GetType() == orig(this.next.GetType())
+return.data in return[].data
+return.data in return[].next.data
+return.data in this[].data
+return.data.GetType() != return.next.GetType()
+return.data.GetType() in return[].GetType()
+return.data.GetType() in return[].data.GetType()
+return.data.GetType() == this.data.GetType()
+return.data.GetType() in this[].data.GetType()
+return.data.GetType() != orig(this.GetType())
+return.next in return[].next
+return.next in return[].next.next
+return.next in this[].next
+return.next.GetType() in return[].GetType()
+return.next.GetType() != this.data.GetType()
+return.next.GetType() == orig(this.GetType())
+return.next.data in return[].data
+return.next.data in return[].next.data
+return.next.data in this[].data
+return.next.next in return[].next
+return.next.next in return[].next.next
+return.next.next in this[].next
+return[] is the reverse of return[].next.next
+return[] is a subsequence of this[].next
+return[] is a subsequence of orig(this[])
+return[].data is the reverse of return[].next.data
+return[].data is a subsequence of this[].data
+return[].next is the reverse of return[].next.next
+return[].next is a subsequence of this[].next
+this.data.GetType() in this[].data.GetType()
+this.data.GetType() == orig(this.data.GetType())
+===========================================================================
+Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node value):::ENTER
+
+value[] == value[].next.next
+value[].GetType() == value[].data.GetType()
+value[].data == value[].next.data
+value[].next == value[].next.next
+this.next == null
+this[].data.GetType() == [System.Int32]
+this[].next == [null]
+value.GetType() == Generics.GenericList`1+Node[System.Int32].class
+value.data.GetType() == System.Int32.class
+value.next.GetType() == Generics.GenericList`1+Node[System.Int32].class
+value[].GetType() == []
+value[].data.GetType() elements == System.Int32.class
+value[].next.data == []
+value[].next.next == []
+this[] elements == this
+this.GetType() == value.GetType()
+this.GetType() != value.data.GetType()
+this.GetType() == value.next.GetType()
+this[].data elements == this.data
+this.data.GetType() != value.GetType()
+this.data.GetType() == value.data.GetType()
+this.data.GetType() != value.next.GetType()
+value.data.GetType() in this[].data.GetType()
+value.GetType() != value.data.GetType()
+value.GetType() == value.next.GetType()
+value.GetType() in value[].GetType()
+value.data in value[].data
+value.data in value[].next.data
+value.data.GetType() != value.next.GetType()
+value.data.GetType() in value[].GetType()
+value.data.GetType() in value[].data.GetType()
+value.next in value[].next
+value.next in value[].next.next
+value.next.GetType() in value[].GetType()
+value.next.data in value[].data
+value.next.data in value[].next.data
+value.next.next in value[].next
+value.next.next in value[].next.next
+value[] is the reverse of value[].next.next
+value[].data is the reverse of value[].next.data
+value[].next is the reverse of value[].next.next
+===========================================================================
+Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node value):::EXIT4
+
+===========================================================================
+Generics.GenericList.Node.Next.set(Generics.GenericList<T>.Node value):::EXIT
+
+this.data == orig(this.data)
+this.next == orig(value)
+this.next.data == value.data
+this.next.next == value.next
+value.data == orig(value.data)
+value.next == orig(value.next)
+value.next.data == orig(value.next.data)
+value.next.next == orig(value.next.next)
+value[].data == value[].next.data
+value[].data == orig(value[].data)
+value[].data.GetType() == value[].next.GetType()
+value[].next == value[].next.next
+value[].next == orig(value[].next)
+value[].next.data == orig(value[].next.data)
+value[].next.next == orig(value[])
+value[].next.next == orig(value[].next.next)
+value.data.GetType() == System.Int32.class
+value.next.GetType() == Generics.GenericList`1+Node[System.Int32].class
+value[].data.GetType() elements == System.Int32.class
+value[].next.GetType() == []
+value[].next.data == []
+value[].next.next == []
+orig(this[].data) elements == this.data
+this.data in orig(this[].data)
+this.data.GetType() == value.data.GetType()
+this.data.GetType() != value.next.GetType()
+this.data.GetType() == orig(this.data.GetType())
+this.next.GetType() != value.data.GetType()
+this.next.GetType() == value.next.GetType()
+this.next.GetType() in value[].next.GetType()
+this.next.GetType() == orig(this.GetType())
+this.next.GetType() == orig(value.GetType())
+value.data in value[].data
+value.data in value[].next.data
+value.data.GetType() != value.next.GetType()
+value.data.GetType() in value[].data.GetType()
+value.data.GetType() in value[].next.GetType()
+value.data.GetType() != orig(this.GetType())
+value.data.GetType() in orig(this[].data.GetType())
+value.data.GetType() == orig(value.data.GetType())
+value.next in value[].next
+value.next in value[].next.next
+value.next.GetType() in value[].next.GetType()
+value.next.GetType() == orig(this.GetType())
+value.next.GetType() == orig(value.next.GetType())
+value.next.data in value[].data
+value.next.data in value[].next.data
+value.next.next in value[].next
+value.next.next in value[].next.next
+value[].data is the reverse of value[].next.data
+value[].next is the reverse of value[].next.next
+value[].next.next is the reverse of orig(value[])
+===========================================================================
+Generics.GenericsTest.AddToList1(System.Collections.Generic.List<System.Int32> intList1):::ENTER
+
+intList1 has only one value
+intList1[] == []
+===========================================================================
+Generics.GenericsTest.AddToList1(System.Collections.Generic.List<System.Int32> intList1):::EXIT13
+
+===========================================================================
+Generics.GenericsTest.AddToList1(System.Collections.Generic.List<System.Int32> intList1):::EXIT
+
+intList1[] == [1, 2, 3]
+===========================================================================
+Generics.GenericsTest.PickSmaller(T a, T b, T smaller):::ENTER
+
+a has only one value
+a.GetType() == System.Int32.class
+b has only one value
+smaller == null
+a.GetType() == b.GetType()
+a.GetType() == smaller.GetType()
+===========================================================================
+Generics.GenericsTest.PickSmaller(T a, T b, T smaller):::EXIT23
+
+===========================================================================
+Generics.GenericsTest.PickSmaller(T a, T b, T smaller):::EXIT
+
+===========================================================================
+Generics.GenericsTest.Swap(System.Collections.Generic.List<T> list1, System.Collections.Generic.List<T> list2):::ENTER
+
+list1 has only one value
+list1.GetType() == System.Collections.Generic.List`1[System.Object].class
+list1[] contains no nulls and has only one value, of length 3
+list1[].GetType() == [System.Int32, System.Int32, System.Int32]
+list2 has only one value
+list2[] contains no nulls and has only one value, of length 3
+===========================================================================
+Generics.GenericsTest.Swap(System.Collections.Generic.List<T> list1, System.Collections.Generic.List<T> list2):::EXIT18
+
+===========================================================================
+Generics.GenericsTest.Swap(System.Collections.Generic.List<T> list1, System.Collections.Generic.List<T> list2):::EXIT
+
+list1[] == orig(list2[])
+list2[] == orig(list1[])
+list1[] contains no nulls and has only one value, of length 3
+list1[].GetType() == [System.Int32, System.Int32, System.Int32]
+list2[] contains no nulls and has only one value, of length 3
+===========================================================================
+Generics.GenericsTest.SwapIfGreater(T lhs, T rhs):::ENTER
+
+lhs has only one value
+lhs.GetType() == System.Int32.class
+rhs has only one value
+===========================================================================
+Generics.GenericsTest.SwapIfGreater(T lhs, T rhs):::EXIT25
+
+===========================================================================
+Generics.GenericsTest.SwapIfGreater(T lhs, T rhs):::EXIT
+
+===========================================================================
+Generics.Node4:::OBJECT
+
+this.GetType() == Generics.Node4`1[System.String].class
+===========================================================================
+Generics.Node4..ctor(T t, System.Int32 i):::ENTER
+
+i one of { 4, 5 }
+t.GetType() == System.String.class
+===========================================================================
+Generics.Node4..ctor(T t, System.Int32 i):::EXIT
+
+===========================================================================
+Generics.Node5:::OBJECT
+
+===========================================================================
+Generics.Node5..ctor(T t, U u):::ENTER
+
+===========================================================================
+Generics.Node5..ctor(T t, U u):::EXIT
+
+===========================================================================
+Generics.NodeItem:::OBJECT
+
+this has only one value
+this.GetType() == Generics.NodeItem`1[Generics.DelegateTestExampleClass].class
+===========================================================================
+Generics.NodeItem..ctor():::EXIT
+
