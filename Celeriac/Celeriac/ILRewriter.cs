@@ -1774,9 +1774,10 @@ namespace Celeriac
     {
       Contract.Requires(methodDef != null);
 
-      string methodName = MemberHelper.GetMemberSignature(methodDef,
+      string methodName = MemberHelper.GetMemberSignature(MemberHelper.UninstantiateAndUnspecialize(methodDef),
             NameFormattingOptions.ParameterName |
             NameFormattingOptions.SmartTypeName |
+            NameFormattingOptions.UseGenericTypeNameSuffix | // interfaces can have same name, but different # of generic args
             NameFormattingOptions.Signature);
 
       // Implicit overloads could produce unique program points with duplicate names.
