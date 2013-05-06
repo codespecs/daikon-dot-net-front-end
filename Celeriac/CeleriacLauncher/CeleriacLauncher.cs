@@ -48,6 +48,7 @@ namespace CeleriacLauncher
       {
         // Run the program from memory
         Assembly rewrittenAssembly = Assembly.Load(resultStream.ToArray());
+        typeManager.SetInstrumentedAssembly(rewrittenAssembly);
         resultStream.Close();
         ExecuteProgramFromMemory(args, celeriacArgs, rewrittenAssembly);
       }

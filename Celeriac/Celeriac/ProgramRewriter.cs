@@ -191,7 +191,6 @@ namespace Celeriac
       AssemblySummary comparabilityManager = null;
       IAssembly assembly = module as IAssembly;
       mutable = MetadataCopier.DeepCopy(host, assembly);
-      typeManager.SetAssemblyIdentity(UnitHelper.GetAssemblyIdentity(mutable));
 
       if (celeriacArgs.StaticComparability || celeriacArgs.GenerateComparability)
       {
