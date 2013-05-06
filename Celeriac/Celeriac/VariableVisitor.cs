@@ -540,7 +540,7 @@ namespace Celeriac
                                          Thread.CurrentThread.ManagedThreadId.ToString());
         }
 
-        Contract.Assume(occurrences == null, "null occurence count entry found for thread" +
+        Contract.Assume(occurrences != null, "null occurence count entry found for thread" +
           Thread.CurrentThread.ManagedThreadId.ToString());
 
         if (!occurrences.TryGetValue(ppt, out occurenceCount))
