@@ -44,6 +44,8 @@ namespace Comparability
       Contract.Invariant(ReferencedTypes != null);
       Contract.Invariant(Contract.ForAll(namedCalls, c => Names.NameTable.ContainsKey(c)));
       Contract.Invariant(Contract.ForAll(arrayIndexes.Keys, a => ids.ContainsKey(a)));
+      // Array Indexes should correspond to the array contents entry: e.g., this.array[..] not this.array
+      Contract.Invariant(Contract.ForAll(arrayIndexes.Keys, a => NameBuilder.IsElementsExpression(a)));
       Contract.Invariant(Contract.ForAll(arrayIndexes.Values, i => i.Count > 0));
 
       // Not true b/c a name is added whenever comparability is queried by Celeriacs's IL visitors
@@ -310,6 +312,11 @@ namespace Comparability
       }
     }
 
+    /// <summary>
+    /// Returns the comparability set for the given array expression.
+    /// </summary>
+    /// <param name="array">the array expression</param>
+    /// <returns>the comparability set for the given array expression</returns>
     public HashSet<string> IndexComparabilityOpinion(string array)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(array));
@@ -498,28 +505,11 @@ namespace Comparability
       return result;
     }
 
-    public int GetArrayIndexComparability(string arrayName)
-    {
-      Contract.Requires(!string.IsNullOrWhiteSpace(arrayName));
-      Contract.Ensures(Contract.Result<int>() >= 0);
-
-      if (!ids.ContainsKey(arrayName))
-      {
-        ids.Add(arrayName, comparability.AddElement());
-      }
-
-      if (!arrayIndexes.ContainsKey(arrayName))
-      {
-        var synthetic = "<index>" + arrayName;
-
-        // create a dummy index
-        var cmp = new HashSet<string>();
-        cmp.Add(synthetic);
-        arrayIndexes.Add(arrayName, cmp);
-      }
-      return GetComparability(arrayIndexes[arrayName].First());
-    }
-
+    /// <summary>
+    /// Returns the compability set id for the expression with the given name.
+    /// </summary>
+    /// <param name="name">the expression</param>
+    /// <returns>the compability set id for the expression with the given name</returns>
     public int GetComparability(string name)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(name));
@@ -528,6 +518,12 @@ namespace Comparability
       return comparability.FindSet(GetId(name));
     }
 
+    /// <summary>
+    /// Returns the tracking id for the expression with the given name; if the expression
+    /// is currently not tracked, a new id is created.
+    /// </summary>
+    /// <param name="name">the expression</param>
+    /// <returns>the tracking id for the expression with the given name</returns>
     private int GetId(string name)
     {
       Contract.Requires(!string.IsNullOrEmpty(name));
@@ -564,6 +560,12 @@ namespace Comparability
       }
     }
 
+    /// <summary>
+    /// Mark the expressions with the given ids as being in the same comparability set.
+    /// </summary>
+    /// <param name="idsToMark">the expression ids</param>
+    /// <seealso cref="ids"/>
+    /// <returns><c>true</c> if any changes to comparability were made</returns>
     private bool Mark(IEnumerable<int> idsToMark)
     {
       bool modified = false;
@@ -579,11 +581,22 @@ namespace Comparability
       return modified;
     }
 
+    /// <summary>
+    /// Mark the expressions with the given names as being in the same comparability set.
+    /// </summary>
+    /// <param name="names">the expression names</param>
+    /// <returns><c>true</c> if any changes to comparability were made</returns>
     private bool Mark(IEnumerable<string> names)
     {
       return Mark(names.Select(n => GetId(n)));
     }
 
+    /// <summary>
+    /// Mark the given expressions as being in the same comparability set; expressions without names
+    /// are ignored.
+    /// </summary>
+    /// <param name="exprs">the expressions</param>
+    /// <returns><c>true</c> if any changes to comparability were made</returns>
     private bool Mark(IEnumerable<IExpression> exprs)
     {
       return Mark(exprs.Select(x => GetId(x)).Where(x => x.HasValue).Select(x => x.Value));
@@ -632,27 +645,30 @@ namespace Comparability
     {
       if (arrayIndexer.Indices.Count() == 1 && Names.NameTable.ContainsKey(arrayIndexer.IndexedObject))
       {
+        // the array expression, e.g.: this.array
         var arrayName = Names.NameTable[arrayIndexer.IndexedObject];
+        // the contents expression, e.g.: this.array[..]
+        var arrayContents = NameBuilder.FormElementsExpression(arrayName);
 
         // mark array indexes as compatible
         var index = arrayIndexer.Indices.First();
         if (Names.NameTable.ContainsKey(index))
         {
           // The array reference may not have been used in a comparable way yet.
-          if (!ids.ContainsKey(arrayName))
+          if (!ids.ContainsKey(arrayContents))
           {
-            ids.Add(arrayName, comparability.AddElement());
+            ids.Add(arrayContents, comparability.AddElement());
           }
 
-          if (!arrayIndexes.ContainsKey(arrayName))
+          if (!arrayIndexes.ContainsKey(arrayContents))
           {
-            arrayIndexes.Add(arrayName, new HashSet<string>());
+            arrayIndexes.Add(arrayContents, new HashSet<string>());
           }
 
-          if (arrayIndexes[arrayName].Add(Names.NameTable[index]))
+          if (arrayIndexes[arrayContents].Add(Names.NameTable[index]))
           {
             // we haven't seen this index before, so re-mark indexes
-            Mark(arrayIndexes[arrayName]);
+            Mark(arrayIndexes[arrayContents]);
           }
         }
         

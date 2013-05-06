@@ -509,16 +509,7 @@ namespace Celeriac
 
       if (comparabilityManager != null)
       {
-        if (type.IsArray)
-        {
-          this.WritePair("comparability",
-              comparabilityManager.GetComparability(name, typeManager, typeContext, methodContext) + "[" + comparabilityManager.GetElementComparability(name, typeManager, typeContext, methodContext) + "]",
-              2);
-        }
-        else
-        {
-          this.WritePair("comparability", comparabilityManager.GetComparability(name, typeManager, typeContext, methodContext), 2);
-        }
+        this.WritePair("comparability", comparabilityManager.GetComparability(name, typeManager, typeContext, methodContext), 2);
       }
       else
       {
@@ -606,10 +597,11 @@ namespace Celeriac
 
       if (comparabilityManager != null)
       {
-        this.WritePair(
-            "comparability",
-            comparabilityManager.GetElementComparability(enclosingVar, typeManager, typeContext, methodContext),
-            IndentsForEntry);
+        this.WritePair("comparability",
+              string.Format("{0}[{1}]",
+                comparabilityManager.GetComparability(name, typeManager, typeContext, methodContext),
+                comparabilityManager.GetIndexComparability(name, typeManager, typeContext, methodContext)),
+              2);
       }
       else
       {
