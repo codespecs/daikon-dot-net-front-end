@@ -73,9 +73,17 @@ namespace Celeriac.Comparability
       }
     }
 
-    public int GetElementComparability(string name, TypeManager typeManager, ITypeReference type, IMethodDefinition method)
+    /// <summary>
+    /// Returns the comparability set id for the given array variable, e.g., <c>this.array[..]</c>
+    /// </summary>
+    /// <param name="name">The name of the array, including "[..]"</param>
+    /// <param name="typeManager">type information</param>
+    /// <param name="type">type context</param>
+    /// <param name="method">method context</param>
+    /// <returns>the comparability set id for the given array variable</returns>
+    public int GetIndexComparability(string name, TypeManager typeManager, ITypeReference type, IMethodDefinition method)
     {
-      Contract.Requires(!string.IsNullOrWhiteSpace(name));
+      Contract.Requires(!string.IsNullOrWhiteSpace(name) && name.EndsWith("[..]"));
       Contract.Requires(typeManager != null);
       Contract.Requires(type != null || method != null);
       Contract.Ensures(Contract.Result<int>() >= 0);
@@ -91,6 +99,15 @@ namespace Celeriac.Comparability
       }
     }
 
+    /// <summary>
+    /// Returns the comparability set id for the given expression. For array experessions, e.g., <c>this.array[..]</c>, 
+    /// returns the comparability set id for the contents.
+    /// </summary>
+    /// <param name="name">The name of the experession</param>
+    /// <param name="typeManager">type information</param>
+    /// <param name="type">type context</param>
+    /// <param name="method">method context, or <c>null</c></param>
+    /// <returns></returns>
     internal int GetComparability(string name, TypeManager typeManager, INamedTypeDefinition type, IMethodDefinition method = null)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(name));
