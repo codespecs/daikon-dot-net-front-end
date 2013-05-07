@@ -631,6 +631,148 @@ namespace Comparability
       HandleComposite(target, target.Instance);
     }
 
+    /// <summary>
+    /// If the call is to a standard collection method, update the element and index comparability information
+    /// </summary>
+    /// <param name="call">the method call</param>
+    private void HandleCollectionMethod(IMethodCall call)
+    {
+      var receiver = call.ThisArgument;
+      var callee = call.MethodToCall.ResolvedMethod;
+
+      IExpression index = null;
+      var elements = new List<IExpression>();
+
+      foreach (var m in MemberHelper.GetImplicitlyImplementedInterfaceMethods(callee))
+      {
+        var genericDef = TypeHelper.UninstantiateAndUnspecialize(m.ContainingTypeDefinition);
+
+        // IEnumerable does not define any methods that affect comparability
+
+        // ICollection
+        if (TypeHelper.TypesAreEquivalent(genericDef, Host.PlatformType.SystemCollectionsGenericICollection, true))
+        {
+          if (m.Name.Value.OneOf("Add", "Remove", "Contains"))
+          {
+            elements.Add(call.Arguments.First());
+          }
+        }
+
+        // IList
+        if (TypeHelper.TypesAreEquivalent(genericDef, Host.PlatformType.SystemCollectionsGenericIList, true))
+        {
+          if (m.Name.Value.OneOf("IndexOf"))
+          {
+            elements.Add(call.Arguments.First());
+          }
+          else if (m.Name.Value.OneOf("get_Item", "set_Item", "RemoveAt"))
+          {
+            index = call.Arguments.First();
+          }
+          else if (m.Name.Value.OneOf("Insert"))
+          {
+            index = call.Arguments.ElementAt(0);
+            elements.Add(call.Arguments.ElementAt(1));
+          }
+        }
+      }
+
+      if (index != null && Names.NameTable.ContainsKey(index))
+      {
+        var collectionName = Names.NameTable[receiver];
+        var collectionContents = NameBuilder.FormElementsExpression(collectionName);
+
+        // The collection reference may not have been used in a comparable way yet.
+        if (!ids.ContainsKey(collectionContents))
+        {
+          ids.Add(collectionContents, comparability.AddElement());
+        }
+
+        if (!collectionIndexes.ContainsKey(collectionContents))
+        {
+          collectionIndexes.Add(collectionContents, new HashSet<string>());
+        }
+
+        if (collectionIndexes[collectionContents].Add(Names.NameTable[index]))
+        {
+          // we haven't seen this index before, so re-mark indexes
+          Mark(collectionIndexes[collectionContents]);
+        }
+      }
+
+      if (elements.Count > 0)
+      {
+        var collectionName = Names.NameTable[receiver];
+        var collectionContents = NameBuilder.FormElementsExpression(collectionName);
+
+        // The collection reference may not have been used in a comparable way yet.
+        if (!ids.ContainsKey(collectionContents))
+        {
+          ids.Add(collectionContents, comparability.AddElement());
+        }
+
+        var names = new List<string>();
+        names.Add(collectionContents);
+        names.AddRange(Names.Names(elements));
+        Mark(names);
+      }
+    }
+
+    /// <summary>
+    /// If the method call is a call to a Dictionary method, update the comparability information
+    /// for keys and values.
+    /// </summary>
+    /// <remarks>
+    ///   This uses <c>Key</c> and <c>Value</c> instead of <c>Keys</c> and <c>Values</c> since the declaration
+    ///   printer uses <c>Key</c> and <c>Value</c> (it grabs it from the dictionary entry, as 
+    /// </remarks>
+    /// <param name="call">the method call</param>
+    private void HandleDictionaryMethod(IMethodCall call)
+    {
+      var receiver = call.ThisArgument;
+      var callee = call.MethodToCall.ResolvedMethod;
+
+      var keys = new List<IExpression>();
+      var values = new List<IExpression>();
+
+      var genericDef = TypeHelper.UninstantiateAndUnspecialize(receiver.Type);
+
+      if (TypeHelper.TypesAreEquivalent(genericDef, Host.PlatformType.SystemCollectionsGenericDictionary, true))
+      {
+        if (callee.Name.Value.OneOf("Remove", "TryGetValue", "ContainsKey", "set_Item", "get_Item"))
+        {
+          keys.Add(call.Arguments.First());
+        }
+        else if (callee.Name.Value.OneOf("Add"))
+        {
+          keys.Add(call.Arguments.ElementAt(0));
+          values.Add(call.Arguments.ElementAt(1));
+        }
+      }
+
+      var collectionName = Names.NameTable[receiver];  
+      var xs = new [] { 
+        Tuple.Create(collectionName + ".Keys", keys),
+        Tuple.Create(NameBuilder.FormElementsExpression(collectionName) + ".Key", keys),
+        Tuple.Create(collectionName + ".Values", values),
+        Tuple.Create(NameBuilder.FormElementsExpression(collectionName) + ".Value", values)
+      };
+
+      foreach (var x in xs.Where(c => c.Item2.Count > 0))
+      {
+        // The collection reference may not have been used in a comparable way yet.
+        if (!ids.ContainsKey(x.Item1))
+        {
+          ids.Add(x.Item1, comparability.AddElement());
+        }
+
+        var names = new List<string>();
+        names.Add(x.Item1);
+        names.AddRange(Names.Names(x.Item2));
+        Mark(names);
+      }
+    }
+
     public override void Visit(IMethodCall call)
     {
       var receiver = call.ThisArgument;
@@ -639,71 +781,8 @@ namespace Comparability
       // Form comparability information for Collection classes
       if (!call.IsStaticCall && Names.NameTable.ContainsKey(receiver))
       {
-        IExpression index = null;
-        var elements = new List<IExpression>();
-
-        foreach (var m in MemberHelper.GetImplicitlyImplementedInterfaceMethods(call.MethodToCall.ResolvedMethod))
-        {
-          var genericDef = TypeHelper.UninstantiateAndUnspecialize(m.ContainingTypeDefinition);
-
-          if (TypeHelper.TypesAreEquivalent(genericDef, Host.PlatformType.SystemCollectionsGenericICollection, true))
-          {
-            if (m.Name.Value.OneOf("Add", "Remove"))
-            {
-              elements.Add(call.Arguments.First());
-              break;
-            }
-          }
-
-          if (TypeHelper.TypesAreEquivalent(genericDef, Host.PlatformType.SystemCollectionsGenericIList, true))
-          {
-            if (m.Name.Value.OneOf("get_Item", "set_Item", "RemoveAt"))
-            {
-              index = call.Arguments.First();
-              break;
-            }
-          }
-        }
-
-        if (index != null && Names.NameTable.ContainsKey(index))
-        {
-          var collectionName = Names.NameTable[receiver];
-          var collectionContents = NameBuilder.FormElementsExpression(collectionName);
-
-          // The collection reference may not have been used in a comparable way yet.
-          if (!ids.ContainsKey(collectionContents))
-          {
-            ids.Add(collectionContents, comparability.AddElement());
-          }
-
-          if (!collectionIndexes.ContainsKey(collectionContents))
-          {
-            collectionIndexes.Add(collectionContents, new HashSet<string>());
-          }
-
-          if (collectionIndexes[collectionContents].Add(Names.NameTable[index]))
-          {
-            // we haven't seen this index before, so re-mark indexes
-            Mark(collectionIndexes[collectionContents]);
-          }
-        }
-
-        if (elements.Count > 0)
-        {
-          var collectionName = Names.NameTable[receiver];
-          var collectionContents = NameBuilder.FormElementsExpression(collectionName);
-
-          // The collection reference may not have been used in a comparable way yet.
-          if (!ids.ContainsKey(collectionContents))
-          {
-            ids.Add(collectionContents, comparability.AddElement());
-          }
-
-          var names = new List<string>();
-          names.Add(collectionContents);
-          names.AddRange(Names.Names(elements));
-          Mark(names);
-        }
+        HandleCollectionMethod(call);
+        HandleDictionaryMethod(call);
       }
 
       if (NameBuilder.IsSetter(callee))
