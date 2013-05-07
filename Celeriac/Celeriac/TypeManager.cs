@@ -544,6 +544,15 @@ namespace Celeriac
         return true;
       }
 
+      // exclude fields that are backing automatically generated events
+      var events = from e in parentType.GetEvents(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+                   where e.Name.Equals(field.Name)
+                   select e;
+      if (events.Count() > 0)
+      {
+        return true;
+      }
+        
       // TODO(#58): Should be able to switch this test off with a command line arg.
       return this.ignoredValues.Contains(parentType.AssemblyQualifiedName + ";" + field.Name);
     }
