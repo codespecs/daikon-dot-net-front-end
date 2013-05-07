@@ -35,7 +35,8 @@ namespace CeleriacLauncher
       }
       catch (InvalidOperationException ex)
       {
-        Console.WriteLine(ex.Message);
+        Console.Error.WriteLine(ex.Message);
+        return;
       }
 
       if (celeriacArgs.SaveAndRun)
@@ -47,6 +48,7 @@ namespace CeleriacLauncher
       {
         // Run the program from memory
         Assembly rewrittenAssembly = Assembly.Load(resultStream.ToArray());
+        typeManager.SetInstrumentedAssembly(rewrittenAssembly);
         resultStream.Close();
         ExecuteProgramFromMemory(args, celeriacArgs, rewrittenAssembly);
       }
