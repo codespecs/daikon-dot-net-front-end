@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using Celeriac.Comparability;
 using Celeriac;
+using Celeriac.Contracts;
 
 namespace Comparability
 {
@@ -24,7 +25,11 @@ namespace Comparability
     private readonly Dictionary<string, int> ids = new Dictionary<string, int>();
     private readonly DisjointSets comparability = new DisjointSets();
 
-    private readonly Dictionary<string, HashSet<string>> arrayIndexes = new Dictionary<string, HashSet<string>>();
+    /// <summary>
+    /// Map from collection element expression (e.g., array[..]) to its name index expressions (e.g., i where array[i]
+    /// appears in the code).
+    /// </summary>
+    private readonly Dictionary<string, HashSet<string>> collectionIndexes = new Dictionary<string, HashSet<string>>();
 
     private readonly HashSet<IReturnStatement> returns = new HashSet<IReturnStatement>();
     private readonly HashSet<IMethodCall> namedCalls = new HashSet<IMethodCall>();
@@ -36,31 +41,37 @@ namespace Comparability
 
     private readonly HashSet<IExpression> namedExpressions = new HashSet<IExpression>();
 
+    public IMetadataHost Host { get; private set; }
+    
     [ContractInvariantMethod]
     private void ObjectInvariant()
     {
       Contract.Invariant(Names != null);
       Contract.Invariant(Method != null);
+      Contract.Invariant(Host != null);
       Contract.Invariant(ReferencedTypes != null);
       Contract.Invariant(Contract.ForAll(namedCalls, c => Names.NameTable.ContainsKey(c)));
-      Contract.Invariant(Contract.ForAll(arrayIndexes.Keys, a => ids.ContainsKey(a)));
+      Contract.Invariant(Contract.ForAll(collectionIndexes.Keys, a => ids.ContainsKey(a)));
       // Array Indexes should correspond to the array contents entry: e.g., this.array[..] not this.array
-      Contract.Invariant(Contract.ForAll(arrayIndexes.Keys, a => NameBuilder.IsElementsExpression(a)));
-      Contract.Invariant(Contract.ForAll(arrayIndexes.Values, i => i.Count > 0));
+      Contract.Invariant(Contract.ForAll(collectionIndexes.Keys, a => NameBuilder.IsElementsExpression(a)));
+      Contract.Invariant(Contract.ForAll(collectionIndexes.Values, i => i.Count > 0));
 
       // Not true b/c a name is added whenever comparability is queried by Celeriacs's IL visitors
       // Contract.Invariant(Contract.ForAll(ids.Keys, n => n.Equals("return") || Names.NameTable.ContainsValue(n)));
     }
 
-    public MethodVisitor(IMethodDefinition method, NameBuilder names)
+    public MethodVisitor(IMethodDefinition method, IMetadataHost host, NameBuilder names)
     {
       Contract.Requires(method != null);
       Contract.Requires(names != null);
+      Contract.Requires(host != null);
       Contract.Ensures(Names == names);
       Contract.Ensures(Method == method);
+      Contract.Ensures(Host == host);
 
       Names = names;
       Method = method;
+      Host = host;
       ReferencedTypes = new Dictionary<IExpression, ITypeReference>();
 
       ids.Add("return", comparability.AddElement());
@@ -322,8 +333,8 @@ namespace Comparability
       Contract.Requires(!string.IsNullOrWhiteSpace(array));
       Contract.Ensures(Contract.Result<HashSet<string>>() != null);
 
-      return arrayIndexes.ContainsKey(array)
-             ? arrayIndexes[array]
+      return collectionIndexes.ContainsKey(array)
+             ? collectionIndexes[array]
              : new HashSet<string>();
     }
 
@@ -622,7 +633,78 @@ namespace Comparability
 
     public override void Visit(IMethodCall call)
     {
+      var receiver = call.ThisArgument;
       var callee = call.MethodToCall.ResolvedMethod;
+
+      // Form comparability information for Collection classes
+      if (!call.IsStaticCall && Names.NameTable.ContainsKey(receiver))
+      {
+        IExpression index = null;
+        var elements = new List<IExpression>();
+
+        foreach (var m in MemberHelper.GetImplicitlyImplementedInterfaceMethods(call.MethodToCall.ResolvedMethod))
+        {
+          var genericDef = TypeHelper.UninstantiateAndUnspecialize(m.ContainingTypeDefinition);
+
+          if (TypeHelper.TypesAreEquivalent(genericDef, Host.PlatformType.SystemCollectionsGenericICollection, true))
+          {
+            if (m.Name.Value.OneOf("Add", "Remove"))
+            {
+              elements.Add(call.Arguments.First());
+              break;
+            }
+          }
+
+          if (TypeHelper.TypesAreEquivalent(genericDef, Host.PlatformType.SystemCollectionsGenericIList, true))
+          {
+            if (m.Name.Value.OneOf("get_Item", "set_Item", "RemoveAt"))
+            {
+              index = call.Arguments.First();
+              break;
+            }
+          }
+        }
+
+        if (index != null && Names.NameTable.ContainsKey(index))
+        {
+          var collectionName = Names.NameTable[receiver];
+          var collectionContents = NameBuilder.FormElementsExpression(collectionName);
+
+          // The collection reference may not have been used in a comparable way yet.
+          if (!ids.ContainsKey(collectionContents))
+          {
+            ids.Add(collectionContents, comparability.AddElement());
+          }
+
+          if (!collectionIndexes.ContainsKey(collectionContents))
+          {
+            collectionIndexes.Add(collectionContents, new HashSet<string>());
+          }
+
+          if (collectionIndexes[collectionContents].Add(Names.NameTable[index]))
+          {
+            // we haven't seen this index before, so re-mark indexes
+            Mark(collectionIndexes[collectionContents]);
+          }
+        }
+
+        if (elements.Count > 0)
+        {
+          var collectionName = Names.NameTable[receiver];
+          var collectionContents = NameBuilder.FormElementsExpression(collectionName);
+
+          // The collection reference may not have been used in a comparable way yet.
+          if (!ids.ContainsKey(collectionContents))
+          {
+            ids.Add(collectionContents, comparability.AddElement());
+          }
+
+          var names = new List<string>();
+          names.Add(collectionContents);
+          names.AddRange(Names.Names(elements));
+          Mark(names);
+        }
+      }
 
       if (NameBuilder.IsSetter(callee))
       {
@@ -660,15 +742,15 @@ namespace Comparability
             ids.Add(arrayContents, comparability.AddElement());
           }
 
-          if (!arrayIndexes.ContainsKey(arrayContents))
+          if (!collectionIndexes.ContainsKey(arrayContents))
           {
-            arrayIndexes.Add(arrayContents, new HashSet<string>());
+            collectionIndexes.Add(arrayContents, new HashSet<string>());
           }
 
-          if (arrayIndexes[arrayContents].Add(Names.NameTable[index]))
+          if (collectionIndexes[arrayContents].Add(Names.NameTable[index]))
           {
             // we haven't seen this index before, so re-mark indexes
-            Mark(arrayIndexes[arrayContents]);
+            Mark(collectionIndexes[arrayContents]);
           }
         }
         
@@ -745,7 +827,7 @@ namespace Comparability
         method.Method.Parameters.Select(p => typeManager.ConvertCCITypeToAssemblyQualifiedName(p.Type)).ToArray(),
         method.ids,
         method.comparability,
-        method.arrayIndexes);
+        method.collectionIndexes);
     }
 
   }
