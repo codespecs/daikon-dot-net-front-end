@@ -143,7 +143,7 @@ namespace Celeriac.Comparability
 
         foreach (var method in type.Methods)
         {
-          var compVisitor = new MethodVisitor(method, names);
+          var compVisitor = new MethodVisitor(method, typeManager.Host, names);
           new CodeTraverser() { PreorderVisitor = compVisitor }.Traverse(method);
           methodComparability.Add(method, compVisitor);
         }

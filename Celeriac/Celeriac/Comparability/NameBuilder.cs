@@ -484,12 +484,27 @@ namespace Comparability
         {
           name = NameTable[call.ThisArgument] + "." + calleeName.Substring("set_".Length);
         }
-
+        
         Parent.Add(call, call.ThisArgument);
         // propogate the instance information
         if (InstanceExpressionsReferredTypes.ContainsKey(receiver))
         {
           AddInstanceExpr(InstanceExpressionsReferredTypes[receiver], call);
+        }
+      }
+
+      // Check for indexes into a List
+      if (!call.IsStaticCall && NameTable.ContainsKey(receiver))
+      {
+        foreach (var m in MemberHelper.GetImplicitlyImplementedInterfaceMethods(call.MethodToCall.ResolvedMethod))
+        {
+          var genericDef = TypeHelper.UninstantiateAndUnspecialize(m.ContainingTypeDefinition);
+          if (TypeHelper.TypesAreEquivalent(genericDef, Host.PlatformType.SystemCollectionsGenericIList, true))
+          {
+            if (m.Name.Value.OneOf("get_Item")){
+              name = FormElementsExpression(NameTable[call.ThisArgument]);
+            }
+          }
         }
       }
 
