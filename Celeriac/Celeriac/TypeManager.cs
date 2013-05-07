@@ -305,10 +305,13 @@ namespace Celeriac
 
     /// <summary>
     /// Process the purity methods list, building the map from type to pure methods for that type.
+    /// Automatically includes Keys and Values properties for Dictionaries.
     /// </summary>
     private void ProcessPurityMethods()
     {
-      this.AddStandardPurityMethods();
+      this.celeriacArgs.PurityMethods.Add(typeof(DictionaryEntry).AssemblyQualifiedName + ";get_Key");
+      this.celeriacArgs.PurityMethods.Add(typeof(DictionaryEntry).AssemblyQualifiedName + ";get_Value");
+
       foreach (String str in this.celeriacArgs.PurityMethods)
       {
         if (str.StartsWith("//")) { continue; }
@@ -393,17 +396,6 @@ namespace Celeriac
           throw;
         }
       }
-    }
-
-    /// <summary>
-    /// Add methods known to be pure to the list of purity methods
-    /// </summary>
-    private void AddStandardPurityMethods()
-    {
-      this.celeriacArgs.PurityMethods.Add(
-        typeof(DictionaryEntry).AssemblyQualifiedName + ";get_Key");
-      this.celeriacArgs.PurityMethods.Add(
-        typeof(DictionaryEntry).AssemblyQualifiedName + ";get_Value");
     }
 
     /// <summary>
@@ -1212,9 +1204,20 @@ namespace Celeriac
     private INamespaceTypeReference CreateTypeReference(AssemblyIdentity assembly, string typeName)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(typeName));
+      return CreateTypeReference(Host, assembly, typeName);
+    }
+
+    /// <summary>
+    /// Creates a type reference anchored in the given assembly reference and whose names are relative to the given host.
+    /// When the type name has periods in it, a structured reference with nested namespaces is created.
+    /// </summary>
+    /// <remarks>Adapted from Cci.TypeHelper.CreateTypeReference</remarks>
+    public static INamespaceTypeReference CreateTypeReference(IMetadataHost host, AssemblyIdentity assembly, string typeName)
+    {
+      Contract.Requires(!string.IsNullOrWhiteSpace(typeName));
 
       var assemblyReference =
-        new Microsoft.Cci.Immutable.AssemblyReference(Host, assembly);
+        new Microsoft.Cci.Immutable.AssemblyReference(host, assembly);
 
       IUnitNamespaceReference ns = new Microsoft.Cci.Immutable.RootUnitNamespaceReference(assemblyReference);
       string[] names = typeName.Split('.');

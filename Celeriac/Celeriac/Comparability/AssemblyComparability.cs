@@ -83,10 +83,12 @@ namespace Celeriac.Comparability
     /// <returns>the comparability set id for the given array variable</returns>
     public int GetIndexComparability(string name, TypeManager typeManager, ITypeReference type, IMethodDefinition method)
     {
-      Contract.Requires(!string.IsNullOrWhiteSpace(name) && name.EndsWith("[..]"));
+      Contract.Requires(!string.IsNullOrWhiteSpace(name));
       Contract.Requires(typeManager != null);
       Contract.Requires(type != null || method != null);
       Contract.Ensures(Contract.Result<int>() >= 0);
+
+      //Contract.Assume(name.EndsWith("[..]"), "Invalid collection elements name: " + name);
 
       if (method != null)
       {

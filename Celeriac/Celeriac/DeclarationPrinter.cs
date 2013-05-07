@@ -597,7 +597,9 @@ namespace Celeriac
 
       if (comparabilityManager != null)
       {
-        this.WritePair("comparability",
+          // Is it OK to include index information for non-ordered collections? A new comparability set will 
+          // be generated for it since there could be no index information.
+          this.WritePair("comparability",
               string.Format("{0}[{1}]",
                 comparabilityManager.GetComparability(name, typeManager, typeContext, methodContext),
                 comparabilityManager.GetIndexComparability(name, typeManager, typeContext, methodContext)),

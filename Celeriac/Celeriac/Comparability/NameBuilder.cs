@@ -508,6 +508,21 @@ namespace Comparability
         }
       }
 
+      // Check for indexes into a Dictionary
+      if (!call.IsStaticCall && NameTable.ContainsKey(receiver))
+      {
+        var genericDef = TypeHelper.UninstantiateAndUnspecialize(receiver.Type);
+
+        if (TypeHelper.TypesAreEquivalent(genericDef, Host.PlatformType.SystemCollectionsGenericDictionary, true))
+        {
+          if (callee.Name.Value.OneOf("get_Item"))
+          {
+            // ISSUE #91: this supports the dictionary[..].Value collection; does not support dictionary.Values
+            name = FormElementsExpression(NameTable[call.ThisArgument]) + ".Value";
+          }
+        }
+      }
+
       if (name == null)
       {
         // Assign a unique generated name (required for return value comparability)
