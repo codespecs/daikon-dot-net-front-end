@@ -5,8 +5,6 @@ this.value == 0
 MyInteger..ctor(System.Int32 x):::ENTER
 x == 0
 ===========================================================================
-MyInteger..ctor(System.Int32 x):::EXIT8
-===========================================================================
 MyInteger..ctor(System.Int32 x):::EXIT
 this.value == orig(x)
 ===========================================================================
@@ -16,8 +14,6 @@ this.theArray[].GetType() one of { [], [MyInteger, MyInteger, System.Object, MyI
 ===========================================================================
 StackAr..ctor(System.Int32 capacity):::ENTER
 capacity one of { 0, 4 }
-===========================================================================
-StackAr..ctor(System.Int32 capacity):::EXIT12
 ===========================================================================
 StackAr..ctor(System.Int32 capacity):::EXIT
 this.theArray[] elements == null
@@ -303,7 +299,7 @@ StackArTester.s.theArray has only one value
 StackArTester.s.theArray[] == []
 StackArTester.s.topOfStack == -1
 ===========================================================================
-StackArTester.push():::EXIT23
+StackArTester.push():::EXIT24
 ===========================================================================
 StackArTester.push():::EXIT
 StackArTester.rnd == orig(StackArTester.rnd)
@@ -327,7 +323,7 @@ StackArTester.s.theArray has only one value
 StackArTester.s.theArray[] == []
 StackArTester.s.topOfStack == -1
 ===========================================================================
-StackArTester.topOrPop():::EXIT33
+StackArTester.topOrPop():::EXIT34
 ===========================================================================
 StackArTester.topOrPop():::EXIT
 StackArTester.rnd == orig(StackArTester.rnd)

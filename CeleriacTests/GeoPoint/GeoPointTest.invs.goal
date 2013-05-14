@@ -34,8 +34,6 @@ latitude one of { 42343845, 42358333, 42372821 }
 longitude one of { -71079857, -71060278, -71040699 }
 latitude > longitude
 ===========================================================================
-GeoPoint.GeoPoint..ctor(System.Int32 latitude, System.Int32 longitude):::EXIT35
-===========================================================================
 GeoPoint.GeoPoint..ctor(System.Int32 latitude, System.Int32 longitude):::EXIT
 GeoPoint.GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.GeoPoint.REP_SCALE_FACTOR)
 this.latitude == orig(latitude)
@@ -97,7 +95,7 @@ orig(this) has only one value
 ===========================================================================
 GeoPoint.GeoPoint.equals(System.Object o):::EXIT10;condition="not(return == true)"
 ===========================================================================
-GeoPoint.GeoPoint.equals(System.Object o):::EXIT27
+GeoPoint.GeoPoint.equals(System.Object o):::EXIT28
 (return == false)  ==>  (this.latitude one of { 42358333, 42372821 })
 (return == false)  ==>  (this.longitude one of { -71079857, -71060278, -71040699 })
 (return == true)  ==>  (this.latitude one of { 42343845, 42358333, 42372821 })
@@ -107,9 +105,9 @@ orig(o.GetType()) == GeoPoint.GeoPoint.class
 this.latitude > this.longitude
 orig(o.GetType()) == orig(this.GetType())
 ===========================================================================
-GeoPoint.GeoPoint.equals(System.Object o):::EXIT27;condition="return == true"
+GeoPoint.GeoPoint.equals(System.Object o):::EXIT28;condition="return == true"
 ===========================================================================
-GeoPoint.GeoPoint.equals(System.Object o):::EXIT27;condition="not(return == true)"
+GeoPoint.GeoPoint.equals(System.Object o):::EXIT28;condition="not(return == true)"
 ===========================================================================
 GeoPoint.GeoPoint.equals(System.Object o):::EXIT
 GeoPoint.GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.GeoPoint.REP_SCALE_FACTOR)
@@ -217,8 +215,6 @@ GeoPoint.GeoPointTest..ctor(System.String name):::ENTER
 GeoPoint.GeoPointTest.tolerance == 0.01
 name has only one value
 name.ToString() == "test"
-===========================================================================
-GeoPoint.GeoPointTest..ctor(System.String name):::EXIT26
 ===========================================================================
 GeoPoint.GeoPointTest..ctor(System.String name):::EXIT
 this.gpDowntown == this.gpEast
@@ -550,7 +546,7 @@ this.gpSouth has only one value
 this.gpSouthEast has only one value
 this.gpWest has only one value
 ===========================================================================
-GeoPoint.GeoPointTest.testHeadingTo():::EXIT102
+GeoPoint.GeoPointTest.testHeadingTo():::EXIT103
 ===========================================================================
 GeoPoint.GeoPointTest.testHeadingTo():::EXIT
 GeoPoint.GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.GeoPoint.REP_SCALE_FACTOR)

@@ -10,7 +10,7 @@ parent parent ExceptionTest.CubingClass:::CLASS 1
     dec-type int
     rep-type int
     flags is_param
-    comparability 22
+    comparability -22
 
 ppt ExceptionTest.CubingClass..ctor(System.Int32\_val):::EXIT8
 ppt-type subexit
@@ -19,20 +19,20 @@ parent parent ExceptionTest.CubingClass:::OBJECT 1
     var-kind return
     dec-type System.Exception
     rep-type hashcode
-    comparability 22
+    comparability -22
   variable exception.GetType()
     var-kind function GetType()
     enclosing-var exception
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
   variable this
     var-kind variable
     dec-type ExceptionTest.CubingClass
     rep-type hashcode
     flags is_param
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
@@ -40,65 +40,21 @@ parent parent ExceptionTest.CubingClass:::OBJECT 1
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
   variable this.val
     var-kind field val
     enclosing-var this
     dec-type int
     rep-type int
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
   variable val
     var-kind variable
     dec-type int
     rep-type int
     flags is_param
-    comparability 22
-
-ppt ExceptionTest.CubingClass..ctor(System.Int32\_val):::EXIT_EX_Runtime
-ppt-type subexit
-parent parent ExceptionTest.CubingClass:::OBJECT 1
-  variable exception
-    var-kind return
-    dec-type System.Exception
-    rep-type hashcode
-    comparability 22
-  variable exception.GetType()
-    var-kind function GetType()
-    enclosing-var exception
-    dec-type java.lang.Class
-    rep-type java.lang.String
-    flags synthetic classname
-    comparability 22
-  variable this
-    var-kind variable
-    dec-type ExceptionTest.CubingClass
-    rep-type hashcode
-    flags is_param
-    comparability 22
-    parent ExceptionTest.CubingClass:::OBJECT 1
-  variable this.GetType()
-    var-kind function GetType()
-    enclosing-var this
-    dec-type java.lang.Class
-    rep-type java.lang.String
-    flags synthetic classname
-    comparability 22
-    parent ExceptionTest.CubingClass:::OBJECT 1
-  variable this.val
-    var-kind field val
-    enclosing-var this
-    dec-type int
-    rep-type int
-    comparability 22
-    parent ExceptionTest.CubingClass:::OBJECT 1
-  variable val
-    var-kind variable
-    dec-type int
-    rep-type int
-    flags is_param
-    comparability 22
+    comparability -22
 
 ppt ExceptionTest.CubingClass.DoCube():::ENTER
 ppt-type enter
@@ -108,7 +64,7 @@ parent parent ExceptionTest.CubingClass:::OBJECT 1
     dec-type ExceptionTest.CubingClass
     rep-type hashcode
     flags is_param
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
@@ -116,14 +72,14 @@ parent parent ExceptionTest.CubingClass:::OBJECT 1
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
   variable this.val
     var-kind field val
     enclosing-var this
     dec-type int
     rep-type int
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
 
 ppt ExceptionTest.CubingClass.DoCube():::EXIT10
@@ -133,25 +89,25 @@ parent parent ExceptionTest.CubingClass:::OBJECT 1
     var-kind return
     dec-type System.Exception
     rep-type hashcode
-    comparability 22
+    comparability -22
   variable exception.GetType()
     var-kind function GetType()
     enclosing-var exception
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
   variable return
     var-kind return
     dec-type int
     rep-type int
-    comparability 22
+    comparability -22
   variable this
     var-kind variable
     dec-type ExceptionTest.CubingClass
     rep-type hashcode
     flags is_param
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
@@ -159,14 +115,14 @@ parent parent ExceptionTest.CubingClass:::OBJECT 1
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
   variable this.val
     var-kind field val
     enclosing-var this
     dec-type int
     rep-type int
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
 
 ppt ExceptionTest.CubingClass.DoCube():::EXIT12
@@ -176,25 +132,25 @@ parent parent ExceptionTest.CubingClass:::OBJECT 1
     var-kind return
     dec-type System.Exception
     rep-type hashcode
-    comparability 22
+    comparability -22
   variable exception.GetType()
     var-kind function GetType()
     enclosing-var exception
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
   variable return
     var-kind return
     dec-type int
     rep-type int
-    comparability 22
+    comparability -22
   variable this
     var-kind variable
     dec-type ExceptionTest.CubingClass
     rep-type hashcode
     flags is_param
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
@@ -202,14 +158,14 @@ parent parent ExceptionTest.CubingClass:::OBJECT 1
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
   variable this.val
     var-kind field val
     enclosing-var this
     dec-type int
     rep-type int
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
 
 ppt ExceptionTest.CubingClass.DoCube():::EXIT_EX_Runtime
@@ -219,25 +175,25 @@ parent parent ExceptionTest.CubingClass:::OBJECT 1
     var-kind return
     dec-type System.Exception
     rep-type hashcode
-    comparability 22
+    comparability -22
   variable exception.GetType()
     var-kind function GetType()
     enclosing-var exception
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
   variable return
     var-kind return
     dec-type int
     rep-type int
-    comparability 22
+    comparability -22
   variable this
     var-kind variable
     dec-type ExceptionTest.CubingClass
     rep-type hashcode
     flags is_param
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
@@ -245,14 +201,14 @@ parent parent ExceptionTest.CubingClass:::OBJECT 1
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
   variable this.val
     var-kind field val
     enclosing-var this
     dec-type int
     rep-type int
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
 
 ppt ExceptionTest.CubingClass.DoNotCube():::ENTER
@@ -263,7 +219,7 @@ parent parent ExceptionTest.CubingClass:::OBJECT 1
     dec-type ExceptionTest.CubingClass
     rep-type hashcode
     flags is_param
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
@@ -271,14 +227,14 @@ parent parent ExceptionTest.CubingClass:::OBJECT 1
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
   variable this.val
     var-kind field val
     enclosing-var this
     dec-type int
     rep-type int
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
 
 ppt ExceptionTest.CubingClass.DoNotCube():::EXIT4
@@ -288,25 +244,25 @@ parent parent ExceptionTest.CubingClass:::OBJECT 1
     var-kind return
     dec-type System.Exception
     rep-type hashcode
-    comparability 22
+    comparability -22
   variable exception.GetType()
     var-kind function GetType()
     enclosing-var exception
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
   variable return
     var-kind return
     dec-type int
     rep-type int
-    comparability 22
+    comparability -22
   variable this
     var-kind variable
     dec-type ExceptionTest.CubingClass
     rep-type hashcode
     flags is_param
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
@@ -314,14 +270,14 @@ parent parent ExceptionTest.CubingClass:::OBJECT 1
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
   variable this.val
     var-kind field val
     enclosing-var this
     dec-type int
     rep-type int
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
 
 ppt ExceptionTest.CubingClass.DoNotCube():::EXIT6
@@ -331,25 +287,25 @@ parent parent ExceptionTest.CubingClass:::OBJECT 1
     var-kind return
     dec-type System.Exception
     rep-type hashcode
-    comparability 22
+    comparability -22
   variable exception.GetType()
     var-kind function GetType()
     enclosing-var exception
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
   variable return
     var-kind return
     dec-type int
     rep-type int
-    comparability 22
+    comparability -22
   variable this
     var-kind variable
     dec-type ExceptionTest.CubingClass
     rep-type hashcode
     flags is_param
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
@@ -357,14 +313,14 @@ parent parent ExceptionTest.CubingClass:::OBJECT 1
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
   variable this.val
     var-kind field val
     enclosing-var this
     dec-type int
     rep-type int
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
 
 ppt ExceptionTest.CubingClass.DoNotCube():::EXIT_EX_Runtime
@@ -374,25 +330,25 @@ parent parent ExceptionTest.CubingClass:::OBJECT 1
     var-kind return
     dec-type System.Exception
     rep-type hashcode
-    comparability 22
+    comparability -22
   variable exception.GetType()
     var-kind function GetType()
     enclosing-var exception
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
   variable return
     var-kind return
     dec-type int
     rep-type int
-    comparability 22
+    comparability -22
   variable this
     var-kind variable
     dec-type ExceptionTest.CubingClass
     rep-type hashcode
     flags is_param
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
@@ -400,14 +356,14 @@ parent parent ExceptionTest.CubingClass:::OBJECT 1
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
   variable this.val
     var-kind field val
     enclosing-var this
     dec-type int
     rep-type int
-    comparability 22
+    comparability -22
     parent ExceptionTest.CubingClass:::OBJECT 1
 
 ppt ExceptionTest.CubingClass:::CLASS
@@ -421,20 +377,20 @@ parent parent ExceptionTest.CubingClass:::CLASS 1
     dec-type ExceptionTest.CubingClass
     rep-type hashcode
     flags is_param
-    comparability 22
+    comparability -22
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
   variable this.val
     var-kind field val
     enclosing-var this
     dec-type int
     rep-type int
-    comparability 22
+    comparability -22
 
 ppt ExceptionTest.ExceptionTest..ctor():::ENTER
 ppt-type enter
@@ -447,20 +403,20 @@ parent parent ExceptionTest.ExceptionTest:::OBJECT 1
     var-kind return
     dec-type System.Exception
     rep-type hashcode
-    comparability 22
+    comparability -22
   variable exception.GetType()
     var-kind function GetType()
     enclosing-var exception
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
   variable this
     var-kind variable
     dec-type ExceptionTest.ExceptionTest
     rep-type hashcode
     flags is_param
-    comparability 22
+    comparability -22
     parent ExceptionTest.ExceptionTest:::OBJECT 1
   variable this.GetType()
     var-kind function GetType()
@@ -468,38 +424,7 @@ parent parent ExceptionTest.ExceptionTest:::OBJECT 1
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
-    parent ExceptionTest.ExceptionTest:::OBJECT 1
-
-ppt ExceptionTest.ExceptionTest..ctor():::EXIT_EX_Runtime
-ppt-type subexit
-parent parent ExceptionTest.ExceptionTest:::OBJECT 1
-  variable exception
-    var-kind return
-    dec-type System.Exception
-    rep-type hashcode
-    comparability 22
-  variable exception.GetType()
-    var-kind function GetType()
-    enclosing-var exception
-    dec-type java.lang.Class
-    rep-type java.lang.String
-    flags synthetic classname
-    comparability 22
-  variable this
-    var-kind variable
-    dec-type ExceptionTest.ExceptionTest
-    rep-type hashcode
-    flags is_param
-    comparability 22
-    parent ExceptionTest.ExceptionTest:::OBJECT 1
-  variable this.GetType()
-    var-kind function GetType()
-    enclosing-var this
-    dec-type java.lang.Class
-    rep-type java.lang.String
-    flags synthetic classname
-    comparability 22
+    comparability -22
     parent ExceptionTest.ExceptionTest:::OBJECT 1
 
 ppt ExceptionTest.ExceptionTest.Main(System.String[]\_args):::ENTER
@@ -510,14 +435,14 @@ parent parent ExceptionTest.ExceptionTest:::CLASS 1
     dec-type java.lang.String[]
     rep-type hashcode
     flags is_param
-    comparability 22
+    comparability -22
   variable args[..]
     var-kind array
     enclosing-var args
     array 1
     dec-type java.lang.String[]
     rep-type hashcode[]
-    comparability 22
+    comparability -22
   variable args[..].ToString()
     var-kind function ToString()
     enclosing-var args[..]
@@ -525,7 +450,7 @@ parent parent ExceptionTest.ExceptionTest:::CLASS 1
     dec-type java.lang.String[]
     rep-type java.lang.String[]
     flags synthetic to_string
-    comparability 22
+    comparability -22
 
 ppt ExceptionTest.ExceptionTest.Main(System.String[]\_args):::EXIT77
 ppt-type subexit
@@ -535,14 +460,14 @@ parent parent ExceptionTest.ExceptionTest:::CLASS 1
     dec-type java.lang.String[]
     rep-type hashcode
     flags is_param
-    comparability 22
+    comparability -22
   variable args[..]
     var-kind array
     enclosing-var args
     array 1
     dec-type java.lang.String[]
     rep-type hashcode[]
-    comparability 22
+    comparability -22
   variable args[..].ToString()
     var-kind function ToString()
     enclosing-var args[..]
@@ -550,19 +475,19 @@ parent parent ExceptionTest.ExceptionTest:::CLASS 1
     dec-type java.lang.String[]
     rep-type java.lang.String[]
     flags synthetic to_string
-    comparability 22
+    comparability -22
   variable exception
     var-kind return
     dec-type System.Exception
     rep-type hashcode
-    comparability 22
+    comparability -22
   variable exception.GetType()
     var-kind function GetType()
     enclosing-var exception
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
 
 ppt ExceptionTest.ExceptionTest.Main(System.String[]\_args):::EXIT79
 ppt-type subexit
@@ -572,14 +497,14 @@ parent parent ExceptionTest.ExceptionTest:::CLASS 1
     dec-type java.lang.String[]
     rep-type hashcode
     flags is_param
-    comparability 22
+    comparability -22
   variable args[..]
     var-kind array
     enclosing-var args
     array 1
     dec-type java.lang.String[]
     rep-type hashcode[]
-    comparability 22
+    comparability -22
   variable args[..].ToString()
     var-kind function ToString()
     enclosing-var args[..]
@@ -587,19 +512,19 @@ parent parent ExceptionTest.ExceptionTest:::CLASS 1
     dec-type java.lang.String[]
     rep-type java.lang.String[]
     flags synthetic to_string
-    comparability 22
+    comparability -22
   variable exception
     var-kind return
     dec-type System.Exception
     rep-type hashcode
-    comparability 22
+    comparability -22
   variable exception.GetType()
     var-kind function GetType()
     enclosing-var exception
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
 
 ppt ExceptionTest.ExceptionTest.Main(System.String[]\_args):::EXIT_EX_Runtime
 ppt-type subexit
@@ -609,14 +534,14 @@ parent parent ExceptionTest.ExceptionTest:::CLASS 1
     dec-type java.lang.String[]
     rep-type hashcode
     flags is_param
-    comparability 22
+    comparability -22
   variable args[..]
     var-kind array
     enclosing-var args
     array 1
     dec-type java.lang.String[]
     rep-type hashcode[]
-    comparability 22
+    comparability -22
   variable args[..].ToString()
     var-kind function ToString()
     enclosing-var args[..]
@@ -624,19 +549,19 @@ parent parent ExceptionTest.ExceptionTest:::CLASS 1
     dec-type java.lang.String[]
     rep-type java.lang.String[]
     flags synthetic to_string
-    comparability 22
+    comparability -22
   variable exception
     var-kind return
     dec-type System.Exception
     rep-type hashcode
-    comparability 22
+    comparability -22
   variable exception.GetType()
     var-kind function GetType()
     enclosing-var exception
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
 
 ppt ExceptionTest.ExceptionTest.Main(System.String[]\_args):::EXIT_EX_System.ArgumentException
 ppt-type subexit
@@ -646,14 +571,14 @@ parent parent ExceptionTest.ExceptionTest:::CLASS 1
     dec-type java.lang.String[]
     rep-type hashcode
     flags is_param
-    comparability 22
+    comparability -22
   variable args[..]
     var-kind array
     enclosing-var args
     array 1
     dec-type java.lang.String[]
     rep-type hashcode[]
-    comparability 22
+    comparability -22
   variable args[..].ToString()
     var-kind function ToString()
     enclosing-var args[..]
@@ -661,19 +586,19 @@ parent parent ExceptionTest.ExceptionTest:::CLASS 1
     dec-type java.lang.String[]
     rep-type java.lang.String[]
     flags synthetic to_string
-    comparability 22
+    comparability -22
   variable exception
     var-kind return
     dec-type System.Exception
     rep-type hashcode
-    comparability 22
+    comparability -22
   variable exception.GetType()
     var-kind function GetType()
     enclosing-var exception
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
 
 ppt ExceptionTest.ExceptionTest.Square(System.Boolean\_square,\_System.Int32\_n):::ENTER
 ppt-type enter
@@ -683,79 +608,13 @@ parent parent ExceptionTest.ExceptionTest:::CLASS 1
     dec-type int
     rep-type int
     flags is_param
-    comparability 22
+    comparability -22
   variable square
     var-kind variable
     dec-type boolean
     rep-type boolean
     flags is_param
-    comparability 22
-
-ppt ExceptionTest.ExceptionTest.Square(System.Boolean\_square,\_System.Int32\_n):::EXIT13
-ppt-type subexit
-parent parent ExceptionTest.ExceptionTest:::CLASS 1
-  variable exception
-    var-kind return
-    dec-type System.Exception
-    rep-type hashcode
-    comparability 22
-  variable exception.GetType()
-    var-kind function GetType()
-    enclosing-var exception
-    dec-type java.lang.Class
-    rep-type java.lang.String
-    flags synthetic classname
-    comparability 22
-  variable n
-    var-kind variable
-    dec-type int
-    rep-type int
-    flags is_param
-    comparability 22
-  variable return
-    var-kind return
-    dec-type int
-    rep-type int
-    comparability 22
-  variable square
-    var-kind variable
-    dec-type boolean
-    rep-type boolean
-    flags is_param
-    comparability 22
-
-ppt ExceptionTest.ExceptionTest.Square(System.Boolean\_square,\_System.Int32\_n):::EXIT16
-ppt-type subexit
-parent parent ExceptionTest.ExceptionTest:::CLASS 1
-  variable exception
-    var-kind return
-    dec-type System.Exception
-    rep-type hashcode
-    comparability 22
-  variable exception.GetType()
-    var-kind function GetType()
-    enclosing-var exception
-    dec-type java.lang.Class
-    rep-type java.lang.String
-    flags synthetic classname
-    comparability 22
-  variable n
-    var-kind variable
-    dec-type int
-    rep-type int
-    flags is_param
-    comparability 22
-  variable return
-    var-kind return
-    dec-type int
-    rep-type int
-    comparability 22
-  variable square
-    var-kind variable
-    dec-type boolean
-    rep-type boolean
-    flags is_param
-    comparability 22
+    comparability -22
 
 ppt ExceptionTest.ExceptionTest.Square(System.Boolean\_square,\_System.Int32\_n):::EXIT22
 ppt-type subexit
@@ -764,31 +623,31 @@ parent parent ExceptionTest.ExceptionTest:::CLASS 1
     var-kind return
     dec-type System.Exception
     rep-type hashcode
-    comparability 22
+    comparability -22
   variable exception.GetType()
     var-kind function GetType()
     enclosing-var exception
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
   variable n
     var-kind variable
     dec-type int
     rep-type int
     flags is_param
-    comparability 22
+    comparability -22
   variable return
     var-kind return
     dec-type int
     rep-type int
-    comparability 22
+    comparability -22
   variable square
     var-kind variable
     dec-type boolean
     rep-type boolean
     flags is_param
-    comparability 22
+    comparability -22
 
 ppt ExceptionTest.ExceptionTest.Square(System.Boolean\_square,\_System.Int32\_n):::EXIT_EX_Runtime
 ppt-type subexit
@@ -797,31 +656,31 @@ parent parent ExceptionTest.ExceptionTest:::CLASS 1
     var-kind return
     dec-type System.Exception
     rep-type hashcode
-    comparability 22
+    comparability -22
   variable exception.GetType()
     var-kind function GetType()
     enclosing-var exception
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
   variable n
     var-kind variable
     dec-type int
     rep-type int
     flags is_param
-    comparability 22
+    comparability -22
   variable return
     var-kind return
     dec-type int
     rep-type int
-    comparability 22
+    comparability -22
   variable square
     var-kind variable
     dec-type boolean
     rep-type boolean
     flags is_param
-    comparability 22
+    comparability -22
 
 ppt ExceptionTest.ExceptionTest:::CLASS
 ppt-type class
@@ -834,20 +693,20 @@ parent parent ExceptionTest.ExceptionTest:::CLASS 1
     dec-type ExceptionTest.ExceptionTest
     rep-type hashcode
     flags is_param
-    comparability 22
+    comparability -22
   variable this.GetType()
     var-kind function GetType()
     enclosing-var this
     dec-type java.lang.Class
     rep-type java.lang.String
     flags synthetic classname
-    comparability 22
+    comparability -22
 
 ExceptionTest.ExceptionTest.Main(System.String[]\_args):::ENTER
 this_invocation_nonce
-0
+2
 args
-62938818
+33189039
 1
 args[..]
 []
@@ -858,7 +717,7 @@ args[..].ToString()
 
 ExceptionTest.ExceptionTest.Square(System.Boolean\_square,\_System.Int32\_n):::ENTER
 this_invocation_nonce
-1
+3
 n
 4
 1
@@ -866,9 +725,9 @@ square
 false
 1
 
-ExceptionTest.ExceptionTest.Square(System.Boolean\_square,\_System.Int32\_n):::EXIT16
+ExceptionTest.ExceptionTest.Square(System.Boolean\_square,\_System.Int32\_n):::EXIT22
 this_invocation_nonce
-1
+3
 exception
 nonsensical
 2
@@ -887,14 +746,14 @@ false
 
 ExceptionTest.CubingClass..ctor(System.Int32\_val):::ENTER
 this_invocation_nonce
-2
+4
 val
 5
 1
 
 ExceptionTest.CubingClass..ctor(System.Int32\_val):::EXIT8
 this_invocation_nonce
-2
+4
 exception
 nonsensical
 2
@@ -902,7 +761,7 @@ exception.GetType()
 nonsensical
 2
 this
-29578451
+30265903
 1
 this.GetType()
 "ExceptionTest.CubingClass"
@@ -916,9 +775,9 @@ val
 
 ExceptionTest.CubingClass.DoCube():::ENTER
 this_invocation_nonce
-3
+5
 this
-29578451
+30265903
 1
 this.GetType()
 "ExceptionTest.CubingClass"
@@ -929,7 +788,7 @@ this.val
 
 ExceptionTest.CubingClass.DoCube():::EXIT10
 this_invocation_nonce
-3
+5
 exception
 nonsensical
 2
@@ -940,7 +799,7 @@ return
 125
 1
 this
-29578451
+30265903
 1
 this.GetType()
 "ExceptionTest.CubingClass"
@@ -951,9 +810,9 @@ this.val
 
 ExceptionTest.ExceptionTest.Main(System.String[]\_args):::EXIT77
 this_invocation_nonce
-0
+2
 args
-62938818
+33189039
 1
 args[..]
 []

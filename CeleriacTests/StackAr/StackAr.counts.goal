@@ -11,5 +11,5 @@ StackArTester.Main(System.String[]\_args) ENTER/30: 1 EXIT4/36: 1
 StackArTester.doNew(System.Int32\_size) ENTER/24: 2 EXIT11/30: 2
 StackArTester.fill(System.Int32\_n) ENTER/24: 1 EXIT86/30: 1
 StackArTester.observe() ENTER/21: 12 EXIT10/27: 12
-StackArTester.push() ENTER/21: 4 EXIT23/27: 4
-StackArTester.topOrPop() ENTER/21: 2 EXIT33/27: 2
+StackArTester.push() ENTER/21: 4 EXIT24/27: 4
+StackArTester.topOrPop() ENTER/21: 2 EXIT34/27: 2

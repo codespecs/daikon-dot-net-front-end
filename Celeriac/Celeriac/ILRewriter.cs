@@ -401,9 +401,7 @@ namespace Celeriac
 
       // If the method is non-void, return in debug builds will contain a store before a jump to
       // the return point. Figure out what the store will be to detect these returns later.
-      ISet<IOperation> synthesizedReturns = DetermineSynthesizedReturns(
-        immutableMethodBody, operations,
-        operations[operationIndexForFirstReturnJumpTarget].Offset, commonExit);
+      ISet<IOperation> synthesizedReturns = DetermineSynthesizedReturns(immutableMethodBody, operations, commonExit);
 
       // We may need to mutate the method body during rewriting, so obtain a mutable version.
       mutableMethodBody = (MethodBody)immutableMethodBody;
@@ -444,26 +442,24 @@ namespace Celeriac
     /// returns. These are returns in the C#, but are implemented in the CIL as jumps
     /// to the given commonExit point.
     /// </summary>
-    /// <param name="originalReturnJumpOffset">The offset for the first nop for the last return 
-    /// in the compiler generated IL</param>
     /// <param name="immutableMethodBody">Method body under consideration</param>
     /// <param name="operations">List of operations in which to look for the synthesized
     /// returns</param>
     /// <param name="commonExit">Common exit the synthesized returns will jump to</param>
     /// <returns>The list of operations if any, otherwise null</returns>
-    private static ISet<IOperation> DetermineSynthesizedReturns(IMethodBody immutableMethodBody,
-      List<IOperation> operations, uint originalReturnJumpOffset, ILGeneratorLabel commonExit)
+    private static ISet<IOperation> DetermineSynthesizedReturns(IMethodBody immutableMethodBody, 
+      List<IOperation> operations, ILGeneratorLabel commonExit)
     {
       Contract.Requires(immutableMethodBody != null);
       Contract.Requires(operations != null);
 
       if (immutableMethodBody.MethodDefinition.Type.TypeCode != PrimitiveTypeCode.Void)
       {
-        OperationCode lastStoreOperation = GetLastStoreOperation(immutableMethodBody);
-        if (lastStoreOperation != 0)
+        Tuple<OperationCode, uint> lastStoreOperation = GetLastStoreOperation(immutableMethodBody);
+        if (lastStoreOperation.Item1 != 0)
         {
           return FindAndAdjustSynthesizedReturns(operations, lastStoreOperation,
-              originalReturnJumpOffset, commonExit);
+              lastStoreOperation.Item2, commonExit);
         }
       }
       return null;
@@ -515,16 +511,18 @@ namespace Celeriac
     /// after instrumentation is complete</param>
     /// <returns>The set of store commands comprising part of the synthesized return</returns>
     private static ISet<IOperation> FindAndAdjustSynthesizedReturns(List<IOperation> operations,
-        OperationCode lastStoreOperation, uint offsetForOldLastReturn, ILGeneratorLabel commonExit)
+        Tuple<OperationCode, uint> lastStoreOperation, uint offsetForOldLastReturn,
+        ILGeneratorLabel commonExit)
     {
       HashSet<IOperation> synthesizedReturns = new HashSet<IOperation>();
+      offsetForOldLastReturn = lastStoreOperation.Item2;
       // Need a pair of instructions for the synthesized return, so stop looking 1 before you
       // hit the end of the operations.
       for (int i = 0; i < operations.Count - 1; i++)
       {
         var next = operations[i + 1].OperationCode;
         // Look for cases where the current instruction is a store...
-        if (operations[i].OperationCode == lastStoreOperation &&
+        if (operations[i].OperationCode == lastStoreOperation.Item1 &&
           // ... and the next instruction is a branch ... 
           (next == OperationCode.Br ||
            next == OperationCode.Leave ||
@@ -546,25 +544,29 @@ namespace Celeriac
 
     /// <summary>
     /// Get the store instruction that will precede any pseudo-return
-    /// (store then a branch) found in a debug build.
+    /// (store then a branch) found in a debug build, and its offset.
     /// </summary>
     /// <param name="methodBody">Method for which to get the last store</param>
-    /// <returns>The instruction called during the store, 0 for void methods</returns>
+    /// <returns>The instruction called during the store, and its offset. Both are 0 for void 
+    /// methods.</returns>
     [Pure]
-    private static OperationCode GetLastStoreOperation(IMethodBody methodBody)
+    private static Tuple<OperationCode, uint> GetLastStoreOperation(IMethodBody methodBody)
     {
       Contract.Requires(methodBody != null);
-      Contract.Ensures((methodBody.MethodDefinition.Type.TypeCode == PrimitiveTypeCode.Void).Implies(Contract.Result<OperationCode>() == 0));
+      Contract.Ensures((methodBody.MethodDefinition.Type.TypeCode == PrimitiveTypeCode.Void)
+        .Implies(Contract.Result<Tuple<OperationCode, uint>>().Item1 == 0));
+
+      OperationCode opCode;
 
       if (methodBody.MethodDefinition.Type.TypeCode == PrimitiveTypeCode.Void)
       {
-        return 0;
+        opCode = 0;
       }
 
       List<IOperation> operations = methodBody.Operations.ToList();
       if (operations.Count < 1)
       {
-        return 0;
+        opCode = 0;
       }
 
       // Start at the end of the method, back track until we get to a load
@@ -578,20 +580,28 @@ namespace Celeriac
       switch (op.OperationCode)
       {
         case OperationCode.Ldloc:
-          return OperationCode.Stloc;
+          opCode = OperationCode.Stloc;
+          break;
         case OperationCode.Ldloc_0:
-          return OperationCode.Stloc_0;
+          opCode = OperationCode.Stloc_0;
+          break;
         case OperationCode.Ldloc_1:
-          return OperationCode.Stloc_1;
+          opCode = OperationCode.Stloc_1;
+          break;
         case OperationCode.Ldloc_2:
-          return OperationCode.Stloc_2;
+          opCode = OperationCode.Stloc_2;
+          break;
         case OperationCode.Ldloc_3:
-          return OperationCode.Stloc_3;
+          opCode = OperationCode.Stloc_3;
+          break;
         case OperationCode.Ldloc_S:
-          return OperationCode.Stloc_S;
+          opCode = OperationCode.Stloc_S;
+          break;
         default:
-          return 0;
+          opCode = 0;
+          break;
       }
+      return new Tuple<OperationCode, uint>(opCode, op.Offset);
     }
 
     #endregion

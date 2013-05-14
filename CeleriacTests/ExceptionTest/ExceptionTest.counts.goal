@@ -1,4 +1,4 @@
 ExceptionTest.CubingClass..ctor(System.Int32\_val) ENTER/6: 1 EXIT8/21: 1
 ExceptionTest.CubingClass.DoCube() ENTER/12: 1 EXIT10/21: 1
 ExceptionTest.ExceptionTest.Main(System.String[]\_args) ENTER/12: 1 EXIT77/18: 1
-ExceptionTest.ExceptionTest.Square(System.Boolean\_square,\_System.Int32\_n) ENTER/9: 1 EXIT16/18: 1
+ExceptionTest.ExceptionTest.Square(System.Boolean\_square,\_System.Int32\_n) ENTER/9: 1 EXIT22/18: 1

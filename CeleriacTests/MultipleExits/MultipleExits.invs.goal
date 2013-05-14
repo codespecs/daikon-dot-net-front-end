@@ -54,7 +54,7 @@ return has only one value
 return.ToString() == "N"
 orig(n) one of { -20, -1 }
 ===========================================================================
-HelloWorld.HelloWorld.multipleReturnsDelayed(System.Int32 n):::EXIT66
+HelloWorld.HelloWorld.multipleReturnsDelayed(System.Int32 n):::EXIT67
 return.ToString() one of { "Big P.", "Little P." }
 orig(n) one of { 1, 1000 }
 ===========================================================================

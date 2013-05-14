@@ -196,8 +196,10 @@ namespace CeleriacLauncher
       object[] programArguments = ExtractProgramArguments(args, celeriacArgs);
       if (programArguments != null)
       {
-        psi.Arguments = String.Join(" ", programArguments[0]);
+        string[] stringArgs = (string[])(programArguments)[0];
+        psi.Arguments = String.Join(" ", stringArgs);
       }
+      psi.UseShellExecute = false;
       Process p = Process.Start(psi);
       p.WaitForExit();
     }
