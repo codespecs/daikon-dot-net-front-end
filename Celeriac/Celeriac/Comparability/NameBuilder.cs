@@ -13,7 +13,10 @@ using Celeriac.Contracts;
 
 namespace Comparability
 {
-
+  /// <summary>
+  /// Builds expression names for code elements in a type; these expession names correspond to the names in the
+  /// DECLS file.
+  /// </summary>
   public class NameBuilder : CodeVisitor
   {
     public INamedTypeDefinition Type { get; private set; }
@@ -56,6 +59,11 @@ namespace Comparability
       Contract.Invariant(Contract.ForAll(StaticNames, n => NameTable.ContainsKey(n)));
     }
 
+    /// <summary>
+    /// Construct a <see cref="NameBuilder"/> with no name information.
+    /// </summary>
+    /// <param name="type">The type to construct name information for</param>
+    /// <param name="typeManager">Celeriac type information</param>
     public NameBuilder(INamedTypeDefinition type, TypeManager typeManager)
     {
       Contract.Requires(type != null);
@@ -76,6 +84,12 @@ namespace Comparability
       AnonymousDelegateReturns = new HashSet<IReturnStatement>();
     }
 
+    /// <summary>
+    /// Returns the expression names for the given expressions, skipping the unnamed
+    /// expressions.
+    /// </summary>
+    /// <param name="exprs">expressions</param>
+    /// <returns>the expression names for the given expressions</returns>
     [Pure]
     public IEnumerable<string> Names(IEnumerable<IExpression> exprs)
     {
@@ -311,7 +325,7 @@ namespace Comparability
         var def = (IArrayIndexer)definition;
         if (NameTable.ContainsKey(def.IndexedObject))
         {
-          TryAdd(outer, NameTable[def.IndexedObject] + "[..]");
+          TryAdd(outer, FormElementsExpression(NameTable[def.IndexedObject]));
 
           // propogate instance expression information
           if (InstanceExpressionsReferredTypes.ContainsKey(def.IndexedObject))
@@ -341,11 +355,10 @@ namespace Comparability
 
     public override void Visit(IArrayIndexer arrayIndexer)
     {
-
       if (arrayIndexer.Indices.Count() == 1 && NameTable.ContainsKey(arrayIndexer.IndexedObject))
       {
         var arrayName = NameTable[arrayIndexer.IndexedObject];
-        TryAdd(arrayIndexer, arrayName + "[..]");
+        TryAdd(arrayIndexer, FormElementsExpression(arrayName));
       }
     }
 
@@ -388,6 +401,7 @@ namespace Comparability
         }
       }
     }
+
     /// <summary>
     /// Returns true if <code>method</code> is a setter
     /// </summary>
@@ -412,6 +426,31 @@ namespace Comparability
       Contract.Requires(method != null);
       Contract.Ensures(Contract.Result<bool>() == (method.IsSpecialName && method.Name.Value.StartsWith("get_")));
       return method.IsSpecialName && method.Name.Value.StartsWith("get_");
+    }
+
+    /// <summary>
+    /// Returns <c>true</c> if the name is the name of a collection elements expression, that is
+    /// it ends with "[..]".
+    /// </summary>
+    /// <param name="name">the expression name</param>
+    /// <returns><c>true</c> if the name is the name of a collection elements expression</returns>
+    [Pure]
+    public static bool IsElementsExpression(string name)
+    {
+      Contract.Requires(!string.IsNullOrWhiteSpace(name));
+      return name.EndsWith("[..]");
+    }
+
+    /// <summary>
+    /// Returns the elements expression name for the given collection/array name, i.e., the name with 
+    /// [..] added to the end. 
+    /// </summary>
+    /// <param name="collectionName">the expression name</param>
+    /// <returns> the elements expression name for the given collection/array name</returns>
+    [Pure]
+    public static string FormElementsExpression(string collectionName)
+    {
+      return collectionName + "[..]";
     }
 
     public override void Visit(IMethodCall call)
@@ -445,12 +484,42 @@ namespace Comparability
         {
           name = NameTable[call.ThisArgument] + "." + calleeName.Substring("set_".Length);
         }
-
+        
         Parent.Add(call, call.ThisArgument);
         // propogate the instance information
         if (InstanceExpressionsReferredTypes.ContainsKey(receiver))
         {
           AddInstanceExpr(InstanceExpressionsReferredTypes[receiver], call);
+        }
+      }
+
+      // Check for indexes into a List
+      if (!call.IsStaticCall && NameTable.ContainsKey(receiver))
+      {
+        foreach (var m in MemberHelper.GetImplicitlyImplementedInterfaceMethods(call.MethodToCall.ResolvedMethod))
+        {
+          var genericDef = TypeHelper.UninstantiateAndUnspecialize(m.ContainingTypeDefinition);
+          if (TypeHelper.TypesAreEquivalent(genericDef, Host.PlatformType.SystemCollectionsGenericIList, true))
+          {
+            if (m.Name.Value.OneOf("get_Item")){
+              name = FormElementsExpression(NameTable[call.ThisArgument]);
+            }
+          }
+        }
+      }
+
+      // Check for indexes into a Dictionary
+      if (!call.IsStaticCall && NameTable.ContainsKey(receiver))
+      {
+        var genericDef = TypeHelper.UninstantiateAndUnspecialize(receiver.Type);
+
+        if (TypeHelper.TypesAreEquivalent(genericDef, Host.PlatformType.SystemCollectionsGenericDictionary, true))
+        {
+          if (callee.Name.Value.OneOf("get_Item"))
+          {
+            // ISSUE #91: this supports the dictionary[..].Value collection; does not support dictionary.Values
+            name = FormElementsExpression(NameTable[call.ThisArgument]) + ".Value";
+          }
         }
       }
 

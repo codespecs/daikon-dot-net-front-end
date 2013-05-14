@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using Celeriac.Comparability;
 using Celeriac;
+using Celeriac.Contracts;
 
 namespace Comparability
 {
@@ -24,7 +25,11 @@ namespace Comparability
     private readonly Dictionary<string, int> ids = new Dictionary<string, int>();
     private readonly DisjointSets comparability = new DisjointSets();
 
-    private readonly Dictionary<string, HashSet<string>> arrayIndexes = new Dictionary<string, HashSet<string>>();
+    /// <summary>
+    /// Map from collection element expression (e.g., array[..]) to its name index expressions (e.g., i where array[i]
+    /// appears in the code).
+    /// </summary>
+    private readonly Dictionary<string, HashSet<string>> collectionIndexes = new Dictionary<string, HashSet<string>>();
 
     private readonly HashSet<IReturnStatement> returns = new HashSet<IReturnStatement>();
     private readonly HashSet<IMethodCall> namedCalls = new HashSet<IMethodCall>();
@@ -36,29 +41,37 @@ namespace Comparability
 
     private readonly HashSet<IExpression> namedExpressions = new HashSet<IExpression>();
 
+    public IMetadataHost Host { get; private set; }
+    
     [ContractInvariantMethod]
     private void ObjectInvariant()
     {
       Contract.Invariant(Names != null);
       Contract.Invariant(Method != null);
+      Contract.Invariant(Host != null);
       Contract.Invariant(ReferencedTypes != null);
       Contract.Invariant(Contract.ForAll(namedCalls, c => Names.NameTable.ContainsKey(c)));
-      Contract.Invariant(Contract.ForAll(arrayIndexes.Keys, a => ids.ContainsKey(a)));
-      Contract.Invariant(Contract.ForAll(arrayIndexes.Values, i => i.Count > 0));
+      Contract.Invariant(Contract.ForAll(collectionIndexes.Keys, a => ids.ContainsKey(a)));
+      // Array Indexes should correspond to the array contents entry: e.g., this.array[..] not this.array
+      Contract.Invariant(Contract.ForAll(collectionIndexes.Keys, a => NameBuilder.IsElementsExpression(a)));
+      Contract.Invariant(Contract.ForAll(collectionIndexes.Values, i => i.Count > 0));
 
       // Not true b/c a name is added whenever comparability is queried by Celeriacs's IL visitors
       // Contract.Invariant(Contract.ForAll(ids.Keys, n => n.Equals("return") || Names.NameTable.ContainsValue(n)));
     }
 
-    public MethodVisitor(IMethodDefinition method, NameBuilder names)
+    public MethodVisitor(IMethodDefinition method, IMetadataHost host, NameBuilder names)
     {
       Contract.Requires(method != null);
       Contract.Requires(names != null);
+      Contract.Requires(host != null);
       Contract.Ensures(Names == names);
       Contract.Ensures(Method == method);
+      Contract.Ensures(Host == host);
 
       Names = names;
       Method = method;
+      Host = host;
       ReferencedTypes = new Dictionary<IExpression, ITypeReference>();
 
       ids.Add("return", comparability.AddElement());
@@ -111,6 +124,11 @@ namespace Comparability
       }
     }
 
+    /// <summary>
+    /// Returns a mapping from parameter names to argument expressions.
+    /// </summary>
+    /// <param name="callsite">the callsite</param>
+    /// <returns>a mapping from parameter names to argument expressions</returns>
     private Dictionary<string, string> ZipArguments(IMethodCall callsite)
     {
       Contract.Requires(callsite != null);
@@ -129,6 +147,14 @@ namespace Comparability
       return paramsToArgs;
     }
 
+    /// <summary>
+    /// Applies comparability information from the given methods to this method. The analysis 
+    /// both calls to the methods and inheritance relationships. Comparability information is 
+    /// propogated up the override / implementation hierarchy.
+    /// </summary>
+    /// <param name="methodData">method summaries</param>
+    /// <remarks>TWS: is the method return value being dropped from the comparability update?</remarks>
+    /// <returns><c>true</c> if the comparability information changed</returns>
     public bool ApplyMethodSummaries(Dictionary<IMethodDefinition, MethodVisitor> methodData)
     {
       Contract.Requires(methodData != null);
@@ -164,6 +190,8 @@ namespace Comparability
         }
         else if (calleeDefinition.ParameterCount > 0)
         {
+          // For methods with no comparability summary, use the types of the parameters as a basis
+          // for comparability
           HashSet<IParameterDefinition> fix = new HashSet<IParameterDefinition>(calleeDefinition.Parameters);
 
           var opinion = ParameterTypeComparability(fix);
@@ -174,9 +202,43 @@ namespace Comparability
           modified |= MergeOpinion(rebased);
         }
       }
+
+      var overriding = methodData.Where(m => TypeManager.GetContractMethods(m.Key).Contains(Method));
+      foreach (var o in overriding)
+      {
+        var bindings = new Dictionary<string,string>();
+        for (int i = 0; i < Method.ParameterCount; i++)
+        {
+          // as above, generate a mapping from this parameters to the names in the summary to apply
+          bindings.Add(o.Key.Parameters.ElementAt(i).Name.Value, Method.Parameters.ElementAt(i).Name.Value);
+        }
+
+        bool sameClass = o.Key.ContainingType.ResolvedType == Names.Type;
+
+        // Incorporate parameter opinion
+        // 1. Generate opinion for parameter comparability
+        // 2. Rebase using argument bindings and remove unused parameters
+        // 3. Merge the comparability sets
+        var names = Union(
+            o.Value.ParameterNames, o.Value.StaticNames,
+            (sameClass ? Names.ThisNames() : new HashSet<string>()));
+
+        var opinion = o.Value.ForNames(names);
+        var rebased = Filter(Rebase(opinion, bindings), o.Value.ParameterNames);
+     
+        modified |= MergeOpinion(rebased);
+      }
+
       return modified;
     }
 
+    /// <summary>
+    /// Compute comparability for a method's parameters based on the types of the parameters. Two parameters
+    /// are considered comparable if one can be assigned to the other.
+    /// </summary>
+    /// <param name="parameters">the parameters</param>
+    /// <seealso cref="TypeHelper.TypesAreAssignmentCompatible"/>
+    /// <returns>comparability sets for the parameters</returns>
     public static HashSet<HashSet<string>> ParameterTypeComparability(IEnumerable<IParameterDefinition> parameters)
     {
       Contract.Requires(parameters != null);
@@ -261,13 +323,18 @@ namespace Comparability
       }
     }
 
+    /// <summary>
+    /// Returns the comparability set for the given array expression.
+    /// </summary>
+    /// <param name="array">the array expression</param>
+    /// <returns>the comparability set for the given array expression</returns>
     public HashSet<string> IndexComparabilityOpinion(string array)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(array));
       Contract.Ensures(Contract.Result<HashSet<string>>() != null);
 
-      return arrayIndexes.ContainsKey(array)
-             ? arrayIndexes[array]
+      return collectionIndexes.ContainsKey(array)
+             ? collectionIndexes[array]
              : new HashSet<string>();
     }
 
@@ -449,28 +516,11 @@ namespace Comparability
       return result;
     }
 
-    public int GetArrayIndexComparability(string arrayName)
-    {
-      Contract.Requires(!string.IsNullOrWhiteSpace(arrayName));
-      Contract.Ensures(Contract.Result<int>() >= 0);
-
-      if (!ids.ContainsKey(arrayName))
-      {
-        ids.Add(arrayName, comparability.AddElement());
-      }
-
-      if (!arrayIndexes.ContainsKey(arrayName))
-      {
-        var synthetic = "<index>" + arrayName;
-
-        // create a dummy index
-        var cmp = new HashSet<string>();
-        cmp.Add(synthetic);
-        arrayIndexes.Add(arrayName, cmp);
-      }
-      return GetComparability(arrayIndexes[arrayName].First());
-    }
-
+    /// <summary>
+    /// Returns the compability set id for the expression with the given name.
+    /// </summary>
+    /// <param name="name">the expression</param>
+    /// <returns>the compability set id for the expression with the given name</returns>
     public int GetComparability(string name)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(name));
@@ -479,6 +529,12 @@ namespace Comparability
       return comparability.FindSet(GetId(name));
     }
 
+    /// <summary>
+    /// Returns the tracking id for the expression with the given name; if the expression
+    /// is currently not tracked, a new id is created.
+    /// </summary>
+    /// <param name="name">the expression</param>
+    /// <returns>the tracking id for the expression with the given name</returns>
     private int GetId(string name)
     {
       Contract.Requires(!string.IsNullOrEmpty(name));
@@ -515,6 +571,12 @@ namespace Comparability
       }
     }
 
+    /// <summary>
+    /// Mark the expressions with the given ids as being in the same comparability set.
+    /// </summary>
+    /// <param name="idsToMark">the expression ids</param>
+    /// <seealso cref="ids"/>
+    /// <returns><c>true</c> if any changes to comparability were made</returns>
     private bool Mark(IEnumerable<int> idsToMark)
     {
       bool modified = false;
@@ -530,11 +592,22 @@ namespace Comparability
       return modified;
     }
 
+    /// <summary>
+    /// Mark the expressions with the given names as being in the same comparability set.
+    /// </summary>
+    /// <param name="names">the expression names</param>
+    /// <returns><c>true</c> if any changes to comparability were made</returns>
     private bool Mark(IEnumerable<string> names)
     {
       return Mark(names.Select(n => GetId(n)));
     }
 
+    /// <summary>
+    /// Mark the given expressions as being in the same comparability set; expressions without names
+    /// are ignored.
+    /// </summary>
+    /// <param name="exprs">the expressions</param>
+    /// <returns><c>true</c> if any changes to comparability were made</returns>
     private bool Mark(IEnumerable<IExpression> exprs)
     {
       return Mark(exprs.Select(x => GetId(x)).Where(x => x.HasValue).Select(x => x.Value));
@@ -558,9 +631,159 @@ namespace Comparability
       HandleComposite(target, target.Instance);
     }
 
+    /// <summary>
+    /// If the call is to a standard collection method, update the element and index comparability information
+    /// </summary>
+    /// <param name="call">the method call</param>
+    private void HandleCollectionMethod(IMethodCall call)
+    {
+      var receiver = call.ThisArgument;
+      var callee = call.MethodToCall.ResolvedMethod;
+
+      IExpression index = null;
+      var elements = new List<IExpression>();
+
+      foreach (var m in MemberHelper.GetImplicitlyImplementedInterfaceMethods(callee))
+      {
+        var genericDef = TypeHelper.UninstantiateAndUnspecialize(m.ContainingTypeDefinition);
+
+        // IEnumerable does not define any methods that affect comparability
+
+        // ICollection
+        if (TypeHelper.TypesAreEquivalent(genericDef, Host.PlatformType.SystemCollectionsGenericICollection, true))
+        {
+          if (m.Name.Value.OneOf("Add", "Remove", "Contains"))
+          {
+            elements.Add(call.Arguments.First());
+          }
+        }
+
+        // IList
+        if (TypeHelper.TypesAreEquivalent(genericDef, Host.PlatformType.SystemCollectionsGenericIList, true))
+        {
+          if (m.Name.Value.OneOf("IndexOf"))
+          {
+            elements.Add(call.Arguments.First());
+          }
+          else if (m.Name.Value.OneOf("get_Item", "set_Item", "RemoveAt"))
+          {
+            index = call.Arguments.First();
+          }
+          else if (m.Name.Value.OneOf("Insert"))
+          {
+            index = call.Arguments.ElementAt(0);
+            elements.Add(call.Arguments.ElementAt(1));
+          }
+        }
+      }
+
+      if (index != null && Names.NameTable.ContainsKey(index))
+      {
+        var collectionName = Names.NameTable[receiver];
+        var collectionContents = NameBuilder.FormElementsExpression(collectionName);
+
+        // The collection reference may not have been used in a comparable way yet.
+        if (!ids.ContainsKey(collectionContents))
+        {
+          ids.Add(collectionContents, comparability.AddElement());
+        }
+
+        if (!collectionIndexes.ContainsKey(collectionContents))
+        {
+          collectionIndexes.Add(collectionContents, new HashSet<string>());
+        }
+
+        if (collectionIndexes[collectionContents].Add(Names.NameTable[index]))
+        {
+          // we haven't seen this index before, so re-mark indexes
+          Mark(collectionIndexes[collectionContents]);
+        }
+      }
+
+      if (elements.Count > 0)
+      {
+        var collectionName = Names.NameTable[receiver];
+        var collectionContents = NameBuilder.FormElementsExpression(collectionName);
+
+        // The collection reference may not have been used in a comparable way yet.
+        if (!ids.ContainsKey(collectionContents))
+        {
+          ids.Add(collectionContents, comparability.AddElement());
+        }
+
+        var names = new List<string>();
+        names.Add(collectionContents);
+        names.AddRange(Names.Names(elements));
+        Mark(names);
+      }
+    }
+
+    /// <summary>
+    /// If the method call is a call to a Dictionary method, update the comparability information
+    /// for keys and values.
+    /// </summary>
+    /// <remarks>
+    ///   This uses <c>Key</c> and <c>Value</c> instead of <c>Keys</c> and <c>Values</c> since the declaration
+    ///   printer uses <c>Key</c> and <c>Value</c> (it grabs it from the dictionary entry, as 
+    /// </remarks>
+    /// <param name="call">the method call</param>
+    private void HandleDictionaryMethod(IMethodCall call)
+    {
+      var receiver = call.ThisArgument;
+      var callee = call.MethodToCall.ResolvedMethod;
+
+      var keys = new List<IExpression>();
+      var values = new List<IExpression>();
+
+      var genericDef = TypeHelper.UninstantiateAndUnspecialize(receiver.Type);
+
+      if (TypeHelper.TypesAreEquivalent(genericDef, Host.PlatformType.SystemCollectionsGenericDictionary, true))
+      {
+        if (callee.Name.Value.OneOf("Remove", "TryGetValue", "ContainsKey", "set_Item", "get_Item"))
+        {
+          keys.Add(call.Arguments.First());
+        }
+        else if (callee.Name.Value.OneOf("Add"))
+        {
+          keys.Add(call.Arguments.ElementAt(0));
+          values.Add(call.Arguments.ElementAt(1));
+        }
+      }
+
+      var collectionName = Names.NameTable[receiver];  
+      var xs = new [] { 
+        Tuple.Create(collectionName + ".Keys", keys),
+        Tuple.Create(NameBuilder.FormElementsExpression(collectionName) + ".Key", keys),
+        Tuple.Create(collectionName + ".Values", values),
+        Tuple.Create(NameBuilder.FormElementsExpression(collectionName) + ".Value", values)
+      };
+
+      foreach (var x in xs.Where(c => c.Item2.Count > 0))
+      {
+        // The collection reference may not have been used in a comparable way yet.
+        if (!ids.ContainsKey(x.Item1))
+        {
+          ids.Add(x.Item1, comparability.AddElement());
+        }
+
+        var names = new List<string>();
+        names.Add(x.Item1);
+        names.AddRange(Names.Names(x.Item2));
+        Mark(names);
+      }
+    }
+
     public override void Visit(IMethodCall call)
     {
+      var receiver = call.ThisArgument;
       var callee = call.MethodToCall.ResolvedMethod;
+
+      // Form comparability information for Collection classes
+      if (!call.IsStaticCall && Names.NameTable.ContainsKey(receiver))
+      {
+        HandleCollectionMethod(call);
+        HandleDictionaryMethod(call);
+      }
 
       if (NameBuilder.IsSetter(callee))
       {
@@ -583,27 +806,30 @@ namespace Comparability
     {
       if (arrayIndexer.Indices.Count() == 1 && Names.NameTable.ContainsKey(arrayIndexer.IndexedObject))
       {
+        // the array expression, e.g.: this.array
         var arrayName = Names.NameTable[arrayIndexer.IndexedObject];
+        // the contents expression, e.g.: this.array[..]
+        var arrayContents = NameBuilder.FormElementsExpression(arrayName);
 
         // mark array indexes as compatible
         var index = arrayIndexer.Indices.First();
         if (Names.NameTable.ContainsKey(index))
         {
           // The array reference may not have been used in a comparable way yet.
-          if (!ids.ContainsKey(arrayName))
+          if (!ids.ContainsKey(arrayContents))
           {
-            ids.Add(arrayName, comparability.AddElement());
+            ids.Add(arrayContents, comparability.AddElement());
           }
 
-          if (!arrayIndexes.ContainsKey(arrayName))
+          if (!collectionIndexes.ContainsKey(arrayContents))
           {
-            arrayIndexes.Add(arrayName, new HashSet<string>());
+            collectionIndexes.Add(arrayContents, new HashSet<string>());
           }
 
-          if (arrayIndexes[arrayName].Add(Names.NameTable[index]))
+          if (collectionIndexes[arrayContents].Add(Names.NameTable[index]))
           {
             // we haven't seen this index before, so re-mark indexes
-            Mark(arrayIndexes[arrayName]);
+            Mark(collectionIndexes[arrayContents]);
           }
         }
         
@@ -680,7 +906,7 @@ namespace Comparability
         method.Method.Parameters.Select(p => typeManager.ConvertCCITypeToAssemblyQualifiedName(p.Type)).ToArray(),
         method.ids,
         method.comparability,
-        method.arrayIndexes);
+        method.collectionIndexes);
     }
 
   }

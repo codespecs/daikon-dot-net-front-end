@@ -137,6 +137,8 @@ namespace Celeriac
     /// </summary>
     private CeleriacArgs celeriacArgs;
 
+    private System.Reflection.Assembly instrumentedAssembly = null;
+
     [NonSerialized]
     private AssemblyIdentity assemblyIdentity;
 
@@ -235,13 +237,57 @@ namespace Celeriac
         return host;
       }
     }
-
-    public AssemblyIdentity AssemblyIdentity
+    
+    /// <summary>
+    /// Store a the instrumented assembly, to use during type resolution. Also clears caches
+    /// and purity method stores
+    /// </summary>
+    /// <param name="assembly">The assembly after instrumentation was added</param>
+    public void SetInstrumentedAssembly(System.Reflection.Assembly assembly)
     {
-      get
+      Contract.Assert(this.instrumentedAssembly == null);
+      this.instrumentedAssembly = assembly;
+      ResetCaches();
+      ReloadMethodPurityInformation();
+    }
+
+    /// <summary>
+    /// Clear all cached information
+    /// </summary>
+    private void ResetCaches()
+    {
+      isListHashmap.Clear();
+      isFSharpListHashmap.Clear();
+      isLinkedListHashmap.Clear();
+      isSetHashmap.Clear();
+      isDictionaryHashMap.Clear();
+      nameTypeMap.Clear();
+    }
+
+    /// <summary>
+    /// Reload method purity information by looking up methods by name and assembly-qualified
+    /// type information.
+    /// </summary>
+    private void ReloadMethodPurityInformation()
+    {
+      // Serialize type and method names
+      var purity = new List<Tuple<string, string>>();
+      foreach (var typeEntry in pureMethodsForType)
       {
-        Contract.Ensures(Contract.Result<AssemblyIdentity>() == this.assemblyIdentity);
-        return this.assemblyIdentity;
+        foreach (var method in typeEntry.Value)
+        {
+          purity.Add(new Tuple<string, string>(typeEntry.Key.AssemblyQualifiedName, method.Name));
+        }
+      }
+
+      // Clear old information
+      pureMethodsForType.Clear();
+      pureMethods.Clear();
+
+      // Reload purity information
+      foreach (var entry in purity)
+      {
+        AddPureMethod(entry.Item1, entry.Item2);
       }
     }
 
@@ -305,10 +351,13 @@ namespace Celeriac
 
     /// <summary>
     /// Process the purity methods list, building the map from type to pure methods for that type.
+    /// Automatically includes Keys and Values properties for Dictionaries.
     /// </summary>
     private void ProcessPurityMethods()
     {
-      this.AddStandardPurityMethods();
+      this.celeriacArgs.PurityMethods.Add(typeof(DictionaryEntry).AssemblyQualifiedName + ";get_Key");
+      this.celeriacArgs.PurityMethods.Add(typeof(DictionaryEntry).AssemblyQualifiedName + ";get_Value");
+
       foreach (String str in this.celeriacArgs.PurityMethods)
       {
         if (str.StartsWith("//")) { continue; }
@@ -396,17 +445,6 @@ namespace Celeriac
     }
 
     /// <summary>
-    /// Add methods known to be pure to the list of purity methods
-    /// </summary>
-    private void AddStandardPurityMethods()
-    {
-      this.celeriacArgs.PurityMethods.Add(
-        typeof(DictionaryEntry).AssemblyQualifiedName + ";get_Key");
-      this.celeriacArgs.PurityMethods.Add(
-        typeof(DictionaryEntry).AssemblyQualifiedName + ";get_Value");
-    }
-
-    /// <summary>
     /// Defines a test to see if a type is an element of a given collection set (e.g. is the type
     /// a list, is the type a set, etc.)
     /// </summary>
@@ -440,21 +478,6 @@ namespace Celeriac
       bool testResult = test(type);
       entries.Add(type, testResult);
       return testResult;
-    }
-
-    /// <summary>
-    /// Set the given identity assembly as the assembly to use when resolving types.
-    /// </summary>
-    /// <param name="identity">The identity to use during type resolution</param>
-    /// <exception cref="ArgumentNullException">If identity is null</exception>
-    /// <exception cref="InvalidOperationException">If assembly identity has been set and another 
-    /// call to this method is executed.</exception>
-    public void SetAssemblyIdentity(AssemblyIdentity identity)
-    {
-      Contract.Requires(identity != null);
-      Contract.Requires(this.AssemblyIdentity == null, "Cannot reset assembly identity");
-      Contract.Ensures(this.AssemblyIdentity == identity);
-      this.assemblyIdentity = identity;
     }
 
     /// <summary>
@@ -552,6 +575,15 @@ namespace Celeriac
         return true;
       }
 
+      // exclude fields that are backing automatically generated events
+      var events = from e in parentType.GetEvents(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+                   where e.Name.Equals(field.Name)
+                   select e;
+      if (events.Count() > 0)
+      {
+        return true;
+      }
+        
       // TODO(#58): Should be able to switch this test off with a command line arg.
       return this.ignoredValues.Contains(parentType.AssemblyQualifiedName + ";" + field.Name);
     }
@@ -853,7 +885,8 @@ namespace Celeriac
                       assemblyQualifiedName,
             // Assembly resolver -- load from self if necessary.
                       (aName) => aName.Name == this.celeriacArgs.AssemblyName ?
-                          System.Reflection.Assembly.LoadFrom(this.celeriacArgs.AssemblyPath) :
+                          (this.instrumentedAssembly ??
+                            System.Reflection.Assembly.LoadFrom(this.celeriacArgs.AssemblyPath)) :
                           System.Reflection.Assembly.Load(aName),
             // Type resolver -- load the type from the assembly if we have one
             // Otherwise let .NET resolve it
@@ -1212,9 +1245,20 @@ namespace Celeriac
     private INamespaceTypeReference CreateTypeReference(AssemblyIdentity assembly, string typeName)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(typeName));
+      return CreateTypeReference(Host, assembly, typeName);
+    }
+
+    /// <summary>
+    /// Creates a type reference anchored in the given assembly reference and whose names are relative to the given host.
+    /// When the type name has periods in it, a structured reference with nested namespaces is created.
+    /// </summary>
+    /// <remarks>Adapted from Cci.TypeHelper.CreateTypeReference</remarks>
+    public static INamespaceTypeReference CreateTypeReference(IMetadataHost host, AssemblyIdentity assembly, string typeName)
+    {
+      Contract.Requires(!string.IsNullOrWhiteSpace(typeName));
 
       var assemblyReference =
-        new Microsoft.Cci.Immutable.AssemblyReference(Host, assembly);
+        new Microsoft.Cci.Immutable.AssemblyReference(host, assembly);
 
       IUnitNamespaceReference ns = new Microsoft.Cci.Immutable.RootUnitNamespaceReference(assemblyReference);
       string[] names = typeName.Split('.');
@@ -1234,7 +1278,7 @@ namespace Celeriac
     {
       Contract.Requires(def != null);
       return TypeHelper.IsCompilerGenerated(def) ||
-             (def is INamedTypeDefinition && FSharpCompilerGeneratedNameRegex.IsMatch(((INamedTypeDefinition) def).Name.Value));
+             (def is INamedTypeDefinition && FSharpCompilerGeneratedNameRegex.IsMatch(((INamedTypeDefinition)def).Name.Value));
     }
 
     /// <summary>
@@ -1392,6 +1436,42 @@ namespace Celeriac
         immutability.Add(type, result);
         return result;
       }
+    }
+
+    /// <summary>
+    /// Returns the method definition which defines the contract for the specified method. For methods implementing
+    /// an interface, this is the interface method. For methods overriding a method, this is the overridden method.
+    /// If both cases are true, the interface is given preference.
+    /// </summary>
+    /// <param name="method"></param>
+    /// <returns>the method definition which defines the contract for the specified method</returns>
+    public static ReadOnlyCollection<IMethodDefinition> GetContractMethods(IMethodDefinition method)
+    {
+      var impl = from m in MemberHelper.GetImplicitlyImplementedInterfaceMethods(method)
+                 where !(m.ContainingTypeDefinition is Dummy)
+                 select m;
+
+      if (impl.Count() > 0)
+      {
+        return impl.ToList().AsReadOnly();
+      }
+
+      var expl = from m in MemberHelper.GetExplicitlyOverriddenMethods(method)
+                 where !(m.ResolvedMethod is Dummy) && !(m.ResolvedMethod.ContainingTypeDefinition is Dummy)
+                 select m.ResolvedMethod;
+
+      if (expl.Count() > 0)
+      {
+        return expl.ToList().AsReadOnly();
+      }
+
+      var baseMethod = MemberHelper.GetImplicitlyOverriddenBaseClassMethod(method);
+      if (baseMethod != null && !(baseMethod.ContainingTypeDefinition is Dummy))
+      {
+        return new[] { baseMethod }.ToList().AsReadOnly();
+      }
+
+      return new List<IMethodDefinition>().AsReadOnly();
     }
 
     #region IDisposable Members
