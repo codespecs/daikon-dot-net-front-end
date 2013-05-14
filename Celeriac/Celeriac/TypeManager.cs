@@ -137,6 +137,8 @@ namespace Celeriac
     /// </summary>
     private CeleriacArgs celeriacArgs;
 
+    private System.Reflection.Assembly instrumentedAssembly = null;
+
     [NonSerialized]
     private AssemblyIdentity assemblyIdentity;
 
@@ -235,13 +237,57 @@ namespace Celeriac
         return host;
       }
     }
-
-    public AssemblyIdentity AssemblyIdentity
+    
+    /// <summary>
+    /// Store a the instrumented assembly, to use during type resolution. Also clears caches
+    /// and purity method stores
+    /// </summary>
+    /// <param name="assembly">The assembly after instrumentation was added</param>
+    public void SetInstrumentedAssembly(System.Reflection.Assembly assembly)
     {
-      get
+      Contract.Assert(this.instrumentedAssembly == null);
+      this.instrumentedAssembly = assembly;
+      ResetCaches();
+      ReloadMethodPurityInformation();
+    }
+
+    /// <summary>
+    /// Clear all cached information
+    /// </summary>
+    private void ResetCaches()
+    {
+      isListHashmap.Clear();
+      isFSharpListHashmap.Clear();
+      isLinkedListHashmap.Clear();
+      isSetHashmap.Clear();
+      isDictionaryHashMap.Clear();
+      nameTypeMap.Clear();
+    }
+
+    /// <summary>
+    /// Reload method purity information by looking up methods by name and assembly-qualified
+    /// type information.
+    /// </summary>
+    private void ReloadMethodPurityInformation()
+    {
+      // Serialize type and method names
+      var purity = new List<Tuple<string, string>>();
+      foreach (var typeEntry in pureMethodsForType)
       {
-        Contract.Ensures(Contract.Result<AssemblyIdentity>() == this.assemblyIdentity);
-        return this.assemblyIdentity;
+        foreach (var method in typeEntry.Value)
+        {
+          purity.Add(new Tuple<string, string>(typeEntry.Key.AssemblyQualifiedName, method.Name));
+        }
+      }
+
+      // Clear old information
+      pureMethodsForType.Clear();
+      pureMethods.Clear();
+
+      // Reload purity information
+      foreach (var entry in purity)
+      {
+        AddPureMethod(entry.Item1, entry.Item2);
       }
     }
 
@@ -432,21 +478,6 @@ namespace Celeriac
       bool testResult = test(type);
       entries.Add(type, testResult);
       return testResult;
-    }
-
-    /// <summary>
-    /// Set the given identity assembly as the assembly to use when resolving types.
-    /// </summary>
-    /// <param name="identity">The identity to use during type resolution</param>
-    /// <exception cref="ArgumentNullException">If identity is null</exception>
-    /// <exception cref="InvalidOperationException">If assembly identity has been set and another 
-    /// call to this method is executed.</exception>
-    public void SetAssemblyIdentity(AssemblyIdentity identity)
-    {
-      Contract.Requires(identity != null);
-      Contract.Requires(this.AssemblyIdentity == null, "Cannot reset assembly identity");
-      Contract.Ensures(this.AssemblyIdentity == identity);
-      this.assemblyIdentity = identity;
     }
 
     /// <summary>
@@ -854,7 +885,8 @@ namespace Celeriac
                       assemblyQualifiedName,
             // Assembly resolver -- load from self if necessary.
                       (aName) => aName.Name == this.celeriacArgs.AssemblyName ?
-                          System.Reflection.Assembly.LoadFrom(this.celeriacArgs.AssemblyPath) :
+                          (this.instrumentedAssembly ??
+                            System.Reflection.Assembly.LoadFrom(this.celeriacArgs.AssemblyPath)) :
                           System.Reflection.Assembly.Load(aName),
             // Type resolver -- load the type from the assembly if we have one
             // Otherwise let .NET resolve it
@@ -1246,7 +1278,7 @@ namespace Celeriac
     {
       Contract.Requires(def != null);
       return TypeHelper.IsCompilerGenerated(def) ||
-             (def is INamedTypeDefinition && FSharpCompilerGeneratedNameRegex.IsMatch(((INamedTypeDefinition) def).Name.Value));
+             (def is INamedTypeDefinition && FSharpCompilerGeneratedNameRegex.IsMatch(((INamedTypeDefinition)def).Name.Value));
     }
 
     /// <summary>
@@ -1405,7 +1437,7 @@ namespace Celeriac
         return result;
       }
     }
-    
+
     /// <summary>
     /// Returns the method definition which defines the contract for the specified method. For methods implementing
     /// an interface, this is the interface method. For methods overriding a method, this is the overridden method.
