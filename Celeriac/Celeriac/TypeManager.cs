@@ -140,7 +140,7 @@ namespace Celeriac
     private System.Reflection.Assembly instrumentedAssembly = null;
 
     [NonSerialized]
-    private AssemblyIdentity assemblyIdentity;
+    public AssemblyIdentity AssemblyIdentity { get; private set; }
 
     #region Collection / Pure Method Memoization Caches
 
@@ -237,7 +237,7 @@ namespace Celeriac
         return host;
       }
     }
-    
+
     /// <summary>
     /// Store a the instrumented assembly, to use during type resolution. Also clears caches
     /// and purity method stores
@@ -249,6 +249,21 @@ namespace Celeriac
       this.instrumentedAssembly = assembly;
       ResetCaches();
       ReloadMethodPurityInformation();
+    }
+
+    /// <summary>
+    /// Set the given identity assembly as the assembly to use when resolving types.
+    /// </summary>
+    /// <param name="identity">The identity to use during type resolution</param>
+    /// <exception cref="ArgumentNullException">If identity is null</exception>
+    /// <exception cref="InvalidOperationException">If assembly identity has been set and another 
+    /// call to this method is executed.</exception>
+    public void SetAssemblyIdentity(AssemblyIdentity identity)
+    {
+      Contract.Requires(identity != null);
+      Contract.Requires(this.AssemblyIdentity == null, "Cannot reset assembly identity");
+      Contract.Ensures(this.AssemblyIdentity == identity);
+      this.AssemblyIdentity = identity;
     }
 
     /// <summary>
@@ -583,7 +598,7 @@ namespace Celeriac
       {
         return true;
       }
-        
+
       // TODO(#58): Should be able to switch this test off with a command line arg.
       return this.ignoredValues.Contains(parentType.AssemblyQualifiedName + ";" + field.Name);
     }
@@ -1173,8 +1188,8 @@ namespace Celeriac
       }
       else
       {
-        Contract.Assume(this.assemblyIdentity != null, "Assembly identity not set");
-        identity = this.assemblyIdentity;
+        Contract.Assume(this.AssemblyIdentity != null, "Assembly identity not set");
+        identity = this.AssemblyIdentity;
       }
       return identity;
     }
