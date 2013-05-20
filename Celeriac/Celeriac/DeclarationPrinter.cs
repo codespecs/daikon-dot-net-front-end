@@ -980,7 +980,7 @@ namespace Celeriac
     {
       Contract.Requires(type != null);
 
-      string parentName = type.ToString();
+      string parentName = TypeManager.GetTypeName(type);
       if (ShouldPrintParentPptIfNecessary(parentName))
       {
         switch (kind)
