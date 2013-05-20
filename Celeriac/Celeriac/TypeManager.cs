@@ -139,7 +139,6 @@ namespace Celeriac
 
     private System.Reflection.Assembly instrumentedAssembly = null;
 
-    [NonSerialized]
     public AssemblyIdentity AssemblyIdentity { get; private set; }
 
     #region Collection / Pure Method Memoization Caches
