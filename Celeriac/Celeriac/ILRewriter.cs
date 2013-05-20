@@ -245,7 +245,6 @@ namespace Celeriac
     /// <remarks>this is cloned from emit code</remarks>
     public override IMethodDefinition Rewrite(IMethodDefinition method)
     {
-      Console.WriteLine(method.ToString());
       if (printDeclarations &&
           (method.ContainingTypeDefinition.IsInterface || method.IsAbstract))
       {
