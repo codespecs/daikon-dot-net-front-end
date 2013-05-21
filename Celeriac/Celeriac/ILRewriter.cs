@@ -334,6 +334,8 @@ namespace Celeriac
         ? new List<IOperation>()
         : new List<IOperation>(immutableMethodBody.Operations));
 
+      operations = AddOffsetForEndFinallyBlocks(operations);
+
       // There may be many nops before the ret instruction, we want to catch anything
       // branching into the last return, so we need to catch anything branching into these
       // nops.
@@ -434,6 +436,31 @@ namespace Celeriac
 
       return mutableMethodBody;
     }
+
+    private List<IOperation> AddOffsetForEndFinallyBlocks(List<IOperation> operations)
+    {
+      uint modifiedOffset = 0;
+      List<IOperation> newOps = new List<IOperation>();
+      foreach (var op in operations)
+      {
+        Operation mutableOp = (Operation)op;
+        mutableOp.Offset += modifiedOffset;
+        newOps.Add((IOperation)mutableOp);
+        
+        if (op.OperationCode == OperationCode.Endfinally)
+        {
+         // modifiedOffset += 1;
+          Operation addedNop = new Operation();
+          // addedNop.Offset = mutableOp.Offset+1;
+          addedNop.OperationCode = OperationCode.Nop;
+          newOps.Add((IOperation)addedNop);
+          newOps.Add((IOperation)addedNop);
+        }
+         
+      }
+      return newOps;
+    }
+
 
     #region Processing method exits
 
@@ -1426,7 +1453,9 @@ namespace Celeriac
         foreach (var exceptionInfo in methodBody.OperationExceptionInformation)
         {
           if (offset == exceptionInfo.TryStartOffset)
-            generator.BeginTryBody();
+          {
+            generator.BeginTryBody();            
+          }
 
           // Never need to do anything when offset == exceptionInfo.TryEndOffset because
           // we pick up an EndTryBody from the HandlerEndOffset below
@@ -1550,18 +1579,31 @@ namespace Celeriac
         IMethodBody methodBody)
     {
       HashSet<uint> offsetsUsedInExceptionInformation = new HashSet<uint>();
+      Dictionary<uint, OperationExceptionInformation> locOEImap = 
+          new Dictionary<uint, OperationExceptionInformation>();
       foreach (var exceptionInfo in methodBody.OperationExceptionInformation)
       {
+        HashSet<uint> thisExceptionVals = new HashSet<uint>();
         uint x = exceptionInfo.TryStartOffset;
-        offsetsUsedInExceptionInformation.Add(x);
+        locOEImap.Add(x, (OperationExceptionInformation)exceptionInfo);
+        thisExceptionVals.Add(x);
         x = exceptionInfo.TryEndOffset;
-        offsetsUsedInExceptionInformation.Add(x);
+        thisExceptionVals.Add(x);
         x = exceptionInfo.HandlerStartOffset;
-        offsetsUsedInExceptionInformation.Add(x);
+        thisExceptionVals.Add(x);
         x = exceptionInfo.HandlerEndOffset;
-        offsetsUsedInExceptionInformation.Add(x);
+        // This currently sets the start of the try instruction to late
+        if (offsetsUsedInExceptionInformation.Contains(x))
+        {
+          OperationExceptionInformation tryBlock = locOEImap[x];
+          tryBlock.TryStartOffset++;
+          offsetsUsedInExceptionInformation.Add(tryBlock.TryStartOffset);
+        }
+        x = exceptionInfo.HandlerEndOffset;
+        thisExceptionVals.Add(x);
         x = exceptionInfo.FilterDecisionStartOffset;
-        offsetsUsedInExceptionInformation.Add(x);
+        thisExceptionVals.Add(x);
+        offsetsUsedInExceptionInformation.UnionWith(thisExceptionVals);
       }
       return offsetsUsedInExceptionInformation;
     }
