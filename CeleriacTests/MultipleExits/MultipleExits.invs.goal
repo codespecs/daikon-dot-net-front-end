@@ -1,0 +1,76 @@
+===========================================================================
+HelloWorld.HelloWorld.Main(System.String[] args):::ENTER
+args has only one value
+args[] == []
+args[].ToString() == []
+===========================================================================
+HelloWorld.HelloWorld.Main(System.String[] args):::EXIT67
+===========================================================================
+HelloWorld.HelloWorld.Main(System.String[] args):::EXIT
+args[] == orig(args[])
+args[] == []
+args[].ToString() == []
+===========================================================================
+HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List<System.Int32> vals, System.Int32 a):::ENTER
+a one of { 1, 2 }
+vals has only one value
+vals[] one of { [3], [4, 4] }
+===========================================================================
+HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List<System.Int32> vals, System.Int32 a):::EXIT25
+return == -1
+orig(a) == 2
+orig(vals[]) == [4, 4]
+===========================================================================
+HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List<System.Int32> vals, System.Int32 a):::EXIT65
+return == -3
+orig(a) == 1
+orig(vals[]) == [3]
+===========================================================================
+HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List<System.Int32> vals, System.Int32 a):::EXIT
+return one of { -3, -1 }
+===========================================================================
+HelloWorld.HelloWorld.intFuncSimple(System.Boolean returnOne):::ENTER
+===========================================================================
+HelloWorld.HelloWorld.intFuncSimple(System.Boolean returnOne):::EXIT10
+return == 1
+orig(returnOne) == true
+===========================================================================
+HelloWorld.HelloWorld.intFuncSimple(System.Boolean returnOne):::EXIT13
+return == 0
+orig(returnOne) == false
+===========================================================================
+HelloWorld.HelloWorld.intFuncSimple(System.Boolean returnOne):::EXIT
+return one of { 0, 1 }
+===========================================================================
+HelloWorld.HelloWorld.multipleReturnsDelayed(System.Int32 n):::ENTER
+===========================================================================
+HelloWorld.HelloWorld.multipleReturnsDelayed(System.Int32 n):::EXIT12
+return has only one value
+return.ToString() == "Z"
+orig(n) == 0
+===========================================================================
+HelloWorld.HelloWorld.multipleReturnsDelayed(System.Int32 n):::EXIT24
+return has only one value
+return.ToString() == "N"
+orig(n) one of { -20, -1 }
+===========================================================================
+HelloWorld.HelloWorld.multipleReturnsDelayed(System.Int32 n):::EXIT67
+return.ToString() one of { "Big P.", "Little P." }
+orig(n) one of { 1, 1000 }
+===========================================================================
+HelloWorld.HelloWorld.multipleReturnsDelayed(System.Int32 n):::EXIT
+===========================================================================
+HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List<System.Int32> vals, System.Int32 a):::ENTER
+a one of { 1, 2 }
+vals has only one value
+vals[] one of { [3], [4, 4] }
+===========================================================================
+HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List<System.Int32> vals, System.Int32 a):::EXIT23
+orig(a) == 2
+orig(vals[]) == [4, 4]
+===========================================================================
+HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List<System.Int32> vals, System.Int32 a):::EXIT61
+orig(a) == 1
+orig(vals[]) == [3]
+===========================================================================
+HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List<System.Int32> vals, System.Int32 a):::EXIT

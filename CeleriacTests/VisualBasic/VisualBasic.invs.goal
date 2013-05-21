@@ -1,0 +1,82 @@
+===========================================================================
+QuickSorter.getpivot(System.Object[] a, System.Int32 left, System.Int32 right):::ENTER
+a != null
+a.GetType() == System.Object[].class
+a[] elements != null
+a[].GetType() one of { [System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32], [System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String] }
+left >= 0
+left < right
+===========================================================================
+QuickSorter.getpivot(System.Object[] a, System.Int32 left, System.Int32 right):::EXIT11
+===========================================================================
+QuickSorter.getpivot(System.Object[] a, System.Int32 left, System.Int32 right):::EXIT
+a[] == orig(a[])
+a[] elements != null
+a[].GetType() one of { [System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32], [System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String] }
+return.GetType() == System.Int32.class
+===========================================================================
+QuickSorter.partition(System.Object[] a, System.Int32 left, System.Int32 right, System.Int32 pivot):::ENTER
+a != null
+a.GetType() == System.Object[].class
+a[] elements != null
+a[].GetType() one of { [System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32], [System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String] }
+left >= 0
+pivot >= 0
+(pivot == 0) ==> (left == 0)
+left <= pivot
+left < right
+pivot < right
+===========================================================================
+QuickSorter.partition(System.Object[] a, System.Int32 left, System.Int32 right, System.Int32 pivot):::EXIT87
+===========================================================================
+QuickSorter.partition(System.Object[] a, System.Int32 left, System.Int32 right, System.Int32 pivot):::EXIT
+a[] elements != null
+a[].GetType() one of { [System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32], [System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String] }
+return.GetType() == System.Int32.class
+===========================================================================
+QuickSorter.print(System.Object[] a):::ENTER
+a.GetType() == System.Object[].class
+a[].GetType() one of { [System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32], [System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String] }
+===========================================================================
+QuickSorter.print(System.Object[] a):::EXIT35
+===========================================================================
+QuickSorter.print(System.Object[] a):::EXIT
+a[] == orig(a[])
+a[].GetType() one of { [System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32], [System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String] }
+===========================================================================
+QuickSorter.qsort(System.Object[] a):::ENTER
+a.GetType() == System.Object[].class
+a[].GetType() one of { [System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32], [System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String] }
+===========================================================================
+QuickSorter.qsort(System.Object[] a):::EXIT61
+===========================================================================
+QuickSorter.qsort(System.Object[] a):::EXIT
+a[].GetType() one of { [System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32], [System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String] }
+===========================================================================
+QuickSorter.quicksort(System.Object[] a, System.Int32 left, System.Int32 right):::ENTER
+a != null
+a.GetType() == System.Object[].class
+a[] elements != null
+a[].GetType() one of { [System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32], [System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String] }
+left >= 0
+(right == 0) ==> (left == 0)
+left <= right
+===========================================================================
+QuickSorter.quicksort(System.Object[] a, System.Int32 left, System.Int32 right):::EXIT33
+orig(left) < orig(right)
+===========================================================================
+QuickSorter.quicksort(System.Object[] a, System.Int32 left, System.Int32 right):::EXIT5
+a[] == orig(a[])
+===========================================================================
+QuickSorter.quicksort(System.Object[] a, System.Int32 left, System.Int32 right):::EXIT
+a[] elements != null
+a[].GetType() one of { [System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32], [System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String] }
+===========================================================================
+QuickSorter.swap(System.Object v1, System.Object v2):::ENTER
+v1 != null
+v2 != null
+v1.GetType() == v2.GetType()
+===========================================================================
+QuickSorter.swap(System.Object v1, System.Object v2):::EXIT15
+===========================================================================
+QuickSorter.swap(System.Object v1, System.Object v2):::EXIT
