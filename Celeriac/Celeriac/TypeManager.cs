@@ -940,6 +940,18 @@ namespace Celeriac
     }
 
     /// <summary>
+    /// Returns the unique name for the type, suitable for use in the declarations file. 
+    /// </summary>
+    /// <param name="type">the type</param>
+    /// <remarks>Includes the number of generic parameters, if any.</remarks>
+    /// <returns>the unique name for the type</returns>
+    public static string GetTypeName(ITypeReference type)
+    {
+      var def = TypeHelper.UninstantiateAndUnspecialize(type);
+      return TypeHelper.GetTypeName(def, NameFormattingOptions.UseGenericTypeNameSuffix | NameFormattingOptions.SmartTypeName);
+    }
+
+    /// <summary>
     /// Get a Reflection Type from a CCI Type
     /// </summary>
     /// <param name="type">A reference to a CCI Type defined in the program to be profiled</param>
