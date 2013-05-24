@@ -245,7 +245,6 @@ namespace Celeriac
     /// <remarks>this is cloned from emit code</remarks>
     public override IMethodDefinition Rewrite(IMethodDefinition method)
     {
-      Console.WriteLine(method.ToString());
       if (printDeclarations &&
           (method.ContainingTypeDefinition.IsInterface || method.IsAbstract))
       {
@@ -1969,8 +1968,10 @@ namespace Celeriac
       }
       if (this.printDeclarations)
       {
+        string typeName = TypeManager.GetTypeName(methodBody.MethodDefinition.ContainingType);
+
         this.declPrinter.PrintParentObjectFields(
-          new VariableParent(methodBody.MethodDefinition.ContainingType.ToString() + ":::OBJECT", VariableParent.ObjectRelId),
+          new VariableParent(typeName + ":::OBJECT", VariableParent.ObjectRelId),
           this.typeManager.ConvertCCITypeToAssemblyQualifiedName(parentType),
           parentType as INamedTypeDefinition, methodBody.MethodDefinition);
       }
@@ -2339,7 +2340,7 @@ namespace Celeriac
         {
           // CCI components come up named <*>, and we want to exclude them.
           // Also exclude the name of the class storing arguments (for offline programs)
-          string typeName = type.ToString();
+          string typeName = TypeManager.GetTypeName(type);
           if (!TypeManager.RegexForTypesToIgnoreForProgramPoint.IsMatch(typeName) &&
               !TypeManager.CodeContractRuntimePpts.IsMatch(typeName) &&
               !typeName.Equals(ArgumentStoringClassName) &&
