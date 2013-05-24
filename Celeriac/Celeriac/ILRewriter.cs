@@ -276,7 +276,7 @@ namespace Celeriac
               // Load the name of the parameter onto the stack, print the parameter
               // to the decls file if necessary.
               this.declPrinter.PrintParameter(param.Name.ToString(),
-                  this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param.Type), 
+                  this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param.Type),
                   method, new VariableParent[0]);
             }
           }
@@ -447,7 +447,7 @@ namespace Celeriac
     /// returns</param>
     /// <param name="commonExit">Common exit the synthesized returns will jump to</param>
     /// <returns>The list of operations if any, otherwise null</returns>
-    private static ISet<IOperation> DetermineSynthesizedReturns(IMethodBody immutableMethodBody, 
+    private static ISet<IOperation> DetermineSynthesizedReturns(IMethodBody immutableMethodBody,
       List<IOperation> operations, ILGeneratorLabel commonExit)
     {
       Contract.Requires(immutableMethodBody != null);
@@ -1425,13 +1425,16 @@ namespace Celeriac
       {
         foreach (var exceptionInfo in methodBody.OperationExceptionInformation)
         {
-          if (offset == exceptionInfo.TryStartOffset)
-            generator.BeginTryBody();
-
           // Never need to do anything when offset == exceptionInfo.TryEndOffset because
           // we pick up an EndTryBody from the HandlerEndOffset below
           // generator.EndTryBody();
-
+          /*
+          if (methodBody.OperationExceptionInformation.Any(exInfo => offset == exInfo.TryStartOffset))
+          {
+           generator.BeginTryBody();
+          }
+           * */
+          
           if (offset == exceptionInfo.HandlerStartOffset)
           {
             switch (exceptionInfo.HandlerKind)
@@ -1458,6 +1461,20 @@ namespace Celeriac
           {
             generator.EndTryBody();
           }
+        }
+        /*
+        if (methodBody.OperationExceptionInformation.Any(exInfo => offset == exInfo.TryStartOffset))
+        {
+          generator.BeginTryBody();
+        }
+         */
+
+        foreach (var exceptionInfo in methodBody.OperationExceptionInformation)
+        {
+          if (offset == exceptionInfo.TryStartOffset)
+          {
+            generator.BeginTryBody();
+          }          
         }
       }
     }
@@ -1852,14 +1869,14 @@ namespace Celeriac
             foreach (var m in TypeManager.GetContractMethods(method))
             {
               Contract.Assume(m.ParameterCount == method.ParameterCount);
-              parents.Add(new VariableParent(  
+              parents.Add(new VariableParent(
                              DeclarationPrinter.SanitizeProgramPointName(FormatMethodName(transition, m)),
                              pptRelId[FormatMethodName(transition, m)],
                              nullIfSame(m.Parameters.ElementAt(i - 1).Name.Value)));
             }
 
             this.declPrinter.PrintParameter(param.Name.ToString(),
-              this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param.Type), 
+              this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param.Type),
               method, parents);
           }
         }
