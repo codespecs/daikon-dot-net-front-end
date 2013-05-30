@@ -1,4 +1,4 @@
-AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd) ENTER/18: 4 EXIT7/33: 4
-AdvancedCollections.AdvancedCollections.DescribeSet(System.Collections.Generic.HashSet<System.String>\_set) ENTER/12: 1 EXIT34/18: 1
+AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet`1<System.String>\_set,\_System.String\_stringToAdd) ENTER/18: 4 EXIT7/33: 4
+AdvancedCollections.AdvancedCollections.DescribeSet(System.Collections.Generic.HashSet`1<System.String>\_set) ENTER/12: 1 EXIT34/18: 1
 AdvancedCollections.AdvancedCollections.Main(System.String[]\_args) ENTER/12: 1 EXIT3/18: 1
 AdvancedCollections.AdvancedCollections.SetTest() ENTER/3: 1 EXIT22/9: 1

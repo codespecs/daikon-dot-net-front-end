@@ -37,7 +37,7 @@ parent parent AdvancedCollections.AdvancedCollections:::OBJECT 1
     comparability -22
     parent AdvancedCollections.AdvancedCollections:::OBJECT 1
 
-ppt AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd):::ENTER
+ppt AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet`1<System.String>\_set,\_System.String\_stringToAdd):::ENTER
 ppt-type enter
 parent parent AdvancedCollections.AdvancedCollections:::CLASS 1
   variable set
@@ -76,7 +76,7 @@ parent parent AdvancedCollections.AdvancedCollections:::CLASS 1
     flags synthetic to_string
     comparability -22
 
-ppt AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd):::EXIT7
+ppt AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet`1<System.String>\_set,\_System.String\_stringToAdd):::EXIT7
 ppt-type subexit
 parent parent AdvancedCollections.AdvancedCollections:::CLASS 1
   variable exception
@@ -148,7 +148,7 @@ parent parent AdvancedCollections.AdvancedCollections:::CLASS 1
     flags synthetic to_string
     comparability -22
 
-ppt AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd):::EXIT9
+ppt AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet`1<System.String>\_set,\_System.String\_stringToAdd):::EXIT9
 ppt-type subexit
 parent parent AdvancedCollections.AdvancedCollections:::CLASS 1
   variable exception
@@ -220,7 +220,7 @@ parent parent AdvancedCollections.AdvancedCollections:::CLASS 1
     flags synthetic to_string
     comparability -22
 
-ppt AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd):::EXIT_EX_Runtime
+ppt AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet`1<System.String>\_set,\_System.String\_stringToAdd):::EXIT_EX_Runtime
 ppt-type subexit
 parent parent AdvancedCollections.AdvancedCollections:::CLASS 1
   variable exception
@@ -292,7 +292,7 @@ parent parent AdvancedCollections.AdvancedCollections:::CLASS 1
     flags synthetic to_string
     comparability -22
 
-ppt AdvancedCollections.AdvancedCollections.DescribeSet(System.Collections.Generic.HashSet<System.String>\_set):::ENTER
+ppt AdvancedCollections.AdvancedCollections.DescribeSet(System.Collections.Generic.HashSet`1<System.String>\_set):::ENTER
 ppt-type enter
 parent parent AdvancedCollections.AdvancedCollections:::CLASS 1
   variable set
@@ -318,7 +318,7 @@ parent parent AdvancedCollections.AdvancedCollections:::CLASS 1
     flags synthetic to_string
     comparability -22
 
-ppt AdvancedCollections.AdvancedCollections.DescribeSet(System.Collections.Generic.HashSet<System.String>\_set):::EXIT34
+ppt AdvancedCollections.AdvancedCollections.DescribeSet(System.Collections.Generic.HashSet`1<System.String>\_set):::EXIT34
 ppt-type subexit
 parent parent AdvancedCollections.AdvancedCollections:::CLASS 1
   variable exception
@@ -356,7 +356,7 @@ parent parent AdvancedCollections.AdvancedCollections:::CLASS 1
     flags synthetic to_string
     comparability -22
 
-ppt AdvancedCollections.AdvancedCollections.DescribeSet(System.Collections.Generic.HashSet<System.String>\_set):::EXIT_EX_Runtime
+ppt AdvancedCollections.AdvancedCollections.DescribeSet(System.Collections.Generic.HashSet`1<System.String>\_set):::EXIT_EX_Runtime
 ppt-type subexit
 parent parent AdvancedCollections.AdvancedCollections:::CLASS 1
   variable exception
@@ -566,7 +566,7 @@ AdvancedCollections.AdvancedCollections.SetTest():::ENTER
 this_invocation_nonce
 3
 
-AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd):::ENTER
+AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet`1<System.String>\_set,\_System.String\_stringToAdd):::ENTER
 this_invocation_nonce
 4
 set
@@ -585,7 +585,7 @@ stringToAdd.ToString()
 "duck"
 1
 
-AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd):::EXIT7
+AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet`1<System.String>\_set,\_System.String\_stringToAdd):::EXIT7
 this_invocation_nonce
 4
 exception
@@ -619,7 +619,7 @@ stringToAdd.ToString()
 "duck"
 1
 
-AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd):::ENTER
+AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet`1<System.String>\_set,\_System.String\_stringToAdd):::ENTER
 this_invocation_nonce
 5
 set
@@ -638,7 +638,7 @@ stringToAdd.ToString()
 "duck"
 1
 
-AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd):::EXIT7
+AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet`1<System.String>\_set,\_System.String\_stringToAdd):::EXIT7
 this_invocation_nonce
 5
 exception
@@ -672,7 +672,7 @@ stringToAdd.ToString()
 "duck"
 1
 
-AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd):::ENTER
+AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet`1<System.String>\_set,\_System.String\_stringToAdd):::ENTER
 this_invocation_nonce
 6
 set
@@ -691,7 +691,7 @@ stringToAdd.ToString()
 "goose"
 1
 
-AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd):::EXIT7
+AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet`1<System.String>\_set,\_System.String\_stringToAdd):::EXIT7
 this_invocation_nonce
 6
 exception
@@ -725,7 +725,7 @@ stringToAdd.ToString()
 "goose"
 1
 
-AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd):::ENTER
+AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet`1<System.String>\_set,\_System.String\_stringToAdd):::ENTER
 this_invocation_nonce
 7
 set
@@ -744,7 +744,7 @@ stringToAdd.ToString()
 "geese"
 1
 
-AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String>\_set,\_System.String\_stringToAdd):::EXIT7
+AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet`1<System.String>\_set,\_System.String\_stringToAdd):::EXIT7
 this_invocation_nonce
 7
 exception
@@ -778,7 +778,7 @@ stringToAdd.ToString()
 "geese"
 1
 
-AdvancedCollections.AdvancedCollections.DescribeSet(System.Collections.Generic.HashSet<System.String>\_set):::ENTER
+AdvancedCollections.AdvancedCollections.DescribeSet(System.Collections.Generic.HashSet`1<System.String>\_set):::ENTER
 this_invocation_nonce
 8
 set
@@ -791,7 +791,7 @@ set[..].ToString()
 ["duck" "goose" "geese"]
 1
 
-AdvancedCollections.AdvancedCollections.DescribeSet(System.Collections.Generic.HashSet<System.String>\_set):::EXIT34
+AdvancedCollections.AdvancedCollections.DescribeSet(System.Collections.Generic.HashSet`1<System.String>\_set):::EXIT34
 this_invocation_nonce
 8
 exception
