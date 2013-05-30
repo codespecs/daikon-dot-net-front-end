@@ -480,7 +480,7 @@ this.counter >= 0
 this.listeners[] contains no nulls and has only one value, of length 1
 this.listeners[].GetType() == [WpfBasic.MainWindow]
 ===========================================================================
-WpfBasic.WpfBasicModel.Counter.get():::EXIT6
+WpfBasic.WpfBasicModel.Counter.get():::EXIT4
 ===========================================================================
 WpfBasic.WpfBasicModel.Counter.get():::EXIT
 this.counter == return

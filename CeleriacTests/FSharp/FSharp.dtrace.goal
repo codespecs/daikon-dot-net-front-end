@@ -2,7 +2,7 @@ decl-version 2.0
 var-comparability none
 input-language C#.NET
 
-ppt FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::ENTER
+ppt FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet`1<System.Int32>\_set):::ENTER
 ppt-type enter
 parent parent FSharp:::CLASS 1
   variable set
@@ -20,7 +20,7 @@ parent parent FSharp:::CLASS 1
     flags no_dups not_ordered
     comparability -22
 
-ppt FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT65
+ppt FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet`1<System.Int32>\_set):::EXIT65
 ppt-type subexit
 parent parent FSharp:::CLASS 1
   variable exception
@@ -63,7 +63,7 @@ parent parent FSharp:::CLASS 1
     flags no_dups not_ordered
     comparability -22
 
-ppt FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT_EX_Runtime
+ppt FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet`1<System.Int32>\_set):::EXIT_EX_Runtime
 ppt-type subexit
 parent parent FSharp:::CLASS 1
   variable exception
@@ -106,7 +106,7 @@ parent parent FSharp:::CLASS 1
     flags no_dups not_ordered
     comparability -22
 
-ppt FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT_EX_System.ArgumentException
+ppt FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet`1<System.Int32>\_set):::EXIT_EX_System.ArgumentException
 ppt-type subexit
 parent parent FSharp:::CLASS 1
   variable exception
@@ -149,7 +149,7 @@ parent parent FSharp:::CLASS 1
     flags no_dups not_ordered
     comparability -22
 
-ppt FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT_EX_System.ArgumentNullException
+ppt FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet`1<System.Int32>\_set):::EXIT_EX_System.ArgumentNullException
 ppt-type subexit
 parent parent FSharp:::CLASS 1
   variable exception
@@ -192,7 +192,7 @@ parent parent FSharp:::CLASS 1
     flags no_dups not_ordered
     comparability -22
 
-ppt FSharp.printCollection(System.String\_msg,\_System.Collections.Generic.IEnumerable<a>\_coll):::ENTER
+ppt FSharp.printCollection(System.String\_msg,\_System.Collections.Generic.IEnumerable`1<a>\_coll):::ENTER
 ppt-type enter
 parent parent FSharp:::CLASS 1
   variable coll
@@ -222,7 +222,7 @@ parent parent FSharp:::CLASS 1
     flags synthetic to_string
     comparability -22
 
-ppt FSharp.printCollection(System.String\_msg,\_System.Collections.Generic.IEnumerable<a>\_coll):::EXIT14
+ppt FSharp.printCollection(System.String\_msg,\_System.Collections.Generic.IEnumerable`1<a>\_coll):::EXIT14
 ppt-type subexit
 parent parent FSharp:::CLASS 1
   variable coll
@@ -264,7 +264,7 @@ parent parent FSharp:::CLASS 1
     flags synthetic to_string
     comparability -22
 
-ppt FSharp.printCollection(System.String\_msg,\_System.Collections.Generic.IEnumerable<a>\_coll):::EXIT_EX_Runtime
+ppt FSharp.printCollection(System.String\_msg,\_System.Collections.Generic.IEnumerable`1<a>\_coll):::EXIT_EX_Runtime
 ppt-type subexit
 parent parent FSharp:::CLASS 1
   variable coll
@@ -407,10 +407,10 @@ exception.GetType()
 nonsensical
 2
 return
-38893755
+14499481
 1
 return.contents@
-14499481
+63386473
 1
 return.contents@[..]
 []
@@ -430,10 +430,10 @@ exception.GetType()
 nonsensical
 2
 return
-38893755
+14499481
 1
 return.contents@
-14499481
+63386473
 1
 return.contents@[..]
 []
@@ -453,10 +453,10 @@ exception.GetType()
 nonsensical
 2
 return
-38893755
+14499481
 1
 return.contents@
-63386473
+33607346
 1
 return.contents@[..]
 [0]
@@ -476,26 +476,26 @@ exception.GetType()
 nonsensical
 2
 return
-38893755
+14499481
 1
 return.contents@
-63386473
+33607346
 1
 return.contents@[..]
 [0]
 1
 
-FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::ENTER
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet`1<System.Int32>\_set):::ENTER
 this_invocation_nonce
 6
 set
-63386473
+33607346
 1
 set[..]
 [0]
 1
 
-FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT65
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet`1<System.Int32>\_set):::EXIT65
 this_invocation_nonce
 6
 exception
@@ -505,13 +505,13 @@ exception.GetType()
 nonsensical
 2
 return
-33607346
+34030663
 1
 return[..]
 [0 1]
 1
 set
-63386473
+33607346
 1
 set[..]
 [0]
@@ -531,10 +531,10 @@ exception.GetType()
 nonsensical
 2
 return
-38893755
+14499481
 1
 return.contents@
-33607346
+34030663
 1
 return.contents@[..]
 [0 1]
@@ -554,26 +554,26 @@ exception.GetType()
 nonsensical
 2
 return
-38893755
+14499481
 1
 return.contents@
-33607346
+34030663
 1
 return.contents@[..]
 [0 1]
 1
 
-FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::ENTER
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet`1<System.Int32>\_set):::ENTER
 this_invocation_nonce
 9
 set
-33607346
+34030663
 1
 set[..]
 [0 1]
 1
 
-FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT65
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet`1<System.Int32>\_set):::EXIT65
 this_invocation_nonce
 9
 exception
@@ -583,13 +583,13 @@ exception.GetType()
 nonsensical
 2
 return
-34030663
+37840511
 1
 return[..]
 [0 1 2]
 1
 set
-33607346
+34030663
 1
 set[..]
 [0 1]
@@ -609,10 +609,10 @@ exception.GetType()
 nonsensical
 2
 return
-38893755
+14499481
 1
 return.contents@
-34030663
+37840511
 1
 return.contents@[..]
 [0 1 2]
@@ -632,26 +632,26 @@ exception.GetType()
 nonsensical
 2
 return
-38893755
+14499481
 1
 return.contents@
-34030663
+37840511
 1
 return.contents@[..]
 [0 1 2]
 1
 
-FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::ENTER
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet`1<System.Int32>\_set):::ENTER
 this_invocation_nonce
 12
 set
-34030663
+37840511
 1
 set[..]
 [0 1 2]
 1
 
-FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT65
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet`1<System.Int32>\_set):::EXIT65
 this_invocation_nonce
 12
 exception
@@ -661,13 +661,13 @@ exception.GetType()
 nonsensical
 2
 return
-37840511
+5020285
 1
 return[..]
 [0 1 2 3]
 1
 set
-34030663
+37840511
 1
 set[..]
 [0 1 2]
@@ -687,10 +687,10 @@ exception.GetType()
 nonsensical
 2
 return
-38893755
+14499481
 1
 return.contents@
-37840511
+5020285
 1
 return.contents@[..]
 [0 1 2 3]
@@ -710,26 +710,26 @@ exception.GetType()
 nonsensical
 2
 return
-38893755
+14499481
 1
 return.contents@
-37840511
+5020285
 1
 return.contents@[..]
 [0 1 2 3]
 1
 
-FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::ENTER
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet`1<System.Int32>\_set):::ENTER
 this_invocation_nonce
 15
 set
-37840511
+5020285
 1
 set[..]
 [0 1 2 3]
 1
 
-FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT65
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet`1<System.Int32>\_set):::EXIT65
 this_invocation_nonce
 15
 exception
@@ -739,13 +739,13 @@ exception.GetType()
 nonsensical
 2
 return
-5020285
+45182569
 1
 return[..]
 [0 1 2 3 4]
 1
 set
-37840511
+5020285
 1
 set[..]
 [0 1 2 3]
@@ -765,10 +765,10 @@ exception.GetType()
 nonsensical
 2
 return
-38893755
+14499481
 1
 return.contents@
-5020285
+45182569
 1
 return.contents@[..]
 [0 1 2 3 4]
@@ -788,26 +788,26 @@ exception.GetType()
 nonsensical
 2
 return
-38893755
+14499481
 1
 return.contents@
-5020285
+45182569
 1
 return.contents@[..]
 [0 1 2 3 4]
 1
 
-FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::ENTER
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet`1<System.Int32>\_set):::ENTER
 this_invocation_nonce
 18
 set
-5020285
+45182569
 1
 set[..]
 [0 1 2 3 4]
 1
 
-FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32>\_set):::EXIT65
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet`1<System.Int32>\_set):::EXIT65
 this_invocation_nonce
 18
 exception
@@ -817,13 +817,13 @@ exception.GetType()
 nonsensical
 2
 return
-45182569
+3989940
 1
 return[..]
 [0 1 2 3 4 5]
 1
 set
-5020285
+45182569
 1
 set[..]
 [0 1 2 3 4]
@@ -843,36 +843,36 @@ exception.GetType()
 nonsensical
 2
 return
-38893755
+14499481
 1
 return.contents@
-45182569
+3989940
 1
 return.contents@[..]
 [0 1 2 3 4 5]
 1
 
-FSharp.printCollection(System.String\_msg,\_System.Collections.Generic.IEnumerable<a>\_coll):::ENTER
+FSharp.printCollection(System.String\_msg,\_System.Collections.Generic.IEnumerable`1<a>\_coll):::ENTER
 this_invocation_nonce
 20
 coll
-45182569
+3989940
 1
 coll.GetType()
 "Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]"
 1
 msg
-3989940
+35909463
 1
 msg.ToString()
 "Collection"
 1
 
-FSharp.printCollection(System.String\_msg,\_System.Collections.Generic.IEnumerable<a>\_coll):::EXIT14
+FSharp.printCollection(System.String\_msg,\_System.Collections.Generic.IEnumerable`1<a>\_coll):::EXIT14
 this_invocation_nonce
 20
 coll
-45182569
+3989940
 1
 coll.GetType()
 "Microsoft.FSharp.Collections.FSharpSet`1[System.Int32]"
@@ -884,7 +884,7 @@ exception.GetType()
 nonsensical
 2
 msg
-3989940
+35909463
 1
 msg.ToString()
 "Collection"

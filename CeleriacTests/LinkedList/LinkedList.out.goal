@@ -1,4 +1,8 @@
 Argument processing complete
+System.Void LinkedLists.LinkedLists.Main(System.String[] args)
+System.Int32 LinkedLists.LinkedLists.printLast(LinkedLists.Node n)
+System.Void LinkedLists.LinkedLists..ctor()
+System.Void LinkedLists.Node..ctor(System.Int32 n)
 Rewriting complete
 Loading complete. Starting program.
 0

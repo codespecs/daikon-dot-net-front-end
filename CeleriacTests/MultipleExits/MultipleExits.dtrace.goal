@@ -136,7 +136,7 @@ parent parent HelloWorld.HelloWorld:::CLASS 1
     flags synthetic classname
     comparability -22
 
-ppt HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::ENTER
+ppt HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List`1<System.Int32>\_vals,\_System.Int32\_a):::ENTER
 ppt-type enter
 parent parent HelloWorld.HelloWorld:::CLASS 1
   variable a
@@ -159,7 +159,7 @@ parent parent HelloWorld.HelloWorld:::CLASS 1
     rep-type int[]
     comparability -22
 
-ppt HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::EXIT25
+ppt HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List`1<System.Int32>\_vals,\_System.Int32\_a):::EXIT25
 ppt-type subexit
 parent parent HelloWorld.HelloWorld:::CLASS 1
   variable a
@@ -199,7 +199,7 @@ parent parent HelloWorld.HelloWorld:::CLASS 1
     rep-type int[]
     comparability -22
 
-ppt HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::EXIT65
+ppt HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List`1<System.Int32>\_vals,\_System.Int32\_a):::EXIT65
 ppt-type subexit
 parent parent HelloWorld.HelloWorld:::CLASS 1
   variable a
@@ -239,7 +239,7 @@ parent parent HelloWorld.HelloWorld:::CLASS 1
     rep-type int[]
     comparability -22
 
-ppt HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::EXIT67
+ppt HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List`1<System.Int32>\_vals,\_System.Int32\_a):::EXIT67
 ppt-type subexit
 parent parent HelloWorld.HelloWorld:::CLASS 1
   variable a
@@ -279,7 +279,7 @@ parent parent HelloWorld.HelloWorld:::CLASS 1
     rep-type int[]
     comparability -22
 
-ppt HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::EXIT_EX_Runtime
+ppt HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List`1<System.Int32>\_vals,\_System.Int32\_a):::EXIT_EX_Runtime
 ppt-type subexit
 parent parent HelloWorld.HelloWorld:::CLASS 1
   variable a
@@ -617,7 +617,7 @@ parent parent HelloWorld.HelloWorld:::CLASS 1
     flags synthetic to_string
     comparability -22
 
-ppt HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::ENTER
+ppt HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List`1<System.Int32>\_vals,\_System.Int32\_a):::ENTER
 ppt-type enter
 parent parent HelloWorld.HelloWorld:::CLASS 1
   variable a
@@ -640,7 +640,7 @@ parent parent HelloWorld.HelloWorld:::CLASS 1
     rep-type int[]
     comparability -22
 
-ppt HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::EXIT23
+ppt HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List`1<System.Int32>\_vals,\_System.Int32\_a):::EXIT23
 ppt-type subexit
 parent parent HelloWorld.HelloWorld:::CLASS 1
   variable a
@@ -675,7 +675,7 @@ parent parent HelloWorld.HelloWorld:::CLASS 1
     rep-type int[]
     comparability -22
 
-ppt HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::EXIT61
+ppt HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List`1<System.Int32>\_vals,\_System.Int32\_a):::EXIT61
 ppt-type subexit
 parent parent HelloWorld.HelloWorld:::CLASS 1
   variable a
@@ -710,7 +710,7 @@ parent parent HelloWorld.HelloWorld:::CLASS 1
     rep-type int[]
     comparability -22
 
-ppt HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::EXIT_EX_Runtime
+ppt HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List`1<System.Int32>\_vals,\_System.Int32\_a):::EXIT_EX_Runtime
 ppt-type subexit
 parent parent HelloWorld.HelloWorld:::CLASS 1
   variable a
@@ -778,7 +778,7 @@ args[..].ToString()
 []
 1
 
-HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::ENTER
+HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List`1<System.Int32>\_vals,\_System.Int32\_a):::ENTER
 this_invocation_nonce
 3
 a
@@ -791,7 +791,7 @@ vals[..]
 [3]
 1
 
-HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::EXIT65
+HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List`1<System.Int32>\_vals,\_System.Int32\_a):::EXIT65
 this_invocation_nonce
 3
 a
@@ -813,7 +813,7 @@ vals[..]
 [4]
 1
 
-HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::ENTER
+HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List`1<System.Int32>\_vals,\_System.Int32\_a):::ENTER
 this_invocation_nonce
 4
 a
@@ -826,7 +826,7 @@ vals[..]
 [4 4]
 1
 
-HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::EXIT25
+HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List`1<System.Int32>\_vals,\_System.Int32\_a):::EXIT25
 this_invocation_nonce
 4
 a
@@ -848,7 +848,7 @@ vals[..]
 nonsensical
 2
 
-HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::ENTER
+HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List`1<System.Int32>\_vals,\_System.Int32\_a):::ENTER
 this_invocation_nonce
 5
 a
@@ -861,7 +861,7 @@ vals[..]
 [3]
 1
 
-HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::EXIT61
+HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List`1<System.Int32>\_vals,\_System.Int32\_a):::EXIT61
 this_invocation_nonce
 5
 a
@@ -880,7 +880,7 @@ vals[..]
 [4]
 1
 
-HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::ENTER
+HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List`1<System.Int32>\_vals,\_System.Int32\_a):::ENTER
 this_invocation_nonce
 6
 a
@@ -893,7 +893,7 @@ vals[..]
 [4 4]
 1
 
-HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List<System.Int32>\_vals,\_System.Int32\_a):::EXIT23
+HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List`1<System.Int32>\_vals,\_System.Int32\_a):::EXIT23
 this_invocation_nonce
 6
 a

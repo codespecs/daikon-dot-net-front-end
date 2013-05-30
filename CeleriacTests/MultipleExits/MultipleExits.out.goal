@@ -1,4 +1,10 @@
 Argument processing complete
+System.Void HelloWorld.HelloWorld.Main(System.String[] args)
+System.String HelloWorld.HelloWorld.multipleReturnsDelayed(System.Int32 n)
+System.Int32 HelloWorld.HelloWorld.intFuncSimple(System.Boolean returnOne)
+System.Int32 HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List<System.Int32> vals, System.Int32 a)
+System.Void HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List<System.Int32> vals, System.Int32 a)
+System.Void HelloWorld.HelloWorld..ctor()
 Rewriting complete
 Loading complete. Starting program.
 buzz

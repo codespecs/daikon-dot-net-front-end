@@ -1,4 +1,8 @@
 Argument processing complete
+System.Void C..ctor(System.Int32 i)
+System.Void C.run()
+System.Void M.Main(System.String[] args)
+System.Void M..ctor()
 Rewriting complete
 Loading complete. Starting program.
 Thread 0 says hi
@@ -40,6 +44,6 @@ Thread 17 says bye
 Thread 18 says hi
 Thread 18 says bye
 Program Complete. Press enter to exit
-Program complete. Exiting Celeriac.
 Thread 19 says hi
 Thread 19 says bye
+Program complete. Exiting Celeriac.
