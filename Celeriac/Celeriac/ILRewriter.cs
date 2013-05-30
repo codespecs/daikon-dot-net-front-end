@@ -1803,6 +1803,7 @@ namespace Celeriac
       string methodName = MemberHelper.GetMemberSignature(MemberHelper.UninstantiateAndUnspecialize(methodDef),
             NameFormattingOptions.ParameterName |
             NameFormattingOptions.SmartTypeName |
+            NameFormattingOptions.ContractNullable | // use ? instead of System.Nullable
             NameFormattingOptions.UseGenericTypeNameSuffix | // interfaces can have same name, but different # of generic args
             NameFormattingOptions.Signature);
 
