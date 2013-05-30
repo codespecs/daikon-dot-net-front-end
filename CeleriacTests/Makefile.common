@@ -109,7 +109,7 @@ ran-dnfe: $(DNFE_EXE) $(CLEAN_OUTPUT)
 else ifeq ($(SIKULI_RUN),1)
 ran-dnfe: $(NAME) $(DNFE_EXE) $(CLEAN_OUTPUT)
 	$(BEFORE_RUN)
-	mkdir daikon-output
+	mkdir -p daikon-output
 	$(DNFE_EXE) $(DNFE_OPTIONS) ./$(NAME).exe $(PROGRAM_ARGS)
 	mv InstrumentedProgram.exe $(NAME).exe
 	$(SIKULI_PATH) -r $(NAME).skl
