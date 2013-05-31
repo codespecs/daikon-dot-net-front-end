@@ -1,5 +1,5 @@
 // Declarations for WpfBasic
-// Declarations written 4/23/2013 1:24:26 AM
+// Declarations written 5/29/2013 3:23:20 PM
 
 decl-version 2.0
 var-comparability none
@@ -757,6 +757,12 @@ parent parent WpfBasic.App:::OBJECT 1
     rep-type java.lang.String
     flags synthetic classname
     comparability -22
+
+ppt WpfBasic.CounterUpdateListener.Update():::ENTER
+ppt-type enter
+
+ppt WpfBasic.CounterUpdateListener.Update():::EXIT
+ppt-type subexit
 
 ppt WpfBasic.MainWindow..ctor():::ENTER
 ppt-type enter
@@ -6549,6 +6555,7 @@ parent parent WpfBasic.MainWindow:::OBJECT 1
 ppt WpfBasic.MainWindow.WpfBasic.CounterUpdateListener.Update():::ENTER
 ppt-type enter
 parent parent WpfBasic.MainWindow:::OBJECT 1
+parent parent WpfBasic.CounterUpdateListener.Update():::ENTER 2
   variable this
     var-kind variable
     dec-type WpfBasic.MainWindow
@@ -7251,6 +7258,7 @@ parent parent WpfBasic.MainWindow:::OBJECT 1
 ppt WpfBasic.MainWindow.WpfBasic.CounterUpdateListener.Update():::EXIT_EX_Runtime
 ppt-type subexit
 parent parent WpfBasic.MainWindow:::OBJECT 1
+parent parent WpfBasic.CounterUpdateListener.Update():::EXIT 2
   variable this
     var-kind variable
     dec-type WpfBasic.MainWindow
@@ -7965,6 +7973,7 @@ parent parent WpfBasic.MainWindow:::OBJECT 1
 ppt WpfBasic.MainWindow.WpfBasic.CounterUpdateListener.Update():::EXIT11
 ppt-type subexit
 parent parent WpfBasic.MainWindow:::OBJECT 1
+parent parent WpfBasic.CounterUpdateListener.Update():::EXIT 2
   variable this
     var-kind variable
     dec-type WpfBasic.MainWindow
@@ -9243,6 +9252,81 @@ parent parent WpfBasic.WpfBasicModel:::OBJECT 1
     comparability -22
     parent WpfBasic.WpfBasicModel:::OBJECT 1
 
+ppt WpfBasic.WpfBasicModel.Counter.get():::EXIT4
+ppt-type subexit
+parent parent WpfBasic.WpfBasicModel:::OBJECT 1
+  variable this
+    var-kind variable
+    dec-type WpfBasic.WpfBasicModel
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent WpfBasic.WpfBasicModel:::OBJECT 1
+  variable this.counter
+    var-kind field counter
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent WpfBasic.WpfBasicModel:::OBJECT 1
+  variable this.listeners
+    var-kind field listeners
+    enclosing-var this
+    dec-type System.Collections.Generic.List`1[WpfBasic.CounterUpdateListener]
+    rep-type hashcode
+    comparability -22
+    parent WpfBasic.WpfBasicModel:::OBJECT 1
+  variable this.listeners.GetType()
+    var-kind function GetType()
+    enclosing-var this.listeners
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent WpfBasic.WpfBasicModel:::OBJECT 1
+  variable this.listeners[..]
+    var-kind array
+    enclosing-var this.listeners
+    array 1
+    dec-type WpfBasic.CounterUpdateListener[]
+    rep-type hashcode[]
+    comparability -22
+    parent WpfBasic.WpfBasicModel:::OBJECT 1
+  variable this.listeners[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.listeners[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+    parent WpfBasic.WpfBasicModel:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent WpfBasic.WpfBasicModel:::OBJECT 1
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
 ppt WpfBasic.WpfBasicModel.Counter.get():::EXIT_EX_Runtime
 ppt-type subexit
 parent parent WpfBasic.WpfBasicModel:::OBJECT 1
@@ -10491,10 +10575,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -10554,7 +10638,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -10587,7 +10671,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -10635,7 +10719,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -10698,7 +10782,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -10746,10 +10830,10 @@ sender.GetType()
 "System.Windows.Controls.Button"
 1
 e
-15271547
+3088388
 1
 e._flags
--129306070
+1293994344
 1
 e._flags.data
 0
@@ -10761,13 +10845,13 @@ e._originalSource.GetType()
 "System.Windows.Controls.Button"
 1
 e._routedEvent
-59995477
+36842478
 1
 e._routedEvent._globalIndex
 136
 1
 e._routedEvent._handlerType
-27795493
+31450711
 1
 System.Type.Delimiter
 46
@@ -10779,25 +10863,25 @@ System.Char.MinValue
 0
 1
 System.Type.FilterAttribute
-48832851
-1
-System.Type.FilterName
-63146847
-1
-System.Type.FilterNameIgnoreCase
-31450711
-1
-System.Type.Missing
 14620943
 1
+System.Type.FilterName
+43445707
+1
+System.Type.FilterNameIgnoreCase
+55467050
+1
+System.Type.Missing
+29441404
+1
 e._routedEvent._name
-64479624
+63646052
 1
 e._routedEvent._ownerType
 23240469
 1
 e._routedEvent._routingStrategy
-43445708
+35943563
 1
 e._source
 52493967
@@ -10859,7 +10943,7 @@ this.GetType()
 "WpfBasic.WpfBasicModel"
 1
 
-WpfBasic.WpfBasicModel.Counter.get():::EXIT6
+WpfBasic.WpfBasicModel.Counter.get():::EXIT4
 this_invocation_nonce
 8
 this
@@ -10995,10 +11079,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -11058,7 +11142,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -11091,7 +11175,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -11139,7 +11223,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -11202,7 +11286,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -11269,7 +11353,7 @@ this.GetType()
 "WpfBasic.WpfBasicModel"
 1
 
-WpfBasic.WpfBasicModel.Counter.get():::EXIT6
+WpfBasic.WpfBasicModel.Counter.get():::EXIT4
 this_invocation_nonce
 12
 this
@@ -11352,10 +11436,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -11415,7 +11499,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -11448,7 +11532,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -11496,7 +11580,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -11559,7 +11643,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -11752,10 +11836,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -11815,7 +11899,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -11848,7 +11932,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -11896,7 +11980,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -11959,7 +12043,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -12007,10 +12091,10 @@ sender.GetType()
 "System.Windows.Controls.Button"
 1
 e
-15271547
+3088388
 1
 e._flags
--129306070
+1293994344
 1
 e._flags.data
 0
@@ -12022,13 +12106,13 @@ e._originalSource.GetType()
 "System.Windows.Controls.Button"
 1
 e._routedEvent
-59995477
+36842478
 1
 e._routedEvent._globalIndex
 136
 1
 e._routedEvent._handlerType
-27795493
+31450711
 1
 System.Type.Delimiter
 46
@@ -12040,25 +12124,25 @@ System.Char.MinValue
 0
 1
 System.Type.FilterAttribute
-48832851
-1
-System.Type.FilterName
-63146847
-1
-System.Type.FilterNameIgnoreCase
-31450711
-1
-System.Type.Missing
 14620943
 1
+System.Type.FilterName
+43445707
+1
+System.Type.FilterNameIgnoreCase
+55467050
+1
+System.Type.Missing
+29441404
+1
 e._routedEvent._name
-64479624
+63646052
 1
 e._routedEvent._ownerType
 23240469
 1
 e._routedEvent._routingStrategy
-43445708
+35943563
 1
 e._source
 52493967
@@ -12125,10 +12209,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -12188,7 +12272,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -12221,7 +12305,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -12269,7 +12353,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -12332,7 +12416,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -12380,10 +12464,10 @@ sender.GetType()
 "System.Windows.Controls.Button"
 1
 e
-55467050
+55056607
 1
 e._flags
--129306070
+1293994344
 1
 e._flags.data
 0
@@ -12395,13 +12479,13 @@ e._originalSource.GetType()
 "System.Windows.Controls.Button"
 1
 e._routedEvent
-59995477
+36842478
 1
 e._routedEvent._globalIndex
 136
 1
 e._routedEvent._handlerType
-27795493
+31450711
 1
 System.Type.Delimiter
 46
@@ -12413,25 +12497,25 @@ System.Char.MinValue
 0
 1
 System.Type.FilterAttribute
-48832851
-1
-System.Type.FilterName
-63146847
-1
-System.Type.FilterNameIgnoreCase
-31450711
-1
-System.Type.Missing
 14620943
 1
+System.Type.FilterName
+43445707
+1
+System.Type.FilterNameIgnoreCase
+55467050
+1
+System.Type.Missing
+29441404
+1
 e._routedEvent._name
-64479624
+63646052
 1
 e._routedEvent._ownerType
 23240469
 1
 e._routedEvent._routingStrategy
-43445708
+35943563
 1
 e._source
 52493967
@@ -12493,7 +12577,7 @@ this.GetType()
 "WpfBasic.WpfBasicModel"
 1
 
-WpfBasic.WpfBasicModel.Counter.get():::EXIT6
+WpfBasic.WpfBasicModel.Counter.get():::EXIT4
 this_invocation_nonce
 15
 this
@@ -12629,10 +12713,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -12692,7 +12776,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -12725,7 +12809,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -12773,7 +12857,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -12836,7 +12920,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -12903,7 +12987,7 @@ this.GetType()
 "WpfBasic.WpfBasicModel"
 1
 
-WpfBasic.WpfBasicModel.Counter.get():::EXIT6
+WpfBasic.WpfBasicModel.Counter.get():::EXIT4
 this_invocation_nonce
 19
 this
@@ -12986,10 +13070,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -13049,7 +13133,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -13082,7 +13166,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -13130,7 +13214,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -13193,7 +13277,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -13386,10 +13470,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -13449,7 +13533,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -13482,7 +13566,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -13530,7 +13614,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -13593,7 +13677,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -13641,58 +13725,58 @@ sender.GetType()
 "System.Windows.Controls.Button"
 1
 e
+55056607
+1
+e._flags
+1293994344
+1
+e._flags.data
+0
+1
+e._originalSource
+52493967
+1
+e._originalSource.GetType()
+"System.Windows.Controls.Button"
+1
+e._routedEvent
+36842478
+1
+e._routedEvent._globalIndex
+136
+1
+e._routedEvent._handlerType
+31450711
+1
+System.Type.Delimiter
+46
+1
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.FilterAttribute
+14620943
+1
+System.Type.FilterName
+43445707
+1
+System.Type.FilterNameIgnoreCase
 55467050
 1
-e._flags
--129306070
-1
-e._flags.data
-0
-1
-e._originalSource
-52493967
-1
-e._originalSource.GetType()
-"System.Windows.Controls.Button"
-1
-e._routedEvent
-59995477
-1
-e._routedEvent._globalIndex
-136
-1
-e._routedEvent._handlerType
-27795493
-1
-System.Type.Delimiter
-46
-1
-System.Char.MaxValue
-65535
-1
-System.Char.MinValue
-0
-1
-System.Type.FilterAttribute
-48832851
-1
-System.Type.FilterName
-63146847
-1
-System.Type.FilterNameIgnoreCase
-31450711
-1
 System.Type.Missing
-14620943
+29441404
 1
 e._routedEvent._name
-64479624
+63646052
 1
 e._routedEvent._ownerType
 23240469
 1
 e._routedEvent._routingStrategy
-43445708
+35943563
 1
 e._source
 52493967
@@ -13759,10 +13843,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -13822,7 +13906,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -13855,7 +13939,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -13903,7 +13987,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -13966,7 +14050,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -14014,10 +14098,10 @@ sender.GetType()
 "System.Windows.Controls.Button"
 1
 e
-29441404
+25747420
 1
 e._flags
--129306070
+1293994344
 1
 e._flags.data
 0
@@ -14029,13 +14113,13 @@ e._originalSource.GetType()
 "System.Windows.Controls.Button"
 1
 e._routedEvent
-59995477
+36842478
 1
 e._routedEvent._globalIndex
 136
 1
 e._routedEvent._handlerType
-27795493
+31450711
 1
 System.Type.Delimiter
 46
@@ -14047,25 +14131,25 @@ System.Char.MinValue
 0
 1
 System.Type.FilterAttribute
-48832851
-1
-System.Type.FilterName
-63146847
-1
-System.Type.FilterNameIgnoreCase
-31450711
-1
-System.Type.Missing
 14620943
 1
+System.Type.FilterName
+43445707
+1
+System.Type.FilterNameIgnoreCase
+55467050
+1
+System.Type.Missing
+29441404
+1
 e._routedEvent._name
-64479624
+63646052
 1
 e._routedEvent._ownerType
 23240469
 1
 e._routedEvent._routingStrategy
-43445708
+35943563
 1
 e._source
 52493967
@@ -14127,7 +14211,7 @@ this.GetType()
 "WpfBasic.WpfBasicModel"
 1
 
-WpfBasic.WpfBasicModel.Counter.get():::EXIT6
+WpfBasic.WpfBasicModel.Counter.get():::EXIT4
 this_invocation_nonce
 22
 this
@@ -14263,10 +14347,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -14326,7 +14410,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -14359,7 +14443,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -14407,7 +14491,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -14470,7 +14554,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -14537,7 +14621,7 @@ this.GetType()
 "WpfBasic.WpfBasicModel"
 1
 
-WpfBasic.WpfBasicModel.Counter.get():::EXIT6
+WpfBasic.WpfBasicModel.Counter.get():::EXIT4
 this_invocation_nonce
 26
 this
@@ -14620,10 +14704,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -14683,7 +14767,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -14716,7 +14800,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -14764,7 +14848,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -14827,7 +14911,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -15020,10 +15104,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -15083,7 +15167,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -15116,7 +15200,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -15164,7 +15248,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -15227,7 +15311,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -15275,58 +15359,58 @@ sender.GetType()
 "System.Windows.Controls.Button"
 1
 e
+25747420
+1
+e._flags
+1293994344
+1
+e._flags.data
+0
+1
+e._originalSource
+52493967
+1
+e._originalSource.GetType()
+"System.Windows.Controls.Button"
+1
+e._routedEvent
+36842478
+1
+e._routedEvent._globalIndex
+136
+1
+e._routedEvent._handlerType
+31450711
+1
+System.Type.Delimiter
+46
+1
+System.Char.MaxValue
+65535
+1
+System.Char.MinValue
+0
+1
+System.Type.FilterAttribute
+14620943
+1
+System.Type.FilterName
+43445707
+1
+System.Type.FilterNameIgnoreCase
+55467050
+1
+System.Type.Missing
 29441404
 1
-e._flags
--129306070
-1
-e._flags.data
-0
-1
-e._originalSource
-52493967
-1
-e._originalSource.GetType()
-"System.Windows.Controls.Button"
-1
-e._routedEvent
-59995477
-1
-e._routedEvent._globalIndex
-136
-1
-e._routedEvent._handlerType
-27795493
-1
-System.Type.Delimiter
-46
-1
-System.Char.MaxValue
-65535
-1
-System.Char.MinValue
-0
-1
-System.Type.FilterAttribute
-48832851
-1
-System.Type.FilterName
-63146847
-1
-System.Type.FilterNameIgnoreCase
-31450711
-1
-System.Type.Missing
-14620943
-1
 e._routedEvent._name
-64479624
+63646052
 1
 e._routedEvent._ownerType
 23240469
 1
 e._routedEvent._routingStrategy
-43445708
+35943563
 1
 e._source
 52493967
@@ -15393,10 +15477,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -15456,7 +15540,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -15489,7 +15573,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -15537,7 +15621,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -15600,7 +15684,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -15648,10 +15732,10 @@ sender.GetType()
 "System.Windows.Controls.Button"
 1
 e
-5166299
+30400195
 1
 e._flags
--129306070
+1293994344
 1
 e._flags.data
 0
@@ -15663,13 +15747,13 @@ e._originalSource.GetType()
 "System.Windows.Controls.Button"
 1
 e._routedEvent
-59995477
+36842478
 1
 e._routedEvent._globalIndex
 136
 1
 e._routedEvent._handlerType
-27795493
+31450711
 1
 System.Type.Delimiter
 46
@@ -15681,25 +15765,25 @@ System.Char.MinValue
 0
 1
 System.Type.FilterAttribute
-48832851
-1
-System.Type.FilterName
-63146847
-1
-System.Type.FilterNameIgnoreCase
-31450711
-1
-System.Type.Missing
 14620943
 1
+System.Type.FilterName
+43445707
+1
+System.Type.FilterNameIgnoreCase
+55467050
+1
+System.Type.Missing
+29441404
+1
 e._routedEvent._name
-64479624
+63646052
 1
 e._routedEvent._ownerType
 23240469
 1
 e._routedEvent._routingStrategy
-43445708
+35943563
 1
 e._source
 52493967
@@ -15761,7 +15845,7 @@ this.GetType()
 "WpfBasic.WpfBasicModel"
 1
 
-WpfBasic.WpfBasicModel.Counter.get():::EXIT6
+WpfBasic.WpfBasicModel.Counter.get():::EXIT4
 this_invocation_nonce
 29
 this
@@ -15897,10 +15981,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -15960,7 +16044,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -15993,7 +16077,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -16041,7 +16125,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -16104,7 +16188,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -16171,7 +16255,7 @@ this.GetType()
 "WpfBasic.WpfBasicModel"
 1
 
-WpfBasic.WpfBasicModel.Counter.get():::EXIT6
+WpfBasic.WpfBasicModel.Counter.get():::EXIT4
 this_invocation_nonce
 33
 this
@@ -16254,10 +16338,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -16317,7 +16401,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -16350,7 +16434,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -16398,7 +16482,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -16461,7 +16545,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -16654,10 +16738,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -16717,7 +16801,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -16750,7 +16834,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -16798,7 +16882,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -16861,7 +16945,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -16909,10 +16993,10 @@ sender.GetType()
 "System.Windows.Controls.Button"
 1
 e
-5166299
+30400195
 1
 e._flags
--129306070
+1293994344
 1
 e._flags.data
 0
@@ -16924,13 +17008,13 @@ e._originalSource.GetType()
 "System.Windows.Controls.Button"
 1
 e._routedEvent
-59995477
+36842478
 1
 e._routedEvent._globalIndex
 136
 1
 e._routedEvent._handlerType
-27795493
+31450711
 1
 System.Type.Delimiter
 46
@@ -16942,25 +17026,25 @@ System.Char.MinValue
 0
 1
 System.Type.FilterAttribute
-48832851
-1
-System.Type.FilterName
-63146847
-1
-System.Type.FilterNameIgnoreCase
-31450711
-1
-System.Type.Missing
 14620943
 1
+System.Type.FilterName
+43445707
+1
+System.Type.FilterNameIgnoreCase
+55467050
+1
+System.Type.Missing
+29441404
+1
 e._routedEvent._name
-64479624
+63646052
 1
 e._routedEvent._ownerType
 23240469
 1
 e._routedEvent._routingStrategy
-43445708
+35943563
 1
 e._source
 52493967
@@ -17027,10 +17111,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -17090,7 +17174,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -17123,7 +17207,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -17171,7 +17255,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -17234,7 +17318,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -17282,10 +17366,10 @@ sender.GetType()
 "System.Windows.Controls.Button"
 1
 e
-46496694
+5166299
 1
 e._flags
--129306070
+1293994344
 1
 e._flags.data
 0
@@ -17297,13 +17381,13 @@ e._originalSource.GetType()
 "System.Windows.Controls.Button"
 1
 e._routedEvent
-59995477
+36842478
 1
 e._routedEvent._globalIndex
 136
 1
 e._routedEvent._handlerType
-27795493
+31450711
 1
 System.Type.Delimiter
 46
@@ -17315,25 +17399,25 @@ System.Char.MinValue
 0
 1
 System.Type.FilterAttribute
-48832851
-1
-System.Type.FilterName
-63146847
-1
-System.Type.FilterNameIgnoreCase
-31450711
-1
-System.Type.Missing
 14620943
 1
+System.Type.FilterName
+43445707
+1
+System.Type.FilterNameIgnoreCase
+55467050
+1
+System.Type.Missing
+29441404
+1
 e._routedEvent._name
-64479624
+63646052
 1
 e._routedEvent._ownerType
 23240469
 1
 e._routedEvent._routingStrategy
-43445708
+35943563
 1
 e._source
 52493967
@@ -17395,7 +17479,7 @@ this.GetType()
 "WpfBasic.WpfBasicModel"
 1
 
-WpfBasic.WpfBasicModel.Counter.get():::EXIT6
+WpfBasic.WpfBasicModel.Counter.get():::EXIT4
 this_invocation_nonce
 36
 this
@@ -17531,10 +17615,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -17594,7 +17678,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -17627,7 +17711,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -17675,7 +17759,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -17738,7 +17822,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -17805,7 +17889,7 @@ this.GetType()
 "WpfBasic.WpfBasicModel"
 1
 
-WpfBasic.WpfBasicModel.Counter.get():::EXIT6
+WpfBasic.WpfBasicModel.Counter.get():::EXIT4
 this_invocation_nonce
 40
 this
@@ -17888,10 +17972,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -17951,7 +18035,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -17984,7 +18068,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -18032,7 +18116,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -18095,7 +18179,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -18288,10 +18372,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -18351,7 +18435,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -18384,7 +18468,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -18432,7 +18516,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -18495,7 +18579,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -18543,10 +18627,10 @@ sender.GetType()
 "System.Windows.Controls.Button"
 1
 e
-46496694
+5166299
 1
 e._flags
--129306070
+1293994344
 1
 e._flags.data
 0
@@ -18558,13 +18642,13 @@ e._originalSource.GetType()
 "System.Windows.Controls.Button"
 1
 e._routedEvent
-59995477
+36842478
 1
 e._routedEvent._globalIndex
 136
 1
 e._routedEvent._handlerType
-27795493
+31450711
 1
 System.Type.Delimiter
 46
@@ -18576,25 +18660,25 @@ System.Char.MinValue
 0
 1
 System.Type.FilterAttribute
-48832851
-1
-System.Type.FilterName
-63146847
-1
-System.Type.FilterNameIgnoreCase
-31450711
-1
-System.Type.Missing
 14620943
 1
+System.Type.FilterName
+43445707
+1
+System.Type.FilterNameIgnoreCase
+55467050
+1
+System.Type.Missing
+29441404
+1
 e._routedEvent._name
-64479624
+63646052
 1
 e._routedEvent._ownerType
 23240469
 1
 e._routedEvent._routingStrategy
-43445708
+35943563
 1
 e._source
 52493967
@@ -18661,10 +18745,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -18724,7 +18808,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -18757,7 +18841,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -18805,7 +18889,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -18868,7 +18952,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -18916,10 +19000,10 @@ sender.GetType()
 "System.Windows.Controls.Button"
 1
 e
-25496434
+46496694
 1
 e._flags
--129306070
+1293994344
 1
 e._flags.data
 0
@@ -18931,13 +19015,13 @@ e._originalSource.GetType()
 "System.Windows.Controls.Button"
 1
 e._routedEvent
-59995477
+36842478
 1
 e._routedEvent._globalIndex
 136
 1
 e._routedEvent._handlerType
-27795493
+31450711
 1
 System.Type.Delimiter
 46
@@ -18949,25 +19033,25 @@ System.Char.MinValue
 0
 1
 System.Type.FilterAttribute
-48832851
-1
-System.Type.FilterName
-63146847
-1
-System.Type.FilterNameIgnoreCase
-31450711
-1
-System.Type.Missing
 14620943
 1
+System.Type.FilterName
+43445707
+1
+System.Type.FilterNameIgnoreCase
+55467050
+1
+System.Type.Missing
+29441404
+1
 e._routedEvent._name
-64479624
+63646052
 1
 e._routedEvent._ownerType
 23240469
 1
 e._routedEvent._routingStrategy
-43445708
+35943563
 1
 e._source
 23507505
@@ -19106,10 +19190,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -19169,7 +19253,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -19202,7 +19286,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -19250,7 +19334,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -19313,7 +19397,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -19380,7 +19464,7 @@ this.GetType()
 "WpfBasic.WpfBasicModel"
 1
 
-WpfBasic.WpfBasicModel.Counter.get():::EXIT6
+WpfBasic.WpfBasicModel.Counter.get():::EXIT4
 this_invocation_nonce
 46
 this
@@ -19463,10 +19547,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -19526,7 +19610,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -19559,7 +19643,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -19607,7 +19691,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -19670,7 +19754,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -19863,10 +19947,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -19926,7 +20010,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -19959,7 +20043,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -20007,7 +20091,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -20070,7 +20154,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -20118,10 +20202,10 @@ sender.GetType()
 "System.Windows.Controls.Button"
 1
 e
-25496434
+46496694
 1
 e._flags
--129306070
+1293994344
 1
 e._flags.data
 0
@@ -20133,13 +20217,13 @@ e._originalSource.GetType()
 "System.Windows.Controls.Button"
 1
 e._routedEvent
-59995477
+36842478
 1
 e._routedEvent._globalIndex
 136
 1
 e._routedEvent._handlerType
-27795493
+31450711
 1
 System.Type.Delimiter
 46
@@ -20151,25 +20235,25 @@ System.Char.MinValue
 0
 1
 System.Type.FilterAttribute
-48832851
-1
-System.Type.FilterName
-63146847
-1
-System.Type.FilterNameIgnoreCase
-31450711
-1
-System.Type.Missing
 14620943
 1
+System.Type.FilterName
+43445707
+1
+System.Type.FilterNameIgnoreCase
+55467050
+1
+System.Type.Missing
+29441404
+1
 e._routedEvent._name
-64479624
+63646052
 1
 e._routedEvent._ownerType
 23240469
 1
 e._routedEvent._routingStrategy
-43445708
+35943563
 1
 e._source
 23507505
@@ -20236,10 +20320,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -20299,7 +20383,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -20332,7 +20416,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -20380,7 +20464,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -20443,7 +20527,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -20491,10 +20575,10 @@ sender.GetType()
 "System.Windows.Controls.Button"
 1
 e
-28141317
+15817070
 1
 e._flags
--129306070
+1293994344
 1
 e._flags.data
 0
@@ -20506,13 +20590,13 @@ e._originalSource.GetType()
 "System.Windows.Controls.Button"
 1
 e._routedEvent
-59995477
+36842478
 1
 e._routedEvent._globalIndex
 136
 1
 e._routedEvent._handlerType
-27795493
+31450711
 1
 System.Type.Delimiter
 46
@@ -20524,25 +20608,25 @@ System.Char.MinValue
 0
 1
 System.Type.FilterAttribute
-48832851
-1
-System.Type.FilterName
-63146847
-1
-System.Type.FilterNameIgnoreCase
-31450711
-1
-System.Type.Missing
 14620943
 1
+System.Type.FilterName
+43445707
+1
+System.Type.FilterNameIgnoreCase
+55467050
+1
+System.Type.Missing
+29441404
+1
 e._routedEvent._name
-64479624
+63646052
 1
 e._routedEvent._ownerType
 23240469
 1
 e._routedEvent._routingStrategy
-43445708
+35943563
 1
 e._source
 52493967
@@ -20604,7 +20688,7 @@ this.GetType()
 "WpfBasic.WpfBasicModel"
 1
 
-WpfBasic.WpfBasicModel.Counter.get():::EXIT6
+WpfBasic.WpfBasicModel.Counter.get():::EXIT4
 this_invocation_nonce
 49
 this
@@ -20740,10 +20824,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -20803,7 +20887,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -20836,7 +20920,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -20884,7 +20968,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -20947,7 +21031,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -21014,7 +21098,7 @@ this.GetType()
 "WpfBasic.WpfBasicModel"
 1
 
-WpfBasic.WpfBasicModel.Counter.get():::EXIT6
+WpfBasic.WpfBasicModel.Counter.get():::EXIT4
 this_invocation_nonce
 53
 this
@@ -21097,10 +21181,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -21160,7 +21244,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -21193,7 +21277,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -21241,7 +21325,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -21304,7 +21388,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -21497,10 +21581,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -21560,7 +21644,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -21593,7 +21677,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -21641,7 +21725,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -21704,7 +21788,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -21752,10 +21836,10 @@ sender.GetType()
 "System.Windows.Controls.Button"
 1
 e
-28141317
+15817070
 1
 e._flags
--129306070
+1293994344
 1
 e._flags.data
 0
@@ -21767,13 +21851,13 @@ e._originalSource.GetType()
 "System.Windows.Controls.Button"
 1
 e._routedEvent
-59995477
+36842478
 1
 e._routedEvent._globalIndex
 136
 1
 e._routedEvent._handlerType
-27795493
+31450711
 1
 System.Type.Delimiter
 46
@@ -21785,25 +21869,25 @@ System.Char.MinValue
 0
 1
 System.Type.FilterAttribute
-48832851
-1
-System.Type.FilterName
-63146847
-1
-System.Type.FilterNameIgnoreCase
-31450711
-1
-System.Type.Missing
 14620943
 1
+System.Type.FilterName
+43445707
+1
+System.Type.FilterNameIgnoreCase
+55467050
+1
+System.Type.Missing
+29441404
+1
 e._routedEvent._name
-64479624
+63646052
 1
 e._routedEvent._ownerType
 23240469
 1
 e._routedEvent._routingStrategy
-43445708
+35943563
 1
 e._source
 52493967
@@ -21870,10 +21954,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -21933,7 +22017,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -21966,7 +22050,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -22014,7 +22098,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -22077,7 +22161,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -22125,10 +22209,10 @@ sender.GetType()
 "System.Windows.Controls.Button"
 1
 e
-51945267
+8135907
 1
 e._flags
--129306070
+1293994344
 1
 e._flags.data
 0
@@ -22140,13 +22224,13 @@ e._originalSource.GetType()
 "System.Windows.Controls.Button"
 1
 e._routedEvent
-59995477
+36842478
 1
 e._routedEvent._globalIndex
 136
 1
 e._routedEvent._handlerType
-27795493
+31450711
 1
 System.Type.Delimiter
 46
@@ -22158,25 +22242,25 @@ System.Char.MinValue
 0
 1
 System.Type.FilterAttribute
-48832851
-1
-System.Type.FilterName
-63146847
-1
-System.Type.FilterNameIgnoreCase
-31450711
-1
-System.Type.Missing
 14620943
 1
+System.Type.FilterName
+43445707
+1
+System.Type.FilterNameIgnoreCase
+55467050
+1
+System.Type.Missing
+29441404
+1
 e._routedEvent._name
-64479624
+63646052
 1
 e._routedEvent._ownerType
 23240469
 1
 e._routedEvent._routingStrategy
-43445708
+35943563
 1
 e._source
 52493967
@@ -22238,7 +22322,7 @@ this.GetType()
 "WpfBasic.WpfBasicModel"
 1
 
-WpfBasic.WpfBasicModel.Counter.get():::EXIT6
+WpfBasic.WpfBasicModel.Counter.get():::EXIT4
 this_invocation_nonce
 56
 this
@@ -22374,10 +22458,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -22437,7 +22521,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -22470,7 +22554,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -22518,7 +22602,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -22581,7 +22665,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -22648,7 +22732,7 @@ this.GetType()
 "WpfBasic.WpfBasicModel"
 1
 
-WpfBasic.WpfBasicModel.Counter.get():::EXIT6
+WpfBasic.WpfBasicModel.Counter.get():::EXIT4
 this_invocation_nonce
 60
 this
@@ -22731,10 +22815,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -22794,7 +22878,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -22827,7 +22911,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -22875,7 +22959,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -22938,7 +23022,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -23131,10 +23215,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -23194,7 +23278,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -23227,7 +23311,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -23275,7 +23359,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -23338,7 +23422,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -23386,10 +23470,10 @@ sender.GetType()
 "System.Windows.Controls.Button"
 1
 e
-51945267
+8135907
 1
 e._flags
--129306070
+1293994344
 1
 e._flags.data
 0
@@ -23401,13 +23485,13 @@ e._originalSource.GetType()
 "System.Windows.Controls.Button"
 1
 e._routedEvent
-59995477
+36842478
 1
 e._routedEvent._globalIndex
 136
 1
 e._routedEvent._handlerType
-27795493
+31450711
 1
 System.Type.Delimiter
 46
@@ -23419,25 +23503,25 @@ System.Char.MinValue
 0
 1
 System.Type.FilterAttribute
-48832851
-1
-System.Type.FilterName
-63146847
-1
-System.Type.FilterNameIgnoreCase
-31450711
-1
-System.Type.Missing
 14620943
 1
+System.Type.FilterName
+43445707
+1
+System.Type.FilterNameIgnoreCase
+55467050
+1
+System.Type.Missing
+29441404
+1
 e._routedEvent._name
-64479624
+63646052
 1
 e._routedEvent._ownerType
 23240469
 1
 e._routedEvent._routingStrategy
-43445708
+35943563
 1
 e._source
 52493967
@@ -23504,10 +23588,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -23567,7 +23651,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -23600,7 +23684,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -23648,7 +23732,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -23711,7 +23795,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -23759,10 +23843,10 @@ sender.GetType()
 "System.Windows.Controls.Button"
 1
 e
-64854219
+6114302
 1
 e._flags
--129306070
+1293994344
 1
 e._flags.data
 0
@@ -23774,13 +23858,13 @@ e._originalSource.GetType()
 "System.Windows.Controls.Button"
 1
 e._routedEvent
-59995477
+36842478
 1
 e._routedEvent._globalIndex
 136
 1
 e._routedEvent._handlerType
-27795493
+31450711
 1
 System.Type.Delimiter
 46
@@ -23792,25 +23876,25 @@ System.Char.MinValue
 0
 1
 System.Type.FilterAttribute
-48832851
-1
-System.Type.FilterName
-63146847
-1
-System.Type.FilterNameIgnoreCase
-31450711
-1
-System.Type.Missing
 14620943
 1
+System.Type.FilterName
+43445707
+1
+System.Type.FilterNameIgnoreCase
+55467050
+1
+System.Type.Missing
+29441404
+1
 e._routedEvent._name
-64479624
+63646052
 1
 e._routedEvent._ownerType
 23240469
 1
 e._routedEvent._routingStrategy
-43445708
+35943563
 1
 e._source
 52493967
@@ -23872,7 +23956,7 @@ this.GetType()
 "WpfBasic.WpfBasicModel"
 1
 
-WpfBasic.WpfBasicModel.Counter.get():::EXIT6
+WpfBasic.WpfBasicModel.Counter.get():::EXIT4
 this_invocation_nonce
 63
 this
@@ -24008,10 +24092,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -24071,7 +24155,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -24104,7 +24188,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -24152,7 +24236,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -24215,7 +24299,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -24282,7 +24366,7 @@ this.GetType()
 "WpfBasic.WpfBasicModel"
 1
 
-WpfBasic.WpfBasicModel.Counter.get():::EXIT6
+WpfBasic.WpfBasicModel.Counter.get():::EXIT4
 this_invocation_nonce
 67
 this
@@ -24365,10 +24449,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -24428,7 +24512,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -24461,7 +24545,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -24509,7 +24593,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -24572,7 +24656,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -24765,10 +24849,10 @@ this._parentIndex
 0
 1
 this._proxy
-29146545
+47364763
 1
 this._proxy._head
-1458230643
+1434767961
 1
 this._proxy._tail
 null
@@ -24828,7 +24912,7 @@ this.incBtn._parentIndex
 2
 1
 this.incBtn._proxy
-29146545
+47364763
 1
 this.incBtn._templatedParent
 null
@@ -24861,7 +24945,7 @@ this.incLabel._parentIndex
 0
 1
 this.incLabel._proxy
-29146545
+47364763
 1
 this.incLabel._templatedParent
 null
@@ -24909,7 +24993,7 @@ this.incText._parentIndex
 1
 1
 this.incText._proxy
-29146545
+47364763
 1
 this.incText._templatedParent
 null
@@ -24972,7 +25056,7 @@ this.resetBtn._parentIndex
 3
 1
 this.resetBtn._proxy
-29146545
+47364763
 1
 this.resetBtn._templatedParent
 null
@@ -25020,10 +25104,10 @@ sender.GetType()
 "System.Windows.Controls.Button"
 1
 e
-64854219
+6114302
 1
 e._flags
--129306070
+1293994344
 1
 e._flags.data
 0
@@ -25035,13 +25119,13 @@ e._originalSource.GetType()
 "System.Windows.Controls.Button"
 1
 e._routedEvent
-59995477
+36842478
 1
 e._routedEvent._globalIndex
 136
 1
 e._routedEvent._handlerType
-27795493
+31450711
 1
 System.Type.Delimiter
 46
@@ -25053,25 +25137,25 @@ System.Char.MinValue
 0
 1
 System.Type.FilterAttribute
-48832851
-1
-System.Type.FilterName
-63146847
-1
-System.Type.FilterNameIgnoreCase
-31450711
-1
-System.Type.Missing
 14620943
 1
+System.Type.FilterName
+43445707
+1
+System.Type.FilterNameIgnoreCase
+55467050
+1
+System.Type.Missing
+29441404
+1
 e._routedEvent._name
-64479624
+63646052
 1
 e._routedEvent._ownerType
 23240469
 1
 e._routedEvent._routingStrategy
-43445708
+35943563
 1
 e._source
 52493967
