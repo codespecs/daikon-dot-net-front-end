@@ -1,4 +1,27 @@
 Argument processing complete
+System.Void QuickSorter.qsort(ref System.Object[] a)
+System.Void QuickSorter.print(ref System.Object[] a)
+System.Void QuickSorter.main()
+System.Void QuickSorter.quicksort(ref System.Object[] a, System.Int32 left, System.Int32 right)
+System.Object QuickSorter.getpivot(ref System.Object[] a, System.Int32 left, System.Int32 right)
+System.Object QuickSorter.partition(ref System.Object[] a, System.Int32 left, System.Int32 right, ref System.Int32 pivot)
+System.Void QuickSorter.swap(ref System.Object v1, ref System.Object v2)
+System.Void My.MyComputer..ctor()
+System.Void My.MyApplication..ctor()
+System.Void My.MyProject..cctor()
+My.MyComputer My.MyProject.Computer.get()
+My.MyApplication My.MyProject.Application.get()
+Microsoft.VisualBasic.ApplicationServices.User My.MyProject.User.get()
+My.MyProject.MyWebServices My.MyProject.WebServices.get()
+System.Boolean My.MyProject.MyWebServices.Equals(System.Object o)
+System.Int32 My.MyProject.MyWebServices.GetHashCode()
+System.Type My.MyProject.MyWebServices.GetType()
+System.String My.MyProject.MyWebServices.ToString()
+T My.MyProject.MyWebServices.Create__Instance__<T>(T instance)
+System.Void My.MyProject.MyWebServices.Dispose__Instance__<T>(ref T instance)
+System.Void My.MyProject.MyWebServices..ctor()
+T My.MyProject.ThreadSafeObjectProvider<T>.GetInstance.get()
+System.Void My.MyProject.ThreadSafeObjectProvider<T>..ctor()
 Rewriting complete
 Loading complete. Starting program.
 towns before qsort:   Paris  London  Stockholm  Berlin  Oslo  Rome  Madrid  Tallinn  Amsterdam  Dublin

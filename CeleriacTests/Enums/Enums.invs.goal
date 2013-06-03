@@ -56,7 +56,7 @@ System.Type.FilterNameIgnoreCase has only one value
 System.Type.Missing has only one value
 enumType.GetType() == System.RuntimeType.class
 ===========================================================================
-Enums.Enums.formatEnum(System.String s, System.Type enumType):::EXIT10
+Enums.Enums.formatEnum(System.String s, System.Type enumType):::EXIT8
 ===========================================================================
 Enums.Enums.formatEnum(System.String s, System.Type enumType):::EXIT
 System.Char.MaxValue == orig(System.Char.MaxValue)
