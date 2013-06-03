@@ -20,12 +20,11 @@ this.latitude one of { 42343845, 42358333, 42372821 }
 this.longitude one of { -71079857, -71060278, -71040699 }
 ===========================================================================
 GeoPoint.GeoPoint..cctor():::ENTER
-GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
+GeoPoint.GeoPoint.REP_SCALE_FACTOR == 0.0
 ===========================================================================
 GeoPoint.GeoPoint..cctor():::EXIT2
 ===========================================================================
 GeoPoint.GeoPoint..cctor():::EXIT
-GeoPoint.GeoPoint.REP_SCALE_FACTOR == orig(GeoPoint.GeoPoint.REP_SCALE_FACTOR)
 GeoPoint.GeoPoint.REP_SCALE_FACTOR == 1000000.0
 ===========================================================================
 GeoPoint.GeoPoint..ctor(System.Int32 latitude, System.Int32 longitude):::ENTER
@@ -203,12 +202,11 @@ this.gpDowntown.GetType() == this.gpSouthEast.GetType()
 this.gpDowntown.GetType() == this.gpWest.GetType()
 ===========================================================================
 GeoPoint.GeoPointTest..cctor():::ENTER
-GeoPoint.GeoPointTest.tolerance == 0.01
+GeoPoint.GeoPointTest.tolerance == 0.0
 ===========================================================================
 GeoPoint.GeoPointTest..cctor():::EXIT2
 ===========================================================================
 GeoPoint.GeoPointTest..cctor():::EXIT
-GeoPoint.GeoPointTest.tolerance == orig(GeoPoint.GeoPointTest.tolerance)
 GeoPoint.GeoPointTest.tolerance == 0.01
 ===========================================================================
 GeoPoint.GeoPointTest..ctor(System.String name):::ENTER
