@@ -10212,23 +10212,23 @@ StackArTester..cctor():::ENTER
 this_invocation_nonce
 2
 StackArTester.rnd
-63988077
+null
 1
 StackArTester.rnd.GetType()
-"System.Random"
-1
+nonsensical
+2
 StackArTester.s
-39021788
+null
 1
 StackArTester.s.theArray
-15651772
-1
+nonsensical
+2
 StackArTester.s.theArray[..]
-[]
-1
+nonsensical
+2
 StackArTester.s.topOfStack
--1
-1
+nonsensical
+2
 
 StackAr..ctor(System.Int32\_capacity):::ENTER
 this_invocation_nonce
@@ -10250,10 +10250,10 @@ exception.GetType()
 nonsensical
 2
 this
-6648223
+39021788
 1
 this.theArray
-59834015
+15651772
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10272,7 +10272,7 @@ StackArTester..cctor():::EXIT6
 this_invocation_nonce
 2
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
@@ -10300,7 +10300,7 @@ StackArTester.Main(System.String[]\_args):::ENTER
 this_invocation_nonce
 4
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
@@ -10318,7 +10318,7 @@ StackArTester.s.topOfStack
 -1
 1
 args
-1635228
+59834015
 1
 args[..]
 []
@@ -10331,7 +10331,7 @@ StackArTester.fill(System.Int32\_n):::ENTER
 this_invocation_nonce
 5
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
@@ -10356,7 +10356,7 @@ StackArTester.doNew(System.Int32\_size):::ENTER
 this_invocation_nonce
 6
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
@@ -10397,10 +10397,10 @@ exception.GetType()
 nonsensical
 2
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10419,10 +10419,10 @@ StackAr.makeEmpty():::ENTER
 this_invocation_nonce
 8
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10447,10 +10447,10 @@ exception.GetType()
 nonsensical
 2
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10469,19 +10469,19 @@ StackArTester.observe():::ENTER
 this_invocation_nonce
 9
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[null null null null]
 1
 StackArTester.s.topOfStack
 -1
@@ -10491,10 +10491,10 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 10
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10522,10 +10522,10 @@ return
 false
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10544,10 +10544,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 11
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10575,10 +10575,10 @@ return
 true
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10597,10 +10597,10 @@ StackAr.top():::ENTER
 this_invocation_nonce
 12
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10619,10 +10619,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 13
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10650,10 +10650,10 @@ return
 true
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10684,10 +10684,10 @@ return.GetType()
 nonsensical
 2
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10706,19 +10706,19 @@ StackArTester.observe():::EXIT10
 this_invocation_nonce
 9
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[null null null null]
 1
 StackArTester.s.topOfStack
 -1
@@ -10734,19 +10734,19 @@ StackArTester.topOrPop():::ENTER
 this_invocation_nonce
 14
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[null null null null]
 1
 StackArTester.s.topOfStack
 -1
@@ -10756,10 +10756,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 15
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10787,10 +10787,10 @@ return
 true
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10809,10 +10809,10 @@ StackAr.topAndPop():::ENTER
 this_invocation_nonce
 16
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10831,10 +10831,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 17
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10862,10 +10862,10 @@ return
 true
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10896,10 +10896,10 @@ return.GetType()
 nonsensical
 2
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10918,19 +10918,19 @@ StackArTester.observe():::ENTER
 this_invocation_nonce
 18
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[null null null null]
 1
 StackArTester.s.topOfStack
 -1
@@ -10940,10 +10940,10 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 19
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10971,10 +10971,10 @@ return
 false
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -10993,10 +10993,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 20
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11024,10 +11024,10 @@ return
 true
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11046,10 +11046,10 @@ StackAr.top():::ENTER
 this_invocation_nonce
 21
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11068,10 +11068,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 22
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11099,10 +11099,10 @@ return
 true
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11133,10 +11133,10 @@ return.GetType()
 nonsensical
 2
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11155,19 +11155,19 @@ StackArTester.observe():::EXIT10
 this_invocation_nonce
 18
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[null null null null]
 1
 StackArTester.s.topOfStack
 -1
@@ -11183,19 +11183,19 @@ StackArTester.topOrPop():::EXIT34
 this_invocation_nonce
 14
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[null null null null]
 1
 StackArTester.s.topOfStack
 -1
@@ -11211,19 +11211,19 @@ StackArTester.doNew(System.Int32\_size):::EXIT11
 this_invocation_nonce
 6
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[null null null null]
 1
 StackArTester.s.topOfStack
 -1
@@ -11242,19 +11242,19 @@ StackArTester.push():::ENTER
 this_invocation_nonce
 23
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[null null null null]
 1
 StackArTester.s.topOfStack
 -1
@@ -11277,7 +11277,7 @@ exception.GetType()
 nonsensical
 2
 this
-51230787
+65344633
 1
 this.value
 0
@@ -11290,10 +11290,10 @@ StackAr.push(System.Object\_x):::ENTER
 this_invocation_nonce
 25
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11308,7 +11308,7 @@ this.topOfStack
 -1
 1
 x
-51230787
+65344633
 1
 x.GetType()
 "MyInteger"
@@ -11318,10 +11318,10 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 26
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11349,10 +11349,10 @@ return
 false
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -11377,16 +11377,16 @@ exception.GetType()
 nonsensical
 2
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 null null null]
+[65344633 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11395,7 +11395,7 @@ this.topOfStack
 0
 1
 x
-51230787
+65344633
 1
 x.GetType()
 "MyInteger"
@@ -11405,38 +11405,38 @@ StackArTester.observe():::ENTER
 this_invocation_nonce
 27
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[65344633 null null null]
 1
 StackArTester.s.topOfStack
--1
+0
 1
 
 StackAr.isFull():::ENTER
 this_invocation_nonce
 28
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 null null null]
+[65344633 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11458,16 +11458,16 @@ return
 false
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 null null null]
+[65344633 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11480,16 +11480,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 29
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 null null null]
+[65344633 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11511,16 +11511,16 @@ return
 false
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 null null null]
+[65344633 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11533,16 +11533,16 @@ StackAr.top():::ENTER
 this_invocation_nonce
 30
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 null null null]
+[65344633 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11555,16 +11555,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 31
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 null null null]
+[65344633 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11586,16 +11586,16 @@ return
 false
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 null null null]
+[65344633 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11614,22 +11614,22 @@ exception.GetType()
 nonsensical
 2
 return
-51230787
+65344633
 1
 return.GetType()
 "MyInteger"
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 null null null]
+[65344633 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11642,22 +11642,22 @@ StackArTester.observe():::EXIT10
 this_invocation_nonce
 27
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[65344633 null null null]
 1
 StackArTester.s.topOfStack
--1
+0
 1
 exception
 nonsensical
@@ -11670,22 +11670,22 @@ StackArTester.push():::EXIT24
 this_invocation_nonce
 23
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[65344633 null null null]
 1
 StackArTester.s.topOfStack
--1
+0
 1
 exception
 nonsensical
@@ -11698,22 +11698,22 @@ StackArTester.push():::ENTER
 this_invocation_nonce
 32
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[65344633 null null null]
 1
 StackArTester.s.topOfStack
--1
+0
 1
 
 MyInteger..ctor(System.Int32\_x):::ENTER
@@ -11746,16 +11746,16 @@ StackAr.push(System.Object\_x):::ENTER
 this_invocation_nonce
 34
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 null null null]
+[65344633 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11774,16 +11774,16 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 35
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 null null null]
+[65344633 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11805,16 +11805,16 @@ return
 false
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 null null null]
+[65344633 null null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" nonsensical nonsensical nonsensical]
@@ -11833,16 +11833,16 @@ exception.GetType()
 nonsensical
 2
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 null null]
+[65344633 58423902 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -11861,38 +11861,38 @@ StackArTester.observe():::ENTER
 this_invocation_nonce
 36
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[65344633 58423902 null null]
 1
 StackArTester.s.topOfStack
--1
+1
 1
 
 StackAr.isFull():::ENTER
 this_invocation_nonce
 37
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 null null]
+[65344633 58423902 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -11914,16 +11914,16 @@ return
 false
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 null null]
+[65344633 58423902 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -11936,16 +11936,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 38
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 null null]
+[65344633 58423902 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -11967,16 +11967,16 @@ return
 false
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 null null]
+[65344633 58423902 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -11989,16 +11989,16 @@ StackAr.top():::ENTER
 this_invocation_nonce
 39
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 null null]
+[65344633 58423902 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -12011,16 +12011,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 40
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 null null]
+[65344633 58423902 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -12042,16 +12042,16 @@ return
 false
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 null null]
+[65344633 58423902 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -12076,16 +12076,16 @@ return.GetType()
 "MyInteger"
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 null null]
+[65344633 58423902 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -12098,22 +12098,22 @@ StackArTester.observe():::EXIT10
 this_invocation_nonce
 36
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[65344633 58423902 null null]
 1
 StackArTester.s.topOfStack
--1
+1
 1
 exception
 nonsensical
@@ -12126,22 +12126,22 @@ StackArTester.push():::EXIT24
 this_invocation_nonce
 32
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[65344633 58423902 null null]
 1
 StackArTester.s.topOfStack
--1
+1
 1
 exception
 nonsensical
@@ -12154,38 +12154,38 @@ StackArTester.push():::ENTER
 this_invocation_nonce
 41
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[65344633 58423902 null null]
 1
 StackArTester.s.topOfStack
--1
+1
 1
 
 StackAr.push(System.Object\_x):::ENTER
 this_invocation_nonce
 42
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 null null]
+[65344633 58423902 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -12204,16 +12204,16 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 43
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 null null]
+[65344633 58423902 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -12235,16 +12235,16 @@ return
 false
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 null null]
+[65344633 58423902 null null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" nonsensical nonsensical]
@@ -12263,16 +12263,16 @@ exception.GetType()
 nonsensical
 2
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 56053076 null]
+[65344633 58423902 56053076 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12291,38 +12291,38 @@ StackArTester.observe():::ENTER
 this_invocation_nonce
 44
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[65344633 58423902 56053076 null]
 1
 StackArTester.s.topOfStack
--1
+2
 1
 
 StackAr.isFull():::ENTER
 this_invocation_nonce
 45
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 56053076 null]
+[65344633 58423902 56053076 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12344,16 +12344,16 @@ return
 false
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 56053076 null]
+[65344633 58423902 56053076 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12366,16 +12366,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 46
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 56053076 null]
+[65344633 58423902 56053076 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12397,16 +12397,16 @@ return
 false
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 56053076 null]
+[65344633 58423902 56053076 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12419,16 +12419,16 @@ StackAr.top():::ENTER
 this_invocation_nonce
 47
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 56053076 null]
+[65344633 58423902 56053076 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12441,16 +12441,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 48
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 56053076 null]
+[65344633 58423902 56053076 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12472,16 +12472,16 @@ return
 false
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 56053076 null]
+[65344633 58423902 56053076 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12506,16 +12506,16 @@ return.GetType()
 "System.Object"
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 56053076 null]
+[65344633 58423902 56053076 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12528,22 +12528,22 @@ StackArTester.observe():::EXIT10
 this_invocation_nonce
 44
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[65344633 58423902 56053076 null]
 1
 StackArTester.s.topOfStack
--1
+2
 1
 exception
 nonsensical
@@ -12556,22 +12556,22 @@ StackArTester.push():::EXIT24
 this_invocation_nonce
 41
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[65344633 58423902 56053076 null]
 1
 StackArTester.s.topOfStack
--1
+2
 1
 exception
 nonsensical
@@ -12584,22 +12584,22 @@ StackArTester.push():::ENTER
 this_invocation_nonce
 49
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[65344633 58423902 56053076 null]
 1
 StackArTester.s.topOfStack
--1
+2
 1
 
 MyInteger..ctor(System.Int32\_x):::ENTER
@@ -12632,16 +12632,16 @@ StackAr.push(System.Object\_x):::ENTER
 this_invocation_nonce
 51
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 56053076 null]
+[65344633 58423902 56053076 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12660,16 +12660,16 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 52
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 56053076 null]
+[65344633 58423902 56053076 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12691,16 +12691,16 @@ return
 false
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 56053076 null]
+[65344633 58423902 56053076 null]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" nonsensical]
@@ -12719,16 +12719,16 @@ exception.GetType()
 nonsensical
 2
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 56053076 34715636]
+[65344633 58423902 56053076 34715636]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -12747,38 +12747,38 @@ StackArTester.observe():::ENTER
 this_invocation_nonce
 53
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[65344633 58423902 56053076 34715636]
 1
 StackArTester.s.topOfStack
--1
+3
 1
 
 StackAr.isFull():::ENTER
 this_invocation_nonce
 54
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 56053076 34715636]
+[65344633 58423902 56053076 34715636]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -12800,16 +12800,16 @@ return
 true
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 56053076 34715636]
+[65344633 58423902 56053076 34715636]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -12822,16 +12822,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 55
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 56053076 34715636]
+[65344633 58423902 56053076 34715636]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -12853,16 +12853,16 @@ return
 false
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 56053076 34715636]
+[65344633 58423902 56053076 34715636]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -12875,16 +12875,16 @@ StackAr.top():::ENTER
 this_invocation_nonce
 56
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 56053076 34715636]
+[65344633 58423902 56053076 34715636]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -12897,16 +12897,16 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 57
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 56053076 34715636]
+[65344633 58423902 56053076 34715636]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -12928,16 +12928,16 @@ return
 false
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 56053076 34715636]
+[65344633 58423902 56053076 34715636]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -12962,16 +12962,16 @@ return.GetType()
 "MyInteger"
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 56053076 34715636]
+[65344633 58423902 56053076 34715636]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -12984,22 +12984,22 @@ StackArTester.observe():::EXIT10
 this_invocation_nonce
 53
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[65344633 58423902 56053076 34715636]
 1
 StackArTester.s.topOfStack
--1
+3
 1
 exception
 nonsensical
@@ -13012,22 +13012,22 @@ StackArTester.push():::EXIT24
 this_invocation_nonce
 49
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[65344633 58423902 56053076 34715636]
 1
 StackArTester.s.topOfStack
--1
+3
 1
 exception
 nonsensical
@@ -13040,16 +13040,16 @@ StackAr.makeEmpty():::ENTER
 this_invocation_nonce
 58
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
 1
 this.theArray[..]
-[51230787 58423902 56053076 34715636]
+[65344633 58423902 56053076 34715636]
 1
 this.theArray[..].GetType()
 ["MyInteger" "MyInteger" "System.Object" "MyInteger"]
@@ -13068,10 +13068,10 @@ exception.GetType()
 nonsensical
 2
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13090,10 +13090,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 59
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13121,10 +13121,10 @@ return
 true
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13143,10 +13143,10 @@ StackAr.makeEmpty():::ENTER
 this_invocation_nonce
 60
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13171,10 +13171,10 @@ exception.GetType()
 nonsensical
 2
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13193,19 +13193,19 @@ StackArTester.observe():::ENTER
 this_invocation_nonce
 61
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[null null null null]
 1
 StackArTester.s.topOfStack
 -1
@@ -13215,10 +13215,10 @@ StackAr.isFull():::ENTER
 this_invocation_nonce
 62
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13246,10 +13246,10 @@ return
 false
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13268,10 +13268,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 63
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13299,10 +13299,10 @@ return
 true
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13321,10 +13321,10 @@ StackAr.top():::ENTER
 this_invocation_nonce
 64
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13343,10 +13343,10 @@ StackAr.isEmpty():::ENTER
 this_invocation_nonce
 65
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13374,10 +13374,10 @@ return
 true
 1
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13408,10 +13408,10 @@ return.GetType()
 nonsensical
 2
 this
-14717055
+1635228
 1
 this.theArray
-65344633
+14717055
 1
 this.theArray.GetType()
 "System.Object[]"
@@ -13430,19 +13430,19 @@ StackArTester.observe():::EXIT10
 this_invocation_nonce
 61
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[null null null null]
 1
 StackArTester.s.topOfStack
 -1
@@ -13458,19 +13458,19 @@ StackArTester.doNew(System.Int32\_size):::ENTER
 this_invocation_nonce
 66
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+1635228
 1
 StackArTester.s.theArray
-15651772
+14717055
 1
 StackArTester.s.theArray[..]
-[]
+[null null null null]
 1
 StackArTester.s.topOfStack
 -1
@@ -13571,19 +13571,19 @@ StackArTester.observe():::ENTER
 this_invocation_nonce
 69
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+44005273
 1
 StackArTester.s.theArray
-15651772
+60503138
 1
 StackArTester.s.theArray[..]
-[]
+[null null null null]
 1
 StackArTester.s.topOfStack
 -1
@@ -13808,19 +13808,19 @@ StackArTester.observe():::EXIT10
 this_invocation_nonce
 69
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+44005273
 1
 StackArTester.s.theArray
-15651772
+60503138
 1
 StackArTester.s.theArray[..]
-[]
+[null null null null]
 1
 StackArTester.s.topOfStack
 -1
@@ -13836,19 +13836,19 @@ StackArTester.topOrPop():::ENTER
 this_invocation_nonce
 74
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+44005273
 1
 StackArTester.s.theArray
-15651772
+60503138
 1
 StackArTester.s.theArray[..]
-[]
+[null null null null]
 1
 StackArTester.s.topOfStack
 -1
@@ -14020,19 +14020,19 @@ StackArTester.observe():::ENTER
 this_invocation_nonce
 78
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+44005273
 1
 StackArTester.s.theArray
-15651772
+60503138
 1
 StackArTester.s.theArray[..]
-[]
+[null null null null]
 1
 StackArTester.s.topOfStack
 -1
@@ -14257,19 +14257,19 @@ StackArTester.observe():::EXIT10
 this_invocation_nonce
 78
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+44005273
 1
 StackArTester.s.theArray
-15651772
+60503138
 1
 StackArTester.s.theArray[..]
-[]
+[null null null null]
 1
 StackArTester.s.topOfStack
 -1
@@ -14285,19 +14285,19 @@ StackArTester.topOrPop():::EXIT34
 this_invocation_nonce
 74
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+44005273
 1
 StackArTester.s.theArray
-15651772
+60503138
 1
 StackArTester.s.theArray[..]
-[]
+[null null null null]
 1
 StackArTester.s.topOfStack
 -1
@@ -14313,19 +14313,19 @@ StackArTester.doNew(System.Int32\_size):::EXIT11
 this_invocation_nonce
 66
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+44005273
 1
 StackArTester.s.theArray
-15651772
+60503138
 1
 StackArTester.s.theArray[..]
-[]
+[null null null null]
 1
 StackArTester.s.topOfStack
 -1
@@ -14459,22 +14459,22 @@ StackArTester.observe():::ENTER
 this_invocation_nonce
 85
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+44005273
 1
 StackArTester.s.theArray
-15651772
+60503138
 1
 StackArTester.s.theArray[..]
-[]
+[44005273 null null null]
 1
 StackArTester.s.topOfStack
--1
+0
 1
 
 StackAr.isFull():::ENTER
@@ -14696,22 +14696,22 @@ StackArTester.observe():::EXIT10
 this_invocation_nonce
 85
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+44005273
 1
 StackArTester.s.theArray
-15651772
+60503138
 1
 StackArTester.s.theArray[..]
-[]
+[44005273 null null null]
 1
 StackArTester.s.topOfStack
--1
+0
 1
 exception
 nonsensical
@@ -14839,22 +14839,22 @@ StackArTester.observe():::ENTER
 this_invocation_nonce
 92
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+44005273
 1
 StackArTester.s.theArray
-15651772
+60503138
 1
 StackArTester.s.theArray[..]
-[]
+[44005273 44005273 null null]
 1
 StackArTester.s.topOfStack
--1
+1
 1
 
 StackAr.isFull():::ENTER
@@ -15076,22 +15076,22 @@ StackArTester.observe():::EXIT10
 this_invocation_nonce
 92
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+44005273
 1
 StackArTester.s.theArray
-15651772
+60503138
 1
 StackArTester.s.theArray[..]
-[]
+[44005273 44005273 null null]
 1
 StackArTester.s.topOfStack
--1
+1
 1
 exception
 nonsensical
@@ -15219,22 +15219,22 @@ StackArTester.observe():::ENTER
 this_invocation_nonce
 99
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+44005273
 1
 StackArTester.s.theArray
-15651772
+60503138
 1
 StackArTester.s.theArray[..]
-[]
+[44005273 44005273 44005273 null]
 1
 StackArTester.s.topOfStack
--1
+2
 1
 
 StackAr.isFull():::ENTER
@@ -15456,22 +15456,22 @@ StackArTester.observe():::EXIT10
 this_invocation_nonce
 99
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+44005273
 1
 StackArTester.s.theArray
-15651772
+60503138
 1
 StackArTester.s.theArray[..]
-[]
+[44005273 44005273 44005273 null]
 1
 StackArTester.s.topOfStack
--1
+2
 1
 exception
 nonsensical
@@ -15534,19 +15534,19 @@ StackArTester.fill(System.Int32\_n):::EXIT86
 this_invocation_nonce
 5
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+44005273
 1
 StackArTester.s.theArray
-15651772
+60503138
 1
 StackArTester.s.theArray[..]
-[]
+[null null null null]
 1
 StackArTester.s.topOfStack
 -1
@@ -15565,25 +15565,25 @@ StackArTester.Main(System.String[]\_args):::EXIT4
 this_invocation_nonce
 4
 StackArTester.rnd
-63988077
+6648223
 1
 StackArTester.rnd.GetType()
 "System.Random"
 1
 StackArTester.s
-39021788
+44005273
 1
 StackArTester.s.theArray
-15651772
+60503138
 1
 StackArTester.s.theArray[..]
-[]
+[null null null null]
 1
 StackArTester.s.topOfStack
 -1
 1
 args
-1635228
+59834015
 1
 args[..]
 []

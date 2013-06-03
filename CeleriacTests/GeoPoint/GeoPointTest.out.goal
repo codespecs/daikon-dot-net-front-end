@@ -1,4 +1,27 @@
 Argument processing complete
+System.Void GeoPoint.GeoPointTest..ctor(System.String name)
+System.Void GeoPoint.GeoPointTest.setUp()
+System.Void GeoPoint.GeoPointTest.testImmutability()
+System.Void GeoPoint.GeoPointTest.testEquals()
+System.Void GeoPoint.GeoPointTest.testEquals2()
+System.Void GeoPoint.GeoPointTest.testDistanceTo()
+System.Void GeoPoint.GeoPointTest.testHeadingTo()
+System.Void GeoPoint.GeoPointTest.testHashCode()
+System.Void GeoPoint.GeoPointTest.Main(System.String[] args)
+System.Void GeoPoint.GeoPointTest.assertEquals(System.String msg, System.Double a, System.Double b, System.Double tol)
+System.Void GeoPoint.GeoPointTest.assertTrue(System.Boolean test)
+System.Void GeoPoint.GeoPointTest.assertTrue(System.String message, System.Boolean test)
+System.Void GeoPoint.GeoPointTest..cctor()
+System.Void GeoPoint.GeoPoint..ctor(System.Int32 latitude, System.Int32 longitude)
+System.String GeoPoint.GeoPoint.ToString()
+System.Boolean GeoPoint.GeoPoint.equals(System.Object o)
+System.Int32 GeoPoint.GeoPoint.hashCode()
+System.Double GeoPoint.GeoPoint.distanceTo(GeoPoint.GeoPoint gp)
+System.Double GeoPoint.GeoPoint.headingTo(GeoPoint.GeoPoint gp)
+System.Void GeoPoint.GeoPoint..cctor()
+System.Void GeoPoint.Assert.assertTrue(System.Boolean test)
+System.Void GeoPoint.Assert.assertNotNull(System.Object obj)
+System.Void GeoPoint.Assert..ctor()
 Rewriting complete
 Loading complete. Starting program.
 testImmutability
