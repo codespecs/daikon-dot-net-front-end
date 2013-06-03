@@ -1,7 +1,7 @@
-QuickSorter.getpivot(System.Object[]\_a,\_System.Int32\_left,\_System.Int32\_right) ENTER/21: 16 EXIT11/33: 16
+QuickSorter.getpivot(System.Object[]\_a,\_System.Int32\_left,\_System.Int32\_right) ENTER/21: 16 EXIT9/33: 16
 QuickSorter.main() ENTER/3: 1 EXIT182/9: 1
-QuickSorter.partition(System.Object[]\_a,\_System.Int32\_left,\_System.Int32\_right,\_System.Int32\_pivot) ENTER/24: 16 EXIT87/36: 16
+QuickSorter.partition(System.Object[]\_a,\_System.Int32\_left,\_System.Int32\_right,\_System.Int32\_pivot) ENTER/24: 16 EXIT85/36: 16
 QuickSorter.print(System.Object[]\_a) ENTER/15: 4 EXIT35/21: 4
 QuickSorter.qsort(System.Object[]\_a) ENTER/15: 2 EXIT61/21: 2
 QuickSorter.quicksort(System.Object[]\_a,\_System.Int32\_left,\_System.Int32\_right) ENTER/21: 34 EXIT33/27: 16 EXIT5/27: 18
-QuickSorter.swap(System.Object\_v1,\_System.Object\_v2) ENTER/15: 121 EXIT15/21: 121
+QuickSorter.swap(System.Object\_v1,\_System.Object\_v2) ENTER/15: 90 EXIT15/21: 90

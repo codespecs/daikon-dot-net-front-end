@@ -3,17 +3,13 @@ MyTestProject.A:::OBJECT
 this.privateA == 3
 this.publicA == 4
 ===========================================================================
-MyTestProject.A..ctor():::EXIT9
-===========================================================================
 MyTestProject.A..ctor():::EXIT
 ===========================================================================
 MyTestProject.B:::OBJECT
 this has only one value
 this.GetType() == MyTestProject.B.class
 this.privateA == 6
-this.publicA == 7
-===========================================================================
-MyTestProject.B..ctor():::EXIT9
+this.publicA == 4
 ===========================================================================
 MyTestProject.B..ctor():::EXIT
 ===========================================================================
@@ -33,7 +29,7 @@ MyTestProject.Shadowing.fooA(MyTestProject.A a):::ENTER
 a.privateA == 3
 a.publicA == 4
 ===========================================================================
-MyTestProject.Shadowing.fooA(MyTestProject.A a):::EXIT1
+MyTestProject.Shadowing.fooA(MyTestProject.A a):::EXIT5
 ===========================================================================
 MyTestProject.Shadowing.fooA(MyTestProject.A a):::EXIT
 a.privateA == orig(a.privateA)
@@ -45,11 +41,12 @@ MyTestProject.Shadowing.fooB(MyTestProject.B b):::ENTER
 b has only one value
 b.GetType() == MyTestProject.B.class
 b.privateA == 6
-b.publicA == 7
+b.publicA == 4
 ===========================================================================
-MyTestProject.Shadowing.fooB(MyTestProject.B b):::EXIT5
+MyTestProject.Shadowing.fooB(MyTestProject.B b):::EXIT13
 ===========================================================================
 MyTestProject.Shadowing.fooB(MyTestProject.B b):::EXIT
 b.privateA == orig(b.privateA)
+b.publicA == orig(b.publicA)
 b.privateA == 6
 b.publicA == 4

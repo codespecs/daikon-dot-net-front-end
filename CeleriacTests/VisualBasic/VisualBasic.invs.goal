@@ -7,7 +7,7 @@ a[].GetType() one of { [System.Int32, System.Int32, System.Int32, System.Int32, 
 left >= 0
 left < right
 ===========================================================================
-QuickSorter.getpivot(System.Object[] a, System.Int32 left, System.Int32 right):::EXIT11
+QuickSorter.getpivot(System.Object[] a, System.Int32 left, System.Int32 right):::EXIT9
 ===========================================================================
 QuickSorter.getpivot(System.Object[] a, System.Int32 left, System.Int32 right):::EXIT
 a[] == orig(a[])
@@ -21,13 +21,12 @@ a.GetType() == System.Object[].class
 a[] elements != null
 a[].GetType() one of { [System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32, System.Int32], [System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String] }
 left >= 0
-pivot >= 0
 (pivot == 0) ==> (left == 0)
 left <= pivot
 left < right
 pivot < right
 ===========================================================================
-QuickSorter.partition(System.Object[] a, System.Int32 left, System.Int32 right, System.Int32 pivot):::EXIT87
+QuickSorter.partition(System.Object[] a, System.Int32 left, System.Int32 right, System.Int32 pivot):::EXIT85
 ===========================================================================
 QuickSorter.partition(System.Object[] a, System.Int32 left, System.Int32 right, System.Int32 pivot):::EXIT
 a[] elements != null
