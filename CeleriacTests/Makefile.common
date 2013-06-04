@@ -229,7 +229,7 @@ summary-w-daikon-if-working: summary-w-daikon
 
 clean:
 	rm -rf $(NAME) $(DIFF_NAME).*.diff $(NAME).out daikon-output ran-dnfe $(EXTRA_JUNK) $(EXTRA_OUTPUTS) $(NAME).inv.gz $(NAME).counts \
-    $(NAME).pdb $(NAME).out.bak
+    $(NAME).pdb $(NAME).out.bak $(NAME).dll
 	$(CLEAN_SCRIPT)
 
 update-out-goals: $(NAME).out
