@@ -16,7 +16,7 @@ public class StackArTester
         {
             s.push(rnd.Next(2) == 1 ? new object() : new MyInteger(0));
         }
-        catch (Overflow e) { }
+        catch (Overflow) { }
         observe();
     }
 
@@ -24,7 +24,7 @@ public class StackArTester
     {
         if (s.isEmpty() || rnd.Next(2) == 1) s.topAndPop();
         else try { s.pop(); }
-            catch (Underflow e) { }
+            catch (Underflow) { }
         observe();
     }
 
@@ -55,7 +55,7 @@ public class StackArTester
                 s.push(s);
                 observe();
             }
-            catch (Overflow e) { }
+            catch (Overflow) { }
         }
         s.makeEmpty();
     }

@@ -67,6 +67,11 @@ public sealed class MyInteger : System.IComparable
         return (rhs is MyInteger) && value == ((MyInteger)rhs).value;
     }
 
+    public override int GetHashCode() 
+    {
+      return value;
+    }
+
     /**
      * Implements the hash method.
      * @param tableSize the hash table size.
