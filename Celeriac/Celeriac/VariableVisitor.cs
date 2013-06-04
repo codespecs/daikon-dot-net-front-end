@@ -41,14 +41,6 @@ namespace Celeriac
   internal enum VariableModifiers
   {
     none = 1,
-    /*
-    // TODO(#11): Implement programmatic program point recognition, until then a flag is used
-    // as the name, and the program point is the value
-    // Any value will be ignored, only the name will be printed
-    program_point = none << 1,
-    // The argument contains a string that will be sanitized, then printed
-    string_to_print = program_point << 1,
-     */
     to_string = none << 1,
     classname = to_string << 1,
     nonsensical = classname << 1,
