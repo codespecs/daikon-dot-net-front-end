@@ -3,6 +3,8 @@
 \usepackage{url}
 \usepackage{geometry}
 \usepackage{graphicx}
+\usepackage{caption}
+\usepackage{verbatim}
 
 \newcommand{\timetbl}[4]{\par\vspace{5mm}\begin{tabular}{ l l l l }
 Estimated Completion Date: & #1 & Estimated Completion Time: & #2 \\
@@ -17,7 +19,7 @@ Actual Completion Date: & #3 & Actual Completion Time: & #4 \\
 \section{Introduction}
 Daikon is a tool that infers likely program invariants from program traces \cite{DaikonUserManual:Online}. The Daikon tool relies on front ends, such as the Chicory front end for Java, to generate program traces to use for input. There are currently no available front ends for the .NET languages -- C\#, VB.NET, and F\#.
 
-The purpose of this document is to describe the architecture of a Daikon front end for .NET. It will be updated throughout the development process as to accurately reflect the design and architecture of the system.
+The purpose of this document is to describe the architecture of Celeriac, a Daikon Front End for .NET. It will be updated throughout the development process as to accurately reflect the design and architecture of the system.
 
 \section{Design Goals}
 This section describes the design goals guiding the development of the .NET Daikon front end.
@@ -31,34 +33,43 @@ However, Celeriac must specially detect the presence of some language-specific c
 Commercial build processes can become very complex over time. As a result, it may be unwieldy or even impossible to integrate new tools into the build chain. In order to promote tool use, Celeriac operates on the output of the build process: a managed binary executable or library. An added benefit of meeting this design goal is that Celeriac can run on programs even when the source is not available.
 
 \paragraph{Don't modify files on disk.}
-Modifying the contents of the disk to instrument the program, e.g., creating a patched version of the executable, is similarly undesirable. The creation or replacement of binary files opens the door for versioning issues such as accidentally running an instrumented binary with incorrect options. 
+Modifying the contents of the disk to instrument the program, e.g., creating a patched version of the executable, is similarly undesirable. The creation or replacement of binary files opens the door for versioning issues such as accidentally running an instrumented binary with incorrect options.
 \\ \\
 There are some situations meeting where this goal isn't possible. For example, when create an instrumented library that will be used by other programs the library must be saved to disk. Also, Celeriac is running on GUI programs using Windows Presentation Foundation (WPF), Celeriac must be run in off-line mode. This is because WPF programs load resources in a way that cannot be done in online mode, since the subject program is loaded into the custom launcher's \texttt{AppDomain}.
 
 \section{Tool Architecture}
-The front end has two major components: an IL rewriter that inserts instrumentation calls into procedures and instrumentation code (a run-time system) that traverses data structures and outputs information in the Daikon format.
+The front end has two major components: an IL rewriter that inserts instrumentation calls into procedures and a run-time system that, when called from the subject program, outputs variable values to construct a datatrace in the Daikon format.
 
-\subsection{Profiler}
-The profiler, written in C\#, utilizes the CCIMetadata IL Rewriting library. The CCIMetadata library provides an API for reading and writing MSIL at a higher level than raw bytecode. The profiler component of the application, named ILRewriter, was adapted from a CCIMetadata example program that printed the name of local variables. The profiler loads a .NET Module in memory, walks over the IL and inserts instrumentation calls at the entrance and exits of methods. While it is inserting instrumentation calls the ILRewriter also makes calls to the DeclarationPrinter class which writes the declaration portion of the datatrace file. When finished, the profiler returns a memory stream which the front-end loads and executes.
+\subsection{IL Rewriter}
+The IL rewriter is implemented in \texttt{ILRewriter.cs} and rewrites .NET binaries by inserting calls to the Celeriac runtime library. It utilizes the CCIMetadata IL Rewriting library \cite{CCI}. The CCIMetadata library provides an API for reading and writing CIL at a higher level than raw bytecode. The IL rewriter component of the application, named \texttt{ILRewriter}, was adapted from a CCIMetadata example program that printed the name of local variables. The rewriter loads a .NET Module in memory, walks over the IL and inserts instrumentation calls at the entrance and every exit of methods. The following figure illustrates the IL rewriter component.
 
-\subsection{Instrumentation Code}
-The instrumentation code, written in C\#, (or another .NET language) and compiled to MSIL, uses reflection to log variable information. The code, written in the VariableVisitor class, is called with the name of the variable, value of the variable, and the assembly-qualified name of the declaring class. The value of the variable itself is printed, along with any static or instance fields of that variable, which are visited reflectively based on the declared type of the variable. The instrumentation code traverses data structures and enumerates variables that implement the IList, ISet, or Dictionary interfaces.
+\begin{center}
+\includegraphics[scale=.7]{Arch1}
+\end{center} \captionof{figure}{IL Rewriter Architecture}
 
-\subsection{Use case illustrated}
-The following figure shows the steps executed during a run of the front-end. The names in parenthesis indicate the class represented by the block.
+A Daikon datatrace file consists of two parts. The first, called the declaration component, is metadata describing the schema of each program point (method entrance or exit).
+While Celeriac is inserting instrumentation calls the IL rewriter also makes calls to the \texttt{DeclarationPrinter} class which writes the declaration portion of the datatrace file. The second component, the datatrace component, will be written by the program as it executes. When the IL rewriter is finished, it returns a memory stream which the front-end loads and executes, or saves to disk if desired.
 
-\includegraphics[scale=.7]{SequenceDiagram.jpg}
+\subsection{Runtime Library}
+The runtime library creates the actual datatrace file that will be input to Daikon. The main method exposed to source programs prints the name of a variable, and its value, then prints the name and value of each of that variables fields, pure methods, and elements if any. The following figure illustrates the functionality of the runtime library component.
 
-\section{Risks}
-This section describes the aspects of the project that are the riskiest, that is parts of the project may be difficult to complete during the fall (or at all).
+\begin{center}
+\includegraphics[scale=.7]{Arch2}
+\end{center} \captionof{figure}{Runtime Library Architecture}
+\~ \\
 
-\paragraph{Instrumenting Exception Return Points}
-The instrumentation calls that the unmanaged profiler adds must maintain the validity of the MSIL code. For function prologues, this maintaining validity is apparently easy. For intermediary return points and exceptional return points, this is not trivial \cite{Mikunov:2003:Online}.
+The runtime library is implemented in the \texttt{VariableVisitor} class. When the \texttt{VisitVariable()} method is called from the instrumented program the value of the variable itself is printed. Then any static or instance fields of that variable, which are visited reflectively based on the declared type of the variable are also printed. The instrumentation code traverses data structures and enumerates variables that implement the IList, ISet, or Dictionary interfaces, or their F\# equivalents.
 
-\paragraph{Detecting / Instrumenting Complex Language Features}
-Certain language features, such a closures, may be compiled into weird
-constructs in the MSIL. It may be hard or impossible to detect all of
-these features in the MSIL code an instrument them accordingly.
+%\section{Risks}
+%This section describes the aspects of the project that are the riskiest, that is parts of the project may be difficult to complete during the fall (or at all).
+
+%\paragraph{Instrumenting Exception Return Points}
+%The instrumentation calls that the unmanaged profiler adds must maintain the validity of the MSIL code. For function prologues, this maintaining validity is apparently easy. For intermediary return points and exceptional return points, this is not trivial \cite{Mikunov:2003:Online}.
+
+%\paragraph{Detecting / Instrumenting Complex Language Features}
+%Certain language features, such a closures, may be compiled into weird
+%constructs in the MSIL. It may be hard or impossible to detect all of
+%these features in the MSIL code an instrument them accordingly.
 
 \appendix
 
@@ -80,7 +91,7 @@ The remainder of the quarter was spend implementing the profiler and visitor, an
 During this quarter reflective visiting and array-style visiting of IEnumerable types were implemented. Most command-line arguments available to Chicory were documented. A test suite was added, modeled off the Kavasir (C++) front-end test suite. Chicory test sources were transliterated from Java to C\# and ran through the front-end. Output invariants were compared to the invariants produced by Chicory, and bugs in the front-end were fixed to rectify the differences. Exception handling was also added, a feature new to Daikon front-ends.
 
 \subsection{4/2012 - 6/2012}
-
+\begin{comment}
 \subsection{Introductory Milestones - From the 10/2010 - 12/2010 section}
 
 \subsubsection{Read the First Three Sections of the Daikon User Manual}
@@ -128,7 +139,8 @@ Didn't end up using a prologue, instead use reflection to output function parame
 \subsection{Instrumentation Milestones}
 
 This section was left intentionally blank
-
+\end{comment}
+\newpage
 \bibliographystyle{plain}
 \bibliography{daikon-dotnet}
 
