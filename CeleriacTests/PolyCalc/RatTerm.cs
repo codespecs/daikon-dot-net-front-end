@@ -43,6 +43,11 @@ public class RatTerm {
         }
     }
 
+    public override int GetHashCode() 
+    {
+      return this.expt + this.coeff.GetHashCode();
+    }
+
     /** @return implementation specific debugging string. */
     public string debugPrint() {
         return "Term<coeff:"+this.coeff.unparse()+" expt:"+this.expt+">";

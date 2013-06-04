@@ -209,7 +209,7 @@ public class RatNum {
         @return an int that all objects equal to this will also
                 return.
     */
-    public int hashCode() {
+    public override int GetHashCode() {
         return this.numer*2 + this.denom*3;
     }
 
