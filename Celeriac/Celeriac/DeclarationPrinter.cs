@@ -936,6 +936,11 @@ namespace Celeriac
           this.WriteLine();
           this.WritePair("ppt", nameToPrint);
           this.WritePair("ppt-type", "class");
+          Type superType = objectType.BaseType;
+          if (superType != TypeManager.ObjectType)
+          {
+            this.WritePair("parent parent", superType + ":::CLASS" + " 1");
+          }
           DeclareStaticFieldsForType(objectType, objectType, typeContext);
         }
 
