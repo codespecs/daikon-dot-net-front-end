@@ -30,7 +30,7 @@ namespace ExceptionTest
             {
                 throw new ArgumentException();
             }
-            catch (ArgumentException ex)
+            catch (ArgumentException)
             {
                 Console.WriteLine("Argument exception caught locally");
             }
@@ -39,11 +39,11 @@ namespace ExceptionTest
             {
                 throw new ArgumentException();
             }
-            catch (ArgumentNullException ex)
+            catch (ArgumentNullException)
             {
-                Console.WriteLine("Argument exception caught incorrectly");
+                Console.WriteLine("Argument caught incorrectly");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine("General exception caught");
             }
@@ -52,12 +52,12 @@ namespace ExceptionTest
             {
                 throw new ArgumentException();
             }
-            catch (ArgumentException ex)
+            catch (ArgumentException)
             {
                 Console.WriteLine("Argument exception caught locally");
                 throw;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine("General exception caught");
             }
