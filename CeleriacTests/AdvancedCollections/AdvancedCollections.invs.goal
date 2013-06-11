@@ -1,0 +1,42 @@
+===========================================================================
+AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet`1<System.String> set, System.String stringToAdd):::ENTER
+set has only one value
+set[].ToString() elements one of { "duck", "goose" }
+stringToAdd.ToString() one of { "duck", "geese", "goose" }
+===========================================================================
+AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet`1<System.String> set, System.String stringToAdd):::EXIT7
+===========================================================================
+AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet`1<System.String> set, System.String stringToAdd):::EXIT
+return == orig(set)
+return[] == set[]
+return has only one value
+return[].ToString() elements one of { "duck", "geese", "goose" }
+stringToAdd.ToString() one of { "duck", "geese", "goose" }
+orig(set[]) is a subsequence of return[]
+orig(stringToAdd) in return[]
+stringToAdd.ToString() in return[].ToString()
+stringToAdd.ToString() == orig(stringToAdd.ToString())
+===========================================================================
+AdvancedCollections.AdvancedCollections.DescribeSet(System.Collections.Generic.HashSet`1<System.String> set):::ENTER
+set has only one value
+set[] contains no nulls and has only one value, of length 3
+set[].ToString() == [duck, goose, geese]
+===========================================================================
+AdvancedCollections.AdvancedCollections.DescribeSet(System.Collections.Generic.HashSet`1<System.String> set):::EXIT34
+===========================================================================
+AdvancedCollections.AdvancedCollections.DescribeSet(System.Collections.Generic.HashSet`1<System.String> set):::EXIT
+set[] == orig(set[])
+set[] contains no nulls and has only one value, of length 3
+set[].ToString() == [duck, goose, geese]
+===========================================================================
+AdvancedCollections.AdvancedCollections.Main(System.String[] args):::ENTER
+args has only one value
+args[] == []
+args[].ToString() == []
+===========================================================================
+AdvancedCollections.AdvancedCollections.Main(System.String[] args):::EXIT3
+===========================================================================
+AdvancedCollections.AdvancedCollections.Main(System.String[] args):::EXIT
+args[] == orig(args[])
+args[] == []
+args[].ToString() == []

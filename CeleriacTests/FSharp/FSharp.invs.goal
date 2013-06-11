@@ -1,0 +1,35 @@
+===========================================================================
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet`1<System.Int32> set):::ENTER
+set[] elements >= 0
+set[i] == i
+===========================================================================
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet`1<System.Int32> set):::EXIT65
+===========================================================================
+FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet`1<System.Int32> set):::EXIT
+set[] == orig(set[])
+return[] elements >= 0
+return[i] == i
+set[] elements >= 0
+set[i] == i
+set[] is a subsequence of return[]
+===========================================================================
+FSharp.printCollection(System.String msg, System.Collections.Generic.IEnumerable`1<a> coll):::ENTER
+coll has only one value
+coll.GetType() == Microsoft.FSharp.Collections.FSharpSet`1[System.Int32].class
+msg has only one value
+msg.ToString() == "Collection"
+===========================================================================
+FSharp.printCollection(System.String msg, System.Collections.Generic.IEnumerable`1<a> coll):::EXIT14
+===========================================================================
+FSharp.printCollection(System.String msg, System.Collections.Generic.IEnumerable`1<a> coll):::EXIT
+msg.ToString() == "Collection"
+msg.ToString() == orig(msg.ToString())
+===========================================================================
+FSharp.set.get():::EXIT1
+===========================================================================
+FSharp.set.get():::EXIT
+return has only one value
+return.contents@ != null
+return.contents@[] elements >= 0
+return.contents@[] sorted by <
+return.contents@[i] == i

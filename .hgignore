@@ -1,0 +1,16 @@
+syntax: glob
+*/bin/*
+*/obj/*
+*.exe
+*.pdb
+*.csproj.user
+*.bak
+*.aux
+*.bbl
+*.log
+*.blg
+*.orig
+*~
+*.rej
+
+*.suo

@@ -1,0 +1,49 @@
+Argument processing complete
+System.Void C..ctor(System.Int32 i)
+System.Void C.run()
+System.Void M.Main(System.String[] args)
+System.Void M..ctor()
+Rewriting complete
+Loading complete. Starting program.
+Thread 0 says hi
+Thread 0 says bye
+Thread 1 says hi
+Thread 1 says bye
+Thread 2 says hi
+Thread 2 says bye
+Thread 3 says hi
+Thread 3 says bye
+Thread 4 says hi
+Thread 4 says bye
+Thread 5 says hi
+Thread 5 says bye
+Thread 6 says hi
+Thread 6 says bye
+Thread 7 says hi
+Thread 7 says bye
+Thread 8 says hi
+Thread 8 says bye
+Thread 9 says hi
+Thread 9 says bye
+Thread 10 says hi
+Thread 10 says bye
+Thread 11 says hi
+Thread 11 says bye
+Thread 12 says hi
+Thread 12 says bye
+Thread 13 says hi
+Thread 13 says bye
+Thread 14 says hi
+Thread 14 says bye
+Thread 15 says hi
+Thread 15 says bye
+Thread 16 says hi
+Thread 16 says bye
+Thread 17 says hi
+Thread 17 says bye
+Thread 18 says hi
+Thread 18 says bye
+Program Complete. Press enter to exit
+Thread 19 says hi
+Thread 19 says bye
+Program complete. Exiting Celeriac.
