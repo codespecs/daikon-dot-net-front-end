@@ -417,7 +417,18 @@ namespace Celeriac
 
         this.EmitDebugInformationFor(op);
         EmitOperation(op, i, ref mutableMethodBody, offset2Label,
-            ref tryBodyStarted, exceptions, commonExit, operations.Last(), synthesizedReturns, ref currentPptEnd);
+            ref tryBodyStarted, exceptions, commonExit, operations.Last(), synthesizedReturns,
+            ref currentPptEnd);
+      }
+
+      // Without a return instruction no program point would be declared. Which 
+      // could cause an error if subclasses try to reference it as a parent. To
+      // compensate, declare a progrp point that will never be reached.
+      if (!operations.Any(op => op.OperationCode == OperationCode.Ret))
+      {
+        DeclareReturnProgramPoint(mutableMethodBody, 100, currentPptEnd);
+        // Must insert a ret or verifier thinks program will fall through.
+        generator.Emit(OperationCode.Ret);
       }
 
       while (generator.InTryBody)
@@ -1433,7 +1444,7 @@ namespace Celeriac
            generator.BeginTryBody();
           }
            * */
-          
+
           if (offset == exceptionInfo.HandlerStartOffset)
           {
             switch (exceptionInfo.HandlerKind)
@@ -1473,7 +1484,7 @@ namespace Celeriac
           if (offset == exceptionInfo.TryStartOffset)
           {
             generator.BeginTryBody();
-          }          
+          }
         }
       }
     }
