@@ -1500,6 +1500,67 @@ namespace Celeriac
       return new List<IMethodDefinition>().AsReadOnly();
     }
 
+    /// <summary>
+    /// Returns the simple name of <paramref name="qualifiedName"/>, using simple names for all generic parameter types.
+    /// </summary>
+    /// <param name="qualifiedName">The qualified name</param>
+    /// <returns>the simple name of <paramref name="qualifiedName"/>, using simple names for all generic parameter types</returns>
+    [Pure]
+    private static string RemoveTypeQualifiers(string qualifiedName)
+    {
+      Contract.Requires(!string.IsNullOrEmpty(qualifiedName));
+      Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
+      // NOT TRUE: Contract.Ensures(Contract.Result<string>().IndexOf('.') < 0); 
+      // Counter-example: System.Collections.Generic.Dictionary<,>.KeyCollection
+
+      var result = Regex.Replace(qualifiedName, "[^<,>]*", delegate (Match match){
+        var str = match.Value;
+        var simpleNameIndex = str.LastIndexOf('.');
+        return simpleNameIndex > 0 ? str.Substring(simpleNameIndex + 1) : str;
+      });
+
+      return result;
+    }
+
+    /// <summary>
+    /// Returns the name of <paramref name="type"/> in <paramref name="targetLanguage"/>. 
+    /// </summary>
+    /// <param name="type">The CLR type</param>
+    /// <param name="sourceKind">The target source language</param>
+    /// <returns>the name of <paramref name="type"/> in <paramref name="targetLanguage"/></returns>
+    /// <exception cref="NotImplementedException">if <paramref name="targetLanguage"/> is not supported</exception>
+    [Pure]
+    public static string GetTypeSourceName(Type type, SourceLanguage targetLanguage, bool forceSimpleName)
+    {
+      Contract.Requires(type != null);
+      Contract.Requires(targetLanguage == SourceLanguage.CSharp || forceSimpleName == false, "Simple names output is only enabled for C#");
+      Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+
+      if (targetLanguage == SourceLanguage.CSharp)
+      {
+        using (var provider = new Microsoft.CSharp.CSharpCodeProvider())
+        {
+          var src = provider.GetTypeOutput(new System.CodeDom.CodeTypeReference(type));
+          return forceSimpleName ? RemoveTypeQualifiers(src) : src;
+        }
+      }
+      else if (targetLanguage == SourceLanguage.VBasic)
+      {
+        using (var provider = new Microsoft.VisualBasic.VBCodeProvider())
+        {
+          return provider.GetTypeOutput(new System.CodeDom.CodeTypeReference(type));
+        }
+      }
+      else if (targetLanguage == SourceLanguage.FSharp)
+      {
+        throw new NotImplementedException("F# type name output is currently not supported");
+      }
+      else
+      {
+        return type.ToString();
+      }
+    }
+
     #region IDisposable Members
 
 
