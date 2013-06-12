@@ -1622,8 +1622,11 @@ namespace Celeriac
           return enumHash;
         }
       }
-      else if (flags.HasFlag(VariableModifiers.classname) ||
-          flags.HasFlag(VariableModifiers.to_string))
+      else if (flags.HasFlag(VariableModifiers.classname))
+      {
+        return "\"" + TypeManager.GetTypeSourceName((Type) x, celeriacArgs.SourceKind, celeriacArgs.SimpleNames) + "\"";
+      }
+      else if(flags.HasFlag(VariableModifiers.to_string))
       {
         return PrepareString(x.ToString());
       }
