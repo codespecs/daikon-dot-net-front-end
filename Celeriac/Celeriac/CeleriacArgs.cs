@@ -10,6 +10,18 @@ using System.Text.RegularExpressions;
 
 namespace Celeriac
 {
+
+  /// <summary>
+  /// Source languages targetting the CLR
+  /// </summary>
+  public enum SourceLanguage
+  {
+    CLR,
+    CSharp,
+    VBasic,
+    FSharp
+  }
+
   /// <summary>
   /// Manages all of the command-line arguments used to create a trace. It is created by ProfilerLauncher
   /// using the arguments gathered from there, and is handed to the Profiler, Declaration
@@ -119,7 +131,8 @@ namespace Celeriac
       dtrace_append,
       enum_underlying_values,
       force_unix_newline,
-      friendly_dec_types,
+      simple_names,
+      source_language,
       linked_lists,
       output_location,
       portable_dll,
@@ -345,7 +358,7 @@ namespace Celeriac
 
       this.programArguments.Add(PossibleArgument.arrays_only, true.ToString());
 
-      this.programArguments.Add(PossibleArgument.friendly_dec_types, false.ToString());
+      this.programArguments.Add(PossibleArgument.source_language, SourceLanguage.CLR.ToString());
     }
 
     /// <summary>
@@ -899,13 +912,24 @@ namespace Celeriac
     }
 
     /// <summary>
-    /// Whether dec-types should be printed in the style they are typed in as.
-    /// If false we print assembly qualified names, e.g. Foo`1[System.Int]
-    /// If true we print Foo&lt;Int&gt; 
+    /// Whether to use simple names for dec-types in the DECLS and class names in the DTRACE.
     /// </summary>
-    public bool FriendlyDecTypes
+    public bool SimpleNames
     {
-      get { return bool.Parse(this.programArguments[PossibleArgument.friendly_dec_types]); }
+      get { return this.programArguments.ContainsKey(PossibleArgument.simple_names); }
+    }
+
+    /// <summary>
+    /// The source language used to the generate the IL. Used for formatting dec-type in the DECLs file,
+    /// and the GetType output in the DTRACE.
+    /// </summary>
+    public SourceLanguage SourceKind
+    {
+      get
+      {
+        var arg = this.programArguments[PossibleArgument.source_language];
+        return (SourceLanguage) Enum.Parse(typeof(SourceLanguage), arg, ignoreCase: true);
+      }
     }
 
     /// <summary>

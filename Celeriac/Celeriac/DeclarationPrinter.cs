@@ -113,6 +113,8 @@ namespace Celeriac
     private const int ComparabilityConstant = -22;
 
     // Daikon is hard coded to recognize the Java full names for dec/rep types
+    private const string DaikonObjectName = "java.lang.Object";
+    private const string DaikonClassName = "java.lang.Class";
     private const string DaikonStringName = "java.lang.String";
     private const string DaikonBoolName = "boolean";
     private const string DaikonIntName = "int";
@@ -1102,7 +1104,7 @@ namespace Celeriac
       this.fileWriter.WriteLine();
       this.WritePair("decl-version", "2.0");
       this.WritePair("var-comparability", celeriacArgs.StaticComparability ? "implicit" : "none");
-      this.WritePair("input-language", "C#.NET");
+      this.WritePair("input-language", celeriacArgs.SourceKind);
     }
 
     /// <summary>
@@ -1139,14 +1141,16 @@ namespace Celeriac
     }
 
     /// <summary>
-    /// Get the correctly formatted dec-type for the given type.
+    /// Returns the dec-type name for the type; If the type corresponds to a special Daikon
+    /// type, the Daikon name is returned (which is the corresponding Java type).
     /// </summary>
     /// <param name="type">The type whose daikon-compliant name to get</param>
-    /// <returns>If the type is standard, the java name for that type, else just 
-    /// the type name</returns>
+    /// <returns>The dec-type name for the type</returns>
     private string GetDecType(Type type)
     {
       Contract.Requires(type != null);
+      Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
+      Contract.Ensures(!Contract.Result<string>().Contains(' '));
 
       if (type.IsEquivalentTo(TypeManager.BooleanType))
       {
@@ -1177,14 +1181,14 @@ namespace Celeriac
         return "char";
       }
       else if (type.IsValueType && (type == TypeManager.IntType ||
-        // There are a lot of types that could be ints, check the non-standard types as well.
+          // There are a lot of types that could be ints, check the non-standard types as well.
           TypeManager.IsNonstandardIntType(type)))
       {
         return DaikonIntName;
       }
       else if (type == TypeManager.ObjectType)
       {
-        return "java.lang.Object";
+        return DaikonObjectName;
       }
       else if (type == TypeManager.StringType)
       {
@@ -1192,21 +1196,12 @@ namespace Celeriac
       }
       else if (type == TypeManager.TypeType)
       {
-        return "java.lang.Class";
+        return DaikonClassName;
       }
       else
       {
-        string typeStr = type.ToString();
-        if (this.celeriacArgs.FriendlyDecTypes)
-        {
-          typeStr = Regex.Replace(typeStr, @"`\d", "");
-          typeStr = Regex.Replace(typeStr, @"\[", "<");
-          typeStr = Regex.Replace(typeStr, @"\]", ">");
-          // We messed up array specifications with our above replacements
-          typeStr = Regex.Replace(typeStr, "<>", "[]");
-          typeStr = Regex.Replace(typeStr, @"\+", @".");
-        }
-        return typeStr;
+        // spaces are not allowed for dec-types; the underscore will be converted to a space by the Daikon FileIO parser
+        return TypeManager.GetTypeSourceName(type, celeriacArgs.SourceKind, celeriacArgs.SimpleNames).Replace(" ", @"\_");
       }
     }
 
