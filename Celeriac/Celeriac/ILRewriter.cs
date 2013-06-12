@@ -428,6 +428,7 @@ namespace Celeriac
       {
         DeclareReturnProgramPoint(mutableMethodBody, 100, currentPptEnd);
         // Must insert a ret or verifier thinks program will fall through.
+        generator.Emit(OperationCode.Ldc_I4_0);
         generator.Emit(OperationCode.Ret);
       }
 
