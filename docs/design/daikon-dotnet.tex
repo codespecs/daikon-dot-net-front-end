@@ -71,6 +71,13 @@ The runtime library is implemented in the \texttt{VariableVisitor} class. When t
 %constructs in the MSIL. It may be hard or impossible to detect all of
 %these features in the MSIL code an instrument them accordingly.
 
+\section{Design Decisions}
+The situation describes important design decisions, the alternatives, and the justification for the implemented choice.
+
+\subsection{Type Resolution}
+\subsection{Instrumentation Trade-Off}
+\subsection{Exceptional Post-Conditions}
+
 \appendix
 
 \section{Appendix: Project Schedule and Milestones}
@@ -90,7 +97,24 @@ The remainder of the quarter was spend implementing the profiler and visitor, an
 \subsection{4/2011 - 6/2011}
 During this quarter reflective visiting and array-style visiting of IEnumerable types were implemented. Most command-line arguments available to Chicory were documented. A test suite was added, modeled off the Kavasir (C++) front-end test suite. Chicory test sources were transliterated from Java to C\# and ran through the front-end. Output invariants were compared to the invariants produced by Chicory, and bugs in the front-end were fixed to rectify the differences. Exception handling was also added, a feature new to Daikon front-ends.
 
+\subsection{9/2011 - 12/2011}
+During this quarter the first code review of Celeriac was completed, resulting in many name improvements. Celeriac was extended to output multiple method exits points for methods that return more than once. A Google Code issue tracker was established. Celeriac was extended to work on programs with multiple threads.
+
+\subsection{1/2012 - 3/2012}
+During this quarter Celeriac was extended to run on pure methods and with the first additional language, F\#. This introduced the complication that F\# uses its own lists, and special handling was added for these.
+
 \subsection{4/2012 - 6/2012}
+During this quarter Celeriac's collection support was significantly expanded, specifically to include both F\# and C\# Sets and Maps. As well, support for generic types with multiple constraints was added as well. The documentation was significantly updated.
+
+\subsection{9/2012 - 12/2012}
+During this quarter the test suite was expanded and enhanced. WPF programs were tested for the first time, as were VB.NET programs. These each introduced bugs, which were fixed. Support was added for using Celeriac on programs exercised by external testing systems such as the Visual Studio testing system and NUnit.
+
+\subsection{1/2013 - 3/2013}
+During this quarter Celeriac was expanded to run on large sample .NET programs, for the research paper. This included running Celeriac on programs in a variety of languages and types, e.g. libraries, GUI applications, etc. A new command line option for WPF programs was added. Bugs were fixed with elimination of jagged and multi-dimensional arrays and type issues. The --std-visiblity flag was significantly broken before, and revamped. Pure method instrumentation was improved. Celeriac was run on the Mono test suite, giving higher confidence in its robustness.
+
+\subsection{4/2013 - 6/2013}
+In this quarter much of the work was focused on wrapping up Celeriac, rather than implementation of new features. The first full release of Celeriac was prepared, and made on June 14. Developer and user documentation were updated and expanded. Many old issues were fixed for the release. Remaining issues were examined and received detailed explanations for new developers. A presentation on Celeriac was given to the PLSE group on May 17th.
+
 \begin{comment}
 \subsection{Introductory Milestones - From the 10/2010 - 12/2010 section}
 
