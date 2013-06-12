@@ -1,10 +1,14 @@
 \documentclass{article}
 
-\usepackage{url}
+\usepackage{caption}
+\usepackage{color}
+\usepackage{fancyvrb}
 \usepackage{geometry}
 \usepackage{graphicx}
-\usepackage{caption}
 \usepackage{verbatim}
+\usepackage{url}
+
+\newcommand\ch[1]{\textcolor[rgb]{0,0,1}{\textbf{#1}}}
 
 \newcommand{\timetbl}[4]{\par\vspace{5mm}\begin{tabular}{ l l l l }
 Estimated Completion Date: & #1 & Estimated Completion Time: & #2 \\
@@ -75,9 +79,52 @@ The runtime library is implemented in the \texttt{VariableVisitor} class. When t
 The situation describes important design decisions, the alternatives, and the justification for the implemented choice.
 
 \subsection{Type Resolution}
-\subsection{Instrumentation Trade-Off}
-\subsection{Exceptional Post-Conditions}
+A Daikon front-end needs to print out each variable's field consistently for every program point. This is a requirement of Daikon, and exists because Daikon output invariants that are always true. If a variable were present at some program points but not others then Daikon would not be able to reason about that variable. 
+\\ \\
+This means a front-end needs to know the declared type of each variable, rather than the run-time type, which may be different each time a method is called, and not available at instrumentation time, when the declaration file is printed.
+\\ \\
+There are several possible approaches for identifying the declared type of each expression. One is the inspect the source code as text, and manually parse the program to learn each expression's type. Another is to interoperate with the compiler, since it must already determine each expression's type, and to use this result. Alternately, variable types may be extracted from a binary program using a bytecode or metadata library. Finally, the types could be determined by reflection on the binary program.
+\\ \\
+Celeriac uses the metadata library approach. Celeriac uses the CCIMetadata library \cite{cci} to determine the types of each variable, albeit in a type system constructed by CCI, that does not have information, such as the fields of the type. The fields of the type are available in the .NET Type, so a bridge between these two type systems must be created. This is accomplished through the use of assembly-qualified name \cite{aqn}. An assembly-qualified name uniquely identifies a type, and allows the Type to be retrieved at run-time.
+\\ \\
+The complication with this approach is to build the appropriate assembly-qualified name given a CCIType. This especially problematic for generic types that may have multiple bounds, e.g. \texttt{public sortEdges<TEdge>(List<TEdge> edges) where TEdge : IEdge<TVertex>, IComparable<TEdge>, IPrettyPrintable}. Generics are reified at runtime in .NET, so at runtime a type \texttt{TEdge} that implements all necessary interfaces would be created, but this type isn't available at instrumentation time, when it is needed by Celeriac. The class \texttt{CeleriacTypeDeclaration} compensates for this, and can be constructed so that a declared types is actually of a list of types, which are a list of constraints on a generic expression. The implementation of this is in \texttt{TypeManager.cs}, and is very complex. Running Celeriac on the Mono test suite helps improve confidence in the results.
+\\ \\
+Given the complication of this process it's worthwhile to reflect on why this implementation choice was made. Source code parsing alternatives would not be feasible because they fail the design goals of allowing Celeriac to run on multiple languages and being build processes independent (since they require source code). Compiler interop would also fail the build process independence goal, and would be infeasible as well because most .NET code uses Microsoft's proprietary compiler. 
 
+\subsection{Instrumentation Granularity}
+Celeriac inserts instrumentation calls to print out all appropriate fields for a given object. This means Celeriac inspects each object's type twice, once at instrumentation time to print the declaration file, and again at runtime. This process involves examining an object's type, determining which fields to print, and then printing either a declaration (when the program is instrumented) or printing the value (when the program is run). 
+\\ \\
+An imaginable alternative would insert calls to print the field values directly, and perform
+no inspection at runtime. The two figures below illustrate the practical difference.
+\begin{center}
+\begin{Verbatim}[commandchars=\\\{\}]
+public void compare(Point p1,
+                    Point p2) \{
+	\ch{PrintObject(this);}
+	\ch{PrintObject(p1);}
+	\ch{PrintObject(p2);}
+	... Client Code ...
+\}
+\end{Verbatim}
+\end{center} \captionof{figure}{Implemented Approach}
+\begin{center}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+public void compare(Point p1,
+                    Point p2) \{
+	\ch{PrintField(this, “foo”);}
+	\ch{PrintField(this, “bar”);}
+        ... More Visitor Code ...
+	... Client Code ...
+\}
+
+\end{Verbatim}
+\end{center} \captionof{figure}{Possible Alternative}
+\  \\
+However, this choice was not implemented for a number of reasons. First, it would lead to a much greater increase in code size. Whereas Celeriac inserts 1 new method for each relevant variable (parameter, field, etc.) the proposed alternative would insert 1 new method for each new variable's fields, resulting in much larger instrumented programs. Also, it would require many more context-switches between the client's program and Celeriac's runtime library. This alternate approach would also lead to much more work being done in IL rather than managed C\#, which is much easier to develop in.
+% \subsection{Exceptional Post-Conditions}
+
+\newpage
 \appendix
 
 \section{Appendix: Project Schedule and Milestones}
