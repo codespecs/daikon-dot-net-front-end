@@ -12,5 +12,5 @@ syntax: glob
 *.orig
 *~
 *.rej
-
+CeleriacTests/Makefile.user
 *.suo
