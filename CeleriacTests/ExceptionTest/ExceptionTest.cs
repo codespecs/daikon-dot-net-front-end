@@ -21,7 +21,7 @@ namespace ExceptionTest
             {
                 c.DoCube();
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
                 Console.WriteLine("Caught null reference exception");
             }
