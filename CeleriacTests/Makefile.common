@@ -1,0 +1,256 @@
+# This is a -*- makefile -*-
+
+CS_EXT = cs
+FS_EXT = fs
+VB_EXT = vb
+DNFE_OPTIONS := $(DNFE_OPTIONS) --verbose=true --force-unix-newline --omit_var=Empty --arrays-only=false
+CLEAN_OUTPUT := ../clean-output.pl
+RUN_MANY := ../run-many.pl
+DTRACE_COUNT ?= $(DAIKONDIR)/scripts/dtrace-count.pl
+DTRACE_DIFF ?= java daikon.tools.DtraceDiff
+SORT_DTRACE_INPLACE := perl -Si sort-dtrace.pl
+LANG ?= CSharp
+INCLUDES ?=
+LIBS ?=
+LIBFLAGS ?=
+DIFF_NAME ?= $(shell basename `pwd`)
+BEFORE_RUN ?= @:
+AFTER_RUN ?= @:
+inv ?= ..
+#  -cp ${DAIKONDIR}/daikon.jar
+DAIKON := java -Xmx960m -XX:MaxPermSize=960M daikon.Daikon --no_text_output --config_option daikon.derive.Derivation.disable_derived_variables=true --config $(inv)/config.txt --config_option daikon.DynamicConstants.OneOf_only=true
+# -Xmx960m -XX:MaxPermSize=960M -cp ${DAIKONDIR}/daikon.jar
+PRINT_INV := java -Xmx960m -XX:MaxPermSize=960M daikon.PrintInvariants
+
+# Customize these 
+UNIT_TESTING_FRAMEWORK ?= 'C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\ReferenceAssemblies\v4.0\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll'
+UNIT_TEST_DRIVER ?= '/cygdrive/c/Program Files (x86)/Microsoft Visual Studio 10.0/Common7/IDE/MSTest'
+DNFE_PATH = 'C:\daikon\scripts'
+DNFE_EXE = $(DAIKONDIR)/scripts/CeleriacLauncher.exe
+SIKULI_PATH = '/cygdrive/c/Program Files (x86)/Sikuli X/Sikuli-IDE-w.bat'
+MSBUILD = 'C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe'
+ifeq ($(LANG), FSharp)
+COMPILER := /cygdrive/c/program_files/fsc.exe /debug
+else ifeq ($(LANG), VB)
+COMPILER := /cygdrive/c/Windows/Microsoft.NET/Framework/v4.0.30319/vbc.exe /debug
+else
+COMPILER := /cygdrive/c/Windows/Microsoft.NET/Framework/v4.0.30319/csc.exe /debug
+endif
+# End customization
+
+default: summary
+
+DTRACE_GOAL_EXT := .goal
+
+ifndef COMPRESS_DTRACE
+DTRACE_EXT := .dtrace
+ZCAT := cat
+else
+export DTRACEGZIP := 1
+DTRACE_EXT := .dtrace.gz
+ZCAT := zcat
+endif
+
+ifeq ($(LANG), FSharp)
+SOURCES ?= *.$(FS_EXT)
+else ifeq ($(LANG), VB)
+SOURCES ?= *.$(VB_EXT)
+else
+SOURCES ?= *.$(CS_EXT)
+endif
+
+ifeq ($(WPF_TEST),1)
+$(NAME): $(SOURCES) $(LIBS)
+	$(MSBUILD) /property:OutDir=. $(NAME).sln
+else
+$(NAME): $(SOURCES) $(LIBS)
+	$(COMPILER) $(DEFINES) $(SOURCES) $(INCLUDES)
+endif
+.PRECIOUS: %$(DTRACE_EXT) %.out %$(DTRACE_EXT).diff %.out.diff
+
+daikon-output/$(NAME)$(DTRACE_EXT): ran-dnfe
+	@
+
+daikon-output/$(NAME)$(DTRACE_EXT).clean: ran-dnfe
+	@
+
+$(NAME).out: ran-dnfe
+	@
+
+daikon-output/$(NAME).inv.gz: daikon-output/$(NAME)$(DTRACE_EXT)
+	$(DAIKON) $^ -o daikon-output/$(NAME).inv.gz
+
+daikon-output/$(NAME).invs.txt: daikon-output/$(NAME).inv.gz
+	$(PRINT_INV) $< >$@
+
+invs-large: $(NAME)
+	$(BEFORE_RUN)
+  
+	$(DNFE_EXE) $(DNFE_OPTIONS) --output-location=- ./$(NAME).exe $(PROGRAM_ARGS)  | $(DAIKON) - -o daikon-output/$(NAME).inv.gz
+	$(AFTER_RUN)
+	$(PRINT_INV) daikon-output/$(NAME).inv.gz daikon-output/$(NAME).inv.txt
+
+ifeq ($(UNIT_TEST),1)
+ran-dnfe: $(DNFE_EXE) $(CLEAN_OUTPUT)
+	# TODO(#66): Shouldn't need to create this
+	mkdir daikon-output
+	$(COMPILER) /target:library $(NAME).cs
+	$(DNFE_EXE) --save-program --output-location=results.dtrace $(DNFE_OPTIONS) $(PROGRAM_ARGS) $(NAME).dll
+	# TODO(#67): Should be able to save and overwrite
+	mv InstrumentedProgram.exe $(NAME).dll
+	$(COMPILER) /target:library /reference:$(UNIT_TESTING_FRAMEWORK),$(NAME).dll $(NAME)Test.cs
+	$(UNIT_TEST_DRIVER) /testcontainer:$(NAME)Test.dll /testsettings:Local.testsettings
+	cat /dev/null $(EXTRA_OUTPUTS) >>$(NAME).out
+	perl -i $(CLEAN_OUTPUT) $(NAME).out
+	touch $@
+	cp results.decls daikon-output/$(NAME).dtrace
+	cat TestResults/Results/Out/results.dtrace >> daikon-output/$(NAME).dtrace
+	rm -r TestResults/Results*
+else ifeq ($(SIKULI_RUN),1)
+ran-dnfe: $(NAME) $(DNFE_EXE) $(CLEAN_OUTPUT)
+	$(BEFORE_RUN)
+	mkdir -p daikon-output
+	$(DNFE_EXE) $(DNFE_OPTIONS) ./$(NAME).exe $(PROGRAM_ARGS)
+	mv InstrumentedProgram.exe $(NAME).exe
+	$(SIKULI_PATH) -r $(NAME).skl
+	./$(NAME).exe
+	cat /dev/null $(EXTRA_OUTPUTS) >>$(NAME).out
+	# Put the files in the right spot
+	cat daikon-output/$(NAME).dtrace >> daikon-output/$(NAME).decls
+	mv daikon-output/$(NAME).decls daikon-output/$(NAME).dtrace
+	perl -i $(CLEAN_OUTPUT) $(NAME).out
+  
+	touch $@
+else
+ifdef TESTS_SCRIPT
+ran-dnfe: $(NAME).exe $(DNFE_EXE) $(TESTS_SCRIPT) $(CLEAN_OUTPUT)
+	rm -f daikon-output/$(NAME)$(DTRACE_EXT)
+	$(BEFORE_RUN)
+	DTRACEAPPEND=1 perl $(RUN_MANY) $(DNFE_EXE) <$(TESTS_SCRIPT) >$(NAME).out
+	$(AFTER_RUN)
+	cat /dev/null $(EXTRA_OUTPUTS) >>$(NAME).out
+	perl -i $(CLEAN_OUTPUT) $(NAME).out
+	$(SORT_DTRACE_INPLACE) daikon-output/$(NAME).dtrace
+	touch $@
+else
+ifdef DTRACE_APPEND
+ran-dnfe: $(NAME) $(DNFE_EXE) $(CLEAN_OUTPUT)
+	$(BEFORE_RUN)
+	$(DNFE_EXE) $(DNFE_OPTIONS) ./$(NAME).exe $(PROGRAM_ARGS) >$(NAME).out 2>&1
+	$(BEFORE_RUN)
+	$(DNFE_EXE) $(DNFE_OPTIONS) --output-location=daikon-output/$(NAME).dtrace --dtrace-append ./$(NAME).exe $(PROGRAM_ARGS) >$(NAME).out 2>&1
+	cat /dev/null $(EXTRA_OUTPUTS) >>$(NAME).out
+	perl -i $(CLEAN_OUTPUT) $(NAME).out
+	$(SORT_DTRACE_INPLACE) daikon-output/$(NAME).dtrace
+	touch $@
+else
+ifeq ($(COUNTS_ONLY),)
+ran-dnfe: $(NAME) $(DNFE_EXE) $(CLEAN_OUTPUT)
+	$(BEFORE_RUN)
+	$(DNFE_EXE) $(DNFE_OPTIONS) ./$(NAME).exe $(PROGRAM_ARGS) >$(NAME).out 2>&1
+	cat /dev/null $(EXTRA_OUTPUTS) >>$(NAME).out
+	perl -i $(CLEAN_OUTPUT) $(NAME).out
+	$(SORT_DTRACE_INPLACE) daikon-output/$(NAME).dtrace
+	touch $@
+else
+ran-dnfe: $(NAME) $(DNFE_EXE) $(CLEAN_OUTPUT)
+	$(BEFORE_RUN)
+	# --program-stdout='&2' --program-stderr='&2' 
+	$(DNFE_EXE) $(DNFE_OPTIONS) --output-location=daikon-output/$(NAME).counts ./$(NAME).exe $(PROGRAM_ARGS) >$(NAME).out 2>&1 
+	$(DTRACE_COUNT) daikon-output/$(NAME).counts >$(NAME).counts
+	$(AFTER_RUN)
+	cat /dev/null $(EXTRA_OUTPUTS) >>$(NAME).out
+	perl -i $(CLEAN_OUTPUT) $(NAME).out
+	touch $@
+endif
+endif
+endif
+endif
+
+ifeq ($(COUNTS_ONLY),)
+$(NAME).counts: daikon-output/$(NAME)$(DTRACE_EXT)
+	$(ZCAT) $< | $(DTRACE_COUNT) >$@
+else
+$(NAME).counts: ran-dnfe
+	@
+endif
+
+counts: $(NAME).counts
+
+$(DIFF_NAME).counts.diff: $(NAME).counts $(NAME).counts$(DTRACE_GOAL_EXT)
+	-diff -u $(NAME).counts$(DTRACE_GOAL_EXT) $(NAME).counts > $@ 2>&1
+
+$(DIFF_NAME).dtrace.diff: daikon-output/$(NAME)$(DTRACE_EXT)\
+                     $(NAME).dtrace$(DTRACE_GOAL_EXT)
+	-$(DTRACE_DIFF) $(NAME).dtrace$(DTRACE_GOAL_EXT) daikon-output/$(NAME)$(DTRACE_EXT) >$@ 2>&1
+
+$(DIFF_NAME).out.diff: $(NAME).out $(NAME).out$(DTRACE_GOAL_EXT)
+	-diff --text -u $<$(DTRACE_GOAL_EXT) $< >$@ 2>&1
+
+$(DIFF_NAME).invs.diff: daikon-output/$(NAME).invs.txt $(NAME).invs$(DTRACE_GOAL_EXT)
+	-diff --text -F::: -u $(NAME).invs$(DTRACE_GOAL_EXT) daikon-output/$(NAME).invs.txt >$@ 2>&1
+
+ifeq ($(COUNTS_ONLY),)
+DIFF_FILES := $(DIFF_NAME).dtrace.diff $(DIFF_NAME).counts.diff $(DIFF_NAME).out.diff
+INV_DIFFS := $(DIFF_NAME).invs.diff
+else
+DIFF_FILES := $(DIFF_NAME).counts.diff $(DIFF_NAME).out.diff
+INV_DIFFS :=
+endif
+
+diffs: $(DIFF_FILES)
+
+diffs-w-daikon: diffs $(INV_DIFFS)
+
+summary: diffs
+	@echo -e "\t["$$(basename `pwd`)"]"
+	@for file in $(DIFF_FILES); do \
+	  if [ -s $$file ]; then \
+	    echo "FAILED  $$file"; \
+	  else \
+	    echo "OK      $$file"; \
+	  fi; \
+	done
+
+summary-w-daikon: diffs-w-daikon
+	@echo -e "\t["$$(basename `pwd`)"]"
+	@for file in $(DIFF_FILES) $(INV_DIFFS); do \
+	  if [ -s $$file ]; then \
+	    echo "FAILED  $$file"; \
+	  else \
+	    echo "OK      $$file"; \
+	  fi; \
+	done
+
+diffs-if-working:            diffs
+summary-if-working:          summary
+diffs-w-daikon-if-working:   diffs-w-daikon
+summary-w-daikon-if-working: summary-w-daikon
+
+clean:
+	rm -rf $(NAME) $(DIFF_NAME).*.diff $(NAME).out daikon-output ran-dnfe $(EXTRA_JUNK) $(EXTRA_OUTPUTS) $(NAME).inv.gz $(NAME).counts \
+    $(NAME).pdb $(NAME).out.bak $(NAME).dll
+	$(CLEAN_SCRIPT)
+
+update-out-goals: $(NAME).out
+	-cp $(NAME).out $(NAME).out$(DTRACE_GOAL_EXT)
+
+update-count-goals: $(NAME).counts
+	-cp $(NAME).counts $(NAME).counts$(DTRACE_GOAL_EXT)
+
+update-dtrace-goals: daikon-output/$(NAME)$(DTRACE_EXT)
+	-cp daikon-output/$(NAME)$(DTRACE_EXT) $(NAME).dtrace$(DTRACE_GOAL_EXT)
+
+update-inv-goals: daikon-output/$(NAME).invs.txt
+	-cp daikon-output/$(NAME).invs.txt $(NAME).invs$(DTRACE_GOAL_EXT)
+
+ifeq ($(COUNTS_ONLY),)
+update-goals: update-out-goals update-count-goals update-dtrace-goals update-inv-goals
+else
+update-goals: update-out-goals update-count-goals
+endif
+
+trace: $(NAME)
+	$(BEFORE_RUN)
+	$(DNFE_EXE) $(DNFE_OPTIONS) --no-var-leader --no-val-leader --no-path-compression ./$(NAME).exe $(PROGRAM_ARGS) 2>&1 | $(DAIKONDIR)/scripts/merge_tracker.py - $(NAME).db
+	$(AFTER_RUN)
