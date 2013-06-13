@@ -1,0 +1,15 @@
+# Machine-specific options
+
+UNIT_TESTING_FRAMEWORK ?= 'C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\ReferenceAssemblies\v4.0\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll'
+UNIT_TEST_DRIVER ?= '/cygdrive/c/Program Files (x86)/Microsoft Visual Studio 10.0/Common7/IDE/MSTest'
+DNFE_PATH = 'C:\daikon\scripts'
+DNFE_EXE = $(DAIKONDIR)/scripts/CeleriacLauncher.exe
+SIKULI_PATH = '/cygdrive/c/Program Files (x86)/Sikuli X/Sikuli-IDE-w.bat'
+MSBUILD = 'C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe'
+ifeq ($(LANG), FSharp)
+COMPILER := /cygdrive/c/program_files/fsc.exe /debug
+else ifeq ($(LANG), VB)
+COMPILER := /cygdrive/c/Windows/Microsoft.NET/Framework/v4.0.30319/vbc.exe /debug
+else
+COMPILER := /cygdrive/c/Windows/Microsoft.NET/Framework/v4.0.30319/csc.exe /debug
+endif
