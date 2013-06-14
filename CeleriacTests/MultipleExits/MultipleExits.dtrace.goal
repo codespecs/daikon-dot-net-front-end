@@ -1,6 +1,6 @@
 decl-version 2.0
 var-comparability none
-input-language C#.NET
+input-language CLR
 
 ppt HelloWorld.HelloWorld..ctor():::ENTER
 ppt-type enter
@@ -769,7 +769,7 @@ HelloWorld.HelloWorld.Main(System.String[]\_args):::ENTER
 this_invocation_nonce
 2
 args
-35943562
+55056607
 1
 args[..]
 []
@@ -785,7 +785,7 @@ a
 1
 1
 vals
-55056607
+25747420
 1
 vals[..]
 [3]
@@ -807,7 +807,7 @@ return
 -3
 1
 vals
-55056607
+25747420
 1
 vals[..]
 [4]
@@ -820,7 +820,7 @@ a
 2
 1
 vals
-55056607
+25747420
 1
 vals[..]
 [4 4]
@@ -855,7 +855,7 @@ a
 1
 1
 vals
-25747420
+30400195
 1
 vals[..]
 [3]
@@ -874,7 +874,7 @@ exception.GetType()
 nonsensical
 2
 vals
-25747420
+30400195
 1
 vals[..]
 [4]
@@ -887,7 +887,7 @@ a
 2
 1
 vals
-25747420
+30400195
 1
 vals[..]
 [4 4]
@@ -978,7 +978,7 @@ n
 0
 1
 return
-30400195
+5166299
 1
 return.ToString()
 "Z"
@@ -1004,7 +1004,7 @@ n
 1
 1
 return
-5166299
+46496694
 1
 return.ToString()
 "Little P."
@@ -1030,7 +1030,7 @@ n
 -1
 1
 return
-46496694
+15817070
 1
 return.ToString()
 "N"
@@ -1056,7 +1056,7 @@ n
 -20
 1
 return
-46496694
+15817070
 1
 return.ToString()
 "N"
@@ -1082,7 +1082,7 @@ n
 1000
 1
 return
-15817070
+8135907
 1
 return.ToString()
 "Big P."
@@ -1092,7 +1092,7 @@ HelloWorld.HelloWorld.Main(System.String[]\_args):::EXIT67
 this_invocation_nonce
 2
 args
-35943562
+55056607
 1
 args[..]
 []
