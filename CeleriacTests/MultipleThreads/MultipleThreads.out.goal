@@ -1,8 +1,4 @@
 Argument processing complete
-System.Void C..ctor(System.Int32 i)
-System.Void C.run()
-System.Void M.Main(System.String[] args)
-System.Void M..ctor()
 Rewriting complete
 Loading complete. Starting program.
 Thread 0 says hi
@@ -21,10 +17,10 @@ Thread 6 says hi
 Thread 6 says bye
 Thread 7 says hi
 Thread 7 says bye
-Thread 8 says hi
-Thread 8 says bye
 Thread 9 says hi
 Thread 9 says bye
+Thread 8 says hi
+Thread 8 says bye
 Thread 10 says hi
 Thread 10 says bye
 Thread 11 says hi
