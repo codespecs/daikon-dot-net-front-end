@@ -1,5 +1,5 @@
 ===========================================================================
-Generics.BaseNodeMultiple:::OBJECT
+Generics.BaseNodeMultiple`2:::OBJECT
 ===========================================================================
 Generics.BaseNodeMultiple`2..ctor(T t, U u):::ENTER
 ===========================================================================
@@ -11,13 +11,13 @@ this.u.GetType() == orig(u.GetType())
 ===========================================================================
 Generics.DelegateTestClass:::OBJECT
 this has only one value
-this.GetType() == Generics.DelegateTestClass.class
+this.GetType() == DelegateTestClass.class
 ===========================================================================
 Generics.DelegateTestClass..ctor():::EXIT
 ===========================================================================
-Generics.DelegateTestStack:::OBJECT
+Generics.DelegateTestStack`1:::OBJECT
 this has only one value
-this.GetType() == Generics.DelegateTestStack`1[System.Double].class
+this.GetType() == DelegateTestStack<double>.class
 ===========================================================================
 Generics.DelegateTestStack`1..ctor():::EXIT
 ===========================================================================
@@ -27,7 +27,7 @@ value._methodBase == null
 value._methodPtr has only one value
 value._methodPtrAux == null
 value._target has only one value
-value._target.GetType() == Generics.DelegateTestClass.class
+value._target.GetType() == DelegateTestClass.class
 ===========================================================================
 Generics.DelegateTestStack`1.add_stackEvent(Generics.StackEventHandler`2<Generics.DelegateTestStack`1<T>, Generics.DelegateTestStack`1<T>.StackEventArgs> value):::EXIT24
 ===========================================================================
@@ -40,25 +40,18 @@ value._methodBase == null
 value._methodPtr has only one value
 value._methodPtrAux == null
 value._target has only one value
-value._target.GetType() == Generics.DelegateTestClass.class
+value._target.GetType() == DelegateTestClass.class
 ===========================================================================
-Generics.GenericList:::OBJECT
-this.head.GetType() == Generics.GenericList`1+Node[System.Int32].class
-===========================================================================
-Generics.GenericList.Node:::OBJECT
-this.GetType() == Generics.GenericList`1+Node[System.Int32].class
-this.data.GetType() == System.Int32.class
-this.next.GetType() == Generics.GenericList`1+Node[System.Int32].class
-this.GetType() == this.next.GetType()
-this.data.GetType() != this.next.GetType()
+Generics.GenericList`1:::OBJECT
+this.head.GetType() == GenericList<int>.Node.class
 ===========================================================================
 Generics.GenericList`1..ctor():::EXIT
 this.head == null
 ===========================================================================
 Generics.GenericList`1.AddHead(T t):::ENTER
-t.GetType() == System.Int32.class
+t.GetType() == int.class
 this has only one value
-this.GetType() == Generics.GenericList`1[System.Int32].class
+this.GetType() == GenericList<int>.class
 t.GetType() != this.head.GetType()
 this.GetType() != this.head.GetType()
 ===========================================================================
@@ -71,7 +64,7 @@ this.head.GetType() == orig(this.head.GetType())
 ===========================================================================
 Generics.GenericList`1.GetEnumerator():::ENTER
 this has only one value
-this.GetType() == Generics.GenericList`1[System.Int32].class
+this.GetType() == GenericList<int>.class
 this.head has only one value
 this.head.data has only one value
 this.head.next has only one value
@@ -83,7 +76,7 @@ this.head == orig(this.head)
 this.head.data == orig(this.head.data)
 this.head.next == orig(this.head.next)
 return has only one value
-return.GetType() == Generics.GenericList`1+<GetEnumerator>d__0[System.Int32].class
+return.GetType() == GenericList<int>.<GetEnumerator>d__0.class
 this.head has only one value
 this.head.data has only one value
 this.head.next has only one value
@@ -96,11 +89,18 @@ Generics.GenericList`1.GetLast():::EXIT25
 Generics.GenericList`1.GetLast():::EXIT
 this.head == orig(this.head)
 return == null
-return.GetType() == System.Int32.class
+return.GetType() == int.class
 this.head == null
 ===========================================================================
+Generics.GenericList`1.Node:::OBJECT
+this.GetType() == GenericList<int>.Node.class
+this.data.GetType() == int.class
+this.next.GetType() == GenericList<int>.Node.class
+this.GetType() == this.next.GetType()
+this.data.GetType() != this.next.GetType()
+===========================================================================
 Generics.GenericList`1.Node..ctor(T t):::ENTER
-t.GetType() == System.Int32.class
+t.GetType() == int.class
 ===========================================================================
 Generics.GenericList`1.Node..ctor(T t):::EXIT
 this.data == orig(t)
@@ -117,7 +117,7 @@ this.data == orig(this.data)
 this.next == orig(this.next)
 this.next.data == orig(this.next.data)
 this.next.next == orig(this.next.next)
-return.GetType() == System.Int32.class
+return.GetType() == int.class
 return.GetType() == this.data.GetType()
 return.GetType() != this.next.GetType()
 return.GetType() == orig(this.data.GetType())
@@ -136,9 +136,9 @@ return.data == orig(this.next.data)
 return.next == this.next.next
 return.next == orig(this.next.next)
 this.data == orig(this.data)
-return.GetType() == Generics.GenericList`1+Node[System.Int32].class
-return.data.GetType() == System.Int32.class
-return.next.GetType() == Generics.GenericList`1+Node[System.Int32].class
+return.GetType() == GenericList<int>.Node.class
+return.data.GetType() == int.class
+return.next.GetType() == GenericList<int>.Node.class
 return.GetType() != return.data.GetType()
 return.GetType() == return.next.GetType()
 return.GetType() != this.data.GetType()
@@ -154,9 +154,9 @@ this.data.GetType() == orig(this.data.GetType())
 ===========================================================================
 Generics.GenericList`1.Node.Next.set(Generics.GenericList`1<T>.Node value):::ENTER
 this.next == null
-value.GetType() == Generics.GenericList`1+Node[System.Int32].class
-value.data.GetType() == System.Int32.class
-value.next.GetType() == Generics.GenericList`1+Node[System.Int32].class
+value.GetType() == GenericList<int>.Node.class
+value.data.GetType() == int.class
+value.next.GetType() == GenericList<int>.Node.class
 this.GetType() == value.GetType()
 this.GetType() != value.data.GetType()
 this.GetType() == value.next.GetType()
@@ -178,8 +178,8 @@ value.data == orig(value.data)
 value.next == orig(value.next)
 value.next.data == orig(value.next.data)
 value.next.next == orig(value.next.next)
-value.data.GetType() == System.Int32.class
-value.next.GetType() == Generics.GenericList`1+Node[System.Int32].class
+value.data.GetType() == int.class
+value.next.GetType() == GenericList<int>.Node.class
 this.data.GetType() == value.data.GetType()
 this.data.GetType() != value.next.GetType()
 this.data.GetType() == orig(this.data.GetType())
@@ -204,7 +204,7 @@ intList1[] == [1, 2, 3]
 ===========================================================================
 Generics.GenericsTest.PickSmaller(T a, T b, T smaller):::ENTER
 a has only one value
-a.GetType() == System.Int32.class
+a.GetType() == int.class
 b has only one value
 smaller == null
 a.GetType() == b.GetType()
@@ -216,9 +216,9 @@ Generics.GenericsTest.PickSmaller(T a, T b, T smaller):::EXIT
 ===========================================================================
 Generics.GenericsTest.Swap(System.Collections.Generic.List`1<T> list1, System.Collections.Generic.List`1<T> list2):::ENTER
 list1 has only one value
-list1.GetType() == System.Collections.Generic.List`1[System.Object].class
+list1.GetType() == List<object>.class
 list1[] contains no nulls and has only one value, of length 3
-list1[].GetType() == [System.Int32, System.Int32, System.Int32]
+list1[].GetType() == [int, int, int]
 list2 has only one value
 list2[] contains no nulls and has only one value, of length 3
 ===========================================================================
@@ -228,35 +228,35 @@ Generics.GenericsTest.Swap(System.Collections.Generic.List`1<T> list1, System.Co
 list1[] == orig(list2[])
 list2[] == orig(list1[])
 list1[] contains no nulls and has only one value, of length 3
-list1[].GetType() == [System.Int32, System.Int32, System.Int32]
+list1[].GetType() == [int, int, int]
 list2[] contains no nulls and has only one value, of length 3
 ===========================================================================
 Generics.GenericsTest.SwapIfGreater(T lhs, T rhs):::ENTER
 lhs has only one value
-lhs.GetType() == System.Int32.class
+lhs.GetType() == int.class
 rhs has only one value
 ===========================================================================
 Generics.GenericsTest.SwapIfGreater(T lhs, T rhs):::EXIT25
 ===========================================================================
 Generics.GenericsTest.SwapIfGreater(T lhs, T rhs):::EXIT
 ===========================================================================
-Generics.Node4:::OBJECT
-this.GetType() == Generics.Node4`1[System.String].class
+Generics.Node4`1:::OBJECT
+this.GetType() == Node4<string>.class
 ===========================================================================
 Generics.Node4`1..ctor(T t, System.Int32 i):::ENTER
 i one of { 4, 5 }
-t.GetType() == System.String.class
+t.GetType() == string.class
 ===========================================================================
 Generics.Node4`1..ctor(T t, System.Int32 i):::EXIT
 ===========================================================================
-Generics.Node5:::OBJECT
+Generics.Node5`2:::OBJECT
 ===========================================================================
 Generics.Node5`2..ctor(T t, U u):::ENTER
 ===========================================================================
 Generics.Node5`2..ctor(T t, U u):::EXIT
 ===========================================================================
-Generics.NodeItem:::OBJECT
+Generics.NodeItem`1:::OBJECT
 this has only one value
-this.GetType() == Generics.NodeItem`1[Generics.DelegateTestExampleClass].class
+this.GetType() == NodeItem<DelegateTestExampleClass>.class
 ===========================================================================
 Generics.NodeItem`1..ctor():::EXIT
