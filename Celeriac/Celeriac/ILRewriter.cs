@@ -421,16 +421,16 @@ namespace Celeriac
             ref currentPptEnd);
       }
 
-      // Without a return instruction no program point would be declared. Which 
-      // could cause an error if subclasses try to reference it as a parent. To
-      // compensate, declare a progrp point that will never be reached.
-      if (!operations.Any(op => op.OperationCode == OperationCode.Ret))
-      {
-        DeclareReturnProgramPoint(mutableMethodBody, 100, currentPptEnd);
-        // Must insert a ret or verifier thinks program will fall through.
-        generator.Emit(OperationCode.Ldc_I4_0);
-        generator.Emit(OperationCode.Ret);
-      }
+      //// Without a return instruction no program point would be declared. Which 
+      //// could cause an error if subclasses try to reference it as a parent. To
+      //// compensate, declare a progrp point that will never be reached.
+      //if (!operations.Any(op => op.OperationCode == OperationCode.Ret))
+      //{
+      //  DeclareReturnProgramPoint(mutableMethodBody, 100, currentPptEnd);
+      //  // Must insert a ret or verifier thinks program will fall through.
+      //  generator.Emit(OperationCode.Ldc_I4_0);
+      //  generator.Emit(OperationCode.Ret);
+      //}
 
       while (generator.InTryBody)
       {
