@@ -38,15 +38,15 @@ The second component, the trace component, is not output by Celeriac directly. I
 \label{design-goals}
 This section describes the design goals guiding the development of the .NET Daikon front-end.
 
-\paragraph{Work with any .NET program.}
+\subsection{Work with any .NET program.}
 While Celeriac will likely primarily be used with programs written in C\#, we leverage the Common Language Runtime architecture to make the front-end work with many .NET languages. Celeriac has been successfully used on F\# and VB.NET in addition to C\#. This compatibility is achieved by targeting the tool at binary programs (which are in CIL), as opposed to targeting source code.
 \\ \\
 However, Celeriac must specially detect the presence of some language-specific constructs, to enable detection of meaningful properties. For example, F\# uses its own list type instead of the .NET \texttt{System.Collections.List} type. To capture meaningful invariants over lists, such as the length of a list, or whether its elements are sorted, Celeriac treats a variable as a List if it has the \texttt{System.Collections.List} or the \texttt{FSharp.List} type.
 
-\paragraph{Don't require modification of the developer's build process.}
+\subsection{Don't require modification of the developer's build process.}
 Commercial build processes can become very complex over time. As a result, it may be unwieldy or even impossible to integrate new tools into the build chain. An added benefit of meeting this design goal is that Celeriac can run on programs even when the source is not available, although the debugging symbols are necessary.
 
-\paragraph{Don't modify files on disk.}
+\subsection{Don't modify files on disk.}
 Modifying the contents of the disk to instrument the program, e.g., creating a patched version of the executable, is similarly undesirable. The creation or replacement of binary files opens the door for versioning issues such as accidentally running an instrumented binary with incorrect options. Celeriac solves this problem by modifying the assembly, specifically adding the instrumentation calls, in memory and then executing the modified assembly directly from memory.
 \\ \\
 There are some situations meeting where this goal isn't possible. For example, when Celeriac creates an instrumented library that will be used by other programs, the instrumented library must be saved to disk. Also, when Celeriac is run on GUI programs using Windows Presentation Foundation (WPF), Celeriac must be run in off-line mode. This is because WPF programs resource loading process cannot complete when the program is in online mode, since the subject program is loaded into the Celeriac launcher's \texttt{AppDomain}. The program will then attempt to resolve resources from the Celeriac launcher's resources, but the resources exist only in the WPF application.
