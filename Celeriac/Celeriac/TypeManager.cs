@@ -872,7 +872,8 @@ namespace Celeriac
       // difficult to build and parse. Consider creating a custom object to manage type identity
       // and use that as a parameter instead.
 
-      var regex = new Regex("{[\\w\\W]*}");
+      // TODO(#108): For now, don't attempt to deal with bounds on generic parameters
+      var regex = new Regex("^{[\\w\\W]*}");
 
       if (regex.IsMatch(assemblyQualifiedName))
       {
@@ -916,6 +917,8 @@ namespace Celeriac
       }
       catch (Exception ex)
       {
+        // TODO(#17): this exception handler needs to be removed
+
         // Attempt to continue by stripping generic information
         if (assemblyQualifiedName.Contains("[["))
         {
