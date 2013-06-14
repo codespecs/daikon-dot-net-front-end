@@ -868,16 +868,15 @@ namespace Celeriac
       Contract.Requires(!string.IsNullOrWhiteSpace(returnType));
       Contract.Requires(parentPpts != null);
 
-      CeleriacTypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(returnType);
-      foreach (Type type in typeDecl.GetAllTypes)
-      {
-        if (type != null)
-        {
-          // TODO: originator should be the type that defined the method
-          DeclareVariable(name, type, typeof(DummyOriginator), kind: VariableKind.Return, nestingDepth: 0, 
-            methodContext: method, parents: parentPpts);
-        }
-      }
+      var typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(returnType);
+      
+      // TODO #108: need to properly handle multiple type bounds
+      var type = typeDecl.GetAllTypes.First();
+      
+      // TODO: originator should be the type that defined the method
+      DeclareVariable(name, type, typeof(DummyOriginator), kind: VariableKind.Return, nestingDepth: 0, 
+           methodContext: method, parents: parentPpts);
+      
     }
 
     /// <summary>
