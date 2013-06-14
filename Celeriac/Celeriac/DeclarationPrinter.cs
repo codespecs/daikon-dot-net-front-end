@@ -54,6 +54,12 @@ namespace Celeriac
       this.ParentVariable = parentVariable;
     }
 
+    /// <summary>
+    /// Returns a new <see cref="VariableParent"/> transforming the parent expression name with <paramref name="modifier"/>.
+    /// If <see cref="ParentVariable"/> is null, it remains null.
+    /// </summary>
+    /// <param name="modifier">The name transformation method.</param>
+    /// <returns>a new <see cref="VariableParent"/> transforming the parent expression name with <paramref name="modifier"/></returns>
     public VariableParent WithName(Func<string, string> modifier)
     {
       return new VariableParent(ParentPpt, RelId, ParentVariable != null ? modifier(ParentVariable) : null);
