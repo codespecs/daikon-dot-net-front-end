@@ -421,16 +421,19 @@ namespace Celeriac
             ref currentPptEnd);
       }
 
-      //// Without a return instruction no program point would be declared. Which 
-      //// could cause an error if subclasses try to reference it as a parent. To
-      //// compensate, declare a progrp point that will never be reached.
-      //if (!operations.Any(op => op.OperationCode == OperationCode.Ret))
-      //{
-      //  DeclareReturnProgramPoint(mutableMethodBody, 100, currentPptEnd);
-      //  // Must insert a ret or verifier thinks program will fall through.
-      //  generator.Emit(OperationCode.Ldc_I4_0);
-      //  generator.Emit(OperationCode.Ret);
-      //}
+      // Without a return instruction no program point would be declared. Which 
+      // could cause an error if subclasses try to reference it as a parent. To
+      // compensate, declare a progrp point that will never be reached.
+      if (!operations.Any(op => op.OperationCode == OperationCode.Ret))
+      {
+        DeclareReturnProgramPoint(mutableMethodBody,
+          RuntimeExceptionExitProgamPointSuffix, currentPptEnd);
+        // Must explcilty exit the method or else the verifier will complain.
+        // This code will never be called, but satisfies the verifier. Throwing was chosen over
+        // returning, because it's difficult to construct an appropriate return value.
+        generator.Emit(OperationCode.Ldnull);
+        generator.Emit(OperationCode.Throw);
+      }
 
       while (generator.InTryBody)
       {
@@ -1118,6 +1121,21 @@ namespace Celeriac
       }
     }
 
+
+    /// <summary>
+    /// Print the declaration for a method return program point onto the stack, if the program point
+    /// should be visited.
+    /// </summary>
+    /// <param name="methodBody">Method being exited</param>
+    /// <param name="i">Instruction number to use as the label for the exit</param>
+    /// <param name="pptEnd">The end of the PPT writing block</param>
+    /// <returns>Whether the declaration was pushed into the stack</returns>
+    private bool DeclareReturnProgramPoint(IMethodBody methodBody, int i, ILGeneratorLabel pptEnd)
+    {
+      return DeclareReturnProgramPoint(
+        methodBody, i.ToString(CultureInfo.InvariantCulture), pptEnd);
+    }
+
     /// <summary>
     /// Print the declaration for a method return program point onto the stack, if the program point
     /// should be visited.
@@ -1126,12 +1144,13 @@ namespace Celeriac
     /// <param name="i">Label for the exit</param>
     /// <param name="pptEnd">The end of the PPT writing block</param>
     /// <returns>Whether the declaration was pushed into the stack</returns>
-    private bool DeclareReturnProgramPoint(IMethodBody methodBody, int i, ILGeneratorLabel pptEnd)
+    private bool DeclareReturnProgramPoint(
+        IMethodBody methodBody, string label, ILGeneratorLabel pptEnd)
     {
       // If we don't want to instrument returns then don't do anything special here
       bool instrumentReturns = celeriacArgs.ShouldPrintProgramPoint(
           FormatMethodName(MethodTransition.EXIT, methodBody.MethodDefinition),
-          i.ToString(CultureInfo.InvariantCulture));
+          label);
       if (!instrumentReturns)
       {
         return false;
@@ -1140,10 +1159,10 @@ namespace Celeriac
       EmitNonceCheck(methodBody.MethodDefinition, pptEnd);
       EmitAcquireWriterLock(pptEnd);
 
-      // Add the i to the end of exit to ensure uniqueness
+      // Add the label to the end of exit to ensure uniqueness
       // A ret command is added even at the end of functions without
       // a return in the code by the compiler, so we catch that scenario
-      EmitMethodSignature(MethodTransition.EXIT, methodBody, label: i.ToString(CultureInfo.InvariantCulture));
+      EmitMethodSignature(MethodTransition.EXIT, methodBody, label);
 
       return true;
     }
@@ -1661,10 +1680,6 @@ namespace Celeriac
             host.PlatformType.SystemVoid.TypeCode))
         {
           var parents = from m in TypeManager.GetContractMethods(methodBody.MethodDefinition)
-                        // TODO(#109): by uninstantiating the method and comparing types, we can avoid linking 
-                        // expressions not available in the supertype. However, we're likely filtering out too much
-                        let u = MemberHelper.UninstantiateAndUnspecialize(m) 
-                        where TypeHelper.TypesAreEquivalent(methodBody.MethodDefinition.Type, u.Type, resolveTypes: true)
                         select new VariableParent(
                           DeclarationPrinter.SanitizeProgramPointName(FormatMethodName(transition, m)),
                           pptRelId[FormatMethodName(transition, m)]);
@@ -1856,11 +1871,6 @@ namespace Celeriac
     /// <param name="method">Method being instrumented</param>
     private void EmitParameters(MethodTransition transition, IMethodDefinition method)
     {
-      // TODO(#109): by uninstantiating the method and comparing types, we can avoid linking 
-      // expressions not available in the supertype. However, we're likely filtering out too much
-      var contractMethods = from m in TypeManager.GetContractMethods(method)
-                            select MemberHelper.UninstantiateAndUnspecialize(m);
-
       int i = 0;
       foreach (var param in method.Parameters)
       {
@@ -1886,14 +1896,15 @@ namespace Celeriac
           {
             Func<string, string> nullIfSame = x => x.Equals(param.Name.Value) ? null : x;
 
-            var parents = from m in contractMethods
-                          // TODO(#109): by uninstantiating the method and comparing types (above), we can avoid linking 
-                          // expressions not available in the supertype. However, we're likely filtering out too much
-                          where TypeHelper.TypesAreEquivalent(param.Type, m.Parameters.ElementAt(i - 1).Type, resolveTypes: true)
-                          select new VariableParent(
+            var parents = new List<VariableParent>();
+            foreach (var m in TypeManager.GetContractMethods(method))
+            {
+              Contract.Assume(m.ParameterCount == method.ParameterCount);
+              parents.Add(new VariableParent(
                              DeclarationPrinter.SanitizeProgramPointName(FormatMethodName(transition, m)),
                              pptRelId[FormatMethodName(transition, m)],
-                             nullIfSame(m.Parameters.ElementAt(i - 1).Name.Value));
+                             nullIfSame(m.Parameters.ElementAt(i - 1).Name.Value)));
+            }
 
             this.declPrinter.PrintParameter(param.Name.ToString(),
               this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param.Type),
