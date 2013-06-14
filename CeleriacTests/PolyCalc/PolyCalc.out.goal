@@ -1,0 +1,112 @@
+Argument processing complete
+System.Void RatNumTest.Main(System.String[] args)
+System.Void RatNumTest..ctor(System.String name)
+System.Void RatNumTest.eq(RatNum ratNum, System.String rep)
+System.Void RatNumTest.testOneArgCtor()
+System.Void RatNumTest.testTwoArgCtor()
+System.Void RatNumTest.testTwoArgCtorOnNaN()
+System.Void RatNumTest.testReduction()
+System.Void RatNumTest.approxEq(System.Double d1, System.Double d2)
+System.Void RatNumTest.testApprox()
+System.Void RatNumTest.testAddSimple()
+System.Void RatNumTest.testAddComplex()
+System.Void RatNumTest.testAddImproper()
+System.Void RatNumTest.testAddOnNaN()
+System.Void RatNumTest.testAddTransitively()
+System.Void RatNumTest.testSubSimple()
+System.Void RatNumTest.testSubComplex()
+System.Void RatNumTest.testSubImproper()
+System.Void RatNumTest.testSubOnNaN()
+System.Void RatNumTest.testSubTransitively()
+System.Void RatNumTest.testMulProperties()
+System.Void RatNumTest.testMulSimple()
+System.Void RatNumTest.testMulComplex()
+System.Void RatNumTest.testMulImproper()
+System.Void RatNumTest.testMulOnNaN()
+System.Void RatNumTest.testMulTransitively()
+System.Void RatNumTest.testDivSimple()
+System.Void RatNumTest.testDivComplex()
+System.Void RatNumTest.testDivImproper()
+System.Void RatNumTest.testDivOnNaN()
+System.Void RatNumTest.testDivTransitively()
+System.Void RatNumTest.testNegate()
+System.Void RatNumTest.decChk(System.String s, RatNum expected)
+System.Void RatNumTest.testParse()
+System.Void RatNumTest.testEqualsReflexive()
+System.Void RatNumTest.testEquals()
+System.Void RatNumTest.assertGreater(RatNum larger, RatNum smaller)
+System.Void RatNumTest.testCompareToReflexive()
+System.Void RatNumTest.testCompareToNonFract()
+System.Void RatNumTest.testCompareToFract()
+System.Void RatNumTest.testCompareToNaNs()
+System.Void RatNumTest.assertPos(RatNum n)
+System.Void RatNumTest.assertNeg(RatNum n)
+System.Void RatNumTest.testIsPosAndIsNeg()
+System.Void RatNumTest.testIsNaN()
+System.Void RatNumTest.testToString()
+System.Void RatNumTest.assertTrue(System.Boolean a)
+System.Void RatNumTest.assertEquals(System.Object a, System.Object b)
+System.Void RatNum..ctor(System.Int32 n)
+System.Void RatNum..ctor(System.Int32 n, System.Int32 d)
+System.Boolean RatNum.isNaN()
+System.Boolean RatNum.isNegative()
+System.Boolean RatNum.isPositive()
+System.Int32 RatNum.CompareTo(RatNum rn)
+System.Double RatNum.approx()
+System.String RatNum.unparse()
+RatNum RatNum.negate()
+RatNum RatNum.add(RatNum arg)
+RatNum RatNum.sub(RatNum arg)
+RatNum RatNum.mul(RatNum arg)
+RatNum RatNum.div(RatNum arg)
+System.Int32 RatNum.gcd(System.Int32 _a, System.Int32 _b)
+System.Int32 RatNum.GetHashCode()
+System.Boolean RatNum.Equals(System.Object obj)
+System.String RatNum.debugPrint()
+System.String RatNum.toString()
+RatNum RatNum.parse(System.String ratStr)
+System.Void RatTerm..ctor(RatNum c, System.Int32 e)
+System.Boolean RatTerm.Equals(System.Object obj)
+System.Int32 RatTerm.GetHashCode()
+System.String RatTerm.debugPrint()
+System.String RatTerm.toString()
+Rewriting complete
+Loading complete. Starting program.
+testOneArgCtor
+testTwoArgCtor
+testTwoArgCtorOnNaN
+testReduction
+testApprox
+testAddSimple
+testAddComplex
+testAddImproper
+testAddOnNaN
+testAddTransitively
+testSubSimple
+testSubComplex
+testSubImproper
+testSubOnNaN
+testSubTransitively
+testMulProperties
+testMulSimple
+testMulComplex
+testMulImproper
+testMulOnNaN
+testMulTransitively
+testDivSimple
+testDivComplex
+testDivImproper
+testDivOnNaN
+testDivTransitively
+testNegate
+testParse
+testEqualsReflexive
+testEquals
+testCompareToReflexive
+testCompareToNonFract
+testCompareToFract
+testCompareToNaNs
+testIsPosAndIsNeg
+testIsNaN
+testToString
+Program complete. Exiting Celeriac.

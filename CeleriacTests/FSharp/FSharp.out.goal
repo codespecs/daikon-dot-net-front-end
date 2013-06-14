@@ -1,0 +1,21 @@
+Argument processing complete
+Microsoft.FSharp.Core.FSharpRef<Microsoft.FSharp.Collections.FSharpSet<System.Int32>> FSharp.set.get()
+Microsoft.FSharp.Collections.FSharpSet<System.Int32> FSharp.addMax(Microsoft.FSharp.Collections.FSharpSet<System.Int32> set)
+System.Void FSharp.printCollection<a>(System.String msg, System.Collections.Generic.IEnumerable<a> coll)
+System.Void FSharp.printCollection@24-2<a>..ctor(Microsoft.FSharp.Core.FSharpFunc<a, Microsoft.FSharp.Core.Unit> clo2)
+Microsoft.FSharp.Core.Unit FSharp.printCollection@24-2<a>.Invoke(a arg20)
+System.Void FSharp.printCollection@24-1<a>..ctor(Microsoft.FSharp.Core.FSharpFunc<System.Int32, Microsoft.FSharp.Core.FSharpFunc<a, Microsoft.FSharp.Core.Unit>> clo1)
+Microsoft.FSharp.Core.FSharpFunc<a, Microsoft.FSharp.Core.Unit> FSharp.printCollection@24-1<a>.Invoke(System.Int32 arg10)
+System.Void FSharp.printCollection@24<a>..ctor()
+Microsoft.FSharp.Core.Unit FSharp.printCollection@24<a>.Invoke(System.Int32 index, a item)
+System.Void <StartupCode$FSharp>.$FSharp.main@()
+Rewriting complete
+Loading complete. Starting program.
+Collection:
+  0: 0
+  1: 1
+  2: 2
+  3: 3
+  4: 4
+  5: 5
+Program complete. Exiting Celeriac.

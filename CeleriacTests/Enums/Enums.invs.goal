@@ -1,0 +1,77 @@
+===========================================================================
+Enums.Enums.PrintColors(Enums.Enums.Colors myColors):::ENTER
+Enums.Enums+Colors.Blue has only one value
+Enums.Enums+Colors.Green has only one value
+Enums.Enums+Colors.Red has only one value
+Enums.Enums+Colors.Yellow has only one value
+myColors has only one value
+===========================================================================
+Enums.Enums.PrintColors(Enums.Enums.Colors myColors):::EXIT6
+===========================================================================
+Enums.Enums.PrintColors(Enums.Enums.Colors myColors):::EXIT
+Enums.Enums+Colors.Blue == orig(Enums.Enums+Colors.Blue)
+Enums.Enums+Colors.Green == orig(Enums.Enums+Colors.Green)
+Enums.Enums+Colors.Red == orig(Enums.Enums+Colors.Red)
+Enums.Enums+Colors.Yellow == orig(Enums.Enums+Colors.Yellow)
+Enums.Enums+Colors.Blue has only one value
+Enums.Enums+Colors.Green has only one value
+Enums.Enums+Colors.Red has only one value
+Enums.Enums+Colors.Yellow has only one value
+===========================================================================
+Enums.Enums.PrintEnumType(System.Type weekdays):::ENTER
+System.Char.MaxValue == 65535
+System.Char.MinValue == 0
+System.Type.Delimiter == 46
+System.Type.FilterAttribute has only one value
+System.Type.FilterName has only one value
+System.Type.FilterNameIgnoreCase has only one value
+System.Type.Missing has only one value
+weekdays.GetType() == System.RuntimeType.class
+===========================================================================
+Enums.Enums.PrintEnumType(System.Type weekdays):::EXIT35
+===========================================================================
+Enums.Enums.PrintEnumType(System.Type weekdays):::EXIT
+System.Char.MaxValue == orig(System.Char.MaxValue)
+System.Char.MinValue == orig(System.Char.MinValue)
+System.Type.Delimiter == orig(System.Type.Delimiter)
+System.Type.FilterAttribute == orig(System.Type.FilterAttribute)
+System.Type.FilterName == orig(System.Type.FilterName)
+System.Type.FilterNameIgnoreCase == orig(System.Type.FilterNameIgnoreCase)
+System.Type.Missing == orig(System.Type.Missing)
+System.Char.MaxValue == 65535
+System.Char.MinValue == 0
+System.Type.Delimiter == 46
+System.Type.FilterAttribute has only one value
+System.Type.FilterName has only one value
+System.Type.FilterNameIgnoreCase has only one value
+System.Type.Missing has only one value
+===========================================================================
+Enums.Enums.formatEnum(System.String s, System.Type enumType):::ENTER
+System.Char.MaxValue == 65535
+System.Char.MinValue == 0
+System.Type.Delimiter == 46
+System.Type.FilterAttribute has only one value
+System.Type.FilterName has only one value
+System.Type.FilterNameIgnoreCase has only one value
+System.Type.Missing has only one value
+enumType.GetType() == System.RuntimeType.class
+===========================================================================
+Enums.Enums.formatEnum(System.String s, System.Type enumType):::EXIT8
+===========================================================================
+Enums.Enums.formatEnum(System.String s, System.Type enumType):::EXIT
+System.Char.MaxValue == orig(System.Char.MaxValue)
+System.Char.MinValue == orig(System.Char.MinValue)
+System.Type.Delimiter == orig(System.Type.Delimiter)
+System.Type.FilterAttribute == orig(System.Type.FilterAttribute)
+System.Type.FilterName == orig(System.Type.FilterName)
+System.Type.FilterNameIgnoreCase == orig(System.Type.FilterNameIgnoreCase)
+System.Type.Missing == orig(System.Type.Missing)
+System.Char.MaxValue == 65535
+System.Char.MinValue == 0
+System.Type.Delimiter == 46
+System.Type.FilterAttribute has only one value
+System.Type.FilterName has only one value
+System.Type.FilterNameIgnoreCase has only one value
+System.Type.Missing has only one value
+return.ToString() < s.ToString()
+s.ToString() == orig(s.ToString())

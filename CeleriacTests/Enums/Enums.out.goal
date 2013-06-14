@@ -1,0 +1,24 @@
+Argument processing complete
+System.Void Enums.Enums.Main()
+System.Void Enums.Enums.PrintColors(Enums.Enums.Colors myColors)
+System.Void Enums.Enums.PrintEnumType(System.Type weekdays)
+System.String Enums.Enums.formatEnum(System.String s, System.Type enumType)
+System.Void Enums.Enums..ctor()
+Rewriting complete
+Loading complete. Starting program.
+The days of the week, and their corresponding values in the Days Enum are:
+Saturday   = 0
+Sunday     = 1
+Monday     = 2
+Tuesday    = 3
+Wednesday  = 4
+Thursday   = 5
+Friday     = 6
+
+Enums can also be created which have values that represent some meaningful amount.
+The BoilingPoints Enum defines the following items, and corresponding values:
+Celsius    = 100
+Fahrenheit = 212
+
+myColors holds a combination of colors. Namely: Red, Blue, Yellow
+Program complete. Exiting Celeriac.

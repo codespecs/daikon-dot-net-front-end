@@ -1,0 +1,10 @@
+Argument processing complete
+System.Void AdvancedCollections.AdvancedCollections.Main(System.String[] args)
+System.Void AdvancedCollections.AdvancedCollections.SetTest()
+System.Void AdvancedCollections.AdvancedCollections.DescribeSet(System.Collections.Generic.HashSet<System.String> set)
+System.Collections.Generic.HashSet<System.String> AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.HashSet<System.String> set, System.String stringToAdd)
+System.Void AdvancedCollections.AdvancedCollections..ctor()
+Rewriting complete
+Loading complete. Starting program.
+[ duck goose geese ]
+Program complete. Exiting Celeriac.

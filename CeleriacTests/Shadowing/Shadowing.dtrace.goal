@@ -1,0 +1,766 @@
+decl-version 2.0
+var-comparability none
+input-language C#.NET
+
+ppt MyTestProject.A..ctor():::ENTER
+ppt-type enter
+parent parent MyTestProject.A:::CLASS 1
+
+ppt MyTestProject.A..ctor():::EXIT9
+ppt-type subexit
+parent parent MyTestProject.A:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type MyTestProject.A
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MyTestProject.A:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MyTestProject.A:::OBJECT 1
+  variable this.privateA
+    var-kind field privateA
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent MyTestProject.A:::OBJECT 1
+  variable this.publicA
+    var-kind field publicA
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent MyTestProject.A:::OBJECT 1
+
+ppt MyTestProject.A:::CLASS
+ppt-type class
+
+ppt MyTestProject.A:::OBJECT
+ppt-type object
+parent parent MyTestProject.A:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type MyTestProject.A
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this.privateA
+    var-kind field privateA
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+  variable this.publicA
+    var-kind field publicA
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+
+ppt MyTestProject.B..ctor():::ENTER
+ppt-type enter
+parent parent MyTestProject.B:::CLASS 1
+
+ppt MyTestProject.B..ctor():::EXIT9
+ppt-type subexit
+parent parent MyTestProject.B:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type MyTestProject.B
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MyTestProject.B:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MyTestProject.B:::OBJECT 1
+  variable this.privateA
+    var-kind field privateA
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent MyTestProject.B:::OBJECT 1
+  variable this.publicA
+    var-kind field publicA
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent MyTestProject.B:::OBJECT 1
+
+ppt MyTestProject.B:::CLASS
+ppt-type class
+
+ppt MyTestProject.B:::OBJECT
+ppt-type object
+parent parent MyTestProject.B:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type MyTestProject.B
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this.privateA
+    var-kind field privateA
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+  variable this.publicA
+    var-kind field publicA
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+
+ppt MyTestProject.Shadowing..ctor():::ENTER
+ppt-type enter
+parent parent MyTestProject.Shadowing:::CLASS 1
+
+ppt MyTestProject.Shadowing..ctor():::EXIT2
+ppt-type subexit
+parent parent MyTestProject.Shadowing:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type MyTestProject.Shadowing
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MyTestProject.Shadowing:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MyTestProject.Shadowing:::OBJECT 1
+
+ppt MyTestProject.Shadowing.Main(System.String[]\_args):::ENTER
+ppt-type enter
+parent parent MyTestProject.Shadowing:::CLASS 1
+  variable args
+    var-kind variable
+    dec-type java.lang.String[]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable args[..]
+    var-kind array
+    enclosing-var args
+    array 1
+    dec-type java.lang.String[]
+    rep-type hashcode[]
+    comparability -22
+  variable args[..].ToString()
+    var-kind function ToString()
+    enclosing-var args[..]
+    array 1
+    dec-type java.lang.String[]
+    rep-type java.lang.String[]
+    flags synthetic to_string
+    comparability -22
+
+ppt MyTestProject.Shadowing.Main(System.String[]\_args):::EXIT14
+ppt-type subexit
+parent parent MyTestProject.Shadowing:::CLASS 1
+  variable args
+    var-kind variable
+    dec-type java.lang.String[]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable args[..]
+    var-kind array
+    enclosing-var args
+    array 1
+    dec-type java.lang.String[]
+    rep-type hashcode[]
+    comparability -22
+  variable args[..].ToString()
+    var-kind function ToString()
+    enclosing-var args[..]
+    array 1
+    dec-type java.lang.String[]
+    rep-type java.lang.String[]
+    flags synthetic to_string
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MyTestProject.Shadowing.Main(System.String[]\_args):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent MyTestProject.Shadowing:::CLASS 1
+  variable args
+    var-kind variable
+    dec-type java.lang.String[]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable args[..]
+    var-kind array
+    enclosing-var args
+    array 1
+    dec-type java.lang.String[]
+    rep-type hashcode[]
+    comparability -22
+  variable args[..].ToString()
+    var-kind function ToString()
+    enclosing-var args[..]
+    array 1
+    dec-type java.lang.String[]
+    rep-type java.lang.String[]
+    flags synthetic to_string
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MyTestProject.Shadowing.fooA(MyTestProject.A\_a):::ENTER
+ppt-type enter
+parent parent MyTestProject.Shadowing:::CLASS 1
+  variable a
+    var-kind variable
+    dec-type MyTestProject.A
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable a.GetType()
+    var-kind function GetType()
+    enclosing-var a
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable a.privateA
+    var-kind field privateA
+    enclosing-var a
+    dec-type int
+    rep-type int
+    comparability -22
+  variable a.publicA
+    var-kind field publicA
+    enclosing-var a
+    dec-type int
+    rep-type int
+    comparability -22
+
+ppt MyTestProject.Shadowing.fooA(MyTestProject.A\_a):::EXIT5
+ppt-type subexit
+parent parent MyTestProject.Shadowing:::CLASS 1
+  variable a
+    var-kind variable
+    dec-type MyTestProject.A
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable a.GetType()
+    var-kind function GetType()
+    enclosing-var a
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable a.privateA
+    var-kind field privateA
+    enclosing-var a
+    dec-type int
+    rep-type int
+    comparability -22
+  variable a.publicA
+    var-kind field publicA
+    enclosing-var a
+    dec-type int
+    rep-type int
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MyTestProject.Shadowing.fooA(MyTestProject.A\_a):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent MyTestProject.Shadowing:::CLASS 1
+  variable a
+    var-kind variable
+    dec-type MyTestProject.A
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable a.GetType()
+    var-kind function GetType()
+    enclosing-var a
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable a.privateA
+    var-kind field privateA
+    enclosing-var a
+    dec-type int
+    rep-type int
+    comparability -22
+  variable a.publicA
+    var-kind field publicA
+    enclosing-var a
+    dec-type int
+    rep-type int
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MyTestProject.Shadowing.fooB(MyTestProject.B\_b):::ENTER
+ppt-type enter
+parent parent MyTestProject.Shadowing:::CLASS 1
+  variable b
+    var-kind variable
+    dec-type MyTestProject.B
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable b.GetType()
+    var-kind function GetType()
+    enclosing-var b
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable b.privateA
+    var-kind field privateA
+    enclosing-var b
+    dec-type int
+    rep-type int
+    comparability -22
+  variable b.publicA
+    var-kind field publicA
+    enclosing-var b
+    dec-type int
+    rep-type int
+    comparability -22
+
+ppt MyTestProject.Shadowing.fooB(MyTestProject.B\_b):::EXIT13
+ppt-type subexit
+parent parent MyTestProject.Shadowing:::CLASS 1
+  variable b
+    var-kind variable
+    dec-type MyTestProject.B
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable b.GetType()
+    var-kind function GetType()
+    enclosing-var b
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable b.privateA
+    var-kind field privateA
+    enclosing-var b
+    dec-type int
+    rep-type int
+    comparability -22
+  variable b.publicA
+    var-kind field publicA
+    enclosing-var b
+    dec-type int
+    rep-type int
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MyTestProject.Shadowing.fooB(MyTestProject.B\_b):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent MyTestProject.Shadowing:::CLASS 1
+  variable b
+    var-kind variable
+    dec-type MyTestProject.B
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable b.GetType()
+    var-kind function GetType()
+    enclosing-var b
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable b.privateA
+    var-kind field privateA
+    enclosing-var b
+    dec-type int
+    rep-type int
+    comparability -22
+  variable b.publicA
+    var-kind field publicA
+    enclosing-var b
+    dec-type int
+    rep-type int
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MyTestProject.Shadowing:::CLASS
+ppt-type class
+
+ppt MyTestProject.Shadowing:::OBJECT
+ppt-type object
+parent parent MyTestProject.Shadowing:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type MyTestProject.Shadowing
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+MyTestProject.Shadowing.Main(System.String[]\_args):::ENTER
+this_invocation_nonce
+2
+args
+17625630
+1
+args[..]
+[]
+1
+args[..].ToString()
+[]
+1
+
+MyTestProject.A..ctor():::ENTER
+this_invocation_nonce
+3
+
+MyTestProject.A..ctor():::EXIT9
+this_invocation_nonce
+3
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+this
+24412946
+1
+this.GetType()
+"MyTestProject.A"
+1
+this.privateA
+3
+1
+this.publicA
+4
+1
+
+MyTestProject.B..ctor():::ENTER
+this_invocation_nonce
+4
+
+MyTestProject.A..ctor():::ENTER
+this_invocation_nonce
+5
+
+MyTestProject.A..ctor():::EXIT9
+this_invocation_nonce
+5
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+this
+31291646
+1
+this.GetType()
+"MyTestProject.B"
+1
+this.privateA
+3
+1
+this.publicA
+4
+1
+
+MyTestProject.B..ctor():::EXIT9
+this_invocation_nonce
+4
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+this
+31291646
+1
+this.GetType()
+"MyTestProject.B"
+1
+this.privateA
+6
+1
+this.publicA
+4
+1
+
+MyTestProject.Shadowing.fooA(MyTestProject.A\_a):::ENTER
+this_invocation_nonce
+6
+a
+24412946
+1
+a.GetType()
+"MyTestProject.A"
+1
+a.privateA
+3
+1
+a.publicA
+4
+1
+
+MyTestProject.Shadowing.fooA(MyTestProject.A\_a):::EXIT5
+this_invocation_nonce
+6
+a
+24412946
+1
+a.GetType()
+"MyTestProject.A"
+1
+a.privateA
+3
+1
+a.publicA
+4
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+MyTestProject.Shadowing.fooA(MyTestProject.A\_a):::ENTER
+this_invocation_nonce
+7
+a
+31291646
+1
+a.GetType()
+"MyTestProject.B"
+1
+a.privateA
+3
+1
+a.publicA
+4
+1
+
+MyTestProject.Shadowing.fooA(MyTestProject.A\_a):::EXIT5
+this_invocation_nonce
+7
+a
+31291646
+1
+a.GetType()
+"MyTestProject.B"
+1
+a.privateA
+3
+1
+a.publicA
+4
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+MyTestProject.Shadowing.fooB(MyTestProject.B\_b):::ENTER
+this_invocation_nonce
+8
+b
+31291646
+1
+b.GetType()
+"MyTestProject.B"
+1
+b.privateA
+6
+1
+b.publicA
+4
+1
+
+MyTestProject.Shadowing.fooB(MyTestProject.B\_b):::EXIT13
+this_invocation_nonce
+8
+b
+31291646
+1
+b.GetType()
+"MyTestProject.B"
+1
+b.privateA
+6
+1
+b.publicA
+4
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
+MyTestProject.Shadowing.Main(System.String[]\_args):::EXIT14
+this_invocation_nonce
+2
+args
+17625630
+1
+args[..]
+[]
+1
+args[..].ToString()
+[]
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+

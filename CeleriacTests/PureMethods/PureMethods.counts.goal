@@ -1,0 +1,16 @@
+PureMethods.A..ctor(System.Int32\_n) ENTER/6: 3 EXIT11/111: 3
+PureMethods.A.This.get() ENTER/102: 1 EXIT3/207: 1
+PureMethods.A.printN() ENTER/102: 1 EXIT11/108: 1
+PureMethods.GenericAs`1..ctor() ENTER/3: 1 EXIT6/54: 1
+PureMethods.GenericAs`1.Add(System.Int32\_x) ENTER/51: 2 EXIT7/57: 2
+PureMethods.InterfaceImplementor..ctor() ENTER/3: 1 EXIT2/33: 1
+PureMethods.InterfaceImplementor.MethodA() ENTER/27: 2 EXIT3/42: 2
+PureMethods.InterfaceImplementor.PropertyA.get() ENTER/27: 1 EXIT3/42: 1
+PureMethods.InterfaceImplementor.PureMethods.AnotherInterface.MethodA() ENTER/27: 1 EXIT3/42: 1
+PureMethods.InterfaceImplementor.PureMethods.MyInterface.MethodB() ENTER/27: 2 EXIT3/42: 2
+PureMethods.PureMethods..ctor() ENTER/3: 3 EXIT2/15: 3
+PureMethods.PureMethods.DoClass(PureMethods.InterfaceImplementor\_implementor) ENTER/33: 1 EXIT19/39: 1
+PureMethods.PureMethods.DoInterface(PureMethods.MyInterface\_myInterface) ENTER/51: 1 EXIT13/57: 1
+PureMethods.PureMethods.DoInterface2(PureMethods.AnotherInterface\_anotherInterface) ENTER/24: 1 EXIT7/30: 1
+PureMethods.PureMethods.Main(System.String[]\_args) ENTER/12: 1 EXIT37/18: 1
+PureMethods.PureMethods.PrintHelloWorld() ENTER/3: 1 EXIT4/9: 1
