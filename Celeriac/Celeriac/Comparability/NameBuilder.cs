@@ -359,6 +359,12 @@ namespace Comparability
       {
         var arrayName = NameTable[arrayIndexer.IndexedObject];
         TryAdd(arrayIndexer, FormElementsExpression(arrayName));
+
+        // propogate instance expression information
+        if (InstanceExpressionsReferredTypes.ContainsKey(arrayIndexer.IndexedObject))
+        {
+          AddInstanceExpr(InstanceExpressionsReferredTypes[arrayIndexer.IndexedObject], arrayIndexer);
+        }
       }
     }
 

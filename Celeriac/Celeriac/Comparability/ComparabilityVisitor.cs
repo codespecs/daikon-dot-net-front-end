@@ -333,9 +333,16 @@ namespace Comparability
       Contract.Requires(!string.IsNullOrWhiteSpace(array));
       Contract.Ensures(Contract.Result<HashSet<string>>() != null);
 
-      return collectionIndexes.ContainsKey(array)
-             ? collectionIndexes[array]
-             : new HashSet<string>();
+      HashSet<string> indexes;
+
+      if (collectionIndexes.TryGetValue(array, out indexes) && indexes.Count > 0)
+      {
+        return ComparabilitySet(indexes.First());
+      }
+      else
+      {
+        return new HashSet<string>();
+      }
     }
 
     public HashSet<string> StaticNames

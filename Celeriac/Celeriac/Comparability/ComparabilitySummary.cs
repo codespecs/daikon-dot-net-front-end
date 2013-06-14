@@ -62,7 +62,7 @@ namespace Celeriac.Comparability
 
         if (indexOpinion.Count > 0)
         {
-          arrayIndexes.Add(name, names.ThisNames());
+          arrayIndexes.Add(name, indexOpinion);
         }
       }
     }
