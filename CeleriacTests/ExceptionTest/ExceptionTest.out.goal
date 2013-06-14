@@ -1,10 +1,4 @@
 Argument processing complete
-System.Void ExceptionTest.ExceptionTest.Main(System.String[] args)
-System.Int32 ExceptionTest.ExceptionTest.Square(System.Boolean square, System.Int32 n)
-System.Void ExceptionTest.ExceptionTest..ctor()
-System.Void ExceptionTest.CubingClass..ctor(System.Int32 val)
-System.Int32 ExceptionTest.CubingClass.DoCube()
-System.Int32 ExceptionTest.CubingClass.DoNotCube()
 Rewriting complete
 Loading complete. Starting program.
 4

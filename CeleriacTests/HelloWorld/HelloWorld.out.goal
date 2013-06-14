@@ -1,6 +1,4 @@
 Argument processing complete
-System.Void HelloWorld.Main(System.String[] args)
-System.Void HelloWorld..ctor()
 Rewriting complete
 Loading complete. Starting program.
 HelloWorld
