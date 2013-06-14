@@ -1,0 +1,190 @@
+decl-version 2.0
+var-comparability none
+input-language CLR
+
+ppt HelloWorld..ctor():::ENTER
+ppt-type enter
+parent parent HelloWorld:::CLASS 1
+
+ppt HelloWorld..ctor():::EXIT2
+ppt-type subexit
+parent parent HelloWorld:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type HelloWorld
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent HelloWorld:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent HelloWorld:::OBJECT 1
+
+ppt HelloWorld.Main(System.String[]\_args):::ENTER
+ppt-type enter
+parent parent HelloWorld:::CLASS 1
+  variable args
+    var-kind variable
+    dec-type java.lang.String[]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable args[..]
+    var-kind array
+    enclosing-var args
+    array 1
+    dec-type java.lang.String[]
+    rep-type hashcode[]
+    comparability -22
+  variable args[..].ToString()
+    var-kind function ToString()
+    enclosing-var args[..]
+    array 1
+    dec-type java.lang.String[]
+    rep-type java.lang.String[]
+    flags synthetic to_string
+    comparability -22
+
+ppt HelloWorld.Main(System.String[]\_args):::EXIT4
+ppt-type subexit
+parent parent HelloWorld:::CLASS 1
+  variable args
+    var-kind variable
+    dec-type java.lang.String[]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable args[..]
+    var-kind array
+    enclosing-var args
+    array 1
+    dec-type java.lang.String[]
+    rep-type hashcode[]
+    comparability -22
+  variable args[..].ToString()
+    var-kind function ToString()
+    enclosing-var args[..]
+    array 1
+    dec-type java.lang.String[]
+    rep-type java.lang.String[]
+    flags synthetic to_string
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt HelloWorld.Main(System.String[]\_args):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent HelloWorld:::CLASS 1
+  variable args
+    var-kind variable
+    dec-type java.lang.String[]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable args[..]
+    var-kind array
+    enclosing-var args
+    array 1
+    dec-type java.lang.String[]
+    rep-type hashcode[]
+    comparability -22
+  variable args[..].ToString()
+    var-kind function ToString()
+    enclosing-var args[..]
+    array 1
+    dec-type java.lang.String[]
+    rep-type java.lang.String[]
+    flags synthetic to_string
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt HelloWorld:::CLASS
+ppt-type class
+
+ppt HelloWorld:::OBJECT
+ppt-type object
+parent parent HelloWorld:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type HelloWorld
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+HelloWorld.Main(System.String[]\_args):::ENTER
+this_invocation_nonce
+2
+args
+12905972
+1
+args[..]
+[]
+1
+args[..].ToString()
+[]
+1
+
+HelloWorld.Main(System.String[]\_args):::EXIT4
+this_invocation_nonce
+2
+args
+12905972
+1
+args[..]
+[]
+1
+args[..].ToString()
+[]
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+

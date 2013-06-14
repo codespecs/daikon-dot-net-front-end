@@ -1,0 +1,5 @@
+HelloWorld.HelloWorld.Main(System.String[]\_args) ENTER/12: 1 EXIT67/18: 1
+HelloWorld.HelloWorld.intFuncMultipleReturns(System.Collections.Generic.List`1<System.Int32>\_vals,\_System.Int32\_a) ENTER/12: 2 EXIT25/21: 1 EXIT65/21: 1
+HelloWorld.HelloWorld.intFuncSimple(System.Boolean\_returnOne) ENTER/6: 2 EXIT10/15: 1 EXIT13/15: 1
+HelloWorld.HelloWorld.multipleReturnsDelayed(System.Int32\_n) ENTER/6: 5 EXIT12/18: 1 EXIT24/18: 2 EXIT67/18: 2
+HelloWorld.HelloWorld.voidFuncMultipleReturns(System.Collections.Generic.List`1<System.Int32>\_vals,\_System.Int32\_a) ENTER/12: 2 EXIT23/18: 1 EXIT61/18: 1
