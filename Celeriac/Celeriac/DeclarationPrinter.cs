@@ -346,6 +346,9 @@ namespace Celeriac
     /// <param name="flags">Variable flags</param>
     /// <param name="parents">The parent variables</param>
     /// <param name="nestingDepth">Nesting depth of the variable</param>
+    /// Message suppressed because this code is as simple as it will get without refactorings
+    /// that would satisfy the code analysis tool but not improve the code. 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
     private void DeclarationChildPrinting(string name, Type type, VariableKind kind,
       VariableFlags flags, IEnumerable<VariableParent> parents, int nestingDepth, Type originatingType,
       INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
@@ -543,6 +546,10 @@ namespace Celeriac
     /// (how to get to it) </param>
     /// <param name="nestingDepth">The nesting depth of the current variable. If not given 
     /// assumed to be the root value of 0.</param>
+    /// 
+    /// Message suppressed because this code is as simple as it will get without refactorings
+    /// that would satisfy the code analysis tool but not improve the code. 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
     private void PrintList(string name, Type elementType, string enclosingVar,
         Type originatingType, VariableKind kind = VariableKind.array,
         VariableFlags flags = VariableFlags.none,
