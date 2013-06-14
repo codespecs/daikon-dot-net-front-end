@@ -1,6 +1,6 @@
 decl-version 2.0
 var-comparability none
-input-language C#.NET
+input-language CLR
 
 ppt ExceptionTest.CubingClass..ctor(System.Int32\_val):::ENTER
 ppt-type enter
@@ -706,7 +706,7 @@ ExceptionTest.ExceptionTest.Main(System.String[]\_args):::ENTER
 this_invocation_nonce
 2
 args
-33189039
+11958757
 1
 args[..]
 []
@@ -761,7 +761,7 @@ exception.GetType()
 nonsensical
 2
 this
-30265903
+40519951
 1
 this.GetType()
 "ExceptionTest.CubingClass"
@@ -777,7 +777,7 @@ ExceptionTest.CubingClass.DoCube():::ENTER
 this_invocation_nonce
 5
 this
-30265903
+40519951
 1
 this.GetType()
 "ExceptionTest.CubingClass"
@@ -799,7 +799,7 @@ return
 125
 1
 this
-30265903
+40519951
 1
 this.GetType()
 "ExceptionTest.CubingClass"
@@ -812,7 +812,7 @@ ExceptionTest.ExceptionTest.Main(System.String[]\_args):::EXIT77
 this_invocation_nonce
 2
 args
-33189039
+11958757
 1
 args[..]
 []

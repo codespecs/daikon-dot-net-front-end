@@ -1,6 +1,6 @@
 decl-version 2.0
 var-comparability none
-input-language C#.NET
+input-language CLR
 
 ppt HelloWorld..ctor():::ENTER
 ppt-type enter
@@ -160,7 +160,7 @@ HelloWorld.Main(System.String[]\_args):::ENTER
 this_invocation_nonce
 2
 args
-16347077
+12905972
 1
 args[..]
 []
@@ -173,7 +173,7 @@ HelloWorld.Main(System.String[]\_args):::EXIT4
 this_invocation_nonce
 2
 args
-16347077
+12905972
 1
 args[..]
 []

@@ -1,6 +1,6 @@
 decl-version 2.0
 var-comparability none
-input-language C#.NET
+input-language CLR
 
 ppt AdvancedCollections.AdvancedCollections..ctor():::ENTER
 ppt-type enter
@@ -553,7 +553,7 @@ AdvancedCollections.AdvancedCollections.Main(System.String[]\_args):::ENTER
 this_invocation_nonce
 2
 args
-29578451
+64879470
 1
 args[..]
 []
@@ -570,7 +570,7 @@ AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.Hash
 this_invocation_nonce
 4
 set
-64879470
+47044325
 1
 set[..]
 []
@@ -579,7 +579,7 @@ set[..].ToString()
 []
 1
 stringToAdd
-47044325
+20745743
 1
 stringToAdd.ToString()
 "duck"
@@ -595,25 +595,25 @@ exception.GetType()
 nonsensical
 2
 return
-64879470
+47044325
 1
 return[..]
-[47044325]
+[20745743]
 1
 return[..].ToString()
 ["duck"]
 1
 set
-64879470
+47044325
 1
 set[..]
-[47044325]
+[20745743]
 1
 set[..].ToString()
 ["duck"]
 1
 stringToAdd
-47044325
+20745743
 1
 stringToAdd.ToString()
 "duck"
@@ -623,16 +623,16 @@ AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.Hash
 this_invocation_nonce
 5
 set
-64879470
+47044325
 1
 set[..]
-[47044325]
+[20745743]
 1
 set[..].ToString()
 ["duck"]
 1
 stringToAdd
-47044325
+20745743
 1
 stringToAdd.ToString()
 "duck"
@@ -648,25 +648,25 @@ exception.GetType()
 nonsensical
 2
 return
-64879470
+47044325
 1
 return[..]
-[47044325]
+[20745743]
 1
 return[..].ToString()
 ["duck"]
 1
 set
-64879470
+47044325
 1
 set[..]
-[47044325]
+[20745743]
 1
 set[..].ToString()
 ["duck"]
 1
 stringToAdd
-47044325
+20745743
 1
 stringToAdd.ToString()
 "duck"
@@ -676,16 +676,16 @@ AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.Hash
 this_invocation_nonce
 6
 set
-64879470
+47044325
 1
 set[..]
-[47044325]
+[20745743]
 1
 set[..].ToString()
 ["duck"]
 1
 stringToAdd
-20745743
+52493967
 1
 stringToAdd.ToString()
 "goose"
@@ -701,25 +701,25 @@ exception.GetType()
 nonsensical
 2
 return
-64879470
+47044325
 1
 return[..]
-[47044325 20745743]
+[20745743 52493967]
 1
 return[..].ToString()
 ["duck" "goose"]
 1
 set
-64879470
+47044325
 1
 set[..]
-[47044325 20745743]
+[20745743 52493967]
 1
 set[..].ToString()
 ["duck" "goose"]
 1
 stringToAdd
-20745743
+52493967
 1
 stringToAdd.ToString()
 "goose"
@@ -729,16 +729,16 @@ AdvancedCollections.AdvancedCollections.AddToSet(System.Collections.Generic.Hash
 this_invocation_nonce
 7
 set
-64879470
+47044325
 1
 set[..]
-[47044325 20745743]
+[20745743 52493967]
 1
 set[..].ToString()
 ["duck" "goose"]
 1
 stringToAdd
-52493967
+2683661
 1
 stringToAdd.ToString()
 "geese"
@@ -754,25 +754,25 @@ exception.GetType()
 nonsensical
 2
 return
-64879470
+47044325
 1
 return[..]
-[47044325 20745743 52493967]
+[20745743 52493967 2683661]
 1
 return[..].ToString()
 ["duck" "goose" "geese"]
 1
 set
-64879470
+47044325
 1
 set[..]
-[47044325 20745743 52493967]
+[20745743 52493967 2683661]
 1
 set[..].ToString()
 ["duck" "goose" "geese"]
 1
 stringToAdd
-52493967
+2683661
 1
 stringToAdd.ToString()
 "geese"
@@ -782,10 +782,10 @@ AdvancedCollections.AdvancedCollections.DescribeSet(System.Collections.Generic.H
 this_invocation_nonce
 8
 set
-64879470
+47044325
 1
 set[..]
-[47044325 20745743 52493967]
+[20745743 52493967 2683661]
 1
 set[..].ToString()
 ["duck" "goose" "geese"]
@@ -801,10 +801,10 @@ exception.GetType()
 nonsensical
 2
 set
-64879470
+47044325
 1
 set[..]
-[47044325 20745743 52493967]
+[20745743 52493967 2683661]
 1
 set[..].ToString()
 ["duck" "goose" "geese"]
@@ -824,7 +824,7 @@ AdvancedCollections.AdvancedCollections.Main(System.String[]\_args):::EXIT3
 this_invocation_nonce
 2
 args
-29578451
+64879470
 1
 args[..]
 []
