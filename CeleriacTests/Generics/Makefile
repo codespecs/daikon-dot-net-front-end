@@ -1,5 +1,5 @@
 NAME := Generics
 
-DNFE_OPTIONS += --friendly_dec_types=true
+DNFE_OPTIONS += --simple-names --source-language=CSharp
 
 include ../Makefile.common
