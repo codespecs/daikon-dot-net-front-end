@@ -81,9 +81,10 @@ namespace Celeriac
     private const string DefaultSaveProgramLocation = "InstrumentedProgram.exe";
 
     /// <summary>
-    /// The number to returned when sample start is gotten if no sample start is in use.
+    /// The threshold hold cutting off sample start. Supplying this value or any lower value will
+    /// not perform method sampling.
     /// </summary>
-    public const int NoSampleStart = -1;
+    public const int SampleStartCutoff = 0;
 
     /// <summary>
     /// Lambdas expressions create objects with special characters in the name -- don't print these
@@ -862,7 +863,7 @@ namespace Celeriac
         return (this.programArguments.ContainsKey(PossibleArgument.sample_start) ?
                 int.Parse(this.programArguments[PossibleArgument.sample_start],
                     CultureInfo.InvariantCulture) :
-                CeleriacArgs.NoSampleStart);
+                CeleriacArgs.SampleStartCutoff);
       }
     }
 

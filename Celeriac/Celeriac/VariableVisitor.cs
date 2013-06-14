@@ -517,14 +517,14 @@ namespace Celeriac
         // first method call in the program
         return true;
       }
-      else if (celeriacArgs.SampleStart == CeleriacArgs.NoSampleStart)
+      else if (celeriacArgs.SampleStart <= CeleriacArgs.SampleStartCutoff)
       {
         return true;
       }
       else
       {
         ConcurrentDictionary<string, int> occurrences;
-        int occurenceCount;
+        int occurrenceCount;
 
         if (!occurenceCounts.TryGetValue(Thread.CurrentThread, out occurrences))
         {
@@ -535,7 +535,7 @@ namespace Celeriac
         Contract.Assume(occurrences != null, "null occurence count entry found for thread" +
           Thread.CurrentThread.ManagedThreadId.ToString());
 
-        if (!occurrences.TryGetValue(ppt, out occurenceCount))
+        if (!occurrences.TryGetValue(ppt, out occurrenceCount))
         {
           throw new KeyNotFoundException("No occurence count entry for PPT: " + ppt);
         }
@@ -543,7 +543,7 @@ namespace Celeriac
         // For example: if sample start is 5, print occurences we should print occurences
         // 1..5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 100, 150, 200, ...
 
-        if (occurenceCount < celeriacArgs.SampleStart)
+        if (occurrenceCount < celeriacArgs.SampleStart)
         {
           return true;
         }
@@ -551,13 +551,13 @@ namespace Celeriac
         {
           // For each subsequent SampleStart decrease printing by a factor of 10.
           // SampleStart == 5:  5..9 => 1, 45..49 => 9, 50..54 => 10
-          int x = occurenceCount / celeriacArgs.SampleStart;
+          int x = occurrenceCount / celeriacArgs.SampleStart;
 
           // SampleStart == 5:  5..9 => 0, 45..49: 0, 50..54: 1
           // TODO(#40): Optimize this computation. (The ops don't undo each other b/c of rounding)
           int factor = (int)Math.Log10((double)x);
           int pow = (int)Math.Pow(10, factor);
-          return occurenceCount % (celeriacArgs.SampleStart * pow) == 0;
+          return occurrenceCount % (celeriacArgs.SampleStart * pow) == 0;
         }
       }
     }

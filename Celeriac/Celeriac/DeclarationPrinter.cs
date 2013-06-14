@@ -273,6 +273,7 @@ namespace Celeriac
       {
         flags = ExtendFlags(flags, VariableFlags.is_enum);
       }
+
       PrintSimpleDescriptors(name, type, kind, flags, enclosingVar, relativeName, parents, typeContext, methodContext);
 
       // If the variable is an object, then look at its fields or elements.
