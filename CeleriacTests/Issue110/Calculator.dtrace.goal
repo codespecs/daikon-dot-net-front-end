@@ -1,0 +1,144 @@
+decl-version 2.0
+var-comparability none
+input-language CLR
+
+ppt Issue110.Calculator.add(System.Int32\_a,\_System.Int32\_b):::ENTER
+ppt-type enter
+  variable a
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+  variable b
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+
+ppt Issue110.Calculator.add(System.Int32\_a,\_System.Int32\_b):::EXIT5
+ppt-type subexit
+  variable a
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+  variable b
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+
+ppt Issue110.Calculator.add(System.Int32\_a,\_System.Int32\_b):::EXIT7
+ppt-type subexit
+  variable a
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+  variable b
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+
+ppt Issue110.Calculator.add(System.Int32\_a,\_System.Int32\_b):::EXIT_EX_Runtime
+ppt-type subexit
+  variable a
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+  variable b
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+
+Issue110.Calculator.add(System.Int32\_a,\_System.Int32\_b):::ENTER
+this_invocation_nonce
+2
+a
+2
+1
+b
+3
+1
+
+Issue110.Calculator.add(System.Int32\_a,\_System.Int32\_b):::EXIT5
+this_invocation_nonce
+2
+a
+2
+1
+b
+3
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+5
+1
+
