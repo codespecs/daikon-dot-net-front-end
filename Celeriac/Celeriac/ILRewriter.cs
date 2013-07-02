@@ -1729,7 +1729,12 @@ namespace Celeriac
         foreach (var parent in TypeManager.GetContractMethods(methodBody.MethodDefinition))
         {
           var f = FormatMethodName(transition, parent);
-          this.declPrinter.PrintParentName(DeclarationPrinter.SanitizeProgramPointName(f), relId);
+
+          if (this.declPrinter.ShouldPrintParentPptIfNecessary(f))
+          {
+            this.declPrinter.PrintParentName(DeclarationPrinter.SanitizeProgramPointName(f), relId);
+          }
+
           pptRelId[f] = relId++;
         }
       }

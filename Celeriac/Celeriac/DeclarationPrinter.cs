@@ -987,7 +987,8 @@ namespace Celeriac
     }
 
     /// <summary>
-    /// Print a reference to the parent program point of the given type and kind.
+    /// Print a reference to the parent program point of the given type and kind, if parent
+    /// PPT is selected.
     /// </summary>
     /// <param name="type">Type to print the parent reference to</param>
     /// <param name="kind">Either object or class (used for static variables)</param>
@@ -1304,9 +1305,11 @@ namespace Celeriac
     /// </summary>
     /// <param name="parentTypeName">Parent name</param>
     /// <returns>True if the name should be printed, false otherwise</returns>
-    private static bool ShouldPrintParentPptIfNecessary(String parentTypeName)
+    public bool ShouldPrintParentPptIfNecessary(String parentTypeName)
     {
       return !String.IsNullOrEmpty(parentTypeName) &&
+             (celeriacArgs.PptOmitPattern == null || !celeriacArgs.PptOmitPattern.IsMatch(parentTypeName)) &&
+             (celeriacArgs.PptSelectPattern == null || celeriacArgs.PptSelectPattern.IsMatch(parentTypeName)) &&
              !TypeManager.RegexForTypesToIgnoreForProgramPoint.IsMatch(parentTypeName) &&
              !TypeManager.CodeContractRuntimePpts.IsMatch(parentTypeName);
     }
