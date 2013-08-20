@@ -117,10 +117,11 @@ namespace Celeriac
     private Stack<ILocalScope> scopeStack = new Stack<ILocalScope>();
 
     /// <summary>
-    /// Relationship IDs for program points; cleared for each method. Keys are method signatures formatted
-    /// with FormatMethodName, and include the transistion.
+    /// Relationship IDs for program points; cleared for each method. Keys are: (1) method signatures formatted
+    /// with FormatMethodName, and include the transistion, or (2) type names.
     /// </summary>
-    private readonly Dictionary<string, int> pptRelId = new Dictionary<string, int>();
+    /// TWS: refactor
+    public static readonly Dictionary<string, int> pptRelId = new Dictionary<string, int>();
 
     /// <summary>
     /// Reference to the VariableVisitor method that loads assembly name and path
@@ -157,6 +158,22 @@ namespace Celeriac
     /// </summary>
     private ITypeDefinition argumentStoringType;
 
+    /// <summary>
+    /// All types referenced by expressions in the program
+    /// </summary>
+    private readonly HashSet<Type> referencedTypes = new HashSet<Type>();
+
+    /// <summary>
+    /// Mapping from System.Types to their assembly type references
+    /// </summary>
+    /// TWS: refactor
+    public static readonly Dictionary<Type, ITypeReference> assemblyTypes = new Dictionary<Type, ITypeReference>(); 
+
+    /// <summary>
+    /// The types that have been declared in the DECLS
+    /// </summary>
+    private readonly HashSet<Type> declaredTypes = new HashSet<Type>();
+
     #endregion
 
     private enum MethodTransition
@@ -181,6 +198,10 @@ namespace Celeriac
       Contract.Invariant(systemString == host.PlatformType.SystemString);
       Contract.Invariant(systemObject == host.PlatformType.SystemObject);
       Contract.Invariant(systemVoid == host.PlatformType.SystemVoid);
+
+      Contract.Invariant(referencedTypes != null);
+      Contract.Invariant(declaredTypes != null);
+      Contract.Invariant(assemblyTypes != null);
     }
 
     public ILRewriter(IMetadataHost host, PdbReader pdbReader, CeleriacArgs celeriacArgs,
@@ -1726,18 +1747,68 @@ namespace Celeriac
           IsThisValid(transition, methodBody.MethodDefinition) ? PptKind.Object : PptKind.Class);
 
         int relId = VariableParent.ObjectRelId + 1;
+
+        // Create parent entries for the methods that this method implements/overrides
         foreach (var parent in TypeManager.GetContractMethods(methodBody.MethodDefinition))
         {
-          var f = FormatMethodName(transition, parent);
+          var methodPpt = FormatMethodName(transition, parent);
 
-          if (this.declPrinter.ShouldPrintParentPptIfNecessary(f))
+          if (this.declPrinter.ShouldPrintParentPptIfNecessary(methodPpt))
           {
-            this.declPrinter.PrintParentName(DeclarationPrinter.SanitizeProgramPointName(f), relId);
+            // Should we sanitize before checking if the parent PPT should be printed?
+            this.declPrinter.PrintParentName(DeclarationPrinter.SanitizeProgramPointName(methodPpt), relId);
           }
 
-          pptRelId[f] = relId++;
+          pptRelId[methodPpt] = relId++;
+        }
+
+        // Create parent entries for the types that this method refers to
+        if (this.celeriacArgs.LinkObjectInvariants)
+        {
+          foreach (var type in GetTypeReferences(methodBody.MethodDefinition))
+          {
+            var typeName = assemblyTypes.ContainsKey(type) ? TypeManager.GetTypeName(assemblyTypes[type]) : TypeManager.GetTypeName(type);
+            var objectPpt = typeName + ":::OBJECT";
+
+            if (this.declPrinter.ShouldPrintParentPptIfNecessary(objectPpt))
+            {
+              // Should we sanitize before checking if the parent PPT should be printed?
+              this.declPrinter.PrintParentName(DeclarationPrinter.SanitizeProgramPointName(objectPpt), relId);     
+            }
+
+            pptRelId[objectPpt] = relId++;
+          }
         }
       }
+    }
+
+    /// <summary>
+    /// Returns the types referenced by the containing type, parameters, and return values for <paramref name="method"/>.
+    /// </summary>
+    /// <param name="method">The method</param>
+    /// <returns>the types referenced by the containing type, parameters, and return values for <paramref name="method"/></returns>
+    private ISet<Type> GetTypeReferences(IMethodDefinition method)
+    {
+      Contract.Requires(method != null);
+
+      var result = new HashSet<Type>();
+
+      // (1) types referenced from fields in containing type
+      var containingType = this.typeManager.ConvertCCITypeToAssemblyQualifiedName(method.ContainingType);
+      result.UnionWith(this.declPrinter.CollectTypes(containingType));
+      
+      // (2) type references from parameters
+      foreach (var param in method.Parameters)
+      {
+        var qualifiedType = this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param.Type);
+        result.UnionWith(this.declPrinter.CollectTypes(qualifiedType));
+      }
+
+      // (3) types referenced from return value
+      var returnType = this.typeManager.ConvertCCITypeToAssemblyQualifiedName(method.Type);
+      result.UnionWith(this.declPrinter.CollectTypes(returnType));
+
+      return result;
     }
 
     /// <summary>
@@ -1918,10 +1989,10 @@ namespace Celeriac
                              DeclarationPrinter.SanitizeProgramPointName(FormatMethodName(transition, m)),
                              pptRelId[FormatMethodName(transition, m)],
                              nullIfSame(m.Parameters.ElementAt(i - 1).Name.Value));
-            
-            this.declPrinter.PrintParameter(param.Name.ToString(),
-              this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param.Type),
-              method, parents);
+
+            var qualifiedType = this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param.Type);
+
+            this.declPrinter.PrintParameter(param.Name.ToString(), qualifiedType, method, parents);
           }
         }
 
@@ -2381,21 +2452,44 @@ namespace Celeriac
       {
         this.declPrinter = new DeclarationPrinter(this.celeriacArgs, this.typeManager, this.comparabilityManager);
 
-        foreach (INamedTypeDefinition type in mutableAssembly.AllTypes)
+        Predicate<INamedTypeDefinition> instrument = type =>
+        {
+          string typeName = TypeManager.GetTypeName(type);
+          return !TypeManager.RegexForTypesToIgnoreForProgramPoint.IsMatch(typeName) &&
+                 !TypeManager.CodeContractRuntimePpts.IsMatch(typeName) &&
+                 !typeName.Equals(ArgumentStoringClassName) &&
+                 !TypeManager.IsCompilerGenerated(type) &&
+                 !typeManager.IsNotInstrumentable(type);
+        };
+
+        // Make a pass to record which System.Types are defined in the assembly being instrumented
+        foreach (INamedTypeDefinition type in mutableAssembly.AllTypes.Where(t => instrument(t)))
+        {
+          string typeName = TypeManager.GetTypeName(type);
+
+          var qualifiedName = this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type);
+          var objectTypeDecl = typeManager.ConvertAssemblyQualifiedNameToType(qualifiedName);
+          foreach (Type systemType in objectTypeDecl.GetAllTypes)
+          {
+            assemblyTypes.Add(systemType, type);
+          }
+        }
+
+        foreach (INamedTypeDefinition type in mutableAssembly.AllTypes.Where(t => instrument(t)))
         {
           // CCI components come up named <*>, and we want to exclude them.
           // Also exclude the name of the class storing arguments (for offline programs)
           string typeName = TypeManager.GetTypeName(type);
-          if (!TypeManager.RegexForTypesToIgnoreForProgramPoint.IsMatch(typeName) &&
-              !TypeManager.CodeContractRuntimePpts.IsMatch(typeName) &&
-              !typeName.Equals(ArgumentStoringClassName) &&
-              !TypeManager.IsCompilerGenerated(type) &&
-              !typeManager.IsNotInstrumentable(type))
+
+          var qualifiedName = this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type);
+          this.declPrinter.PrintObjectDefinition(typeName, qualifiedName, type);
+          this.declPrinter.PrintParentClassDefinition(typeName, qualifiedName, type);
+
+          var objectTypeDecl = typeManager.ConvertAssemblyQualifiedNameToType(qualifiedName);
+          foreach (Type objectType in objectTypeDecl.GetAllTypes)
           {
-            this.declPrinter.PrintObjectDefinition(typeName,
-                this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type), type);
-            this.declPrinter.PrintParentClassDefinition(typeName,
-                this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type), type);
+            referencedTypes.Add(objectType);
+            declaredTypes.Add(objectType);
           }
         }
       }
