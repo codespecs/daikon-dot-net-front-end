@@ -955,6 +955,19 @@ namespace Celeriac
     }
 
     /// <summary>
+    /// Returns the name for the type, suitable for use in the declarations file. If possible, use the <code>ITypeReference</code> form
+    /// of this method
+    /// </summary>
+    /// <param name="type">The type</param>
+    /// <returns>the name for the type, suitable for use in the declarations file</returns>
+    public static string GetTypeName(Type type)
+    {
+      Contract.Requires(type != null);
+      Contract.Ensures(!String.IsNullOrEmpty(Contract.Result<string>()));
+      return type.FullName;
+    }
+
+    /// <summary>
     /// Get a Reflection Type from a CCI Type
     /// </summary>
     /// <param name="type">A reference to a CCI Type defined in the program to be profiled</param>
@@ -1415,6 +1428,8 @@ namespace Celeriac
     /// </returns>
     public static Type GetListElementType(Type type)
     {
+      Contract.Ensures(Contract.Result<Type>() != null);
+
       // Element type is in HasElementType for arrays and a generic parameter for generic lists,
       // and if we have no type information let it be object
       Type elementType = ObjectType;

@@ -263,7 +263,7 @@ namespace Celeriac
       Contract.Requires(typeContext != null || methodContext != null);
 
       parents = parents ?? new VariableParent[0];
-
+      
       if (PerformEarlyExitChecks(name, kind, enclosingVar, nestingDepth))
       {
         return;
@@ -272,6 +272,26 @@ namespace Celeriac
       if (type.IsEnum)
       {
         flags = ExtendFlags(flags, VariableFlags.is_enum);
+      }
+
+      // For linking object invariants, need to introduce a parent for the declared type
+      if (!name.Equals("this"))
+      {
+        var origParents = new List<VariableParent>(parents);
+        var objType = ILRewriter.assemblyTypes.ContainsKey(type) ? TypeManager.GetTypeName(ILRewriter.assemblyTypes[type]) : TypeManager.GetTypeName(type);
+        var objPpt = objType + ":::OBJECT";
+
+        if (ILRewriter.pptRelId.ContainsKey(objPpt))
+        {
+          var objParent = new VariableParent(SanitizeProgramPointName(objPpt), ILRewriter.pptRelId[objPpt], "this");
+          origParents.Add(objParent);
+        }
+        else
+        {
+          Console.WriteLine("No PPT Rel ID for " + type.Name);
+        }
+
+        parents = origParents;
       }
 
       PrintSimpleDescriptors(name, type, kind, flags, enclosingVar, relativeName, parents, typeContext, methodContext);
@@ -1392,6 +1412,115 @@ namespace Celeriac
 
     #endregion
 
+    #region Type Traversal
+
+    /// <summary>
+    /// Collect types for parameter of type <paramref name="paramType"/> for a parameter or return value.
+    /// </summary>
+    /// <param name="paramType">The parameter type</param>
+    /// <param name="acc">Result accumulator</param>
+    public ISet<Type> CollectTypes(string paramType)
+    {
+      Contract.Requires(!String.IsNullOrEmpty(paramType));
+      Contract.Ensures(Contract.Result<ISet<Type>>() != null);
+
+      CeleriacTypeDeclaration typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(paramType);
+
+      var acc = new HashSet<Type>();
+      foreach (Type type in typeDecl.GetAllTypes.Where(t => t != null))
+      {
+        CollectTypes(type, typeof(DummyOriginator), acc, 0);
+      }
+
+      return acc;
+    }
+
+    /// <summary>
+    /// Collect types for the elements of a collection.
+    /// </summary>
+    /// <param name="type">The collection type</param>
+    /// <param name="acc">Result accumulator</param>
+    public void CollectElementTypes(Type type, Type originatingType, HashSet<Type> acc, int nestingDepth)
+    {
+      Contract.Requires(type != null);
+      Contract.Requires(originatingType != null);
+      Contract.Requires(acc != null);
+      Contract.Requires(nestingDepth >= 1);
+
+      CollectChildTypes(TypeManager.GetListElementType(type), originatingType, acc, nestingDepth);
+    }
+
+    /// <summary>
+    /// Collect types for fields and pure methods for <paramref name="type"/>.
+    /// </summary>
+    /// <param name="type">The parent type</param>
+    /// <param name="originatingType">The type originating the request (for visibility calculations)</param>
+    /// <param name="acc">Result accumulator</param>
+    /// <param name="nestingDepth">The traversal nesting depth of the parent</param>
+    public void CollectChildTypes(Type type, Type originatingType, HashSet<Type> acc, int nestingDepth)
+    {
+      Contract.Requires(type != null);
+      Contract.Requires(originatingType != null);
+      Contract.Requires(acc != null);
+      Contract.Requires(nestingDepth >= 0);
+
+      foreach (FieldInfo field in
+         type.GetSortedFields(this.celeriacArgs.GetInstanceAccessOptionsForFieldInspection(type, originatingType)))
+      {
+        if (!this.typeManager.ShouldIgnoreField(type, field))
+        {
+          CollectTypes(field.FieldType, originatingType, acc, nestingDepth: nestingDepth + 1);
+        }
+      }
+
+      foreach (FieldInfo staticField in
+        type.GetSortedFields(this.celeriacArgs.GetStaticAccessOptionsForFieldInspection(
+        type, originatingType)))
+      {
+        if (!this.typeManager.ShouldIgnoreField(type, staticField)){
+          CollectTypes(staticField.FieldType, originatingType, acc, nestingDepth: nestingDepth + 1);
+        }
+      }
+
+      foreach (var method in typeManager.GetPureMethodsForType(type, originatingType))
+      {
+        CollectTypes(method.ReturnType, originatingType, acc, nestingDepth: nestingDepth + 1);
+      }
+    }
+
+    /// <summary>
+    /// Collect types for <paramref name="type"/>.
+    /// </summary>
+    /// <param name="type">The type to collect types for</param>
+    /// <param name="originatingType">Type originating the request (for visibility calculation)</param>
+    /// <param name="acc">Result accumulator</param>
+    /// <param name="nestingDepth">The traversal nesting depth of the type</param>
+    public void CollectTypes(Type type, Type originatingType, HashSet<Type> acc, int nestingDepth)
+    {
+      Contract.Requires(type != null);
+      Contract.Requires(originatingType != null);
+      Contract.Requires(acc != null);
+      Contract.Requires(nestingDepth >= 0);
+
+      if (nestingDepth <= this.celeriacArgs.MaxNestingDepth)
+      {
+        if (this.typeManager.IsListImplementer(type) || this.typeManager.IsSet(type))
+        {
+          CollectChildTypes(type, originatingType, acc, nestingDepth: nestingDepth + 1);
+        }
+        else
+        {
+          if (!type.IsPrimitive && type != typeof(void))
+          {
+            acc.Add(type);
+          }
+
+          CollectTypes(type, originatingType, acc, nestingDepth: nestingDepth + 1);
+        }
+      }
+    }
+
+    #endregion
 
     /// <summary>
     /// Returns a method expression string suitable for printing. 

@@ -104,7 +104,7 @@ namespace Celeriac
     internal enum PossibleArgument
     {
       // Comments indicate section argument is defined under in documentation
-      /* Please keep each section in alphabetical order. */
+      // **Please keep each section in alphabetical order** 
 
       // Program Point Options
       ppt_omit_pattern,
@@ -122,6 +122,14 @@ namespace Celeriac
       omit_var,
       purity_file,
       std_visibility,
+      /// <summary>
+      /// Link every expression to an object invariant PPT for its type in the assembly
+      /// </summary>
+      link_assembly_object_invariants,
+      /// <summary>
+      /// Link every expression to an object invariant PPT for its type (including those not in the assembly)
+      /// </summary>
+      link_object_invariants,
 
       // Misc. options
       assembly_name,
@@ -955,6 +963,23 @@ namespace Celeriac
     public bool IsPortableDll
     {
       get { return this.programArguments.ContainsKey(PossibleArgument.portable_dll); }
+    }
+
+    /// <summary>
+    /// If <code>true</code>, link all expressions to an object invariant PPT for their type (event those
+    /// not in the assembly).
+    /// </summary>
+    public bool LinkObjectInvariants
+    {
+      get { return this.programArguments.ContainsKey(PossibleArgument.link_object_invariants); }
+    }
+
+    /// <summary>
+    /// If <code>true</code>, link all expressions to an object invariant PPT for their type
+    /// </summary>
+    public bool LinkAssemblyObjectInvariants
+    {
+      get { return this.programArguments.ContainsKey(PossibleArgument.link_assembly_object_invariants); }
     }
 
     /// <summary>
