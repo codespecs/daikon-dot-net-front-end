@@ -255,13 +255,12 @@ namespace Celeriac
         VariableFlags flags = VariableFlags.none,
         string enclosingVar = "", string relativeName = "", IEnumerable<VariableParent> parents = null,
         int nestingDepth = 0,
-        INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
+        ITypeReference typeContext = null, IMethodDefinition methodContext = null)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(name));
       Contract.Requires(type != null);
       Contract.Requires(nestingDepth >= 0);
-      Contract.Requires(typeContext != null || methodContext != null);
-
+     
       parents = parents ?? new VariableParent[0];
       
       if (PerformEarlyExitChecks(name, kind, enclosingVar, nestingDepth))
@@ -285,6 +284,7 @@ namespace Celeriac
         {
           var objParent = new VariableParent(SanitizeProgramPointName(objPpt), ILRewriter.pptRelId[objPpt], "this");
           origParents.Add(objParent);
+          ILRewriter.referencedTypes.Add(type);
         }
         else
         {
@@ -372,13 +372,12 @@ namespace Celeriac
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
     private void DeclarationChildPrinting(string name, Type type, VariableKind kind,
       VariableFlags flags, IEnumerable<VariableParent> parents, int nestingDepth, Type originatingType,
-      INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
+      ITypeReference typeContext = null, IMethodDefinition methodContext = null)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(name));
       Contract.Requires(type != null);
       Contract.Requires(nestingDepth >= 0);
-      Contract.Requires(typeContext != null || methodContext != null);
-
+      
       foreach (FieldInfo field in
         type.GetSortedFields(this.celeriacArgs.GetInstanceAccessOptionsForFieldInspection(
             type, originatingType)))
@@ -472,7 +471,7 @@ namespace Celeriac
       }
     }
 
-    private void PrintStaticFields(Type type, Type originatingType, INamedTypeDefinition typeContext, IMethodDefinition methodContext)
+    private void PrintStaticFields(Type type, Type originatingType, ITypeReference typeContext, IMethodDefinition methodContext)
     {
       foreach (FieldInfo staticField in
           type.GetSortedFields(this.celeriacArgs.GetStaticAccessOptionsForFieldInspection(
@@ -511,12 +510,11 @@ namespace Celeriac
     /// <param name="parents">Parent information for the variable</param>
     private void PrintSimpleDescriptors(string name, Type type, VariableKind kind,
       VariableFlags flags, string enclosingVar, string relativeName, IEnumerable<VariableParent> parents,
-      INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
+      ITypeReference typeContext = null, IMethodDefinition methodContext = null)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(name));
       Contract.Requires(type != null);
-      Contract.Requires(typeContext != null || methodContext != null);
-
+      
       this.WritePair("variable", name, 1);
 
       PrintVarKind(kind, relativeName);
@@ -541,7 +539,11 @@ namespace Celeriac
 
       if (comparabilityManager != null)
       {
-        this.WritePair("comparability", comparabilityManager.GetComparability(name, typeManager, typeContext, methodContext), 2);
+        var cmp = typeContext == null && methodContext == null ?
+          ComparabilityConstant :
+          comparabilityManager.GetComparability(name, typeManager, typeContext, methodContext);
+
+        this.WritePair("comparability", cmp , 2);
       }
       else
       {
@@ -575,7 +577,7 @@ namespace Celeriac
         Type originatingType, VariableKind kind = VariableKind.array,
         VariableFlags flags = VariableFlags.none,
         string relativeName = "", IEnumerable<VariableParent> parents = null, int nestingDepth = 0,
-        INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
+        ITypeReference typeContext = null, IMethodDefinition methodContext = null)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(name));
 
@@ -761,11 +763,10 @@ namespace Celeriac
     /// </param>
     /// <param name="parentObjectType">Assembly-qualified name of the type of the parent
     /// </param>
-    public void PrintParentObjectFields(VariableParent parentPpt, string assemblyQualifiedName, INamedTypeDefinition typeContext, IMethodDefinition methodContext)
+    public void PrintParentObjectFields(VariableParent parentPpt, string assemblyQualifiedName, ITypeReference typeContext, IMethodDefinition methodContext)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(assemblyQualifiedName));
 
-      
       CeleriacTypeDeclaration typeDecl =
           this.typeManager.ConvertAssemblyQualifiedNameToType(assemblyQualifiedName);
 
@@ -811,11 +812,10 @@ namespace Celeriac
     /// Print the declarations for all fields of the given type.
     /// </summary>
     /// <param name="type">Type to print declarations of the static fields of</param>
-    private void DeclareStaticFieldsForType(Type type, Type originatingType, INamedTypeDefinition typeContext, IMethodDefinition methodContext = null)
+    private void DeclareStaticFieldsForType(Type type, Type originatingType, ITypeReference typeContext, IMethodDefinition methodContext = null)
     {
       Contract.Requires(type != null);
-      Contract.Requires(typeContext != null || methodContext != null);
-
+     
       foreach (FieldInfo staticField in
         // type passed in as originating type so we get all the fields for it
         type.GetSortedFields(this.celeriacArgs.GetStaticAccessOptionsForFieldInspection(
@@ -919,12 +919,12 @@ namespace Celeriac
     /// <param name="objectName">How the object should be described in the declaration</param>
     /// <param name="objectAssemblyQualifiedName">Assembly qualified name of the object,
     /// used to fetch the Type</param>
-    public void PrintObjectDefinition(string objectName, string objectAssemblyQualifiedName, INamedTypeDefinition type)
+    /// <param name="type">The type reference, or <c>null</c> if the type is in an external assembly</param>
+    public void PrintObjectDefinition(string objectName, string objectAssemblyQualifiedName, ITypeReference/*?*/ type)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(objectName));
       Contract.Requires(!string.IsNullOrWhiteSpace(objectAssemblyQualifiedName));
-      Contract.Requires(type != null);
-
+      
       CeleriacTypeDeclaration objectTypeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
       foreach (Type objectType in objectTypeDecl.GetAllTypes)
@@ -954,12 +954,11 @@ namespace Celeriac
     /// <param name="className">Name of the class whose static fields are being examined</param>
     /// <param name="objectAssemblyQualifiedName">The assembly qualified name of the object whose 
     /// static fields to print</param>
-    public void PrintParentClassDefinition(string className, string objectAssemblyQualifiedName, INamedTypeDefinition typeContext)
+    public void PrintParentClassDefinition(string className, string objectAssemblyQualifiedName, ITypeReference typeContext)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(className));
       Contract.Requires(!string.IsNullOrWhiteSpace(objectAssemblyQualifiedName));
-      Contract.Requires(typeContext != null);
-
+      
       CeleriacTypeDeclaration objectTypeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
       foreach (Type objectType in objectTypeDecl.GetAllTypes)
@@ -973,7 +972,6 @@ namespace Celeriac
           this.WritePair("ppt-type", "class");
           DeclareStaticFieldsForType(objectType, objectType, typeContext);
         }
-
       }
     }
 
@@ -1380,7 +1378,7 @@ namespace Celeriac
     private void DeclareVariableAsList(string name, Type type, IEnumerable<VariableParent> parents,
         int nestingDepth, Type originatingType,
         VariableFlags collectionFlags = VariableFlags.none,
-        INamedTypeDefinition typeContext = null, IMethodDefinition methodContext = null)
+        ITypeReference typeContext = null, IMethodDefinition methodContext = null)
     {
       Type elementType = TypeManager.GetListElementType(type);
       // Print the type of the list if it's not primitive

@@ -161,7 +161,7 @@ namespace Celeriac
     /// <summary>
     /// All types referenced by expressions in the program
     /// </summary>
-    private readonly HashSet<Type> referencedTypes = new HashSet<Type>();
+    public static readonly HashSet<Type> referencedTypes = new HashSet<Type>();
 
     /// <summary>
     /// Mapping from System.Types to their assembly type references
@@ -2480,7 +2480,6 @@ namespace Celeriac
           // CCI components come up named <*>, and we want to exclude them.
           // Also exclude the name of the class storing arguments (for offline programs)
           string typeName = TypeManager.GetTypeName(type);
-
           var qualifiedName = this.typeManager.ConvertCCITypeToAssemblyQualifiedName(type);
           this.declPrinter.PrintObjectDefinition(typeName, qualifiedName, type);
           this.declPrinter.PrintParentClassDefinition(typeName, qualifiedName, type);
@@ -2498,8 +2497,24 @@ namespace Celeriac
 
       if (this.printDeclarations)
       {
+        if (this.celeriacArgs.LinkObjectInvariants)
+        {
+          // print any missing missing object DECLS that are referenced
+          foreach (var type in referencedTypes.Where(t => !declaredTypes.Contains(t)))
+          {
+            string typeName = TypeManager.GetTypeName(type);
+
+            // try to grab context (used when grabbing comparability information)
+            var context = assemblyTypes.ContainsKey(type) ? assemblyTypes[type] : null;
+
+            this.declPrinter.PrintParentClassDefinition(typeName, type.AssemblyQualifiedName, context);
+            this.declPrinter.PrintObjectDefinition(typeName, type.AssemblyQualifiedName, context);
+          }
+        }
+
         this.declPrinter.CloseWriter();
       }
+
       return result;
     }
 

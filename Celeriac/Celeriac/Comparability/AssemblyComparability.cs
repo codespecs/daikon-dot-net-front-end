@@ -109,8 +109,8 @@ namespace Celeriac.Comparability
     /// <param name="typeManager">type information</param>
     /// <param name="type">type context</param>
     /// <param name="method">method context, or <c>null</c></param>
-    /// <returns></returns>
-    internal int GetComparability(string name, TypeManager typeManager, INamedTypeDefinition type, IMethodDefinition method = null)
+    /// <returns>the comparability set id</returns>
+    internal int GetComparability(string name, TypeManager typeManager, ITypeReference type, IMethodDefinition method = null)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(name));
       Contract.Requires(type != null || method != null);
