@@ -274,7 +274,7 @@ namespace Celeriac
       }
 
       // For linking object invariants, need to introduce a parent for the declared type
-      if (!name.Equals("this"))
+      if (!name.Equals("this") && !type.IsGenericParameter)
       {
         var origParents = new List<VariableParent>(parents);
         var objType = ILRewriter.assemblyTypes.ContainsKey(type) ? TypeManager.GetTypeName(ILRewriter.assemblyTypes[type]) : TypeManager.GetTypeName(type);
@@ -288,7 +288,7 @@ namespace Celeriac
         }
         else
         {
-          Console.WriteLine("No PPT Rel ID for " + type.Name);
+          //Console.WriteLine("No PPT Rel ID for " + type.Name);
         }
 
         parents = origParents;
@@ -635,6 +635,8 @@ namespace Celeriac
 
       if (comparabilityManager != null)
       {
+        if (typeContext != null || methodContext != null)
+        {
           // Is it OK to include index information for non-ordered collections? A new comparability set will 
           // be generated for it since there could be no index information.
           this.WritePair("comparability",
@@ -642,6 +644,11 @@ namespace Celeriac
                 comparabilityManager.GetComparability(name, typeManager, typeContext, methodContext),
                 comparabilityManager.GetIndexComparability(name, typeManager, typeContext, methodContext)),
               2);
+        }
+        else
+        {
+          this.WritePair("comparability", ComparabilityConstant, IndentsForEntry);
+        }
       }
       else
       {
@@ -913,14 +920,66 @@ namespace Celeriac
       
     }
 
+
+    public void PrintObjectDefinition(string objectName, Type objectType, ITypeReference/*?*/ typeRef)
+    {
+      Contract.Requires(!String.IsNullOrEmpty(objectName));
+      Contract.Requires(objectType != null);
+
+      this.variablesForCurrentProgramPoint.Clear();
+      if (objectType != null)
+      {
+        string nameToPrint = SanitizeProgramPointName(objectName + ":::OBJECT");
+        if (celeriacArgs.ShouldPrintProgramPoint(nameToPrint))
+        {
+          this.WriteLine();
+          this.WritePair("ppt", nameToPrint);
+          this.WritePair("ppt-type", "object");
+          this.WritePair("parent", "parent " + nameToPrint.Replace(":::OBJECT", ":::CLASS 1"));
+
+          ILRewriter.pptRelId.Clear();
+          var relId = VariableParent.ObjectRelId + 1;
+
+          // Create parent entries for the types that this method refers to
+          if (this.celeriacArgs.LinkObjectInvariants)
+          {
+            var allRefs = (typeRef != null ? GetTypeReferences(typeRef.ResolvedType) : GetTypeReferences(objectType));
+            var nonGeneric = allRefs.Where(t => !t.IsGenericParameter).ToList();
+
+            foreach (var refType in allRefs)
+            {
+              var typeName = ILRewriter.assemblyTypes.ContainsKey(refType) ? TypeManager.GetTypeName(ILRewriter.assemblyTypes[refType]) : TypeManager.GetTypeName(refType);
+              var objectPpt = typeName + ":::OBJECT";
+
+              if (ShouldPrintParentPptIfNecessary(objectPpt))
+              {
+                // Should we sanitize before checking if the parent PPT should be printed?
+                PrintParentName(DeclarationPrinter.SanitizeProgramPointName(objectPpt), relId);
+
+                // Make sure object ppt is printed for the type
+                ILRewriter.referencedTypes.Add(refType);
+              }
+
+              ILRewriter.pptRelId[objectPpt] = relId++;
+            }
+          }
+
+          // Pass objectType in as originating type so we get all its private fields.
+          this.DeclareVariable("this", objectType, objectType, VariableKind.variable,
+              flags: ExtendFlags(VariableFlags.is_param, VariableFlags.is_reference_immutable, MarkIf(TypeManager.IsImmutable(objectType), VariableFlags.is_reference_immutable)),
+              typeContext: typeRef);
+        }
+      }
+    }
+
     /// <summary>
     /// Print the declaration of the object with the given qualified assembly name
     /// </summary>
     /// <param name="objectName">How the object should be described in the declaration</param>
     /// <param name="objectAssemblyQualifiedName">Assembly qualified name of the object,
     /// used to fetch the Type</param>
-    /// <param name="type">The type reference, or <c>null</c> if the type is in an external assembly</param>
-    public void PrintObjectDefinition(string objectName, string objectAssemblyQualifiedName, ITypeReference/*?*/ type)
+    /// <param name="typeRef">The type reference, or <c>null</c> if the type is in an external assembly</param>
+    public void PrintObjectDefinition(string objectName, string objectAssemblyQualifiedName, ITypeReference/*?*/ typeRef)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(objectName));
       Contract.Requires(!string.IsNullOrWhiteSpace(objectAssemblyQualifiedName));
@@ -929,22 +988,7 @@ namespace Celeriac
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
       foreach (Type objectType in objectTypeDecl.GetAllTypes)
       {
-        this.variablesForCurrentProgramPoint.Clear();
-        if (objectType != null)
-        {
-          string nameToPrint = SanitizeProgramPointName(objectName + ":::OBJECT");
-          if (celeriacArgs.ShouldPrintProgramPoint(nameToPrint))
-          {
-            this.WriteLine();
-            this.WritePair("ppt", nameToPrint);
-            this.WritePair("ppt-type", "object");
-            this.WritePair("parent", "parent " + nameToPrint.Replace(":::OBJECT", ":::CLASS 1"));
-            // Pass objectType in as originating type so we get all its private fields.
-            this.DeclareVariable("this", objectType, objectType, VariableKind.variable,
-                flags: ExtendFlags(VariableFlags.is_param, VariableFlags.is_reference_immutable, MarkIf(TypeManager.IsImmutable(objectType), VariableFlags.is_reference_immutable)),
-                typeContext: type);
-          }
-        }
+        PrintObjectDefinition(objectName, objectType, typeRef);
       }
     }
 
@@ -1434,6 +1478,23 @@ namespace Celeriac
     }
 
     /// <summary>
+    /// Collect types for parameter of type <paramref name="paramType"/> for a parameter or return value.
+    /// </summary>
+    /// <param name="paramType">The parameter type</param>
+    /// <param name="acc">Result accumulator</param>
+    public ISet<Type> CollectTypes(Type paramType)
+    {
+      Contract.Requires(paramType != null);
+      Contract.Ensures(Contract.Result<ISet<Type>>() != null);
+
+      var acc = new HashSet<Type>();
+
+      CollectTypes(paramType, typeof(DummyOriginator), acc, 0);
+
+      return acc;
+    }
+
+    /// <summary>
     /// Collect types for the elements of a collection.
     /// </summary>
     /// <param name="type">The collection type</param>
@@ -1508,7 +1569,9 @@ namespace Celeriac
         }
         else
         {
-          if (!type.IsPrimitive && type != typeof(void))
+          // exclude these types, since they are handled specially by Daikon
+          var exclude = new[] { typeof(void), typeof(object), typeof(string), typeof(Type) };
+          if (!type.IsPrimitive && !exclude.Contains(type))
           {
             acc.Add(type);
           }
@@ -1516,6 +1579,56 @@ namespace Celeriac
           CollectTypes(type, originatingType, acc, nestingDepth: nestingDepth + 1);
         }
       }
+    }
+
+    /// <summary>
+    /// Returns the types referenced fields and properties for <paramref name="typeDef"/>.
+    /// </summary>
+    /// <param name="typeDef">the type</param>
+    /// <returns>the types referenced by the containing type, parameters, and return values for <paramref name="typeDef"/></returns>
+    private ISet<Type> GetTypeReferences(ITypeDefinition typeDef)
+    {
+      Contract.Requires(typeDef != null);
+
+      var result = new HashSet<Type>();
+
+      foreach (var field in typeDef.Fields)
+      {
+        var qualifiedType = this.typeManager.ConvertCCITypeToAssemblyQualifiedName(field.Type);
+        result.UnionWith(CollectTypes(qualifiedType));
+      }
+
+      foreach (var prop in typeDef.Properties.Where(p => p.Getter != null))
+      {
+        var qualifiedType = this.typeManager.ConvertCCITypeToAssemblyQualifiedName(prop.Type);
+        result.UnionWith(CollectTypes(qualifiedType));
+      }
+
+      return result;
+    }
+
+    /// <summary>
+    /// Returns the types referenced fields and properties for <paramref name="typeDef"/>.
+    /// </summary>
+    /// <param name="type">type type</param>
+    /// <returns>the types referenced by the containing type, parameters, and return values for <paramref name="type"/></returns>
+    private ISet<Type> GetTypeReferences(Type type)
+    {
+      Contract.Requires(type != null);
+
+      var result = new HashSet<Type>();
+
+      foreach (var field in type.GetFields())
+      {
+        result.UnionWith(CollectTypes(field.FieldType));
+      }
+
+      foreach (var prop in type.GetProperties().Where(p => p.GetGetMethod() != null))
+      {
+        result.UnionWith(CollectTypes(prop.PropertyType));
+      }
+
+      return result;
     }
 
     #endregion
