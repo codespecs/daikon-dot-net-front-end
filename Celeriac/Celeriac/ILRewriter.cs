@@ -167,7 +167,7 @@ namespace Celeriac
     /// Mapping from System.Types to their assembly type references
     /// </summary>
     /// TWS: refactor
-    public static readonly Dictionary<Type, ITypeReference> assemblyTypes = new Dictionary<Type, ITypeReference>(); 
+    public static readonly Dictionary<Type, ITypeReference> assemblyTypes = new Dictionary<Type, ITypeReference>();
 
     /// <summary>
     /// The types that have been declared in the DECLS
@@ -272,8 +272,30 @@ namespace Celeriac
         // TODO: how should we handle exceptional exits
         foreach (var t in new[] { MethodTransition.ENTER, MethodTransition.EXIT })
         {
+          pptRelId.Clear();
+
           // Print either the enter or exit statement
           this.DeclareMethodTransition(t, FormatMethodName(t, method), string.Empty);
+
+          // Create parent entries for the types that this method refers to
+          if (this.celeriacArgs.LinkObjectInvariants)
+          {
+            var relId = VariableParent.ObjectRelId + 1;
+
+            foreach (var type in GetTypeReferences(method).Where(x => !x.IsGenericParameter))
+            {
+              var typeName = assemblyTypes.ContainsKey(type) ? TypeManager.GetTypeName(assemblyTypes[type]) : TypeManager.GetTypeName(type);
+              var objectPpt = typeName + ":::OBJECT";
+
+              if (this.declPrinter.ShouldPrintParentPptIfNecessary(objectPpt))
+              {
+                // Should we sanitize before checking if the parent PPT should be printed?
+                this.declPrinter.PrintParentName(DeclarationPrinter.SanitizeProgramPointName(objectPpt), relId);
+              }
+
+              pptRelId[objectPpt] = relId++;
+            }
+          }
 
           int i = 0;
           foreach (var param in method.Parameters)
@@ -1697,8 +1719,7 @@ namespace Celeriac
       if (transition == MethodTransition.EXIT && this.printDeclarations)
       {
         // Declare the return if it's not a void method and there's any return statement
-        if ((methodBody.MethodDefinition.Type.TypeCode !=
-            host.PlatformType.SystemVoid.TypeCode))
+        if ((methodBody.MethodDefinition.Type.TypeCode != host.PlatformType.SystemVoid.TypeCode))
         {
           var parents = from m in TypeManager.GetContractMethods(methodBody.MethodDefinition)
                         // TODO(#109): by uninstantiating the method and comparing types, we can avoid linking 
@@ -1765,7 +1786,7 @@ namespace Celeriac
         // Create parent entries for the types that this method refers to
         if (this.celeriacArgs.LinkObjectInvariants)
         {
-          foreach (var type in GetTypeReferences(methodBody.MethodDefinition))
+          foreach (var type in GetTypeReferences(methodBody.MethodDefinition).Where(t => !t.IsGenericParameter))
           {
             var typeName = assemblyTypes.ContainsKey(type) ? TypeManager.GetTypeName(assemblyTypes[type]) : TypeManager.GetTypeName(type);
             var objectPpt = typeName + ":::OBJECT";
@@ -1773,7 +1794,10 @@ namespace Celeriac
             if (this.declPrinter.ShouldPrintParentPptIfNecessary(objectPpt))
             {
               // Should we sanitize before checking if the parent PPT should be printed?
-              this.declPrinter.PrintParentName(DeclarationPrinter.SanitizeProgramPointName(objectPpt), relId);     
+              this.declPrinter.PrintParentName(DeclarationPrinter.SanitizeProgramPointName(objectPpt), relId);
+
+              // Make sure object ppt is printed for the type
+              referencedTypes.Add(type);
             }
 
             pptRelId[objectPpt] = relId++;
@@ -1784,6 +1808,7 @@ namespace Celeriac
 
     /// <summary>
     /// Returns the types referenced by the containing type, parameters, and return values for <paramref name="method"/>.
+    /// NOTE: instantiated generic types include their type arguments.
     /// </summary>
     /// <param name="method">The method</param>
     /// <returns>the types referenced by the containing type, parameters, and return values for <paramref name="method"/></returns>
@@ -1810,6 +1835,8 @@ namespace Celeriac
 
       return result;
     }
+
+   
 
     /// <summary>
     /// Emit the instrumentation and print the declaration for any static fields of the parent class.
@@ -2489,6 +2516,16 @@ namespace Celeriac
           {
             referencedTypes.Add(objectType);
             declaredTypes.Add(objectType);
+
+            if (objectType.IsGenericType)
+            {
+              var def = objectType.GetGenericTypeDefinition();
+              declaredTypes.Add(def);
+              referencedTypes.Add(def);
+              Console.WriteLine("Declared: " + def.FullName);
+            }
+
+            Console.WriteLine("Declared: " + objectType.FullName);
           }
         }
       }
@@ -2499,17 +2536,40 @@ namespace Celeriac
       {
         if (this.celeriacArgs.LinkObjectInvariants)
         {
-          // print any missing missing object DECLS that are referenced
-          foreach (var type in referencedTypes.Where(t => !declaredTypes.Contains(t)))
+          var printed = new HashSet<string>();
+
+          bool addedType = false;
+
+          do
           {
-            string typeName = TypeManager.GetTypeName(type);
+            addedType = false;
 
-            // try to grab context (used when grabbing comparability information)
-            var context = assemblyTypes.ContainsKey(type) ? assemblyTypes[type] : null;
+            // print any missing missing object DECLS that are referenced
+            var refs = referencedTypes.Where(t => !declaredTypes.Contains(t) && !t.IsGenericParameter).ToList();
+            foreach (var type in refs)
+            {
+              if (type.IsGenericType && declaredTypes.Contains(type.GetGenericTypeDefinition()))
+              {
+                continue;
+              }
 
-            this.declPrinter.PrintParentClassDefinition(typeName, type.AssemblyQualifiedName, context);
-            this.declPrinter.PrintObjectDefinition(typeName, type.AssemblyQualifiedName, context);
-          }
+              string typeName = TypeManager.GetTypeName(type);
+
+              if (!printed.Contains(typeName))
+              {
+                // try to grab context (used when grabbing comparability information)
+                var context = assemblyTypes.ContainsKey(type) ? assemblyTypes[type] : null;
+
+                this.declPrinter.PrintParentClassDefinition(typeName, type.AssemblyQualifiedName, context);
+                this.declPrinter.PrintObjectDefinition(typeName, type.AssemblyQualifiedName, context);
+
+                Console.WriteLine("Created external type entry: " + typeName);
+
+                printed.Add(typeName);
+                addedType = true;
+              }
+            }
+          } while (addedType);
         }
 
         this.declPrinter.CloseWriter();

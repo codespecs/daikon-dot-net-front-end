@@ -956,15 +956,27 @@ namespace Celeriac
 
     /// <summary>
     /// Returns the name for the type, suitable for use in the declarations file. If possible, use the <code>ITypeReference</code> form
-    /// of this method
+    /// of this method. Names of generic types are of the form <c>Fully.Qualified.Namespace.SimpleName`N</c>, where <c>N</c> is the
+    /// number of generic parameters.
     /// </summary>
     /// <param name="type">The type</param>
     /// <returns>the name for the type, suitable for use in the declarations file</returns>
     public static string GetTypeName(Type type)
     {
       Contract.Requires(type != null);
+      Contract.Requires(!type.IsGenericParameter);
       Contract.Ensures(!String.IsNullOrEmpty(Contract.Result<string>()));
-      return type.FullName;
+      Contract.Assume(!String.IsNullOrEmpty(type.FullName), "Type has empty qualified name " + type);
+
+      if (type.IsGenericType)
+      {
+        Contract.Assume(type.FullName.Contains('['), "Generic type missing parameter list: " + type.FullName); 
+        return type.FullName.Substring(0, type.FullName.IndexOf('['));
+      }
+      else
+      {
+        return type.FullName;
+      }  
     }
 
     /// <summary>
