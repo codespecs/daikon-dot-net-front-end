@@ -2539,11 +2539,15 @@ namespace Celeriac
           var printed = new HashSet<string>();
 
           bool addedType = false;
+          int roundCount = 0;
 
           do
           {
             addedType = false;
+            roundCount++;
 
+            Console.WriteLine("Adding missing ref types. Round #" + roundCount);
+           
             // print any missing missing object DECLS that are referenced
             var refs = referencedTypes.Where(t => !declaredTypes.Contains(t) && !t.IsGenericParameter).ToList();
             foreach (var type in refs)
