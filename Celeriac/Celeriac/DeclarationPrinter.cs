@@ -946,7 +946,12 @@ namespace Celeriac
             var allRefs = (typeRef != null ? GetTypeReferences(typeRef.ResolvedType) : GetTypeReferences(objectType));
             var nonGeneric = allRefs.Where(t => !t.IsGenericParameter).ToList();
 
-            foreach (var refType in allRefs)
+            foreach (var r in allRefs)
+            {
+              Console.WriteLine("   " + r.FullName);
+            }
+
+            foreach (var refType in nonGeneric)
             {
               var typeName = ILRewriter.assemblyTypes.ContainsKey(refType) ? TypeManager.GetTypeName(ILRewriter.assemblyTypes[refType]) : TypeManager.GetTypeName(refType);
               var objectPpt = typeName + ":::OBJECT";
@@ -1618,7 +1623,7 @@ namespace Celeriac
 
       var result = new HashSet<Type>();
 
-      foreach (var field in type.GetFields())
+      foreach (var field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
       {
         result.UnionWith(CollectTypes(field.FieldType));
       }
