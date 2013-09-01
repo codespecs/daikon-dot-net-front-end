@@ -1786,7 +1786,7 @@ namespace Celeriac
         // Create parent entries for the types that this method refers to
         if (this.celeriacArgs.LinkObjectInvariants)
         {
-          foreach (var type in GetTypeReferences(methodBody.MethodDefinition).Where(t => !t.IsGenericParameter))
+          foreach (var type in GetTypeReferences(methodBody.MethodDefinition).Where(t => TypeManager.CanLinkToObjectType(t)))
           {
             var typeName = assemblyTypes.ContainsKey(type) ? TypeManager.GetTypeName(assemblyTypes[type]) : TypeManager.GetTypeName(type);
             var objectPpt = typeName + ":::OBJECT";
@@ -2522,10 +2522,8 @@ namespace Celeriac
               var def = objectType.GetGenericTypeDefinition();
               declaredTypes.Add(def);
               referencedTypes.Add(def);
-              Console.WriteLine("Declared: " + def.FullName);
             }
 
-            Console.WriteLine("Declared: " + objectType.FullName);
           }
         }
       }
@@ -2546,10 +2544,8 @@ namespace Celeriac
             addedType = false;
             roundCount++;
 
-            Console.WriteLine("Adding missing ref types. Round #" + roundCount);
-           
             // print any missing missing object DECLS that are referenced
-            var refs = referencedTypes.Where(t => !declaredTypes.Contains(t) && !t.IsGenericParameter).ToList();
+            var refs = referencedTypes.Where(t => !declaredTypes.Contains(t) && TypeManager.CanLinkToObjectType(t)).ToList();
             foreach (var type in refs)
             {
               if (type.IsGenericType && declaredTypes.Contains(type.GetGenericTypeDefinition()))
@@ -2564,10 +2560,12 @@ namespace Celeriac
                 // try to grab context (used when grabbing comparability information)
                 var context = assemblyTypes.ContainsKey(type) ? assemblyTypes[type] : null;
 
-                this.declPrinter.PrintParentClassDefinition(typeName, type.AssemblyQualifiedName, context);
-                this.declPrinter.PrintObjectDefinition(typeName, type.AssemblyQualifiedName, context);
+                var asm = type.IsGenericType ? type.GetGenericTypeDefinition().AssemblyQualifiedName : type.AssemblyQualifiedName;
+                
+                Contract.Assume(!string.IsNullOrEmpty(asm), "Type " + typeName + " has no assembly qualified name");
 
-                Console.WriteLine("Created external type entry: " + typeName);
+                this.declPrinter.PrintParentClassDefinition(typeName, asm, context);
+                this.declPrinter.PrintObjectDefinition(typeName, asm, context, linkObjectInvariants: roundCount < this.celeriacArgs.MaxNestingDepth);
 
                 printed.Add(typeName);
                 addedType = true;
