@@ -603,6 +603,31 @@ namespace Celeriac
     }
 
     /// <summary>
+    /// Returns <c>true</c> if an expression of type <paramref name="type"/> should link to its object invariant.
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns><c>true</c> if an expression of type <paramref name="type"/> should link to its object invariant</returns>
+    public static bool CanLinkToObjectType(Type type)
+    {
+      Contract.Requires(type != null);
+
+      if (type.IsGenericParameter)
+      {
+        // false, since we can't create a DECL OBJECT for the type
+        return false;
+      }
+      else if (type.IsArray)
+      {
+        // false, arrays are handled by sub-expressions?
+        return false;
+      }
+      else
+      {
+        return true;
+      }
+    }
+
+    /// <summary>
     /// Returns whether the given type is any of the numeric types, e.g. int, float, BigInteger.
     /// </summary>
     /// <param name="type">Type to test</param>
@@ -966,9 +991,16 @@ namespace Celeriac
       Contract.Requires(type != null);
       Contract.Requires(!type.IsGenericParameter);
       Contract.Ensures(!String.IsNullOrEmpty(Contract.Result<string>()));
-      Contract.Assume(!String.IsNullOrEmpty(type.FullName), "Type has empty qualified name " + type);
 
-      if (type.IsGenericType)
+      type = type.IsGenericType ? type.GetGenericTypeDefinition() : type;
+      
+      Contract.Assume(!String.IsNullOrEmpty(type.FullName), "Type has no qualified name (type is not a definition but contains generic parameters?): " + type);
+
+      if (type.IsGenericTypeDefinition)
+      {
+        return type.FullName;
+      }
+      else if (type.IsGenericType)
       {
         Contract.Assume(type.FullName.Contains('['), "Generic type missing parameter list: " + type.FullName); 
         return type.FullName.Substring(0, type.FullName.IndexOf('['));

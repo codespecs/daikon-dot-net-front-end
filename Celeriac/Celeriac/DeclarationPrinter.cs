@@ -274,7 +274,7 @@ namespace Celeriac
       }
 
       // For linking object invariants, need to introduce a parent for the declared type
-      if (!name.Equals("this") && !type.IsGenericParameter)
+      if (!name.Equals("this") && TypeManager.CanLinkToObjectType(type))
       {
         var origParents = new List<VariableParent>(parents);
         var objType = ILRewriter.assemblyTypes.ContainsKey(type) ? TypeManager.GetTypeName(ILRewriter.assemblyTypes[type]) : TypeManager.GetTypeName(type);
@@ -285,10 +285,6 @@ namespace Celeriac
           var objParent = new VariableParent(SanitizeProgramPointName(objPpt), ILRewriter.pptRelId[objPpt], "this");
           origParents.Add(objParent);
           ILRewriter.referencedTypes.Add(type);
-        }
-        else
-        {
-          //Console.WriteLine("No PPT Rel ID for " + type.Name);
         }
 
         parents = origParents;
@@ -921,7 +917,7 @@ namespace Celeriac
     }
 
 
-    public void PrintObjectDefinition(string objectName, Type objectType, ITypeReference/*?*/ typeRef)
+    public void PrintObjectDefinition(string objectName, Type objectType, ITypeReference/*?*/ typeRef, bool linkObjectInvariants = true)
     {
       Contract.Requires(!String.IsNullOrEmpty(objectName));
       Contract.Requires(objectType != null);
@@ -940,20 +936,17 @@ namespace Celeriac
           ILRewriter.pptRelId.Clear();
           var relId = VariableParent.ObjectRelId + 1;
 
-          // Create parent entries for the types that this method refers to
-          if (this.celeriacArgs.LinkObjectInvariants)
+          // Create parent entries for the types that this object refers to
+          if (linkObjectInvariants && this.celeriacArgs.LinkObjectInvariants)
           {
             var allRefs = (typeRef != null ? GetTypeReferences(typeRef.ResolvedType) : GetTypeReferences(objectType));
             var nonGeneric = allRefs.Where(t => !t.IsGenericParameter).ToList();
 
-            foreach (var r in allRefs)
-            {
-              Console.WriteLine("   " + r.FullName);
-            }
-
             foreach (var refType in nonGeneric)
             {
-              var typeName = ILRewriter.assemblyTypes.ContainsKey(refType) ? TypeManager.GetTypeName(ILRewriter.assemblyTypes[refType]) : TypeManager.GetTypeName(refType);
+              var typeName = ILRewriter.assemblyTypes.ContainsKey(refType) ? 
+                TypeManager.GetTypeName(ILRewriter.assemblyTypes[refType]) :
+                TypeManager.GetTypeName(refType.IsGenericType ? refType.GetGenericTypeDefinition() : refType);
               var objectPpt = typeName + ":::OBJECT";
 
               if (ShouldPrintParentPptIfNecessary(objectPpt))
@@ -984,7 +977,7 @@ namespace Celeriac
     /// <param name="objectAssemblyQualifiedName">Assembly qualified name of the object,
     /// used to fetch the Type</param>
     /// <param name="typeRef">The type reference, or <c>null</c> if the type is in an external assembly</param>
-    public void PrintObjectDefinition(string objectName, string objectAssemblyQualifiedName, ITypeReference/*?*/ typeRef)
+    public void PrintObjectDefinition(string objectName, string objectAssemblyQualifiedName, ITypeReference/*?*/ typeRef, bool linkObjectInvariants = true)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(objectName));
       Contract.Requires(!string.IsNullOrWhiteSpace(objectAssemblyQualifiedName));
@@ -993,7 +986,7 @@ namespace Celeriac
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
       foreach (Type objectType in objectTypeDecl.GetAllTypes)
       {
-        PrintObjectDefinition(objectName, objectType, typeRef);
+        PrintObjectDefinition(objectName, objectType, typeRef, linkObjectInvariants);
       }
     }
 
