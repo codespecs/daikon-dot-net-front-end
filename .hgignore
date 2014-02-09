@@ -1,0 +1,26 @@
+syntax: glob
+*/bin/*
+*/obj/*
+*.exe
+*.pdb
+*.csproj.user
+*.bak
+*.aux
+*.bbl
+*.log
+*.blg
+*.orig
+*.rej
+*.suo
+
+## Backup file
+\#*\#
+*~
+
+## Test Artifacts
+CeleriacTests/Makefile.user
+CeleriacTests/*/daikon-output/*
+CeleriacTests/*/ran-dnfe
+CeleriacTests/*/*.out
+CeleriacTests/*/*.diff
+CeleriacTests/*/*.counts

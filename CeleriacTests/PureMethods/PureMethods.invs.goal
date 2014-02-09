@@ -1,0 +1,451 @@
+===========================================================================
+PureMethods.A:::OBJECT
+this == this.PureMethod4
+this.NPlusOne == this.PureMethod4.NPlusOne
+this.NPlusOne == this.This.NPlusOne
+this.PureMethod1 == this.PureMethod4.PureMethod1
+this.PureMethod1 == this.This.PureMethod1
+this.PureMethod2 == this.PureMethod4.PureMethod2
+this.PureMethod2 == this.This.PureMethod2
+this.PureMethod3 == this.PureMethod4.PureMethod3
+this.PureMethod3 == this.PureMethod4.n
+this.PureMethod3 == this.This.PureMethod3
+this.PureMethod3 == this.This.n
+this.PureMethod3 == this.n
+this.PureMethod4 == this.PureMethod4.PureMethod4
+this.PureMethod4 == this.PureMethod4.This
+this.PureMethod4 == this.This
+this.PureMethod4 == this.This.PureMethod4
+this.PureMethod4 == this.This.This
+this.PureMethod4.genericList == this.genericList
+this.PureMethod4.genericList[] == this.genericList[]
+this.This.genericList == this.genericList
+this.This.genericList[] == this.genericList[]
+string.IsNullOrWhiteSpace(this.PureMethod2) == false
+this.NPlusOne one of { 2, 3, 7 }
+this.PureMethod1 == 0
+this.PureMethod2 has only one value
+this.PureMethod2.ToString() == "0"
+this.PureMethod3 one of { 1, 2, 6 }
+this.PureMethod4.GetType() == PureMethods.A.class
+this.genericList[] one of { [], [6] }
+this.GetType() == this.PureMethod4.GetType()
+this.PureMethod4.GetType() == this.This.GetType()
+===========================================================================
+PureMethods.A..ctor(System.Int32 n):::ENTER
+n one of { 1, 2, 6 }
+===========================================================================
+PureMethods.A..ctor(System.Int32 n):::EXIT
+this.PureMethod3 == orig(n)
+this.genericList[] == []
+===========================================================================
+PureMethods.A.This.get():::ENTER
+this.NPlusOne == 7
+this.PureMethod3 == 6
+this.PureMethod4 has only one value
+this.genericList has only one value
+this.genericList[] == []
+===========================================================================
+PureMethods.A.This.get():::EXIT3
+===========================================================================
+PureMethods.A.This.get():::EXIT
+return == return.PureMethod4
+return == return.PureMethod4.PureMethod4
+return == return.PureMethod4.This
+return == return.This
+return == return.This.PureMethod4
+return == return.This.This
+return == this.PureMethod4
+return == this.PureMethod4.PureMethod4
+return == this.PureMethod4.This
+return == this.This
+return == this.This.PureMethod4
+return == this.This.This
+return == orig(this)
+return == orig(this.PureMethod4)
+return == orig(this.PureMethod4.PureMethod4)
+return == orig(this.PureMethod4.This)
+return == orig(this.This)
+return == orig(this.This.PureMethod4)
+return == orig(this.This.This)
+return.NPlusOne == return.PureMethod4.NPlusOne
+return.NPlusOne == return.This.NPlusOne
+return.NPlusOne == this.NPlusOne
+return.NPlusOne == this.PureMethod4.NPlusOne
+return.NPlusOne == this.This.NPlusOne
+return.NPlusOne == orig(this.NPlusOne)
+return.NPlusOne == orig(this.PureMethod4.NPlusOne)
+return.NPlusOne == orig(this.This.NPlusOne)
+return.PureMethod1 == return.PureMethod4.PureMethod1
+return.PureMethod1 == return.This.PureMethod1
+return.PureMethod1 == this.PureMethod1
+return.PureMethod1 == this.PureMethod4.PureMethod1
+return.PureMethod1 == this.This.PureMethod1
+return.PureMethod1 == orig(this.PureMethod1)
+return.PureMethod1 == orig(this.PureMethod4.PureMethod1)
+return.PureMethod1 == orig(this.This.PureMethod1)
+return.PureMethod2 == return.PureMethod4.PureMethod2
+return.PureMethod2 == return.This.PureMethod2
+return.PureMethod2 == this.PureMethod2
+return.PureMethod2 == this.PureMethod4.PureMethod2
+return.PureMethod2 == this.This.PureMethod2
+return.PureMethod2 == orig(this.PureMethod2)
+return.PureMethod2 == orig(this.PureMethod4.PureMethod2)
+return.PureMethod2 == orig(this.This.PureMethod2)
+return.PureMethod3 == return.PureMethod4.PureMethod3
+return.PureMethod3 == return.PureMethod4.n
+return.PureMethod3 == return.This.PureMethod3
+return.PureMethod3 == return.This.n
+return.PureMethod3 == return.n
+return.PureMethod3 == this.PureMethod3
+return.PureMethod3 == this.PureMethod4.PureMethod3
+return.PureMethod3 == this.PureMethod4.n
+return.PureMethod3 == this.This.PureMethod3
+return.PureMethod3 == this.This.n
+return.PureMethod3 == this.n
+return.PureMethod3 == orig(this.PureMethod3)
+return.PureMethod3 == orig(this.PureMethod4.PureMethod3)
+return.PureMethod3 == orig(this.PureMethod4.n)
+return.PureMethod3 == orig(this.This.PureMethod3)
+return.PureMethod3 == orig(this.This.n)
+return.PureMethod3 == orig(this.n)
+return.PureMethod4.genericList == return.genericList
+return.PureMethod4.genericList[] == return.genericList[]
+return.This.genericList == return.genericList
+return.This.genericList[] == return.genericList[]
+return.genericList == this.PureMethod4.genericList
+return.genericList == this.This.genericList
+return.genericList == this.genericList
+return.genericList == orig(this.PureMethod4.genericList)
+return.genericList == orig(this.This.genericList)
+return.genericList == orig(this.genericList)
+return.genericList[] == this.PureMethod4.genericList[]
+return.genericList[] == this.This.genericList[]
+return.genericList[] == this.genericList[]
+return.genericList[] == orig(this.PureMethod4.genericList[])
+return.genericList[] == orig(this.This.genericList[])
+return.genericList[] == orig(this.genericList[])
+string.IsNullOrWhiteSpace(return.PureMethod2) == string.IsNullOrWhiteSpace(this.PureMethod2)
+string.IsNullOrWhiteSpace(return.PureMethod2) == orig(string.IsNullOrWhiteSpace(this.PureMethod2))
+return has only one value
+return.GetType() == PureMethods.A.class
+return.NPlusOne == 7
+return.PureMethod1 == 0
+return.PureMethod2 has only one value
+return.PureMethod2.ToString() == "0"
+return.PureMethod3 == 6
+return.genericList has only one value
+return.genericList[] == []
+string.IsNullOrWhiteSpace(return.PureMethod2) == false
+return.PureMethod2.ToString() == this.PureMethod2.ToString()
+return.PureMethod2.ToString() == orig(this.PureMethod2.ToString())
+===========================================================================
+PureMethods.A.printN():::ENTER
+this.NPlusOne == 7
+this.PureMethod3 == 6
+this.PureMethod4 has only one value
+this.genericList has only one value
+this.genericList[] == []
+===========================================================================
+PureMethods.A.printN():::EXIT11
+===========================================================================
+PureMethods.A.printN():::EXIT
+string.IsNullOrWhiteSpace(this.PureMethod2) == orig(string.IsNullOrWhiteSpace(this.PureMethod2))
+this.NPlusOne == orig(this.NPlusOne)
+this.NPlusOne == orig(this.PureMethod4.NPlusOne)
+this.NPlusOne == orig(this.This.NPlusOne)
+this.PureMethod1 == orig(this.PureMethod1)
+this.PureMethod1 == orig(this.PureMethod4.PureMethod1)
+this.PureMethod1 == orig(this.This.PureMethod1)
+this.PureMethod2 == orig(this.PureMethod2)
+this.PureMethod2 == orig(this.PureMethod4.PureMethod2)
+this.PureMethod2 == orig(this.This.PureMethod2)
+this.PureMethod3 == orig(this.PureMethod3)
+this.PureMethod3 == orig(this.PureMethod4.PureMethod3)
+this.PureMethod3 == orig(this.PureMethod4.n)
+this.PureMethod3 == orig(this.This.PureMethod3)
+this.PureMethod3 == orig(this.This.n)
+this.PureMethod3 == orig(this.n)
+this.PureMethod4 == orig(this)
+this.PureMethod4 == orig(this.PureMethod4)
+this.PureMethod4 == orig(this.PureMethod4.PureMethod4)
+this.PureMethod4 == orig(this.PureMethod4.This)
+this.PureMethod4 == orig(this.This)
+this.PureMethod4 == orig(this.This.PureMethod4)
+this.PureMethod4 == orig(this.This.This)
+this.genericList == orig(this.PureMethod4.genericList)
+this.genericList == orig(this.This.genericList)
+this.genericList == orig(this.genericList)
+this.NPlusOne == 7
+this.PureMethod3 == 6
+this.PureMethod4 has only one value
+this.genericList has only one value
+this.genericList[] == [6]
+this.PureMethod2.ToString() == orig(this.PureMethod2.ToString())
+===========================================================================
+PureMethods.AnotherInterface.MethodA():::EXIT
+return has only one value
+return.ToString() == "AnotherInterface.MethodA()"
+string.IsNullOrWhiteSpace(return) == false
+===========================================================================
+PureMethods.GenericAs:::OBJECT
+this.genericSet[] == this.genericSet[].PureMethod4
+this.genericSet[] == this.genericSet[].This
+this.genericSet[].PureMethod3 == this.genericSet[].n
+this has only one value
+this.GetType() == PureMethods.GenericAs`1[PureMethods.A].class
+this.Size one of { 0, 1, 2 }
+this.genericSet has only one value
+this.genericSet.GetType() == PureMethods.A[].class
+this.genericSet[].NPlusOne one of { [], [2], [2, 3] }
+this.genericSet[].PureMethod1 one of { [], [0], [0, 0] }
+this.genericSet[].PureMethod3 one of { [], [1], [1, 2] }
+===========================================================================
+PureMethods.GenericAs`1..ctor():::EXIT
+this.genericSet[].NPlusOne == this.genericSet[].PureMethod1
+this.genericSet[].NPlusOne == this.genericSet[].PureMethod3
+this.genericSet[].NPlusOne == this.genericSet[].n
+this.Size == 0
+this.genericSet[] == []
+this.genericSet[].GetType() == []
+this.genericSet[].NPlusOne == []
+this.genericSet[].PureMethod2 == []
+this.genericSet[].genericList == []
+===========================================================================
+PureMethods.GenericAs`1.Add(System.Int32 x):::ENTER
+this.Size one of { 0, 1 }
+this.genericSet[] elements has only one value
+this.genericSet[].GetType() elements == PureMethods.A.class
+this.genericSet[].GetType() one of { [], [PureMethods.A] }
+this.genericSet[].NPlusOne elements == 2
+this.genericSet[].NPlusOne one of { [], [2] }
+this.genericSet[].PureMethod1 elements == 0
+this.genericSet[].PureMethod1 one of { [], [0] }
+this.genericSet[i].PureMethod1 == i
+this.genericSet[].PureMethod2 elements has only one value
+this.genericSet[].PureMethod3 elements == 1
+this.genericSet[].PureMethod3 one of { [], [1] }
+this.genericSet[].genericList elements has only one value
+x one of { 1, 2 }
+this.genericSet[].PureMethod3 elements == this.Size
+this.genericSet[].NPlusOne elements == x
+===========================================================================
+PureMethods.GenericAs`1.Add(System.Int32 x):::EXIT7
+===========================================================================
+PureMethods.GenericAs`1.Add(System.Int32 x):::EXIT
+this.Size == orig(x)
+this.genericSet == orig(this.genericSet)
+this.Size one of { 1, 2 }
+this.genericSet[].GetType() elements == PureMethods.A.class
+this.genericSet[].GetType() one of { [PureMethods.A], [PureMethods.A, PureMethods.A] }
+this.genericSet[].NPlusOne elements one of { 2, 3 }
+this.genericSet[].NPlusOne one of { [2], [2, 3] }
+this.genericSet[].PureMethod1 elements == 0
+this.genericSet[].PureMethod1 one of { [0], [0, 0] }
+this.genericSet[].PureMethod2 elements has only one value
+this.genericSet[].PureMethod3 elements one of { 1, 2 }
+this.genericSet[].PureMethod3 one of { [1], [1, 2] }
+this.Size in this.genericSet[].PureMethod3
+orig(this.genericSet[].NPlusOne) elements == this.Size
+this.genericSet.GetType() == orig(this.genericSet.GetType())
+orig(this.genericSet[]) is a subsequence of this.genericSet[]
+orig(this.genericSet[].NPlusOne) is a subsequence of this.genericSet[].NPlusOne
+orig(this.genericSet[].PureMethod1) is a subsequence of this.genericSet[].PureMethod1
+orig(this.genericSet[].PureMethod2) is a subsequence of this.genericSet[].PureMethod2
+orig(this.genericSet[].NPlusOne) is a subsequence of this.genericSet[].PureMethod3
+orig(this.genericSet[].PureMethod3) is a subsequence of this.genericSet[].PureMethod3
+orig(this.genericSet[].genericList) is a subsequence of this.genericSet[].genericList
+===========================================================================
+PureMethods.InterfaceImplementor:::OBJECT
+string.IsNullOrWhiteSpace(this.MethodA) == string.IsNullOrWhiteSpace(this.PropertyA)
+string.IsNullOrWhiteSpace(this.MethodA) == false
+this has only one value
+this.GetType() == PureMethods.InterfaceImplementor.class
+this.MethodA has only one value
+this.MethodA.ToString() == "MethodA()"
+this.PropertyA has only one value
+this.PropertyA.ToString() == "PropertyA"
+===========================================================================
+PureMethods.InterfaceImplementor..ctor():::EXIT
+===========================================================================
+PureMethods.InterfaceImplementor.MethodA():::ENTER
+===========================================================================
+PureMethods.InterfaceImplementor.MethodA():::EXIT3
+===========================================================================
+PureMethods.InterfaceImplementor.MethodA():::EXIT
+return == this.MethodA
+return == orig(this.MethodA)
+string.IsNullOrWhiteSpace(return) == string.IsNullOrWhiteSpace(this.MethodA)
+string.IsNullOrWhiteSpace(return) == string.IsNullOrWhiteSpace(this.PropertyA)
+string.IsNullOrWhiteSpace(return) == orig(string.IsNullOrWhiteSpace(this.MethodA))
+string.IsNullOrWhiteSpace(return) == orig(string.IsNullOrWhiteSpace(this.PropertyA))
+this.PropertyA == orig(this.PropertyA)
+return.ToString() == this.MethodA.ToString()
+return.ToString() == orig(this.MethodA.ToString())
+this.PropertyA.ToString() == orig(this.PropertyA.ToString())
+===========================================================================
+PureMethods.InterfaceImplementor.PropertyA.get():::ENTER
+===========================================================================
+PureMethods.InterfaceImplementor.PropertyA.get():::EXIT3
+===========================================================================
+PureMethods.InterfaceImplementor.PropertyA.get():::EXIT
+return == this.PropertyA
+return == orig(this.PropertyA)
+string.IsNullOrWhiteSpace(return) == string.IsNullOrWhiteSpace(this.MethodA)
+string.IsNullOrWhiteSpace(return) == string.IsNullOrWhiteSpace(this.PropertyA)
+string.IsNullOrWhiteSpace(return) == orig(string.IsNullOrWhiteSpace(this.MethodA))
+string.IsNullOrWhiteSpace(return) == orig(string.IsNullOrWhiteSpace(this.PropertyA))
+this.MethodA == orig(this.MethodA)
+return.ToString() == this.PropertyA.ToString()
+return.ToString() == orig(this.PropertyA.ToString())
+this.MethodA.ToString() == orig(this.MethodA.ToString())
+===========================================================================
+PureMethods.InterfaceImplementor.PureMethods.AnotherInterface.MethodA():::ENTER
+===========================================================================
+PureMethods.InterfaceImplementor.PureMethods.AnotherInterface.MethodA():::EXIT3
+===========================================================================
+PureMethods.InterfaceImplementor.PureMethods.AnotherInterface.MethodA():::EXIT
+string.IsNullOrWhiteSpace(return) == string.IsNullOrWhiteSpace(this.MethodA)
+string.IsNullOrWhiteSpace(return) == string.IsNullOrWhiteSpace(this.PropertyA)
+string.IsNullOrWhiteSpace(return) == orig(string.IsNullOrWhiteSpace(this.MethodA))
+string.IsNullOrWhiteSpace(return) == orig(string.IsNullOrWhiteSpace(this.PropertyA))
+this.MethodA == orig(this.MethodA)
+this.PropertyA == orig(this.PropertyA)
+this.MethodA.ToString() == orig(this.MethodA.ToString())
+this.PropertyA.ToString() == orig(this.PropertyA.ToString())
+===========================================================================
+PureMethods.InterfaceImplementor.PureMethods.MyInterface.MethodB():::ENTER
+===========================================================================
+PureMethods.InterfaceImplementor.PureMethods.MyInterface.MethodB():::EXIT3
+===========================================================================
+PureMethods.InterfaceImplementor.PureMethods.MyInterface.MethodB():::EXIT
+string.IsNullOrWhiteSpace(return) == string.IsNullOrWhiteSpace(this.MethodA)
+string.IsNullOrWhiteSpace(return) == string.IsNullOrWhiteSpace(this.PropertyA)
+string.IsNullOrWhiteSpace(return) == orig(string.IsNullOrWhiteSpace(this.MethodA))
+string.IsNullOrWhiteSpace(return) == orig(string.IsNullOrWhiteSpace(this.PropertyA))
+this.MethodA == orig(this.MethodA)
+this.PropertyA == orig(this.PropertyA)
+this.MethodA.ToString() == orig(this.MethodA.ToString())
+this.PropertyA.ToString() == orig(this.PropertyA.ToString())
+===========================================================================
+PureMethods.MyInterface.MethodA():::EXIT
+return has only one value
+return.ToString() == "MethodA()"
+string.IsNullOrWhiteSpace(return) == false
+===========================================================================
+PureMethods.MyInterface.MethodB():::EXIT
+return has only one value
+return.ToString() == "MyInterface.MethodB()"
+string.IsNullOrWhiteSpace(return) == false
+===========================================================================
+PureMethods.MyInterface.PropertyA.get():::EXIT
+return has only one value
+return.ToString() == "PropertyA"
+string.IsNullOrWhiteSpace(return) == false
+===========================================================================
+PureMethods.PureMethods:::OBJECT
+this.GetType() == PureMethods.PureMethods.class
+===========================================================================
+PureMethods.PureMethods..ctor():::EXIT
+===========================================================================
+PureMethods.PureMethods.DoClass(PureMethods.InterfaceImplementor implementor):::ENTER
+string.IsNullOrWhiteSpace(implementor.MethodA) == string.IsNullOrWhiteSpace(implementor.PropertyA)
+implementor has only one value
+implementor.GetType() == PureMethods.InterfaceImplementor.class
+implementor.MethodA has only one value
+implementor.MethodA.ToString() == "MethodA()"
+implementor.PropertyA has only one value
+implementor.PropertyA.ToString() == "PropertyA"
+string.IsNullOrWhiteSpace(implementor.MethodA) == false
+this has only one value
+===========================================================================
+PureMethods.PureMethods.DoClass(PureMethods.InterfaceImplementor implementor):::EXIT19
+===========================================================================
+PureMethods.PureMethods.DoClass(PureMethods.InterfaceImplementor implementor):::EXIT
+implementor.MethodA == orig(implementor.MethodA)
+implementor.PropertyA == orig(implementor.PropertyA)
+string.IsNullOrWhiteSpace(implementor.MethodA) == string.IsNullOrWhiteSpace(implementor.PropertyA)
+string.IsNullOrWhiteSpace(implementor.MethodA) == orig(string.IsNullOrWhiteSpace(implementor.MethodA))
+string.IsNullOrWhiteSpace(implementor.MethodA) == orig(string.IsNullOrWhiteSpace(implementor.PropertyA))
+implementor.MethodA has only one value
+implementor.MethodA.ToString() == "MethodA()"
+implementor.PropertyA has only one value
+implementor.PropertyA.ToString() == "PropertyA"
+string.IsNullOrWhiteSpace(implementor.MethodA) == false
+implementor.MethodA.ToString() == orig(implementor.MethodA.ToString())
+implementor.PropertyA.ToString() == orig(implementor.PropertyA.ToString())
+===========================================================================
+PureMethods.PureMethods.DoInterface(PureMethods.MyInterface myInterface):::ENTER
+string.IsNullOrWhiteSpace(myInterface.MethodA) == string.IsNullOrWhiteSpace(myInterface.MethodB)
+string.IsNullOrWhiteSpace(myInterface.MethodA) == string.IsNullOrWhiteSpace(myInterface.PropertyA)
+string.IsNullOrWhiteSpace(myInterface.MethodA) == string.IsNullOrWhiteSpace(myInterface.PropertyB)
+myInterface has only one value
+myInterface.GetType() == PureMethods.InterfaceImplementor.class
+myInterface.MethodA has only one value
+myInterface.MethodA.ToString() == "MethodA()"
+myInterface.MethodB has only one value
+myInterface.MethodB.ToString() == "MyInterface.MethodB()"
+myInterface.PropertyA has only one value
+myInterface.PropertyA.ToString() == "PropertyA"
+myInterface.PropertyB has only one value
+myInterface.PropertyB.ToString() == "MyInterface.PropertyB"
+string.IsNullOrWhiteSpace(myInterface.MethodA) == false
+this has only one value
+===========================================================================
+PureMethods.PureMethods.DoInterface(PureMethods.MyInterface myInterface):::EXIT13
+===========================================================================
+PureMethods.PureMethods.DoInterface(PureMethods.MyInterface myInterface):::EXIT
+myInterface.MethodA == orig(myInterface.MethodA)
+myInterface.MethodB == orig(myInterface.MethodB)
+myInterface.PropertyA == orig(myInterface.PropertyA)
+myInterface.PropertyB == orig(myInterface.PropertyB)
+string.IsNullOrWhiteSpace(myInterface.MethodA) == string.IsNullOrWhiteSpace(myInterface.MethodB)
+string.IsNullOrWhiteSpace(myInterface.MethodA) == string.IsNullOrWhiteSpace(myInterface.PropertyA)
+string.IsNullOrWhiteSpace(myInterface.MethodA) == string.IsNullOrWhiteSpace(myInterface.PropertyB)
+string.IsNullOrWhiteSpace(myInterface.MethodA) == orig(string.IsNullOrWhiteSpace(myInterface.MethodA))
+string.IsNullOrWhiteSpace(myInterface.MethodA) == orig(string.IsNullOrWhiteSpace(myInterface.MethodB))
+string.IsNullOrWhiteSpace(myInterface.MethodA) == orig(string.IsNullOrWhiteSpace(myInterface.PropertyA))
+string.IsNullOrWhiteSpace(myInterface.MethodA) == orig(string.IsNullOrWhiteSpace(myInterface.PropertyB))
+myInterface.MethodA has only one value
+myInterface.MethodA.ToString() == "MethodA()"
+myInterface.MethodB has only one value
+myInterface.MethodB.ToString() == "MyInterface.MethodB()"
+myInterface.PropertyA has only one value
+myInterface.PropertyA.ToString() == "PropertyA"
+myInterface.PropertyB has only one value
+myInterface.PropertyB.ToString() == "MyInterface.PropertyB"
+string.IsNullOrWhiteSpace(myInterface.MethodA) == false
+myInterface.MethodA.ToString() == orig(myInterface.MethodA.ToString())
+myInterface.MethodB.ToString() == orig(myInterface.MethodB.ToString())
+myInterface.PropertyA.ToString() == orig(myInterface.PropertyA.ToString())
+myInterface.PropertyB.ToString() == orig(myInterface.PropertyB.ToString())
+===========================================================================
+PureMethods.PureMethods.DoInterface2(PureMethods.AnotherInterface anotherInterface):::ENTER
+anotherInterface has only one value
+anotherInterface.GetType() == PureMethods.InterfaceImplementor.class
+anotherInterface.MethodA has only one value
+anotherInterface.MethodA.ToString() == "AnotherInterface.MethodA()"
+string.IsNullOrWhiteSpace(anotherInterface.MethodA) == false
+this has only one value
+===========================================================================
+PureMethods.PureMethods.DoInterface2(PureMethods.AnotherInterface anotherInterface):::EXIT7
+===========================================================================
+PureMethods.PureMethods.DoInterface2(PureMethods.AnotherInterface anotherInterface):::EXIT
+anotherInterface.MethodA == orig(anotherInterface.MethodA)
+string.IsNullOrWhiteSpace(anotherInterface.MethodA) == orig(string.IsNullOrWhiteSpace(anotherInterface.MethodA))
+anotherInterface.MethodA has only one value
+anotherInterface.MethodA.ToString() == "AnotherInterface.MethodA()"
+string.IsNullOrWhiteSpace(anotherInterface.MethodA) == false
+anotherInterface.MethodA.ToString() == orig(anotherInterface.MethodA.ToString())
+===========================================================================
+PureMethods.PureMethods.Main(System.String[] args):::ENTER
+args has only one value
+args[] == []
+args[].ToString() == []
+===========================================================================
+PureMethods.PureMethods.Main(System.String[] args):::EXIT37
+===========================================================================
+PureMethods.PureMethods.Main(System.String[] args):::EXIT
+args[] == orig(args[])
+args[] == []
+args[].ToString() == []

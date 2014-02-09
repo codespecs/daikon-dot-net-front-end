@@ -1,0 +1,14 @@
+Argument processing complete
+System.Void MyTestProject.Shadowing.Main(System.String[] args)
+System.Void MyTestProject.Shadowing.fooA(MyTestProject.A a)
+System.Void MyTestProject.Shadowing.fooB(MyTestProject.B b)
+System.Void MyTestProject.Shadowing..ctor()
+System.Void MyTestProject.A..ctor()
+System.Void MyTestProject.B..ctor()
+Rewriting complete
+Loading complete. Starting program.
+4
+4
+7
+4
+Program complete. Exiting Celeriac.

@@ -1,0 +1,3 @@
+LinkedLists.LinkedLists.Main(System.String[]\_args) ENTER/12: 1 EXIT37/18: 1
+LinkedLists.LinkedLists.printLast(LinkedLists.Node\_n) ENTER/45: 4 EXIT19/54: 4
+LinkedLists.Node..ctor(System.Int32\_n) ENTER/6: 4 EXIT8/54: 4

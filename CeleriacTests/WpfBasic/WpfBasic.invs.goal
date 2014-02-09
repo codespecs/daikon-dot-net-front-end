@@ -1,0 +1,552 @@
+===========================================================================
+WpfBasic.App:::OBJECT
+this has only one value
+this.GetType() == WpfBasic.App.class
+===========================================================================
+WpfBasic.App..ctor():::ENTER
+WpfBasic.App.model == null
+===========================================================================
+WpfBasic.App..ctor():::EXIT
+WpfBasic.App.model has only one value
+===========================================================================
+WpfBasic.MainWindow:::OBJECT
+this._contextStorage == this.incBtn._contextStorage
+this._contextStorage == this.incLabel._contextStorage
+this._contextStorage == this.incText._contextStorage
+this._contextStorage == this.resetBtn._contextStorage
+this._controlBoolField == this.incBtn._controlBoolField
+this._controlBoolField == this.incLabel._controlBoolField
+this._controlBoolField == this.incText._controlBoolField
+this._controlBoolField == this.resetBtn._controlBoolField
+this._parent == this._templatedParent
+this._parent == this.incBtn._templatedParent
+this._parent == this.incLabel._templatedParent
+this._parent == this.incText._templatedParent
+this._parent == this.resetBtn._templatedParent
+this._parentIndex == this.incLabel._parentIndex
+this._parentIndex == this.incText._changeEventNestingCount
+this._proxy == this.incBtn._proxy
+this._proxy == this.incLabel._proxy
+this._proxy == this.incText._proxy
+this._proxy == this.resetBtn._proxy
+this.ArrangeRequest == this.incBtn.ArrangeRequest
+this.ArrangeRequest == this.incBtn.MeasureRequest
+this.ArrangeRequest == this.incLabel.ArrangeRequest
+this.ArrangeRequest == this.incLabel.MeasureRequest
+this.ArrangeRequest == this.incText.ArrangeRequest
+this.ArrangeRequest == this.incText.MeasureRequest
+this.ArrangeRequest == this.MeasureRequest
+this.ArrangeRequest == this.resetBtn.ArrangeRequest
+this.ArrangeRequest == this.resetBtn.MeasureRequest
+this.incBtn._parent == this.incLabel._parent
+this.incBtn._parent == this.incText._parent
+this.incBtn._parent == this.resetBtn._parent
+this.incBtn.sizeChangedInfo == this.sizeChangedInfo
+this.incLabel.sizeChangedInfo == this.sizeChangedInfo
+this.incText._isInsideTextContentChange == this.incText._isTypographySet
+this.incText.sizeChangedInfo == this.sizeChangedInfo
+this.resetBtn.sizeChangedInfo == this.sizeChangedInfo
+this has only one value
+this._contentLoaded == true
+this._contextStorage == null
+this._controlBoolField has only one value
+this._parent == null
+this._parentIndex == 0
+this._proxy._tail == null
+this.ArrangeRequest == null
+this.incBtn has only one value
+this.incBtn._parent has only one value
+this.incBtn._parentIndex == 2
+this.incBtn.GetType() == System.Windows.Controls.Button.class
+this.incLabel has only one value
+this.incLabel.GetType() == System.Windows.Controls.Label.class
+this.incText has only one value
+this.incText._isInsideTextContentChange == false
+this.incText._newTextValue has only one value
+this.incText._parentIndex == 1
+this.incText.GetType() == System.Windows.Controls.TextBox.class
+this.model has only one value
+this.model.listeners has only one value
+this.model.listeners[] contains no nulls and has only one value, of length 1
+this.model.GetType() == WpfBasic.WpfBasicModel.class
+this.resetBtn has only one value
+this.resetBtn._parentIndex == 3
+this.sizeChangedInfo == null
+this.GetType() == WpfBasic.MainWindow.class
+this.incBtn.GetType() == this.resetBtn.GetType()
+===========================================================================
+WpfBasic.MainWindow..ctor():::EXIT
+this._contentLoaded == this.incText._minmaxChanged
+this._proxy has only one value
+this._proxy._head has only one value
+===========================================================================
+WpfBasic.MainWindow.WpfBasic.CounterUpdateListener.Update():::ENTER
+this.incText._isInsideTextContentChange == this.incText._minmaxChanged
+this._proxy has only one value
+this._proxy._head has only one value
+this._parentIndex <= this.model.counter
+(this.model.counter >> this.resetBtn._parentIndex == 0)
+===========================================================================
+WpfBasic.MainWindow.WpfBasic.CounterUpdateListener.Update():::EXIT11
+===========================================================================
+WpfBasic.MainWindow.WpfBasic.CounterUpdateListener.Update():::EXIT
+this._contentLoaded == orig(this._contentLoaded)
+this._contextStorage == orig(this._contextStorage)
+this._contextStorage == orig(this.incBtn._contextStorage)
+this._contextStorage == orig(this.incLabel._contextStorage)
+this._contextStorage == orig(this.incText._contextStorage)
+this._contextStorage == orig(this.resetBtn._contextStorage)
+this._controlBoolField == orig(this._controlBoolField)
+this._controlBoolField == orig(this.incBtn._controlBoolField)
+this._controlBoolField == orig(this.incLabel._controlBoolField)
+this._controlBoolField == orig(this.incText._controlBoolField)
+this._controlBoolField == orig(this.resetBtn._controlBoolField)
+this._parent == orig(this._parent)
+this._parent == orig(this._templatedParent)
+this._parent == orig(this.incBtn._templatedParent)
+this._parent == orig(this.incLabel._templatedParent)
+this._parent == orig(this.incText._templatedParent)
+this._parent == orig(this.resetBtn._templatedParent)
+this._parentIndex == orig(this._parentIndex)
+this._parentIndex == orig(this.incLabel._parentIndex)
+this._parentIndex == orig(this.incText._changeEventNestingCount)
+this._proxy == orig(this._proxy)
+this._proxy == orig(this.incBtn._proxy)
+this._proxy == orig(this.incLabel._proxy)
+this._proxy == orig(this.incText._proxy)
+this._proxy == orig(this.resetBtn._proxy)
+this._proxy._head == orig(this._proxy._head)
+this._proxy._tail == orig(this._proxy._tail)
+this.ArrangeRequest == orig(this.ArrangeRequest)
+this.ArrangeRequest == orig(this.incBtn.ArrangeRequest)
+this.ArrangeRequest == orig(this.incBtn.MeasureRequest)
+this.ArrangeRequest == orig(this.incLabel.ArrangeRequest)
+this.ArrangeRequest == orig(this.incLabel.MeasureRequest)
+this.ArrangeRequest == orig(this.incText.ArrangeRequest)
+this.ArrangeRequest == orig(this.incText.MeasureRequest)
+this.ArrangeRequest == orig(this.MeasureRequest)
+this.ArrangeRequest == orig(this.resetBtn.ArrangeRequest)
+this.ArrangeRequest == orig(this.resetBtn.MeasureRequest)
+this.incBtn == orig(this.incBtn)
+this.incBtn._parent == orig(this.incBtn._parent)
+this.incBtn._parent == orig(this.incLabel._parent)
+this.incBtn._parent == orig(this.incText._parent)
+this.incBtn._parent == orig(this.resetBtn._parent)
+this.incBtn._parentIndex == orig(this.incBtn._parentIndex)
+this.incLabel == orig(this.incLabel)
+this.incText == orig(this.incText)
+this.incText._isInsideTextContentChange == this.incText._minmaxChanged
+this.incText._isInsideTextContentChange == orig(this.incText._isInsideTextContentChange)
+this.incText._isInsideTextContentChange == orig(this.incText._isTypographySet)
+this.incText._isInsideTextContentChange == orig(this.incText._minmaxChanged)
+this.incText._newTextValue == orig(this.incText._newTextValue)
+this.incText._parentIndex == orig(this.incText._parentIndex)
+this.model == orig(this.model)
+this.model.counter == orig(this.model.counter)
+this.model.listeners == orig(this.model.listeners)
+this.model.listeners[] == orig(this.model.listeners[])
+this.resetBtn == orig(this.resetBtn)
+this.resetBtn._parentIndex == orig(this.resetBtn._parentIndex)
+this.sizeChangedInfo == orig(this.incBtn.sizeChangedInfo)
+this.sizeChangedInfo == orig(this.incLabel.sizeChangedInfo)
+this.sizeChangedInfo == orig(this.incText.sizeChangedInfo)
+this.sizeChangedInfo == orig(this.resetBtn.sizeChangedInfo)
+this.sizeChangedInfo == orig(this.sizeChangedInfo)
+this._proxy has only one value
+this._proxy._head has only one value
+this._parentIndex <= this.model.counter
+this.incBtn.GetType() == orig(this.incBtn.GetType())
+this.incBtn.GetType() == orig(this.resetBtn.GetType())
+this.incLabel.GetType() == orig(this.incLabel.GetType())
+this.incText.GetType() == orig(this.incText.GetType())
+(this.model.counter >> this.resetBtn._parentIndex == 0)
+this.model.GetType() == orig(this.model.GetType())
+===========================================================================
+WpfBasic.MainWindow.incBtn_Click(System.Object sender, System.Windows.RoutedEventArgs e):::ENTER
+this._parentIndex == System.Char.MinValue
+this.incLabel._parentIndex == System.Char.MinValue
+this.incText._changeEventNestingCount == System.Char.MinValue
+this.incText._isInsideTextContentChange == this.incText._minmaxChanged
+sender == e._originalSource
+sender == e._source
+e._flags.data == System.Char.MinValue
+this._proxy has only one value
+this._proxy._head has only one value
+sender has only one value
+e._flags has only one value
+e._routedEvent has only one value
+e._routedEvent._globalIndex == 136
+e._routedEvent._handlerType has only one value
+System.Type.Delimiter == 46
+System.Char.MaxValue == 65535
+System.Char.MinValue == 0
+System.Type.FilterAttribute has only one value
+System.Type.FilterName has only one value
+System.Type.FilterNameIgnoreCase has only one value
+System.Type.Missing has only one value
+e._routedEvent._name has only one value
+e._routedEvent._ownerType has only one value
+e._routedEvent._routingStrategy has only one value
+e.GetType() == System.Windows.RoutedEventArgs.class
+this.incBtn.GetType() == sender.GetType()
+this.incBtn.GetType() == e._originalSource.GetType()
+this.incBtn.GetType() == e._source.GetType()
+(this.model.counter >> this.resetBtn._parentIndex == 0)
+(this.model.counter & e._routedEvent._globalIndex) == 0
+this.model.counter < e._routedEvent._globalIndex
+this.model.counter < System.Type.Delimiter
+this.model.counter < System.Char.MaxValue
+this.model.counter is a bitwise subset of System.Char.MaxValue
+this.model.counter >= System.Char.MinValue
+===========================================================================
+WpfBasic.MainWindow.incBtn_Click(System.Object sender, System.Windows.RoutedEventArgs e):::EXIT5
+===========================================================================
+WpfBasic.MainWindow.incBtn_Click(System.Object sender, System.Windows.RoutedEventArgs e):::EXIT
+this._contentLoaded == orig(this._contentLoaded)
+this._contextStorage == orig(this._contextStorage)
+this._contextStorage == orig(this.incBtn._contextStorage)
+this._contextStorage == orig(this.incLabel._contextStorage)
+this._contextStorage == orig(this.incText._contextStorage)
+this._contextStorage == orig(this.resetBtn._contextStorage)
+this._controlBoolField == orig(this._controlBoolField)
+this._controlBoolField == orig(this.incBtn._controlBoolField)
+this._controlBoolField == orig(this.incLabel._controlBoolField)
+this._controlBoolField == orig(this.incText._controlBoolField)
+this._controlBoolField == orig(this.resetBtn._controlBoolField)
+this._parent == orig(this._parent)
+this._parent == orig(this._templatedParent)
+this._parent == orig(this.incBtn._templatedParent)
+this._parent == orig(this.incLabel._templatedParent)
+this._parent == orig(this.incText._templatedParent)
+this._parent == orig(this.resetBtn._templatedParent)
+this._parentIndex == System.Char.MinValue
+this._proxy == orig(this._proxy)
+this._proxy == orig(this.incBtn._proxy)
+this._proxy == orig(this.incLabel._proxy)
+this._proxy == orig(this.incText._proxy)
+this._proxy == orig(this.resetBtn._proxy)
+this._proxy._head == orig(this._proxy._head)
+this._proxy._tail == orig(this._proxy._tail)
+this.ArrangeRequest == orig(this.ArrangeRequest)
+this.ArrangeRequest == orig(this.incBtn.ArrangeRequest)
+this.ArrangeRequest == orig(this.incBtn.MeasureRequest)
+this.ArrangeRequest == orig(this.incLabel.ArrangeRequest)
+this.ArrangeRequest == orig(this.incLabel.MeasureRequest)
+this.ArrangeRequest == orig(this.incText.ArrangeRequest)
+this.ArrangeRequest == orig(this.incText.MeasureRequest)
+this.ArrangeRequest == orig(this.MeasureRequest)
+this.ArrangeRequest == orig(this.resetBtn.ArrangeRequest)
+this.ArrangeRequest == orig(this.resetBtn.MeasureRequest)
+this.incBtn == orig(this.incBtn)
+this.incBtn._parent == orig(this.incBtn._parent)
+this.incBtn._parent == orig(this.incLabel._parent)
+this.incBtn._parent == orig(this.incText._parent)
+this.incBtn._parent == orig(this.resetBtn._parent)
+this.incBtn._parentIndex == orig(this.incBtn._parentIndex)
+this.incLabel == orig(this.incLabel)
+this.incLabel._parentIndex == System.Char.MinValue
+this.incText == orig(this.incText)
+this.incText._changeEventNestingCount == System.Char.MinValue
+this.incText._isInsideTextContentChange == this.incText._minmaxChanged
+this.incText._isInsideTextContentChange == orig(this.incText._isInsideTextContentChange)
+this.incText._isInsideTextContentChange == orig(this.incText._isTypographySet)
+this.incText._isInsideTextContentChange == orig(this.incText._minmaxChanged)
+this.incText._newTextValue == orig(this.incText._newTextValue)
+this.incText._parentIndex == orig(this.incText._parentIndex)
+this.model == orig(this.model)
+this.model.listeners == orig(this.model.listeners)
+this.model.listeners[] == orig(this.model.listeners[])
+this.resetBtn == orig(this.resetBtn)
+this.resetBtn._parentIndex == orig(this.resetBtn._parentIndex)
+this.sizeChangedInfo == orig(this.incBtn.sizeChangedInfo)
+this.sizeChangedInfo == orig(this.incLabel.sizeChangedInfo)
+this.sizeChangedInfo == orig(this.incText.sizeChangedInfo)
+this.sizeChangedInfo == orig(this.resetBtn.sizeChangedInfo)
+this.sizeChangedInfo == orig(this.sizeChangedInfo)
+e._flags == orig(e._flags)
+e._flags.data == System.Char.MinValue
+e._originalSource == e._source
+e._originalSource == orig(sender)
+e._originalSource == orig(e._originalSource)
+e._originalSource == orig(e._source)
+e._routedEvent == orig(e._routedEvent)
+e._routedEvent._globalIndex == orig(e._routedEvent._globalIndex)
+e._routedEvent._handlerType == orig(e._routedEvent._handlerType)
+System.Type.Delimiter == orig(System.Type.Delimiter)
+System.Char.MaxValue == orig(System.Char.MaxValue)
+System.Char.MinValue == orig(this._parentIndex)
+System.Char.MinValue == orig(this.incLabel._parentIndex)
+System.Char.MinValue == orig(this.incText._changeEventNestingCount)
+System.Char.MinValue == orig(e._flags.data)
+System.Char.MinValue == orig(System.Char.MinValue)
+System.Type.FilterAttribute == orig(System.Type.FilterAttribute)
+System.Type.FilterName == orig(System.Type.FilterName)
+System.Type.FilterNameIgnoreCase == orig(System.Type.FilterNameIgnoreCase)
+System.Type.Missing == orig(System.Type.Missing)
+e._routedEvent._name == orig(e._routedEvent._name)
+e._routedEvent._ownerType == orig(e._routedEvent._ownerType)
+e._routedEvent._routingStrategy == orig(e._routedEvent._routingStrategy)
+this._proxy has only one value
+this._proxy._head has only one value
+e._flags has only one value
+e._originalSource has only one value
+e._routedEvent has only one value
+e._routedEvent._globalIndex == 136
+e._routedEvent._handlerType has only one value
+System.Type.Delimiter == 46
+System.Char.MaxValue == 65535
+System.Char.MinValue == 0
+System.Type.FilterAttribute has only one value
+System.Type.FilterName has only one value
+System.Type.FilterNameIgnoreCase has only one value
+System.Type.Missing has only one value
+e._routedEvent._name has only one value
+e._routedEvent._ownerType has only one value
+e._routedEvent._routingStrategy has only one value
+this.incBtn.GetType() == e._originalSource.GetType()
+this.incBtn.GetType() == e._source.GetType()
+this.incBtn.GetType() == orig(this.incBtn.GetType())
+this.incBtn.GetType() == orig(this.resetBtn.GetType())
+this.incBtn.GetType() == orig(sender.GetType())
+this.incBtn.GetType() == orig(e._originalSource.GetType())
+this.incBtn.GetType() == orig(e._source.GetType())
+this.incLabel.GetType() == orig(this.incLabel.GetType())
+this.incText._parentIndex <= this.model.counter
+this.incText.GetType() == orig(this.incText.GetType())
+(this.model.counter >> this.resetBtn._parentIndex == 0)
+(this.model.counter & e._routedEvent._globalIndex) == 0
+this.model.counter < e._routedEvent._globalIndex
+this.model.counter < System.Type.Delimiter
+this.model.counter < System.Char.MaxValue
+this.model.counter is a bitwise subset of System.Char.MaxValue
+this.model.counter > System.Char.MinValue
+this.model.counter - orig(this.model.counter) - 1 == 0
+this.model.GetType() == orig(this.model.GetType())
+(orig(this.model.counter) >> this.resetBtn._parentIndex == 0)
+(e._routedEvent._globalIndex & orig(this.model.counter)) == 0
+e._routedEvent._globalIndex > orig(this.model.counter)
+System.Type.Delimiter > orig(this.model.counter)
+System.Char.MaxValue > orig(this.model.counter)
+orig(this.model.counter) is a bitwise subset of System.Char.MaxValue
+System.Char.MinValue <= orig(this.model.counter)
+this.incText._parentIndex == (plume.MathMDE.gcd(this.model.counter, orig(this.model.counter)))
+===========================================================================
+WpfBasic.MainWindow.resetBtn_Click(System.Object sender, System.Windows.RoutedEventArgs e):::ENTER
+this.incText._isInsideTextContentChange == this.incText._minmaxChanged
+sender == e._originalSource
+sender == e._source
+this._proxy has only one value
+this._proxy._head has only one value
+this.model.counter == 5
+sender has only one value
+e has only one value
+e._flags has only one value
+e._routedEvent has only one value
+e._routedEvent._globalIndex == 136
+e._routedEvent._handlerType has only one value
+System.Type.Delimiter == 46
+System.Char.MaxValue == 65535
+System.Char.MinValue == 0
+System.Type.FilterAttribute has only one value
+System.Type.FilterName has only one value
+System.Type.FilterNameIgnoreCase has only one value
+System.Type.Missing has only one value
+e._routedEvent._name has only one value
+e._routedEvent._ownerType has only one value
+e._routedEvent._routingStrategy has only one value
+e.GetType() == System.Windows.RoutedEventArgs.class
+===========================================================================
+WpfBasic.MainWindow.resetBtn_Click(System.Object sender, System.Windows.RoutedEventArgs e):::EXIT5
+===========================================================================
+WpfBasic.MainWindow.resetBtn_Click(System.Object sender, System.Windows.RoutedEventArgs e):::EXIT
+this._contentLoaded == orig(this._contentLoaded)
+this._contextStorage == orig(this._contextStorage)
+this._contextStorage == orig(this.incBtn._contextStorage)
+this._contextStorage == orig(this.incLabel._contextStorage)
+this._contextStorage == orig(this.incText._contextStorage)
+this._contextStorage == orig(this.resetBtn._contextStorage)
+this._controlBoolField == orig(this._controlBoolField)
+this._controlBoolField == orig(this.incBtn._controlBoolField)
+this._controlBoolField == orig(this.incLabel._controlBoolField)
+this._controlBoolField == orig(this.incText._controlBoolField)
+this._controlBoolField == orig(this.resetBtn._controlBoolField)
+this._parent == orig(this._parent)
+this._parent == orig(this._templatedParent)
+this._parent == orig(this.incBtn._templatedParent)
+this._parent == orig(this.incLabel._templatedParent)
+this._parent == orig(this.incText._templatedParent)
+this._parent == orig(this.resetBtn._templatedParent)
+this._proxy == orig(this._proxy)
+this._proxy == orig(this.incBtn._proxy)
+this._proxy == orig(this.incLabel._proxy)
+this._proxy == orig(this.incText._proxy)
+this._proxy == orig(this.resetBtn._proxy)
+this._proxy._head == orig(this._proxy._head)
+this._proxy._tail == orig(this._proxy._tail)
+this.ArrangeRequest == orig(this.ArrangeRequest)
+this.ArrangeRequest == orig(this.incBtn.ArrangeRequest)
+this.ArrangeRequest == orig(this.incBtn.MeasureRequest)
+this.ArrangeRequest == orig(this.incLabel.ArrangeRequest)
+this.ArrangeRequest == orig(this.incLabel.MeasureRequest)
+this.ArrangeRequest == orig(this.incText.ArrangeRequest)
+this.ArrangeRequest == orig(this.incText.MeasureRequest)
+this.ArrangeRequest == orig(this.MeasureRequest)
+this.ArrangeRequest == orig(this.resetBtn.ArrangeRequest)
+this.ArrangeRequest == orig(this.resetBtn.MeasureRequest)
+this.incBtn == orig(this.incBtn)
+this.incBtn._parent == orig(this.incBtn._parent)
+this.incBtn._parent == orig(this.incLabel._parent)
+this.incBtn._parent == orig(this.incText._parent)
+this.incBtn._parent == orig(this.resetBtn._parent)
+this.incLabel == orig(this.incLabel)
+this.incText == orig(this.incText)
+this.incText._isInsideTextContentChange == this.incText._minmaxChanged
+this.incText._isInsideTextContentChange == orig(this.incText._isInsideTextContentChange)
+this.incText._isInsideTextContentChange == orig(this.incText._isTypographySet)
+this.incText._isInsideTextContentChange == orig(this.incText._minmaxChanged)
+this.incText._newTextValue == orig(this.incText._newTextValue)
+this.model == orig(this.model)
+this.model.listeners == orig(this.model.listeners)
+this.model.listeners[] == orig(this.model.listeners[])
+this.resetBtn == orig(this.resetBtn)
+this.sizeChangedInfo == orig(this.incBtn.sizeChangedInfo)
+this.sizeChangedInfo == orig(this.incLabel.sizeChangedInfo)
+this.sizeChangedInfo == orig(this.incText.sizeChangedInfo)
+this.sizeChangedInfo == orig(this.resetBtn.sizeChangedInfo)
+this.sizeChangedInfo == orig(this.sizeChangedInfo)
+e._flags == orig(e._flags)
+e._originalSource == e._source
+e._originalSource == orig(sender)
+e._originalSource == orig(e._originalSource)
+e._originalSource == orig(e._source)
+e._routedEvent == orig(e._routedEvent)
+e._routedEvent._handlerType == orig(e._routedEvent._handlerType)
+System.Type.FilterAttribute == orig(System.Type.FilterAttribute)
+System.Type.FilterName == orig(System.Type.FilterName)
+System.Type.FilterNameIgnoreCase == orig(System.Type.FilterNameIgnoreCase)
+System.Type.Missing == orig(System.Type.Missing)
+e._routedEvent._name == orig(e._routedEvent._name)
+e._routedEvent._ownerType == orig(e._routedEvent._ownerType)
+e._routedEvent._routingStrategy == orig(e._routedEvent._routingStrategy)
+this._proxy has only one value
+this._proxy._head has only one value
+e._flags has only one value
+e._originalSource has only one value
+e._routedEvent has only one value
+e._routedEvent._globalIndex == 136
+e._routedEvent._handlerType has only one value
+System.Type.Delimiter == 46
+System.Char.MaxValue == 65535
+System.Char.MinValue == 0
+System.Type.FilterAttribute has only one value
+System.Type.FilterName has only one value
+System.Type.FilterNameIgnoreCase has only one value
+System.Type.Missing has only one value
+e._routedEvent._name has only one value
+e._routedEvent._ownerType has only one value
+e._routedEvent._routingStrategy has only one value
+===========================================================================
+WpfBasic.WpfBasicModel:::OBJECT
+this has only one value
+this.listeners has only one value
+this.listeners.GetType() == System.Collections.Generic.List`1[WpfBasic.CounterUpdateListener].class
+this.listeners[].GetType() one of { [], [WpfBasic.MainWindow] }
+this.GetType() == WpfBasic.WpfBasicModel.class
+===========================================================================
+WpfBasic.WpfBasicModel..ctor():::EXIT
+this.counter == 0
+this.listeners[] == []
+this.listeners[].GetType() == []
+===========================================================================
+WpfBasic.WpfBasicModel.AddListener(WpfBasic.CounterUpdateListener listener):::ENTER
+this.counter == 0
+this.listeners[] == []
+this.listeners[].GetType() == []
+listener has only one value
+listener.GetType() == WpfBasic.MainWindow.class
+===========================================================================
+WpfBasic.WpfBasicModel.AddListener(WpfBasic.CounterUpdateListener listener):::EXIT6
+===========================================================================
+WpfBasic.WpfBasicModel.AddListener(WpfBasic.CounterUpdateListener listener):::EXIT
+this.counter == orig(this.counter)
+this.listeners == orig(this.listeners)
+this.counter == 0
+this.listeners[] contains no nulls and has only one value, of length 1
+this.listeners[].GetType() == [WpfBasic.MainWindow]
+this.listeners.GetType() == orig(this.listeners.GetType())
+===========================================================================
+WpfBasic.WpfBasicModel.Counter.get():::ENTER
+this.counter >= 0
+this.listeners[] contains no nulls and has only one value, of length 1
+this.listeners[].GetType() == [WpfBasic.MainWindow]
+===========================================================================
+WpfBasic.WpfBasicModel.Counter.get():::EXIT4
+===========================================================================
+WpfBasic.WpfBasicModel.Counter.get():::EXIT
+this.counter == return
+this.listeners == orig(this.listeners)
+this.listeners[] == orig(this.listeners[])
+return == orig(this.counter)
+this.listeners[] contains no nulls and has only one value, of length 1
+this.listeners[].GetType() == [WpfBasic.MainWindow]
+return >= 0
+this.listeners.GetType() == orig(this.listeners.GetType())
+===========================================================================
+WpfBasic.WpfBasicModel.Counter.set(System.Int32 value):::ENTER
+this.listeners[] contains no nulls and has only one value, of length 1
+this.listeners[].GetType() == [WpfBasic.MainWindow]
+this.counter != value
+===========================================================================
+WpfBasic.WpfBasicModel.Counter.set(System.Int32 value):::EXIT7
+===========================================================================
+WpfBasic.WpfBasicModel.Counter.set(System.Int32 value):::EXIT
+this.counter == orig(value)
+this.listeners == orig(this.listeners)
+this.listeners[] == orig(this.listeners[])
+this.listeners[] contains no nulls and has only one value, of length 1
+this.listeners[].GetType() == [WpfBasic.MainWindow]
+this.counter != orig(this.counter)
+this.listeners.GetType() == orig(this.listeners.GetType())
+===========================================================================
+WpfBasic.WpfBasicModel.IncrementCounter():::ENTER
+this.listeners[] contains no nulls and has only one value, of length 1
+this.listeners[].GetType() == [WpfBasic.MainWindow]
+===========================================================================
+WpfBasic.WpfBasicModel.IncrementCounter():::EXIT8
+===========================================================================
+WpfBasic.WpfBasicModel.IncrementCounter():::EXIT
+this.listeners == orig(this.listeners)
+this.listeners[] == orig(this.listeners[])
+this.listeners[] contains no nulls and has only one value, of length 1
+this.listeners[].GetType() == [WpfBasic.MainWindow]
+this.counter - orig(this.counter) - 1 == 0
+this.listeners.GetType() == orig(this.listeners.GetType())
+===========================================================================
+WpfBasic.WpfBasicModel.NotifyListeners():::ENTER
+this.listeners[] contains no nulls and has only one value, of length 1
+this.listeners[].GetType() == [WpfBasic.MainWindow]
+===========================================================================
+WpfBasic.WpfBasicModel.NotifyListeners():::EXIT13
+===========================================================================
+WpfBasic.WpfBasicModel.NotifyListeners():::EXIT
+this.counter == orig(this.counter)
+this.listeners == orig(this.listeners)
+this.listeners[] == orig(this.listeners[])
+this.listeners[] contains no nulls and has only one value, of length 1
+this.listeners[].GetType() == [WpfBasic.MainWindow]
+this.listeners.GetType() == orig(this.listeners.GetType())
+===========================================================================
+WpfBasic.WpfBasicModel.ResetCounter():::ENTER
+this.counter == 5
+this.listeners[] contains no nulls and has only one value, of length 1
+this.listeners[].GetType() == [WpfBasic.MainWindow]
+===========================================================================
+WpfBasic.WpfBasicModel.ResetCounter():::EXIT5
+===========================================================================
+WpfBasic.WpfBasicModel.ResetCounter():::EXIT
+this.listeners == orig(this.listeners)
+this.listeners[] == orig(this.listeners[])
+this.counter == 0
+this.listeners[] contains no nulls and has only one value, of length 1
+this.listeners[].GetType() == [WpfBasic.MainWindow]
+this.listeners.GetType() == orig(this.listeners.GetType())
