@@ -484,7 +484,10 @@ namespace Celeriac
 
           // Get the types this type inherits or derives from.
           var parentTypes = type.GetInterfaces().ToList();
-          parentTypes.Add(type.BaseType);
+          if (type.BaseType != null)
+          {
+            parentTypes.Add(type.BaseType);
+          }
 
           foreach (var parentType in parentTypes)
           {
