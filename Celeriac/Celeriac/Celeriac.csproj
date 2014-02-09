@@ -59,6 +59,9 @@
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>DoNotBuild</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>2</CodeContractsAnalysisWarningLevel>
+    <CodeContractsMissingPublicRequiresAsWarnings>True</CodeContractsMissingPublicRequiresAsWarnings>
+    <CodeContractsSQLServerOption />
+    <CodeContractsFailBuildOnWarnings>False</CodeContractsFailBuildOnWarnings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
