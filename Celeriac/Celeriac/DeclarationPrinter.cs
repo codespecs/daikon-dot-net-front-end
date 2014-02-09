@@ -13,6 +13,7 @@ using Celeriac.Comparability;
 using Microsoft.Cci;
 using System.Diagnostics.Contracts;
 using Celeriac.Contracts;
+using System.Diagnostics;
 
 namespace Celeriac
 {
@@ -40,18 +41,42 @@ namespace Celeriac
     public int RelId { get; private set; }
     public string ParentVariable { get; private set; }
 
+    // Use these fields to identify the members of the parent, so that we can check
+    // that a particular implementation method is indeed present at the parent.
+    public IMethodDefinition ContractMethod { get; private set; }
+    public ITypeReference Type { get; private set; }
+
     public const int ObjectRelId = 1;
 
     public VariableParent(string parentPpt, int relId)
-      : this(parentPpt, relId, null)
-    { 
+      : this(parentPpt, relId, null, null, null)
+    {
     }
 
-    public VariableParent(string parentPpt, int relId, string parentVariable)
+    public VariableParent(string parentPpt, int relId, string parentVariable) :
+      this(parentPpt, relId, parentVariable, null, null)
+    {
+    }
+
+    // When the parent is a method.
+    public VariableParent(string parentPpt, int relId, IMethodDefinition contractMethod)
+      : this(parentPpt, relId, null, contractMethod, null)
+    {
+    }
+
+    // When the parent is a class/interface.
+    public VariableParent(string parentPpt, int relId, ITypeReference type)
+      : this(parentPpt, relId, null, null, type)
+    {
+    }
+
+    public VariableParent(string parentPpt, int relId, string parentVariable, IMethodDefinition contractMethod, ITypeReference type)
     {
       this.ParentPpt = parentPpt;
       this.RelId = relId;
       this.ParentVariable = parentVariable;
+      this.ContractMethod = contractMethod;
+      this.Type = type;
     }
 
     /// <summary>
@@ -232,6 +257,7 @@ namespace Celeriac
       this.PrintPreliminaries();
     }
 
+    [DebuggerStepThrough]
     public static Func<string, string> FormInstanceName(string fieldOrMethod)
     {
       return n => string.Join(".", n, fieldOrMethod);
@@ -260,9 +286,9 @@ namespace Celeriac
       Contract.Requires(!string.IsNullOrWhiteSpace(name));
       Contract.Requires(type != null);
       Contract.Requires(nestingDepth >= 0);
-     
+
       parents = parents ?? new VariableParent[0];
-      
+
       if (PerformEarlyExitChecks(name, kind, enclosingVar, nestingDepth))
       {
         return;
@@ -373,7 +399,7 @@ namespace Celeriac
       Contract.Requires(!string.IsNullOrWhiteSpace(name));
       Contract.Requires(type != null);
       Contract.Requires(nestingDepth >= 0);
-      
+
       foreach (FieldInfo field in
         type.GetSortedFields(this.celeriacArgs.GetInstanceAccessOptionsForFieldInspection(
             type, originatingType)))
@@ -385,11 +411,13 @@ namespace Celeriac
               MarkIf(field.IsLiteral || (flags.HasFlag(VariableFlags.is_reference_immutable) && field.IsInitOnly), VariableFlags.is_reference_immutable),
               MarkIf(field.IsLiteral || (flags.HasFlag(VariableFlags.is_reference_immutable) && field.IsInitOnly && TypeManager.IsImmutable(field.FieldType)), VariableFlags.is_value_immutable));
 
+          IEnumerable<VariableParent> newParents = GetVariableParentsForVariable(parents, field.Name);
+
           DeclareVariable(FormInstanceName(field.Name)(name), field.FieldType, originatingType,
               VariableKind.field, enclosingVar: name, relativeName: field.Name,
               nestingDepth: nestingDepth + 1,
               flags: fieldFlags,
-              parents: parents.Select(p => p.WithName(FormInstanceName(field.Name))), 
+              parents: newParents.Select(p => p.WithName(FormInstanceName(field.Name))),
               typeContext: typeContext, methodContext: methodContext);
         }
       }
@@ -405,7 +433,7 @@ namespace Celeriac
           // Parent must be reference immutable to for ToType() to remain constant
             ExtendFlags(VariableFlags.classname, VariableFlags.synthetic, immutability),
             enclosingVar: name, relativeName: GetTypeMethodCall,
-            nestingDepth: nestingDepth + 1, 
+            nestingDepth: nestingDepth + 1,
             parents: parents.Select(p => p.WithName(FormInstanceName(GetTypeMethodCall))),
             typeContext: typeContext, methodContext: methodContext);
       }
@@ -418,15 +446,15 @@ namespace Celeriac
         DeclareVariable(FormInstanceName(ToStringMethodCall)(name), TypeManager.StringType,
             originatingType,
             VariableKind.function,
-            // Parent must be value-immutable for ToString() value to remain constant (assuming it doesn't access outside state)
+          // Parent must be value-immutable for ToString() value to remain constant (assuming it doesn't access outside state)
             ExtendFlags(VariableFlags.to_string, VariableFlags.synthetic, immutability),
             enclosingVar: name, relativeName: ToStringMethodCall,
-            nestingDepth: nestingDepth + 1, 
+            nestingDepth: nestingDepth + 1,
             parents: parents.Select(p => p.WithName(FormInstanceName(ToStringMethodCall))),
             typeContext: typeContext, methodContext: methodContext);
       }
 
-      foreach (var method in typeManager.GetPureMethodsForType(type, originatingType))
+      foreach (MethodInfo method in typeManager.GetPureMethodsForType(type, originatingType))
       {
         string methodName = DeclarationPrinter.SanitizePropertyName(method.Name);
 
@@ -437,6 +465,8 @@ namespace Celeriac
 
         Func<string, string> formName = n => SanitizedMethodExpression(method, n);
 
+        IEnumerable<VariableParent> newParents = GetVariableParentsForVariable(parents, methodName);
+
         DeclareVariable(formName(name),
           method.ReturnType,
           originatingType,
@@ -445,7 +475,7 @@ namespace Celeriac
           kind: VariableKind.function,
           flags: pureMethodFlags,
           nestingDepth: nestingDepth + 1,
-          parents: parents.Select(p => p.WithName(formName)),
+          parents: newParents.Select(p => p.WithName(formName)),
           typeContext: typeContext, methodContext: methodContext);
       }
 
@@ -461,10 +491,39 @@ namespace Celeriac
         FieldInfo linkedListField = TypeManager.FindLinkedListField(type);
         PrintList(formName(name), linkedListField.FieldType, name, originatingType,
             VariableKind.array,
-            nestingDepth: nestingDepth, 
+            nestingDepth: nestingDepth,
             parents: parents.Select(p => p.WithName(formName)),
             flags: flags);
       }
+    }
+
+    // Updates the parents based on a particular member name.
+    private IEnumerable<VariableParent> GetVariableParentsForVariable(IEnumerable<VariableParent> oldParents, string memberName)
+    {
+      List<VariableParent> newParents = new List<VariableParent>();
+
+      foreach (VariableParent parent in oldParents)
+      {
+        if (parent.ContractMethod == null)
+        {
+          newParents.Add(parent);
+        }
+        else
+        {
+          // Check that the contract method actually appears in the parent type.
+          // TODO: This is textual comparison of members. I don't know if this is sufficient, but it seems to work so far.
+          // I feel like there may be some renaming corner cases where this fails.
+          IMethodDefinition contractMethod = parent.ContractMethod;
+          var members = contractMethod.ContainingType.ResolvedType.Members.Select(member => member.Name.ToString()).ToList();
+
+          if (members.Contains(memberName))
+          {
+            newParents.Add(parent);
+          }
+        }
+      }
+
+      return newParents;
     }
 
     private void PrintStaticFields(Type type, Type originatingType, ITypeReference typeContext, IMethodDefinition methodContext)
@@ -510,7 +569,7 @@ namespace Celeriac
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(name));
       Contract.Requires(type != null);
-      
+
       this.WritePair("variable", name, 1);
 
       PrintVarKind(kind, relativeName);
@@ -539,7 +598,7 @@ namespace Celeriac
           ComparabilityConstant :
           comparabilityManager.GetComparability(name, typeManager, typeContext, methodContext);
 
-        this.WritePair("comparability", cmp , 2);
+        this.WritePair("comparability", cmp, 2);
       }
       else
       {
@@ -676,10 +735,10 @@ namespace Celeriac
       {
         if (!this.typeManager.ShouldIgnoreField(elementType, field))
         {
-         
+
           PrintList(FormInstanceName(field.Name)(name), field.FieldType, name,
               originatingType, VariableKind.field, relativeName: field.Name,
-              nestingDepth: nestingDepth + 1, 
+              nestingDepth: nestingDepth + 1,
               parents: parents.Select(p => p.WithName(FormInstanceName(field.Name))),
               typeContext: typeContext, methodContext: methodContext);
         }
@@ -718,7 +777,7 @@ namespace Celeriac
             originatingType, VariableKind.function,
             ExtendFlags(VariableFlags.to_string, VariableFlags.synthetic),
             relativeName: ToStringMethodCall,
-            nestingDepth: nestingDepth + 1, 
+            nestingDepth: nestingDepth + 1,
             parents: parents.Select(p => p.WithName(FormInstanceName(ToStringMethodCall))),
             typeContext: typeContext, methodContext: methodContext);
       }
@@ -744,7 +803,7 @@ namespace Celeriac
           relativeName: methodName,
           kind: VariableKind.function,
           flags: pureMethodFlags,
-          nestingDepth: nestingDepth + 1, 
+          nestingDepth: nestingDepth + 1,
           parents: parents.Select(p => p.WithName(newName)),
           typeContext: typeContext, methodContext: methodContext);
       }
@@ -766,27 +825,32 @@ namespace Celeriac
     /// </param>
     /// <param name="parentObjectType">Assembly-qualified name of the type of the parent
     /// </param>
-    public void PrintParentObjectFields(VariableParent parentPpt, string assemblyQualifiedName, ITypeReference typeContext, IMethodDefinition methodContext)
+    public void PrintParentObjectFields(VariableParent[] parentPpts, string assemblyQualifiedName, ITypeReference typeContext, IMethodDefinition methodContext)
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(assemblyQualifiedName));
 
       CeleriacTypeDeclaration typeDecl =
-          this.typeManager.ConvertAssemblyQualifiedNameToType(assemblyQualifiedName);
+        this.typeManager.ConvertAssemblyQualifiedNameToType(assemblyQualifiedName);
 
       foreach (Type type in typeDecl.GetAllTypes)
       {
         // If we can't resolve the parent object type don't write anything
         if (type != null)
         {
-          this.DeclareVariable("this", type, type, parents: new [] {parentPpt},
-              flags: ExtendFlags(VariableFlags.is_param, VariableFlags.is_reference_immutable, MarkIf(TypeManager.IsImmutable(type), VariableFlags.is_value_immutable)),
-              typeContext: typeContext, methodContext: methodContext);
+          this.DeclareVariable("this", type, type, parents: parentPpts,
+            flags: ExtendFlags(VariableFlags.is_param, VariableFlags.is_reference_immutable, MarkIf(TypeManager.IsImmutable(type), VariableFlags.is_value_immutable)),
+            typeContext: typeContext, methodContext: methodContext);
         }
         else
         {
           // TODO(#47): Error handling?
         }
       }
+    }
+
+    public void PrintParentObjectFields(VariableParent parentPpt, string assemblyQualifiedName, ITypeReference typeContext, IMethodDefinition methodContext)
+    {
+      PrintParentObjectFields(new VariableParent[] { parentPpt }, assemblyQualifiedName, typeContext, methodContext);
     }
 
     /// <summary>
@@ -818,7 +882,7 @@ namespace Celeriac
     private void DeclareStaticFieldsForType(Type type, Type originatingType, ITypeReference typeContext, IMethodDefinition methodContext = null)
     {
       Contract.Requires(type != null);
-     
+
       foreach (FieldInfo staticField in
         // type passed in as originating type so we get all the fields for it
         type.GetSortedFields(this.celeriacArgs.GetStaticAccessOptionsForFieldInspection(
@@ -884,9 +948,9 @@ namespace Celeriac
       foreach (Type type in typeDecl.GetAllTypes)
       {
         if (type != null)
-        {   
+        {
           // TODO: the defining method should be the originator
-          DeclareVariable(name, type, typeof(DummyOriginator), flags: VariableFlags.is_param, 
+          DeclareVariable(name, type, typeof(DummyOriginator), flags: VariableFlags.is_param,
             methodContext: methodDefinition, parents: parentPpts);
         }
       }
@@ -906,14 +970,14 @@ namespace Celeriac
       Contract.Requires(parentPpts != null);
 
       var typeDecl = typeManager.ConvertAssemblyQualifiedNameToType(returnType);
-      
+
       // TODO #108: need to properly handle multiple type bounds
       var type = typeDecl.GetAllTypes.First();
-      
+
       // TODO: originator should be the type that defined the method
-      DeclareVariable(name, type, typeof(DummyOriginator), kind: VariableKind.Return, nestingDepth: 0, 
+      DeclareVariable(name, type, typeof(DummyOriginator), kind: VariableKind.Return, nestingDepth: 0,
            methodContext: method, parents: parentPpts);
-      
+
     }
 
 
@@ -944,7 +1008,7 @@ namespace Celeriac
 
             foreach (var refType in nonGeneric)
             {
-              var typeName = ILRewriter.assemblyTypes.ContainsKey(refType) ? 
+              var typeName = ILRewriter.assemblyTypes.ContainsKey(refType) ?
                 TypeManager.GetTypeName(ILRewriter.assemblyTypes[refType]) :
                 TypeManager.GetTypeName(refType.IsGenericType ? refType.GetGenericTypeDefinition() : refType);
               var objectPpt = typeName + ":::OBJECT";
@@ -981,7 +1045,7 @@ namespace Celeriac
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(objectName));
       Contract.Requires(!string.IsNullOrWhiteSpace(objectAssemblyQualifiedName));
-      
+
       CeleriacTypeDeclaration objectTypeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
       foreach (Type objectType in objectTypeDecl.GetAllTypes)
@@ -1000,7 +1064,7 @@ namespace Celeriac
     {
       Contract.Requires(!string.IsNullOrWhiteSpace(className));
       Contract.Requires(!string.IsNullOrWhiteSpace(objectAssemblyQualifiedName));
-      
+
       CeleriacTypeDeclaration objectTypeDecl =
           typeManager.ConvertAssemblyQualifiedNameToType(objectAssemblyQualifiedName);
       foreach (Type objectType in objectTypeDecl.GetAllTypes)
@@ -1106,6 +1170,7 @@ namespace Celeriac
     /// <param name="condition">Condition to test</param>
     /// <param name="flag">Flags to return if condition is true</param>
     /// <returns>Flags iff contition is true, otherwise none</returns>
+    [DebuggerStepThrough]
     private static VariableFlags MarkIf(bool condition, VariableFlags flag)
     {
       return condition ? flag : VariableFlags.none;
@@ -1116,6 +1181,7 @@ namespace Celeriac
     /// </summary>
     /// <param name="flags"></param>
     /// <returns>union of <code>flags</code>, respecting the Celeriac command line options</returns>
+    [DebuggerStepThrough]
     private VariableFlags ExtendFlags(params VariableFlags[] flags)
     {
       Contract.Requires(flags != null);
@@ -1255,7 +1321,7 @@ namespace Celeriac
         return "char";
       }
       else if (type.IsValueType && (type == TypeManager.IntType ||
-          // There are a lot of types that could be ints, check the non-standard types as well.
+        // There are a lot of types that could be ints, check the non-standard types as well.
           TypeManager.IsNonstandardIntType(type)))
       {
         return DaikonIntName;
@@ -1430,7 +1496,7 @@ namespace Celeriac
             originatingType,
             VariableKind.function, VariableFlags.classname | VariableFlags.synthetic,
             enclosingVar: name, relativeName: GetTypeMethodCall,
-            nestingDepth: nestingDepth + 1, 
+            nestingDepth: nestingDepth + 1,
             parents: parents.Select(p => p.WithName((FormInstanceName(GetTypeMethodCall)))),
             typeContext: typeContext, methodContext: methodContext);
       }
@@ -1444,8 +1510,8 @@ namespace Celeriac
       Func<string, string> newName = n => n + "[..]";
 
       PrintList(newName(name), elementType, name, originatingType, VariableKind.array,
-          nestingDepth: nestingDepth, 
-          parents: parents.Select(p => p.WithName(newName)), 
+          nestingDepth: nestingDepth,
+          parents: parents.Select(p => p.WithName(newName)),
           flags: collectionFlags,
           typeContext: typeContext, methodContext: methodContext);
     }
@@ -1534,7 +1600,8 @@ namespace Celeriac
         type.GetSortedFields(this.celeriacArgs.GetStaticAccessOptionsForFieldInspection(
         type, originatingType)))
       {
-        if (!this.typeManager.ShouldIgnoreField(type, staticField)){
+        if (!this.typeManager.ShouldIgnoreField(type, staticField))
+        {
           CollectTypes(staticField.FieldType, originatingType, acc, nestingDepth: nestingDepth + 1);
         }
       }

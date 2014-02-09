@@ -385,6 +385,13 @@ namespace Celeriac
           throw new InvalidOperationException(
               "Malformed purity file -- line with contents: " + str);
         }
+        catch (InvalidOperationException)
+        {
+          // Skip over malformed purity entries instead of crashing.
+          string error = string.Format("Warning: malformed purity entry '{0}'", str);
+          Console.Error.WriteLine(error);
+          Console.WriteLine(error);
+        }
       }
     }
 
@@ -394,7 +401,8 @@ namespace Celeriac
     /// </summary>
     /// <param name="type">Type containing the method</param>
     /// <param name="method">MethodInfo of the pure method</param>
-    public void AddPureMethod(Type type, MethodInfo method)
+    /// <returns>True if the pure method was added, or false if the pure was already present</returns>
+    public bool AddPureMethod(Type type, MethodInfo method)
     {
       Contract.Requires(type != null);
       Contract.Requires(method != null);
@@ -403,7 +411,7 @@ namespace Celeriac
 
       if (pureMethods.Contains(method))
       {
-        return;
+        return false;
       }
       if (!this.pureMethodsForType.ContainsKey(type))
       {
@@ -411,6 +419,7 @@ namespace Celeriac
       }
       pureMethodsForType[type].Add(method);
       pureMethods.Add(method);
+      return true;
     }
 
     /// <summary>
@@ -442,6 +451,60 @@ namespace Celeriac
           Contract.Assume(method == null || method.IsStatic);
         }
         Contract.Assume(method != null, "No method of name " + methodName + " exists for type on type " + typeName);
+
+        System.Reflection.Assembly instrumentedAssembly =
+          System.Reflection.Assembly.LoadFrom(this.celeriacArgs.AssemblyPath);
+
+        if (this.celeriacArgs.InferPurity)
+        {
+          // Get the types that implement/inherit from this.
+          var implementedTypes =
+              instrumentedAssembly.GetExportedTypes().Where(
+                  a => type.IsAssignableFrom(a) && !a.Equals(type));
+
+          foreach (var implementedType in implementedTypes)
+          {
+            // Get the method in the implementation that is/overrides the method in the interface/abstract class.
+            System.Reflection.MethodInfo implementedMethod =
+                implementedType.GetMethod(method.Name, method.GetParameters().Select(p => p.GetType()).ToArray());
+
+            if (implementedMethod != null && implementedType.FullName != null)
+            {
+              // Try to also add the implementation method as pure.
+              if (AddPureMethod(implementedType, implementedMethod))
+              {
+                string inferred =
+                    string.Format("Inferred pure method {0}.{1}", implementedType.FullName, implementedMethod.Name);
+
+                Debug.WriteLine(inferred);
+                if (this.celeriacArgs.VerboseMode) Console.WriteLine(inferred);
+              }
+            }
+          }
+
+          // Get the types this type inherits or derives from.
+          var parentTypes = type.GetInterfaces().ToList();
+          parentTypes.Add(type.BaseType);
+
+          foreach (var parentType in parentTypes)
+          {
+            System.Reflection.MethodInfo interfaceMethod =
+                parentType.GetMethod(method.Name, method.GetParameters().Select(p => p.GetType()).ToArray());
+
+            if (interfaceMethod != null && parentType.FullName != null)
+            {
+              if (AddPureMethod(parentType, interfaceMethod))
+              {
+                string inferred =
+                    string.Format("Inferred pure method {0}.{1}", parentType.FullName, interfaceMethod.Name);
+
+                Debug.WriteLine(inferred);
+                if (this.celeriacArgs.VerboseMode) Console.WriteLine(inferred);
+              }
+            }
+          }
+        }
+
         AddPureMethod(type, method);
       }
       catch (Exception ex)

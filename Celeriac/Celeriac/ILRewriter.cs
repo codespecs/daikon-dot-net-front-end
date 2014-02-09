@@ -277,6 +277,12 @@ namespace Celeriac
           // Print either the enter or exit statement
           this.DeclareMethodTransition(t, FormatMethodName(t, method), string.Empty);
 
+          // Print the parent of this method, if necessary. 
+          if (this.printDeclarations)
+          {
+            this.declPrinter.PrintParentName(method.ContainingType, PptKind.Object);
+          }
+
           // Create parent entries for the types that this method refers to
           if (this.celeriacArgs.LinkObjectInvariants)
           {
@@ -296,6 +302,23 @@ namespace Celeriac
               pptRelId[objectPpt] = relId++;
             }
           }
+
+          string methodTypeName = TypeManager.GetTypeName(method.ContainingType);
+          var methodParentType = method.ContainingTypeDefinition;
+
+          // Print out parent fields for interface/abstract type.
+          // This must occur before printing of parameters and the return value to be
+          // consistent with the ordering in non-interface/abstract methods.
+          //
+          // For an interface/abstract method we only include one parent: the containing interface/class
+          // TODO: Is this correct? 
+          this.declPrinter.PrintParentObjectFields(
+            new VariableParent(
+                parentPpt: methodTypeName + ":::OBJECT", 
+                relId: VariableParent.ObjectRelId, 
+                type: method.ContainingTypeDefinition.ResolvedType),
+            this.typeManager.ConvertCCITypeToAssemblyQualifiedName(methodParentType),
+            methodParentType as INamedTypeDefinition, method);
 
           int i = 0;
           foreach (var param in method.Parameters)
@@ -346,8 +369,9 @@ namespace Celeriac
       var containingType = method.ContainingType;
 
       // If the method is compiler generated don't insert instrumentation code.
+      // If the method is virtual, then proceed even if marked as compiler generated.
       if (TypeManager.IsCompilerGenerated(containingType.ResolvedType) ||
-          typeManager.IsCompilerGenerated(method) ||
+          (typeManager.IsCompilerGenerated(method) && !methodBody.MethodDefinition.IsVirtual) ||
           !celeriacArgs.ShouldPrintProgramPoint(FormatMethodName(methodBody.MethodDefinition)))
       {
         return base.Rewrite(methodBody);
@@ -1672,6 +1696,7 @@ namespace Celeriac
         string label = "", ITypeReference exceptionType = null)
     {
       string methodName = FormatMethodName(transition, methodBody.MethodDefinition);
+
       pptRelId.Clear();
 
       if (!celeriacArgs.ShouldPrintProgramPoint(methodName, label))
@@ -2006,8 +2031,20 @@ namespace Celeriac
           generator.Emit(OperationCode.Ldstr, param.Name.Value);
           if (this.printDeclarations)
           {
+            // Checks if a string has the same value as param.Name.Value. 
+            // If it does, return null, otherwise return the passed string. 
             Func<string, string> nullIfSame = x => x.Equals(param.Name.Value) ? null : x;
 
+            // Determine the parents of this parameter variable. To do so, we check if the method this 
+            // parameter belongs to implements an interface or abstract method (which is the parent).
+            // Each parent is represented by a VariableParent object.
+            //
+            // There is a subtly when the name of the parameter differs in the implementation compared to the
+            // interface or abstract method. If this is not the case, we set the VariableParent.ParentVariable
+            // to null. Otherwise, we set it to the name of the parameter in the interface or abstract method
+            // to provide a backward link in the DECLS file.
+            //
+            // Extra note: In the Daikon source code, VariableParent.ParentVariable maps to to VarParent.parent_variable.
             var parents = from m in contractMethods
                           // TODO(#109): by uninstantiating the method and comparing types (above), we can avoid linking 
                           // expressions not available in the supertype. However, we're likely filtering out too much
@@ -2016,6 +2053,16 @@ namespace Celeriac
                              DeclarationPrinter.SanitizeProgramPointName(FormatMethodName(transition, m)),
                              pptRelId[FormatMethodName(transition, m)],
                              nullIfSame(m.Parameters.ElementAt(i - 1).Name.Value));
+
+            // Some debugging code to step through what happens in the statement above.
+            foreach (IMethodDefinition m in contractMethods)
+            {
+              IParameterDefinition p = m.Parameters.ElementAt(i - 1);
+              if (TypeHelper.TypesAreEquivalent(param.Type, p.Type, true))
+              {
+                string x = nullIfSame(p.Name.Value);
+              }
+            }
 
             var qualifiedType = this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param.Type);
 
@@ -2111,10 +2158,26 @@ namespace Celeriac
       }
       if (this.printDeclarations)
       {
+        // Print out the parent object fields with proper parent links.
+        // For interfaces/abstract types, fields will contain a parent link to the object invariant
+        // as well as the interface.
+        var parents = (from m in TypeManager.GetContractMethods(methodBody.MethodDefinition)
+                       let u = MemberHelper.UninstantiateAndUnspecialize(m)
+                       where TypeHelper.TypesAreEquivalent(methodBody.MethodDefinition.Type, u.Type, resolveTypes: true)
+
+                       select new VariableParent(
+                         DeclarationPrinter.SanitizeProgramPointName(FormatMethodName(transition, m)),
+                         pptRelId[FormatMethodName(transition, m)], m)).ToList();
+
+        var methodDef = methodBody.MethodDefinition;
+        var type = methodDef.ContainingType;
+
+        // There must be one parent that is repreentative of the containing type of this method.
         string typeName = TypeManager.GetTypeName(methodBody.MethodDefinition.ContainingType);
+        parents.Add(new VariableParent(typeName + ":::OBJECT", VariableParent.ObjectRelId, type));
 
         this.declPrinter.PrintParentObjectFields(
-          new VariableParent(typeName + ":::OBJECT", VariableParent.ObjectRelId),
+          parents.ToArray(),
           this.typeManager.ConvertCCITypeToAssemblyQualifiedName(parentType),
           parentType as INamedTypeDefinition, methodBody.MethodDefinition);
       }

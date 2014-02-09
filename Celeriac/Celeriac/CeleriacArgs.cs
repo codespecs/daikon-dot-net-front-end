@@ -70,6 +70,11 @@ namespace Celeriac
     private const bool DefaultVerboseMode = false;
 
     /// <summary>
+    /// Whether or not to infer additional purity methods from the purity file
+    /// </summary>
+    private const bool DefaultInferPurity = false;
+
+    /// <summary>
     /// The location a user should specify to print to standard out.
     /// </summary>
     private const string PrintOutputFileLocation = "STDOUT";
@@ -121,6 +126,7 @@ namespace Celeriac
       omit_parent_dec_type,
       omit_var,
       purity_file,
+      infer_purity,
       std_visibility,
       /// <summary>
       /// Link every expression to an object invariant PPT for its type in the assembly
@@ -364,6 +370,8 @@ namespace Celeriac
           DefaultNestingDepth.ToString(CultureInfo.InvariantCulture));
 
       this.programArguments.Add(PossibleArgument.verbose, DefaultVerboseMode.ToString());
+
+      this.programArguments.Add(PossibleArgument.infer_purity, DefaultInferPurity.ToString());
 
       this.programArguments.Add(PossibleArgument.arrays_only, true.ToString());
 
@@ -909,6 +917,11 @@ namespace Celeriac
         this.programArguments.TryGetValue(PossibleArgument.purity_file, out result);
         return result;
       }
+    }
+
+    public bool InferPurity
+    {
+        get { return bool.Parse(this.programArguments[PossibleArgument.infer_purity]); }
     }
 
     /// <summary>
