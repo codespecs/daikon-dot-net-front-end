@@ -1035,7 +1035,7 @@ namespace Celeriac
           }
 
           ReflectiveVisit(exprName, value, method.ReturnType,
-            writer, depth + 1, originatingType, fieldFlags: fieldFlags);
+            writer, depth + 1, originatingType, fieldFlags: valueFlags);
         }
       }
 
