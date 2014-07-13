@@ -211,7 +211,7 @@ namespace Celeriac
 
           Assembly decompiled = Decompiler.GetCodeModelFromMetadataModel(typeManager.Host, mutable,
             pdbReader, DecompilerOptions.AnonymousDelegates | DecompilerOptions.Iterators);
-          comparabilityManager = AssemblySummary.MakeSummary(decompiled, typeManager, pdbReader);
+          comparabilityManager = AssemblySummary.MakeSummary(decompiled, typeManager);
 
           if (celeriacArgs.VerboseMode)
           {

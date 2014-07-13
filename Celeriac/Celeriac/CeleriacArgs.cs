@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.IO;
@@ -220,6 +221,7 @@ namespace Celeriac
     public int ProgramArgIndex { get; private set; }
 
     [ContractInvariantMethod]
+    [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification="Called by CC framework")]
     private void ObjectInvariant()
     {
       Contract.Invariant(this.programArguments != null);

@@ -10,6 +10,7 @@ using System.Diagnostics.Contracts;
 using Celeriac.Comparability;
 using Celeriac;
 using Celeriac.Contracts;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Comparability
 {
@@ -44,6 +45,7 @@ namespace Comparability
     public IMetadataHost Host { get; private set; }
     
     [ContractInvariantMethod]
+    [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Called by CC framework")]
     private void ObjectInvariant()
     {
       Contract.Invariant(Names != null);

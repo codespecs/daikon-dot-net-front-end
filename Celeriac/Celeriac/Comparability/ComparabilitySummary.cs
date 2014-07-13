@@ -7,6 +7,7 @@ using System.Diagnostics.Contracts;
 using Comparability;
 using Celeriac.Contracts;
 using Microsoft.Cci;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Celeriac.Comparability
 {
@@ -19,6 +20,7 @@ namespace Celeriac.Comparability
     private readonly DisjointSets comparability = new DisjointSets();
 
     [ContractInvariantMethod]
+    [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Called by CC framework")]
     private void ObjectInvariant()
     {
       Contract.Invariant(Contract.ForAll(arrayIndexes.Keys, i => ids.ContainsKey(i)));

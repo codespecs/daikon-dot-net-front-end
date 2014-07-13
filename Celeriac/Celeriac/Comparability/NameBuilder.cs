@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using Celeriac;
 using Celeriac.Contracts;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Comparability
 {
@@ -43,6 +44,7 @@ namespace Comparability
     private IMethodDefinition context = null;
 
     [ContractInvariantMethod]
+    [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Called by CC framework")]
     private void ObjectInvariants()
     {
       Contract.Invariant(methodCallCnt >= 0);

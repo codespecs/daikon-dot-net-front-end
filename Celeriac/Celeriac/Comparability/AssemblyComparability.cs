@@ -128,13 +128,11 @@ namespace Celeriac.Comparability
     }
 
 
-    public static AssemblySummary MakeSummary(Microsoft.Cci.MutableCodeModel.Module decompiled, TypeManager typeManager,
-                                   PdbReader reader)
+    public static AssemblySummary MakeSummary(Microsoft.Cci.MutableCodeModel.Module decompiled, TypeManager typeManager)
     {
       Contract.Requires(decompiled != null);
       Contract.Requires(typeManager != null);
-      Contract.Requires(reader != null);
-
+     
       var methodComparability = new Dictionary<IMethodDefinition, MethodVisitor>();
       var typeNames = new Dictionary<INamedTypeDefinition, NameBuilder>();
 

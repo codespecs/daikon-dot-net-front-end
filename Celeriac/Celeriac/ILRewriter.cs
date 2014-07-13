@@ -25,6 +25,7 @@ using Assembly = Microsoft.Cci.MutableCodeModel.Assembly;
 using MethodBody = Microsoft.Cci.MutableCodeModel.MethodBody;
 using System.Runtime.CompilerServices;
 using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 
 // This file and ProgramRewriter.cs originally came from the CCIMetadata (http://ccimetadata.codeplex.com/)
 // sample programs. Specifically, it was Samples/ILMutator/ILMutator.cs. The original code inserted
@@ -185,6 +186,7 @@ namespace Celeriac
     #region CCI Code
 
     [ContractInvariantMethod]
+    [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Called by CC framework")]
     private void ObjectInvariant()
     {
       Contract.Invariant(host != null);
@@ -2056,14 +2058,14 @@ namespace Celeriac
                              nullIfSame(m.Parameters.ElementAt(i - 1).Name.Value), m);
 
             // Some debugging code to step through what happens in the statement above.
-            foreach (IMethodDefinition m in contractMethods)
-            {
-              IParameterDefinition p = m.Parameters.ElementAt(i - 1);
-              if (TypeHelper.TypesAreEquivalent(param.Type, p.Type, true))
-              {
-                string x = nullIfSame(p.Name.Value);
-              }
-            }
+            //foreach (IMethodDefinition m in contractMethods)
+            //{
+            //  IParameterDefinition p = m.Parameters.ElementAt(i - 1);
+            //  if (TypeHelper.TypesAreEquivalent(param.Type, p.Type, true))
+            //  {
+            //    string x = nullIfSame(p.Name.Value);
+            //  }
+            //}
 
             var qualifiedType = this.typeManager.ConvertCCITypeToAssemblyQualifiedName(param.Type);
 

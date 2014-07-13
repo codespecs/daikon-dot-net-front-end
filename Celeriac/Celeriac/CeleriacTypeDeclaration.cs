@@ -9,6 +9,7 @@ namespace Celeriac
   using System.Diagnostics;
   using System.Diagnostics.Contracts;
   using Celeriac.Contracts;
+    using System.Diagnostics.CodeAnalysis;
 
   /// <summary>
   /// Describes the possible ways a single type could be declared. Operates as a union type over
@@ -39,6 +40,7 @@ namespace Celeriac
     private readonly DeclarationType declarationType;
 
     [ContractInvariantMethod]
+    [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Called by CC framework")]
     private void ObjectInvariant()
     {
         Contract.Invariant((declarationType == DeclarationType.SingleClass).Implies(type != null));
@@ -79,6 +81,7 @@ namespace Celeriac
 
     internal DeclarationType GetDeclarationType
     {
+      [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Referenced from CCs")]
       get
       {
         return declarationType;

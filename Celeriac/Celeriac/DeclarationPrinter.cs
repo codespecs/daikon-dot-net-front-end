@@ -14,6 +14,7 @@ using Microsoft.Cci;
 using System.Diagnostics.Contracts;
 using Celeriac.Contracts;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Celeriac
 {
@@ -38,6 +39,7 @@ namespace Celeriac
   public class VariableParent
   {
     [ContractInvariantMethod]
+    [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Called by CC framework")]
     private void ObjectInvariant()
     {
       Contract.Invariant(!string.IsNullOrEmpty(ParentPpt));
@@ -1499,6 +1501,7 @@ namespace Celeriac
     /// declared, null or empty otherwise</param>
     /// <param name="nestingDepth">Nesting depth of the variable to potentially be declared</param>
     /// <returns>True if the variable should be skipped, otherwise false</returns>
+    [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "kind", Justification="Used to determine allowed values for enclosingVar")]
     private bool PerformEarlyExitChecks(string name, VariableKind kind, string enclosingVar,
       int nestingDepth)
     {

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics.Contracts;
 using Celeriac.Contracts;
+using System.Diagnostics.CodeAnalysis;
 
 namespace EmilStefanov
 {
@@ -12,6 +13,7 @@ namespace EmilStefanov
   public sealed class DisjointSets
   {
     [ContractInvariantMethod]
+    [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Called by CC framework")]
     private void ObjectInvariant()
     {
       Contract.Invariant(this.m_elementCount >= 0);

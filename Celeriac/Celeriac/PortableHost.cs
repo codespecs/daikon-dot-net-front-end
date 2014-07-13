@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Cci;
 using System.IO;
 using System.Diagnostics.Contracts;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Celeriac
 {
@@ -18,6 +19,7 @@ namespace Celeriac
     private AssemblyIdentity/*?*/ coreAssemblySymbolicIdentity;
 
     [ContractInvariantMethod]
+    [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Called by CC framework")]
     private void ObjectInvariants()
     {
       Contract.Invariant(peReader != null);

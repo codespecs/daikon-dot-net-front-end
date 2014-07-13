@@ -16,6 +16,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Diagnostics.Contracts;
 using System.Runtime.Serialization;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Celeriac
 {
@@ -321,6 +322,7 @@ namespace Celeriac
     }
 
     [ContractInvariantMethod]
+    [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Called by CC framework")]
     private void ObjectInvariants()
     {
       Contract.Invariant(celeriacArgs != null);
@@ -391,7 +393,6 @@ namespace Celeriac
           // Skip over malformed purity entries instead of crashing.
           string error = string.Format("Warning: malformed purity entry '{0}'", str);
           Console.Error.WriteLine(error);
-          Console.WriteLine(error);
         }
       }
     }
