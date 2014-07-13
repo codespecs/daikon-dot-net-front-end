@@ -316,6 +316,7 @@ namespace Celeriac
             new VariableParent(
                 parentPpt: methodTypeName + ":::OBJECT", 
                 relId: VariableParent.ObjectRelId, 
+                parentVariable: null,
                 type: method.ContainingTypeDefinition.ResolvedType),
             this.typeManager.ConvertCCITypeToAssemblyQualifiedName(methodParentType),
             methodParentType as INamedTypeDefinition, method);
@@ -1753,7 +1754,7 @@ namespace Celeriac
                         where TypeHelper.TypesAreEquivalent(methodBody.MethodDefinition.Type, u.Type, resolveTypes: true)
                         select new VariableParent(
                           DeclarationPrinter.SanitizeProgramPointName(FormatMethodName(transition, m)),
-                          pptRelId[FormatMethodName(transition, m)]);
+                          pptRelId[FormatMethodName(transition, m)], null, m);
 
           this.declPrinter.PrintReturn(
               "return",
@@ -2052,7 +2053,7 @@ namespace Celeriac
                           select new VariableParent(
                              DeclarationPrinter.SanitizeProgramPointName(FormatMethodName(transition, m)),
                              pptRelId[FormatMethodName(transition, m)],
-                             nullIfSame(m.Parameters.ElementAt(i - 1).Name.Value));
+                             nullIfSame(m.Parameters.ElementAt(i - 1).Name.Value), m);
 
             // Some debugging code to step through what happens in the statement above.
             foreach (IMethodDefinition m in contractMethods)
@@ -2164,17 +2165,17 @@ namespace Celeriac
         var parents = (from m in TypeManager.GetContractMethods(methodBody.MethodDefinition)
                        let u = MemberHelper.UninstantiateAndUnspecialize(m)
                        where TypeHelper.TypesAreEquivalent(methodBody.MethodDefinition.Type, u.Type, resolveTypes: true)
-
+                       // No need to account for member renaming when linking objects
                        select new VariableParent(
                          DeclarationPrinter.SanitizeProgramPointName(FormatMethodName(transition, m)),
-                         pptRelId[FormatMethodName(transition, m)], m)).ToList();
+                         pptRelId[FormatMethodName(transition, m)], null, m)).ToList();
 
         var methodDef = methodBody.MethodDefinition;
         var type = methodDef.ContainingType;
 
         // There must be one parent that is repreentative of the containing type of this method.
         string typeName = TypeManager.GetTypeName(methodBody.MethodDefinition.ContainingType);
-        parents.Add(new VariableParent(typeName + ":::OBJECT", VariableParent.ObjectRelId, type));
+        parents.Add(new VariableParent(typeName + ":::OBJECT", VariableParent.ObjectRelId, null, type));
 
         this.declPrinter.PrintParentObjectFields(
           parents.ToArray(),
