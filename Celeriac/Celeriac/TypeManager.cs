@@ -80,6 +80,7 @@ namespace Celeriac
     public static readonly Type FloatType = typeof(float);
     public static readonly Type IntType = typeof(int);
     public static readonly Type ListType = typeof(IList);
+    public static readonly Type GenericListType = typeof(IList<>);
     public static readonly Type LongType = typeof(long);
     public static readonly Type ObjectType = typeof(object);
     public static readonly Type ShortType = typeof(short);
@@ -599,7 +600,11 @@ namespace Celeriac
     private bool IsListTest(Type type)
     {
       Contract.Requires(type != null);
-      return SearchForMatchingInterface(type, interfaceToTest => interfaceToTest == TypeManager.ListType);
+      return SearchForMatchingInterface(type, interfaceToTest => {
+        if (interfaceToTest == TypeManager.ListType) return true;
+        else if (interfaceToTest.IsGenericType && interfaceToTest.GetGenericTypeDefinition() == TypeManager.GenericListType) return true;
+        else return false;
+      });
     }
 
     /// <summary>

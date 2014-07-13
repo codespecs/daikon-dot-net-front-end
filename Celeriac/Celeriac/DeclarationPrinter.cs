@@ -37,45 +37,93 @@ namespace Celeriac
   /// <remarks>See Section A.3.3 Variable declarations of the developer's manual</remarks>
   public class VariableParent
   {
+    [ContractInvariantMethod]
+    private void ObjectInvariant()
+    {
+      Contract.Invariant(!string.IsNullOrEmpty(ParentPpt));
+      Contract.Invariant(RelId > 0);
+      Contract.Invariant(Type != null || TypeReference != null);
+    }
+
+    /// <summary>
+    /// Relationship ID for the object invariant relationship.
+    /// </summary>
+    public const int ObjectRelId = 1;
+
+    /// <summary>
+    /// The parent PPT name.
+    /// </summary>
     public string ParentPpt { get; private set; }
+
+    /// <summary>
+    /// The relationship ID. Each parent for a PPT has a unique relationship id.
+    /// </summary>
     public int RelId { get; private set; }
+
+    /// <summary>
+    /// The variable name at the parent PPT or <c>null</c> if the name is the same at the parent PPT.
+    /// </summary>
     public string ParentVariable { get; private set; }
 
     // Use these fields to identify the members of the parent, so that we can check
     // that a particular implementation method is indeed present at the parent.
-    public IMethodDefinition ContractMethod { get; private set; }
-    public ITypeReference Type { get; private set; }
 
-    public const int ObjectRelId = 1;
+    /// <summary>
+    /// The corresponding method or <c>null</c> if the parent is a type.
+    /// </summary>
+    public IMethodDefinition Method { get; private set; }
 
-    public VariableParent(string parentPpt, int relId)
-      : this(parentPpt, relId, null, null, null)
+    /// <summary>
+    /// The type (or containing type if the parent is a method).
+    /// </summary>
+    public ITypeReference TypeReference { get; private set; }
+
+    public Type Type { get; private set; }
+
+    /// <summary>
+    /// Create a Variable Parent link record for the given method.
+    /// </summary>
+    /// <param name="parentPpt">The parent PPT name</param>
+    /// <param name="relId">The unique relationship ID</param>
+    /// <param name="parentVariable">The parent variable name or <c>null</c> if the name is the same</param>
+    /// <param name="method">The parent method</param>
+    public VariableParent(string parentPpt, int relId, string parentVariable, IMethodDefinition method)
+      : this(parentPpt, relId, parentVariable, method, method.ContainingType, null)
     {
     }
 
-    public VariableParent(string parentPpt, int relId, string parentVariable) :
-      this(parentPpt, relId, parentVariable, null, null)
+    /// <summary>
+    /// Create a Variable Parent link record for the given type.
+    /// </summary>
+    /// <param name="parentPpt">The parent PPT (should be an object PPT)</param>
+    /// <param name="relId">The unique relationship ID</param>
+    /// <param name="parentVariable">The parent variable name or <c>null</c> if the name is the same</param>
+    /// <param name="type">The parent type</param>
+    public VariableParent(string parentPpt, int relId, string parentVariable, ITypeReference type)
+      : this(parentPpt, relId, parentVariable, null, type, null)
     {
     }
 
-    // When the parent is a method.
-    public VariableParent(string parentPpt, int relId, IMethodDefinition contractMethod)
-      : this(parentPpt, relId, null, contractMethod, null)
+    /// <summary>
+    /// Create a Variable Parent link record for the given type.
+    /// </summary>
+    /// <param name="parentPpt">The parent PPT (should be an object PPT)</param>
+    /// <param name="relId">The unique relationship ID</param>
+    /// <param name="parentVariable">The parent variable name or <c>null</c> if the name is the same</param>
+    /// <param name="type">The parent type</param>
+    public VariableParent(string parentPpt, int relId, string parentVariable, Type type)
+      : this(parentPpt, relId, parentVariable, null, null, type)
     {
     }
 
-    // When the parent is a class/interface.
-    public VariableParent(string parentPpt, int relId, ITypeReference type)
-      : this(parentPpt, relId, null, null, type)
-    {
-    }
 
-    public VariableParent(string parentPpt, int relId, string parentVariable, IMethodDefinition contractMethod, ITypeReference type)
+    private VariableParent(string parentPpt, int relId, string parentVariable, IMethodDefinition method, ITypeReference typeReference, Type type)
     {
       this.ParentPpt = parentPpt;
       this.RelId = relId;
       this.ParentVariable = parentVariable;
-      this.ContractMethod = contractMethod;
+      this.Method = method;
+      this.TypeReference = typeReference;
       this.Type = type;
     }
 
@@ -87,7 +135,7 @@ namespace Celeriac
     /// <returns>a new <see cref="VariableParent"/> transforming the parent expression name with <paramref name="modifier"/></returns>
     public VariableParent WithName(Func<string, string> modifier)
     {
-      return new VariableParent(ParentPpt, RelId, ParentVariable != null ? modifier(ParentVariable) : null);
+      return new VariableParent(ParentPpt, RelId, ParentVariable != null ? modifier(ParentVariable) : null, Method, TypeReference, Type);
     }
   }
 
@@ -308,7 +356,7 @@ namespace Celeriac
 
         if (ILRewriter.pptRelId.ContainsKey(objPpt))
         {
-          var objParent = new VariableParent(SanitizeProgramPointName(objPpt), ILRewriter.pptRelId[objPpt], "this");
+          var objParent = new VariableParent(SanitizeProgramPointName(objPpt), ILRewriter.pptRelId[objPpt], "this", type);
           origParents.Add(objParent);
           ILRewriter.referencedTypes.Add(type);
         }
@@ -504,7 +552,7 @@ namespace Celeriac
 
       foreach (VariableParent parent in oldParents)
       {
-        if (parent.ContractMethod == null)
+        if (parent.Method == null)
         {
           newParents.Add(parent);
         }
@@ -513,7 +561,8 @@ namespace Celeriac
           // Check that the contract method actually appears in the parent type.
           // TODO: This is textual comparison of members. I don't know if this is sufficient, but it seems to work so far.
           // I feel like there may be some renaming corner cases where this fails.
-          IMethodDefinition contractMethod = parent.ContractMethod;
+          // TWS: you can't just use the names because the number of arguments might differ (overrides)
+          IMethodDefinition contractMethod = parent.Method;
           var members = contractMethod.ContainingType.ResolvedType.Members.Select(member => member.Name.ToString()).ToList();
 
           if (members.Contains(memberName))
@@ -1509,9 +1558,24 @@ namespace Celeriac
 
       Func<string, string> newName = n => n + "[..]";
 
+      var listParents = parents.Where(p =>
+      {
+        if (p.Type != null)
+        {
+          return typeManager.IsListImplementer(p.Type);
+        }
+        else
+        {
+          var qualifiedName = typeManager.ConvertCCITypeToAssemblyQualifiedName(p.TypeReference);
+          var parentType = typeManager.ConvertAssemblyQualifiedNameToType(qualifiedName);
+          return typeManager.IsListImplementer(parentType.GetSingleType);
+        }
+      });
+
+
       PrintList(newName(name), elementType, name, originatingType, VariableKind.array,
           nestingDepth: nestingDepth,
-          parents: parents.Select(p => p.WithName(newName)),
+          parents: listParents.Select(p => p.WithName(newName)),
           flags: collectionFlags,
           typeContext: typeContext, methodContext: methodContext);
     }
