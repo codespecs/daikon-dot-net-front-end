@@ -289,9 +289,11 @@ namespace Celeriac
       }
       else
       {
-        if (!Directory.Exists(celeriacArgs.OutputLocation))
+        // Create the containing directory, if necessary
+        var outputDir = Path.GetDirectoryName(celeriacArgs.OutputLocation);
+        if (!string.IsNullOrWhiteSpace(outputDir) && !Directory.Exists(outputDir))
         {
-          Directory.CreateDirectory(Path.GetDirectoryName(celeriacArgs.OutputLocation));
+          Directory.CreateDirectory(outputDir);
         }
         this.fileWriter = new StreamWriter(this.celeriacArgs.OutputLocation);
       }

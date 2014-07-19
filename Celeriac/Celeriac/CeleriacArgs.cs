@@ -683,7 +683,8 @@ namespace Celeriac
     }
 
     /// <summary>
-    /// Where to output the datatrace and decls
+    /// The filename of the datatrace output. The containing directory is used at the output location
+    /// for auxilliary files.
     /// </summary>
     public string OutputLocation
     {
