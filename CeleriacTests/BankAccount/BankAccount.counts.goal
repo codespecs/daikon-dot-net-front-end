@@ -1,3 +1,3 @@
-BankAccountNS.BankAccount..ctor(System.String\_customerName,\_System.Double\_balance) ENTER/24: 3 EXIT14/48: 3
-BankAccountNS.BankAccount.Balance.get() ENTER/33: 1 EXIT4/42: 1
-BankAccountNS.BankAccount.Debit(System.Double\_amount) ENTER/36: 3 EXIT49/42: 1 EXIT_EX_System.Exception/42: 2
+BankAccountNS.BankAccount..ctor(System.String\_customerName,\_System.Double\_balance) ENTER/18: 3 EXIT14/42: 3
+BankAccountNS.BankAccount.Balance.get() ENTER/27: 1 EXIT4/36: 1
+BankAccountNS.BankAccount.Debit(System.Double\_amount) ENTER/30: 3 EXIT49/36: 1 EXIT_EX_System.Exception/36: 2

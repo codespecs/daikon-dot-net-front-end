@@ -5,7 +5,7 @@
   <Execution>
     <TestTypeSpecific>
       <UnitTestRunConfig testTypeId="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b">
-        <AssemblyResolution applicationBaseDirectory="%DAIKONDIR%\DotNetFrontEndTests\BankAccount">
+        <AssemblyResolution applicationBaseDirectory="%CELERIAC_TESTS%\BankAccount">
           <TestDirectory useLoadContext="true" />
           <RuntimeResolution>
             <Directory path="%DNFE_OUT%" includeSubDirectories="true" />
