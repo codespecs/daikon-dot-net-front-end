@@ -17,6 +17,7 @@ using System.Runtime.CompilerServices;
 using System.Diagnostics.Contracts;
 using System.Runtime.Serialization;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Celeriac
 {
@@ -250,6 +251,20 @@ namespace Celeriac
       this.instrumentedAssembly = assembly;
       ResetCaches();
       ReloadMethodPurityInformation();
+
+      AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(ResolveLocalAssembly);
+    }
+
+    private System.Reflection.Assembly ResolveLocalAssembly(object sender, ResolveEventArgs args)
+    {
+      // Search for the assembly in the same directory as the instrumented assembly
+      // There's good reason to beleive that this is the assembly that's intended to be loaded by the program
+
+      var absolute = Path.GetFullPath(this.celeriacArgs.AssemblyPath);
+      var dir = Path.GetDirectoryName(absolute);
+      var name = args.Name.Split(',')[0]; // the name includes the version number, hash and other extraneous information
+      var path = Path.Combine(dir, name + ".dll");
+      return System.Reflection.Assembly.LoadFile(path);
     }
 
     /// <summary>
@@ -988,25 +1003,50 @@ namespace Celeriac
       // Otherwise get the type and save the result.
       try
       {
+        // Assembly resolver -- load from self if necessary.
+        Func<System.Reflection.AssemblyName, System.Reflection.Assembly> resolveAssembly = aName =>
+        {
+          if (aName.Name == this.celeriacArgs.AssemblyName)
+          {
+            // Type is in the instrumented assembly
+            return this.instrumentedAssembly ?? System.Reflection.Assembly.LoadFrom(this.celeriacArgs.AssemblyPath);
+          }
+          else
+          {
+            // Type is in a different assembly
+            try
+            {
+              // Try to look up the assembly using the standard lookup mechanism. This won't work if Celeriac is being run
+              // from a different directory.
+              var found = System.Reflection.Assembly.Load(aName);
+              Contract.Assume(found != null);
+              return found;
+            }
+            catch
+            {
+              // Search for the assembly in the same directory as the instrumented assembly
+              // There's good reason to beleive that this is the assembly that's intended to be loaded by the program
+              var me = this.instrumentedAssembly ?? System.Reflection.Assembly.LoadFrom(this.celeriacArgs.AssemblyPath);
+              var dir = Path.GetDirectoryName(me.Location);
+              var path = Path.Combine(dir, aName.Name + ".dll");
+              return System.Reflection.Assembly.LoadFile(path);
+            }
+          }                
+        };
+
+        // Type resolver -- load the type from the assembly if we have one
+        // Otherwise let .NET resolve it
+        Func<System.Reflection.Assembly, string, bool, Type> resolveType = (assem, name, ignore) => {
+          return assem == null ? Type.GetType(name, false, ignore) : assem.GetType(name, false, ignore);
+        };
+
         Type result;
         if (!this.nameTypeMap.TryGetValue(assemblyQualifiedName, out result))
         {
           // Now get the type with the assembly-qualified name.
           // Load the assembly if necessary, then load the type from the assembly.
-          result = Type.GetType(
-                      assemblyQualifiedName,
-            // Assembly resolver -- load from self if necessary.
-                      (aName) => aName.Name == this.celeriacArgs.AssemblyName ?
-                          (this.instrumentedAssembly ??
-                            System.Reflection.Assembly.LoadFrom(this.celeriacArgs.AssemblyPath)) :
-                          System.Reflection.Assembly.Load(aName),
-            // Type resolver -- load the type from the assembly if we have one
-            // Otherwise let .NET resolve it
-                      (assem, name, ignore) => assem == null ?
-                          Type.GetType(name, false, ignore) :
-                              assem.GetType(name, false, ignore),
-                      false);
-
+          result = Type.GetType(assemblyQualifiedName, resolveAssembly, resolveType, throwOnError: false);
+       
           Contract.Assume(result != null, "Couldn't convert type with assembly qualified name: " + assemblyQualifiedName);
           this.nameTypeMap.Add(assemblyQualifiedName, result);
         }

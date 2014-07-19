@@ -56,7 +56,7 @@ $(NAME): $(SOURCES) $(LIBS)
 	$(MSBUILD) /property:OutDir=. $(NAME).sln
 else
 $(NAME): $(SOURCES) $(LIBS)
-	$(COMPILER) $(DEFINES) $(SOURCES) $(INCLUDES)
+	$(COMPILER) $(DEFINES) $(SOURCES) /R:$(LIBS) $(INCLUDES)
 endif
 .PRECIOUS: %$(DTRACE_EXT) %.out %$(DTRACE_EXT).diff %.out.diff
 
