@@ -980,6 +980,9 @@ namespace Celeriac
       Contract.Requires(!string.IsNullOrWhiteSpace(assemblyQualifiedName));
       Contract.Ensures(Contract.Result<CeleriacTypeDeclaration>() != null);
 
+      // XXX: does this create duplicate handlers?
+      AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(ResolveLocalAssembly);
+      
       // TODO(#17): Passing around an assembly qualified name here may not be best because it is
       // difficult to build and parse. Consider creating a custom object to manage type identity
       // and use that as a parameter instead.
@@ -1009,7 +1012,8 @@ namespace Celeriac
           if (aName.Name == this.celeriacArgs.AssemblyName)
           {
             // Type is in the instrumented assembly
-            return this.instrumentedAssembly ?? System.Reflection.Assembly.LoadFrom(this.celeriacArgs.AssemblyPath);
+            var absolute = Path.GetFullPath(this.celeriacArgs.AssemblyPath);
+            return this.instrumentedAssembly ?? System.Reflection.Assembly.LoadFrom(absolute);
           }
           else
           {
@@ -1026,7 +1030,8 @@ namespace Celeriac
             {
               // Search for the assembly in the same directory as the instrumented assembly
               // There's good reason to beleive that this is the assembly that's intended to be loaded by the program
-              var me = this.instrumentedAssembly ?? System.Reflection.Assembly.LoadFrom(this.celeriacArgs.AssemblyPath);
+              var absolute = Path.GetFullPath(this.celeriacArgs.AssemblyPath);
+              var me = this.instrumentedAssembly ?? System.Reflection.Assembly.LoadFrom(absolute);
               var dir = Path.GetDirectoryName(me.Location);
               var path = Path.Combine(dir, aName.Name + ".dll");
               return System.Reflection.Assembly.LoadFile(path);
@@ -1036,8 +1041,10 @@ namespace Celeriac
 
         // Type resolver -- load the type from the assembly if we have one
         // Otherwise let .NET resolve it
-        Func<System.Reflection.Assembly, string, bool, Type> resolveType = (assem, name, ignore) => {
-          return assem == null ? Type.GetType(name, false, ignore) : assem.GetType(name, false, ignore);
+        Func<System.Reflection.Assembly, string, bool, Type> resolveType = (assembly, name, ignoreCase) => {
+          var throwOnError = false;
+          var type = assembly == null ? Type.GetType(name, throwOnError, ignoreCase) : assembly.GetType(name, throwOnError, ignoreCase);
+          return type;
         };
 
         Type result;
