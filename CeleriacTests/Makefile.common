@@ -7,7 +7,6 @@ DNFE_OPTIONS := $(DNFE_OPTIONS) --verbose=true --force-unix-newline --omit_var=E
 CLEAN_OUTPUT := ../clean-output.pl
 RUN_MANY := ../run-many.pl
 DTRACE_COUNT ?= $(DAIKONDIR)/scripts/dtrace-count.pl
-DTRACE_DIFF ?= java daikon.tools.DtraceDiff
 SORT_DTRACE_INPLACE := perl -Si ../sort-dtrace.pl
 LANG ?= CSharp
 INCLUDES ?=
@@ -17,11 +16,17 @@ DIFF_NAME ?= $(shell basename `pwd`)
 BEFORE_RUN ?= @:
 AFTER_RUN ?= @:
 inv ?= ..
-#  -cp ${DAIKONDIR}/daikon.jar
-DAIKON := java -Xmx960m daikon.Daikon --no_text_output --config_option daikon.derive.Derivation.disable_derived_variables=true --config $(inv)/config.txt --config_option daikon.DynamicConstants.OneOf_only=true
-# -Xmx960m -XX:MaxPermSize=960M -cp ${DAIKONDIR}/daikon.jar
-PRINT_INV := java -Xmx960m daikon.PrintInvariants
+
+# Need to include Daikon in the Java classpath if daikon.jar is not in the
+# environment's classpath
+# -cp ${DAIKONDIR}/daikon.jar
+
+# If your system has enough RAM, you could pre-allocate the memory for the VM
 # -XX:MaxPermSize=960M
+
+DAIKON := java -Xmx1024m daikon.Daikon --no_text_output --config_option daikon.derive.Derivation.disable_derived_variables=true --config $(inv)/config.txt --config_option daikon.DynamicConstants.OneOf_only=true
+DTRACE_DIFF ?= java -Xmx1024m daikon.tools.DtraceDiff
+PRINT_INV := java -Xmx1024m daikon.PrintInvariants
 
 include ../Makefile.user
 
