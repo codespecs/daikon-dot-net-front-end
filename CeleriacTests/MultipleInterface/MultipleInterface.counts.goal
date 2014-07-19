@@ -1,0 +1,7 @@
+MultipleInterface.BaseClass..ctor() ENTER/3: 2 EXIT2/15: 2
+MultipleInterface.MyInterfaceImpl..ctor() ENTER/3: 2 EXIT2/15: 2
+MultipleInterface.MyInterfaceImpl.GreaterThan(System.Int32\_a,\_System.Int32\_b) ENTER/15: 2 EXIT5/24: 2
+MultipleInterface.OtherInterfaceImpl..ctor() ENTER/3: 1 EXIT2/15: 1
+MultipleInterface.OtherInterfaceImpl.GreaterThan(System.Int32\_a,\_System.Int32\_b) ENTER/15: 1 EXIT19/24: 1
+MultipleInterface.Program.DoSomething(MultipleInterface.MyInterface\_i,\_MultipleInterface.MyInterfaceImpl\_c,\_MultipleInterface.OtherInterfaceImpl\_o) ENTER/21: 1 EXIT16/27: 1
+MultipleInterface.Program.Main(System.String[]\_args) ENTER/12: 1 EXIT6/18: 1
