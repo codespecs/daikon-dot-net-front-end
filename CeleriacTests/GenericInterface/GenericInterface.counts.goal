@@ -1,0 +1,5 @@
+GenericInterface.Driver.Main() ENTER/3: 1 EXIT35/9: 1
+GenericInterface.FixedList..ctor(System.Int32\_size) ENTER/6: 1 EXIT12/36: 1
+GenericInterface.FixedList.Add(System.Object\_o) ENTER/33: 2 EXIT14/39: 2
+GenericInterface.FixedList`1..ctor(System.Int32\_size) ENTER/6: 1 EXIT12/39: 1
+GenericInterface.FixedList`1.Add(T\_o) ENTER/36: 3 EXIT14/42: 3
