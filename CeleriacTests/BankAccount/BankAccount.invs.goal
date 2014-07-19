@@ -1,126 +1,62 @@
 ===========================================================================
 BankAccountNS.BankAccount:::OBJECT
-this has only one value
+this.m_balance one of { 7.44, 11.99 }
 this.m_customerName has only one value
 this.m_customerName.ToString() == "Mr. Bryan Walton"
-this.m_balance one of { 6.54, 11.99, 17.76 }
 this.m_frozen == false
 this.GetType() == BankAccountNS.BankAccount.class
 ===========================================================================
 BankAccountNS.BankAccount..ctor(System.String customerName, System.Double balance):::ENTER
-BankAccount.DebitAmountExceedsBalanceMessage has only one value
-BankAccount.DebitAmountExceedsBalanceMessage.ToString() == "Debit amount exceeds balance"
-BankAccount.DebitAmountLessThanZeroMessage has only one value
-BankAccount.DebitAmountLessThanZeroMessage.ToString() == "Debit amount less than zero"
 customerName has only one value
 customerName.ToString() == "Mr. Bryan Walton"
 balance == 11.99
 ===========================================================================
-BankAccountNS.BankAccount..ctor(System.String customerName, System.Double balance):::EXIT14
-===========================================================================
 BankAccountNS.BankAccount..ctor(System.String customerName, System.Double balance):::EXIT
-BankAccount.DebitAmountExceedsBalanceMessage == orig(BankAccount.DebitAmountExceedsBalanceMessage)
-BankAccount.DebitAmountLessThanZeroMessage == orig(BankAccount.DebitAmountLessThanZeroMessage)
-this.m_customerName == orig(customerName)
 this.m_balance == orig(balance)
-BankAccount.DebitAmountExceedsBalanceMessage has only one value
-BankAccount.DebitAmountExceedsBalanceMessage.ToString() == "Debit amount exceeds balance"
-BankAccount.DebitAmountLessThanZeroMessage has only one value
-BankAccount.DebitAmountLessThanZeroMessage.ToString() == "Debit amount less than zero"
+this.m_customerName == orig(customerName)
 this.m_balance == 11.99
 customerName.ToString() == "Mr. Bryan Walton"
-BankAccount.DebitAmountExceedsBalanceMessage.ToString() == orig(BankAccount.DebitAmountExceedsBalanceMessage.ToString())
-BankAccount.DebitAmountLessThanZeroMessage.ToString() == orig(BankAccount.DebitAmountLessThanZeroMessage.ToString())
 this.m_customerName.ToString() == customerName.ToString()
 customerName.ToString() == orig(customerName.ToString())
 ===========================================================================
 BankAccountNS.BankAccount.Balance.get():::ENTER
-BankAccount.DebitAmountExceedsBalanceMessage has only one value
-BankAccount.DebitAmountExceedsBalanceMessage.ToString() == "Debit amount exceeds balance"
-BankAccount.DebitAmountLessThanZeroMessage has only one value
-BankAccount.DebitAmountLessThanZeroMessage.ToString() == "Debit amount less than zero"
-this.m_balance == 6.54
+BankAccountNS.BankAccount.DebitAmountExceedsBalanceMessage has only one value
+BankAccountNS.BankAccount.DebitAmountLessThanZeroMessage has only one value
+this has only one value
+this.m_balance == 7.44
 ===========================================================================
 BankAccountNS.BankAccount.Balance.get():::EXIT4
 ===========================================================================
 BankAccountNS.BankAccount.Balance.get():::EXIT
-BankAccount.DebitAmountExceedsBalanceMessage == orig(BankAccount.DebitAmountExceedsBalanceMessage)
-BankAccount.DebitAmountLessThanZeroMessage == orig(BankAccount.DebitAmountLessThanZeroMessage)
-this.m_customerName == orig(this.m_customerName)
 this.m_balance == return
+this.m_customerName == orig(this.m_customerName)
 this.m_frozen == orig(this.m_frozen)
 return == orig(this.m_balance)
-BankAccount.DebitAmountExceedsBalanceMessage has only one value
-BankAccount.DebitAmountExceedsBalanceMessage.ToString() == "Debit amount exceeds balance"
-BankAccount.DebitAmountLessThanZeroMessage has only one value
-BankAccount.DebitAmountLessThanZeroMessage.ToString() == "Debit amount less than zero"
-return == 6.54
-BankAccount.DebitAmountExceedsBalanceMessage.ToString() == orig(BankAccount.DebitAmountExceedsBalanceMessage.ToString())
-BankAccount.DebitAmountLessThanZeroMessage.ToString() == orig(BankAccount.DebitAmountLessThanZeroMessage.ToString())
-this.m_customerName.ToString() == orig(this.m_customerName.ToString())
-===========================================================================
-BankAccountNS.BankAccount.Credit(System.Double amount):::ENTER
-BankAccount.DebitAmountExceedsBalanceMessage has only one value
-BankAccount.DebitAmountExceedsBalanceMessage.ToString() == "Debit amount exceeds balance"
-BankAccount.DebitAmountLessThanZeroMessage has only one value
-BankAccount.DebitAmountLessThanZeroMessage.ToString() == "Debit amount less than zero"
-this.m_balance == 11.99
-amount == 5.77
-===========================================================================
-BankAccountNS.BankAccount.Credit(System.Double amount):::EXIT30
-===========================================================================
-BankAccountNS.BankAccount.Credit(System.Double amount):::EXIT
-BankAccount.DebitAmountExceedsBalanceMessage == orig(BankAccount.DebitAmountExceedsBalanceMessage)
-BankAccount.DebitAmountLessThanZeroMessage == orig(BankAccount.DebitAmountLessThanZeroMessage)
-this.m_customerName == orig(this.m_customerName)
-this.m_frozen == orig(this.m_frozen)
-BankAccount.DebitAmountExceedsBalanceMessage has only one value
-BankAccount.DebitAmountExceedsBalanceMessage.ToString() == "Debit amount exceeds balance"
-BankAccount.DebitAmountLessThanZeroMessage has only one value
-BankAccount.DebitAmountLessThanZeroMessage.ToString() == "Debit amount less than zero"
-this.m_balance == 17.76
-BankAccount.DebitAmountExceedsBalanceMessage.ToString() == orig(BankAccount.DebitAmountExceedsBalanceMessage.ToString())
-BankAccount.DebitAmountLessThanZeroMessage.ToString() == orig(BankAccount.DebitAmountLessThanZeroMessage.ToString())
+BankAccountNS.BankAccount.DebitAmountExceedsBalanceMessage has only one value
+BankAccountNS.BankAccount.DebitAmountLessThanZeroMessage has only one value
+return == 7.44
 this.m_customerName.ToString() == orig(this.m_customerName.ToString())
 ===========================================================================
 BankAccountNS.BankAccount.Debit(System.Double amount):::ENTER
-BankAccount.DebitAmountExceedsBalanceMessage has only one value
-BankAccount.DebitAmountExceedsBalanceMessage.ToString() == "Debit amount exceeds balance"
-BankAccount.DebitAmountLessThanZeroMessage has only one value
-BankAccount.DebitAmountLessThanZeroMessage.ToString() == "Debit amount less than zero"
-this.m_balance == 17.76
-amount == 11.22
+this.m_balance == 11.99
+amount one of { -100.0, 4.55, 20.0 }
 ===========================================================================
 BankAccountNS.BankAccount.Debit(System.Double amount):::EXIT49
+BankAccountNS.BankAccount.DebitAmountExceedsBalanceMessage has only one value
+BankAccountNS.BankAccount.DebitAmountLessThanZeroMessage has only one value
+this.m_balance == 7.44
+orig(BankAccountNS.BankAccount.DebitAmountExceedsBalanceMessage) has only one value
+orig(BankAccountNS.BankAccount.DebitAmountLessThanZeroMessage) has only one value
+orig(this) has only one value
+orig(amount) == 4.55
+===========================================================================
+BankAccountNS.BankAccount.Debit(System.Double amount):::EXIT_EX_System.Exception
+this.m_balance == orig(this.m_balance)
+this.m_balance == 11.99
+orig(amount) one of { -100.0, 20.0 }
 ===========================================================================
 BankAccountNS.BankAccount.Debit(System.Double amount):::EXIT
-BankAccount.DebitAmountExceedsBalanceMessage == orig(BankAccount.DebitAmountExceedsBalanceMessage)
-BankAccount.DebitAmountLessThanZeroMessage == orig(BankAccount.DebitAmountLessThanZeroMessage)
 this.m_customerName == orig(this.m_customerName)
 this.m_frozen == orig(this.m_frozen)
-BankAccount.DebitAmountExceedsBalanceMessage has only one value
-BankAccount.DebitAmountExceedsBalanceMessage.ToString() == "Debit amount exceeds balance"
-BankAccount.DebitAmountLessThanZeroMessage has only one value
-BankAccount.DebitAmountLessThanZeroMessage.ToString() == "Debit amount less than zero"
-this.m_balance == 6.54
-BankAccount.DebitAmountExceedsBalanceMessage.ToString() == orig(BankAccount.DebitAmountExceedsBalanceMessage.ToString())
-BankAccount.DebitAmountLessThanZeroMessage.ToString() == orig(BankAccount.DebitAmountLessThanZeroMessage.ToString())
+exception.GetType() == System.ArgumentOutOfRangeException.class
 this.m_customerName.ToString() == orig(this.m_customerName.ToString())
-===========================================================================
-BankAccountNS.BankAccount.Main():::ENTER
-BankAccount.DebitAmountExceedsBalanceMessage has only one value
-BankAccount.DebitAmountExceedsBalanceMessage.ToString() == "Debit amount exceeds balance"
-BankAccount.DebitAmountLessThanZeroMessage has only one value
-BankAccount.DebitAmountLessThanZeroMessage.ToString() == "Debit amount less than zero"
-===========================================================================
-BankAccountNS.BankAccount.Main():::EXIT19
-===========================================================================
-BankAccountNS.BankAccount.Main():::EXIT
-BankAccount.DebitAmountExceedsBalanceMessage == orig(BankAccount.DebitAmountExceedsBalanceMessage)
-BankAccount.DebitAmountLessThanZeroMessage == orig(BankAccount.DebitAmountLessThanZeroMessage)
-BankAccount.DebitAmountExceedsBalanceMessage has only one value
-BankAccount.DebitAmountExceedsBalanceMessage.ToString() == "Debit amount exceeds balance"
-BankAccount.DebitAmountLessThanZeroMessage has only one value
-BankAccount.DebitAmountLessThanZeroMessage.ToString() == "Debit amount less than zero"
-BankAccount.DebitAmountExceedsBalanceMessage.ToString() == orig(BankAccount.DebitAmountExceedsBalanceMessage.ToString())
-BankAccount.DebitAmountLessThanZeroMessage.ToString() == orig(BankAccount.DebitAmountLessThanZeroMessage.ToString())

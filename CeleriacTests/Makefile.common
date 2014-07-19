@@ -18,9 +18,10 @@ BEFORE_RUN ?= @:
 AFTER_RUN ?= @:
 inv ?= ..
 #  -cp ${DAIKONDIR}/daikon.jar
-DAIKON := java -Xmx960m -XX:MaxPermSize=960M daikon.Daikon --no_text_output --config_option daikon.derive.Derivation.disable_derived_variables=true --config $(inv)/config.txt --config_option daikon.DynamicConstants.OneOf_only=true
+DAIKON := java -Xmx960m daikon.Daikon --no_text_output --config_option daikon.derive.Derivation.disable_derived_variables=true --config $(inv)/config.txt --config_option daikon.DynamicConstants.OneOf_only=true
 # -Xmx960m -XX:MaxPermSize=960M -cp ${DAIKONDIR}/daikon.jar
-PRINT_INV := java -Xmx960m -XX:MaxPermSize=960M daikon.PrintInvariants
+PRINT_INV := java -Xmx960m daikon.PrintInvariants
+# -XX:MaxPermSize=960M
 
 include ../Makefile.user
 
@@ -90,7 +91,7 @@ ran-dnfe: $(DNFE_EXE) $(CLEAN_OUTPUT)
 	perl -i $(CLEAN_OUTPUT) $(NAME).out
 	touch $@
 	cp results.decls daikon-output/$(NAME).dtrace
-	cat TestResults/Results/Out/results.dtrace >> daikon-output/$(NAME).dtrace
+	cat TestResults/Results/Out/*.dtrace >> daikon-output/$(NAME).dtrace
 	rm -r TestResults/Results*
 else ifeq ($(SIKULI_RUN),1)
 ran-dnfe: $(NAME) $(DNFE_EXE) $(CLEAN_OUTPUT)
@@ -214,7 +215,7 @@ diffs-w-daikon-if-working:   diffs-w-daikon
 summary-w-daikon-if-working: summary-w-daikon
 
 clean:
-	rm -rf $(NAME) $(DIFF_NAME).*.diff $(NAME).out daikon-output ran-dnfe $(EXTRA_JUNK) $(EXTRA_OUTPUTS) $(NAME).inv.gz $(NAME).counts \
+	rm -rf $(NAME) $(DIFF_NAME).*.diff $(NAME).out results.decls daikon-output ran-dnfe $(EXTRA_JUNK) $(EXTRA_OUTPUTS) $(NAME).inv.gz $(NAME).counts \
     $(NAME).pdb $(NAME).out.bak $(NAME).dll
 	$(CLEAN_SCRIPT)
 
