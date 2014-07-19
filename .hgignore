@@ -24,3 +24,7 @@ CeleriacTests/*/ran-dnfe
 CeleriacTests/*/*.out
 CeleriacTests/*/*.diff
 CeleriacTests/*/*.counts
+CeleriacTests/*/*.dll
+
+## VS options
+Celeriac\Celeriac.sln.ide
