@@ -1,0 +1,126 @@
+===========================================================================
+MultipleInterface.BaseClass:::OBJECT
+this.GetType() == MultipleInterface.MyInterfaceImpl.class
+===========================================================================
+MultipleInterface.BaseClass..ctor():::EXIT
+===========================================================================
+MultipleInterface.MyInterface:::OBJECT
+===========================================================================
+MultipleInterface.MyInterface.GreaterThan(System.Int32 rhs, System.Int32 lhs):::ENTER
+lhs one of { 2, 4, 10 }
+rhs one of { 3, 6, 10 }
+===========================================================================
+MultipleInterface.MyInterface.GreaterThan(System.Int32 rhs, System.Int32 lhs):::EXIT
+(return == false)  <==>  (orig(lhs) one of { 4, 10 })
+(return == false)  <==>  (orig(rhs) one of { 3, 10 })
+(return == true)  <==>  (orig(lhs) == 2)
+(return == true)  <==>  (orig(rhs) == 6)
+(return == true)  ==>  (orig(this) has only one value)
+(return == true)  ==>  (orig(this.GetType()) == MultipleInterface.MyInterfaceImpl.class)
+===========================================================================
+MultipleInterface.MyInterface.GreaterThan(System.Int32 rhs, System.Int32 lhs):::EXIT;condition="return == true"
+return == true
+orig(lhs) == 2
+orig(rhs) == 6
+orig(this) has only one value
+orig(this.GetType()) == MultipleInterface.MyInterfaceImpl.class
+===========================================================================
+MultipleInterface.MyInterface.GreaterThan(System.Int32 rhs, System.Int32 lhs):::EXIT;condition="not(return == true)"
+return == false
+orig(lhs) one of { 4, 10 }
+orig(rhs) one of { 3, 10 }
+===========================================================================
+MultipleInterface.MyInterfaceImpl:::OBJECT
+this.GetType() == MultipleInterface.MyInterfaceImpl.class
+===========================================================================
+MultipleInterface.MyInterfaceImpl..ctor():::EXIT
+===========================================================================
+MultipleInterface.MyInterfaceImpl.GreaterThan(System.Int32 a, System.Int32 b):::ENTER
+===========================================================================
+MultipleInterface.MyInterfaceImpl.GreaterThan(System.Int32 a, System.Int32 b):::EXIT5
+(return == false)  <==>  (orig(a) == 3)
+(return == false)  <==>  (orig(b) == 4)
+(return == true)  <==>  (orig(a) == 6)
+(return == true)  <==>  (orig(b) == 2)
+===========================================================================
+MultipleInterface.MyInterfaceImpl.GreaterThan(System.Int32 a, System.Int32 b):::EXIT5;condition="return == true"
+===========================================================================
+MultipleInterface.MyInterfaceImpl.GreaterThan(System.Int32 a, System.Int32 b):::EXIT5;condition="not(return == true)"
+===========================================================================
+MultipleInterface.MyInterfaceImpl.GreaterThan(System.Int32 a, System.Int32 b):::EXIT
+(return == false)  <==>  (orig(a) == 3)
+(return == false)  <==>  (orig(b) == 4)
+(return == true)  <==>  (orig(a) == 6)
+(return == true)  <==>  (orig(b) == 2)
+===========================================================================
+MultipleInterface.MyInterfaceImpl.GreaterThan(System.Int32 a, System.Int32 b):::EXIT;condition="return == true"
+===========================================================================
+MultipleInterface.MyInterfaceImpl.GreaterThan(System.Int32 a, System.Int32 b):::EXIT;condition="not(return == true)"
+===========================================================================
+MultipleInterface.OtherInterfaceImpl:::OBJECT
+this has only one value
+this.GetType() == MultipleInterface.OtherInterfaceImpl.class
+===========================================================================
+MultipleInterface.OtherInterfaceImpl..ctor():::EXIT
+===========================================================================
+MultipleInterface.OtherInterfaceImpl.GreaterThan(System.Int32 a, System.Int32 b):::ENTER
+a == b
+a == 10
+===========================================================================
+MultipleInterface.OtherInterfaceImpl.GreaterThan(System.Int32 a, System.Int32 b):::EXIT19
+===========================================================================
+MultipleInterface.OtherInterfaceImpl.GreaterThan(System.Int32 a, System.Int32 b):::EXIT19;condition="not(return == true)"
+===========================================================================
+MultipleInterface.OtherInterfaceImpl.GreaterThan(System.Int32 a, System.Int32 b):::EXIT
+return == false
+===========================================================================
+MultipleInterface.OtherInterfaceImpl.GreaterThan(System.Int32 a, System.Int32 b):::EXIT;condition="not(return == true)"
+===========================================================================
+MultipleInterface.Program.DoSomething(MultipleInterface.MyInterface i, MultipleInterface.MyInterfaceImpl c, MultipleInterface.OtherInterfaceImpl o):::ENTER
+c has only one value
+c.GetType() == MultipleInterface.MyInterfaceImpl.class
+i has only one value
+o has only one value
+o.GetType() == MultipleInterface.OtherInterfaceImpl.class
+c.GetType() == i.GetType()
+===========================================================================
+MultipleInterface.Program.DoSomething(MultipleInterface.MyInterface i, MultipleInterface.MyInterfaceImpl c, MultipleInterface.OtherInterfaceImpl o):::EXIT16
+===========================================================================
+MultipleInterface.Program.DoSomething(MultipleInterface.MyInterface i, MultipleInterface.MyInterfaceImpl c, MultipleInterface.OtherInterfaceImpl o):::EXIT
+===========================================================================
+MultipleInterface.Program.Main(System.String[] args):::ENTER
+args has only one value
+args[] == []
+args[].ToString() == []
+===========================================================================
+MultipleInterface.Program.Main(System.String[] args):::EXIT6
+===========================================================================
+MultipleInterface.Program.Main(System.String[] args):::EXIT
+args[] == orig(args[])
+args[] == []
+args[].ToString() == []
+===========================================================================
+MultipleInterface.SameInterface:::OBJECT
+this.GetType() == MultipleInterface.MyInterfaceImpl.class
+===========================================================================
+MultipleInterface.SameInterface.GreaterThan(System.Int32 x, System.Int32 y):::ENTER
+x one of { 3, 6 }
+y one of { 2, 4 }
+===========================================================================
+MultipleInterface.SameInterface.GreaterThan(System.Int32 x, System.Int32 y):::EXIT
+(return == false)  <==>  (orig(x) == 3)
+(return == false)  <==>  (orig(y) == 4)
+(return == true)  <==>  (orig(x) == 6)
+(return == true)  <==>  (orig(y) == 2)
+===========================================================================
+MultipleInterface.SameInterface.GreaterThan(System.Int32 x, System.Int32 y):::EXIT;condition="return == true"
+return == true
+orig(this) has only one value
+orig(x) == 6
+orig(y) == 2
+===========================================================================
+MultipleInterface.SameInterface.GreaterThan(System.Int32 x, System.Int32 y):::EXIT;condition="not(return == true)"
+return == false
+orig(this) has only one value
+orig(x) == 3
+orig(y) == 4

@@ -1,0 +1,2232 @@
+decl-version 2.0
+var-comparability none
+input-language CLR
+
+ppt MultipleInterface.BaseClass..ctor():::ENTER
+ppt-type enter
+parent parent MultipleInterface.BaseClass:::CLASS 1
+
+ppt MultipleInterface.BaseClass..ctor():::EXIT2
+ppt-type subexit
+parent parent MultipleInterface.BaseClass:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.BaseClass
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.BaseClass:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.BaseClass:::OBJECT 1
+
+ppt MultipleInterface.BaseClass.Bar(System.String\_arg):::ENTER
+ppt-type enter
+parent parent MultipleInterface.BaseClass:::OBJECT 1
+  variable arg
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable arg.ToString()
+    var-kind function ToString()
+    enclosing-var arg
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.BaseClass
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.BaseClass:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.BaseClass:::OBJECT 1
+
+ppt MultipleInterface.BaseClass.Bar(System.String\_arg):::EXIT3
+ppt-type subexit
+parent parent MultipleInterface.BaseClass:::OBJECT 1
+  variable arg
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable arg.ToString()
+    var-kind function ToString()
+    enclosing-var arg
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.BaseClass
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.BaseClass:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.BaseClass:::OBJECT 1
+
+ppt MultipleInterface.BaseClass.Bar(System.String\_arg):::EXIT5
+ppt-type subexit
+parent parent MultipleInterface.BaseClass:::OBJECT 1
+  variable arg
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable arg.ToString()
+    var-kind function ToString()
+    enclosing-var arg
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.BaseClass
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.BaseClass:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.BaseClass:::OBJECT 1
+
+ppt MultipleInterface.BaseClass.Bar(System.String\_arg):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent MultipleInterface.BaseClass:::OBJECT 1
+  variable arg
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable arg.ToString()
+    var-kind function ToString()
+    enclosing-var arg
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.BaseClass
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.BaseClass:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.BaseClass:::OBJECT 1
+
+ppt MultipleInterface.BaseClass:::CLASS
+ppt-type class
+
+ppt MultipleInterface.BaseClass:::OBJECT
+ppt-type object
+parent parent MultipleInterface.BaseClass:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.BaseClass
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::ENTER
+ppt-type enter
+parent parent MultipleInterface.MyInterface:::OBJECT 1
+  variable lhs
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+  variable rhs
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.MyInterface
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.MyInterface:::OBJECT 1
+
+ppt MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT
+ppt-type subexit
+parent parent MultipleInterface.MyInterface:::OBJECT 1
+  variable lhs
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+  variable return
+    var-kind return
+    dec-type boolean
+    rep-type boolean
+    comparability -22
+  variable rhs
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.MyInterface
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.MyInterface:::OBJECT 1
+
+ppt MultipleInterface.MyInterface:::CLASS
+ppt-type class
+
+ppt MultipleInterface.MyInterface:::OBJECT
+ppt-type object
+parent parent MultipleInterface.MyInterface:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.MyInterface
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MultipleInterface.MyInterfaceImpl..ctor():::ENTER
+ppt-type enter
+parent parent MultipleInterface.MyInterfaceImpl:::CLASS 1
+
+ppt MultipleInterface.MyInterfaceImpl..ctor():::EXIT2
+ppt-type subexit
+parent parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.MyInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+
+ppt MultipleInterface.MyInterfaceImpl.Bar(System.String\_arg):::ENTER
+ppt-type enter
+parent parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+parent parent MultipleInterface.BaseClass.Bar(System.String\_arg):::ENTER 2
+  variable arg
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.BaseClass.Bar(System.String\_arg):::ENTER 2
+  variable arg.ToString()
+    var-kind function ToString()
+    enclosing-var arg
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability -22
+    parent MultipleInterface.BaseClass.Bar(System.String\_arg):::ENTER 2
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.MyInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.BaseClass.Bar(System.String\_arg):::ENTER 2
+    parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.BaseClass.Bar(System.String\_arg):::ENTER 2
+    parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+
+ppt MultipleInterface.MyInterfaceImpl.Bar(System.String\_arg):::EXIT3
+ppt-type subexit
+parent parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+parent parent MultipleInterface.BaseClass.Bar(System.String\_arg):::EXIT 2
+  variable arg
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.BaseClass.Bar(System.String\_arg):::EXIT 2
+  variable arg.ToString()
+    var-kind function ToString()
+    enclosing-var arg
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability -22
+    parent MultipleInterface.BaseClass.Bar(System.String\_arg):::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+    parent MultipleInterface.BaseClass.Bar(System.String\_arg):::EXIT 2
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.MyInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.BaseClass.Bar(System.String\_arg):::EXIT 2
+    parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.BaseClass.Bar(System.String\_arg):::EXIT 2
+    parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+
+ppt MultipleInterface.MyInterfaceImpl.Bar(System.String\_arg):::EXIT5
+ppt-type subexit
+parent parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+parent parent MultipleInterface.BaseClass.Bar(System.String\_arg):::EXIT 2
+  variable arg
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.BaseClass.Bar(System.String\_arg):::EXIT 2
+  variable arg.ToString()
+    var-kind function ToString()
+    enclosing-var arg
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability -22
+    parent MultipleInterface.BaseClass.Bar(System.String\_arg):::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+    parent MultipleInterface.BaseClass.Bar(System.String\_arg):::EXIT 2
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.MyInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.BaseClass.Bar(System.String\_arg):::EXIT 2
+    parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.BaseClass.Bar(System.String\_arg):::EXIT 2
+    parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+
+ppt MultipleInterface.MyInterfaceImpl.Bar(System.String\_arg):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+parent parent MultipleInterface.BaseClass.Bar(System.String\_arg):::EXIT 2
+  variable arg
+    var-kind variable
+    dec-type java.lang.String
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.BaseClass.Bar(System.String\_arg):::EXIT 2
+  variable arg.ToString()
+    var-kind function ToString()
+    enclosing-var arg
+    dec-type java.lang.String
+    rep-type java.lang.String
+    flags synthetic to_string
+    comparability -22
+    parent MultipleInterface.BaseClass.Bar(System.String\_arg):::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+    parent MultipleInterface.BaseClass.Bar(System.String\_arg):::EXIT 2
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.MyInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.BaseClass.Bar(System.String\_arg):::EXIT 2
+    parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.BaseClass.Bar(System.String\_arg):::EXIT 2
+    parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+
+ppt MultipleInterface.MyInterfaceImpl.GreaterThan(System.Int32\_a,\_System.Int32\_b):::ENTER
+ppt-type enter
+parent parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+parent parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::ENTER 2
+parent parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::ENTER 3
+  variable a
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::ENTER 2 rhs
+    parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::ENTER 3 x
+  variable b
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::ENTER 2 lhs
+    parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::ENTER 3 y
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.MyInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::ENTER 2
+    parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::ENTER 3
+    parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::ENTER 2
+    parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::ENTER 3
+    parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+
+ppt MultipleInterface.MyInterfaceImpl.GreaterThan(System.Int32\_a,\_System.Int32\_b):::EXIT5
+ppt-type subexit
+parent parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+parent parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+parent parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::EXIT 3
+  variable a
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2 rhs
+    parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::EXIT 3 x
+  variable b
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2 lhs
+    parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::EXIT 3 y
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type boolean
+    rep-type boolean
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+    parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::EXIT 3
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.MyInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+    parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::EXIT 3
+    parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+    parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::EXIT 3
+    parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+
+ppt MultipleInterface.MyInterfaceImpl.GreaterThan(System.Int32\_a,\_System.Int32\_b):::EXIT7
+ppt-type subexit
+parent parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+parent parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+parent parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::EXIT 3
+  variable a
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2 rhs
+    parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::EXIT 3 x
+  variable b
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2 lhs
+    parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::EXIT 3 y
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type boolean
+    rep-type boolean
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+    parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::EXIT 3
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.MyInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+    parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::EXIT 3
+    parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+    parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::EXIT 3
+    parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+
+ppt MultipleInterface.MyInterfaceImpl.GreaterThan(System.Int32\_a,\_System.Int32\_b):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+parent parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+parent parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::EXIT 3
+  variable a
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2 rhs
+    parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::EXIT 3 x
+  variable b
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2 lhs
+    parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::EXIT 3 y
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type boolean
+    rep-type boolean
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+    parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::EXIT 3
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.MyInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+    parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::EXIT 3
+    parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+    parent MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::EXIT 3
+    parent MultipleInterface.MyInterfaceImpl:::OBJECT 1
+
+ppt MultipleInterface.MyInterfaceImpl:::CLASS
+ppt-type class
+
+ppt MultipleInterface.MyInterfaceImpl:::OBJECT
+ppt-type object
+parent parent MultipleInterface.MyInterfaceImpl:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.MyInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MultipleInterface.OtherInterfaceImpl..ctor():::ENTER
+ppt-type enter
+parent parent MultipleInterface.OtherInterfaceImpl:::CLASS 1
+
+ppt MultipleInterface.OtherInterfaceImpl..ctor():::EXIT2
+ppt-type subexit
+parent parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.OtherInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+
+ppt MultipleInterface.OtherInterfaceImpl.GreaterThan(System.Int32\_a,\_System.Int32\_b):::ENTER
+ppt-type enter
+parent parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+parent parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::ENTER 2
+  variable a
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::ENTER 2 rhs
+  variable b
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::ENTER 2 lhs
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.OtherInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::ENTER 2
+    parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::ENTER 2
+    parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+
+ppt MultipleInterface.OtherInterfaceImpl.GreaterThan(System.Int32\_a,\_System.Int32\_b):::EXIT19
+ppt-type subexit
+parent parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+parent parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+  variable a
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2 rhs
+  variable b
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2 lhs
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type boolean
+    rep-type boolean
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.OtherInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+    parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+    parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+
+ppt MultipleInterface.OtherInterfaceImpl.GreaterThan(System.Int32\_a,\_System.Int32\_b):::EXIT21
+ppt-type subexit
+parent parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+parent parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+  variable a
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2 rhs
+  variable b
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2 lhs
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type boolean
+    rep-type boolean
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.OtherInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+    parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+    parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+
+ppt MultipleInterface.OtherInterfaceImpl.GreaterThan(System.Int32\_a,\_System.Int32\_b):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+parent parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+  variable a
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2 rhs
+  variable b
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2 lhs
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type boolean
+    rep-type boolean
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.OtherInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+    parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.MyInterface.GreaterThan(System.Int32\_rhs,\_System.Int32\_lhs):::EXIT 2
+    parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+
+ppt MultipleInterface.OtherInterfaceImpl.MyAction:::CLASS
+ppt-type class
+
+ppt MultipleInterface.OtherInterfaceImpl.MyAction:::OBJECT
+ppt-type object
+parent parent MultipleInterface.OtherInterfaceImpl.MyAction:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.OtherInterfaceImpl+MyAction
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable this._methodBase
+    var-kind field _methodBase
+    enclosing-var this
+    dec-type java.lang.Object
+    rep-type hashcode
+    comparability -22
+  variable this._methodBase.GetType()
+    var-kind function GetType()
+    enclosing-var this._methodBase
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this._methodPtr
+    var-kind field _methodPtr
+    enclosing-var this
+    dec-type System.IntPtr
+    rep-type hashcode
+    comparability -22
+  variable this._methodPtrAux
+    var-kind field _methodPtrAux
+    enclosing-var this
+    dec-type System.IntPtr
+    rep-type hashcode
+    comparability -22
+  variable this._target
+    var-kind field _target
+    enclosing-var this
+    dec-type java.lang.Object
+    rep-type hashcode
+    comparability -22
+  variable this._target.GetType()
+    var-kind function GetType()
+    enclosing-var this._target
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MultipleInterface.OtherInterfaceImpl.add_MyEvent(MultipleInterface.OtherInterfaceImpl.MyAction\_value):::ENTER
+ppt-type enter
+parent parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.OtherInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable value
+    var-kind variable
+    dec-type MultipleInterface.OtherInterfaceImpl+MyAction
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable value._methodBase
+    var-kind field _methodBase
+    enclosing-var value
+    dec-type java.lang.Object
+    rep-type hashcode
+    comparability -22
+  variable value._methodBase.GetType()
+    var-kind function GetType()
+    enclosing-var value._methodBase
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable value._methodPtr
+    var-kind field _methodPtr
+    enclosing-var value
+    dec-type System.IntPtr
+    rep-type hashcode
+    comparability -22
+  variable value._methodPtrAux
+    var-kind field _methodPtrAux
+    enclosing-var value
+    dec-type System.IntPtr
+    rep-type hashcode
+    comparability -22
+  variable value._target
+    var-kind field _target
+    enclosing-var value
+    dec-type java.lang.Object
+    rep-type hashcode
+    comparability -22
+  variable value._target.GetType()
+    var-kind function GetType()
+    enclosing-var value._target
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MultipleInterface.OtherInterfaceImpl.add_MyEvent(MultipleInterface.OtherInterfaceImpl.MyAction\_value):::EXIT24
+ppt-type subexit
+parent parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.OtherInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable value
+    var-kind variable
+    dec-type MultipleInterface.OtherInterfaceImpl+MyAction
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable value._methodBase
+    var-kind field _methodBase
+    enclosing-var value
+    dec-type java.lang.Object
+    rep-type hashcode
+    comparability -22
+  variable value._methodBase.GetType()
+    var-kind function GetType()
+    enclosing-var value._methodBase
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable value._methodPtr
+    var-kind field _methodPtr
+    enclosing-var value
+    dec-type System.IntPtr
+    rep-type hashcode
+    comparability -22
+  variable value._methodPtrAux
+    var-kind field _methodPtrAux
+    enclosing-var value
+    dec-type System.IntPtr
+    rep-type hashcode
+    comparability -22
+  variable value._target
+    var-kind field _target
+    enclosing-var value
+    dec-type java.lang.Object
+    rep-type hashcode
+    comparability -22
+  variable value._target.GetType()
+    var-kind function GetType()
+    enclosing-var value._target
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MultipleInterface.OtherInterfaceImpl.add_MyEvent(MultipleInterface.OtherInterfaceImpl.MyAction\_value):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.OtherInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable value
+    var-kind variable
+    dec-type MultipleInterface.OtherInterfaceImpl+MyAction
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable value._methodBase
+    var-kind field _methodBase
+    enclosing-var value
+    dec-type java.lang.Object
+    rep-type hashcode
+    comparability -22
+  variable value._methodBase.GetType()
+    var-kind function GetType()
+    enclosing-var value._methodBase
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable value._methodPtr
+    var-kind field _methodPtr
+    enclosing-var value
+    dec-type System.IntPtr
+    rep-type hashcode
+    comparability -22
+  variable value._methodPtrAux
+    var-kind field _methodPtrAux
+    enclosing-var value
+    dec-type System.IntPtr
+    rep-type hashcode
+    comparability -22
+  variable value._target
+    var-kind field _target
+    enclosing-var value
+    dec-type java.lang.Object
+    rep-type hashcode
+    comparability -22
+  variable value._target.GetType()
+    var-kind function GetType()
+    enclosing-var value._target
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MultipleInterface.OtherInterfaceImpl.remove_MyEvent(MultipleInterface.OtherInterfaceImpl.MyAction\_value):::ENTER
+ppt-type enter
+parent parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.OtherInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable value
+    var-kind variable
+    dec-type MultipleInterface.OtherInterfaceImpl+MyAction
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable value._methodBase
+    var-kind field _methodBase
+    enclosing-var value
+    dec-type java.lang.Object
+    rep-type hashcode
+    comparability -22
+  variable value._methodBase.GetType()
+    var-kind function GetType()
+    enclosing-var value._methodBase
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable value._methodPtr
+    var-kind field _methodPtr
+    enclosing-var value
+    dec-type System.IntPtr
+    rep-type hashcode
+    comparability -22
+  variable value._methodPtrAux
+    var-kind field _methodPtrAux
+    enclosing-var value
+    dec-type System.IntPtr
+    rep-type hashcode
+    comparability -22
+  variable value._target
+    var-kind field _target
+    enclosing-var value
+    dec-type java.lang.Object
+    rep-type hashcode
+    comparability -22
+  variable value._target.GetType()
+    var-kind function GetType()
+    enclosing-var value._target
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MultipleInterface.OtherInterfaceImpl.remove_MyEvent(MultipleInterface.OtherInterfaceImpl.MyAction\_value):::EXIT24
+ppt-type subexit
+parent parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.OtherInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable value
+    var-kind variable
+    dec-type MultipleInterface.OtherInterfaceImpl+MyAction
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable value._methodBase
+    var-kind field _methodBase
+    enclosing-var value
+    dec-type java.lang.Object
+    rep-type hashcode
+    comparability -22
+  variable value._methodBase.GetType()
+    var-kind function GetType()
+    enclosing-var value._methodBase
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable value._methodPtr
+    var-kind field _methodPtr
+    enclosing-var value
+    dec-type System.IntPtr
+    rep-type hashcode
+    comparability -22
+  variable value._methodPtrAux
+    var-kind field _methodPtrAux
+    enclosing-var value
+    dec-type System.IntPtr
+    rep-type hashcode
+    comparability -22
+  variable value._target
+    var-kind field _target
+    enclosing-var value
+    dec-type java.lang.Object
+    rep-type hashcode
+    comparability -22
+  variable value._target.GetType()
+    var-kind function GetType()
+    enclosing-var value._target
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MultipleInterface.OtherInterfaceImpl.remove_MyEvent(MultipleInterface.OtherInterfaceImpl.MyAction\_value):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.OtherInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.OtherInterfaceImpl:::OBJECT 1
+  variable value
+    var-kind variable
+    dec-type MultipleInterface.OtherInterfaceImpl+MyAction
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable value._methodBase
+    var-kind field _methodBase
+    enclosing-var value
+    dec-type java.lang.Object
+    rep-type hashcode
+    comparability -22
+  variable value._methodBase.GetType()
+    var-kind function GetType()
+    enclosing-var value._methodBase
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable value._methodPtr
+    var-kind field _methodPtr
+    enclosing-var value
+    dec-type System.IntPtr
+    rep-type hashcode
+    comparability -22
+  variable value._methodPtrAux
+    var-kind field _methodPtrAux
+    enclosing-var value
+    dec-type System.IntPtr
+    rep-type hashcode
+    comparability -22
+  variable value._target
+    var-kind field _target
+    enclosing-var value
+    dec-type java.lang.Object
+    rep-type hashcode
+    comparability -22
+  variable value._target.GetType()
+    var-kind function GetType()
+    enclosing-var value._target
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MultipleInterface.OtherInterfaceImpl:::CLASS
+ppt-type class
+
+ppt MultipleInterface.OtherInterfaceImpl:::OBJECT
+ppt-type object
+parent parent MultipleInterface.OtherInterfaceImpl:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.OtherInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MultipleInterface.Program..ctor():::ENTER
+ppt-type enter
+parent parent MultipleInterface.Program:::CLASS 1
+
+ppt MultipleInterface.Program..ctor():::EXIT2
+ppt-type subexit
+parent parent MultipleInterface.Program:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.Program
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.Program:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.Program:::OBJECT 1
+
+ppt MultipleInterface.Program.DoSomething(MultipleInterface.MyInterface\_i,\_MultipleInterface.MyInterfaceImpl\_c,\_MultipleInterface.OtherInterfaceImpl\_o):::ENTER
+ppt-type enter
+parent parent MultipleInterface.Program:::CLASS 1
+  variable c
+    var-kind variable
+    dec-type MultipleInterface.MyInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable c.GetType()
+    var-kind function GetType()
+    enclosing-var c
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable i
+    var-kind variable
+    dec-type MultipleInterface.MyInterface
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable i.GetType()
+    var-kind function GetType()
+    enclosing-var i
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable o
+    var-kind variable
+    dec-type MultipleInterface.OtherInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable o.GetType()
+    var-kind function GetType()
+    enclosing-var o
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MultipleInterface.Program.DoSomething(MultipleInterface.MyInterface\_i,\_MultipleInterface.MyInterfaceImpl\_c,\_MultipleInterface.OtherInterfaceImpl\_o):::EXIT16
+ppt-type subexit
+parent parent MultipleInterface.Program:::CLASS 1
+  variable c
+    var-kind variable
+    dec-type MultipleInterface.MyInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable c.GetType()
+    var-kind function GetType()
+    enclosing-var c
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable i
+    var-kind variable
+    dec-type MultipleInterface.MyInterface
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable i.GetType()
+    var-kind function GetType()
+    enclosing-var i
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable o
+    var-kind variable
+    dec-type MultipleInterface.OtherInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable o.GetType()
+    var-kind function GetType()
+    enclosing-var o
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MultipleInterface.Program.DoSomething(MultipleInterface.MyInterface\_i,\_MultipleInterface.MyInterfaceImpl\_c,\_MultipleInterface.OtherInterfaceImpl\_o):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent MultipleInterface.Program:::CLASS 1
+  variable c
+    var-kind variable
+    dec-type MultipleInterface.MyInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable c.GetType()
+    var-kind function GetType()
+    enclosing-var c
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable i
+    var-kind variable
+    dec-type MultipleInterface.MyInterface
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable i.GetType()
+    var-kind function GetType()
+    enclosing-var i
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable o
+    var-kind variable
+    dec-type MultipleInterface.OtherInterfaceImpl
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable o.GetType()
+    var-kind function GetType()
+    enclosing-var o
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MultipleInterface.Program.Main(System.String[]\_args):::ENTER
+ppt-type enter
+parent parent MultipleInterface.Program:::CLASS 1
+  variable args
+    var-kind variable
+    dec-type java.lang.String[]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable args[..]
+    var-kind array
+    enclosing-var args
+    array 1
+    dec-type java.lang.String[]
+    rep-type hashcode[]
+    comparability -22
+  variable args[..].ToString()
+    var-kind function ToString()
+    enclosing-var args[..]
+    array 1
+    dec-type java.lang.String[]
+    rep-type java.lang.String[]
+    flags synthetic to_string
+    comparability -22
+
+ppt MultipleInterface.Program.Main(System.String[]\_args):::EXIT6
+ppt-type subexit
+parent parent MultipleInterface.Program:::CLASS 1
+  variable args
+    var-kind variable
+    dec-type java.lang.String[]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable args[..]
+    var-kind array
+    enclosing-var args
+    array 1
+    dec-type java.lang.String[]
+    rep-type hashcode[]
+    comparability -22
+  variable args[..].ToString()
+    var-kind function ToString()
+    enclosing-var args[..]
+    array 1
+    dec-type java.lang.String[]
+    rep-type java.lang.String[]
+    flags synthetic to_string
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MultipleInterface.Program.Main(System.String[]\_args):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent MultipleInterface.Program:::CLASS 1
+  variable args
+    var-kind variable
+    dec-type java.lang.String[]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable args[..]
+    var-kind array
+    enclosing-var args
+    array 1
+    dec-type java.lang.String[]
+    rep-type hashcode[]
+    comparability -22
+  variable args[..].ToString()
+    var-kind function ToString()
+    enclosing-var args[..]
+    array 1
+    dec-type java.lang.String[]
+    rep-type java.lang.String[]
+    flags synthetic to_string
+    comparability -22
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MultipleInterface.Program:::CLASS
+ppt-type class
+
+ppt MultipleInterface.Program:::OBJECT
+ppt-type object
+parent parent MultipleInterface.Program:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.Program
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::ENTER
+ppt-type enter
+parent parent MultipleInterface.SameInterface:::OBJECT 1
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.SameInterface
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.SameInterface:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.SameInterface:::OBJECT 1
+  variable x
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+  variable y
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+
+ppt MultipleInterface.SameInterface.GreaterThan(System.Int32\_x,\_System.Int32\_y):::EXIT
+ppt-type subexit
+parent parent MultipleInterface.SameInterface:::OBJECT 1
+  variable return
+    var-kind return
+    dec-type boolean
+    rep-type boolean
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.SameInterface
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent MultipleInterface.SameInterface:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent MultipleInterface.SameInterface:::OBJECT 1
+  variable x
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+  variable y
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+
+ppt MultipleInterface.SameInterface:::CLASS
+ppt-type class
+
+ppt MultipleInterface.SameInterface:::OBJECT
+ppt-type object
+parent parent MultipleInterface.SameInterface:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type MultipleInterface.SameInterface
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+MultipleInterface.Program.Main(System.String[]\_args):::ENTER
+this_invocation_nonce
+2
+args
+2533231
+1
+args[..]
+[]
+1
+args[..].ToString()
+[]
+1
+
+MultipleInterface.MyInterfaceImpl..ctor():::ENTER
+this_invocation_nonce
+3
+
+MultipleInterface.BaseClass..ctor():::ENTER
+this_invocation_nonce
+4
+
+MultipleInterface.BaseClass..ctor():::EXIT2
+this_invocation_nonce
+4
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+this
+22799085
+1
+this.GetType()
+"MultipleInterface.MyInterfaceImpl"
+1
+
+MultipleInterface.MyInterfaceImpl..ctor():::EXIT2
+this_invocation_nonce
+3
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+this
+22799085
+1
+this.GetType()
+"MultipleInterface.MyInterfaceImpl"
+1
+
+MultipleInterface.MyInterfaceImpl..ctor():::ENTER
+this_invocation_nonce
+5
+
+MultipleInterface.BaseClass..ctor():::ENTER
+this_invocation_nonce
+6
+
+MultipleInterface.BaseClass..ctor():::EXIT2
+this_invocation_nonce
+6
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+this
+44643603
+1
+this.GetType()
+"MultipleInterface.MyInterfaceImpl"
+1
+
+MultipleInterface.MyInterfaceImpl..ctor():::EXIT2
+this_invocation_nonce
+5
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+this
+44643603
+1
+this.GetType()
+"MultipleInterface.MyInterfaceImpl"
+1
+
+MultipleInterface.OtherInterfaceImpl..ctor():::ENTER
+this_invocation_nonce
+7
+
+MultipleInterface.OtherInterfaceImpl..ctor():::EXIT2
+this_invocation_nonce
+7
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+this
+66248115
+1
+this.GetType()
+"MultipleInterface.OtherInterfaceImpl"
+1
+
+MultipleInterface.Program.DoSomething(MultipleInterface.MyInterface\_i,\_MultipleInterface.MyInterfaceImpl\_c,\_MultipleInterface.OtherInterfaceImpl\_o):::ENTER
+this_invocation_nonce
+8
+c
+44643603
+1
+c.GetType()
+"MultipleInterface.MyInterfaceImpl"
+1
+i
+22799085
+1
+i.GetType()
+"MultipleInterface.MyInterfaceImpl"
+1
+o
+66248115
+1
+o.GetType()
+"MultipleInterface.OtherInterfaceImpl"
+1
+
+MultipleInterface.MyInterfaceImpl.GreaterThan(System.Int32\_a,\_System.Int32\_b):::ENTER
+this_invocation_nonce
+9
+a
+3
+1
+b
+4
+1
+this
+22799085
+1
+this.GetType()
+"MultipleInterface.MyInterfaceImpl"
+1
+
+MultipleInterface.MyInterfaceImpl.GreaterThan(System.Int32\_a,\_System.Int32\_b):::EXIT5
+this_invocation_nonce
+9
+a
+3
+1
+b
+4
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+false
+1
+this
+22799085
+1
+this.GetType()
+"MultipleInterface.MyInterfaceImpl"
+1
+
+MultipleInterface.MyInterfaceImpl.GreaterThan(System.Int32\_a,\_System.Int32\_b):::ENTER
+this_invocation_nonce
+10
+a
+6
+1
+b
+2
+1
+this
+44643603
+1
+this.GetType()
+"MultipleInterface.MyInterfaceImpl"
+1
+
+MultipleInterface.MyInterfaceImpl.GreaterThan(System.Int32\_a,\_System.Int32\_b):::EXIT5
+this_invocation_nonce
+10
+a
+6
+1
+b
+2
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+true
+1
+this
+44643603
+1
+this.GetType()
+"MultipleInterface.MyInterfaceImpl"
+1
+
+MultipleInterface.OtherInterfaceImpl.GreaterThan(System.Int32\_a,\_System.Int32\_b):::ENTER
+this_invocation_nonce
+11
+a
+10
+1
+b
+10
+1
+this
+66248115
+1
+this.GetType()
+"MultipleInterface.OtherInterfaceImpl"
+1
+
+MultipleInterface.OtherInterfaceImpl.GreaterThan(System.Int32\_a,\_System.Int32\_b):::EXIT19
+this_invocation_nonce
+11
+a
+10
+1
+b
+10
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+return
+false
+1
+this
+66248115
+1
+this.GetType()
+"MultipleInterface.OtherInterfaceImpl"
+1
+
+MultipleInterface.Program.DoSomething(MultipleInterface.MyInterface\_i,\_MultipleInterface.MyInterfaceImpl\_c,\_MultipleInterface.OtherInterfaceImpl\_o):::EXIT16
+this_invocation_nonce
+8
+c
+44643603
+1
+c.GetType()
+"MultipleInterface.MyInterfaceImpl"
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+i
+22799085
+1
+i.GetType()
+"MultipleInterface.MyInterfaceImpl"
+1
+o
+66248115
+1
+o.GetType()
+"MultipleInterface.OtherInterfaceImpl"
+1
+
+MultipleInterface.Program.Main(System.String[]\_args):::EXIT6
+this_invocation_nonce
+2
+args
+2533231
+1
+args[..]
+[]
+1
+args[..].ToString()
+[]
+1
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
