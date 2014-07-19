@@ -5,12 +5,11 @@ this.GetType() == CeleriacInterfaceTest.Driver.class
 CeleriacInterfaceTest.Driver..ctor():::EXIT
 ===========================================================================
 CeleriacInterfaceTest.Driver.CheckExternalInterface(OtherAssembly.IExternalInterface ex):::ENTER
-ex has only one value
-ex.GetType() == CeleriacInterfaceTest.Implementation.class
 ===========================================================================
 CeleriacInterfaceTest.Driver.CheckExternalInterface(OtherAssembly.IExternalInterface ex):::EXIT4
 ===========================================================================
 CeleriacInterfaceTest.Driver.CheckExternalInterface(OtherAssembly.IExternalInterface ex):::EXIT
+ex.PositiveNumber - orig(ex.PositiveNumber) - 2 == 0
 ===========================================================================
 CeleriacInterfaceTest.Driver.Main(System.String[] AssemblyLoadEventArgs):::ENTER
 AssemblyLoadEventArgs has only one value
@@ -25,32 +24,57 @@ AssemblyLoadEventArgs[] == []
 AssemblyLoadEventArgs[].ToString() == []
 ===========================================================================
 CeleriacInterfaceTest.Implementation:::OBJECT
+this.CallCount == this.OtherPositiveNumber
+this.CallCount == this.PositiveNumber
+this.OtherPositiveNumber == this.PositiveNumber
 this has only one value
 this.GetType() == CeleriacInterfaceTest.Implementation.class
 ===========================================================================
 CeleriacInterfaceTest.Implementation..ctor():::EXIT
+this.CallCount == 2
 this.callCnt == 1
 ===========================================================================
 CeleriacInterfaceTest.Implementation.CallCount():::ENTER
+this.CallCount - this.callCnt - 1 == 0
 ===========================================================================
 CeleriacInterfaceTest.Implementation.CallCount():::EXIT11
 ===========================================================================
 CeleriacInterfaceTest.Implementation.CallCount():::EXIT
 return == this.callCnt
-return - orig(this.callCnt) - 1 == 0
+return - this.CallCount + 1 == 0
+return - orig(this.CallCount) - 1 == 0
+return - orig(this.callCnt) - 2 == 0
+this.CallCount - orig(this.CallCount) - 2 == 0
+this.CallCount - orig(this.callCnt) - 3 == 0
 ===========================================================================
 CeleriacInterfaceTest.Implementation.OtherPositiveNumber.get():::ENTER
+this.CallCount - this.callCnt - 1 == 0
 ===========================================================================
 CeleriacInterfaceTest.Implementation.OtherPositiveNumber.get():::EXIT4
 ===========================================================================
 CeleriacInterfaceTest.Implementation.OtherPositiveNumber.get():::EXIT
 return == this.callCnt
-return == orig(this.callCnt)
+return == orig(this.CallCount)
+return == orig(this.OtherPositiveNumber)
+return == orig(this.PositiveNumber)
+return - this.CallCount + 1 == 0
+return - orig(this.callCnt) - 1 == 0
+this.CallCount - orig(this.callCnt) - 2 == 0
 ===========================================================================
 CeleriacInterfaceTest.Implementation.PositiveNumber.get():::ENTER
+this.CallCount - this.callCnt - 1 == 0
 ===========================================================================
 CeleriacInterfaceTest.Implementation.PositiveNumber.get():::EXIT4
 ===========================================================================
 CeleriacInterfaceTest.Implementation.PositiveNumber.get():::EXIT
 return == this.callCnt
-return == orig(this.callCnt)
+return == orig(this.CallCount)
+return == orig(this.OtherPositiveNumber)
+return == orig(this.PositiveNumber)
+return - this.CallCount + 1 == 0
+return - orig(this.callCnt) - 1 == 0
+this.CallCount - orig(this.callCnt) - 2 == 0
+===========================================================================
+OtherAssembly.IExternalInterface:::OBJECT
+this has only one value
+this.GetType() == CeleriacInterfaceTest.Implementation.class

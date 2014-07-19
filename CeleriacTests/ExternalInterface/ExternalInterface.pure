@@ -1,0 +1,4 @@
+CeleriacInterfaceTest.Implementation, ExternalInterface, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;CallCount
+CeleriacInterfaceTest.Implementation, ExternalInterface, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;get_OtherPositiveNumber
+CeleriacInterfaceTest.Implementation, ExternalInterface, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;get_PositiveNumber
+OtherAssembly.IExternalInterface, OtherAssembly, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;get_PositiveNumber
