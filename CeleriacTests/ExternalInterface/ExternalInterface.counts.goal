@@ -1,0 +1,7 @@
+CeleriacInterfaceTest.Driver..ctor() ENTER/3: 100 EXIT2/15: 100
+CeleriacInterfaceTest.Driver.CheckExternalInterface(OtherAssembly.IExternalInterface\_ex) ENTER/15: 100 EXIT4/21: 100
+CeleriacInterfaceTest.Driver.Main(System.String[]\_AssemblyLoadEventArgs) ENTER/12: 1 EXIT31/18: 1
+CeleriacInterfaceTest.Implementation..ctor() ENTER/3: 1 EXIT6/18: 1
+CeleriacInterfaceTest.Implementation.CallCount() ENTER/12: 100 EXIT11/21: 100
+CeleriacInterfaceTest.Implementation.OtherPositiveNumber.get() ENTER/12: 100 EXIT4/21: 100
+CeleriacInterfaceTest.Implementation.PositiveNumber.get() ENTER/12: 200 EXIT4/21: 200

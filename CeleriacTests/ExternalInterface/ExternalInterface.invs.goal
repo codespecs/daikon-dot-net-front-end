@@ -1,0 +1,56 @@
+===========================================================================
+CeleriacInterfaceTest.Driver:::OBJECT
+this.GetType() == CeleriacInterfaceTest.Driver.class
+===========================================================================
+CeleriacInterfaceTest.Driver..ctor():::EXIT
+===========================================================================
+CeleriacInterfaceTest.Driver.CheckExternalInterface(OtherAssembly.IExternalInterface ex):::ENTER
+ex has only one value
+ex.GetType() == CeleriacInterfaceTest.Implementation.class
+===========================================================================
+CeleriacInterfaceTest.Driver.CheckExternalInterface(OtherAssembly.IExternalInterface ex):::EXIT4
+===========================================================================
+CeleriacInterfaceTest.Driver.CheckExternalInterface(OtherAssembly.IExternalInterface ex):::EXIT
+===========================================================================
+CeleriacInterfaceTest.Driver.Main(System.String[] AssemblyLoadEventArgs):::ENTER
+AssemblyLoadEventArgs has only one value
+AssemblyLoadEventArgs[] == []
+AssemblyLoadEventArgs[].ToString() == []
+===========================================================================
+CeleriacInterfaceTest.Driver.Main(System.String[] AssemblyLoadEventArgs):::EXIT31
+===========================================================================
+CeleriacInterfaceTest.Driver.Main(System.String[] AssemblyLoadEventArgs):::EXIT
+AssemblyLoadEventArgs[] == orig(AssemblyLoadEventArgs[])
+AssemblyLoadEventArgs[] == []
+AssemblyLoadEventArgs[].ToString() == []
+===========================================================================
+CeleriacInterfaceTest.Implementation:::OBJECT
+this has only one value
+this.GetType() == CeleriacInterfaceTest.Implementation.class
+===========================================================================
+CeleriacInterfaceTest.Implementation..ctor():::EXIT
+this.callCnt == 1
+===========================================================================
+CeleriacInterfaceTest.Implementation.CallCount():::ENTER
+===========================================================================
+CeleriacInterfaceTest.Implementation.CallCount():::EXIT11
+===========================================================================
+CeleriacInterfaceTest.Implementation.CallCount():::EXIT
+return == this.callCnt
+return - orig(this.callCnt) - 1 == 0
+===========================================================================
+CeleriacInterfaceTest.Implementation.OtherPositiveNumber.get():::ENTER
+===========================================================================
+CeleriacInterfaceTest.Implementation.OtherPositiveNumber.get():::EXIT4
+===========================================================================
+CeleriacInterfaceTest.Implementation.OtherPositiveNumber.get():::EXIT
+return == this.callCnt
+return == orig(this.callCnt)
+===========================================================================
+CeleriacInterfaceTest.Implementation.PositiveNumber.get():::ENTER
+===========================================================================
+CeleriacInterfaceTest.Implementation.PositiveNumber.get():::EXIT4
+===========================================================================
+CeleriacInterfaceTest.Implementation.PositiveNumber.get():::EXIT
+return == this.callCnt
+return == orig(this.callCnt)

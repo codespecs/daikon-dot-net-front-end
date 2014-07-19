@@ -609,7 +609,10 @@ namespace Celeriac
     public string AssemblyPath
     {
       // Required arg
-      get { return this.programArguments[PossibleArgument.assembly_location]; }
+      get 
+      {
+        return this.programArguments[PossibleArgument.assembly_location]; 
+      }
     }
 
     /// <summary>
