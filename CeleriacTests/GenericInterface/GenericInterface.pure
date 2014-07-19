@@ -1,0 +1,6 @@
+GenericInterface.IFixedList, GenericInterface, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;get_Length
+GenericInterface.IFixedList`1, GenericInterface, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;get_Length
+GenericInterface.IFixedList`1, GenericInterface, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;get_MaxLength
+GenericInterface.FixedList, GenericInterface, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;get_Length
+GenericInterface.FixedList`1, GenericInterface, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;get_Length
+GenericInterface.FixedList`1, GenericInterface, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;get_MaxLength

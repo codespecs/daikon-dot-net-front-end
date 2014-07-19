@@ -1,0 +1,76 @@
+===========================================================================
+GenericInterface.FixedList:::OBJECT
+this.Length == this.cnt
+this has only one value
+this.GetType() == GenericInterface.FixedList.class
+this.Length one of { 0, 1, 2 }
+this.data has only one value
+this.data.GetType() == System.Object[].class
+===========================================================================
+GenericInterface.FixedList..ctor(System.Int32 size):::ENTER
+size == 10
+===========================================================================
+GenericInterface.FixedList..ctor(System.Int32 size):::EXIT
+this.Length == 0
+this.data[] contains only nulls and has only one value, of length 10
+===========================================================================
+GenericInterface.FixedList.Add(System.Object o):::ENTER
+===========================================================================
+GenericInterface.FixedList.Add(System.Object o):::EXIT14
+===========================================================================
+GenericInterface.FixedList.Add(System.Object o):::EXIT
+this.data == orig(this.data)
+this.data.GetType() == orig(this.data.GetType())
+orig(o) in this.data[]
+===========================================================================
+GenericInterface.FixedList`1:::OBJECT
+this.Length == this.cnt
+this has only one value
+this.GetType() == GenericInterface.FixedList`1[System.Double].class
+this.MaxLength == 10
+this.data has only one value
+this.data.GetType() == T[].class
+===========================================================================
+GenericInterface.FixedList`1..ctor(System.Int32 size):::ENTER
+size == 10
+===========================================================================
+GenericInterface.FixedList`1..ctor(System.Int32 size):::EXIT
+this.MaxLength == orig(size)
+this.Length == 0
+this.data[] contains only nulls and has only one value, of length 10
+this.data[].GetType() == [System.Double, System.Double, System.Double, System.Double, System.Double, System.Double, System.Double, System.Double, System.Double, System.Double]
+===========================================================================
+GenericInterface.FixedList`1.Add(T o):::ENTER
+o.GetType() == System.Double.class
+this.data[].GetType() == [System.Double, System.Double, System.Double, System.Double, System.Double, System.Double, System.Double, System.Double, System.Double, System.Double]
+===========================================================================
+GenericInterface.FixedList`1.Add(T o):::EXIT14
+===========================================================================
+GenericInterface.FixedList`1.Add(T o):::EXIT
+this.data == orig(this.data)
+this.data[].GetType() == [System.Double, System.Double, System.Double, System.Double, System.Double, System.Double, System.Double, System.Double, System.Double, System.Double]
+this.data.GetType() == orig(this.data.GetType())
+===========================================================================
+GenericInterface.IFixedList:::OBJECT
+this has only one value
+this.GetType() == GenericInterface.FixedList.class
+this.Length one of { 0, 1, 2 }
+===========================================================================
+GenericInterface.IFixedList.Add(System.Object o):::ENTER
+this.Length one of { 0, 1 }
+===========================================================================
+GenericInterface.IFixedList.Add(System.Object o):::EXIT
+this.Length one of { 1, 2 }
+===========================================================================
+GenericInterface.IFixedList`1:::OBJECT
+this has only one value
+this.GetType() == GenericInterface.FixedList`1[System.Double].class
+this.MaxLength == 10
+this.Length < this.MaxLength
+===========================================================================
+GenericInterface.IFixedList`1.Add(T o):::ENTER
+this.Length one of { 0, 1, 2 }
+===========================================================================
+GenericInterface.IFixedList`1.Add(T o):::EXIT
+this.MaxLength == orig(this.MaxLength)
+this.Length one of { 1, 2, 3 }

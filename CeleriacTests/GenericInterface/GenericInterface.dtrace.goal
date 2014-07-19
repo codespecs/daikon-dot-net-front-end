@@ -1,0 +1,3386 @@
+decl-version 2.0
+var-comparability none
+input-language CLR
+
+ppt GenericInterface.Driver..ctor():::ENTER
+ppt-type enter
+parent parent GenericInterface.Driver:::CLASS 1
+
+ppt GenericInterface.Driver..ctor():::EXIT2
+ppt-type subexit
+parent parent GenericInterface.Driver:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GenericInterface.Driver
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.Driver:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.Driver:::OBJECT 1
+
+ppt GenericInterface.Driver.Main():::ENTER
+ppt-type enter
+parent parent GenericInterface.Driver:::CLASS 1
+
+ppt GenericInterface.Driver.Main():::EXIT35
+ppt-type subexit
+parent parent GenericInterface.Driver:::CLASS 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.Driver.Main():::EXIT_EX_Runtime
+ppt-type subexit
+parent parent GenericInterface.Driver:::CLASS 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.Driver:::CLASS
+ppt-type class
+
+ppt GenericInterface.Driver:::OBJECT
+ppt-type object
+parent parent GenericInterface.Driver:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type GenericInterface.Driver
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.FixedList..ctor(System.Int32\_size):::ENTER
+ppt-type enter
+parent parent GenericInterface.FixedList:::CLASS 1
+  variable size
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+
+ppt GenericInterface.FixedList..ctor(System.Int32\_size):::EXIT12
+ppt-type subexit
+parent parent GenericInterface.FixedList:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable size
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GenericInterface.FixedList
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.cnt
+    var-kind field cnt
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data
+    var-kind field data
+    enclosing-var this
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data.GetType()
+    var-kind function GetType()
+    enclosing-var this.data
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data[..]
+    var-kind array
+    enclosing-var this.data
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability -22
+  variable this.data[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.data[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.FixedList.Add(System.Object\_o):::ENTER
+ppt-type enter
+parent parent GenericInterface.FixedList:::OBJECT 1
+parent parent GenericInterface.IFixedList.Add(System.Object\_o):::ENTER 2
+  variable o
+    var-kind variable
+    dec-type java.lang.Object
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList.Add(System.Object\_o):::ENTER 2
+  variable o.GetType()
+    var-kind function GetType()
+    enclosing-var o
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList.Add(System.Object\_o):::ENTER 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.FixedList
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList.Add(System.Object\_o):::ENTER 2
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList.Add(System.Object\_o):::ENTER 2
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList.Add(System.Object\_o):::ENTER 2
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.cnt
+    var-kind field cnt
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data
+    var-kind field data
+    enclosing-var this
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data.GetType()
+    var-kind function GetType()
+    enclosing-var this.data
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data[..]
+    var-kind array
+    enclosing-var this.data
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability -22
+  variable this.data[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.data[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.FixedList.Add(System.Object\_o):::EXIT14
+ppt-type subexit
+parent parent GenericInterface.FixedList:::OBJECT 1
+parent parent GenericInterface.IFixedList.Add(System.Object\_o):::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable o
+    var-kind variable
+    dec-type java.lang.Object
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList.Add(System.Object\_o):::EXIT 2
+  variable o.GetType()
+    var-kind function GetType()
+    enclosing-var o
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList.Add(System.Object\_o):::EXIT 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.FixedList
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList.Add(System.Object\_o):::EXIT 2
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList.Add(System.Object\_o):::EXIT 2
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList.Add(System.Object\_o):::EXIT 2
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.cnt
+    var-kind field cnt
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data
+    var-kind field data
+    enclosing-var this
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data.GetType()
+    var-kind function GetType()
+    enclosing-var this.data
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data[..]
+    var-kind array
+    enclosing-var this.data
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability -22
+  variable this.data[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.data[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.FixedList.Add(System.Object\_o):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent GenericInterface.FixedList:::OBJECT 1
+parent parent GenericInterface.IFixedList.Add(System.Object\_o):::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable o
+    var-kind variable
+    dec-type java.lang.Object
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList.Add(System.Object\_o):::EXIT 2
+  variable o.GetType()
+    var-kind function GetType()
+    enclosing-var o
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList.Add(System.Object\_o):::EXIT 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.FixedList
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList.Add(System.Object\_o):::EXIT 2
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList.Add(System.Object\_o):::EXIT 2
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList.Add(System.Object\_o):::EXIT 2
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.cnt
+    var-kind field cnt
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data
+    var-kind field data
+    enclosing-var this
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data.GetType()
+    var-kind function GetType()
+    enclosing-var this.data
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data[..]
+    var-kind array
+    enclosing-var this.data
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability -22
+  variable this.data[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.data[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.FixedList.Length.get():::ENTER
+ppt-type enter
+parent parent GenericInterface.FixedList:::OBJECT 1
+parent parent GenericInterface.IFixedList.Length.get():::ENTER 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.FixedList
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList.Length.get():::ENTER 2
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList.Length.get():::ENTER 2
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList.Length.get():::ENTER 2
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.cnt
+    var-kind field cnt
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data
+    var-kind field data
+    enclosing-var this
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data.GetType()
+    var-kind function GetType()
+    enclosing-var this.data
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data[..]
+    var-kind array
+    enclosing-var this.data
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability -22
+  variable this.data[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.data[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.FixedList.Length.get():::EXIT4
+ppt-type subexit
+parent parent GenericInterface.FixedList:::OBJECT 1
+parent parent GenericInterface.IFixedList.Length.get():::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList.Length.get():::EXIT 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.FixedList
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList.Length.get():::EXIT 2
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList.Length.get():::EXIT 2
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList.Length.get():::EXIT 2
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.cnt
+    var-kind field cnt
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data
+    var-kind field data
+    enclosing-var this
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data.GetType()
+    var-kind function GetType()
+    enclosing-var this.data
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data[..]
+    var-kind array
+    enclosing-var this.data
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability -22
+  variable this.data[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.data[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.FixedList.Length.get():::EXIT6
+ppt-type subexit
+parent parent GenericInterface.FixedList:::OBJECT 1
+parent parent GenericInterface.IFixedList.Length.get():::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList.Length.get():::EXIT 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.FixedList
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList.Length.get():::EXIT 2
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList.Length.get():::EXIT 2
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList.Length.get():::EXIT 2
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.cnt
+    var-kind field cnt
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data
+    var-kind field data
+    enclosing-var this
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data.GetType()
+    var-kind function GetType()
+    enclosing-var this.data
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data[..]
+    var-kind array
+    enclosing-var this.data
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability -22
+  variable this.data[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.data[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.FixedList.Length.get():::EXIT_EX_Runtime
+ppt-type subexit
+parent parent GenericInterface.FixedList:::OBJECT 1
+parent parent GenericInterface.IFixedList.Length.get():::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList.Length.get():::EXIT 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.FixedList
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList.Length.get():::EXIT 2
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList.Length.get():::EXIT 2
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList.Length.get():::EXIT 2
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.cnt
+    var-kind field cnt
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data
+    var-kind field data
+    enclosing-var this
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data.GetType()
+    var-kind function GetType()
+    enclosing-var this.data
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.FixedList:::OBJECT 1
+  variable this.data[..]
+    var-kind array
+    enclosing-var this.data
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability -22
+  variable this.data[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.data[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.FixedList:::CLASS
+ppt-type class
+
+ppt GenericInterface.FixedList:::OBJECT
+ppt-type object
+parent parent GenericInterface.FixedList:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type GenericInterface.FixedList
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+  variable this.cnt
+    var-kind field cnt
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+  variable this.data
+    var-kind field data
+    enclosing-var this
+    dec-type java.lang.Object[]
+    rep-type hashcode
+    comparability -22
+  variable this.data.GetType()
+    var-kind function GetType()
+    enclosing-var this.data
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this.data[..]
+    var-kind array
+    enclosing-var this.data
+    array 1
+    dec-type java.lang.Object[]
+    rep-type hashcode[]
+    comparability -22
+  variable this.data[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.data[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.FixedList`1..ctor(System.Int32\_size):::ENTER
+ppt-type enter
+parent parent GenericInterface.FixedList`1:::CLASS 1
+  variable size
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+
+ppt GenericInterface.FixedList`1..ctor(System.Int32\_size):::EXIT12
+ppt-type subexit
+parent parent GenericInterface.FixedList`1:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable size
+    var-kind variable
+    dec-type int
+    rep-type int
+    flags is_param
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GenericInterface.FixedList`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.MaxLength
+    var-kind function MaxLength
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.cnt
+    var-kind field cnt
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data
+    var-kind field data
+    enclosing-var this
+    dec-type T[]
+    rep-type hashcode
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data.GetType()
+    var-kind function GetType()
+    enclosing-var this.data
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data[..]
+    var-kind array
+    enclosing-var this.data
+    array 1
+    dec-type T[]
+    rep-type hashcode[]
+    comparability -22
+  variable this.data[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.data[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.FixedList`1.Add(T\_o):::ENTER
+ppt-type enter
+parent parent GenericInterface.FixedList`1:::OBJECT 1
+parent parent GenericInterface.IFixedList`1.Add(T\_o):::ENTER 2
+  variable o
+    var-kind variable
+    dec-type System.ValueType
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable o.GetType()
+    var-kind function GetType()
+    enclosing-var o
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GenericInterface.FixedList`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1.Add(T\_o):::ENTER 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1.Add(T\_o):::ENTER 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.Add(T\_o):::ENTER 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.MaxLength
+    var-kind function MaxLength
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.Add(T\_o):::ENTER 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.cnt
+    var-kind field cnt
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data
+    var-kind field data
+    enclosing-var this
+    dec-type T[]
+    rep-type hashcode
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data.GetType()
+    var-kind function GetType()
+    enclosing-var this.data
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data[..]
+    var-kind array
+    enclosing-var this.data
+    array 1
+    dec-type T[]
+    rep-type hashcode[]
+    comparability -22
+  variable this.data[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.data[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.FixedList`1.Add(T\_o):::EXIT14
+ppt-type subexit
+parent parent GenericInterface.FixedList`1:::OBJECT 1
+parent parent GenericInterface.IFixedList`1.Add(T\_o):::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable o
+    var-kind variable
+    dec-type System.ValueType
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable o.GetType()
+    var-kind function GetType()
+    enclosing-var o
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GenericInterface.FixedList`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1.Add(T\_o):::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1.Add(T\_o):::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.Add(T\_o):::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.MaxLength
+    var-kind function MaxLength
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.Add(T\_o):::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.cnt
+    var-kind field cnt
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data
+    var-kind field data
+    enclosing-var this
+    dec-type T[]
+    rep-type hashcode
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data.GetType()
+    var-kind function GetType()
+    enclosing-var this.data
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data[..]
+    var-kind array
+    enclosing-var this.data
+    array 1
+    dec-type T[]
+    rep-type hashcode[]
+    comparability -22
+  variable this.data[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.data[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.FixedList`1.Add(T\_o):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent GenericInterface.FixedList`1:::OBJECT 1
+parent parent GenericInterface.IFixedList`1.Add(T\_o):::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable o
+    var-kind variable
+    dec-type System.ValueType
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable o.GetType()
+    var-kind function GetType()
+    enclosing-var o
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GenericInterface.FixedList`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1.Add(T\_o):::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1.Add(T\_o):::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.Add(T\_o):::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.MaxLength
+    var-kind function MaxLength
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.Add(T\_o):::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.cnt
+    var-kind field cnt
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data
+    var-kind field data
+    enclosing-var this
+    dec-type T[]
+    rep-type hashcode
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data.GetType()
+    var-kind function GetType()
+    enclosing-var this.data
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data[..]
+    var-kind array
+    enclosing-var this.data
+    array 1
+    dec-type T[]
+    rep-type hashcode[]
+    comparability -22
+  variable this.data[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.data[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.FixedList`1.Length.get():::ENTER
+ppt-type enter
+parent parent GenericInterface.FixedList`1:::OBJECT 1
+parent parent GenericInterface.IFixedList`1.Length.get():::ENTER 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.FixedList`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::ENTER 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::ENTER 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::ENTER 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.MaxLength
+    var-kind function MaxLength
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::ENTER 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.cnt
+    var-kind field cnt
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data
+    var-kind field data
+    enclosing-var this
+    dec-type T[]
+    rep-type hashcode
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data.GetType()
+    var-kind function GetType()
+    enclosing-var this.data
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data[..]
+    var-kind array
+    enclosing-var this.data
+    array 1
+    dec-type T[]
+    rep-type hashcode[]
+    comparability -22
+  variable this.data[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.data[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.FixedList`1.Length.get():::EXIT4
+ppt-type subexit
+parent parent GenericInterface.FixedList`1:::OBJECT 1
+parent parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.FixedList`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.MaxLength
+    var-kind function MaxLength
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.cnt
+    var-kind field cnt
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data
+    var-kind field data
+    enclosing-var this
+    dec-type T[]
+    rep-type hashcode
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data.GetType()
+    var-kind function GetType()
+    enclosing-var this.data
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data[..]
+    var-kind array
+    enclosing-var this.data
+    array 1
+    dec-type T[]
+    rep-type hashcode[]
+    comparability -22
+  variable this.data[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.data[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.FixedList`1.Length.get():::EXIT6
+ppt-type subexit
+parent parent GenericInterface.FixedList`1:::OBJECT 1
+parent parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.FixedList`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.MaxLength
+    var-kind function MaxLength
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.cnt
+    var-kind field cnt
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data
+    var-kind field data
+    enclosing-var this
+    dec-type T[]
+    rep-type hashcode
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data.GetType()
+    var-kind function GetType()
+    enclosing-var this.data
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data[..]
+    var-kind array
+    enclosing-var this.data
+    array 1
+    dec-type T[]
+    rep-type hashcode[]
+    comparability -22
+  variable this.data[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.data[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.FixedList`1.Length.get():::EXIT_EX_Runtime
+ppt-type subexit
+parent parent GenericInterface.FixedList`1:::OBJECT 1
+parent parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.FixedList`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.MaxLength
+    var-kind function MaxLength
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.cnt
+    var-kind field cnt
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data
+    var-kind field data
+    enclosing-var this
+    dec-type T[]
+    rep-type hashcode
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data.GetType()
+    var-kind function GetType()
+    enclosing-var this.data
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data[..]
+    var-kind array
+    enclosing-var this.data
+    array 1
+    dec-type T[]
+    rep-type hashcode[]
+    comparability -22
+  variable this.data[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.data[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.FixedList`1.MaxLength.get():::ENTER
+ppt-type enter
+parent parent GenericInterface.FixedList`1:::OBJECT 1
+parent parent GenericInterface.IFixedList`1.MaxLength.get():::ENTER 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.FixedList`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::ENTER 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::ENTER 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::ENTER 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.MaxLength
+    var-kind function MaxLength
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::ENTER 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.cnt
+    var-kind field cnt
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data
+    var-kind field data
+    enclosing-var this
+    dec-type T[]
+    rep-type hashcode
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data.GetType()
+    var-kind function GetType()
+    enclosing-var this.data
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data[..]
+    var-kind array
+    enclosing-var this.data
+    array 1
+    dec-type T[]
+    rep-type hashcode[]
+    comparability -22
+  variable this.data[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.data[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.FixedList`1.MaxLength.get():::EXIT6
+ppt-type subexit
+parent parent GenericInterface.FixedList`1:::OBJECT 1
+parent parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.FixedList`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.MaxLength
+    var-kind function MaxLength
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.cnt
+    var-kind field cnt
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data
+    var-kind field data
+    enclosing-var this
+    dec-type T[]
+    rep-type hashcode
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data.GetType()
+    var-kind function GetType()
+    enclosing-var this.data
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data[..]
+    var-kind array
+    enclosing-var this.data
+    array 1
+    dec-type T[]
+    rep-type hashcode[]
+    comparability -22
+  variable this.data[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.data[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.FixedList`1.MaxLength.get():::EXIT8
+ppt-type subexit
+parent parent GenericInterface.FixedList`1:::OBJECT 1
+parent parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.FixedList`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.MaxLength
+    var-kind function MaxLength
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.cnt
+    var-kind field cnt
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data
+    var-kind field data
+    enclosing-var this
+    dec-type T[]
+    rep-type hashcode
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data.GetType()
+    var-kind function GetType()
+    enclosing-var this.data
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data[..]
+    var-kind array
+    enclosing-var this.data
+    array 1
+    dec-type T[]
+    rep-type hashcode[]
+    comparability -22
+  variable this.data[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.data[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.FixedList`1.MaxLength.get():::EXIT_EX_Runtime
+ppt-type subexit
+parent parent GenericInterface.FixedList`1:::OBJECT 1
+parent parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.FixedList`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.MaxLength
+    var-kind function MaxLength
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.cnt
+    var-kind field cnt
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data
+    var-kind field data
+    enclosing-var this
+    dec-type T[]
+    rep-type hashcode
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data.GetType()
+    var-kind function GetType()
+    enclosing-var this.data
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.FixedList`1:::OBJECT 1
+  variable this.data[..]
+    var-kind array
+    enclosing-var this.data
+    array 1
+    dec-type T[]
+    rep-type hashcode[]
+    comparability -22
+  variable this.data[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.data[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.FixedList`1:::CLASS
+ppt-type class
+
+ppt GenericInterface.FixedList`1:::OBJECT
+ppt-type object
+parent parent GenericInterface.FixedList`1:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type GenericInterface.FixedList`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+  variable this.MaxLength
+    var-kind function MaxLength
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+  variable this.cnt
+    var-kind field cnt
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+  variable this.data
+    var-kind field data
+    enclosing-var this
+    dec-type T[]
+    rep-type hashcode
+    comparability -22
+  variable this.data.GetType()
+    var-kind function GetType()
+    enclosing-var this.data
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this.data[..]
+    var-kind array
+    enclosing-var this.data
+    array 1
+    dec-type T[]
+    rep-type hashcode[]
+    comparability -22
+  variable this.data[..].GetType()
+    var-kind function GetType()
+    enclosing-var this.data[..]
+    array 1
+    dec-type java.lang.Class[]
+    rep-type java.lang.String[]
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.IFixedList.Add(System.Object\_o):::ENTER
+ppt-type enter
+parent parent GenericInterface.IFixedList:::OBJECT 1
+  variable o
+    var-kind variable
+    dec-type java.lang.Object
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable o.GetType()
+    var-kind function GetType()
+    enclosing-var o
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedList
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList:::OBJECT 1
+
+ppt GenericInterface.IFixedList.Add(System.Object\_o):::EXIT
+ppt-type subexit
+parent parent GenericInterface.IFixedList:::OBJECT 1
+  variable o
+    var-kind variable
+    dec-type java.lang.Object
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable o.GetType()
+    var-kind function GetType()
+    enclosing-var o
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedList
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList:::OBJECT 1
+
+ppt GenericInterface.IFixedList.Length.get():::ENTER
+ppt-type enter
+parent parent GenericInterface.IFixedList:::OBJECT 1
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedList
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList:::OBJECT 1
+
+ppt GenericInterface.IFixedList.Length.get():::EXIT
+ppt-type subexit
+parent parent GenericInterface.IFixedList:::OBJECT 1
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedList
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList:::OBJECT 1
+
+ppt GenericInterface.IFixedList:::CLASS
+ppt-type class
+
+ppt GenericInterface.IFixedList:::OBJECT
+ppt-type object
+parent parent GenericInterface.IFixedList:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedList
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+
+ppt GenericInterface.IFixedListContract`1..ctor():::ENTER
+ppt-type enter
+parent parent GenericInterface.IFixedListContract`1:::CLASS 1
+
+ppt GenericInterface.IFixedListContract`1..ctor():::EXIT2
+ppt-type subexit
+parent parent GenericInterface.IFixedListContract`1:::OBJECT 1
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedListContract`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+
+ppt GenericInterface.IFixedListContract`1.Add(T\_o):::ENTER
+ppt-type enter
+parent parent GenericInterface.IFixedListContract`1:::OBJECT 1
+parent parent GenericInterface.IFixedList`1.Add(T\_o):::ENTER 2
+  variable o
+    var-kind variable
+    dec-type System.ValueType
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable o.GetType()
+    var-kind function GetType()
+    enclosing-var o
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedListContract`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1.Add(T\_o):::ENTER 2
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1.Add(T\_o):::ENTER 2
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+
+ppt GenericInterface.IFixedListContract`1.Add(T\_o):::EXIT1
+ppt-type subexit
+parent parent GenericInterface.IFixedListContract`1:::OBJECT 1
+parent parent GenericInterface.IFixedList`1.Add(T\_o):::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable o
+    var-kind variable
+    dec-type System.ValueType
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable o.GetType()
+    var-kind function GetType()
+    enclosing-var o
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedListContract`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1.Add(T\_o):::EXIT 2
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1.Add(T\_o):::EXIT 2
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+
+ppt GenericInterface.IFixedListContract`1.Add(T\_o):::EXIT_EX_Runtime
+ppt-type subexit
+parent parent GenericInterface.IFixedListContract`1:::OBJECT 1
+parent parent GenericInterface.IFixedList`1.Add(T\_o):::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable o
+    var-kind variable
+    dec-type System.ValueType
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable o.GetType()
+    var-kind function GetType()
+    enclosing-var o
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedListContract`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1.Add(T\_o):::EXIT 2
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1.Add(T\_o):::EXIT 2
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+
+ppt GenericInterface.IFixedListContract`1.Length.get():::ENTER
+ppt-type enter
+parent parent GenericInterface.IFixedListContract`1:::OBJECT 1
+parent parent GenericInterface.IFixedList`1.Length.get():::ENTER 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedListContract`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::ENTER 2
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::ENTER 2
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+
+ppt GenericInterface.IFixedListContract`1.Length.get():::EXIT3
+ppt-type subexit
+parent parent GenericInterface.IFixedListContract`1:::OBJECT 1
+parent parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedListContract`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+
+ppt GenericInterface.IFixedListContract`1.Length.get():::EXIT5
+ppt-type subexit
+parent parent GenericInterface.IFixedListContract`1:::OBJECT 1
+parent parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedListContract`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+
+ppt GenericInterface.IFixedListContract`1.Length.get():::EXIT_EX_Runtime
+ppt-type subexit
+parent parent GenericInterface.IFixedListContract`1:::OBJECT 1
+parent parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedListContract`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1.Length.get():::EXIT 2
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+
+ppt GenericInterface.IFixedListContract`1.MaxLength.get():::ENTER
+ppt-type enter
+parent parent GenericInterface.IFixedListContract`1:::OBJECT 1
+parent parent GenericInterface.IFixedList`1.MaxLength.get():::ENTER 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedListContract`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::ENTER 2
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::ENTER 2
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+
+ppt GenericInterface.IFixedListContract`1.MaxLength.get():::EXIT3
+ppt-type subexit
+parent parent GenericInterface.IFixedListContract`1:::OBJECT 1
+parent parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedListContract`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+
+ppt GenericInterface.IFixedListContract`1.MaxLength.get():::EXIT5
+ppt-type subexit
+parent parent GenericInterface.IFixedListContract`1:::OBJECT 1
+parent parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedListContract`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+
+ppt GenericInterface.IFixedListContract`1.MaxLength.get():::EXIT_EX_Runtime
+ppt-type subexit
+parent parent GenericInterface.IFixedListContract`1:::OBJECT 1
+parent parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+  variable exception
+    var-kind return
+    dec-type System.Exception
+    rep-type hashcode
+    comparability -22
+  variable exception.GetType()
+    var-kind function GetType()
+    enclosing-var exception
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedListContract`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1.MaxLength.get():::EXIT 2
+    parent GenericInterface.IFixedListContract`1:::OBJECT 1
+
+ppt GenericInterface.IFixedListContract`1:::CLASS
+ppt-type class
+
+ppt GenericInterface.IFixedListContract`1:::OBJECT
+ppt-type object
+parent parent GenericInterface.IFixedListContract`1:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedListContract`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+
+ppt GenericInterface.IFixedList`1.Add(T\_o):::ENTER
+ppt-type enter
+parent parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable o
+    var-kind variable
+    dec-type System.ValueType
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable o.GetType()
+    var-kind function GetType()
+    enclosing-var o
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedList`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable this.MaxLength
+    var-kind function MaxLength
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+
+ppt GenericInterface.IFixedList`1.Add(T\_o):::EXIT
+ppt-type subexit
+parent parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable o
+    var-kind variable
+    dec-type System.ValueType
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable o.GetType()
+    var-kind function GetType()
+    enclosing-var o
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedList`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable this.MaxLength
+    var-kind function MaxLength
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+
+ppt GenericInterface.IFixedList`1.Length.get():::ENTER
+ppt-type enter
+parent parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedList`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable this.MaxLength
+    var-kind function MaxLength
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+
+ppt GenericInterface.IFixedList`1.Length.get():::EXIT
+ppt-type subexit
+parent parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedList`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable this.MaxLength
+    var-kind function MaxLength
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+
+ppt GenericInterface.IFixedList`1.MaxLength.get():::ENTER
+ppt-type enter
+parent parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedList`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable this.MaxLength
+    var-kind function MaxLength
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+
+ppt GenericInterface.IFixedList`1.MaxLength.get():::EXIT
+ppt-type subexit
+parent parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable return
+    var-kind return
+    dec-type int
+    rep-type int
+    comparability -22
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedList`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+  variable this.MaxLength
+    var-kind function MaxLength
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+    parent GenericInterface.IFixedList`1:::OBJECT 1
+
+ppt GenericInterface.IFixedList`1:::CLASS
+ppt-type class
+
+ppt GenericInterface.IFixedList`1:::OBJECT
+ppt-type object
+parent parent GenericInterface.IFixedList`1:::CLASS 1
+  variable this
+    var-kind variable
+    dec-type GenericInterface.IFixedList`1[T]
+    rep-type hashcode
+    flags is_param
+    comparability -22
+  variable this.GetType()
+    var-kind function GetType()
+    enclosing-var this
+    dec-type java.lang.Class
+    rep-type java.lang.String
+    flags synthetic classname
+    comparability -22
+  variable this.Length
+    var-kind function Length
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+  variable this.MaxLength
+    var-kind function MaxLength
+    enclosing-var this
+    dec-type int
+    rep-type int
+    comparability -22
+
+GenericInterface.Driver.Main():::ENTER
+this_invocation_nonce
+2
+
+GenericInterface.FixedList..ctor(System.Int32\_size):::ENTER
+this_invocation_nonce
+3
+size
+10
+1
+
+GenericInterface.FixedList..ctor(System.Int32\_size):::EXIT12
+this_invocation_nonce
+3
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+size
+10
+1
+this
+30123063
+1
+this.GetType()
+"GenericInterface.FixedList"
+1
+this.Length
+0
+1
+this.cnt
+0
+1
+this.data
+2672115
+1
+this.data.GetType()
+"System.Object[]"
+1
+this.data[..]
+[null null null null null null null null null null]
+1
+this.data[..].GetType()
+[nonsensical nonsensical nonsensical nonsensical nonsensical nonsensical nonsensical nonsensical nonsensical nonsensical]
+1
+
+GenericInterface.FixedList.Add(System.Object\_o):::ENTER
+this_invocation_nonce
+4
+o
+1
+1
+o.GetType()
+"System.Int32"
+1
+this
+30123063
+1
+this.GetType()
+"GenericInterface.FixedList"
+1
+this.Length
+0
+1
+this.cnt
+0
+1
+this.data
+2672115
+1
+this.data.GetType()
+"System.Object[]"
+1
+this.data[..]
+[null null null null null null null null null null]
+1
+this.data[..].GetType()
+[nonsensical nonsensical nonsensical nonsensical nonsensical nonsensical nonsensical nonsensical nonsensical nonsensical]
+1
+
+GenericInterface.FixedList.Add(System.Object\_o):::EXIT14
+this_invocation_nonce
+4
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+o
+1
+1
+o.GetType()
+"System.Int32"
+1
+this
+30123063
+1
+this.GetType()
+"GenericInterface.FixedList"
+1
+this.Length
+1
+1
+this.cnt
+1
+1
+this.data
+2672115
+1
+this.data.GetType()
+"System.Object[]"
+1
+this.data[..]
+[1 null null null null null null null null null]
+1
+this.data[..].GetType()
+["System.Int32" nonsensical nonsensical nonsensical nonsensical nonsensical nonsensical nonsensical nonsensical nonsensical]
+1
+
+GenericInterface.FixedList.Add(System.Object\_o):::ENTER
+this_invocation_nonce
+5
+o
+24049039
+1
+o.GetType()
+"System.Double[]"
+1
+this
+30123063
+1
+this.GetType()
+"GenericInterface.FixedList"
+1
+this.Length
+1
+1
+this.cnt
+1
+1
+this.data
+2672115
+1
+this.data.GetType()
+"System.Object[]"
+1
+this.data[..]
+[1 null null null null null null null null null]
+1
+this.data[..].GetType()
+["System.Int32" nonsensical nonsensical nonsensical nonsensical nonsensical nonsensical nonsensical nonsensical nonsensical]
+1
+
+GenericInterface.FixedList.Add(System.Object\_o):::EXIT14
+this_invocation_nonce
+5
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+o
+24049039
+1
+o.GetType()
+"System.Double[]"
+1
+this
+30123063
+1
+this.GetType()
+"GenericInterface.FixedList"
+1
+this.Length
+2
+1
+this.cnt
+2
+1
+this.data
+2672115
+1
+this.data.GetType()
+"System.Object[]"
+1
+this.data[..]
+[1 24049039 null null null null null null null null]
+1
+this.data[..].GetType()
+["System.Int32" "System.Double[]" nonsensical nonsensical nonsensical nonsensical nonsensical nonsensical nonsensical nonsensical]
+1
+
+GenericInterface.FixedList`1..ctor(System.Int32\_size):::ENTER
+this_invocation_nonce
+6
+size
+10
+1
+
+GenericInterface.FixedList`1..ctor(System.Int32\_size):::EXIT12
+this_invocation_nonce
+6
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+size
+10
+1
+this
+15114764
+1
+this.GetType()
+"GenericInterface.FixedList`1[System.Double]"
+1
+this.Length
+0
+1
+this.MaxLength
+10
+1
+this.cnt
+0
+1
+this.data
+1815156
+1
+this.data.GetType()
+"T[]"
+1
+this.data[..]
+[0 0 0 0 0 0 0 0 0 0]
+1
+this.data[..].GetType()
+["System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double"]
+1
+
+GenericInterface.FixedList`1.Add(T\_o):::ENTER
+this_invocation_nonce
+7
+o
+1072693248
+1
+o.GetType()
+"System.Double"
+1
+this
+15114764
+1
+this.GetType()
+"GenericInterface.FixedList`1[System.Double]"
+1
+this.Length
+0
+1
+this.MaxLength
+10
+1
+this.cnt
+0
+1
+this.data
+1815156
+1
+this.data.GetType()
+"T[]"
+1
+this.data[..]
+[0 0 0 0 0 0 0 0 0 0]
+1
+this.data[..].GetType()
+["System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double"]
+1
+
+GenericInterface.FixedList`1.Add(T\_o):::EXIT14
+this_invocation_nonce
+7
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+o
+1072693248
+1
+o.GetType()
+"System.Double"
+1
+this
+15114764
+1
+this.GetType()
+"GenericInterface.FixedList`1[System.Double]"
+1
+this.Length
+1
+1
+this.MaxLength
+10
+1
+this.cnt
+1
+1
+this.data
+1815156
+1
+this.data.GetType()
+"T[]"
+1
+this.data[..]
+[1072693248 0 0 0 0 0 0 0 0 0]
+1
+this.data[..].GetType()
+["System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double"]
+1
+
+GenericInterface.FixedList`1.Add(T\_o):::ENTER
+this_invocation_nonce
+8
+o
+1073741824
+1
+o.GetType()
+"System.Double"
+1
+this
+15114764
+1
+this.GetType()
+"GenericInterface.FixedList`1[System.Double]"
+1
+this.Length
+1
+1
+this.MaxLength
+10
+1
+this.cnt
+1
+1
+this.data
+1815156
+1
+this.data.GetType()
+"T[]"
+1
+this.data[..]
+[1072693248 0 0 0 0 0 0 0 0 0]
+1
+this.data[..].GetType()
+["System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double"]
+1
+
+GenericInterface.FixedList`1.Add(T\_o):::EXIT14
+this_invocation_nonce
+8
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+o
+1073741824
+1
+o.GetType()
+"System.Double"
+1
+this
+15114764
+1
+this.GetType()
+"GenericInterface.FixedList`1[System.Double]"
+1
+this.Length
+2
+1
+this.MaxLength
+10
+1
+this.cnt
+2
+1
+this.data
+1815156
+1
+this.data.GetType()
+"T[]"
+1
+this.data[..]
+[1072693248 1073741824 0 0 0 0 0 0 0 0]
+1
+this.data[..].GetType()
+["System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double"]
+1
+
+GenericInterface.FixedList`1.Add(T\_o):::ENTER
+this_invocation_nonce
+9
+o
+1074266112
+1
+o.GetType()
+"System.Double"
+1
+this
+15114764
+1
+this.GetType()
+"GenericInterface.FixedList`1[System.Double]"
+1
+this.Length
+2
+1
+this.MaxLength
+10
+1
+this.cnt
+2
+1
+this.data
+1815156
+1
+this.data.GetType()
+"T[]"
+1
+this.data[..]
+[1072693248 1073741824 0 0 0 0 0 0 0 0]
+1
+this.data[..].GetType()
+["System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double"]
+1
+
+GenericInterface.FixedList`1.Add(T\_o):::EXIT14
+this_invocation_nonce
+9
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+o
+1074266112
+1
+o.GetType()
+"System.Double"
+1
+this
+15114764
+1
+this.GetType()
+"GenericInterface.FixedList`1[System.Double]"
+1
+this.Length
+3
+1
+this.MaxLength
+10
+1
+this.cnt
+3
+1
+this.data
+1815156
+1
+this.data.GetType()
+"T[]"
+1
+this.data[..]
+[1072693248 1073741824 1074266112 0 0 0 0 0 0 0]
+1
+this.data[..].GetType()
+["System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double" "System.Double"]
+1
+
+GenericInterface.Driver.Main():::EXIT35
+this_invocation_nonce
+2
+exception
+nonsensical
+2
+exception.GetType()
+nonsensical
+2
+
