@@ -90,11 +90,9 @@ namespace Celeriac
       }
 
       string pdbFile = Path.ChangeExtension(module.Location, "pdb");
-      PdbReader pdbReader = LoadPdbReaderAndFile(celeriacArgs, typeManager, module, pdbFile);
-
       Assembly mutable = null;
 
-      using (pdbReader)
+      using (var pdbReader = LoadPdbReaderAndFile(celeriacArgs, typeManager, module, pdbFile))
       {
         AssemblySummary comparabilityManager = GenerateComparability(celeriacArgs, typeManager,
           host, module, pdbReader, ref mutable);
@@ -134,10 +132,18 @@ namespace Celeriac
           resultStream = new MemoryStream();
         }
 
+
+#if __MonoCS__
+        // Reading / Writing DEBUG information on Mono is not supported by CCI
+        PdbWriter pdbWriter = null;
+#else
+        var pdbWriter = new PdbWriter(pdbFile, pdbReader);
+#endif
+
         // Need to not pass in a local scope provider until such time as we have one 
         // that will use the mutator to remap things (like the type of a scope 
         // constant) from the original assembly to the mutated one.
-        using (var pdbWriter = new PdbWriter(pdbFile, pdbReader))
+        using (pdbWriter)
         {
           PeWriter.WritePeToStream(module, host, resultStream, pdbReader, null, pdbWriter);
         }
@@ -162,21 +168,23 @@ namespace Celeriac
     /// <returns>Absolute path to the celeriac directory.</returns>
     private static string FindVisitorDir()
     {
+#if __MonoCS__
+      string daikonDir = Environment.GetEnvironmentVariable(DaikonEnvVar);
+#else
       // Look for the path to the reflector, it's an environment variable, check the user space 
       // first.
-      string daikonDir = Environment.GetEnvironmentVariable(DaikonEnvVar,
-          EnvironmentVariableTarget.User);
+      string daikonDir = Environment.GetEnvironmentVariable(DaikonEnvVar, EnvironmentVariableTarget.User);
       if (daikonDir == null)
       {
         // If that didn't work check the machine space
-        daikonDir = Environment.GetEnvironmentVariable(DaikonEnvVar,
-            EnvironmentVariableTarget.Machine);
+        daikonDir = Environment.GetEnvironmentVariable(DaikonEnvVar, EnvironmentVariableTarget.Machine);
       }
+#endif
 
       if (daikonDir == null)
       {
         // We can't proceed without this
-        Console.WriteLine("Must define " + DaikonEnvVar + " environment variable");
+        Console.Error.WriteLine("Must define " + DaikonEnvVar + " environment variable");
         Environment.Exit(1);
       }
       return daikonDir;
@@ -230,9 +238,20 @@ namespace Celeriac
     /// <summary>
     /// Load the PDB reader and pdb file for the source program.
     /// </summary>
-    private static PdbReader LoadPdbReaderAndFile(CeleriacArgs celeriacArgs, TypeManager typeManager,
-      IModule module, string pdbFile)
+    private static PdbReader LoadPdbReaderAndFile(CeleriacArgs celeriacArgs, TypeManager typeManager, IModule module, string pdbFile)
     {
+#if __MonoCS__
+      if (celeriacArgs.StaticComparability)
+      {
+        throw new NotSupportedException("Static comparability analysis is not supported on Mono");
+      }
+      else
+      {
+        Console.Error.WriteLine("WARNING: Program database (PDB) information is not supported on Mono");
+        Console.Error.WriteLine("Celeriac will attempt to continue, but might fail.");
+        return null;
+      }
+#else
       PdbReader pdbReader = null;
       try
       {
@@ -242,21 +261,21 @@ namespace Celeriac
         }
         return pdbReader;
       }
-      catch (System.IO.IOException)
+      catch (System.IO.IOException ex)
       {
         if (celeriacArgs.StaticComparability)
         {
-          throw new InvalidOperationException("Error loading PDB file for '" +
-            module.Name.Value + "' (required for static comparability analysis)");
+          throw new InvalidOperationException("Error loading program database (PDB) file for '" + module.Name.Value + "'. Debug information is required for static comparability analysis.", ex);
         }
         else
         {
-          // It seems to be non-fatal, so print the error and continue.
+          // It seems to be non-fatal, so print the error and continue.  
           Console.Error.WriteLine("WARNING: Could not load the PDB file for '" + module.Name.Value + "'");
           Console.Error.WriteLine("Celeriac will attempt to continue, but might fail.");
         }
         return null;
       }
+#endif
     }
   }
 }
