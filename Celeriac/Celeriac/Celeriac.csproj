@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -117,10 +117,6 @@
     <AssemblyOriginatorKeyFile>CeleriacKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FSharp.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\FSharp\2.0\Runtime\v4.0\FSharp.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Cci.Analysis.ControlAndDataFlowGraph">
       <HintPath>CCI_DLLs\Microsoft.Cci.Analysis.ControlAndDataFlowGraph.dll</HintPath>
     </Reference>
@@ -221,7 +217,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-
     <PostBuildEvent Condition=" '$(OS)' == 'Windows_NT' ">
 copy /Y $(TargetPath) "%25CELERIAC_HOME%25"
 copy /Y $(TargetDir)$(TargetName).pdb  "%25CELERIAC_HOME%25"
@@ -230,6 +225,13 @@ copy /Y $(TargetDir)$(TargetName).pdb  "%25CELERIAC_HOME%25"
 cp $(TargetPath) $CELERIAC_HOME
 cp $(TargetPath).mdb  $CELERIAC_HOME
     </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+copy /Y $(TargetPath) "%25CELERIAC_HOME%25"
+copy /Y $(TargetDir)$(TargetName).pdb  "%25CELERIAC_HOME%25"
+copy /Y $(TargetDir)*.dll "%25CELERIAC_HOME%25"
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
