@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -36,10 +36,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FSharp.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\FSharp\2.0\Runtime\v4.0\FSharp.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,12 +48,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CeleriacLauncher\CeleriacLauncher.csproj">
+      <Project>{16a7f601-58b3-458e-aa50-9c366ecb9c47}</Project>
+      <Name>CeleriacLauncher</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-
-
     <PostBuildEvent Condition=" '$(OS)' == 'Windows_NT' ">
 copy $(TargetPath) $(SolutionDir)CeleriacLauncher\bin\Debug /Y
 copy $(TargetDir)$(TargetName).pdb $(SolutionDir)CeleriacLauncher\bin\Debug /Y
@@ -66,7 +68,6 @@ copy $(TargetDir)$(TargetName).pdb $(SolutionDir)CeleriacLauncher\bin\Debug /Y
 cp $(TargetPath) $(SolutionDir)CeleriacLauncher\bin\Debug
 cp $(TargetPath).mdb $(SolutionDir)CeleriacLauncher\bin\Debug
     </PostBuildEvent>
-
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
