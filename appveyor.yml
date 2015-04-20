@@ -1,0 +1,12 @@
+version: 1.0.{build}
+clone_folder: c:\projects\celeriac
+environment:
+  CELERIAC_HOME: c:\projects\celeriac\dist
+before_build:
+- mkdir %CELERIAC_HOME%\dist
+build:
+  project: Celeriac\Celeriac.sln
+  verbosity: normal
+artifacts:
+- path: dist
+  name: Celeriac
