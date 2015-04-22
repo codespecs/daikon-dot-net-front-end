@@ -6,6 +6,6 @@ The [Daikon dynamic invariant detector](http://plse.cs.washington.edu/daikon/) u
 
 This project, Celeriac, dynamically instruments a .NET application to produce a Daikon-compatible program trace. Celeriac works directly on binaries, and therefore does not require build modifications.
 
-To start using Celeriac, visit the [Getting Started](https://code.google.com/p/daikon-dot-net-front-end/wiki/GettingStarted) documentation page. (We are in the process of migrating the documentation over to the GitHub Wiki).
+To start using Celeriac, visit the [Getting Started](https://github.com/melonhead901/daikon-dot-net-front-end/wiki) wiki page. (We are in the process of migrating the documentation over to the GitHub Wiki).
 
 Binaries are available via [AppVeyor](https://ci.appveyor.com/project/twschiller/daikon-dot-net-front-end/build/artifacts).
